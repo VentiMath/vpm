@@ -83,3 +83,6 @@ assert.match(inputs,/<textarea[^>]*aria-label="Contest"/);assert.match(inputs,/>
 assert.equal(api.InputBase,require('vmui-material/InputBase').default);
 
 for(const name of ['Input','OutlinedInput']){const html=renderToString(React.createElement(api[name],{label:name==='OutlinedInput'?'Contest':undefined,defaultValue:'AMC'}));assert.match(html,new RegExp('Mui'+name+'-root'));assert.equal(api[name],require('vmui-material/'+name).default);}
+
+const decorated=renderToString(React.createElement(api.FormControl,null,React.createElement(api.InputLabel,{htmlFor:'fee'},'Fee'),React.createElement(api.OutlinedInput,{id:'fee',label:'Fee',defaultValue:0,startAdornment:React.createElement(api.InputAdornment,{position:'start'},'$')})));
+assert.match(decorated,/data-shrink="true"/);assert.match(decorated,/MuiInputAdornment-positionStart/);assert.match(decorated,/for="fee"/);

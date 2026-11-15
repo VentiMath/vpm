@@ -172,3 +172,8 @@ InputBase({maxRows:{}});
 // @ts-expect-error boolean disabled
 InputBase({disabled:'no'});
 void [InputBaseEntry,inputOptions];
+
+import InputLabel=require('vmui-material/InputLabel');
+import InputAdornment=require('vmui-material/InputAdornment');
+InputLabel.default({htmlFor:'fee',shrink:true});
+InputAdornment.default({position:'start',children:'$'});

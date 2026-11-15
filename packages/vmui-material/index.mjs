@@ -44,3 +44,5 @@ export const inputBaseClasses=a.inputBaseClasses;
 export const getInputBaseUtilityClass=a.getInputBaseUtilityClass;
 export const {Input,inputClasses,getInputUtilityClass}=a;
 export const {OutlinedInput,outlinedInputClasses,getOutlinedInputUtilityClass}=a;
+export const {InputLabel,inputLabelClasses,getInputLabelUtilityClass}=a;
+export const {InputAdornment,inputAdornmentClasses,getInputAdornmentUtilityClass}=a;

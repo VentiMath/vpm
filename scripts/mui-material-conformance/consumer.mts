@@ -181,3 +181,16 @@ React.createElement(OutlinedInput,{label:'Contest',notched:false,multiline:true,
 React.createElement(OutlinedInput,{disableUnderline:true});
 // @ts-expect-error notched is a boolean
 React.createElement(OutlinedInput,{notched:'yes'});
+
+import InputLabel,{inputLabelClasses} from 'vmui-material/InputLabel';
+import InputAdornment from 'vmui-material/InputAdornment';
+InputLabel({htmlFor:'fee',shrink:true,size:'small',classes:{shrink:inputLabelClasses.shrink},ref:React.createRef<HTMLLabelElement>()});
+InputLabel({component:'span',ref:React.createRef<HTMLSpanElement>(),disableAnimation:true});
+InputAdornment({position:'end',disablePointerEvents:true,children:'kg',ref:React.createRef<HTMLDivElement>()});
+InputAdornment({component:'aside',position:'start',disableTypography:true});
+// @ts-expect-error position is required
+InputAdornment({children:'$'});
+// @ts-expect-error only start or end positions
+InputAdornment({position:'left'});
+// @ts-expect-error label shrink is boolean
+InputLabel({shrink:'yes'});

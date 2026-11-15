@@ -1,0 +1,2927 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-15T02:50:21.888Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/hook-form-conformance/package-lock.json": "d59e3d00df6b0800ed06ff6047084686f72a53ca05786944211e10bdbe6d51ff",
+    "../../scripts/mui-material-conformance/input-decorations-bench-entry.jsx": "8752aea0dcf4f4ec1fb59f979c5308b0951e7dcd106891e220e6f83d8bb054b8",
+    "../../scripts/mui-material-conformance/input-decorations-build.cjs": "62c24b7429f1ae71fa0974e113e0df10fd8d9faa4902e95048ddd6859d5c1637",
+    "../../scripts/mui-material-conformance/input-decorations-scene.jsx": "8bbdfc1f7a38b74cf3c36e014afec88dc3ca9058b1bf286dc9d2c4100612b0a7",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/app-upstream/input-decorations-bench.cjs": "e3c4c0b2278dba2bdfbb5ef86d1d06577661d7239c3c50a63313926763562cc2",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/app-vpm/input-decorations-bench.cjs": "4b309c8c156af8624b18df17b32c4e7e5cfc7ed1e6332981e35a58d7174d26eb",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/current-upstream/input-decorations-bench.cjs": "aea37d8045257667194ff562efe2c25d94dc1a62d61fab990090223fbfa9c56b",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/current-vpm/input-decorations-bench.cjs": "0376b8525ee5b9582401263d65faecaf878af965da62c94e2df52da707050079",
+    "../../scripts/mui-system-conformance/package-lock.json": "ddadfff23ccbae1816cb53aa88c03f4279279b3014993b39c62b7b1676faa633",
+    "../vemotion-babel-plugin/index.cjs": "e5bf72ac7bc3e7429c7fd385d680260211ce95b7e0e4316bb69f611a45029369",
+    "../vemotion-babel-plugin/src": "31538914c8f6834d1c48e1eda455f8655afa6b7e7aaf597c044a311bac473b74",
+    "../vemotion-cache/index.js": "a4391dfaa7d6330038ccb0b39ffff0af5a48066b27b0316eece0b6562a94abaa",
+    "../vemotion-cache/src": "6d560802fa6d75bfd7179e31c5427593220b0931c4b5b953dca79c86bacb30dd",
+    "../vemotion-hash/index.js": "96b215f0e2ae15c729dbc5eac185aab2e484ae1b67490ebcd94d5709056cd4e5",
+    "../vemotion-is-prop-valid/index.js": "5993ac5f383ac427e13b3b739eea889aefbf57af365dba833582890a10b52344",
+    "../vemotion-memoize/index.js": "9b0b8759044ffed69cfcc0548304888144cd1e2ffb794ed99726c51ab3a38c60",
+    "../vemotion-react/_isolated-hnrs.js": "03518aa3cc4cd476a205dd63745b0db44c7df9f9eba4ce11b232fb26055abdcf",
+    "../vemotion-react/index.js": "41d7839fc57c4dc975e17143eb363b1f68efde4cb9e9778f006b81ec10dc1259",
+    "../vemotion-react/jsx-dev-runtime.js": "a110b06d83cebb2ee63b0ea0224f4ff394355da4ab6a3b7aed0e69c2dfb1704b",
+    "../vemotion-react/jsx-runtime.js": "d4cf2669f60829205ad963371e5edc535f0413fadecc8bf56ad4e174fd87f38f",
+    "../vemotion-react/src": "f3fa58f006f4c35c1c8ee16c2384334e3697f7923b3440db92a117260aa648ba",
+    "../vemotion-serialize/index.js": "c5fc672aac873af6b663291fdd3b8c0c72a6e271458be622e9de5154e2874801",
+    "../vemotion-serialize/src": "2f1c965c2df5db9fad836cf20b73677ad8c24814e34ce224b957c9c0a4b376e9",
+    "../vemotion-sheet/index.js": "370197e943ace72eb9feb1ef45c8b22b76904e7dee222fa2106dda556df3c2a7",
+    "../vemotion-sheet/src": "2f1c965c2df5db9fad836cf20b73677ad8c24814e34ce224b957c9c0a4b376e9",
+    "../vemotion-styled/base.js": "2c0d8fb8493f8ec54e67182ff81335ce4ee2fd3503b6d563e473fc08f6e770dd",
+    "../vemotion-styled/index.js": "d2c6ecd98351625a2c3d2c8126ff4b3761a0b8ca82066b5cbec5055961aa2b93",
+    "../vemotion-styled/src": "8d1258141f1423dcabcc14f4037b3f878a1302dbea67718f709780a553642600",
+    "../vemotion-unitless/index.js": "068105a5301790ad6ff590e36f620f1548a809f59e222a7075f52544665c85d5",
+    "../vemotion-use-insertion-effect-with-fallbacks/index.js": "c9bc22b0c67ed348c3b377f69484dae1e32ac76fbaf7af198ddbd729be039e66",
+    "../vemotion-use-insertion-effect-with-fallbacks/src": "3304c3023c2ddc417a0e21a4bfff163baf1f4792dfd7073d54ba75418f8b2fae",
+    "../vemotion-utils/index.js": "8d92f8c8a9bdbb347324c097e7e1c6a23004bf9bb61fa6391e912df0ec39ccf3",
+    "../vemotion-utils/src": "3304c3023c2ddc417a0e21a4bfff163baf1f4792dfd7073d54ba75418f8b2fae",
+    "../vemotion-weak-memoize/index.js": "3e44339d2b635f8ccca795abacc5f4e395c6598894dc0520ff997eda25eca99d",
+    "../vmui-private-theming/ThemeProvider.cjs": "1a9d3eb6c1ccc48c5d9332295e40af36917d1e6648d12f750de0c50ac9f82564",
+    "../vmui-private-theming/ThemeProvider.mjs": "46256569d2dd107cec05e4ccdf472197a191e663234a32704f2fd968d61e7abd",
+    "../vmui-private-theming/index.cjs": "dbea69c9f4dccb3914c34d8bbffc813f470bf4c9eb0d61f6b41612b18c27b5da",
+    "../vmui-private-theming/index.mjs": "7d7e0dfbbc9e98b983de15f56153013d35c1be470bcb66edf5a7bdafb8362af3",
+    "../vmui-private-theming/useTheme.cjs": "a510ba26fed37a3b028a2ebbaf51e3c9daf8e4e5a0c3f47b785f00891832da65",
+    "../vmui-private-theming/useTheme.mjs": "6f8bc2ed0d6a8d2323f10e23d26b25256b284bf6a570cc058fb6693e34032ded",
+    "../vmui-styled-engine/GlobalStyles.cjs": "f2389d1af2f9e02a49087610c78f4c011254a4f191edaa9da0a43209131649d2",
+    "../vmui-styled-engine/GlobalStyles.mjs": "921cebc2abc1ebd5bc7a17366f1f01cbab72d6ab5bf37a73efcd41ed748e8c51",
+    "../vmui-styled-engine/StyledEngineProvider.cjs": "bfead354f2d307038620421321a5e653f24a4b83f9217207eaa1eef174b0e90c",
+    "../vmui-styled-engine/StyledEngineProvider.mjs": "9934fbd41b842081688ecc1b311934709ec0d8eecd814df97acfd55eda3335cb",
+    "../vmui-styled-engine/index.cjs": "3883e5d988d7fb95c8f7b9e1a68f0722503d8f85944f4a0b21cd33010ac13a6b",
+    "../vmui-styled-engine/index.mjs": "5b0497c8c2e0f5873d6aef91b66a8a9497950c5c384788ac4b5ad16f5cbcc2f9",
+    "../vmui-system/Box.cjs": "b64b6a88be592977443812e88f8ffcd322f91b8be67e67ce9498431e4759442b",
+    "../vmui-system/Box.mjs": "21321a7ad67cb60e3ecebfa2a745229f7dc5e157a2ea9f849d17ec92b95f8114",
+    "../vmui-system/Container.cjs": "e5b343d9d6d100b338a0e56f92ecab49d95c474e2cbbe14fb75ac3f1b9a095b7",
+    "../vmui-system/Container.mjs": "27b64fcd5ebaff98ed97105da2a9c501ee43370a5955bb3ade6e97c86640c9b4",
+    "../vmui-system/DefaultPropsProvider.cjs": "e32e451936582001bdba5f84b954357cdf8c725b9dab2a00ff7256be07b7214b",
+    "../vmui-system/DefaultPropsProvider.mjs": "f8d343ffa887ae7d66aa9e71998d955acbaacffe254eb87183d551fa57ee9544",
+    "../vmui-system/GlobalStyles.cjs": "204f09c030c315a082c087578fecb9ac35e3f3a594ecb85969d6fca0f9c02c11",
+    "../vmui-system/GlobalStyles.mjs": "59da1b6d2e56c6134f749ecabad4d1df79ce76e30888dc529bac180970004b33",
+    "../vmui-system/Grid.cjs": "4ca2fca568728b0dfc4d5d9e9917c996369d9f14a445fa0359ad5c3ca7b0f996",
+    "../vmui-system/Grid.mjs": "5ebd81226ce7cdb73e7aaeb4b11f5995789584f2c43b63ba0373826508a2f558",
+    "../vmui-system/InitColorSchemeScript.cjs": "f5d958140169b55a2cc741bc05164619ac9c142ab1167d94bb68df7a182a9f4a",
+    "../vmui-system/InitColorSchemeScript.mjs": "b4d810d5aaf45a3dcddeb5c0fb1f31c810a0bf7bbcc8530ee99732ea13ac67ea",
+    "../vmui-system/RtlProvider.cjs": "5bb89c64918fab9e47c008742bca8cb7f32d024277575b7647a2eb2cf2db05f2",
+    "../vmui-system/RtlProvider.mjs": "5af7be25286fddf304077e8f31c265ded0cd8a5cd7bc732cac756e107a7d1e9d",
+    "../vmui-system/Stack.cjs": "ba257160041d5c6b9a37c8fb51a3972820ce4481265953280570f4e26acb5c68",
+    "../vmui-system/Stack.mjs": "35633dc42f472ba32506901028b2bd0182602eb27b293c914b297eea3afa7dec",
+    "../vmui-system/ThemeProvider.cjs": "6be5417b9b8d26bb43b00eaad127197b25f2e68deae73573110a98ad55507053",
+    "../vmui-system/ThemeProvider.mjs": "d8d3add5be8e4d3aa2ad4af70acbf35ace684075643b5ca9bf04e4019263ee3f",
+    "../vmui-system/borders.cjs": "7c0f94d8efd492acba687d8df77e8ad0f4e45ef2518360f90cd09ebeda99c474",
+    "../vmui-system/borders.mjs": "298e2c19c85eb7157fdfbb860ab222e7e8f936991922b4756b79e9db8f13dc9e",
+    "../vmui-system/breakpoints.cjs": "707735fe09f5f263761d65fadc74afcb6d5bb3dcba5db4c72d692560e14c2a0f",
+    "../vmui-system/breakpoints.mjs": "cb3dba12099937a43e952a7ef50dbf763cc23aecf6302c182fff7cd9614b60ba",
+    "../vmui-system/colorManipulator.cjs": "8dca5753c5c2940196673eaace10e3b8e64f0e497863dc2cd8b2d7ff82a3d094",
+    "../vmui-system/colorManipulator.mjs": "4139f8352993b5369060bb719b40ed03ce2c5ce68e9edadc01e68546551962b6",
+    "../vmui-system/colors.cjs": "56cf0820050ee5d563bbaa983f6114ef26bb443092f9a22348a1fd1371db7407",
+    "../vmui-system/compose.cjs": "5309ab8adfffff6caed4bbe5fbcc154d127cf1aaf8881f8415f84a99efcedf3d",
+    "../vmui-system/compose.mjs": "da201a17433a28b3f795701f7d32b849f5e584258c86016ab78f915be3c8be71",
+    "../vmui-system/createBox.cjs": "48f5d57f508c1194ba00cc8ba6071c7ee8eb51511fdfb9f0b6a817b4fd54fd9e",
+    "../vmui-system/createBox.mjs": "d51887118f2ede63c55a111181217d6fb0b619e882ea94f546abca590ca4f656",
+    "../vmui-system/createBreakpoints.cjs": "f103076893d26bba729bcdb358ce8410e5abe9d4c1667ccb2caf36259444558c",
+    "../vmui-system/createBreakpoints.mjs": "f62adabc5215b2c93a3b870aa931b15bcbbf6d8f0ba9da0b801c954105b3d4b6",
+    "../vmui-system/createStyled.cjs": "35643ad0bca0719804a11e44b105186ad6e70de113f7dbc8cd00534b80b26ccc",
+    "../vmui-system/createStyled.mjs": "e14a03be4c660cd96d68f89a4a48c4c0663282801a7c4bf30b0fea88d8c50c06",
+    "../vmui-system/createTheme.cjs": "ef66b46f1765583e1f1a78db274a9c5c734a817bc51a9c268905a06bfdca4b00",
+    "../vmui-system/createTheme.mjs": "3f9b31a383461582d8aa7f51155ff1874015f5370c72a75cae0b8d06f845de25",
+    "../vmui-system/cssContainerQueries.cjs": "43cdac47291af1a1b4287e7ca68c689466ee479821c0808bf17634ae78e4c141",
+    "../vmui-system/cssContainerQueries.mjs": "ecaa8cc0793ea045cb67902d6d73e3d597dcf5adc662b8cbe0665313112bd6ff",
+    "../vmui-system/cssGrid.cjs": "dd8a548c547b6ab4f9c24b56217207bd7a65139c540caef3e0b0daff07a6a0b9",
+    "../vmui-system/cssGrid.mjs": "6a9220dfd8f26ea0e57132266e752f7bdee4067341f8192646084af73901ce01",
+    "../vmui-system/cssVars.cjs": "76f379d9cb127f254ebd9ce1f089b44a3727bc3e66817295cc4116dce875f1c6",
+    "../vmui-system/cssVars.mjs": "ad9f227cbb7638ab24556fe0709c99c2e8e525f976819753f87a8896b68463be",
+    "../vmui-system/display.cjs": "640ba4c444d713d74536fd252b268b6ab5e12a2db8d9a81d19c1c078db084aac",
+    "../vmui-system/display.mjs": "63325f27891e1dd087b5fbdb4671ad04465be3ad04b34eb5a478e9634a42cb5e",
+    "../vmui-system/flexbox.cjs": "fdc54462f82546497b54f16b07360450a7d4daf4ab75788d3e3cf21f40df2a9d",
+    "../vmui-system/flexbox.mjs": "42b9ea2bdcf803400c81358b672d7e696a9688caf7e08273031e2a6154179805",
+    "../vmui-system/index.cjs": "815536114e6591be4bc3545eec525a3843cf3c315bd3b15a2ba44af29a21f366",
+    "../vmui-system/index.mjs": "2ff8e95b96c9987c982c6f69484037cecd1db7abbc33902c0413f68c227e5ada",
+    "../vmui-system/layout.cjs": "1e834fb9a67911b39def8f3eca37235fb790407a3bf534dbbb751ae6d54ec170",
+    "../vmui-system/palette.cjs": "93aaa58e6747f0a63f7f51884b320566c6e1f136c678e4e0328ab2f7f9ace400",
+    "../vmui-system/palette.mjs": "1c4bdeb92399b1382dff078d9bcfcdb1cfe93eb21df9adb7500647e9b855d00a",
+    "../vmui-system/positions.cjs": "fbf0e2493aab65226a197ffa87f485b92524ad62e34f812614857e1b84cdc4a8",
+    "../vmui-system/positions.mjs": "166f56d449726f55d5c6418c71fabf4e93801aea7220df1832f0363e9b94dc53",
+    "../vmui-system/react.cjs": "10a90e43f3bd281ea0c99259a56c7e398eec35d85ee111478689af1238b48f16",
+    "../vmui-system/shadows.cjs": "e2b3ee2ba7c465b059a99e0257115d0e632e1b313d98ddd8db31c2dead4df177",
+    "../vmui-system/shadows.mjs": "3f5d98175756fc768897b4f66820c2a251118b805e4c99778aa3a7b868481116",
+    "../vmui-system/sizing.cjs": "6272f9251dfadb216aac6987c36770b3622d72c46ed50b81b52aa1bff4947b94",
+    "../vmui-system/sizing.mjs": "75a1437c227788501e8d2ae9d34705154e90d961223eed6eee05a5aa99376c1b",
+    "../vmui-system/spacing.cjs": "df5bd7265242e184046ece61efcbce52b001cf479937aa86a5b9a9a5e4caef0f",
+    "../vmui-system/spacing.mjs": "06ba3be7ad24d588d91da1cddd523068d9613cfea7473a6b78554b410c487949",
+    "../vmui-system/style.cjs": "de7dde015cae1a05cd0beffe1df9c77ec5b63dda22bef976dccae76f5506e446",
+    "../vmui-system/style.mjs": "f9320a99cdfeec7573f6d257ec5693b0914d0b56ed9987ce36174de95c9b6d33",
+    "../vmui-system/styleFunctionSx.cjs": "21844aad8bfe3166f6a0ef449972fc95c03126446f1b4f23e4cbd44b250bcf1a",
+    "../vmui-system/styleFunctionSx.mjs": "8cdf559dcdb7d91d7dad1e192b1a6df1027aa5ec5b8d2ca8e5be55a310d30de2",
+    "../vmui-system/styled.cjs": "634c4b206aa5fc01f953edad02c3a771f30742514d0839cca499abc092dab4b5",
+    "../vmui-system/styled.mjs": "73d39c4637e3b9e3739121efb0f0f4be98918190c29f543ca16b6b44cafa9d40",
+    "../vmui-system/sx.cjs": "f41de5dfa31e16e1121e75a46765b07496b4423e5981ebb5c9dbafac3acf457c",
+    "../vmui-system/theme.cjs": "8d3a6dea5a341c0dbe98690abfa0dd70f54201b5b3636fe45557245de1e1be7e",
+    "../vmui-system/typography.cjs": "987ea252bdab27a30c20b837387a8aab7f71fcb302ed9efe9d25259995c5194f",
+    "../vmui-system/typography.mjs": "6be7933e862afa30b0ea0ed67a7c9eee76ee75fddac2cec6b98e1d010f7e749d",
+    "../vmui-system/useMediaQuery.cjs": "42a285cd890c3f206a15c171d5b65ae8540cc43ecd81df8631c6e104a941f234",
+    "../vmui-system/useMediaQuery.mjs": "3d0c7b297574f8922479c9440b76afba587f802e99ff30c94d6c2be12c06a17d",
+    "../vmui-system/useTheme.cjs": "975e4bd16a686d713f9ce92d1402ba2c9adc5864869e3643d3119dd53bf69c99",
+    "../vmui-system/useTheme.mjs": "e25cae231af64953959efc125dbfcdc96962221e1f3631da0cb632fa922ed645",
+    "../vmui-system/useThemeProps.cjs": "a63dbc2cc4d9073b8ad97998b9d70e4507c47694c1cdabedd1cf1b8e7dcbd4c4",
+    "../vmui-system/useThemeProps.mjs": "1b8b8a33d7e3cce93633c2fbef1a8141633d7bca47aff1e834e5817b30bb1973",
+    "../vmui-system/useThemeWithoutDefault.cjs": "96b8e6465fb4473f30875e7e25e99bdf138b4637c1dd09b6d2cb48d13ce23dac",
+    "../vmui-system/useThemeWithoutDefault.mjs": "26ce4314b640064fd50d74109b653cb08b1c562bfa2d423a1b22d650a2fb6b71",
+    "../vmui-system/variables.cjs": "6eb072abb5fe13f347097ed98a3086d29605c817a226b70cef005f0826e5941f",
+    "../vmui-utils/ClassNameGenerator.cjs": "6213feb83273586f7de134f72c421782ffa48819586511baf9d1dc6fc36f7f20",
+    "../vmui-utils/ClassNameGenerator.mjs": "6b66d354f6624e6aec303690dd064d2149f94f18ec52bab5187b3c19c224eca5",
+    "../vmui-utils/HTMLElementType.cjs": "ae07ceb3ea431b1e2d0fda4c1bff885e7bd7d4c69244b661dc46e32a99a54b56",
+    "../vmui-utils/HTMLElementType.mjs": "35b1f8f9751f75a8e6d6703412ef13f45b607fb30108c9b71c5bf65eaf0b2a86",
+    "../vmui-utils/appendOwnerState.cjs": "8a8203ab3e0f9008cb7148631f32c754adbbef0be3ff752ee11893eea63df253",
+    "../vmui-utils/appendOwnerState.mjs": "024d6e38a09777eafab126e99df13bb5933ac5b7299c3b1dd8a4e00ce37ba9bb",
+    "../vmui-utils/capitalize.cjs": "466ace0ba91f0eb59598533df1bf92203904e75ce9d24ed73d447d4bd2f6b683",
+    "../vmui-utils/capitalize.mjs": "2e692f2ba8c915e8a5fbebedb2a4dd6f8afe19cbfecf16cb2acb366f4f6bda5f",
+    "../vmui-utils/chainPropTypes.cjs": "64738c503dc44f8f3538d7503ceb60041c88004b587d72c77eff07da7f153d9b",
+    "../vmui-utils/chainPropTypes.mjs": "af29dc439c14f6941b8f1740bb877635d63019990652c2e760a0f93fcd055792",
+    "../vmui-utils/clamp.cjs": "4ea234c98488fe2b1f1a668b7ce56c3fcfb6b0d94532d94bb2ec8aaec093c5e8",
+    "../vmui-utils/clamp.mjs": "d1588edd0c58ed7ab6c3863dc4043aee60b16d0ecba0297847eba23afa6a3499",
+    "../vmui-utils/composeClasses.cjs": "c72db2f2d0199bfb167898f06e6c10c994f31a0956751ec5fbc8a8d4840d824f",
+    "../vmui-utils/composeClasses.mjs": "57bae69bf2452e63eb458aae908e79f066ebed3661b70a4995fd08b9b8efc49f",
+    "../vmui-utils/contains.cjs": "a978b047810fe70d07612d47e8c4da1c515a4f02fc2be0689afd5169eec8e207",
+    "../vmui-utils/contains.mjs": "2f0f88211bb69776a090c7079ecf21671d51d99c78f2686fe4b342ec6c7f4898",
+    "../vmui-utils/createChainedFunction.cjs": "b6c57fef271d0f5aa19c198c5b41c03f407da749ea5271b42684a9e1e6a5e36a",
+    "../vmui-utils/createChainedFunction.mjs": "45cfae0309fa596f9032c7b83a39e6f29c4b6557cfe26d46cdb6915cdbf6960c",
+    "../vmui-utils/debounce.cjs": "3852b1cbbc7bbdf38e86cffd14f6a5ae27eb29c2d6d9f46e06fd775be04338f1",
+    "../vmui-utils/debounce.mjs": "26756d5d85c3bbea438493a450065ce18c8d8eec741bf546a3d107bdeb35f33e",
+    "../vmui-utils/deepmerge.cjs": "eca6c9c4308d7254fc21112281f966a4b27258b65dc837960903712b2585bb95",
+    "../vmui-utils/deepmerge.mjs": "8d68c51ee253afcd699872a9cb24c33484291d4512e9858d5c0c81b166bbe74a",
+    "../vmui-utils/deprecatedPropType.cjs": "167e8146d593467fb628e4cbe0348527046498a892866f5ce52b26aa63fc9fe3",
+    "../vmui-utils/deprecatedPropType.mjs": "bf695ea438eabe1b79325ebe3b667aae7920e6236c92c86d1586ff7c0efa8471",
+    "../vmui-utils/elementAcceptingRef.cjs": "c3421533a636766a14fb32441d7507e8506e498e0425436433cb22a67074d62e",
+    "../vmui-utils/elementAcceptingRef.mjs": "cb11878271169ddf73f4930a1dd249bbb94fcd3bdd1110c2149ebcfe8a104f52",
+    "../vmui-utils/elementTypeAcceptingRef.cjs": "a953e733808c3739d29c32aea176434d5e28cc9b77f6c5ab4b14a52903c821dc",
+    "../vmui-utils/elementTypeAcceptingRef.mjs": "5df95de2599172dbad31500c360950dd646ef1e92dfe1e0c55d9b1e094441b89",
+    "../vmui-utils/exactProp.cjs": "2bcb71df8c0b0ca80b54f7dfba8799ddf1dd7e03833bbacee7f9bdcfc732e94d",
+    "../vmui-utils/exactProp.mjs": "d983c6d76089d649c0b77aa7b7f21b2381168f88e87cb287983ae735c44dcffd",
+    "../vmui-utils/extractEventHandlers.cjs": "78953d2b46eb154b71204565e5fab23da43f22a70d875fd42643c3ef971efc49",
+    "../vmui-utils/extractEventHandlers.mjs": "fadb22d0e37dbc35d78087a25d208e173fdf5cb0b8079b0f21d57c7c63eced31",
+    "../vmui-utils/fastDeepAssign.cjs": "1c7f60e965c16ae9261d2ec53511094ebd2c0ad05d640f39d4a063860cfe8d68",
+    "../vmui-utils/fastDeepAssign.mjs": "c00d95130cb7edc275b9c683f6397ec6b125bace48704c2980ed76d0497eb969",
+    "../vmui-utils/fastObjectShallowCompare.cjs": "3d207409294c330d9da814abd02982724ea40d5b8f83cb877ddb98dc021eed5b",
+    "../vmui-utils/fastObjectShallowCompare.mjs": "462c19ca96f1bd7651abe9325ef2f99afd6bded597b4bb45f0f909bf6a55a292",
+    "../vmui-utils/formatMuiErrorMessage.cjs": "723a68f4343f18b51cd81c0b0e8da94b95b4a531663c8e09a8ce9745c2ce6fac",
+    "../vmui-utils/formatMuiErrorMessage.mjs": "8204857f95fa3243d72503e31963b8a53f9be5f1224cf0c1cea5e3e1f62a090c",
+    "../vmui-utils/generateUtilityClass.cjs": "865be2049fbb4ef4ed4c1bd0d1a2b7f0af898a128f5e5b883d191a9811d9105b",
+    "../vmui-utils/generateUtilityClass.mjs": "2555c0761da1d35820df28989dbd2fab9c9f23165d318368de6d6a21ce0a5759",
+    "../vmui-utils/generateUtilityClasses.cjs": "2803d15c8920eb6b06bebd7fbef6f3881ed394644244c1bb893ddf1e7d132cee",
+    "../vmui-utils/generateUtilityClasses.mjs": "db8a623b630b813b748fd28847eb700f8c271ef262efe780e32d4c37a8b571d4",
+    "../vmui-utils/getActiveElement.cjs": "f9811ccea626e9c4bec30750f457102bb216ffdebf9f09e010b1b80ea9bc1255",
+    "../vmui-utils/getActiveElement.mjs": "9a0ae08abbab81f40d4f3b73cd53cf1f5e84b938f8f4c936d2cbdb8cb394a87b",
+    "../vmui-utils/getDisplayName.cjs": "4b7bf675dac24e974a549a4ad7399c9a0afa33fd1d1d6d267bc455dd6135bd05",
+    "../vmui-utils/getDisplayName.mjs": "c67ce4c3aacef24079ca3cbce7ea6723825e5b5389d0e71055aa4c19ef3548c8",
+    "../vmui-utils/getEventTarget.cjs": "04576c4987304ebd227e45aa400540b2029dd2fc8b0973a628a2f8504e2b4bfa",
+    "../vmui-utils/getEventTarget.mjs": "dafa6f09dc81512dfac498b71c5555d3011f2bca308a16de02d20fae8cb7fc16",
+    "../vmui-utils/getReactElementRef.cjs": "65da43940aeb639cde709fbd6a50d19fee97344a6a815b91cf3fbc444bb4b675",
+    "../vmui-utils/getReactElementRef.mjs": "a89736dbacb73ba8222d50db8f04b3fae63909e74060ece95b060921929c15f3",
+    "../vmui-utils/getReactNodeRef.cjs": "f03ceec5ab58570e197a0936a5b2edf91fda6cd9fe0b55eef166811c13c0d195",
+    "../vmui-utils/getReactNodeRef.mjs": "a78888e7ad099bc748916ed352f793e70d21753bba42b3cf1f3f963136f195d2",
+    "../vmui-utils/getScrollbarSize.cjs": "305a54493f23f3c4c012e9543ccf6ed7ccfb1260646b783f0155bb663d637554",
+    "../vmui-utils/getScrollbarSize.mjs": "8d1056ff3f76efdf899db221ed316210af1ceeb2bc87a3d365799759e13da474",
+    "../vmui-utils/getValidReactChildren.cjs": "56a8cdfcbd4f092cf90df912fa1bf1f8b63a7efd41df51e51d53cc6c397eb21d",
+    "../vmui-utils/getValidReactChildren.mjs": "61735aa08c9cc0b47a08ee7913a9f86fc17c85422e5a5802f5162a76c5383a68",
+    "../vmui-utils/index.cjs": "f22a51b57dee4397510ff87dcf78fc1eb04efecf593199db40f73c949e724b4e",
+    "../vmui-utils/index.mjs": "77990978ca4ed32ebd07630d3c319a066bc94fc382ac8fa767aa3f3a36d8b1cd",
+    "../vmui-utils/integerPropType.cjs": "e5035039ece3f358faadbb3e83425e6dae8477ee78f56b8f30ce89d651f57888",
+    "../vmui-utils/integerPropType.mjs": "6d9d4e48215e61ba0079c22cb9ee2377702cb0e6bbf9da6ee4109712f637aec9",
+    "../vmui-utils/isEventHandler.cjs": "146211ece8a4e9e441c420367eee0982fcbd007036b88acf36d07755caed9edb",
+    "../vmui-utils/isEventHandler.mjs": "a6189e34d88e7ef1fc813d0829727dd7ee7d49791500c288a347b722a87adf6c",
+    "../vmui-utils/isFocusVisible.cjs": "b776e3144ef25e863c6b095a6c7b7d4302fed4fbd8e6348d4ef2d203b9871590",
+    "../vmui-utils/isFocusVisible.mjs": "782be519cca00feabeedbd98d3c6be7e26671db3ae1001f2c03ee1d15951fa4e",
+    "../vmui-utils/isHostComponent.cjs": "769315ceb1ee854e06d43beba185c5b354c5ce095bf7fe0e7e3cb312416df466",
+    "../vmui-utils/isHostComponent.mjs": "25342e31eefd28ff2cda6d93093e8c438b8e6748e4de9479fb2597a2075af91b",
+    "../vmui-utils/isMuiElement.cjs": "7fa1fe9310462136f212b1d117440e1cb0742c23c404f9a7e75b1f64978a21e1",
+    "../vmui-utils/isMuiElement.mjs": "a4b2dcc904d61e2a494297a2e912c431423201f065cb8c1f1c7370ad846f9ca6",
+    "../vmui-utils/isObjectEmpty.cjs": "62fd3fc5eaba83aeb31631222c615a963887a6fb4f415bf8ac07c2d3ffa240df",
+    "../vmui-utils/isObjectEmpty.mjs": "003c055a84dfb20e387bc60d3c7f613153a43d4b2811ac159ad0e6e84caf07fa",
+    "../vmui-utils/mergeSlotProps.cjs": "a8daacba191afee6604a728f790af6ac8df4b8a7e0614b6c255c145b726f86f9",
+    "../vmui-utils/mergeSlotProps.mjs": "1266f954d524754a8986c43959a4d97f2eea8c17678c9cdb8b01f9f5d481f413",
+    "../vmui-utils/omitEventHandlers.cjs": "17bf9548b222c01ab58cc32a4197c6937fa45b5b5a2549104c8ee73ad8536280",
+    "../vmui-utils/omitEventHandlers.mjs": "1419a8093c5ca368ef2b8855b28d40a0e4717c4e8afd77fd667eb56f8194b7e6",
+    "../vmui-utils/ownerDocument.cjs": "e79c2f3cb745e8353896b562033f543f90e686223f31feab36c1c912106a6539",
+    "../vmui-utils/ownerDocument.mjs": "f307880079a0cc4f955057ac984d3d9d6b49903341df5f33590813ac23f172c2",
+    "../vmui-utils/ownerWindow.cjs": "4df70d53bea011e95887cb9578134f702bcac248f0c633e9903d8eef2b0d7c1d",
+    "../vmui-utils/ownerWindow.mjs": "4451fb7cf84a6726ce56b0840e757e19b33df8a2364ca08e6e54fb7a96681dbc",
+    "../vmui-utils/ponyfillGlobal.cjs": "3a6768da253fb5a95c27f26fa5183d718d57c4198417e4d7c7aa2cc381aff353",
+    "../vmui-utils/ponyfillGlobal.mjs": "79630c23987e5e0d73d901650d6c4c047866550943a3359ae7b9fcd799b13984",
+    "../vmui-utils/refType.cjs": "26ff33f2aa9e70f9d433a64b20fef79923584526f6495c0c4215581823de5981",
+    "../vmui-utils/refType.mjs": "e21241aac8108cb860d1ee4384493248d6516dc40d83bb999624ffcd5be8643a",
+    "../vmui-utils/requirePropFactory.cjs": "98cc50e167116ea8829229cd94ac09bd894d7eace9b349b780edd1a8ffac2b5d",
+    "../vmui-utils/requirePropFactory.mjs": "85b2f0d2a5a5066fb1881d586252e3f20469d6855b8974308f35650defd535f4",
+    "../vmui-utils/resolveComponentProps.cjs": "2eed5ced5371e33378eadd57661f95639a901d84c4198c11bcb8253ef457b6c9",
+    "../vmui-utils/resolveComponentProps.mjs": "f9cb286b32275b46665c38d82bb7edde27cc2694a9028889f9bdae1752a603ea",
+    "../vmui-utils/resolveProps.cjs": "1f099674e7c14401cb2913fe9327ce27e160c19f1929330f0598b07850fdc2a6",
+    "../vmui-utils/resolveProps.mjs": "fc3be909aa068e1342e410f3053275ad6683b1a596da83e45157972a2d43653b",
+    "../vmui-utils/setRef.cjs": "68a6dfb4a9daffe2e8824b28f013956130cfcdf640ad1c03d5c3435a70ee9ba5",
+    "../vmui-utils/setRef.mjs": "0a04ecc2557457d45067549d045357aecf36a7c8a06520d3819e64e56f3df0ee",
+    "../vmui-utils/types.cjs": "8222b8169ee86f25cdccd84d340340060ae3f0cff55e2ea9d344d7c332733b71",
+    "../vmui-utils/types.mjs": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+    "../vmui-utils/unsupportedProp.cjs": "a3e57a2c7488380da74053d727fc5ad792fcf8c2d5eea6c3b2c840ba2062577b",
+    "../vmui-utils/unsupportedProp.mjs": "a8e07cade9a92be7828a165340e6f14e6d1305333cbd47f6ff3ee1a42835c280",
+    "../vmui-utils/useControlled.cjs": "45c96219323d0eb7d35598fb6fccf5a46fd27572fd1f1c18845786249cf5f903",
+    "../vmui-utils/useControlled.mjs": "d72870d1da14f4887927b023ff7cfd73cc80f458a9ee68b6d1186cb11e94ded2",
+    "../vmui-utils/useEnhancedEffect.cjs": "88b1545639ad5c3830ab0d12c43c9c7a44997f96c8c4cd59b8f9e3c33a0b6a22",
+    "../vmui-utils/useEnhancedEffect.mjs": "e72913a283a73c4e9d40b72992e67c110788399f885926b9d4855206bbcf20ed",
+    "../vmui-utils/useEventCallback.cjs": "7754ef7e6385a1f9353c4220d54b687ad3f28491bb97c8de6baf9ac3a4cc5f9b",
+    "../vmui-utils/useEventCallback.mjs": "ad5c9394f901b04968c3449e3afdc18b31829b4f7fbed5ff2b5f1304ff211666",
+    "../vmui-utils/useForcedRerendering.cjs": "8b64edc8e001008ebb452bf0d63ad06eb34c835905a389dd7e0caf75088200fb",
+    "../vmui-utils/useForcedRerendering.mjs": "51f98f5cc2d671a7aa41133b57eb9761f3bc74171b5ae2698d748e8cd393835a",
+    "../vmui-utils/useForkRef.cjs": "b5c5e91a25c17e0789c9c3b2b390414386c2e6f3b684067bae0f5542008121e8",
+    "../vmui-utils/useForkRef.mjs": "2cbbdefebc9ab2fbd5f88a42ae87cfa552e1704dcf01fc226741cba544996461",
+    "../vmui-utils/useId.cjs": "cc06466f2b4ca78a4150ffd480d91950e42e453eeecb56e3a190ac84ddd0e63a",
+    "../vmui-utils/useId.mjs": "205ce4c2fcdc41f67f07237e5943f4836836982f5da02c166e50765fdd9580cb",
+    "../vmui-utils/useIsFocusVisible.cjs": "dea7b9e2629de0cf357a31ee5b4af5cc574dfe0f0274d4248fa841aeb23ec2fa",
+    "../vmui-utils/useIsFocusVisible.mjs": "9754952abc66c23012117b1b4c124513738c71884aab937b2724868bad278a99",
+    "../vmui-utils/useLazyRef.cjs": "ab90b2aa3535b2f8c7c1fade50dee0219dcb7b2f3b23e6682c9008414589f5ba",
+    "../vmui-utils/useLazyRef.mjs": "414b1670eb2a2019e3be75ec9cd3f3e048fbfeafed9e78c41aabea7604740d4e",
+    "../vmui-utils/useOnMount.cjs": "efeaffaa9193f472e3b706b347cacfc111401b2e84c62a5e6a7d89db21f08407",
+    "../vmui-utils/useOnMount.mjs": "b4433238ca80b96d0c8795b533f6bb5b203c1a5b246f45a91db369332cd2d4c2",
+    "../vmui-utils/usePreviousProps.cjs": "48fafcaa6402a4a9457e886fdd13854e758e52c6f3cb1ae10f4cf808708502d7",
+    "../vmui-utils/usePreviousProps.mjs": "9373442f3040fdc57a80ff1203a9516fe230884df562dbdb3ab135dbe615baf6",
+    "../vmui-utils/useRovingTabIndex.cjs": "d776ecd08c45a1bf6ea3f4f07b1bbf444cd390548a0812caa3cca481091ecc08",
+    "../vmui-utils/useRovingTabIndex.mjs": "16ccd5cb31651a22ac18b027df2d50e756bdd52bb786108453fff57cb80c27a4",
+    "../vmui-utils/useSlotProps.cjs": "eb4c13e7a9f4c4548d4036948f56188eb95fa18d022e4f20ebd92490fe94b743",
+    "../vmui-utils/useSlotProps.mjs": "6cf10363d7a82bd2a8fd485bb78e820de20beeeca73564c8facf35a4bcc27481",
+    "../vmui-utils/useTimeout.cjs": "12d8bf715f9204bc7277f8d38ccab77d04d81e3346ee95974e8cf1c928b5815a",
+    "../vmui-utils/useTimeout.mjs": "e13b8903020e575d7276488482d9f5daf79d260c82e54f6e588de1ab9dd0adeb",
+    "../vmui-utils/useValueAsRef.cjs": "e456e0847118fcf87786e656b9b3c94c6372317be9a03e19eb27b24e7a9e86d2",
+    "../vmui-utils/useValueAsRef.mjs": "ee10057829e2a45b3c3ffc93b3d5926379940c20d2eccab1020f3ed9cc8aefa1",
+    "../vmui-utils/visuallyHidden.cjs": "42f063bac5cbde8cc992e6bcccbc58235d3657ee56b2e1fa59257213d460a979",
+    "../vmui-utils/visuallyHidden.mjs": "cea799abdd7a78ddacbbb5a892f2516aa1e39f42c460f8083f9dbf40f729a0af",
+    "PROVENANCE.json": "bd04ee447091641444b850ae3e24f6f02983a1e390597efffd311b613e877718",
+    "bench/input-decorations.cjs": "9fc7a81361c394abe37424d5cf9d435a666423b84e935c122d32a01f899f5a9a",
+    "buttons.cjs": "991a937cdb131f7e570bf8513901fb3423b2a2b58aad3096fba4cb6e0ddf25c6",
+    "forms.cjs": "31b0280783062a13a15a629c6600a052c6eb8196fa413278087f035f85387088",
+    "index.cjs": "c62e86f68a4cdb9cf8605d42b74bd9bceb436441a946c930856f24b61cbdd167",
+    "input-base.cjs": "6ae03af38c5523ef9c1ed2ee4085410374c402be2016cf074de747d13e7c15ac",
+    "input-decorations.cjs": "aa69712a3fe8089671258d3560d5b9e956a3ca00dba2049e243754fa22456f76",
+    "input-variants.cjs": "788afdf00b15a9adf5e8e9c1645c586e1aae93086ac7178abfa74446c0c42f8c",
+    "package.json": "3df2e87a882534c4736498aa17469f19dc61f33c999ac903761bd60bb4e93b89",
+    "surfaces.cjs": "76dba2de164f93a2f31d9f08d7a4353ff4ced7f68814d31341cb1851c1deddb0",
+    "text.cjs": "344b9dc7bf08a46b8241932f051677704870e2ab48804afdd8a9da6fffae1cbf",
+    "theme.cjs": "c8f10a217705c2e142da705773511879c7a3b3cc617cab08616813cdb57286d7"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 46331,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 standard SSR",
+            "iterations": 23,
+            "samples": [
+              497538.04347826104,
+              437918.47826086835,
+              477960.173913044,
+              478271.7391304345,
+              430182.9565217388,
+              452829.6956521731,
+              489936.6086956532,
+              466117.7826086957,
+              402309.78260869614,
+              495291.6521739128,
+              503836.95652173983,
+              411376.826086958
+            ]
+          },
+          {
+            "case": "Material9 outlined SSR",
+            "iterations": 15,
+            "samples": [
+              528713.8666666654,
+              571919.4666666681,
+              626288.866666664,
+              553677.7333333323,
+              587444.4666666704,
+              552061.1333333363,
+              671222.2666666624,
+              573652.7999999984,
+              567061.1333333303,
+              609755.6000000016,
+              578419.3999999996,
+              620522.1999999973
+            ]
+          },
+          {
+            "case": "Material9 multiline SSR",
+            "iterations": 14,
+            "samples": [
+              626386.9285714269,
+              793178.5714285654,
+              653494.0714285702,
+              739901.7857142749,
+              686660.7142857058,
+              758630.9285714411,
+              611062.5000000028,
+              637577.4285714247,
+              706345.2142857127,
+              664684.5714285681,
+              740699.428571442,
+              713071.4285714248
+            ]
+          },
+          {
+            "case": "Material9 form SSR",
+            "iterations": 9,
+            "samples": [
+              947421.2222222226,
+              1142981.4444444573,
+              907703.6666666723,
+              855157.3333333333,
+              1291490.6666666816,
+              991388.8888888777,
+              1120680.55555556,
+              1011874.999999994,
+              1298388.888888894,
+              923833.333333328,
+              1095884.3333333386,
+              998481.5555555744
+            ]
+          },
+          {
+            "case": "App7 standard SSR",
+            "iterations": 23,
+            "samples": [
+              462554.3478260901,
+              459496.3913043458,
+              507900.34782609006,
+              473092.39130434283,
+              464545.2608695688,
+              533067.0434782603,
+              475914.82608696306,
+              496110.5217391338,
+              457938.43478261057,
+              472804.3478260825,
+              524701.086956532,
+              442164.86956522363
+            ]
+          },
+          {
+            "case": "App7 outlined SSR",
+            "iterations": 16,
+            "samples": [
+              588992.1875000255,
+              685742.1875000114,
+              575359.375000005,
+              587440.1250000006,
+              612169.2499999938,
+              693528.6249999991,
+              572119.8125000058,
+              620976.5624999761,
+              667463.5624999894,
+              611424.4374999771,
+              612273.4374999936,
+              680171.874999985
+            ]
+          },
+          {
+            "case": "App7 multiline SSR",
+            "iterations": 13,
+            "samples": [
+              700679.5384615473,
+              635532.0769230624,
+              736362.1538461652,
+              630727.6153846103,
+              646237.1538461342,
+              624301.3076923139,
+              732750.0000000187,
+              643964.7692307937,
+              660538.4615384607,
+              758669.8461538547,
+              635326.9230769281,
+              655820.4615384617
+            ]
+          },
+          {
+            "case": "App7 form SSR",
+            "iterations": 10,
+            "samples": [
+              1403583.299999991,
+              1001195.9000000388,
+              930058.3000000188,
+              925595.9000000075,
+              1246870.799999988,
+              1049887.5000000226,
+              918325.0000000043,
+              988741.6999999915,
+              1090241.5999999903,
+              1077704.0999999826,
+              953245.8000000134,
+              1040362.499999992
+            ]
+          }
+        ],
+        "checksum": 1041847232
+      },
+      "vpm": {
+        "pid": 46332,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 standard SSR",
+            "iterations": 23,
+            "samples": [
+              452503.60869565414,
+              434407.6086956499,
+              415829.69565217564,
+              467731.91304347833,
+              468750,
+              443335.1739130434,
+              439476.4347826085,
+              473378.60869565356,
+              460661.2173913049,
+              468123.1739130419,
+              448307.99999999977,
+              433106.86956521956
+            ]
+          },
+          {
+            "case": "Material9 outlined SSR",
+            "iterations": 15,
+            "samples": [
+              575683.333333336,
+              476077.79999999976,
+              610033.3333333309,
+              565016.6666666641,
+              565061.1333333321,
+              539333.3333333355,
+              487669.3999999967,
+              581272.199999997,
+              572011.1333333307,
+              530124.9999999983,
+              510927.79999999795,
+              579844.4000000018
+            ]
+          },
+          {
+            "case": "Material9 multiline SSR",
+            "iterations": 14,
+            "samples": [
+              511214.28571428853,
+              585583.357142858,
+              587999.9999999979,
+              616556.5714285646,
+              510044.64285714284,
+              560714.2857142873,
+              538395.8571428594,
+              483175.5714285708,
+              614142.8571428541,
+              577916.6428571411,
+              549008.928571433,
+              508122.07142856944
+            ]
+          },
+          {
+            "case": "Material9 form SSR",
+            "iterations": 9,
+            "samples": [
+              849786.9999999794,
+              1013342.5555555581,
+              895282.3333333223,
+              1011222.2222222094,
+              1099337.9999999888,
+              908379.5555555602,
+              1087592.5555555518,
+              995092.666666652,
+              946902.7777777734,
+              1003745.4444444494,
+              889560.2222222452,
+              1003388.8888888719
+            ]
+          },
+          {
+            "case": "App7 standard SSR",
+            "iterations": 23,
+            "samples": [
+              431686.56521739333,
+              423396.73913043836,
+              457262.6521739059,
+              449527.173913042,
+              461094.2173913017,
+              464376.8260869504,
+              423715.5652173956,
+              480373.1739130438,
+              461682.95652173785,
+              442146.7391304324,
+              406601.4347826062,
+              435224.6521739092
+            ]
+          },
+          {
+            "case": "App7 outlined SSR",
+            "iterations": 16,
+            "samples": [
+              497812.4999999949,
+              553710.9375,
+              488432.25000000244,
+              542700.5000000093,
+              570445.3124999986,
+              546947.9374999935,
+              576627.5624999935,
+              498802.12499999744,
+              764476.5625000076,
+              592093.7500000036,
+              447377.56250000873,
+              579002.6249999868
+            ]
+          },
+          {
+            "case": "App7 multiline SSR",
+            "iterations": 13,
+            "samples": [
+              602701.9230769278,
+              533551.2307692275,
+              530830.076923079,
+              504426.23076924065,
+              570791.6153846083,
+              489740.3846153933,
+              559378.2307692331,
+              466657.076923079,
+              574307.6923076842,
+              516913.4615384442,
+              565336.5384615567,
+              525823.6923076975
+            ]
+          },
+          {
+            "case": "App7 form SSR",
+            "iterations": 10,
+            "samples": [
+              850570.9000000025,
+              1077899.9999999995,
+              970958.2999999837,
+              865870.8000000387,
+              1004862.5000000356,
+              872887.5000000244,
+              1002183.3999999672,
+              923979.2000000307,
+              1015054.199999986,
+              873933.2999999986,
+              944220.8000000392,
+              891258.3000000268
+            ]
+          }
+        ],
+        "checksum": 888485216
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 46361,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 standard SSR",
+            "iterations": 22,
+            "samples": [
+              489441.27272727137,
+              454823.86363636353,
+              403664.7727272732,
+              482405.31818182,
+              496571.9545454539,
+              455952.6363636363,
+              451929.9090909085,
+              404020.8636363616,
+              435407.1818181818,
+              472585.2272727257,
+              426126.9090909097,
+              450884.45454545284
+            ]
+          },
+          {
+            "case": "Material9 outlined SSR",
+            "iterations": 17,
+            "samples": [
+              564781.8823529446,
+              595080.8823529381,
+              559951.0000000023,
+              569639.7058823496,
+              546377.4705882343,
+              527661.7647058803,
+              545473.0588235313,
+              552627.4117647076,
+              536610.2941176423,
+              522580.8823529405,
+              562524.529411763,
+              548661.7647058786
+            ]
+          },
+          {
+            "case": "Material9 multiline SSR",
+            "iterations": 20,
+            "samples": [
+              606095.849999997,
+              525018.7499999981,
+              559952.0999999981,
+              526306.2499999932,
+              519749.99999999907,
+              515302.1000000081,
+              550137.5000000054,
+              518741.650000004,
+              546604.1999999902,
+              600935.4500000086,
+              585458.3500000103,
+              512049.99999999924
+            ]
+          },
+          {
+            "case": "Material9 form SSR",
+            "iterations": 11,
+            "samples": [
+              949204.5454545323,
+              1105628.81818183,
+              971272.7272727244,
+              1045647.7272727252,
+              880071.9090909091,
+              991712.1818181883,
+              1050651.4545454592,
+              1016068.1818181894,
+              891886.3636363726,
+              1055151.454545446,
+              1043356.090909087,
+              1011950.7272727332
+            ]
+          },
+          {
+            "case": "App7 standard SSR",
+            "iterations": 23,
+            "samples": [
+              487512.69565217546,
+              465923.9130434858,
+              440860.4782608623,
+              451193.8695652193,
+              443565.21739130426,
+              447445.6521739126,
+              441811.60869564576,
+              404137.6956521736,
+              447389.47826087254,
+              451184.7826086958,
+              479869.56521738286,
+              479929.34782608086
+            ]
+          },
+          {
+            "case": "App7 outlined SSR",
+            "iterations": 19,
+            "samples": [
+              539372.8421052784,
+              559462.684210518,
+              507940.7894736984,
+              550747.8421052503,
+              550559.2105263245,
+              493131.57894735737,
+              581929.7894736816,
+              540655.7368420947,
+              487554.8421052707,
+              580103.0526315691,
+              541028.4736842281,
+              489524.10526317183
+            ]
+          },
+          {
+            "case": "App7 multiline SSR",
+            "iterations": 18,
+            "samples": [
+              676101.8888888783,
+              475039.33333331987,
+              527921.2777777755,
+              546062.499999986,
+              513821.7777777703,
+              541777.7777777752,
+              546599.5555555563,
+              486354.16666666564,
+              560930.555555539,
+              544798.6111111175,
+              488488.44444442977,
+              553439.8333333381
+            ]
+          },
+          {
+            "case": "App7 form SSR",
+            "iterations": 11,
+            "samples": [
+              1035924.181818204,
+              880874.999999998,
+              1086666.6363636712,
+              935515.1818182011,
+              1183018.9090908954,
+              979685.6363636008,
+              853003.8181818534,
+              963136.3636363362,
+              862973.545454555,
+              1021284.0909090863,
+              906587.1818181883,
+              996087.1818181906
+            ]
+          }
+        ],
+        "checksum": 962167360
+      },
+      "upstream": {
+        "pid": 46362,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 standard SSR",
+            "iterations": 22,
+            "samples": [
+              412677.99999999965,
+              472335.2272727264,
+              515367.4090909083,
+              412613.6363636358,
+              463833.3181818191,
+              489200.77272727137,
+              444499.9999999998,
+              470570.09090909216,
+              457681.81818181893,
+              413846.5909090908,
+              489488.6363636369,
+              456791.6363636367
+            ]
+          },
+          {
+            "case": "Material9 outlined SSR",
+            "iterations": 17,
+            "samples": [
+              628392.1764705904,
+              569573.529411768,
+              638943.647058822,
+              542948.5294117673,
+              663093.1764705913,
+              571088.2352941219,
+              621436.2352941139,
+              556931.4117647015,
+              622480.4117647074,
+              552443.6470588212,
+              638034.2941176476,
+              601075.9411764719
+            ]
+          },
+          {
+            "case": "Material9 multiline SSR",
+            "iterations": 20,
+            "samples": [
+              800760.4000000015,
+              576818.7500000068,
+              685560.4500000027,
+              610858.3500000008,
+              659693.7499999967,
+              724916.6500000001,
+              611412.4999999944,
+              659285.449999993,
+              630116.7000000078,
+              777495.8500000025,
+              695899.9999999946,
+              590787.499999999
+            ]
+          },
+          {
+            "case": "Material9 form SSR",
+            "iterations": 11,
+            "samples": [
+              1239837.0909090978,
+              937037.9090909079,
+              1116405.3636363696,
+              1004196.9999999971,
+              1352030.272727275,
+              1093446.9090909096,
+              1201662.9090909108,
+              1011083.2727272571,
+              1081791.636363629,
+              1235617.4545454492,
+              1021640.181818198,
+              1108386.363636369
+            ]
+          },
+          {
+            "case": "App7 standard SSR",
+            "iterations": 23,
+            "samples": [
+              434766.3043478228,
+              559628.6521739211,
+              457907.6086956478,
+              444175.69565217965,
+              540601.4347826109,
+              460509.0434782576,
+              451740.9565217389,
+              521505.43478261045,
+              428139.4782608656,
+              543827.8695652195,
+              446465.565217384,
+              452327.9130434789
+            ]
+          },
+          {
+            "case": "App7 outlined SSR",
+            "iterations": 19,
+            "samples": [
+              573081.1052631715,
+              693546.0526315661,
+              603785.1052631739,
+              631184.2105263071,
+              699333.3157894611,
+              628089.9473684162,
+              705760.9473684255,
+              619688.6315789303,
+              640877.1578947285,
+              720366.210526328,
+              585026.3157894677,
+              640519.7368421077
+            ]
+          },
+          {
+            "case": "App7 multiline SSR",
+            "iterations": 18,
+            "samples": [
+              774814.777777768,
+              685465.2777777674,
+              749824.1111111131,
+              662449.055555549,
+              665173.6111111101,
+              784090.2777777754,
+              643557.8888888863,
+              775474.4999999983,
+              661226.8333333305,
+              705120.3333333231,
+              771127.3333333237,
+              727444.444444422
+            ]
+          },
+          {
+            "case": "App7 form SSR",
+            "iterations": 11,
+            "samples": [
+              1001257.5454545434,
+              969034.0909090661,
+              1225189.3636363423,
+              1016738.6363636152,
+              1103132.545454545,
+              1156284.0909090978,
+              1240212.090909071,
+              998530.2727272524,
+              1035810.6363636248,
+              1027193.1818181821,
+              1205738.6363636313,
+              1042625.0000000023
+            ]
+          }
+        ],
+        "checksum": 830358336
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 46380,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 standard SSR",
+            "iterations": 21,
+            "samples": [
+              458476.1904761898,
+              462359.0952380953,
+              417888.9047619047,
+              452345.238095239,
+              455398.8095238099,
+              460470.23809523764,
+              479408.7142857149,
+              421337.333333332,
+              490085.28571428516,
+              485906.7619047626,
+              408317.4285714276,
+              468198.38095238234
+            ]
+          },
+          {
+            "case": "Material9 outlined SSR",
+            "iterations": 16,
+            "samples": [
+              640630.1875000012,
+              546877.6250000005,
+              673835.9375000016,
+              579083.3124999964,
+              633406.249999993,
+              558789.0624999972,
+              692070.3125000002,
+              549539.0624999956,
+              604476.5624999969,
+              505934.8750000012,
+              589554.6874999979,
+              636046.8749999981
+            ]
+          },
+          {
+            "case": "Material9 multiline SSR",
+            "iterations": 16,
+            "samples": [
+              652330.7500000044,
+              681236.9999999959,
+              604617.1874999971,
+              662377.5625000121,
+              622468.7499999959,
+              692794.3124999985,
+              697510.4375000001,
+              615031.2500000013,
+              671762.9999999986,
+              687166.6875000102,
+              751682.2500000017,
+              657335.9374999938
+            ]
+          },
+          {
+            "case": "Material9 form SSR",
+            "iterations": 9,
+            "samples": [
+              1130801.0000000196,
+              1026587.9999999976,
+              1101819.4444444464,
+              954273.2222222034,
+              1021745.3333333298,
+              1465162.1111111126,
+              1146856.4444444636,
+              1180861.1111110977,
+              1022652.7777777695,
+              1232268.5555555683,
+              1009439.7777777682,
+              958907.3333333242
+            ]
+          },
+          {
+            "case": "App7 standard SSR",
+            "iterations": 22,
+            "samples": [
+              499541.68181818654,
+              469003.8181818181,
+              486706.4545454489,
+              530102.2727272767,
+              496126.90909091063,
+              470549.2727272775,
+              504481.0454545438,
+              494384.4545454526,
+              484159.0909090986,
+              496585.22727272403,
+              459052.99999999854,
+              495471.5909090985
+            ]
+          },
+          {
+            "case": "App7 outlined SSR",
+            "iterations": 16,
+            "samples": [
+              582468.7500000038,
+              613710.9375000023,
+              565393.1875000069,
+              641887.9999999944,
+              664223.9374999974,
+              563437.5000000205,
+              703210.937499989,
+              650341.1250000113,
+              580940.1249999837,
+              680544.3124999898,
+              637158.8750000114,
+              593015.625000021
+            ]
+          },
+          {
+            "case": "App7 multiline SSR",
+            "iterations": 15,
+            "samples": [
+              659311.0666666689,
+              682200.0000000116,
+              794552.7333333303,
+              715744.4666666682,
+              657630.5333333343,
+              748972.2666666845,
+              653161.066666659,
+              663538.8666666585,
+              806875.000000006,
+              683166.666666663,
+              677263.8666666656,
+              768533.3333333195
+            ]
+          },
+          {
+            "case": "App7 form SSR",
+            "iterations": 10,
+            "samples": [
+              989629.1999999903,
+              1102487.5000000065,
+              1061783.3999999675,
+              1280687.4999999763,
+              1013966.6999999918,
+              1011745.8000000169,
+              987649.9999999851,
+              1193320.8999999806,
+              1004045.7999999945,
+              972566.7000000158,
+              964949.9999999988,
+              1182545.8000000254
+            ]
+          }
+        ],
+        "checksum": 1036230208
+      },
+      "vpm": {
+        "pid": 46382,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 standard SSR",
+            "iterations": 21,
+            "samples": [
+              452942.4285714294,
+              460313.4761904764,
+              452920.61904762074,
+              450238.09523809445,
+              425442.4761904775,
+              453499.99999999785,
+              448700.38095238095,
+              474152.7619047637,
+              427212.285714285,
+              444577.3809523828,
+              483674.5714285723,
+              452888.90476190264
+            ]
+          },
+          {
+            "case": "Material9 outlined SSR",
+            "iterations": 16,
+            "samples": [
+              586093.7499999963,
+              466567.74999999587,
+              588557.2500000009,
+              585963.5624999981,
+              582776.0625000024,
+              601929.6875000037,
+              606817.7500000047,
+              529414.0624999955,
+              602244.8124999969,
+              607575.5624999957,
+              560020.8124999994,
+              561137.9999999997
+            ]
+          },
+          {
+            "case": "Material9 multiline SSR",
+            "iterations": 16,
+            "samples": [
+              545213.5000000027,
+              528484.3749999979,
+              582786.4374999976,
+              611057.3125000016,
+              547395.8749999994,
+              550335.9374999945,
+              667067.750000001,
+              563205.7500000016,
+              552197.9374999972,
+              591937.5000000002,
+              545450.5000000012,
+              522437.4999999952
+            ]
+          },
+          {
+            "case": "Material9 form SSR",
+            "iterations": 9,
+            "samples": [
+              1025504.6666666708,
+              1057763.8888889095,
+              952356.4444444268,
+              1138453.6666666665,
+              943532.444444448,
+              1004587.8888888891,
+              990472.2222222011,
+              1063194.4444444596,
+              1093703.66666667,
+              878245.3333333504,
+              947513.8888888827,
+              898004.5555555434
+            ]
+          },
+          {
+            "case": "App7 standard SSR",
+            "iterations": 22,
+            "samples": [
+              570880.6818181839,
+              481829.545454554,
+              393393.9545454553,
+              421732.95454545657,
+              456890.18181818404,
+              457183.7272727324,
+              403676.1363636287,
+              493922.3636363605,
+              478924.2727272784,
+              463212.0909090893,
+              394501.90909090824,
+              467511.36363635934
+            ]
+          },
+          {
+            "case": "App7 outlined SSR",
+            "iterations": 16,
+            "samples": [
+              562554.687499997,
+              509213.56249999406,
+              545080.750000011,
+              587088.5625,
+              513669.24999999243,
+              603052.1249999907,
+              498210.937500005,
+              589760.4375000043,
+              545937.5000000079,
+              488265.6249999968,
+              599367.187499979,
+              493367.1874999845
+            ]
+          },
+          {
+            "case": "App7 multiline SSR",
+            "iterations": 15,
+            "samples": [
+              583880.6000000052,
+              463624.99999998667,
+              592055.5333333444,
+              526333.3333333321,
+              566302.799999994,
+              453547.1999999875,
+              597561.0666666701,
+              525377.8000000238,
+              565136.0666666429,
+              514588.8666666603,
+              570358.3333333276,
+              516474.99999999127
+            ]
+          },
+          {
+            "case": "App7 form SSR",
+            "iterations": 10,
+            "samples": [
+              896179.200000006,
+              1042904.2000000209,
+              926316.6000000183,
+              1075658.2999999863,
+              928037.5000000276,
+              965045.8999999955,
+              871591.699999999,
+              953708.2999999712,
+              882712.4999999797,
+              1077433.400000018,
+              973662.5000000003,
+              1031937.5000000037
+            ]
+          }
+        ],
+        "checksum": 874148544
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 46383,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 standard SSR",
+            "iterations": 21,
+            "samples": [
+              515047.61904762057,
+              462670.6666666678,
+              437059.5238095234,
+              413704.38095238106,
+              405603.1904761886,
+              477142.8571428562,
+              450509.95238095283,
+              511192.42857142974,
+              450914.66666666575,
+              463408.71428571426,
+              438890.85714285634,
+              425632.9047619044
+            ]
+          },
+          {
+            "case": "Material9 outlined SSR",
+            "iterations": 18,
+            "samples": [
+              513460.6666666678,
+              566171.3333333359,
+              559555.5555555556,
+              543983.7777777825,
+              531946.7777777808,
+              535074.0555555578,
+              533506.9444444432,
+              540770.833333334,
+              517636.6111111103,
+              504321.77777777397,
+              505293.9999999984,
+              508993.0555555561
+            ]
+          },
+          {
+            "case": "Material9 multiline SSR",
+            "iterations": 18,
+            "samples": [
+              573453.7222222242,
+              558682.8888888881,
+              510643.5000000021,
+              591106.4999999983,
+              558263.8888888848,
+              526025.444444435,
+              504870.3888888895,
+              526782.388888882,
+              525152.7777777736,
+              558497.666666666,
+              578861.1111111095,
+              543539.3333333422
+            ]
+          },
+          {
+            "case": "Material9 form SSR",
+            "iterations": 11,
+            "samples": [
+              1009496.1818181839,
+              1071390.1818181842,
+              968712.0909090936,
+              935587.1818181847,
+              1075496.2727272743,
+              1077738.6363636402,
+              1043443.1818181854,
+              823700.7272727252,
+              1019500.0000000038,
+              965784.0909091068,
+              842359.8181818142,
+              951825.7272727416
+            ]
+          },
+          {
+            "case": "App7 standard SSR",
+            "iterations": 24,
+            "samples": [
+              457256.9583333272,
+              477480.87500000716,
+              385112.833333333,
+              462494.79166667134,
+              467055.54166666727,
+              438366.33333332505,
+              432558.9999999977,
+              395973.95833333355,
+              439539.9166666702,
+              472217.0000000005,
+              447602.4583333356,
+              484255.2083333374
+            ]
+          },
+          {
+            "case": "App7 outlined SSR",
+            "iterations": 20,
+            "samples": [
+              507047.9499999919,
+              553256.250000004,
+              466699.9999999916,
+              522743.74999999505,
+              545614.5500000047,
+              541712.4999999942,
+              486735.45000001474,
+              552743.7500000133,
+              545000.0000000045,
+              470116.6499999999,
+              515149.99999999424,
+              554193.7499999903
+            ]
+          },
+          {
+            "case": "App7 multiline SSR",
+            "iterations": 18,
+            "samples": [
+              535932.83333334,
+              616493.0555555657,
+              523569.4444444461,
+              584536.99999998,
+              660527.7777777651,
+              491020.83333334833,
+              530305.55555554,
+              527101.8333333409,
+              480562.49999998114,
+              563937.500000015,
+              515451.38888887875,
+              528018.4999999922
+            ]
+          },
+          {
+            "case": "App7 form SSR",
+            "iterations": 10,
+            "samples": [
+              1153150.0000000051,
+              897304.2000000079,
+              1154912.5000000005,
+              979749.9999999672,
+              1099450.0000000244,
+              1074154.1999999755,
+              902308.3000000042,
+              1073516.699999982,
+              921358.30000002,
+              983233.3999999719,
+              901516.7000000018,
+              1160583.399999996
+            ]
+          }
+        ],
+        "checksum": 996004832
+      },
+      "upstream": {
+        "pid": 46412,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 standard SSR",
+            "iterations": 21,
+            "samples": [
+              477928.5714285709,
+              486402.80952380836,
+              390815.47619047714,
+              520325.4285714279,
+              401299.5714285699,
+              502128.99999999785,
+              488490.04761904693,
+              420670.66666666756,
+              456813.4761904779,
+              482283.71428571595,
+              457144.85714285856,
+              469222.2380952395
+            ]
+          },
+          {
+            "case": "Material9 outlined SSR",
+            "iterations": 18,
+            "samples": [
+              547064.7777777786,
+              609418.9999999963,
+              569618.0555555593,
+              603340.27777778,
+              525726.8333333324,
+              615104.1666666655,
+              544548.6111111109,
+              636611.1111111144,
+              560252.3333333301,
+              625627.3333333285,
+              634215.2777777794,
+              511680.5555555541
+            ]
+          },
+          {
+            "case": "Material9 multiline SSR",
+            "iterations": 18,
+            "samples": [
+              703039.3333333349,
+              738870.3888888889,
+              636275.499999998,
+              797009.2777777861,
+              626069.444444435,
+              696995.3888888843,
+              601080.9999999967,
+              653942.1666666637,
+              621520.8333333319,
+              702374.9999999987,
+              780175.944444434,
+              652625.0000000068
+            ]
+          },
+          {
+            "case": "Material9 form SSR",
+            "iterations": 11,
+            "samples": [
+              1170863.636363637,
+              1016617.4545454603,
+              1169117.3636363808,
+              1071541.6363636283,
+              1095136.3636363773,
+              923931.8181818238,
+              973166.6363636163,
+              1196568.1818181896,
+              1006416.7272727322,
+              1093730.9999999963,
+              1090469.7272727306,
+              1156761.3636363645
+            ]
+          },
+          {
+            "case": "App7 standard SSR",
+            "iterations": 24,
+            "samples": [
+              3521052.08333334,
+              1038741.3333333294,
+              581022.5416666792,
+              690329.833333332,
+              478664.91666667344,
+              481638.8750000063,
+              615796.8750000009,
+              465869.79166666727,
+              661559.0416666729,
+              631668.4166666657,
+              464614.5833333435,
+              566949.6666666684
+            ]
+          },
+          {
+            "case": "App7 outlined SSR",
+            "iterations": 20,
+            "samples": [
+              716499.9999999964,
+              767945.7999999841,
+              757712.5000000023,
+              641085.4499999915,
+              718241.6500000044,
+              684335.400000009,
+              811489.6000000045,
+              623893.750000002,
+              628514.5499999999,
+              687493.7499999987,
+              587085.4499999951,
+              795429.1499999954
+            ]
+          },
+          {
+            "case": "App7 multiline SSR",
+            "iterations": 18,
+            "samples": [
+              638363.4444444447,
+              645756.9444444289,
+              744076.3888888948,
+              658708.3333333288,
+              724053.22222221,
+              671752.2777777654,
+              720608.7777777712,
+              799136.5555555553,
+              665328.6666666594,
+              748166.6666666721,
+              658921.3333333343,
+              655374.9999999986
+            ]
+          },
+          {
+            "case": "App7 form SSR",
+            "iterations": 10,
+            "samples": [
+              1008104.1999999797,
+              1204691.700000012,
+              1014804.1999999804,
+              986658.2999999991,
+              961262.4999999752,
+              1261400.0000000033,
+              1039012.4999999898,
+              939491.5999999739,
+              990191.7000000139,
+              1070754.2000000102,
+              1193062.4999999963,
+              955587.5000000015
+            ]
+          }
+        ],
+        "checksum": 830436544
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 46419,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 standard SSR",
+            "iterations": 22,
+            "samples": [
+              646198.8636363622,
+              495695.045454547,
+              457232.9545454543,
+              517492.4545454551,
+              513369.3181818185,
+              445009.4545454549,
+              497719.6818181824,
+              478282.18181818345,
+              440422.31818181934,
+              497768.9545454547,
+              507914.77272727026,
+              407352.2727272725
+            ]
+          },
+          {
+            "case": "Material9 outlined SSR",
+            "iterations": 16,
+            "samples": [
+              660609.375,
+              564622.4374999988,
+              613395.875000002,
+              636510.3750000003,
+              637731.7500000003,
+              571026.0625000033,
+              625684.8750000045,
+              579473.9375000049,
+              659489.5624999992,
+              558343.7499999988,
+              649606.7499999966,
+              569966.1875000003
+            ]
+          },
+          {
+            "case": "Material9 multiline SSR",
+            "iterations": 15,
+            "samples": [
+              672461.1333333239,
+              741533.3333333364,
+              683308.3333333434,
+              747272.1999999976,
+              670183.3333333373,
+              721747.1999999968,
+              652299.9999999986,
+              744536.1333333344,
+              665038.9333333351,
+              729044.3999999904,
+              676649.9999999874,
+              885394.3999999955
+            ]
+          },
+          {
+            "case": "Material9 form SSR",
+            "iterations": 10,
+            "samples": [
+              1252199.9999999935,
+              998679.1999999924,
+              1135962.5000000051,
+              1193054.1999999832,
+              963129.200000003,
+              1043387.4999999944,
+              1114416.600000004,
+              1469112.5000000056,
+              1093695.8000000003,
+              976712.5000000078,
+              1156245.8000000105,
+              1082937.5000000028
+            ]
+          },
+          {
+            "case": "App7 standard SSR",
+            "iterations": 20,
+            "samples": [
+              562787.4999999903,
+              477564.6000000051,
+              545158.2999999914,
+              442245.80000000057,
+              596635.3999999911,
+              479618.7499999974,
+              508591.69999999955,
+              698564.5999999974,
+              484774.9999999905,
+              426337.49999999965,
+              521570.799999995,
+              444675.0000000065
+            ]
+          },
+          {
+            "case": "App7 outlined SSR",
+            "iterations": 15,
+            "samples": [
+              614413.8666666549,
+              579316.6666666669,
+              1026094.4666666546,
+              710116.6666666662,
+              639641.6666666482,
+              723252.7999999851,
+              561802.7333333279,
+              630275.0000000135,
+              584744.4666666585,
+              675424.9999999957,
+              643322.2666666856,
+              627883.3333333145
+            ]
+          },
+          {
+            "case": "App7 multiline SSR",
+            "iterations": 16,
+            "samples": [
+              709682.3125000071,
+              698320.312500016,
+              741447.9374999985,
+              640841.1875000013,
+              676942.7499999949,
+              734747.375000012,
+              671632.812499979,
+              680669.2499999941,
+              772989.562499987,
+              668705.7500000151,
+              727346.3125000035,
+              762541.6875000042
+            ]
+          },
+          {
+            "case": "App7 form SSR",
+            "iterations": 10,
+            "samples": [
+              1055312.499999991,
+              1012100.0000000095,
+              1128866.6999999804,
+              1076749.9999999928,
+              1089120.8000000005,
+              1068237.4999999865,
+              1231120.8000000077,
+              1033333.3000000039,
+              976862.5000000156,
+              1268470.7999999772,
+              1016649.9999999814,
+              985562.5000000146
+            ]
+          }
+        ],
+        "checksum": 1022514688
+      },
+      "vpm": {
+        "pid": 46424,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 standard SSR",
+            "iterations": 22,
+            "samples": [
+              514554.9090909108,
+              487897.72727272665,
+              403030.27272727055,
+              471761.36363636475,
+              511513.2272727268,
+              420255.68181818,
+              498852.2727272715,
+              510380.68181818054,
+              445545.45454545546,
+              499215.90909090696,
+              463874.999999999,
+              422316.27272727486
+            ]
+          },
+          {
+            "case": "Material9 outlined SSR",
+            "iterations": 16,
+            "samples": [
+              605713.5625000001,
+              652406.2499999985,
+              603132.8125000001,
+              677291.687499995,
+              574583.3125000033,
+              667648.4374999987,
+              512221.37499999575,
+              626986.9374999999,
+              567666.6875000009,
+              682382.8124999949,
+              595411.4999999973,
+              507588.562499997
+            ]
+          },
+          {
+            "case": "Material9 multiline SSR",
+            "iterations": 15,
+            "samples": [
+              631002.8000000026,
+              728255.5333333373,
+              596952.7999999931,
+              676036.1333333246,
+              891430.5333333383,
+              722811.1333333345,
+              619905.5999999928,
+              838347.2000000136,
+              626072.1999999988,
+              699041.6666666534,
+              636752.7999999917,
+              580086.0666666722
+            ]
+          },
+          {
+            "case": "Material9 form SSR",
+            "iterations": 10,
+            "samples": [
+              1195658.400000002,
+              1030116.6000000194,
+              1129845.9000000092,
+              923891.6000000017,
+              907208.300000002,
+              1290945.8000000087,
+              1025895.8000000122,
+              1173283.3000000028,
+              988416.7000000163,
+              1025279.2,
+              1128241.7000000123,
+              991037.4999999931
+            ]
+          },
+          {
+            "case": "App7 standard SSR",
+            "iterations": 20,
+            "samples": [
+              508702.04999999946,
+              443372.9500000027,
+              455772.9000000108,
+              506608.34999999905,
+              440456.2499999997,
+              465510.40000000515,
+              569895.8000000061,
+              454952.09999999136,
+              415377.05000000645,
+              544054.1499999994,
+              484052.1000000081,
+              491647.89999999816
+            ]
+          },
+          {
+            "case": "App7 outlined SSR",
+            "iterations": 15,
+            "samples": [
+              623366.6666666674,
+              708466.6666666636,
+              676113.8666666435,
+              665822.2666666612,
+              739630.5333333354,
+              644847.2000000038,
+              638213.8666666833,
+              587908.3333333257,
+              667219.4666666655,
+              644902.7333333106,
+              634336.133333333,
+              717252.7333333164
+            ]
+          },
+          {
+            "case": "App7 multiline SSR",
+            "iterations": 16,
+            "samples": [
+              791804.6875000186,
+              656203.1250000189,
+              649776.0624999956,
+              750460.9375000086,
+              642419.249999989,
+              678270.812500017,
+              747135.4375000204,
+              633031.2499999878,
+              688080.7500000116,
+              767447.8750000162,
+              668585.9375000121,
+              699263.000000002
+            ]
+          },
+          {
+            "case": "App7 form SSR",
+            "iterations": 10,
+            "samples": [
+              1141195.800000014,
+              1040683.3000000005,
+              1214533.2999999938,
+              1138745.8000000152,
+              1033445.900000015,
+              1083391.6000000045,
+              1170666.6999999925,
+              1137733.4000000246,
+              1031374.9999999801,
+              1248220.8000000357,
+              1080437.5000000163,
+              1052187.499999991
+            ]
+          }
+        ],
+        "checksum": 878800640
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 46425,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 standard SSR",
+            "iterations": 22,
+            "samples": [
+              443274.6363636371,
+              485403.40909090935,
+              423763.2727272724,
+              514992.4545454548,
+              467140.1363636365,
+              428765.1363636371,
+              470312.5000000005,
+              496217.8181818176,
+              425289.7727272708,
+              491831.4545454543,
+              485560.59090908966,
+              398026.499999999
+            ]
+          },
+          {
+            "case": "Material9 outlined SSR",
+            "iterations": 16,
+            "samples": [
+              560734.3749999956,
+              633778.6874999978,
+              601789.0624999964,
+              600947.8750000028,
+              512468.74999999645,
+              624010.4375000044,
+              667583.3124999997,
+              585419.3125000009,
+              696140.6249999981,
+              614856.8125000012,
+              711677.1250000014,
+              615830.7500000007
+            ]
+          },
+          {
+            "case": "Material9 multiline SSR",
+            "iterations": 15,
+            "samples": [
+              728275.0000000002,
+              630311.0666666725,
+              695730.5333333352,
+              626663.8666666647,
+              718486.1333333326,
+              632744.4666666604,
+              717411.1333333409,
+              640094.4666666723,
+              681044.4666666626,
+              734847.2666666717,
+              667722.1999999953,
+              823155.533333329
+            ]
+          },
+          {
+            "case": "Material9 form SSR",
+            "iterations": 9,
+            "samples": [
+              932574.0000000072,
+              1261944.4444444273,
+              875870.3333333213,
+              854074.1111111301,
+              1315685.2222222267,
+              1132319.444444445,
+              1153916.6666666712,
+              894962.9999999867,
+              979949.1111111061,
+              1154060.1111110945,
+              985935.1111111008,
+              1165416.6666666646
+            ]
+          },
+          {
+            "case": "App7 standard SSR",
+            "iterations": 19,
+            "samples": [
+              442287.3157894676,
+              530377.2105263234,
+              455855.26315790054,
+              435013.15789473284,
+              534791.6842105357,
+              463037.2631578978,
+              418559.21052631043,
+              451260.94736841833,
+              512664.47368420573,
+              452563.63157895254,
+              507094.315789465,
+              540401.3157894713
+            ]
+          },
+          {
+            "case": "App7 outlined SSR",
+            "iterations": 16,
+            "samples": [
+              754885.4375000076,
+              637651.0000000054,
+              566273.4375000014,
+              693023.4374999884,
+              631177.125000022,
+              583528.6250000137,
+              702265.6250000239,
+              587708.3125000127,
+              615929.6874999995,
+              722554.6875000077,
+              590249.9999999976,
+              622533.8749999878
+            ]
+          },
+          {
+            "case": "App7 multiline SSR",
+            "iterations": 13,
+            "samples": [
+              841147.3846153617,
+              804336.5384615194,
+              721862.2307692525,
+              698445.4615384702,
+              848182.6923076859,
+              702804.4615384575,
+              671051.2307692205,
+              777368.6153846378,
+              674371.8461538474,
+              646807.6923076926,
+              711612.1538461602,
+              757650.6153846261
+            ]
+          },
+          {
+            "case": "App7 form SSR",
+            "iterations": 10,
+            "samples": [
+              1012645.799999973,
+              1645108.2999999926,
+              1006587.4999999779,
+              969991.600000003,
+              960312.5000000091,
+              1212945.7999999886,
+              1016633.3000000123,
+              951362.5000000047,
+              964154.20000003,
+              1120150.0000000123,
+              968958.4000000196,
+              960637.4999999844
+            ]
+          }
+        ],
+        "checksum": 1037108160
+      },
+      "upstream": {
+        "pid": 46455,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 standard SSR",
+            "iterations": 22,
+            "samples": [
+              478100.3636363643,
+              419482.9545454556,
+              468517.04545454454,
+              477344.68181818107,
+              419554.90909090923,
+              488111.7727272717,
+              473196.9545454562,
+              422022.72727272636,
+              466331.40909090993,
+              494842.77272727375,
+              423138.22727272636,
+              489746.2272727285
+            ]
+          },
+          {
+            "case": "Material9 outlined SSR",
+            "iterations": 16,
+            "samples": [
+              562137.9999999973,
+              667757.8124999997,
+              562929.6874999951,
+              617471.3750000009,
+              567388.0000000012,
+              621184.8749999973,
+              583330.7500000017,
+              647627.6249999984,
+              490398.4374999979,
+              589781.2500000015,
+              636161.4375000002,
+              561895.8125000049
+            ]
+          },
+          {
+            "case": "Material9 multiline SSR",
+            "iterations": 15,
+            "samples": [
+              582713.9333333282,
+              736175.0000000029,
+              611886.133333337,
+              691786.1333333348,
+              641849.999999992,
+              606555.5333333274,
+              723786.0666666772,
+              635472.2000000038,
+              715305.6000000106,
+              646938.9333333311,
+              734349.9999999949,
+              643544.3999999886
+            ]
+          },
+          {
+            "case": "Material9 form SSR",
+            "iterations": 9,
+            "samples": [
+              1090361.1111111029,
+              1186601.8888888953,
+              1008592.666666674,
+              1154481.555555574,
+              1081004.6666666595,
+              1092912.111111117,
+              1057370.3333333367,
+              1061064.7777777761,
+              1145560.2222222297,
+              1063027.777777759,
+              1284652.7777777638,
+              977749.9999999893
+            ]
+          },
+          {
+            "case": "App7 standard SSR",
+            "iterations": 19,
+            "samples": [
+              511901.3157894809,
+              516815.7894736875,
+              454247.78947369155,
+              457910.1052631574,
+              489800.42105263,
+              457144.73684211046,
+              499179.84210525756,
+              551789.4736842185,
+              472833.3157894739,
+              472241.26315789984,
+              471214.94736842054,
+              562629.4210526339
+            ]
+          },
+          {
+            "case": "App7 outlined SSR",
+            "iterations": 16,
+            "samples": [
+              726750.0000000098,
+              550880.2500000058,
+              649000.0000000009,
+              659549.437499976,
+              684421.8749999981,
+              589351.562499985,
+              585476.5625000198,
+              648958.3124999853,
+              615408.8749999858,
+              592247.4374999922,
+              660799.4374999749,
+              594716.1250000192
+            ]
+          },
+          {
+            "case": "App7 multiline SSR",
+            "iterations": 13,
+            "samples": [
+              630150.6153846066,
+              669150.6923077144,
+              727493.5384615184,
+              718916.6153845971,
+              704913.4615384762,
+              657650.6153846122,
+              781955.0769230983,
+              695625.0000000112,
+              658112.1538461747,
+              670705.076923066,
+              764926.307692314,
+              645407.0769230804
+            ]
+          },
+          {
+            "case": "App7 form SSR",
+            "iterations": 10,
+            "samples": [
+              1151899.9999999779,
+              955374.9999999581,
+              950508.3000000013,
+              1256100.000000015,
+              963308.3000000169,
+              968816.599999991,
+              1057320.9000000134,
+              1188508.3000000124,
+              986850.000000004,
+              1065716.70000003,
+              1126158.300000043,
+              969200.0000000007
+            ]
+          }
+        ],
+        "checksum": 899829440
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "Material9 standard SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 472038.97826086986,
+          "vpmNs": 450405.804347827,
+          "changePct": -4.582921095360781
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 460757.56818181905,
+          "vpmNs": 453376.886363636,
+          "changePct": -1.6018579678045652
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 459473.21428571374,
+          "vpmNs": 452904.76190476166,
+          "changePct": -1.4295615449887
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 473575.4047619052,
+          "vpmNs": 450712.3095238093,
+          "changePct": -4.827762381281298
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 496707.3636363647,
+          "vpmNs": 479829.5454545457,
+          "changePct": -3.3979399979612745
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 470857.00000000035,
+          "vpmNs": 468726.3181818185,
+          "changePct": -0.4525114457641699
+        }
+      ]
+    },
+    {
+      "case": "Material9 outlined SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 576036.0999999989,
+          "vpmNs": 565038.899999998,
+          "changePct": -1.9091164598886934
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 611256.0882352928,
+          "vpmNs": 550644.588235293,
+          "changePct": -9.915893054740154
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 597015.6249999974,
+          "vpmNs": 586028.6562499972,
+          "changePct": -1.8403151090057746
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 586479.1666666697,
+          "vpmNs": 532726.8611111119,
+          "changePct": -9.165254046629812
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 619540.3750000033,
+          "vpmNs": 604423.1875000001,
+          "changePct": -2.4400649433062527
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 586556.0000000016,
+          "vpmNs": 615343.7812500009,
+          "changePct": 4.907933982432922
+        }
+      ]
+    },
+    {
+      "case": "Material9 multiline SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 696502.9642857092,
+          "vpmNs": 554861.6071428601,
+          "changePct": -20.336073844008375
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 659489.5999999949,
+          "vpmNs": 536455.2249999917,
+          "changePct": -18.655999275804213
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 667070.2812500054,
+          "vpmNs": 551266.9374999958,
+          "changePct": -17.35999144393132
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 675468.777777774,
+          "vpmNs": 550901.6111111136,
+          "changePct": -18.441587644727885
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 702527.7666666701,
+          "vpmNs": 656394.4666666582,
+          "changePct": -6.566758239165926
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 645241.6666666599,
+          "vpmNs": 688387.4999999988,
+          "changePct": 6.686771106433942
+        }
+      ]
+    },
+    {
+      "case": "Material9 form SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1005178.2777777842,
+          "vpmNs": 999240.7777777619,
+          "changePct": -0.5906912366977046
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1100916.6363636393,
+          "vpmNs": 1014009.4545454613,
+          "changePct": -7.894074714433874
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 1064203.722222222,
+          "vpmNs": 997530.055555545,
+          "changePct": -6.26512248307608
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1092100.3636363633,
+          "vpmNs": 989104.1363636388,
+          "changePct": -9.431022157137491
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1104056.200000002,
+          "vpmNs": 1028006.2000000158,
+          "changePct": -6.88823630536074
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1085682.888888881,
+          "vpmNs": 1059127.2777777729,
+          "changePct": -2.4459822829376976
+        }
+      ]
+    },
+    {
+      "case": "App7 standard SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 472948.36956521263,
+          "vpmNs": 445836.9565217372,
+          "changePct": -5.732425522134532
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 455117.7608695633,
+          "vpmNs": 449315.2173913042,
+          "changePct": -1.2749543035131317
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 494928.02272727556,
+          "vpmNs": 460197.90909091086,
+          "changePct": -7.017204935171417
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 598409.70833334,
+          "vpmNs": 452429.7083333314,
+          "changePct": -24.394657701424094
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 496683.349999995,
+          "vpmNs": 474781.25000000664,
+          "changePct": -4.4096706684427005
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 481316.86842105194,
+          "vpmNs": 459446.26315789914,
+          "changePct": -4.543909989047091
+        }
+      ]
+    },
+    {
+      "case": "App7 outlined SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 612221.3437499937,
+          "vpmNs": 550329.4374999967,
+          "changePct": -10.109400281750236
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 635851.9736842074,
+          "vpmNs": 540842.1052631615,
+          "changePct": -14.94213627592389
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 625434.9062500069,
+          "vpmNs": 545509.1250000094,
+          "changePct": -12.779232571014909
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 701996.8749999976,
+          "vpmNs": 532228.1249999946,
+          "changePct": -24.183690276399517
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 634958.3333333309,
+          "vpmNs": 655362.4999999859,
+          "changePct": 3.213465450487041
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 632183.5937499856,
+          "vpmNs": 626855.5000000049,
+          "changePct": -0.8428079758247886
+        }
+      ]
+    },
+    {
+      "case": "App7 multiline SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 651028.807692298,
+          "vpmNs": 532190.6538461533,
+          "changePct": -18.2539009705869
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 716282.3888888726,
+          "vpmNs": 543288.1944444464,
+          "changePct": -24.15167497176387
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 682683.3333333373,
+          "vpmNs": 545734.6999999875,
+          "changePct": -20.060345206418162
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 668540.4722222125,
+          "vpmNs": 529162.0277777661,
+          "changePct": -20.848168545601396
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 704001.3125000115,
+          "vpmNs": 683175.7812500143,
+          "changePct": -2.9581665375086774
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 683165.0384615386,
+          "vpmNs": 716737.1923077063,
+          "changePct": 4.914208420526167
+        }
+      ]
+    },
+    {
+      "case": "App7 form SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1020779.2000000153,
+          "vpmNs": 934100.0000000349,
+          "changePct": -8.49147396420098
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1039217.8181818136,
+          "vpmNs": 971410.9999999686,
+          "changePct": -6.524793647252691
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 1012856.2500000044,
+          "vpmNs": 959377.0999999833,
+          "changePct": -5.280033568437858
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1011454.19999998,
+          "vpmNs": 1028375.049999977,
+          "changePct": 1.6729230053122768
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1061774.9999999888,
+          "vpmNs": 1110562.5000000144,
+          "changePct": 4.594900049447959
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1022085.4500000087,
+          "vpmNs": 988289.5499999905,
+          "changePct": -3.306563066719903
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "Material9 standard SSR",
+      "upstream_ns": 466398,
+      "vpm_ns": 451809,
+      "change_pct": -3.1,
+      "upstream_first_pct": -3,
+      "vpm_first_pct": -3.2,
+      "process_range_pct": "-4.6, -1.6, -1.4, -4.8",
+      "control_max_abs_pct": 3.4,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "Material9 outlined SSR",
+      "upstream_ns": 591747,
+      "vpm_ns": 557842,
+      "change_pct": -5.5,
+      "upstream_first_pct": -1.9,
+      "vpm_first_pct": -9.5,
+      "process_range_pct": "-1.9, -9.9, -1.8, -9.2",
+      "control_max_abs_pct": 4.9,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "Material9 multiline SSR",
+      "upstream_ns": 671270,
+      "vpm_ns": 551084,
+      "change_pct": -18.5,
+      "upstream_first_pct": -18.8,
+      "vpm_first_pct": -18.5,
+      "process_range_pct": "-20.3, -18.7, -17.4, -18.4",
+      "control_max_abs_pct": 6.7,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "Material9 form SSR",
+      "upstream_ns": 1078152,
+      "vpm_ns": 998385,
+      "change_pct": -7.1,
+      "upstream_first_pct": -3.4,
+      "vpm_first_pct": -8.7,
+      "process_range_pct": "-0.6, -7.9, -6.3, -9.4",
+      "control_max_abs_pct": 6.9,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "App7 standard SSR",
+      "upstream_ns": 483938,
+      "vpm_ns": 450872,
+      "change_pct": -6.4,
+      "upstream_first_pct": -6.4,
+      "vpm_first_pct": -12.8,
+      "process_range_pct": "-5.7, -1.3, -7.0, -24.4",
+      "control_max_abs_pct": 4.5,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "App7 outlined SSR",
+      "upstream_ns": 630643,
+      "vpm_ns": 543176,
+      "change_pct": -13.9,
+      "upstream_first_pct": -11.4,
+      "vpm_first_pct": -19.6,
+      "process_range_pct": "-10.1, -14.9, -12.8, -24.2",
+      "control_max_abs_pct": 3.2,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "App7 multiline SSR",
+      "upstream_ns": 675612,
+      "vpm_ns": 537739,
+      "change_pct": -20.5,
+      "upstream_first_pct": -19.2,
+      "vpm_first_pct": -22.5,
+      "process_range_pct": "-18.3, -24.2, -20.1, -20.8",
+      "control_max_abs_pct": 4.9,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "App7 form SSR",
+      "upstream_ns": 1016818,
+      "vpm_ns": 965394,
+      "change_pct": -5.9,
+      "upstream_first_pct": -6.9,
+      "vpm_first_pct": -2.4,
+      "process_range_pct": "-8.5, -6.5, -5.3, 1.7",
+      "control_max_abs_pct": 4.6,
+      "evidence": "unestablished at this precision"
+    }
+  ]
+}

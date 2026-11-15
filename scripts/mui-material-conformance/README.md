@@ -199,3 +199,11 @@ use the same isolated process harness; `bench/input-variants.cjs` records the
 standard, outlined, multiline and complete-field SSR cases. The new native input
 engine file is named `input-base.cjs`, leaving `Input.cjs` available as a public
 entry on case-insensitive filesystems too.
+
+
+`input-decorations-contract.cjs` compares 960 InputLabel/InputAdornment SSR
+contracts against Material 9.5.0 and app 7.2.0. The decoration browser fixture
+checks label transforms, pointer behavior, inherited state, theme overrides,
+light/dark/RTL/variable themes, live shrink/focus, React Hook Form, accessible
+names and hydration in production and development React. It is included in
+clean npm/Bun archive consumption and strict NodeNext/Bundler declaration checks.

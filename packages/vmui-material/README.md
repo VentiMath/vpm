@@ -1,6 +1,6 @@
 # vmui-material
 
-Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input and OutlinedInput, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
+Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel and InputAdornment, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
 
 ```js
 import { Button, ToggleButton, ToggleButtonGroup } from 'vmui-material';
@@ -19,13 +19,13 @@ Typography covers semantic variants, custom roots, truncation, spacing and physi
 
 For existing callers, Typography retains Material 7’s `paragraph`, direct System props and CSS/palette-path colors that Material 9 dropped. Explicit root ARIA attributes take precedence over SVG child attributes; a supplied title makes a decorative child accessible unless the root explicitly hides it. Unknown typography variants and icon sizes cannot read inherited object properties.
 
-InputLabel/InputAdornment/TextField wrappers, remaining surfaces and display components, navigation, menus/overlays, full Material theme creation and the remaining app-used exports still need implementation. No upstream Material implementation is bundled, and no app dependency or release has been changed by this work. Runtime dependencies are the VPM System closure, with React as a peer.
+TextField wrappers, remaining surfaces and display components, navigation, menus/overlays, full Material theme creation and the remaining app-used exports still need implementation. No upstream Material implementation is bundled, and no app dependency or release has been changed by this work. Runtime dependencies are the VPM System closure, with React as a peer.
 
 The earlier button and text/icon benchmarks predate the custom native-root correction. The earlier button measurements found Node icon-button SSR about 20% slower than both controls. The new Typography/Link/SvgIcon measurements are inconclusive on Node and Bun: process-pair variation and identical-source controls do not establish a speedup or regression in any case. Raw samples, including large control differences, are retained. These are isolated SSR costs, not application interaction measurements.
 
 [Conformance](../../scripts/mui-material-conformance/README.md), [button benchmarks](bench/results/README.md), [text/icon benchmarks](bench/text/README.md), [Box benchmarks](bench/box/README.md), [surface/icon benchmarks](bench/surfaces/README.md), [form benchmarks](bench/forms/README.md), [input benchmarks](bench/input/README.md) and [provenance](PROVENANCE.json) record the measured scope. Supported runtimes are Node 24, Bun 1.4.4 and modern browsers.
 
-Current application priorities (reviewed at `3aa9eb28`, November 13, 2026): Material remains in shared theme/navigation, authentication, public pages and table components while many feature pages use Astryx. A static non-test source inventory found Typography imports in 164 files, Box in 99, styles in 88, Paper in 43 and Divider in 15. These are import counts, not route reachability or adoption percentages. The Box/theme boundary and SVG sprite root are covered. Paper, Divider and the Icon fallback are also covered. The shared FormControl/FormLabel/FormHelperText foundation is covered; InputBase is now covered too; next are InputLabel/InputAdornment/TextField, menus and the table’s Material peers. A complete app cutover requires those callers, including dependencies’ imports, to pass together.
+Current application priorities (reviewed at `3aa9eb28`, November 13, 2026): Material remains in shared theme/navigation, authentication, public pages and table components while many feature pages use Astryx. A static non-test source inventory found Typography imports in 164 files, Box in 99, styles in 88, Paper in 43 and Divider in 15. These are import counts, not route reachability or adoption percentages. The Box/theme boundary and SVG sprite root are covered. Paper, Divider and the Icon fallback are also covered. The shared FormControl/FormLabel/FormHelperText foundation is covered; InputBase is now covered too; next are TextField, menus and the table’s Material peers. A complete app cutover requires those callers, including dependencies’ imports, to pass together.
 
 The `styles` entry exposes `ThemeProvider`, `useTheme`, `styled`, `GlobalStyles`,
 `useThemeProps`, `useMediaQuery` and `useColorScheme`. Pass an existing resolved
@@ -186,3 +186,25 @@ Node no longer establishes a standard-input or full-field slowdown in this run;
 outlined SSR takes 9–13% less time and multiline about 25% less than the two
 controls. Bun takes less time in seven of eight cases; the app full-field direction
 is unestablished. These are local SSR measurements, not browser latency claims.
+
+
+InputLabel and InputAdornment cover the shared form wrappers used by VentiMath:
+label shrink follows focus, filled values (including zero) and start adornments;
+explicit `shrink` wins. Labels preserve native `htmlFor`, required asterisks,
+small/standard/outlined/filled styling, animation opt-out and caller transforms.
+Adornments inherit variant, hidden-label and size styling, isolate nested form
+context, wrap strings in Typography unless disabled, and support interactive
+children or `disablePointerEvents`. Native/custom roots, refs, theme defaults,
+slot overrides and `sx` are supported. Filled label/adornment styling does not
+imply that FilledInput has been implemented.
+
+The [decorated-field measurements](bench/input-decorations/README.md) cover
+12 prepared standard, outlined, multiline and full-field trees with real
+InputLabel/InputAdornment wrappers, using current and app Material controls.
+
+In that decorated-field run, Node takes 19.9% less time for standard inputs and
+11.3% less for full fields than app Material 7. Against Material 9, standard,
+outlined and full-field directions are unestablished; multiline takes 20.5% less.
+Bun establishes lower time for multiline against both controls and outlined
+against app 7; other directions are unestablished. No case establishes a
+regression. All samples and controls are retained in the report.

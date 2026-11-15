@@ -313,3 +313,16 @@ export const inputClasses:Readonly<InputClasses>;
 export const outlinedInputClasses:Readonly<OutlinedInputClasses>;
 export function getInputUtilityClass(slot:string):string;
 export function getOutlinedInputUtilityClass(slot:string):string;
+
+export type InputLabelClasses=Record<'root'|'focused'|'disabled'|'error'|'required'|'asterisk'|'formControl'|'sizeSmall'|'shrink'|'animated'|'standard'|'filled'|'outlined',string>;
+export interface InputLabelOwnProps extends Omit<FormLabelOwnProps,'classes'> {classes?:Partial<InputLabelClasses>; disableAnimation?:boolean; shrink?:boolean; margin?:'dense'; size?:'small'|'medium'|(string & {}); variant?:'standard'|'outlined'|'filled';}
+export type InputLabelProps<C extends React.ElementType='label'>=InputLabelOwnProps & Omit<React.ComponentPropsWithRef<C>,keyof InputLabelOwnProps> & {component?:C};
+export const InputLabel:TextComponent<InputLabelOwnProps,'label'>;
+export const inputLabelClasses:Readonly<InputLabelClasses>;
+export function getInputLabelUtilityClass(slot:string):string;
+export type InputAdornmentClasses=Record<'root'|'filled'|'standard'|'outlined'|'positionStart'|'positionEnd'|'disablePointerEvents'|'hiddenLabel'|'sizeSmall',string>;
+export interface InputAdornmentOwnProps {children?:React.ReactNode; className?:string; classes?:Partial<InputAdornmentClasses>; disablePointerEvents?:boolean; disableTypography?:boolean; position:'start'|'end'; variant?:'standard'|'outlined'|'filled'; sx?:SxProps<Theme>;}
+export type InputAdornmentProps<C extends React.ElementType='div'>=InputAdornmentOwnProps & Omit<React.ComponentPropsWithRef<C>,keyof InputAdornmentOwnProps> & {component?:C};
+export const InputAdornment:TextComponent<InputAdornmentOwnProps,'div'>;
+export const inputAdornmentClasses:Readonly<InputAdornmentClasses>;
+export function getInputAdornmentUtilityClass(slot:string):string;

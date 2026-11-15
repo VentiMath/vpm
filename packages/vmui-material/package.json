@@ -547,6 +547,46 @@
         "types": "./outlinedInputClasses.d.cts",
         "default": "./outlinedInputClasses.cjs"
       }
+    },
+    "./InputLabel": {
+      "import": {
+        "types": "./InputLabel.d.mjs",
+        "default": "./InputLabel.mjs"
+      },
+      "require": {
+        "types": "./InputLabel.d.cjs",
+        "default": "./InputLabel.cjs"
+      }
+    },
+    "./inputLabelClasses": {
+      "import": {
+        "types": "./inputLabelClasses.d.mjs",
+        "default": "./inputLabelClasses.mjs"
+      },
+      "require": {
+        "types": "./inputLabelClasses.d.cjs",
+        "default": "./inputLabelClasses.cjs"
+      }
+    },
+    "./InputAdornment": {
+      "import": {
+        "types": "./InputAdornment.d.mjs",
+        "default": "./InputAdornment.mjs"
+      },
+      "require": {
+        "types": "./InputAdornment.d.cjs",
+        "default": "./InputAdornment.cjs"
+      }
+    },
+    "./inputAdornmentClasses": {
+      "import": {
+        "types": "./inputAdornmentClasses.d.mjs",
+        "default": "./inputAdornmentClasses.mjs"
+      },
+      "require": {
+        "types": "./inputAdornmentClasses.d.cjs",
+        "default": "./inputAdornmentClasses.cjs"
+      }
     }
   },
   "files": [
