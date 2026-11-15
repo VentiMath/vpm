@@ -1,0 +1,2395 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-15T19:58:59.632Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/mui-material-conformance/chip-bench-entry.jsx": "8bd1cd7b8ce5ad2afb48c2888d228f9daf32285cd67fd4dd27a5a65341e80f54",
+    "../../scripts/mui-material-conformance/chip-build.cjs": "cdf032df2216830f08adc95c7468ad66aab149f0a5d9a55284840215e793ab90",
+    "../../scripts/mui-material-conformance/chip-scene.jsx": "89a3cfc3a9bb230b3dfe6947cceafd0a8bf1c7db1fee02788d98129ccf35bbcf",
+    "../../scripts/mui-material-conformance/input-decorations-scene.jsx": "5c347916c11063227c790f8f36e4b95d61bf04e2e3fec09c2c0f91075f36b36b",
+    "../../scripts/mui-material-conformance/text-field-scene.jsx": "b58726e5f376b37870e8d922c16149602002dbf4f6fee4c554c9595f2df205c8",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/app-upstream/chip-bench.cjs": "bde75e1181eb0fac31a73741c3d202b2de79f6e6c19ce8753fcbc84535dc97da",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/app-vpm/chip-bench.cjs": "687087e83659f99831c894f1e7df1a8fa44aa4caba2dc8c057717f376dc48c39",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/current-upstream/chip-bench.cjs": "7f303d96c6c4b4f9569ddbadd147c3b29fdc9cecd421eef8e880debd2c4559d5",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/current-vpm/chip-bench.cjs": "b5c28469e49a30c98b05f29f3e826ae7896a8f8b7388a805c79c6ba1810a78d3",
+    "../../scripts/mui-system-conformance/package-lock.json": "ddadfff23ccbae1816cb53aa88c03f4279279b3014993b39c62b7b1676faa633",
+    "../vemotion-babel-plugin/index.cjs": "e5bf72ac7bc3e7429c7fd385d680260211ce95b7e0e4316bb69f611a45029369",
+    "../vemotion-babel-plugin/src": "31538914c8f6834d1c48e1eda455f8655afa6b7e7aaf597c044a311bac473b74",
+    "../vemotion-cache/index.js": "a4391dfaa7d6330038ccb0b39ffff0af5a48066b27b0316eece0b6562a94abaa",
+    "../vemotion-cache/src": "6d560802fa6d75bfd7179e31c5427593220b0931c4b5b953dca79c86bacb30dd",
+    "../vemotion-hash/index.js": "96b215f0e2ae15c729dbc5eac185aab2e484ae1b67490ebcd94d5709056cd4e5",
+    "../vemotion-is-prop-valid/index.js": "5993ac5f383ac427e13b3b739eea889aefbf57af365dba833582890a10b52344",
+    "../vemotion-memoize/index.js": "9b0b8759044ffed69cfcc0548304888144cd1e2ffb794ed99726c51ab3a38c60",
+    "../vemotion-react/_isolated-hnrs.js": "03518aa3cc4cd476a205dd63745b0db44c7df9f9eba4ce11b232fb26055abdcf",
+    "../vemotion-react/index.js": "41d7839fc57c4dc975e17143eb363b1f68efde4cb9e9778f006b81ec10dc1259",
+    "../vemotion-react/jsx-dev-runtime.js": "a110b06d83cebb2ee63b0ea0224f4ff394355da4ab6a3b7aed0e69c2dfb1704b",
+    "../vemotion-react/jsx-runtime.js": "d4cf2669f60829205ad963371e5edc535f0413fadecc8bf56ad4e174fd87f38f",
+    "../vemotion-react/src": "f3fa58f006f4c35c1c8ee16c2384334e3697f7923b3440db92a117260aa648ba",
+    "../vemotion-serialize/index.js": "c5fc672aac873af6b663291fdd3b8c0c72a6e271458be622e9de5154e2874801",
+    "../vemotion-serialize/src": "2f1c965c2df5db9fad836cf20b73677ad8c24814e34ce224b957c9c0a4b376e9",
+    "../vemotion-sheet/index.js": "370197e943ace72eb9feb1ef45c8b22b76904e7dee222fa2106dda556df3c2a7",
+    "../vemotion-sheet/src": "2f1c965c2df5db9fad836cf20b73677ad8c24814e34ce224b957c9c0a4b376e9",
+    "../vemotion-styled/base.js": "2c0d8fb8493f8ec54e67182ff81335ce4ee2fd3503b6d563e473fc08f6e770dd",
+    "../vemotion-styled/index.js": "d2c6ecd98351625a2c3d2c8126ff4b3761a0b8ca82066b5cbec5055961aa2b93",
+    "../vemotion-styled/src": "8d1258141f1423dcabcc14f4037b3f878a1302dbea67718f709780a553642600",
+    "../vemotion-unitless/index.js": "068105a5301790ad6ff590e36f620f1548a809f59e222a7075f52544665c85d5",
+    "../vemotion-use-insertion-effect-with-fallbacks/index.js": "c9bc22b0c67ed348c3b377f69484dae1e32ac76fbaf7af198ddbd729be039e66",
+    "../vemotion-use-insertion-effect-with-fallbacks/src": "3304c3023c2ddc417a0e21a4bfff163baf1f4792dfd7073d54ba75418f8b2fae",
+    "../vemotion-utils/index.js": "8d92f8c8a9bdbb347324c097e7e1c6a23004bf9bb61fa6391e912df0ec39ccf3",
+    "../vemotion-utils/src": "3304c3023c2ddc417a0e21a4bfff163baf1f4792dfd7073d54ba75418f8b2fae",
+    "../vemotion-weak-memoize/index.js": "3e44339d2b635f8ccca795abacc5f4e395c6598894dc0520ff997eda25eca99d",
+    "../vmui-private-theming/ThemeProvider.cjs": "1a9d3eb6c1ccc48c5d9332295e40af36917d1e6648d12f750de0c50ac9f82564",
+    "../vmui-private-theming/ThemeProvider.mjs": "46256569d2dd107cec05e4ccdf472197a191e663234a32704f2fd968d61e7abd",
+    "../vmui-private-theming/index.cjs": "dbea69c9f4dccb3914c34d8bbffc813f470bf4c9eb0d61f6b41612b18c27b5da",
+    "../vmui-private-theming/index.mjs": "7d7e0dfbbc9e98b983de15f56153013d35c1be470bcb66edf5a7bdafb8362af3",
+    "../vmui-private-theming/useTheme.cjs": "a510ba26fed37a3b028a2ebbaf51e3c9daf8e4e5a0c3f47b785f00891832da65",
+    "../vmui-private-theming/useTheme.mjs": "6f8bc2ed0d6a8d2323f10e23d26b25256b284bf6a570cc058fb6693e34032ded",
+    "../vmui-styled-engine/GlobalStyles.cjs": "f2389d1af2f9e02a49087610c78f4c011254a4f191edaa9da0a43209131649d2",
+    "../vmui-styled-engine/GlobalStyles.mjs": "921cebc2abc1ebd5bc7a17366f1f01cbab72d6ab5bf37a73efcd41ed748e8c51",
+    "../vmui-styled-engine/StyledEngineProvider.cjs": "bfead354f2d307038620421321a5e653f24a4b83f9217207eaa1eef174b0e90c",
+    "../vmui-styled-engine/StyledEngineProvider.mjs": "9934fbd41b842081688ecc1b311934709ec0d8eecd814df97acfd55eda3335cb",
+    "../vmui-styled-engine/index.cjs": "3883e5d988d7fb95c8f7b9e1a68f0722503d8f85944f4a0b21cd33010ac13a6b",
+    "../vmui-styled-engine/index.mjs": "5b0497c8c2e0f5873d6aef91b66a8a9497950c5c384788ac4b5ad16f5cbcc2f9",
+    "../vmui-system/Box.cjs": "b64b6a88be592977443812e88f8ffcd322f91b8be67e67ce9498431e4759442b",
+    "../vmui-system/Box.mjs": "21321a7ad67cb60e3ecebfa2a745229f7dc5e157a2ea9f849d17ec92b95f8114",
+    "../vmui-system/Container.cjs": "e5b343d9d6d100b338a0e56f92ecab49d95c474e2cbbe14fb75ac3f1b9a095b7",
+    "../vmui-system/Container.mjs": "27b64fcd5ebaff98ed97105da2a9c501ee43370a5955bb3ade6e97c86640c9b4",
+    "../vmui-system/DefaultPropsProvider.cjs": "e32e451936582001bdba5f84b954357cdf8c725b9dab2a00ff7256be07b7214b",
+    "../vmui-system/DefaultPropsProvider.mjs": "f8d343ffa887ae7d66aa9e71998d955acbaacffe254eb87183d551fa57ee9544",
+    "../vmui-system/GlobalStyles.cjs": "204f09c030c315a082c087578fecb9ac35e3f3a594ecb85969d6fca0f9c02c11",
+    "../vmui-system/GlobalStyles.mjs": "59da1b6d2e56c6134f749ecabad4d1df79ce76e30888dc529bac180970004b33",
+    "../vmui-system/Grid.cjs": "4ca2fca568728b0dfc4d5d9e9917c996369d9f14a445fa0359ad5c3ca7b0f996",
+    "../vmui-system/Grid.mjs": "5ebd81226ce7cdb73e7aaeb4b11f5995789584f2c43b63ba0373826508a2f558",
+    "../vmui-system/InitColorSchemeScript.cjs": "f5d958140169b55a2cc741bc05164619ac9c142ab1167d94bb68df7a182a9f4a",
+    "../vmui-system/InitColorSchemeScript.mjs": "b4d810d5aaf45a3dcddeb5c0fb1f31c810a0bf7bbcc8530ee99732ea13ac67ea",
+    "../vmui-system/RtlProvider.cjs": "5bb89c64918fab9e47c008742bca8cb7f32d024277575b7647a2eb2cf2db05f2",
+    "../vmui-system/RtlProvider.mjs": "5af7be25286fddf304077e8f31c265ded0cd8a5cd7bc732cac756e107a7d1e9d",
+    "../vmui-system/Stack.cjs": "ba257160041d5c6b9a37c8fb51a3972820ce4481265953280570f4e26acb5c68",
+    "../vmui-system/Stack.mjs": "35633dc42f472ba32506901028b2bd0182602eb27b293c914b297eea3afa7dec",
+    "../vmui-system/ThemeProvider.cjs": "6be5417b9b8d26bb43b00eaad127197b25f2e68deae73573110a98ad55507053",
+    "../vmui-system/ThemeProvider.mjs": "d8d3add5be8e4d3aa2ad4af70acbf35ace684075643b5ca9bf04e4019263ee3f",
+    "../vmui-system/borders.cjs": "7c0f94d8efd492acba687d8df77e8ad0f4e45ef2518360f90cd09ebeda99c474",
+    "../vmui-system/borders.mjs": "298e2c19c85eb7157fdfbb860ab222e7e8f936991922b4756b79e9db8f13dc9e",
+    "../vmui-system/breakpoints.cjs": "707735fe09f5f263761d65fadc74afcb6d5bb3dcba5db4c72d692560e14c2a0f",
+    "../vmui-system/breakpoints.mjs": "cb3dba12099937a43e952a7ef50dbf763cc23aecf6302c182fff7cd9614b60ba",
+    "../vmui-system/colorManipulator.cjs": "8dca5753c5c2940196673eaace10e3b8e64f0e497863dc2cd8b2d7ff82a3d094",
+    "../vmui-system/colorManipulator.mjs": "4139f8352993b5369060bb719b40ed03ce2c5ce68e9edadc01e68546551962b6",
+    "../vmui-system/colors.cjs": "56cf0820050ee5d563bbaa983f6114ef26bb443092f9a22348a1fd1371db7407",
+    "../vmui-system/compose.cjs": "5309ab8adfffff6caed4bbe5fbcc154d127cf1aaf8881f8415f84a99efcedf3d",
+    "../vmui-system/compose.mjs": "da201a17433a28b3f795701f7d32b849f5e584258c86016ab78f915be3c8be71",
+    "../vmui-system/createBox.cjs": "48f5d57f508c1194ba00cc8ba6071c7ee8eb51511fdfb9f0b6a817b4fd54fd9e",
+    "../vmui-system/createBox.mjs": "d51887118f2ede63c55a111181217d6fb0b619e882ea94f546abca590ca4f656",
+    "../vmui-system/createBreakpoints.cjs": "f103076893d26bba729bcdb358ce8410e5abe9d4c1667ccb2caf36259444558c",
+    "../vmui-system/createBreakpoints.mjs": "f62adabc5215b2c93a3b870aa931b15bcbbf6d8f0ba9da0b801c954105b3d4b6",
+    "../vmui-system/createStyled.cjs": "35643ad0bca0719804a11e44b105186ad6e70de113f7dbc8cd00534b80b26ccc",
+    "../vmui-system/createStyled.mjs": "e14a03be4c660cd96d68f89a4a48c4c0663282801a7c4bf30b0fea88d8c50c06",
+    "../vmui-system/createTheme.cjs": "ef66b46f1765583e1f1a78db274a9c5c734a817bc51a9c268905a06bfdca4b00",
+    "../vmui-system/createTheme.mjs": "3f9b31a383461582d8aa7f51155ff1874015f5370c72a75cae0b8d06f845de25",
+    "../vmui-system/cssContainerQueries.cjs": "43cdac47291af1a1b4287e7ca68c689466ee479821c0808bf17634ae78e4c141",
+    "../vmui-system/cssContainerQueries.mjs": "ecaa8cc0793ea045cb67902d6d73e3d597dcf5adc662b8cbe0665313112bd6ff",
+    "../vmui-system/cssGrid.cjs": "dd8a548c547b6ab4f9c24b56217207bd7a65139c540caef3e0b0daff07a6a0b9",
+    "../vmui-system/cssGrid.mjs": "6a9220dfd8f26ea0e57132266e752f7bdee4067341f8192646084af73901ce01",
+    "../vmui-system/cssVars.cjs": "76f379d9cb127f254ebd9ce1f089b44a3727bc3e66817295cc4116dce875f1c6",
+    "../vmui-system/cssVars.mjs": "ad9f227cbb7638ab24556fe0709c99c2e8e525f976819753f87a8896b68463be",
+    "../vmui-system/display.cjs": "640ba4c444d713d74536fd252b268b6ab5e12a2db8d9a81d19c1c078db084aac",
+    "../vmui-system/display.mjs": "63325f27891e1dd087b5fbdb4671ad04465be3ad04b34eb5a478e9634a42cb5e",
+    "../vmui-system/flexbox.cjs": "fdc54462f82546497b54f16b07360450a7d4daf4ab75788d3e3cf21f40df2a9d",
+    "../vmui-system/flexbox.mjs": "42b9ea2bdcf803400c81358b672d7e696a9688caf7e08273031e2a6154179805",
+    "../vmui-system/index.cjs": "815536114e6591be4bc3545eec525a3843cf3c315bd3b15a2ba44af29a21f366",
+    "../vmui-system/index.mjs": "2ff8e95b96c9987c982c6f69484037cecd1db7abbc33902c0413f68c227e5ada",
+    "../vmui-system/layout.cjs": "1e834fb9a67911b39def8f3eca37235fb790407a3bf534dbbb751ae6d54ec170",
+    "../vmui-system/palette.cjs": "93aaa58e6747f0a63f7f51884b320566c6e1f136c678e4e0328ab2f7f9ace400",
+    "../vmui-system/palette.mjs": "1c4bdeb92399b1382dff078d9bcfcdb1cfe93eb21df9adb7500647e9b855d00a",
+    "../vmui-system/positions.cjs": "fbf0e2493aab65226a197ffa87f485b92524ad62e34f812614857e1b84cdc4a8",
+    "../vmui-system/positions.mjs": "166f56d449726f55d5c6418c71fabf4e93801aea7220df1832f0363e9b94dc53",
+    "../vmui-system/react.cjs": "10a90e43f3bd281ea0c99259a56c7e398eec35d85ee111478689af1238b48f16",
+    "../vmui-system/shadows.cjs": "e2b3ee2ba7c465b059a99e0257115d0e632e1b313d98ddd8db31c2dead4df177",
+    "../vmui-system/shadows.mjs": "3f5d98175756fc768897b4f66820c2a251118b805e4c99778aa3a7b868481116",
+    "../vmui-system/sizing.cjs": "6272f9251dfadb216aac6987c36770b3622d72c46ed50b81b52aa1bff4947b94",
+    "../vmui-system/sizing.mjs": "75a1437c227788501e8d2ae9d34705154e90d961223eed6eee05a5aa99376c1b",
+    "../vmui-system/spacing.cjs": "df5bd7265242e184046ece61efcbce52b001cf479937aa86a5b9a9a5e4caef0f",
+    "../vmui-system/spacing.mjs": "06ba3be7ad24d588d91da1cddd523068d9613cfea7473a6b78554b410c487949",
+    "../vmui-system/style.cjs": "de7dde015cae1a05cd0beffe1df9c77ec5b63dda22bef976dccae76f5506e446",
+    "../vmui-system/style.mjs": "f9320a99cdfeec7573f6d257ec5693b0914d0b56ed9987ce36174de95c9b6d33",
+    "../vmui-system/styleFunctionSx.cjs": "21844aad8bfe3166f6a0ef449972fc95c03126446f1b4f23e4cbd44b250bcf1a",
+    "../vmui-system/styleFunctionSx.mjs": "8cdf559dcdb7d91d7dad1e192b1a6df1027aa5ec5b8d2ca8e5be55a310d30de2",
+    "../vmui-system/styled.cjs": "634c4b206aa5fc01f953edad02c3a771f30742514d0839cca499abc092dab4b5",
+    "../vmui-system/styled.mjs": "73d39c4637e3b9e3739121efb0f0f4be98918190c29f543ca16b6b44cafa9d40",
+    "../vmui-system/sx.cjs": "f41de5dfa31e16e1121e75a46765b07496b4423e5981ebb5c9dbafac3acf457c",
+    "../vmui-system/theme.cjs": "8d3a6dea5a341c0dbe98690abfa0dd70f54201b5b3636fe45557245de1e1be7e",
+    "../vmui-system/typography.cjs": "987ea252bdab27a30c20b837387a8aab7f71fcb302ed9efe9d25259995c5194f",
+    "../vmui-system/typography.mjs": "6be7933e862afa30b0ea0ed67a7c9eee76ee75fddac2cec6b98e1d010f7e749d",
+    "../vmui-system/useMediaQuery.cjs": "42a285cd890c3f206a15c171d5b65ae8540cc43ecd81df8631c6e104a941f234",
+    "../vmui-system/useMediaQuery.mjs": "3d0c7b297574f8922479c9440b76afba587f802e99ff30c94d6c2be12c06a17d",
+    "../vmui-system/useTheme.cjs": "975e4bd16a686d713f9ce92d1402ba2c9adc5864869e3643d3119dd53bf69c99",
+    "../vmui-system/useTheme.mjs": "e25cae231af64953959efc125dbfcdc96962221e1f3631da0cb632fa922ed645",
+    "../vmui-system/useThemeProps.cjs": "a63dbc2cc4d9073b8ad97998b9d70e4507c47694c1cdabedd1cf1b8e7dcbd4c4",
+    "../vmui-system/useThemeProps.mjs": "1b8b8a33d7e3cce93633c2fbef1a8141633d7bca47aff1e834e5817b30bb1973",
+    "../vmui-system/useThemeWithoutDefault.cjs": "96b8e6465fb4473f30875e7e25e99bdf138b4637c1dd09b6d2cb48d13ce23dac",
+    "../vmui-system/useThemeWithoutDefault.mjs": "26ce4314b640064fd50d74109b653cb08b1c562bfa2d423a1b22d650a2fb6b71",
+    "../vmui-system/variables.cjs": "6eb072abb5fe13f347097ed98a3086d29605c817a226b70cef005f0826e5941f",
+    "../vmui-utils/ClassNameGenerator.cjs": "6213feb83273586f7de134f72c421782ffa48819586511baf9d1dc6fc36f7f20",
+    "../vmui-utils/ClassNameGenerator.mjs": "6b66d354f6624e6aec303690dd064d2149f94f18ec52bab5187b3c19c224eca5",
+    "../vmui-utils/HTMLElementType.cjs": "ae07ceb3ea431b1e2d0fda4c1bff885e7bd7d4c69244b661dc46e32a99a54b56",
+    "../vmui-utils/HTMLElementType.mjs": "35b1f8f9751f75a8e6d6703412ef13f45b607fb30108c9b71c5bf65eaf0b2a86",
+    "../vmui-utils/appendOwnerState.cjs": "8a8203ab3e0f9008cb7148631f32c754adbbef0be3ff752ee11893eea63df253",
+    "../vmui-utils/appendOwnerState.mjs": "024d6e38a09777eafab126e99df13bb5933ac5b7299c3b1dd8a4e00ce37ba9bb",
+    "../vmui-utils/capitalize.cjs": "466ace0ba91f0eb59598533df1bf92203904e75ce9d24ed73d447d4bd2f6b683",
+    "../vmui-utils/capitalize.mjs": "2e692f2ba8c915e8a5fbebedb2a4dd6f8afe19cbfecf16cb2acb366f4f6bda5f",
+    "../vmui-utils/chainPropTypes.cjs": "64738c503dc44f8f3538d7503ceb60041c88004b587d72c77eff07da7f153d9b",
+    "../vmui-utils/chainPropTypes.mjs": "af29dc439c14f6941b8f1740bb877635d63019990652c2e760a0f93fcd055792",
+    "../vmui-utils/clamp.cjs": "4ea234c98488fe2b1f1a668b7ce56c3fcfb6b0d94532d94bb2ec8aaec093c5e8",
+    "../vmui-utils/clamp.mjs": "d1588edd0c58ed7ab6c3863dc4043aee60b16d0ecba0297847eba23afa6a3499",
+    "../vmui-utils/composeClasses.cjs": "c72db2f2d0199bfb167898f06e6c10c994f31a0956751ec5fbc8a8d4840d824f",
+    "../vmui-utils/composeClasses.mjs": "57bae69bf2452e63eb458aae908e79f066ebed3661b70a4995fd08b9b8efc49f",
+    "../vmui-utils/contains.cjs": "a978b047810fe70d07612d47e8c4da1c515a4f02fc2be0689afd5169eec8e207",
+    "../vmui-utils/contains.mjs": "2f0f88211bb69776a090c7079ecf21671d51d99c78f2686fe4b342ec6c7f4898",
+    "../vmui-utils/createChainedFunction.cjs": "b6c57fef271d0f5aa19c198c5b41c03f407da749ea5271b42684a9e1e6a5e36a",
+    "../vmui-utils/createChainedFunction.mjs": "45cfae0309fa596f9032c7b83a39e6f29c4b6557cfe26d46cdb6915cdbf6960c",
+    "../vmui-utils/debounce.cjs": "3852b1cbbc7bbdf38e86cffd14f6a5ae27eb29c2d6d9f46e06fd775be04338f1",
+    "../vmui-utils/debounce.mjs": "26756d5d85c3bbea438493a450065ce18c8d8eec741bf546a3d107bdeb35f33e",
+    "../vmui-utils/deepmerge.cjs": "eca6c9c4308d7254fc21112281f966a4b27258b65dc837960903712b2585bb95",
+    "../vmui-utils/deepmerge.mjs": "8d68c51ee253afcd699872a9cb24c33484291d4512e9858d5c0c81b166bbe74a",
+    "../vmui-utils/deprecatedPropType.cjs": "167e8146d593467fb628e4cbe0348527046498a892866f5ce52b26aa63fc9fe3",
+    "../vmui-utils/deprecatedPropType.mjs": "bf695ea438eabe1b79325ebe3b667aae7920e6236c92c86d1586ff7c0efa8471",
+    "../vmui-utils/elementAcceptingRef.cjs": "c3421533a636766a14fb32441d7507e8506e498e0425436433cb22a67074d62e",
+    "../vmui-utils/elementAcceptingRef.mjs": "cb11878271169ddf73f4930a1dd249bbb94fcd3bdd1110c2149ebcfe8a104f52",
+    "../vmui-utils/elementTypeAcceptingRef.cjs": "a953e733808c3739d29c32aea176434d5e28cc9b77f6c5ab4b14a52903c821dc",
+    "../vmui-utils/elementTypeAcceptingRef.mjs": "5df95de2599172dbad31500c360950dd646ef1e92dfe1e0c55d9b1e094441b89",
+    "../vmui-utils/exactProp.cjs": "2bcb71df8c0b0ca80b54f7dfba8799ddf1dd7e03833bbacee7f9bdcfc732e94d",
+    "../vmui-utils/exactProp.mjs": "d983c6d76089d649c0b77aa7b7f21b2381168f88e87cb287983ae735c44dcffd",
+    "../vmui-utils/extractEventHandlers.cjs": "78953d2b46eb154b71204565e5fab23da43f22a70d875fd42643c3ef971efc49",
+    "../vmui-utils/extractEventHandlers.mjs": "fadb22d0e37dbc35d78087a25d208e173fdf5cb0b8079b0f21d57c7c63eced31",
+    "../vmui-utils/fastDeepAssign.cjs": "1c7f60e965c16ae9261d2ec53511094ebd2c0ad05d640f39d4a063860cfe8d68",
+    "../vmui-utils/fastDeepAssign.mjs": "c00d95130cb7edc275b9c683f6397ec6b125bace48704c2980ed76d0497eb969",
+    "../vmui-utils/fastObjectShallowCompare.cjs": "3d207409294c330d9da814abd02982724ea40d5b8f83cb877ddb98dc021eed5b",
+    "../vmui-utils/fastObjectShallowCompare.mjs": "462c19ca96f1bd7651abe9325ef2f99afd6bded597b4bb45f0f909bf6a55a292",
+    "../vmui-utils/formatMuiErrorMessage.cjs": "723a68f4343f18b51cd81c0b0e8da94b95b4a531663c8e09a8ce9745c2ce6fac",
+    "../vmui-utils/formatMuiErrorMessage.mjs": "8204857f95fa3243d72503e31963b8a53f9be5f1224cf0c1cea5e3e1f62a090c",
+    "../vmui-utils/generateUtilityClass.cjs": "865be2049fbb4ef4ed4c1bd0d1a2b7f0af898a128f5e5b883d191a9811d9105b",
+    "../vmui-utils/generateUtilityClass.mjs": "2555c0761da1d35820df28989dbd2fab9c9f23165d318368de6d6a21ce0a5759",
+    "../vmui-utils/generateUtilityClasses.cjs": "2803d15c8920eb6b06bebd7fbef6f3881ed394644244c1bb893ddf1e7d132cee",
+    "../vmui-utils/generateUtilityClasses.mjs": "db8a623b630b813b748fd28847eb700f8c271ef262efe780e32d4c37a8b571d4",
+    "../vmui-utils/getActiveElement.cjs": "f9811ccea626e9c4bec30750f457102bb216ffdebf9f09e010b1b80ea9bc1255",
+    "../vmui-utils/getActiveElement.mjs": "9a0ae08abbab81f40d4f3b73cd53cf1f5e84b938f8f4c936d2cbdb8cb394a87b",
+    "../vmui-utils/getDisplayName.cjs": "4b7bf675dac24e974a549a4ad7399c9a0afa33fd1d1d6d267bc455dd6135bd05",
+    "../vmui-utils/getDisplayName.mjs": "c67ce4c3aacef24079ca3cbce7ea6723825e5b5389d0e71055aa4c19ef3548c8",
+    "../vmui-utils/getEventTarget.cjs": "04576c4987304ebd227e45aa400540b2029dd2fc8b0973a628a2f8504e2b4bfa",
+    "../vmui-utils/getEventTarget.mjs": "dafa6f09dc81512dfac498b71c5555d3011f2bca308a16de02d20fae8cb7fc16",
+    "../vmui-utils/getReactElementRef.cjs": "65da43940aeb639cde709fbd6a50d19fee97344a6a815b91cf3fbc444bb4b675",
+    "../vmui-utils/getReactElementRef.mjs": "a89736dbacb73ba8222d50db8f04b3fae63909e74060ece95b060921929c15f3",
+    "../vmui-utils/getReactNodeRef.cjs": "f03ceec5ab58570e197a0936a5b2edf91fda6cd9fe0b55eef166811c13c0d195",
+    "../vmui-utils/getReactNodeRef.mjs": "a78888e7ad099bc748916ed352f793e70d21753bba42b3cf1f3f963136f195d2",
+    "../vmui-utils/getScrollbarSize.cjs": "305a54493f23f3c4c012e9543ccf6ed7ccfb1260646b783f0155bb663d637554",
+    "../vmui-utils/getScrollbarSize.mjs": "8d1056ff3f76efdf899db221ed316210af1ceeb2bc87a3d365799759e13da474",
+    "../vmui-utils/getValidReactChildren.cjs": "56a8cdfcbd4f092cf90df912fa1bf1f8b63a7efd41df51e51d53cc6c397eb21d",
+    "../vmui-utils/getValidReactChildren.mjs": "61735aa08c9cc0b47a08ee7913a9f86fc17c85422e5a5802f5162a76c5383a68",
+    "../vmui-utils/index.cjs": "f22a51b57dee4397510ff87dcf78fc1eb04efecf593199db40f73c949e724b4e",
+    "../vmui-utils/index.mjs": "77990978ca4ed32ebd07630d3c319a066bc94fc382ac8fa767aa3f3a36d8b1cd",
+    "../vmui-utils/integerPropType.cjs": "e5035039ece3f358faadbb3e83425e6dae8477ee78f56b8f30ce89d651f57888",
+    "../vmui-utils/integerPropType.mjs": "6d9d4e48215e61ba0079c22cb9ee2377702cb0e6bbf9da6ee4109712f637aec9",
+    "../vmui-utils/isEventHandler.cjs": "146211ece8a4e9e441c420367eee0982fcbd007036b88acf36d07755caed9edb",
+    "../vmui-utils/isEventHandler.mjs": "a6189e34d88e7ef1fc813d0829727dd7ee7d49791500c288a347b722a87adf6c",
+    "../vmui-utils/isFocusVisible.cjs": "b776e3144ef25e863c6b095a6c7b7d4302fed4fbd8e6348d4ef2d203b9871590",
+    "../vmui-utils/isFocusVisible.mjs": "782be519cca00feabeedbd98d3c6be7e26671db3ae1001f2c03ee1d15951fa4e",
+    "../vmui-utils/isHostComponent.cjs": "769315ceb1ee854e06d43beba185c5b354c5ce095bf7fe0e7e3cb312416df466",
+    "../vmui-utils/isHostComponent.mjs": "25342e31eefd28ff2cda6d93093e8c438b8e6748e4de9479fb2597a2075af91b",
+    "../vmui-utils/isMuiElement.cjs": "7fa1fe9310462136f212b1d117440e1cb0742c23c404f9a7e75b1f64978a21e1",
+    "../vmui-utils/isMuiElement.mjs": "a4b2dcc904d61e2a494297a2e912c431423201f065cb8c1f1c7370ad846f9ca6",
+    "../vmui-utils/isObjectEmpty.cjs": "62fd3fc5eaba83aeb31631222c615a963887a6fb4f415bf8ac07c2d3ffa240df",
+    "../vmui-utils/isObjectEmpty.mjs": "003c055a84dfb20e387bc60d3c7f613153a43d4b2811ac159ad0e6e84caf07fa",
+    "../vmui-utils/mergeSlotProps.cjs": "a8daacba191afee6604a728f790af6ac8df4b8a7e0614b6c255c145b726f86f9",
+    "../vmui-utils/mergeSlotProps.mjs": "1266f954d524754a8986c43959a4d97f2eea8c17678c9cdb8b01f9f5d481f413",
+    "../vmui-utils/omitEventHandlers.cjs": "17bf9548b222c01ab58cc32a4197c6937fa45b5b5a2549104c8ee73ad8536280",
+    "../vmui-utils/omitEventHandlers.mjs": "1419a8093c5ca368ef2b8855b28d40a0e4717c4e8afd77fd667eb56f8194b7e6",
+    "../vmui-utils/ownerDocument.cjs": "e79c2f3cb745e8353896b562033f543f90e686223f31feab36c1c912106a6539",
+    "../vmui-utils/ownerDocument.mjs": "f307880079a0cc4f955057ac984d3d9d6b49903341df5f33590813ac23f172c2",
+    "../vmui-utils/ownerWindow.cjs": "4df70d53bea011e95887cb9578134f702bcac248f0c633e9903d8eef2b0d7c1d",
+    "../vmui-utils/ownerWindow.mjs": "4451fb7cf84a6726ce56b0840e757e19b33df8a2364ca08e6e54fb7a96681dbc",
+    "../vmui-utils/ponyfillGlobal.cjs": "3a6768da253fb5a95c27f26fa5183d718d57c4198417e4d7c7aa2cc381aff353",
+    "../vmui-utils/ponyfillGlobal.mjs": "79630c23987e5e0d73d901650d6c4c047866550943a3359ae7b9fcd799b13984",
+    "../vmui-utils/refType.cjs": "26ff33f2aa9e70f9d433a64b20fef79923584526f6495c0c4215581823de5981",
+    "../vmui-utils/refType.mjs": "e21241aac8108cb860d1ee4384493248d6516dc40d83bb999624ffcd5be8643a",
+    "../vmui-utils/requirePropFactory.cjs": "98cc50e167116ea8829229cd94ac09bd894d7eace9b349b780edd1a8ffac2b5d",
+    "../vmui-utils/requirePropFactory.mjs": "85b2f0d2a5a5066fb1881d586252e3f20469d6855b8974308f35650defd535f4",
+    "../vmui-utils/resolveComponentProps.cjs": "2eed5ced5371e33378eadd57661f95639a901d84c4198c11bcb8253ef457b6c9",
+    "../vmui-utils/resolveComponentProps.mjs": "f9cb286b32275b46665c38d82bb7edde27cc2694a9028889f9bdae1752a603ea",
+    "../vmui-utils/resolveProps.cjs": "1f099674e7c14401cb2913fe9327ce27e160c19f1929330f0598b07850fdc2a6",
+    "../vmui-utils/resolveProps.mjs": "fc3be909aa068e1342e410f3053275ad6683b1a596da83e45157972a2d43653b",
+    "../vmui-utils/setRef.cjs": "68a6dfb4a9daffe2e8824b28f013956130cfcdf640ad1c03d5c3435a70ee9ba5",
+    "../vmui-utils/setRef.mjs": "0a04ecc2557457d45067549d045357aecf36a7c8a06520d3819e64e56f3df0ee",
+    "../vmui-utils/types.cjs": "8222b8169ee86f25cdccd84d340340060ae3f0cff55e2ea9d344d7c332733b71",
+    "../vmui-utils/types.mjs": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+    "../vmui-utils/unsupportedProp.cjs": "a3e57a2c7488380da74053d727fc5ad792fcf8c2d5eea6c3b2c840ba2062577b",
+    "../vmui-utils/unsupportedProp.mjs": "a8e07cade9a92be7828a165340e6f14e6d1305333cbd47f6ff3ee1a42835c280",
+    "../vmui-utils/useControlled.cjs": "45c96219323d0eb7d35598fb6fccf5a46fd27572fd1f1c18845786249cf5f903",
+    "../vmui-utils/useControlled.mjs": "d72870d1da14f4887927b023ff7cfd73cc80f458a9ee68b6d1186cb11e94ded2",
+    "../vmui-utils/useEnhancedEffect.cjs": "88b1545639ad5c3830ab0d12c43c9c7a44997f96c8c4cd59b8f9e3c33a0b6a22",
+    "../vmui-utils/useEnhancedEffect.mjs": "e72913a283a73c4e9d40b72992e67c110788399f885926b9d4855206bbcf20ed",
+    "../vmui-utils/useEventCallback.cjs": "7754ef7e6385a1f9353c4220d54b687ad3f28491bb97c8de6baf9ac3a4cc5f9b",
+    "../vmui-utils/useEventCallback.mjs": "ad5c9394f901b04968c3449e3afdc18b31829b4f7fbed5ff2b5f1304ff211666",
+    "../vmui-utils/useForcedRerendering.cjs": "8b64edc8e001008ebb452bf0d63ad06eb34c835905a389dd7e0caf75088200fb",
+    "../vmui-utils/useForcedRerendering.mjs": "51f98f5cc2d671a7aa41133b57eb9761f3bc74171b5ae2698d748e8cd393835a",
+    "../vmui-utils/useForkRef.cjs": "b5c5e91a25c17e0789c9c3b2b390414386c2e6f3b684067bae0f5542008121e8",
+    "../vmui-utils/useForkRef.mjs": "2cbbdefebc9ab2fbd5f88a42ae87cfa552e1704dcf01fc226741cba544996461",
+    "../vmui-utils/useId.cjs": "cc06466f2b4ca78a4150ffd480d91950e42e453eeecb56e3a190ac84ddd0e63a",
+    "../vmui-utils/useId.mjs": "205ce4c2fcdc41f67f07237e5943f4836836982f5da02c166e50765fdd9580cb",
+    "../vmui-utils/useIsFocusVisible.cjs": "dea7b9e2629de0cf357a31ee5b4af5cc574dfe0f0274d4248fa841aeb23ec2fa",
+    "../vmui-utils/useIsFocusVisible.mjs": "9754952abc66c23012117b1b4c124513738c71884aab937b2724868bad278a99",
+    "../vmui-utils/useLazyRef.cjs": "ab90b2aa3535b2f8c7c1fade50dee0219dcb7b2f3b23e6682c9008414589f5ba",
+    "../vmui-utils/useLazyRef.mjs": "414b1670eb2a2019e3be75ec9cd3f3e048fbfeafed9e78c41aabea7604740d4e",
+    "../vmui-utils/useOnMount.cjs": "efeaffaa9193f472e3b706b347cacfc111401b2e84c62a5e6a7d89db21f08407",
+    "../vmui-utils/useOnMount.mjs": "b4433238ca80b96d0c8795b533f6bb5b203c1a5b246f45a91db369332cd2d4c2",
+    "../vmui-utils/usePreviousProps.cjs": "48fafcaa6402a4a9457e886fdd13854e758e52c6f3cb1ae10f4cf808708502d7",
+    "../vmui-utils/usePreviousProps.mjs": "9373442f3040fdc57a80ff1203a9516fe230884df562dbdb3ab135dbe615baf6",
+    "../vmui-utils/useRovingTabIndex.cjs": "d776ecd08c45a1bf6ea3f4f07b1bbf444cd390548a0812caa3cca481091ecc08",
+    "../vmui-utils/useRovingTabIndex.mjs": "16ccd5cb31651a22ac18b027df2d50e756bdd52bb786108453fff57cb80c27a4",
+    "../vmui-utils/useSlotProps.cjs": "eb4c13e7a9f4c4548d4036948f56188eb95fa18d022e4f20ebd92490fe94b743",
+    "../vmui-utils/useSlotProps.mjs": "6cf10363d7a82bd2a8fd485bb78e820de20beeeca73564c8facf35a4bcc27481",
+    "../vmui-utils/useTimeout.cjs": "12d8bf715f9204bc7277f8d38ccab77d04d81e3346ee95974e8cf1c928b5815a",
+    "../vmui-utils/useTimeout.mjs": "e13b8903020e575d7276488482d9f5daf79d260c82e54f6e588de1ab9dd0adeb",
+    "../vmui-utils/useValueAsRef.cjs": "e456e0847118fcf87786e656b9b3c94c6372317be9a03e19eb27b24e7a9e86d2",
+    "../vmui-utils/useValueAsRef.mjs": "ee10057829e2a45b3c3ffc93b3d5926379940c20d2eccab1020f3ed9cc8aefa1",
+    "../vmui-utils/visuallyHidden.cjs": "42f063bac5cbde8cc992e6bcccbc58235d3657ee56b2e1fa59257213d460a979",
+    "../vmui-utils/visuallyHidden.mjs": "cea799abdd7a78ddacbbb5a892f2516aa1e39f42c460f8083f9dbf40f729a0af",
+    "PROVENANCE.json": "de96bbdfa565f3653e68b10f2274fdfecb869c58162085e7c23f1582577c83ed",
+    "bench/chip.cjs": "9503744516955d14678306a6d7b7cb0b0d94e26e1af434a569d453e249b05c9b",
+    "buttons.cjs": "1478ebf7f407320e431575ea5baed648a2d483de500c9ddacffd4b5f62a42a3a",
+    "check-controls.cjs": "949418cb135c3487a4d78a4dcc98438bd59ca24b89072f37d0740763eaf8227c",
+    "chip-control.cjs": "e04892122a24347db9d6853ddc9506a0db72db86c213efc01d567da5ed1f5c06",
+    "forms.cjs": "31b0280783062a13a15a629c6600a052c6eb8196fa413278087f035f85387088",
+    "index.cjs": "74cbc9ecf9b88564f2cbb6323498e67d8d56cf56703b69c732c05d1904956e07",
+    "input-base.cjs": "6ae03af38c5523ef9c1ed2ee4085410374c402be2016cf074de747d13e7c15ac",
+    "input-decorations.cjs": "aa69712a3fe8089671258d3560d5b9e956a3ca00dba2049e243754fa22456f76",
+    "input-variants.cjs": "788afdf00b15a9adf5e8e9c1645c586e1aae93086ac7178abfa74446c0c42f8c",
+    "lists.cjs": "9914dfa218a6203bd5125e2ca41f3bd754611511f8040ccdbbb980051a84c4e7",
+    "menus.cjs": "8b2b02112e60868623348108babcea78f409ca1b713a3946fb166d1cfe7c1aea",
+    "package.json": "fe0f3025d44bee02269f1a1f9ee161eb25a236b86383adcb848c1de59c49c557",
+    "radio-controls.cjs": "c8eff8dc50691230641b1664ef159ef7f3f5f0100ad4aac76a4bb2969a41192a",
+    "select-input.cjs": "256dd778cd45fa24e0d47e2806098046cbd4ff5c18e64b96c8cb2f65cd1aa11d",
+    "surfaces.cjs": "76dba2de164f93a2f31d9f08d7a4353ff4ced7f68814d31341cb1851c1deddb0",
+    "text-field.cjs": "901585bd50e2658499e140e661aea2b86b29251c0c66d65c1d22ac2f6185f6c0",
+    "text.cjs": "344b9dc7bf08a46b8241932f051677704870e2ab48804afdd8a9da6fffae1cbf",
+    "theme.cjs": "c8f10a217705c2e142da705773511879c7a3b3cc617cab08616813cdb57286d7"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 47798,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 status Chip SSR",
+            "iterations": 39,
+            "samples": [
+              319026.6923076913,
+              261915.61538461462,
+              290544.8717948721,
+              298297.0256410253,
+              280855.7692307691,
+              303005.3333333332,
+              306097.20512820524,
+              327518.15384615265,
+              278180.564102564,
+              298887.82051281957,
+              331604.6923076914,
+              282403.8461538451
+            ]
+          },
+          {
+            "case": "Material9 preferences Chip SSR",
+            "iterations": 23,
+            "samples": [
+              406436.6086956556,
+              438858.6956521739,
+              449279.0000000023,
+              445264.47826086974,
+              456038.0434782612,
+              420398.52173913125,
+              402911.2173913063,
+              448976.4347826038,
+              399023.52173913125,
+              430746.391304351,
+              452134.08695651754,
+              396193.82608695416
+            ]
+          },
+          {
+            "case": "Material9 roommates Chip SSR",
+            "iterations": 16,
+            "samples": [
+              596385.437500004,
+              531596.3124999997,
+              612716.1250000057,
+              507645.81250000163,
+              671671.8750000013,
+              505546.8750000074,
+              695976.5624999931,
+              538736.9374999907,
+              542012.9999999972,
+              694854.1250000062,
+              517869.7500000027,
+              588783.8124999973
+            ]
+          },
+          {
+            "case": "App7 status Chip SSR",
+            "iterations": 29,
+            "samples": [
+              325886.51724137797,
+              275117.82758620026,
+              329933.93103448267,
+              306933.9310344856,
+              353340.5172413809,
+              348652.3103448266,
+              338087.65517240885,
+              301176.7241379293,
+              302847.7241379325,
+              321758.6206896518,
+              311728.4482758617,
+              336094.8275862076
+            ]
+          },
+          {
+            "case": "App7 preferences Chip SSR",
+            "iterations": 22,
+            "samples": [
+              446087.09090908343,
+              403979.18181817903,
+              491518.9090909073,
+              443320.045454553,
+              414460.22727273597,
+              460164.7727272807,
+              433515.18181818636,
+              1228806.8181818207,
+              1329931.8181818246,
+              1500803.0454545384,
+              1141416.6818181828,
+              2519501.909090898
+            ]
+          },
+          {
+            "case": "App7 roommates Chip SSR",
+            "iterations": 14,
+            "samples": [
+              576348.2142857097,
+              699577.3571428733,
+              630693.4285714437,
+              727562.5000000087,
+              681381.0000000038,
+              559392.8571428738,
+              652925.5714285682,
+              595502.9999999754,
+              648425.6428571241,
+              555464.2857142816,
+              565104.1428571456,
+              684681.5714285575
+            ]
+          }
+        ],
+        "checksum": 630458016
+      },
+      "vpm": {
+        "pid": 47827,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 status Chip SSR",
+            "iterations": 39,
+            "samples": [
+              191419.87179487167,
+              220862.1794871784,
+              192294.8717948721,
+              180401.71794871768,
+              188042.74358974336,
+              178958.33333333346,
+              177355.76923076934,
+              199330.12820512903,
+              200519.23076923043,
+              192123.92307692356,
+              188340.79487179423,
+              193425.23076923104
+            ]
+          },
+          {
+            "case": "Material9 preferences Chip SSR",
+            "iterations": 23,
+            "samples": [
+              294779.00000000297,
+              264048.91304347845,
+              333943.8695652165,
+              325306.1739130425,
+              302047.0869565226,
+              270666.6521739121,
+              302289.8260869575,
+              323090.56521738885,
+              318202.91304347845,
+              264150.3478260881,
+              296103.2608695662,
+              319548.91304348083
+            ]
+          },
+          {
+            "case": "Material9 roommates Chip SSR",
+            "iterations": 16,
+            "samples": [
+              487429.68749999703,
+              417906.25000000146,
+              367216.1249999988,
+              439463.5625000021,
+              550195.3125000014,
+              396398.4374999967,
+              434489.6249999977,
+              467028.62500000466,
+              426020.8124999991,
+              434143.18749999837,
+              424002.62499999994,
+              380546.8750000003
+            ]
+          },
+          {
+            "case": "App7 status Chip SSR",
+            "iterations": 29,
+            "samples": [
+              224346.27586206826,
+              204206.89655171716,
+              221508.62068965266,
+              220405.17241379316,
+              176445.41379310543,
+              220501.4482758621,
+              186064.65517241147,
+              218744.27586206773,
+              185770.1034482802,
+              219561.7931034529,
+              184255.7586206912,
+              297589.0689655177
+            ]
+          },
+          {
+            "case": "App7 preferences Chip SSR",
+            "iterations": 22,
+            "samples": [
+              325662.90909091383,
+              270340.90909090865,
+              373642.04545454786,
+              279907.1818181718,
+              323753.7727272659,
+              288685.5909090917,
+              336945.0454545441,
+              300333.3181818148,
+              316263.2727272694,
+              272003.7727272752,
+              312236.72727273055,
+              270168.5909090863
+            ]
+          },
+          {
+            "case": "App7 roommates Chip SSR",
+            "iterations": 14,
+            "samples": [
+              470160.7142857094,
+              416955.3571428618,
+              414086.28571428254,
+              473901.7857142958,
+              430770.8571428423,
+              510154.71428570437,
+              393779.78571428685,
+              434479.1428571528,
+              467029.78571430064,
+              418955.35714284703,
+              493642.8571428613,
+              431261.92857141636
+            ]
+          }
+        ],
+        "checksum": 388190001
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 47828,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 status Chip SSR",
+            "iterations": 51,
+            "samples": [
+              201048.19607843182,
+              238343.1372549012,
+              191366.82352941154,
+              175054.74509803942,
+              185128.27450980333,
+              187021.2352941171,
+              190800.66666666587,
+              204488.54901960705,
+              200388.88235294106,
+              197273.70588235345,
+              198115.19607843057,
+              194887.25490196107
+            ]
+          },
+          {
+            "case": "Material9 preferences Chip SSR",
+            "iterations": 31,
+            "samples": [
+              349430.0967741919,
+              314426.0967741935,
+              315814.51612903277,
+              293778.2258064515,
+              295647.8387096768,
+              298055.1290322564,
+              283790.3225806419,
+              313985.2258064498,
+              306184.1290322586,
+              286713.7096774176,
+              304122.29032257927,
+              302670.6774193548
+            ]
+          },
+          {
+            "case": "Material9 roommates Chip SSR",
+            "iterations": 25,
+            "samples": [
+              433948.3199999995,
+              418798.3200000008,
+              402868.32000000234,
+              437453.3199999996,
+              454991.6799999983,
+              450270.00000000047,
+              447209.99999999546,
+              423646.64000000636,
+              438669.9999999928,
+              445638.3199999982,
+              439203.31999999686,
+              447554.999999993
+            ]
+          },
+          {
+            "case": "App7 status Chip SSR",
+            "iterations": 47,
+            "samples": [
+              176926.42553191597,
+              199288.1276595789,
+              205453.8936170241,
+              192048.7659574422,
+              216133.87234042713,
+              221961.0000000035,
+              215802.2978723422,
+              172204.787234042,
+              206083.34042553228,
+              207966.31914893317,
+              193198.5744680826,
+              226181.74468085327
+            ]
+          },
+          {
+            "case": "App7 preferences Chip SSR",
+            "iterations": 32,
+            "samples": [
+              324960.9374999949,
+              271128.90624999866,
+              329597.6562500016,
+              302751.3124999999,
+              322930.999999997,
+              280295.5937499973,
+              312031.24999999686,
+              304959.65624999854,
+              277380.21875000384,
+              296556.0000000025,
+              298868.49999999756,
+              394819.03125000175
+            ]
+          },
+          {
+            "case": "App7 roommates Chip SSR",
+            "iterations": 23,
+            "samples": [
+              451317.0000000074,
+              532474.6086956545,
+              441970.99999999645,
+              425394.95652173454,
+              459070.6521739182,
+              413566.99999999796,
+              445331.52173912444,
+              474327.869565217,
+              421561.60869565257,
+              430364.1304347919,
+              444565.21739130036,
+              401431.1304347796
+            ]
+          }
+        ],
+        "checksum": 408700608
+      },
+      "upstream": {
+        "pid": 47833,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 status Chip SSR",
+            "iterations": 51,
+            "samples": [
+              295902.7647058827,
+              296861.1176470593,
+              303311.2745098033,
+              297957.50980392145,
+              276397.0588235294,
+              300681.3725490193,
+              305878.2745098046,
+              297248.37254901987,
+              314009.8039215686,
+              297811.274509803,
+              298412.58823529305,
+              280129.0980392147
+            ]
+          },
+          {
+            "case": "Material9 preferences Chip SSR",
+            "iterations": 31,
+            "samples": [
+              436224.4516129038,
+              409022.870967742,
+              426254.0322580655,
+              443204.29032258387,
+              447622.32258064265,
+              492447.58064515924,
+              386373.6451612934,
+              415213.70967741916,
+              429270.1612903219,
+              435280.93548386986,
+              412880.3548387109,
+              431095.4193548358
+            ]
+          },
+          {
+            "case": "Material9 roommates Chip SSR",
+            "iterations": 25,
+            "samples": [
+              579140.0000000068,
+              594454.9999999981,
+              607089.9999999984,
+              558999.9999999964,
+              558060.0000000049,
+              606615.0000000015,
+              594814.9999999986,
+              535775.0000000033,
+              569136.639999997,
+              618433.3200000037,
+              509445.0000000051,
+              550778.3600000038
+            ]
+          },
+          {
+            "case": "App7 status Chip SSR",
+            "iterations": 47,
+            "samples": [
+              320729.5957446788,
+              296688.82978723483,
+              347014.1702127682,
+              294641.8297872339,
+              314864.3617021256,
+              328729.6170212764,
+              323453.8936170203,
+              297972.53191489464,
+              323444.14893616963,
+              306096.63829787157,
+              320995.57446808636,
+              292651.59574468154
+            ]
+          },
+          {
+            "case": "App7 preferences Chip SSR",
+            "iterations": 32,
+            "samples": [
+              451470.06249999325,
+              419872.3749999971,
+              430652.3437499976,
+              450296.87500000646,
+              421733.0937500066,
+              441209.62499999907,
+              430588.5312499953,
+              447727.8749999982,
+              427988.2812500091,
+              439531.2500000017,
+              413169.2499999957,
+              451135.40625000326
+            ]
+          },
+          {
+            "case": "App7 roommates Chip SSR",
+            "iterations": 23,
+            "samples": [
+              550242.739130424,
+              620208.3043478287,
+              604271.7391304431,
+              639849.6521738984,
+              559809.7826087011,
+              581623.1739130394,
+              637585.1304347713,
+              558530.7826086928,
+              599798.9130434848,
+              552262.6956521692,
+              594313.3913043588,
+              556809.7826087029
+            ]
+          }
+        ],
+        "checksum": 425019492
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 47836,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 status Chip SSR",
+            "iterations": 32,
+            "samples": [
+              303471.34375000093,
+              305842.4375000008,
+              298975.2499999998,
+              275519.5312499996,
+              320960.93750000064,
+              287222.65625,
+              283282.5625000002,
+              309356.7812499991,
+              265386.7187500012,
+              307085.9375000001,
+              275240.8749999997,
+              295165.3749999998
+            ]
+          },
+          {
+            "case": "Material9 preferences Chip SSR",
+            "iterations": 20,
+            "samples": [
+              435847.9500000044,
+              391531.2499999971,
+              484618.7499999985,
+              375714.59999999776,
+              463354.20000000345,
+              413564.550000001,
+              454054.15000000177,
+              405241.69999999914,
+              441002.0999999972,
+              424535.4500000019,
+              459877.0500000001,
+              438427.1000000012
+            ]
+          },
+          {
+            "case": "Material9 roommates Chip SSR",
+            "iterations": 17,
+            "samples": [
+              527813.7058823551,
+              581705.8823529484,
+              723132.3529411731,
+              555066.1764705986,
+              509901.94117647497,
+              573830.8823529357,
+              500387.2352941097,
+              575453.4705882259,
+              512639.70588235994,
+              587575.9411764701,
+              509688.76470589003,
+              562708.3529411721
+            ]
+          },
+          {
+            "case": "App7 status Chip SSR",
+            "iterations": 31,
+            "samples": [
+              337072.5806451578,
+              305973.1290322596,
+              340767.48387097253,
+              296923.38709677674,
+              370145.1612903237,
+              299775.54838709725,
+              351651.8709677418,
+              330014.80645161646,
+              291610.22580645356,
+              328350.8064516149,
+              296060.48387096316,
+              327326.6129032319
+            ]
+          },
+          {
+            "case": "App7 preferences Chip SSR",
+            "iterations": 24,
+            "samples": [
+              456034.75000000536,
+              420260.4166666693,
+              443767.37500000256,
+              434960.0416666703,
+              444026.0416666604,
+              435302.08333333087,
+              500564.2499999965,
+              412968.7499999951,
+              447121.5416666609,
+              475324.62500000367,
+              438982.6249999942,
+              461465.2916666652
+            ]
+          },
+          {
+            "case": "App7 roommates Chip SSR",
+            "iterations": 16,
+            "samples": [
+              598887.9999999881,
+              658210.9375000016,
+              618005.1875000175,
+              626854.1874999868,
+              547369.8125000226,
+              635640.6250000077,
+              558856.8124999824,
+              843307.3125000021,
+              579929.6874999981,
+              552924.5000000173,
+              518460.9375000093,
+              650432.2499999944
+            ]
+          }
+        ],
+        "checksum": 537332352
+      },
+      "vpm": {
+        "pid": 47837,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 status Chip SSR",
+            "iterations": 32,
+            "samples": [
+              167526.03125000044,
+              195464.84375000084,
+              199739.56250000137,
+              180584.65624999977,
+              190089.84375000003,
+              219524.7499999997,
+              211919.2500000011,
+              202839.84375000052,
+              180542.9687500002,
+              185044.2500000007,
+              207946.59375000003,
+              228511.7187499992
+            ]
+          },
+          {
+            "case": "Material9 preferences Chip SSR",
+            "iterations": 20,
+            "samples": [
+              344474.9999999999,
+              305064.54999999737,
+              349070.84999999823,
+              341250.00000000227,
+              384135.4500000023,
+              260414.55000000153,
+              319993.75000000326,
+              248804.199999995,
+              295070.85000000184,
+              294066.65000000206,
+              246652.05000000013,
+              331991.65000000334
+            ]
+          },
+          {
+            "case": "Material9 roommates Chip SSR",
+            "iterations": 17,
+            "samples": [
+              430210.764705882,
+              443374.9999999998,
+              484490.176470585,
+              448997.5882352958,
+              464213.23529411625,
+              400492.64705882757,
+              485379.88235294534,
+              435254.94117646787,
+              408514.7058823529,
+              443786.7647058858,
+              546438.705882351,
+              440205.88235294406
+            ]
+          },
+          {
+            "case": "App7 status Chip SSR",
+            "iterations": 31,
+            "samples": [
+              199530.93548387216,
+              214790.32258064527,
+              190822.5806451634,
+              221801.06451612353,
+              224440.87096773874,
+              173041.67741935412,
+              208010.7419354854,
+              183271.5161290326,
+              220041.64516129682,
+              219172.06451612693,
+              178010.74193548335,
+              223408.61290322503
+            ]
+          },
+          {
+            "case": "App7 preferences Chip SSR",
+            "iterations": 24,
+            "samples": [
+              278050.33333333046,
+              316154.5000000009,
+              294286.4583333365,
+              328362.87499999156,
+              267493.04166666354,
+              349144.0833333381,
+              262822.91666667373,
+              338543.41666666226,
+              275973.9583333385,
+              350244.791666673,
+              282614.58333332714,
+              325866.3333333421
+            ]
+          },
+          {
+            "case": "App7 roommates Chip SSR",
+            "iterations": 16,
+            "samples": [
+              508161.43749999296,
+              391708.31250000047,
+              488718.75000000384,
+              385380.1874999903,
+              504945.31249999854,
+              410294.24999999267,
+              419388.0000000121,
+              465510.43750000076,
+              421533.8749999944,
+              438695.3125000019,
+              400156.2500000091,
+              458570.31250000093
+            ]
+          }
+        ],
+        "checksum": 379774144
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 47838,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 status Chip SSR",
+            "iterations": 47,
+            "samples": [
+              217749.10638297923,
+              191970.74468085117,
+              187227.85106382993,
+              222179.97872340394,
+              184040.78723404292,
+              193823.57446808534,
+              190660.4468085111,
+              187882.08510638346,
+              196497.3404255314,
+              201003.55319148893,
+              185051.42553191434,
+              184296.10638297786
+            ]
+          },
+          {
+            "case": "Material9 preferences Chip SSR",
+            "iterations": 33,
+            "samples": [
+              313724.757575759,
+              320167.9393939375,
+              295964.636363637,
+              302330.81818182033,
+              295314.39393939293,
+              284385.09090909234,
+              301702.0303030284,
+              287416.6666666655,
+              324867.4242424255,
+              289409.0909090926,
+              306837.1212121216,
+              314928.0303030289
+            ]
+          },
+          {
+            "case": "Material9 roommates Chip SSR",
+            "iterations": 23,
+            "samples": [
+              442235.52173913125,
+              458177.56521739246,
+              448626.8260869545,
+              438713.73913043505,
+              439815.2173913065,
+              428994.5652173935,
+              454396.7391304368,
+              439081.52173913625,
+              439029.00000000006,
+              423313.434782615,
+              429389.4782608632,
+              377558.000000007
+            ]
+          },
+          {
+            "case": "App7 status Chip SSR",
+            "iterations": 52,
+            "samples": [
+              197987.17307692362,
+              198561.69230769185,
+              198918.26923076922,
+              209291.6730769266,
+              203046.48076923005,
+              183969.55769230772,
+              204994.38461538285,
+              204862.98076923066,
+              202754.00000000096,
+              183072.11538461407,
+              202876.6153846172,
+              214705.92307692344
+            ]
+          },
+          {
+            "case": "App7 preferences Chip SSR",
+            "iterations": 32,
+            "samples": [
+              315598.9687500025,
+              310731.7499999951,
+              278174.46875000227,
+              315761.71875000367,
+              311772.1250000045,
+              341686.2187499987,
+              287371.09374999645,
+              307343.75000000116,
+              354847.65625000134,
+              279386.7187500041,
+              279993.4999999962,
+              315368.49999999814
+            ]
+          },
+          {
+            "case": "App7 roommates Chip SSR",
+            "iterations": 22,
+            "samples": [
+              416895.863636362,
+              459178.0454545435,
+              452034.09090909606,
+              413213.99999998737,
+              479429.90909090935,
+              459998.1363636413,
+              438897.72727272264,
+              460617.40909092146,
+              412399.63636365416,
+              470208.3181818208,
+              455231.0454545353,
+              429340.90909090044
+            ]
+          }
+        ],
+        "checksum": 414369312
+      },
+      "upstream": {
+        "pid": 47839,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 status Chip SSR",
+            "iterations": 47,
+            "samples": [
+              324449.46808510623,
+              302632.9787234042,
+              306611.70212765975,
+              340790.7872340432,
+              310100.1914893614,
+              311631.212765957,
+              296042.5531914891,
+              280703.8936170213,
+              282046.10638297885,
+              302770.3829787235,
+              317076.25531914993,
+              314714.5531914882
+            ]
+          },
+          {
+            "case": "Material9 preferences Chip SSR",
+            "iterations": 33,
+            "samples": [
+              426479.81818181573,
+              430388.90909090725,
+              443228.54545454803,
+              423919.1818181814,
+              503986.09090909,
+              444136.3636363617,
+              435333.3333333329,
+              510035.3333333315,
+              405675.48484848504,
+              440276.51515151584,
+              410325.7575757576,
+              831040.393939392
+            ]
+          },
+          {
+            "case": "Material9 roommates Chip SSR",
+            "iterations": 23,
+            "samples": [
+              589269.9565217358,
+              549992.7391304324,
+              607411.2608695605,
+              584871.3478260873,
+              540894.913043481,
+              584476.4347826027,
+              541306.1739130408,
+              589463.7826086973,
+              558947.4347826067,
+              589364.1304347788,
+              545186.5652173836,
+              523987.3043478245
+            ]
+          },
+          {
+            "case": "App7 status Chip SSR",
+            "iterations": 52,
+            "samples": [
+              298305.28846153687,
+              330873.4038461519,
+              306923.8653846163,
+              335007.21153846005,
+              296987.98076922755,
+              317040.8653846179,
+              298387.0192307668,
+              310100.15384615684,
+              308641.01923076797,
+              309802.07692307606,
+              310570.50000000047,
+              303272.44230769476
+            ]
+          },
+          {
+            "case": "App7 preferences Chip SSR",
+            "iterations": 32,
+            "samples": [
+              456311.1874999919,
+              407916.6562500092,
+              457658.84375001065,
+              413803.3750000005,
+              443630.21875000186,
+              394046.8750000008,
+              470360.68750000483,
+              399865.87500000326,
+              412983.06250000396,
+              447691.40625000146,
+              415669.281250004,
+              432503.90624999115
+            ]
+          },
+          {
+            "case": "App7 roommates Chip SSR",
+            "iterations": 22,
+            "samples": [
+              584623.0909090866,
+              597462.136363633,
+              546776.5454545562,
+              559717.7727272745,
+              572142.0454545461,
+              565660.9999999877,
+              578244.3181818218,
+              576696.9545454686,
+              618848.4545454519,
+              536490.5454545433,
+              560310.6363636347,
+              586537.8636363568
+            ]
+          }
+        ],
+        "checksum": 428144256
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 47868,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 status Chip SSR",
+            "iterations": 36,
+            "samples": [
+              292496.52777777787,
+              291155.11111111264,
+              298552.08333333395,
+              331635.41666666657,
+              274626.1666666672,
+              300274.3055555565,
+              298827.52777777775,
+              319511.58333333436,
+              298284.7222222221,
+              281622.69444444455,
+              309121.5277777779,
+              326986.11111111124
+            ]
+          },
+          {
+            "case": "Material9 preferences Chip SSR",
+            "iterations": 23,
+            "samples": [
+              465356.9130434789,
+              404983.69565217296,
+              443923.91304348205,
+              457940.2173913017,
+              411697.4782608671,
+              449496.34782608924,
+              449362.34782608645,
+              652076.0869565216,
+              441853.2608695624,
+              516822.4347826056,
+              443278.9999999959,
+              457478.26086956734
+            ]
+          },
+          {
+            "case": "Material9 roommates Chip SSR",
+            "iterations": 18,
+            "samples": [
+              503481.4999999956,
+              600138.8888888895,
+              522675.888888898,
+              592719.8888888876,
+              538141.2222222177,
+              589516.2222222249,
+              536756.9444444547,
+              931384.2222222142,
+              540194.4444444476,
+              679314.8333333269,
+              507912.0555555568,
+              670094.9444444354
+            ]
+          },
+          {
+            "case": "App7 status Chip SSR",
+            "iterations": 33,
+            "samples": [
+              350665.4242424206,
+              281611.1212121224,
+              350933.0606060564,
+              296568.1818181813,
+              364204.5454545441,
+              321012.6363636377,
+              335066.93939394114,
+              306426.75757576403,
+              335945.6969696952,
+              309244.96969697485,
+              340167.9393939434,
+              294366.1515151537
+            ]
+          },
+          {
+            "case": "App7 preferences Chip SSR",
+            "iterations": 23,
+            "samples": [
+              424032.6086956469,
+              495425.739130437,
+              420791.69565218047,
+              462644.9130434752,
+              433554.3478260839,
+              473322.4782608669,
+              441143.1304347883,
+              463105.08695652336,
+              412686.60869565356,
+              478996.3913043444,
+              435797.0869565258,
+              493985.521739126
+            ]
+          },
+          {
+            "case": "App7 roommates Chip SSR",
+            "iterations": 17,
+            "samples": [
+              536887.2352941092,
+              568017.1764705686,
+              636936.2941176512,
+              565892.1764705904,
+              539681.4117646981,
+              629703.4117647213,
+              533830.8823529587,
+              535102.9411764798,
+              536330.882352933,
+              657088.235294128,
+              505639.7058823516,
+              569725.4705882295
+            ]
+          }
+        ],
+        "checksum": 533472672
+      },
+      "vpm": {
+        "pid": 47870,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 status Chip SSR",
+            "iterations": 36,
+            "samples": [
+              318728.0277777786,
+              283776.6388888888,
+              289146.97222222213,
+              319106.47222222283,
+              298910.86111111066,
+              303547.4444444443,
+              286659.72222222225,
+              269163.1944444437,
+              296019.66666666616,
+              278929.41666666756,
+              290651.6388888889,
+              303333.3333333338
+            ]
+          },
+          {
+            "case": "Material9 preferences Chip SSR",
+            "iterations": 23,
+            "samples": [
+              466521.73913043557,
+              416478.26086956804,
+              421708.3478260876,
+              427865.9130434779,
+              488376.8260869562,
+              445976.47826087126,
+              462367.7391304345,
+              551507.2608695648,
+              473150.34782608884,
+              423539.8695652204,
+              446114.13043478277,
+              423009.0434782646
+            ]
+          },
+          {
+            "case": "Material9 roommates Chip SSR",
+            "iterations": 18,
+            "samples": [
+              607513.8888888886,
+              508368.05555555504,
+              604532.4444444431,
+              503560.16666666575,
+              598953.7222222275,
+              502097.22222222004,
+              638164.333333331,
+              558386.5555555576,
+              623580.9999999951,
+              520282.3888888967,
+              755793.9444444501,
+              551439.7777777858
+            ]
+          },
+          {
+            "case": "App7 status Chip SSR",
+            "iterations": 33,
+            "samples": [
+              305849.72727272986,
+              354333.33333333285,
+              315173.0000000002,
+              400491.1515151531,
+              308731.06060606445,
+              365784.09090908745,
+              312428.03030303627,
+              350231.060606065,
+              299707.090909089,
+              390352.27272727917,
+              376194.4242424265,
+              362500.0000000028
+            ]
+          },
+          {
+            "case": "App7 preferences Chip SSR",
+            "iterations": 23,
+            "samples": [
+              444762.6521739099,
+              443873.17391304194,
+              448748.2173913122,
+              449411.21739130403,
+              443404.00000000163,
+              486507.21739131375,
+              418268.1304347743,
+              449590.565217388,
+              445652.17391304346,
+              448124.9999999996,
+              432798.9130434795,
+              442945.65217390534
+            ]
+          },
+          {
+            "case": "App7 roommates Chip SSR",
+            "iterations": 17,
+            "samples": [
+              695333.352941174,
+              559460.8235294211,
+              541132.3529411567,
+              620796.5882352736,
+              555970.5882353013,
+              567840.7058823509,
+              526198.5294117788,
+              594147.0588235301,
+              603061.2941176514,
+              534843.117647062,
+              673311.2941176521,
+              537237.7058823558
+            ]
+          }
+        ],
+        "checksum": 453683498
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 47884,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 status Chip SSR",
+            "iterations": 36,
+            "samples": [
+              311306.69444444455,
+              285189.8333333338,
+              298699.0833333323,
+              278917.80555555574,
+              297936.36111111095,
+              305850.69444444455,
+              262125.00000000067,
+              288476.8611111102,
+              317723.38888888876,
+              269777.77777777746,
+              300390.0555555548,
+              330393.4999999996
+            ]
+          },
+          {
+            "case": "Material9 preferences Chip SSR",
+            "iterations": 23,
+            "samples": [
+              375619.565217389,
+              446195.65217391006,
+              416498.17391304544,
+              419253.60869565693,
+              454998.1739130445,
+              395646.7391304347,
+              419871.3478260841,
+              442076.0869565198,
+              392590.60869565216,
+              435798.9130434777,
+              427307.9565217388,
+              458534.43478260847
+            ]
+          },
+          {
+            "case": "Material9 roommates Chip SSR",
+            "iterations": 17,
+            "samples": [
+              644046.5882353024,
+              496419.11764706497,
+              558948.5294117768,
+              523379.88235293614,
+              541789.235294118,
+              615041.7058823571,
+              517879.9411764617,
+              619980.4117647065,
+              571850.5294117569,
+              619612.7647058748,
+              528779.4117646974,
+              555326.0000000029
+            ]
+          },
+          {
+            "case": "App7 status Chip SSR",
+            "iterations": 29,
+            "samples": [
+              356367.82758620975,
+              309916.6896551792,
+              367869.27586206666,
+              334866.37931034615,
+              374225.5862068995,
+              351533.068965519,
+              305093.41379310767,
+              356770.1034482744,
+              306925.27586207405,
+              341306.03448275465,
+              298183.8965517282,
+              334426.72413792904
+            ]
+          },
+          {
+            "case": "App7 preferences Chip SSR",
+            "iterations": 22,
+            "samples": [
+              503054.95454545674,
+              435179.90909090673,
+              419585.22727272584,
+              460100.36363636365,
+              446297.3181818122,
+              488806.8181818219,
+              417397.7272727247,
+              452857.95454545185,
+              432446.95454545354,
+              463551.1363636417,
+              425839.0454545468,
+              475498.090909086
+            ]
+          },
+          {
+            "case": "App7 roommates Chip SSR",
+            "iterations": 17,
+            "samples": [
+              663879.9411764868,
+              573428.9411764835,
+              621960.7647058986,
+              561406.8823529391,
+              844235.294117639,
+              578610.2941176657,
+              528289.2352941096,
+              679924.0000000014,
+              549723.0000000051,
+              547200.9411764703,
+              527691.1764705855,
+              665764.7058823653
+            ]
+          }
+        ],
+        "checksum": 532266880
+      },
+      "upstream": {
+        "pid": 47887,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 status Chip SSR",
+            "iterations": 36,
+            "samples": [
+              316019.66666666686,
+              314771.9722222209,
+              267203.694444444,
+              293778.9444444437,
+              332277.7777777791,
+              272627.333333334,
+              312206.02777777787,
+              315629.6388888885,
+              283707.19444444444,
+              295370.3611111109,
+              292864.5833333342,
+              302836.8055555559
+            ]
+          },
+          {
+            "case": "Material9 preferences Chip SSR",
+            "iterations": 23,
+            "samples": [
+              536250.0000000003,
+              401981.91304347856,
+              443333.3478260841,
+              467681.17391304317,
+              402030.7826086962,
+              458012.6956521761,
+              469510.86956521915,
+              408369.5652173931,
+              443788.0434782617,
+              479282.60869565274,
+              402066.9999999981,
+              430021.73913043365
+            ]
+          },
+          {
+            "case": "Material9 roommates Chip SSR",
+            "iterations": 17,
+            "samples": [
+              533075.9999999908,
+              604272.0588235196,
+              524269.58823529654,
+              614277.0000000087,
+              527093.1764705839,
+              600892.1176470561,
+              505416.70588234626,
+              516852.94117646664,
+              614026.999999998,
+              519071.0588235293,
+              567767.1764705846,
+              525963.2352941106
+            ]
+          },
+          {
+            "case": "App7 status Chip SSR",
+            "iterations": 29,
+            "samples": [
+              282458.3448275854,
+              309806.0344827586,
+              314738.48275862203,
+              339050.27586206415,
+              341064.65517241554,
+              306831.89655172196,
+              388551.72413793206,
+              290119.2413793179,
+              321747.13793104055,
+              330173.8620689634,
+              333334.7586206887,
+              337147.96551723714
+            ]
+          },
+          {
+            "case": "App7 preferences Chip SSR",
+            "iterations": 22,
+            "samples": [
+              419903.4090909105,
+              448823.86363636586,
+              482051.136363628,
+              426346.59090909245,
+              482308.6818181847,
+              421535.9545454579,
+              467062.49999999726,
+              443674.22727271914,
+              450789.7727272724,
+              424339.00000000076,
+              457085.22727271763,
+              425503.77272727306
+            ]
+          },
+          {
+            "case": "App7 roommates Chip SSR",
+            "iterations": 17,
+            "samples": [
+              589953.4117647015,
+              607482.8235294209,
+              574980.3529411913,
+              859754.941176481,
+              534051.4705882443,
+              575406.8235294065,
+              657578.4117647024,
+              499544.1176470462,
+              511127.4705882352,
+              563100.4705882173,
+              593090.705882359,
+              506632.3529411902
+            ]
+          }
+        ],
+        "checksum": 456901856
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "Material9 status Chip SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 298592.4230769224,
+          "vpmNs": 191771.8974358976,
+          "changePct": -35.774693992655685
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 297884.3921568622,
+          "vpmNs": 196080.48039215727,
+          "changePct": -34.175644795480345
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 297070.3124999998,
+          "vpmNs": 197602.2031250011,
+          "changePct": -33.48301906640327
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 308355.9468085106,
+          "vpmNs": 191315.59574468114,
+          "changePct": -37.9562490281764
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 298689.80555555585,
+          "vpmNs": 293335.6527777775,
+          "changePct": -1.7925462061953334
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 299103.5833333334,
+          "vpmNs": 298317.72222222167,
+          "changePct": -0.2627387817804583
+        }
+      ]
+    },
+    {
+      "case": "Material9 preferences Chip SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 434802.54347826244,
+          "vpmNs": 302168.45652174007,
+          "changePct": -30.504441371363157
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 430182.79032257886,
+          "vpmNs": 303396.48387096706,
+          "changePct": -29.472658903100058
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 437137.5250000028,
+          "vpmNs": 312529.1500000003,
+          "changePct": -28.505531525805683
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 437804.9242424244,
+          "vpmNs": 302016.4242424244,
+          "changePct": -31.015754387634587
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 449429.34782608785,
+          "vpmNs": 446045.304347827,
+          "changePct": -0.7529645081322922
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 443560.6956521729,
+          "vpmNs": 423589.65217391145,
+          "changePct": -4.502437586111585
+        }
+      ]
+    },
+    {
+      "case": "Material9 roommates Chip SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 565398.4062499972,
+          "vpmNs": 430081.9999999987,
+          "changePct": -23.93293025841442
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 574138.3200000019,
+          "vpmNs": 438936.6599999948,
+          "changePct": -23.548621523817935
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 558887.2647058853,
+          "vpmNs": 443580.88235294283,
+          "changePct": -20.631420616396134
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 571711.9347826047,
+          "vpmNs": 439055.26086956816,
+          "changePct": -23.203411690798383
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 564855.3333333363,
+          "vpmNs": 578670.1388888925,
+          "changePct": 2.445724549334072
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 530084.5882352873,
+          "vpmNs": 557137.2647058899,
+          "changePct": 5.10346406422868
+        }
+      ]
+    },
+    {
+      "case": "App7 status Chip SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 323822.5689655149,
+          "vpmNs": 219153.0344827603,
+          "changePct": -32.32311287540346
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 317796.9787234022,
+          "vpmNs": 205768.6170212782,
+          "changePct": -35.251550267137375
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 327838.70967742335,
+          "vpmNs": 211400.53225806533,
+          "changePct": -35.51690937715295
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 309221.548076922,
+          "vpmNs": 202815.30769230908,
+          "changePct": -34.41100435799619
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 328039.7878787894,
+          "vpmNs": 352282.1969696989,
+          "changePct": 7.390081931118386
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 325960.500000002,
+          "vpmNs": 338086.2068965504,
+          "changePct": 3.719992728121446
+        }
+      ]
+    },
+    {
+      "case": "App7 preferences Chip SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 475841.84090909397,
+          "vpmNs": 306285.0227272727,
+          "changePct": -35.63301996686202
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 435091.79687499965,
+          "vpmNs": 303855.4843749992,
+          "changePct": -30.162902045635253
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 443896.7083333315,
+          "vpmNs": 305220.4791666687,
+          "changePct": -31.24065273818788
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 424086.59374999756,
+          "vpmNs": 311251.93749999977,
+          "changePct": -26.60651336611568
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 451894.0217391318,
+          "vpmNs": 445207.41304347664,
+          "changePct": -1.4796851416448153
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 446249.0454545425,
+          "vpmNs": 449577.63636363205,
+          "changePct": 0.7459043202432181
+        }
+      ]
+    },
+    {
+      "case": "App7 roommates Chip SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 639559.5357142838,
+          "vpmNs": 432870.5357142846,
+          "changePct": -32.31739790560096
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 587968.282608699,
+          "vpmNs": 443268.1086956484,
+          "changePct": -24.61020061678235
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 608446.5937500028,
+          "vpmNs": 430114.59374999814,
+          "changePct": -29.309392448218276
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 574419.5000000073,
+          "vpmNs": 453632.5681818157,
+          "changePct": -21.027651710673144
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 552786.7941176442,
+          "vpmNs": 563650.764705886,
+          "changePct": 1.9653093568529956
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 575193.5882352989,
+          "vpmNs": 576019.6176470746,
+          "changePct": 0.1436089394372564
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "Material9 status Chip SSR",
+      "upstream_ns": 298238,
+      "vpm_ns": 193926,
+      "change_pct": -35,
+      "upstream_first_pct": -34.6,
+      "vpm_first_pct": -36.1,
+      "process_range_pct": "-35.8, -34.2, -33.5, -38.0",
+      "control_max_abs_pct": 1.8,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "Material9 preferences Chip SSR",
+      "upstream_ns": 435970,
+      "vpm_ns": 302782,
+      "change_pct": -30,
+      "upstream_first_pct": -29.5,
+      "vpm_first_pct": -30.2,
+      "process_range_pct": "-30.5, -29.5, -28.5, -31.0",
+      "control_max_abs_pct": 4.5,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "Material9 roommates Chip SSR",
+      "upstream_ns": 568555,
+      "vpm_ns": 438996,
+      "change_pct": -23.4,
+      "upstream_first_pct": -22.3,
+      "vpm_first_pct": -23.4,
+      "process_range_pct": "-23.9, -23.5, -20.6, -23.2",
+      "control_max_abs_pct": 5.1,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "App7 status Chip SSR",
+      "upstream_ns": 320810,
+      "vpm_ns": 208585,
+      "change_pct": -34.8,
+      "upstream_first_pct": -33.9,
+      "vpm_first_pct": -34.8,
+      "process_range_pct": "-32.3, -35.3, -35.5, -34.4",
+      "control_max_abs_pct": 7.4,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "App7 preferences Chip SSR",
+      "upstream_ns": 439494,
+      "vpm_ns": 305753,
+      "change_pct": -30.7,
+      "upstream_first_pct": -33.4,
+      "vpm_first_pct": -28.4,
+      "process_range_pct": "-35.6, -30.2, -31.2, -26.6",
+      "control_max_abs_pct": 1.5,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "App7 roommates Chip SSR",
+      "upstream_ns": 598207,
+      "vpm_ns": 438069,
+      "change_pct": -27,
+      "upstream_first_pct": -30.8,
+      "vpm_first_pct": -22.8,
+      "process_range_pct": "-32.3, -24.6, -29.3, -21.0",
+      "control_max_abs_pct": 2,
+      "evidence": "lower time in every pair, beyond control spread"
+    }
+  ]
+}

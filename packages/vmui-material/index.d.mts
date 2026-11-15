@@ -447,3 +447,17 @@ export interface SwitchProps extends Omit<CheckboxProps,'indeterminate'|'indeter
 export const Switch:React.ForwardRefExoticComponent<SwitchProps & React.RefAttributes<HTMLSpanElement>>;
 export const switchClasses:Readonly<SwitchClasses>;
 export function getSwitchUtilityClass(slot:string):string;
+
+export type ChipClasses=Record<'root'|'sizeSmall'|'sizeMedium'|'colorDefault'|'colorError'|'colorInfo'|'colorPrimary'|'colorSecondary'|'colorSuccess'|'colorWarning'|'disabled'|'clickable'|'deletable'|'outlined'|'filled'|'avatar'|'icon'|'label'|'deleteIcon'|'focusVisible',string>;
+export interface ChipOwnProps {
+ avatar?:React.ReactElement;icon?:React.ReactElement;deleteIcon?:React.ReactElement;label?:React.ReactNode;children?:null;
+ clickable?:boolean;disabled?:boolean;skipFocusWhenDisabled?:boolean;nativeButton?:boolean;
+ color?:ButtonColor|'default';size?:'small'|'medium';variant?:'filled'|'outlined';onDelete?:(event:React.SyntheticEvent)=>void;
+ classes?:Partial<ChipClasses>;sx?:SxProps<Theme>;slots?:{root?:React.ElementType;label?:React.ElementType};
+ slotProps?:{root?:ChipSlotProps|((state:ChipOwnProps)=>ChipSlotProps);label?:ChipSlotProps|((state:ChipOwnProps)=>ChipSlotProps)};
+}
+export type ChipSlotProps=React.HTMLAttributes<HTMLElement>&{ref?:React.Ref<HTMLElement>;sx?:SxProps<Theme>};
+export type ChipProps<C extends React.ElementType='div'>=ChipOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof ChipOwnProps>&{component?:C};
+export const Chip:<C extends React.ElementType='div'>(props:ChipProps<C>)=>React.ReactElement|null;
+export const chipClasses:Readonly<ChipClasses>;
+export function getChipUtilityClass(slot:string):string;

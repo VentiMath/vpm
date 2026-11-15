@@ -107,3 +107,8 @@ assert.equal(api.Switch,require('vmui-material/Switch').default);
 assert.equal(api.switchClasses,require('vmui-material/switchClasses').default);
 const switchHtml=renderToString(React.createElement(api.Switch,{defaultChecked:true,'aria-label':'Email'}));
 assert.match(switchHtml,/role="switch"/);assert.match(switchHtml,/checked=""/);
+
+assert.equal(api.Chip,require('vmui-material/Chip').default);
+assert.equal(api.chipClasses,require('vmui-material/chipClasses').default);
+const chipHtml=renderToString(React.createElement(api.Chip,{label:'Roommate',onDelete(){}}));
+assert.match(chipHtml,/MuiChip-deleteIcon/);assert.match(chipHtml,/role="button"/);

@@ -917,6 +917,26 @@
         "types": "./switchClasses.d.cts",
         "default": "./switchClasses.cjs"
       }
+    },
+    "./Chip": {
+      "import": {
+        "types": "./Chip.d.mts",
+        "default": "./Chip.mjs"
+      },
+      "require": {
+        "types": "./Chip.d.cts",
+        "default": "./Chip.cjs"
+      }
+    },
+    "./chipClasses": {
+      "import": {
+        "types": "./chipClasses.d.mts",
+        "default": "./chipClasses.mjs"
+      },
+      "require": {
+        "types": "./chipClasses.d.cts",
+        "default": "./chipClasses.cjs"
+      }
     }
   },
   "files": [

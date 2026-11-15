@@ -227,3 +227,6 @@ void switchClasses.thumb;void getSwitchUtilityClass('track');
 Switch({indeterminate:true});
 // @ts-expect-error Switch size is small or medium
 Switch({size:'large'});
+
+import Chip from 'vmui-material/Chip';
+Chip({label:'Confirmed',color:'success',variant:'outlined'});

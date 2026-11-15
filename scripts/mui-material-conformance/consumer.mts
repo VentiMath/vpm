@@ -259,3 +259,13 @@ void switchClasses.thumb;void getSwitchUtilityClass('track');
 Switch({indeterminate:true});
 // @ts-expect-error Switch size is small or medium
 Switch({size:'large'});
+
+import Chip, { chipClasses, type ChipProps } from 'vmui-material/Chip';
+import chipUtility from 'vmui-material/chipClasses';
+const chipProps:ChipProps={label:'Roommate',avatar:React.createElement('span'),onDelete:e=>e.stopPropagation(),draggable:true,onDragStart:e=>e.dataTransfer.setData('text/plain','student'),slotProps:{label:state=>({className:state.size})}};
+Chip(chipProps);Chip({component:'a',href:'/contest',ref:React.createRef<HTMLAnchorElement>(),label:'Contest',clickable:true});
+chipUtility.root satisfies string;chipClasses.label satisfies string;
+// @ts-expect-error Chip has small and medium sizes
+Chip({size:'large'});
+// @ts-expect-error ref must match the root
+Chip({component:'a',ref:React.createRef<HTMLButtonElement>()});

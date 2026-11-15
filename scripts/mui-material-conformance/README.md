@@ -271,3 +271,19 @@ Top-level input ARIA-label forwarding and reset synchronization are VPM fixes.
 Exact archives run the same controls via `VPM_MATERIAL_BROWSER_FILTER=switch-browser.cjs`.
 Use `switch-build.cjs` before `packages/vmui-material/bench/switch.cjs`; benchmark
 Node and Bun sequentially with no concurrent tests or builds.
+
+
+Chip: `chip-contract.cjs` compares 672 SSR combinations against current9/app7.
+`chip-browser.cjs` checks actual status, tag and roommate patterns with synthetic
+data: styles, overrides, CSS variables, RTL, clicks, deletion, keyboard activation,
+nested inputs, dragging, disabled semantics, refs and hydration. CSS colors are
+normalized through a canvas pixel, so equivalent rgba/relative-color syntax is
+compared by value. App7 deprecated compound Chip classes are normalized only
+in SSR checks.
+Disabled removal is deliberately blocked even when upstream dispatches the
+callback; explicit disabled ARIA is preserved.
+
+`chip-build.cjs` prepares three eight-Chip SSR workloads for `bench/chip.cjs`;
+run those in isolated processes with both controls. Avatar and SvgIcon inputs
+are unchanged controls; the package runtime uses only owned components.
+Exact archives rerun these through `VPM_MATERIAL_BROWSER_FILTER=chip-browser.cjs`.

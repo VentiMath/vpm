@@ -4,7 +4,7 @@ const fs = require("node:fs"),
   os = require("node:os"),
   assert = require("node:assert/strict"),
   { execFileSync } = require("node:child_process");
-const browserChecks=["browser.cjs", "text-browser.cjs", "surfaces-browser.cjs", "forms-browser.cjs", "input-browser.cjs", "input-variants-browser.cjs", "input-decorations-browser.cjs", "text-field-browser.cjs", "lists-browser.cjs", "menus-browser.cjs", "select-browser.cjs", "checkbox-browser.cjs", "radio-browser.cjs", "switch-browser.cjs"];
+const browserChecks=["browser.cjs", "text-browser.cjs", "surfaces-browser.cjs", "forms-browser.cjs", "input-browser.cjs", "input-variants-browser.cjs", "input-decorations-browser.cjs", "text-field-browser.cjs", "lists-browser.cjs", "menus-browser.cjs", "select-browser.cjs", "checkbox-browser.cjs", "radio-browser.cjs", "switch-browser.cjs", "chip-browser.cjs"];
 const browserFilter=process.env.VPM_MATERIAL_BROWSER_FILTER;
 assert.ok(!browserFilter||browserFilter.split(",").every(file=>browserChecks.includes(file)),"Unknown Material browser fixture filter");
 const root = path.resolve(__dirname, "../.."),
@@ -118,7 +118,7 @@ try {
       "text-contract.cjs",
       "surfaces-contract.cjs",
       "forms-contract.cjs",
-      "input-contract.cjs", "input-variants-contract.cjs", "input-decorations-contract.cjs", "text-field-contract.cjs", "lists-contract.cjs", "select-contract.cjs", "checkbox-contract.cjs", "radio-contract.cjs", "switch-contract.cjs",
+      "input-contract.cjs", "input-variants-contract.cjs", "input-decorations-contract.cjs", "text-field-contract.cjs", "lists-contract.cjs", "select-contract.cjs", "checkbox-contract.cjs", "radio-contract.cjs", "switch-contract.cjs", "chip-contract.cjs",
       ...(manager === "npm" ? browserChecks.filter(file=>!browserFilter||browserFilter.split(",").includes(file)) : []),
     ]) {
       process.stdout.write(

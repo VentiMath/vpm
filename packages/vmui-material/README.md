@@ -1,6 +1,6 @@
 # vmui-material
 
-Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup and Switch, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
+Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch and Chip, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
 
 ```js
 import { Button, ToggleButton, ToggleButtonGroup } from 'vmui-material';
@@ -391,3 +391,34 @@ The four-control and four-labelled-control Switch workloads use 48% and 33%
 less Bun time than Material9. The other Bun cases and all Node comparisons
 have no established direction beyond process/control variation. These are
 local SSR measurements, not interaction or application latency claims.
+
+
+## Chip
+
+`Chip` covers VentiMath’s remaining Material status/award labels, selectable
+contest reasons and tags, navigation badges, and draggable/removable roommate
+labels (app main `2cfe38df`). Filled/outlined colors, both sizes, avatars/icons,
+custom delete icons, root/label slots, refs and polymorphic roots are supported.
+The shared app theme’s sizing, label padding and outlined contrast overrides,
+multiline labels and custom badge colors are checked in Chrome.
+
+Click and delete stay separate: Delete/Backspace remove only when the Chip
+itself has focus; nested input keys do not remove the Chip. Disabled Chips
+cannot invoke deletion, even through keyboard or programmatic icon clicks,
+and expose disabled ARIA while retaining the documented focus policy.
+ButtonBase now preserves an explicit `aria-disabled` value. Current utility
+classes are exported,
+not app7’s deprecated compound class aliases. The cancel glyph is public
+Material design data; the component behavior is independently written.
+Avatar is an unchanged test control and remains a separate pending component.
+
+The current9/app7 comparisons cover 672 SSR cases, light/dark and variable
+themes, RTL, keyboard/click/drag callbacks, disabled behavior, hydration and
+node/ref lifetime. [Chip measurements](bench/chip/README.md) use prepared SSR
+trees, not application interaction timings. Material now has 39 independent
+components; the package remains partial and unreleased.
+
+The prepared eight-Chip SSR workloads use 16–29% less Node time and 23–35%
+less Bun time across current9/app7 comparisons. Every process pair shows lower
+time beyond the identical-source control spread. Raw samples and source hashes
+are retained. These results do not establish a browser or application speedup.

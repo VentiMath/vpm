@@ -279,7 +279,7 @@ const ButtonBase = React.forwardRef(function ButtonBase(input, forwardedRef) {
         ? { disabled }
         : {
             role: rest.href || rest.to ? undefined : "button",
-            "aria-disabled": disabled || undefined,
+            "aria-disabled": rest["aria-disabled"] ?? (disabled || undefined),
           }),
       ...(rest.role !== undefined ? { role: rest.role } : {}),
       tabIndex: disabled ? -1 : tabIndex,
