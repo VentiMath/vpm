@@ -1,0 +1,12 @@
+{
+  "name": "vpm-reselect-conformance",
+  "private": true,
+  "description": "Pinned Reselect API and unchanged MUI X selector callers",
+  "dependencies": {
+    "reselect": "5.3.0",
+    "reselect-app": "npm:reselect@5.1.1",
+    "@mui/x-internals": "8.7.0",
+    "react": "19.3.1",
+    "esbuild": "0.25.12"
+  }
+}

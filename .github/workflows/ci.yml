@@ -451,6 +451,12 @@ jobs:
         run: |
           node scripts/pack-cssjanus-release.cjs --ref "$GITHUB_SHA" --tag cssjanus-2.3.1-ci --out "$RUNNER_TEMP/cssjanus-release"
           node scripts/check-cssjanus-release.cjs "$RUNNER_TEMP/cssjanus-release"
+      - run: npm --prefix scripts/reselect-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node --test packages/vreselect/test/*.test.cjs
+      - run: node scripts/reselect-conformance/callers.cjs
+      - run: node scripts/reselect-conformance/development.cjs
+      - run: node scripts/reselect-conformance/types.cjs
+      - run: node scripts/reselect-conformance/archives.cjs
       - run: npm --prefix scripts/swipeable-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/swipeable-conformance/archives.cjs
       - run: npm --prefix scripts/highlight-words-conformance ci --ignore-scripts --no-audit --no-fund
@@ -1183,6 +1189,11 @@ jobs:
       - run: node scripts/rtl-conformance/archives.cjs
       - run: npm --prefix scripts/cssjanus-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/cssjanus-conformance/archives.cjs
+      - run: npm --prefix scripts/reselect-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: bun test packages/vreselect/test/*.test.cjs
+      - run: bun scripts/reselect-conformance/callers.cjs
+      - run: bun scripts/reselect-conformance/development.cjs
+      - run: node scripts/reselect-conformance/types.cjs
       - run: npm --prefix scripts/swipeable-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/swipeable-conformance/archives.cjs
       - run: npm --prefix scripts/highlight-words-conformance ci --ignore-scripts --no-audit --no-fund
