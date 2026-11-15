@@ -7,7 +7,7 @@ controls are Framer Motion 14.7.0 and app 12.36.0 from the sibling Motion fixtur
 React 19.3.1 and esbuild come from the Material System fixture. No upstream runtime
 source was copied or imported into the owned package.
 
-- Eleven Node/Bun tests compare initial SSR for three patterns and three tree
+- Thirteen Node/Bun tests compare initial SSR for three patterns and three tree
   sizes against both controls, plus escaped content, custom roots, stable factory
   identity, input ownership and explicit unsupported-prop errors.
 - Forty-three Chrome scenarios cover entrances, child order and dynamic insertion,
@@ -45,3 +45,7 @@ retained. This measures server rendering, not animation setup after mount,
 interaction latency, browser paint, or app startup.
 
 Custom root replacement, null/restore and callback-ref changes are now checked against both controls. These remain part of the existing app-shaped React contract; no new gesture/layout/primitive scope is claimed.
+
+The initial-render optimization also checks canonical transform ordering, ordinary CSS, array endpoints and the existing null-leading initial-array difference: VPM chooses the first non-null value while the controls omit that initial style.
+
+Sparse keyframe arrays retain their first/last present, non-null endpoints without allocating a filtered array.

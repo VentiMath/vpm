@@ -31,7 +31,10 @@ parent rerenders. Focus, refs and DOM identity survive theme and ordinary prop
 updates. Animation work and element bindings are released on unmount, including
 Strict Mode replay. Variant groups keep independent animation boundaries and
 newly mounted children animate without restarting an unchanged parent. SSR
-initial markup matches the current and app controls and hydrates in place.
+initial markup for the checked app patterns matches both controls and hydrates in place.
+For an initial keyframe array beginning with null, VPM retains its existing first
+non-null value; both controls omit that initial style. This is an explicit
+regression check, not a parity claim for that additional case.
 
 The source inventory at VentiMath `3aa9eb28` found 43 non-test files and 110 Motion
 JSX roots, importing only `motion` and `useAnimation` from `motion/react`. Those
@@ -49,11 +52,12 @@ Full production integration and a consumer release still need separate checks.
 [Conformance](../../scripts/motion-react-conformance/README.md),
 [benchmarks](bench/results/README.md) and [provenance](PROVENANCE.json) document
 the verified scope. SSR measurements are not browser frame-rate claims.
-The measured 12-root SSR workloads take 6–8% less time on Bun than the app
-control and 11–14% less than Motion 14. On Node, fade SSR takes about 8% more
-than the app control; variants and initial=false have no established difference.
-Versus Motion 14, Node takes 2.5–5.9% more. Raw process-pair variation and
-identical-source controls are retained; no browser-performance claim follows.
+Earlier timing reports are historical. The current initial-render measurements
+show 23–26% less Node time across all three workloads against both controls.
+The fade entrance now takes 23% less Node time, reversing the earlier regression.
+Bun takes 29–38% less time across these comparisons. The balanced fresh-process
+pairs and identical-source controls establish these directions for the measured
+SSR workloads; they do not establish browser animation or whole-app speed.
 
 Runtime targets are Node 24, Bun 1.4.4, React 19.3 and modern browsers.
 
@@ -70,8 +74,19 @@ This does not establish identical intermediate animation trajectories or app
 adoption. [Follow-up SSR measurements](bench/root-lifecycle/README.md) retain
 isolated controls; this is a lifecycle correction, not a new speed claim.
 
-The follow-up benchmark records about 7% more Node time for simple fade SSR
+Before the initial-render optimization, the lifecycle benchmark recorded about 7% more Node time for simple fade SSR
 against both controls. Other Node directions are unestablished. Bun is lower
-for all three Material-independent Motion 14 cases (about 12%); app 12 fade is
+for all three Motion 14 cases (about 12%); app 12 fade is
 unestablished, while variants and initial-false are lower. These SSR comparisons
 do not measure the browser lifecycle correction.
+
+
+Initial rendering now avoids temporary entry/keyframe arrays, combines native
+prop filtering with unsupported-prop validation and allocates child tracking only
+when a child mounts. No cross-request style cache or mutable input snapshot is
+introduced. [Optimized SSR measurements](bench/initial-render/README.md) supersede
+the earlier timing reports for this implementation. Browser ownership checks
+continue to cover custom-root replacement/restoration, variants, stable refs,
+StrictMode, unmount and reduced motion.
+
+The benchmark labeled fade includes an opacity/translation entrance; it is not an opacity-only workload. Sparse initial keyframe arrays retain their existing endpoints.

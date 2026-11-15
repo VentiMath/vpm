@@ -41,18 +41,27 @@ function resolve(props, definition) {
 }
 function values(target, last = false) {
   const result = {};
-  for (const [key, value] of Object.entries(target)) if (!["transition", "transitionEnd"].includes(key) && value !== void 0) {
+  for (const key of Object.keys(target)) {
+    const value = target[key];
+    if (key === "transition" || key === "transitionEnd" || value === undefined) continue;
     if (Array.isArray(value)) {
-      const usable = value.filter((x) => x !== null);
-      if (usable.length) result[key] = usable[last ? usable.length - 1 : 0];
+      for (let i = last ? value.length - 1 : 0; i >= 0 && i < value.length; i += last ? -1 : 1) {
+        if (i in value) { const sample = value[i]; if (sample !== null) { result[key] = sample; break; } }
+      }
     } else result[key] = value;
   }
   return result;
 }
 function cssStyle(input) {
-  const style = {}, parts = [];
+  const style = {};
+  let hasTransform = false;
+  for (const key of Object.keys(input)) {
+    if (transformKeys.has(key)) hasTransform = true;
+    else style[key] = input[key];
+  }
+  if (!hasTransform) return style;
+  const parts = [];
   let nonIdentity = false;
-  for (const [key, value] of Object.entries(input)) if (!transformKeys.has(key)) style[key] = value;
   for (const key of transforms) if (input[key] !== void 0) {
     const value = input[key], scale = key.startsWith("scale"), angle = /^(rotate|skew)/.test(key);
     nonIdentity ||= value !== (scale ? 1 : 0);
@@ -68,7 +77,7 @@ function stop(record) {
   record.controls = [];
 }
 function ordered(record) {
-  return [...record.children].filter((c) => c.alive && c.node && c.props.inherit !== false && c.props.animate === void 0).sort((a, b) => a.node === b.node ? 0 : a.node.compareDocumentPosition(b.node) & 2 ? 1 : -1);
+  return [...(record.children || [])].filter((c) => c.alive && c.node && c.props.inherit !== false && c.props.animate === void 0).sort((a, b) => a.node === b.node ? 0 : a.node.compareDocumentPosition(b.node) & 2 ? 1 : -1);
 }
 function specification(record, definition, override = {}) {
   const target = copy(resolve(record.props, definition));
@@ -203,8 +212,15 @@ const cache = /* @__PURE__ */ new Map();
 function create(Component) {
   if (cache.has(Component)) return cache.get(Component);
   const Motion = React.forwardRef(function Motion2(props, forwardedRef) {
-    for (const key of unsupported) if (props[key] !== void 0 && props[key] !== false) throw new TypeError(key + " is outside the VentiMath Motion React contract");
-    if (props.transformTemplate || props.onUpdate) throw new TypeError("transformTemplate/onUpdate are not implemented in the React layer");
+    const native = {};
+    for (const key of Object.keys(props)) {
+      const value = props[key];
+      if (unsupported.has(key)) {
+        if (value !== undefined && value !== false) throw new TypeError(key + " is outside the VentiMath Motion React contract");
+      } else if (reserved.has(key)) {
+        if ((key === "transformTemplate" || key === "onUpdate") && value) throw new TypeError("transformTemplate/onUpdate are not implemented in the React layer");
+      } else if (key !== "style") native[key] = value;
+    }
     const context = React.useContext(Tree), config = React.useContext(Config);
     const inherited = props.inherit === false ? void 0 : context?.animate;
     const animate = props.animate === void 0 ? inherited : props.animate;
@@ -213,7 +229,7 @@ function create(Component) {
     // React diffs this stable initial pose while the DOM animator owns later frames.
     // Ordinary style props remain live and are not captured in the initial pose.
     const [firstStyle] = React.useState(() => cssStyle(values(resolve(props, initialBlocked ? animate : initial), initialBlocked)));
-    const [record] = React.useState(() => ({ node: null, ownedNode: null, props: null, children: /* @__PURE__ */ new Set(), controls: [], generation: 0, alive: false, first: true, lastAuto: null }));
+    const [record] = React.useState(() => ({ node: null, ownedNode: null, props: null, children: null, controls: [], generation: 0, alive: false, first: true, lastAuto: null }));
     const ref = React.useCallback((node) => {
       // A custom React root may replace its DOM element without unmounting
       // this Motion component. Transfer animation ownership to the new node.
@@ -251,11 +267,11 @@ function create(Component) {
     useLayout(() => {
       record.alive = true;
       record.parent = context?.record;
-      record.parent?.children.add(record);
+      if (record.parent) (record.parent.children ||= new Set()).add(record);
       return () => {
         record.alive = false;
         queue.delete(record);
-        record.parent?.children.delete(record);
+        record.parent?.children?.delete(record);
         stop(record);
         if (record.ownedNode) dom.releaseElement(record.ownedNode);
         record.ownedNode = null;
@@ -280,10 +296,8 @@ function create(Component) {
       media?.addEventListener("change", change);
       return () => media?.removeEventListener("change", change);
     }, [config.reducedMotion, record]);
-    const native = {};
-    for (const [key, value] of Object.entries(props)) if (!reserved.has(key) && !unsupported.has(key) && key !== "style") native[key] = value;
     const tree = React.useMemo(() => ({ record, initial, animate: label(animate) ? animate : void 0 }), [record, initial, animate]);
-    return h(Tree.Provider, { value: tree }, h(Component, { ...native, ref, style: { ...cssStyle(props.style || {}), ...firstStyle } }, props.children));
+    return h(Tree.Provider, { value: tree }, h(Component, { ...native, ref, style: { ...(props.style ? cssStyle(props.style) : null), ...firstStyle } }, props.children));
   });
   Motion.displayName = "motion." + (typeof Component === "string" ? Component : Component.displayName || Component.name || "component");
   cache.set(Component, Motion);

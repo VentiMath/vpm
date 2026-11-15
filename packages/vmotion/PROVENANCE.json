@@ -22,7 +22,8 @@
     "Variant ownership crosses ordinary wrappers and respects independent animation scopes. Mounted children participate without restarting the parent.",
     "Owned animation work is stopped and element bindings released on unmount; stale completions are suppressed.",
     "Dynamic reduced-motion configuration and user preference changes stop transform playback; initial=false and SSR hydration preserve initial markup.",
-    "Custom roots transfer animation ownership when their DOM element changes or disappears and returns. Old node bindings are released and stale completion suppressed; ref-only changes on the same node retain playback. Compared with current/app controls using the Material-style polymorphic root boundary. The pinned controls recover direct DOM replacement but leave a null-restored root at its initial pose; VPM deliberately resumes it."
+    "Custom roots transfer animation ownership when their DOM element changes or disappears and returns. Old node bindings are released and stale completion suppressed; ref-only changes on the same node retain playback. Compared with current/app controls using the Material-style polymorphic root boundary. The pinned controls recover direct DOM replacement but leave a null-restored root at its initial pose; VPM deliberately resumes it.",
+    "Initial rendering removes temporary entry/keyframe arrays and combines prop filtering with validation; child sets are allocated only when a child mounts. Initial styles, variant ownership, custom-root retirement and null/root restoration remain checked. No animation snapshot is cached across requests or reused between callers."
   ],
   "references": [
     "https://motion.dev/docs/react-motion-component",

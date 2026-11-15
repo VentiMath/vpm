@@ -23,3 +23,9 @@ test('rendered inputs remain unchanged and unsupported contracts reject',()=>{
  for(const prop of ['layout','drag','whileHover'])assert.throws(()=>renderToString(R.createElement(api.motion.div,{[prop]:true})),/outside/);
  assert.throws(()=>renderToString(R.createElement(api.motion.div,{transformTemplate:()=>''})),/not implemented/);
 });
+test('initial styles preserve ordered transforms, null keyframes and plain CSS',()=>{
+ const cases=[{initial:{scale:1,x:0,rotate:0},style:{color:'red',opacity:.4}},{initial:{rotate:20,x:12,scale:.8}},{initial:{opacity:[null,.2,.8],x:[null,10,20]}},{initial:false,animate:{opacity:[null,.2,.8],x:[null,10,20]}},{initial:{opacity:.2},style:{color:'red',borderWidth:2}}];
+ for(const props of cases){const {React:R,api,renderToString}=own,actual=renderToString(R.createElement(api.motion.div,props,'Contest'));for(const version of ['current','app']){const c=require(base+'/'+version+'.cjs'),expected=c.renderToString(c.React.createElement(c.api.motion.div,props,'Contest'));if(Array.isArray(props.initial?.opacity)){assert.equal(actual,'<div style="opacity:0.2;transform:translateX(10px)">Contest</div>');assert.equal(expected,'<div>Contest</div>');}else assert.equal(actual,expected,version+' '+JSON.stringify(props));}}
+});
+
+test('initial keyframe scans preserve sparse-array endpoints',()=>{const {React:R,api,renderToString}=own;const frames=[];frames[2]=12;frames[4]=null;frames[7]=24;assert.match(renderToString(R.createElement(api.motion.div,{initial:{x:frames}})),/translateX\(12px\)/);assert.match(renderToString(R.createElement(api.motion.div,{initial:false,animate:{x:frames}})),/translateX\(24px\)/);});
