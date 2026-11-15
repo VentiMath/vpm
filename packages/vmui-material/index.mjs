@@ -39,3 +39,6 @@ export const FormHelperText = a.FormHelperText;
 export const formHelperTextClasses = a.formHelperTextClasses;
 export const getFormHelperTextUtilityClass = a.getFormHelperTextUtilityClass;
 export const useFormControl = a.useFormControl;
+export const InputBase=a.InputBase;
+export const inputBaseClasses=a.inputBaseClasses;
+export const getInputBaseUtilityClass=a.getInputBaseUtilityClass;

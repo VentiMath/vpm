@@ -77,3 +77,7 @@ assert.match(surfaces,/MuiPaper-elevation2/);assert.match(surfaces,/aria-orienta
 const forms=renderToString(React.createElement(api.FormControl,{required:true,error:true},React.createElement(api.FormLabel,{htmlFor:'field'},'Contest'),React.createElement(api.FormHelperText,null,' ')));
 assert.match(forms,/Mui-required/);assert.match(forms,/Mui-error/);assert.match(forms,/aria-hidden="true"/);
 assert.equal(api.useFormControl,require('vmui-material/FormControl/useFormControl').default);
+
+const inputs=renderToString(React.createElement(api.FormControl,{required:true},React.createElement(api.InputBase,{id:'field','aria-label':'Contest',defaultValue:'AMC',multiline:true,rows:2})));
+assert.match(inputs,/<textarea[^>]*aria-label="Contest"/);assert.match(inputs,/>AMC<\/textarea>/);assert.equal((inputs.match(/<textarea/g)||[]).length,1);
+assert.equal(api.InputBase,require('vmui-material/InputBase').default);

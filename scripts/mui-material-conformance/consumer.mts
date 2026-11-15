@@ -159,3 +159,16 @@ FormLabel({component:'legend',ref:React.createRef<SVGSVGElement>()});
 // @ts-expect-error helper error is boolean
 FormHelperText({error:'yes'});
 void [FormControlEntry,FormLabelEntry,HelperEntry,useFormControl,formHook,formContext];
+
+import {InputBase,type InputBaseProps} from 'vmui-material';
+import InputBaseEntry from 'vmui-material/InputBase';
+InputBase({ref:React.createRef<HTMLDivElement>(),inputRef:React.createRef<HTMLInputElement>(),type:'number',inputProps:{min:0,max:100},onChange:e=>{const value:string=e.target.value;void value;}});
+InputBase({multiline:true,minRows:2,maxRows:4,slotProps:{input:{'aria-label':'Travel notes',maxLength:100}}});
+const inputOptions:InputBaseProps={value:0,required:true,error:false,slots:{root:'section'},renderSuffix:s=>s.focused?'Focused':null};
+// @ts-expect-error root ref points to a div, not an SVG
+InputBase({ref:React.createRef<SVGSVGElement>()});
+// @ts-expect-error numeric or string row limit
+InputBase({maxRows:{}});
+// @ts-expect-error boolean disabled
+InputBase({disabled:'no'});
+void [InputBaseEntry,inputOptions];

@@ -281,3 +281,18 @@ export type FormHelperTextProps<C extends React.ElementType="p">=FormHelperTextO
 export const FormHelperText:TextComponent<FormHelperTextOwnProps,"p">;
 export const formHelperTextClasses:Readonly<FormHelperTextClasses>;
 export function getFormHelperTextUtilityClass(slot:string):string;
+
+export interface InputBaseComponentProps extends React.HTMLAttributes<HTMLInputElement|HTMLTextAreaElement> { [key:string]:any; }
+export type InputBaseClasses=Record<'root'|'formControl'|'focused'|'disabled'|'adornedStart'|'adornedEnd'|'error'|'sizeSmall'|'multiline'|'colorSecondary'|'fullWidth'|'hiddenLabel'|'readOnly'|'input'|'inputTypeSearch',string>;
+export interface InputBaseProps extends Omit<React.HTMLAttributes<HTMLDivElement>,'children'|'defaultValue'|'onChange'|'onFocus'|'onBlur'|'onKeyDown'|'onKeyUp'|'onInvalid'> {
+ classes?:Partial<InputBaseClasses>; color?:ButtonColor; disabled?:boolean; error?:boolean; fullWidth?:boolean; required?:boolean; readOnly?:boolean; multiline?:boolean; disableInjectingGlobalStyles?:boolean; size?:'small'|'medium'|(string & {}); margin?:'none'|'dense';
+ autoComplete?:string; autoFocus?:boolean; defaultValue?:unknown; value?:unknown; name?:string; placeholder?:string; type?:string; rows?:number|string; minRows?:number|string; maxRows?:number|string;
+ startAdornment?:React.ReactNode; endAdornment?:React.ReactNode; inputComponent?:React.ElementType<InputBaseComponentProps>; inputProps?:InputBaseComponentProps; inputRef?:React.Ref<any>; sx?:SxProps<Theme>;
+ slots?:{root?:React.ElementType;input?:React.ElementType}; slotProps?:{root?:React.HTMLAttributes<HTMLDivElement>&{ref?:React.Ref<HTMLDivElement>;sx?:SxProps<Theme>};input?:InputBaseComponentProps&{sx?:SxProps<Theme>}};
+ /** Retained for app Material 7 callers. */ components?:{Root?:React.ElementType;Input?:React.ElementType}; componentsProps?:InputBaseProps['slotProps'];
+ onChange?:React.ChangeEventHandler<HTMLInputElement|HTMLTextAreaElement>; onFocus?:React.FocusEventHandler<HTMLInputElement|HTMLTextAreaElement>; onBlur?:React.FocusEventHandler<HTMLInputElement|HTMLTextAreaElement>; onKeyDown?:React.KeyboardEventHandler<HTMLInputElement|HTMLTextAreaElement>; onKeyUp?:React.KeyboardEventHandler<HTMLInputElement|HTMLTextAreaElement>; onInvalid?:React.FormEventHandler<HTMLInputElement|HTMLTextAreaElement>;
+ renderSuffix?:(state:{disabled?:boolean;error?:boolean;filled?:boolean;focused?:boolean;required?:boolean;margin?:'none'|'dense'|'normal';startAdornment?:React.ReactNode})=>React.ReactNode;
+}
+export const InputBase:React.ForwardRefExoticComponent<InputBaseProps & React.RefAttributes<HTMLDivElement>>;
+export const inputBaseClasses:Readonly<InputBaseClasses>;
+export function getInputBaseUtilityClass(slot:string):string;

@@ -487,6 +487,26 @@
         "types": "./FormControl/FormControlContext.d.cts",
         "default": "./FormControl/FormControlContext.cjs"
       }
+    },
+    "./InputBase": {
+      "import": {
+        "types": "./InputBase.d.mts",
+        "default": "./InputBase.mjs"
+      },
+      "require": {
+        "types": "./InputBase.d.cts",
+        "default": "./InputBase.cjs"
+      }
+    },
+    "./inputBaseClasses": {
+      "import": {
+        "types": "./inputBaseClasses.d.mts",
+        "default": "./inputBaseClasses.mjs"
+      },
+      "require": {
+        "types": "./inputBaseClasses.d.cts",
+        "default": "./inputBaseClasses.cjs"
+      }
     }
   },
   "files": [

@@ -4,6 +4,9 @@ const fs = require("node:fs"),
   os = require("node:os"),
   assert = require("node:assert/strict"),
   { execFileSync } = require("node:child_process");
+const browserChecks=["browser.cjs", "text-browser.cjs", "surfaces-browser.cjs", "forms-browser.cjs", "input-browser.cjs"];
+const browserFilter=process.env.VPM_MATERIAL_BROWSER_FILTER;
+assert.ok(!browserFilter||browserChecks.includes(browserFilter),"Unknown Material browser fixture filter");
 const root = path.resolve(__dirname, "../.."),
   scratch = fs.mkdtempSync(path.join(os.tmpdir(), "vmui-material-archives-"));
 const run = (bin, args, cwd = scratch) =>
@@ -115,7 +118,8 @@ try {
       "text-contract.cjs",
       "surfaces-contract.cjs",
       "forms-contract.cjs",
-      ...(manager === "npm" ? ["browser.cjs", "text-browser.cjs", "surfaces-browser.cjs", "forms-browser.cjs"] : []),
+      "input-contract.cjs",
+      ...(manager === "npm" ? browserChecks.filter(file=>!browserFilter||file===browserFilter) : []),
     ]) {
       process.stdout.write(
         execFileSync("node", [__dirname + "/" + file], {
