@@ -4,7 +4,7 @@ const fs = require("node:fs"),
   os = require("node:os"),
   assert = require("node:assert/strict"),
   { execFileSync } = require("node:child_process");
-const browserChecks=["browser.cjs", "text-browser.cjs", "surfaces-browser.cjs", "forms-browser.cjs", "input-browser.cjs"];
+const browserChecks=["browser.cjs", "text-browser.cjs", "surfaces-browser.cjs", "forms-browser.cjs", "input-browser.cjs", "input-variants-browser.cjs"];
 const browserFilter=process.env.VPM_MATERIAL_BROWSER_FILTER;
 assert.ok(!browserFilter||browserChecks.includes(browserFilter),"Unknown Material browser fixture filter");
 const root = path.resolve(__dirname, "../.."),
@@ -118,7 +118,7 @@ try {
       "text-contract.cjs",
       "surfaces-contract.cjs",
       "forms-contract.cjs",
-      "input-contract.cjs",
+      "input-contract.cjs", "input-variants-contract.cjs",
       ...(manager === "npm" ? browserChecks.filter(file=>!browserFilter||file===browserFilter) : []),
     ]) {
       process.stdout.write(

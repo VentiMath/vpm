@@ -1,0 +1,14 @@
+'use strict';
+const assert=require('node:assert/strict');
+const {peer}=require('./paths.cjs'),R=peer('react'),h=R.createElement,render=peer('react-dom/server').renderToStaticMarkup,own=require(require('./prepare.cjs'));
+const old=new Set(['InputBase','Input','OutlinedInput'].flatMap(n=>['inputSizeSmall','inputMultiline','inputAdornedStart','inputAdornedEnd','inputHiddenLabel',...(n==='InputBase'?[]:['colorSecondary','sizeSmall','multiline','adornedStart','adornedEnd','formControl'])].map(s=>'Mui'+n+'-'+s)));
+function normalize(html){return html.replace(/<style[\s\S]*?<\/style>/g,'').replace(/<textarea aria-hidden="true"[\s\S]*?<\/textarea>/g,'').replace(/ class="([^"]*)"/g,(_,s)=>' class="'+s.split(' ').filter(c=>!c.startsWith('css-')&&!old.has(c)).sort().join(' ')+'"').replace(/<([\w-]+)([^>]*)>/g,(_,tag,attrs)=>'<'+tag+[...attrs.matchAll(/([\w:-]+)="([^"]*)"/g)].map(x=>' '+x[1]+'="'+x[2]+'"').sort().join('')+'>');}
+const cases=[];
+for(const disabled of [undefined,false,true])for(const error of [undefined,false,true])for(const size of ['small','medium'])for(const multiline of [false,true])for(const defaultValue of ['',0,'Contest'])cases.push({disabled,error,size,multiline,defaultValue});
+cases.push({classes:{underline:'custom-underline',notchedOutline:'custom-outline'}},{required:true,readOnly:true},{startAdornment:'$',endAdornment:'kg',fullWidth:true},{label:0,notched:true},{label:'<Contest>',required:true},{label:'',notched:false},{disableUnderline:true},{slots:{root:'section'},slotProps:{root:{'data-root':'custom'},input:{maxLength:5}}},{inputProps:{id:'inner',value:'inner'},id:'outer',value:'outer',onChange(){}},{type:'search',classes:{root:'app-root',input:'app-input',error:'app-error'},error:true},{multiline:true,rows:3},{multiline:true,minRows:2,maxRows:4});
+let checks=0;
+for(const pkg of ['@mui/material','mui-material-app'])for(const name of ['Input','OutlinedInput'])for(const props of cases)for(const parent of [false,true]){
+ const control=peer(pkg),draw=M=>{const p={label:'Contest',...props};if(name==='Input')delete p.label;else delete p.disableUnderline;let html=render(parent?h(M.FormControl,{error:true,required:true,color:'secondary',size:'small'},h(M[name],p)):h(M[name],p));if(p.slots?.root==='section'){if(M===control)assert.match(html,/classes="\[object Object\]"/);else assert.doesNotMatch(html,/ classes=/);html=html.replace(/ classes="\[object Object\]"/,'');if(name==='Input'&&M===control)assert.match(html,/ownerState="\[object Object\]"/);else assert.doesNotMatch(html,/ ownerState=/);html=html.replace(/ ownerState="\[object Object\]"/,'');}return normalize(html)};
+ assert.equal(draw(own),draw(control),pkg+' '+name+' '+JSON.stringify(props)+' parent='+parent);checks++;
+}
+console.log(checks+' Input/OutlinedInput visible SSR, native attributes, legend and initial form-state comparisons pass');

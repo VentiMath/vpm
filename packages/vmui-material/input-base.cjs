@@ -91,9 +91,13 @@ const InputBase=React.forwardRef(function InputBase(input,forwardedRef){
  const actual=auto?"textarea":inputComponent;
  if(typeof Field!=="string"){fieldProps.as=actual;fieldProps.ownerState={...state,...extra.ownerState};}
  const rootOptions={...rootProps,...rest,...(onInvalid===undefined?{}:{onInvalid}),required:ownRequired,ref:rootRef,onClick:event=>{if(event.target===event.currentTarget)node.current?.focus?.();onClick?.(event);},className:rootClass};
+ delete rootOptions.ownerState;
  if(typeof Root!=="string")rootOptions.ownerState={...state,...rootProps.ownerState};
  return h(React.Fragment,null,!disableInjectingGlobalStyles&&h(GlobalStyles,{styles:keyframes}),h(Root,rootOptions,startAdornment,h(FormControlContext.Provider,{value:undefined},h(Field,fieldProps)),endAdornment,renderSuffix?.({color,disabled,error,hiddenLabel,size,required,filled:context?.filled,focused,startAdornment,margin:inherit("margin",margin)})));
 });
 InputBase.displayName="InputBase";
 const inputBaseClasses=Object.freeze(Object.fromEntries(["root","formControl","focused","disabled","adornedStart","adornedEnd","error","sizeSmall","multiline","colorSecondary","fullWidth","hiddenLabel","readOnly","input","inputTypeSearch"].map(slot=>[slot,utility(slot)])));
 module.exports={InputBase,inputBaseClasses,getInputBaseUtilityClass:utility};
+
+// Internal styled primitives shared by the independent input variants.
+Object.defineProperties(module.exports,{InputBaseRoot:{value:InputBaseRoot},InputBaseInput:{value:InputBaseInput}});

@@ -18,7 +18,7 @@ export function InputScene({mode='light',rtl=false,variables=false,custom=false,
  const control=React.useRef(null),label=React.useRef(null),helper=React.useRef(null);
  const counts=React.useRef({focus:0,blur:0});
  React.useEffect(()=>{window.formControls={control,label,helper,counts};},[]);
- React.useEffect(()=>()=>cache.sheet.flush(),[cache]);
+
  return <CacheProvider value={cache}><ThemeProvider theme={theme}><section id="forms" dir={rtl?'rtl':'ltr'} data-tick={tick} style={{fontFamily:'Arial',fontSize:16,padding:20,background:mode==='dark'?'#121212':'#fff'}}>
  {mount&&<FormControl id="control" ref={control} disabled={disabled} error={error} required={required} focused={focused} fullWidth margin="normal" onFocus={()=>counts.current.focus++} onBlur={()=>counts.current.blur++} sx={{maxWidth:{xs:280,sm:400},mb:2}}>
  <FormLabel id="label" ref={label} htmlFor="contest">Contest</FormLabel>
@@ -34,7 +34,7 @@ export function InputScene({mode='light',rtl=false,variables=false,custom=false,
  <InputCases/><button id="outside">Outside</button>
  </section></ThemeProvider></CacheProvider>;
 }
-export function HydrationScene(){const cache=React.useMemo(()=>createCache({key:'formhydrate'}),[]);React.useEffect(()=>()=>cache.sheet.flush(),[cache]);return <CacheProvider value={cache}><FormControl required size="small"><FormLabel htmlFor="hydrate-input">Contest</FormLabel><InputBase id="hydrate-input" defaultValue="AMC" aria-describedby="hydrate-help"/><FormHelperText id="hydrate-help">Required</FormHelperText><Probe id="hydrate-state"/></FormControl></CacheProvider>}
+export function HydrationScene(){const cache=React.useMemo(()=>createCache({key:'formhydrate'}),[]);return <CacheProvider value={cache}><FormControl required size="small"><FormLabel htmlFor="hydrate-input">Contest</FormLabel><InputBase id="hydrate-input" defaultValue="AMC" aria-describedby="hydrate-help"/><FormHelperText id="hydrate-help">Required</FormHelperText><Probe id="hydrate-state"/></FormControl></CacheProvider>}
 
 const CustomInput=React.forwardRef(function CustomInput({ownerState,as,...props},ref){return <input {...props} ref={ref} data-custom="true"/>});
 function InputCases(){
@@ -57,4 +57,4 @@ function InputCases(){
  </section>;
 }
 
-export function ForeignScene({doc}){const cache=React.useMemo(()=>createCache({key:'foreigninput',container:doc.head}),[doc]);React.useEffect(()=>()=>cache.sheet.flush(),[cache]);return <CacheProvider value={cache}><InputBase id="foreign" multiline minRows={2} maxRows={3} fullWidth defaultValue={'one\ntwo\nthree\nfour'} inputProps={{'aria-label':'Foreign notes'}}/></CacheProvider>}
+export function ForeignScene({doc}){const cache=React.useMemo(()=>createCache({key:'foreigninput',container:doc.head}),[doc]);return <CacheProvider value={cache}><InputBase id="foreign" multiline minRows={2} maxRows={3} fullWidth defaultValue={'one\ntwo\nthree\nfour'} inputProps={{'aria-label':'Foreign notes'}}/></CacheProvider>}

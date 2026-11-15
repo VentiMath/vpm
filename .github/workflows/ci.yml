@@ -82,6 +82,7 @@ jobs:
           node scripts/mui-material-conformance/surfaces-contract.cjs
           node scripts/mui-material-conformance/forms-contract.cjs
           node scripts/mui-material-conformance/input-contract.cjs
+          node scripts/mui-material-conformance/input-variants-contract.cjs
           node scripts/mui-material-conformance/types.cjs
           node scripts/mui-material-conformance/browser.cjs
           VPM_REACT_MODE=development node scripts/mui-material-conformance/browser.cjs
@@ -93,6 +94,8 @@ jobs:
           VPM_REACT_MODE=development node scripts/mui-material-conformance/forms-browser.cjs
           node scripts/mui-material-conformance/input-browser.cjs
           VPM_REACT_MODE=development node scripts/mui-material-conformance/input-browser.cjs
+          node scripts/mui-material-conformance/input-variants-browser.cjs
+          VPM_REACT_MODE=development node scripts/mui-material-conformance/input-variants-browser.cjs
           node scripts/mui-material-conformance/archives.cjs
       - name: Motion React application patterns
         run: |
@@ -939,6 +942,7 @@ jobs:
           bun scripts/mui-material-conformance/surfaces-contract.cjs
           bun scripts/mui-material-conformance/forms-contract.cjs
           bun scripts/mui-material-conformance/input-contract.cjs
+          bun scripts/mui-material-conformance/input-variants-contract.cjs
           bun test packages/vmui-system/test/system.test.cjs
           bun scripts/mui-system-conformance/primitives.cjs
           bun scripts/mui-system-conformance/colors.cjs

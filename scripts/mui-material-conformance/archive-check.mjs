@@ -81,3 +81,5 @@ assert.equal(api.useFormControl,require('vmui-material/FormControl/useFormContro
 const inputs=renderToString(React.createElement(api.FormControl,{required:true},React.createElement(api.InputBase,{id:'field','aria-label':'Contest',defaultValue:'AMC',multiline:true,rows:2})));
 assert.match(inputs,/<textarea[^>]*aria-label="Contest"/);assert.match(inputs,/>AMC<\/textarea>/);assert.equal((inputs.match(/<textarea/g)||[]).length,1);
 assert.equal(api.InputBase,require('vmui-material/InputBase').default);
+
+for(const name of ['Input','OutlinedInput']){const html=renderToString(React.createElement(api[name],{label:name==='OutlinedInput'?'Contest':undefined,defaultValue:'AMC'}));assert.match(html,new RegExp('Mui'+name+'-root'));assert.equal(api[name],require('vmui-material/'+name).default);}

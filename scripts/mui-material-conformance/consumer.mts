@@ -172,3 +172,12 @@ InputBase({maxRows:{}});
 // @ts-expect-error boolean disabled
 InputBase({disabled:'no'});
 void [InputBaseEntry,inputOptions];
+
+import Input, {inputClasses} from 'vmui-material/Input';
+import OutlinedInput, {outlinedInputClasses} from 'vmui-material/OutlinedInput';
+React.createElement(Input,{disableUnderline:true,inputRef:React.createRef<HTMLInputElement>(),type:'number',inputProps:{min:0,max:100},classes:{underline:inputClasses.underline}});
+React.createElement(OutlinedInput,{label:'Contest',notched:false,multiline:true,minRows:2,slotProps:{notchedOutline:state=>({'aria-hidden':true,'aria-label':state.required?'Required':'Optional',ref:React.createRef<HTMLFieldSetElement>()})},classes:{notchedOutline:outlinedInputClasses.notchedOutline}});
+// @ts-expect-error outlined variants have no underline switch
+React.createElement(OutlinedInput,{disableUnderline:true});
+// @ts-expect-error notched is a boolean
+React.createElement(OutlinedInput,{notched:'yes'});

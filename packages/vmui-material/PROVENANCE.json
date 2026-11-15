@@ -8,7 +8,7 @@
   "implementation": {
     "kind": "independent implementation",
     "replacementStatus": "partial; remaining component families pending",
-    "targetScope": "Eighteen components: button controls, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText and InputBase; createSvgIcon and the scoped resolved-theme bridge. Includes controlled/uncontrolled native inputs, custom slots/refs, autofill state, client-owned textarea measurement, and shared input focus/filled/required/error state, native label and helper accessibility, form theme overrides, surfaces/elevations, horizontal/vertical and labelled dividers, font-icon fallback, current custom-root props, nested/CSS-variable themes and responsive sx. Full Material theme creation and remaining families are not implemented.",
+    "targetScope": "Twenty components: button controls, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input and OutlinedInput; createSvgIcon and the scoped resolved-theme bridge. Includes controlled/uncontrolled native inputs, custom slots/refs, autofill state, client-owned textarea measurement, and shared input focus/filled/required/error state, native label and helper accessibility, form theme overrides, surfaces/elevations, horizontal/vertical and labelled dividers, font-icon fallback, current custom-root props, nested/CSS-variable themes and responsive sx. Full Material theme creation and remaining families are not implemented.",
     "independentComponents": [
       "ButtonBase",
       "Button",
@@ -27,9 +27,11 @@
       "FormControl",
       "FormLabel",
       "FormHelperText",
-      "InputBase"
+      "InputBase",
+      "Input",
+      "OutlinedInput"
     ],
-    "remainingWork": "Input/OutlinedInput/InputLabel/TextField and remaining form controls; remaining surfaces and data display; navigation, menus, tabs and overlays; full Material theme creation and remaining app-used exports; whole-app integration and consumer release."
+    "remainingWork": "InputLabel/InputAdornment/TextField and remaining form controls; remaining surfaces and data display; navigation, menus, tabs and overlays; full Material theme creation and remaining app-used exports; whole-app integration and consumer release."
   },
   "changes": [
     "Written independently over VPM System and its styling closure; no upstream Material runtime, Babel or prop-types ships.",
@@ -44,7 +46,8 @@
     "Paper preserves caller shadow/overlay variables and theme overrides; invalid noninteger or out-of-range elevations reject explicitly. Divider preserves separator roles/orientation and legacy app light/vertical-children hooks. Font icons remain decorative unless explicitly exposed.",
     "Box now forwards custom-root API props such as Icon color/fontSize instead of consuming them as System styles, matching Material 9. App Material 7 has the collision; the browser fixture asserts this intentional difference. Native roots retain app direct System props.",
     "Independent FormControl state provider and useFormControl; FormLabel and FormHelperText inherit only undefined options, preserve explicit false, expose native label/helper semantics and reset stale focus on disable. Initial filled/adornment state supports recognized Input/Select children for SSR. Shared provider identity across CJS/ESM context entries; no upstream input code ships.",
-    "Independent InputBase renders native inputs and textareas over VPM styles and FormControl context. Preserves value ownership, input/slot prop precedence, refs and React Hook Form callbacks; follows Material9 native input aria-label placement. Native slot roots do not leak the internal classes object. Multiline measurement is a client-owned node in the field ownerDocument with width-sensitive ResizeObserver scheduling and cleanup; no hidden mirror is serialized into SSR. Measurement lifetime follows the live DOM ref, including custom-root replacement, rather than only the outer component lifetime."
+    "Independent InputBase renders native inputs and textareas over VPM styles and FormControl context. Preserves value ownership, input/slot prop precedence, refs and React Hook Form callbacks; follows Material9 native input aria-label placement. Native slot roots do not leak the internal classes object. Multiline measurement is a client-owned node in the field ownerDocument with width-sensitive ResizeObserver scheduling and cleanup; no hidden mirror is serialized into SSR. Measurement lifetime follows the live DOM ref, including custom-root replacement, rather than only the outer component lifetime.",
+    "Independent standard Input and OutlinedInput compose the owned InputBase engine. Includes underline focus/error/disabled states, outlined fieldset/legend notch, initial value and adornment form state, required labels, current outline slots and legacy app padding overrides. Native slot roots omit internal ownerState and classes attributes that upstream can leak. No upstream Material runtime is included."
   ],
   "caller": {
     "scope": "Navigation actions, contest forms, family area/reminder toggles, palette selector and navbar Fab. Building this subset does not switch VentiMath dependencies. Navigation search and link roots, theme typography and icon sizing, and @mui/icons-material consumers in MustangMath, I2MC and IMO. FuseSvgIcon instead uses styled Box, SVG sprite references and an Icon fallback. Material icons and FuseSvgIcon are distinct callers. Shared external-link actions combine IconButton with motion.button and inherited variants. Paper appears in contest registration/results and public authentication panels; Divider in shared navigation and vertical toolbars; Icon in palette selection and FuseSvgIcon\u2019s non-SVG fallback. Form foundations are used by FuseSettings number/radio/switch controllers and palette selection; the shared theme changes label typography, control color and helper margins. Browser checks use synthetic settings forms and unchanged upstream InputBase through a test-only context bridge. InputBase is an indirect dependency of TextField/table fields, not a direct app import. Audited NumberFormController numeric limits, shared DataTable search/filter styling, ARML multiline preferences and WARML fixed-row contact fields. Synthetic acceptance uses unchanged current/app React Hook Form Controllers.",
@@ -65,6 +68,8 @@
     "https://mui.com/material-ui/api/form-control/",
     "https://mui.com/material-ui/api/form-label/",
     "https://mui.com/material-ui/api/form-helper-text/",
-    "https://mui.com/material-ui/api/input-base/"
+    "https://mui.com/material-ui/api/input-base/",
+    "https://mui.com/material-ui/api/input/",
+    "https://mui.com/material-ui/api/outlined-input/"
   ]
 }

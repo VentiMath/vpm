@@ -161,3 +161,41 @@ Its acceptance retains the same browser/state cases and adds scoped, fallback
 and live theme/owner-state checks. Unit-test preparation writes a process-specific
 bundle so parallel Node test files cannot load each other's partially written
 output. The System caller SSR and Chrome suites also cover the shared styling change.
+
+Input and OutlinedInput add 960 paired visible SSR/initial-state comparisons
+against Material 9.5.0 and app 7.2.0. The variant browser fixture compares
+light/dark, RTL/LTR, ordinary/CSS-variable themes, disabled/error states, and
+VentiMath-style padding overrides. It checks underline focus, outlined notch,
+retained input/selection, React Hook Form number/textarea controllers, accessible
+labels/helpers, custom outline slots and hydration. Headless focus emulation
+ensures native focus events are delivered.
+
+Material 9 no longer applies the legacy per-input size/adornment override keys.
+The browser test asserts their precise padding/geometry differences before
+comparing the remaining current-control CSS. The app-7 comparison has no such
+allowance: it must match the VentiMath legacy theme behavior directly. SSR tests
+also assert upstream's native-slot `classes`/`ownerState` leaks before removing
+those attributes from the comparison; VPM does not emit them.
+
+```sh
+node scripts/mui-material-conformance/input-variants-contract.cjs
+bun scripts/mui-material-conformance/input-variants-contract.cjs
+node scripts/mui-material-conformance/input-variants-browser.cjs
+VPM_REACT_MODE=development node scripts/mui-material-conformance/input-variants-browser.cjs
+node scripts/mui-material-conformance/input-variants-build.cjs
+```
+
+The new component unit tests, strict NodeNext/Bundler consumers and full
+18-package archive checks include these entries. Browser evidence is local
+Chrome, not application adoption or Safari/Firefox acceptance.
+
+The input fixtures keep Emotion caches alive for their document lifetime. A
+component-effect cleanup must not flush a live cache during StrictMode replay;
+that would compare controls with missing styles. Frame/document teardown owns
+fixture styles. The textarea measurement nodes still have explicit ref cleanup.
+
+[Input/OutlinedInput benchmarks](../../packages/vmui-material/bench/input-variants/README.md)
+use the same isolated process harness; `bench/input-variants.cjs` records the
+standard, outlined, multiline and complete-field SSR cases. The new native input
+engine file is named `input-base.cjs`, leaving `Input.cjs` available as a public
+entry on case-insensitive filesystems too.

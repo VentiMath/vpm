@@ -296,3 +296,20 @@ export interface InputBaseProps extends Omit<React.HTMLAttributes<HTMLDivElement
 export const InputBase:React.ForwardRefExoticComponent<InputBaseProps & React.RefAttributes<HTMLDivElement>>;
 export const inputBaseClasses:Readonly<InputBaseClasses>;
 export function getInputBaseUtilityClass(slot:string):string;
+
+export type InputClasses=Record<'root'|'colorSecondary'|'focused'|'disabled'|'adornedStart'|'adornedEnd'|'error'|'sizeSmall'|'multiline'|'input'|'inputTypeSearch'|'underline',string>;
+export type OutlinedInputClasses=Record<Exclude<keyof InputClasses,'underline'>|'notchedOutline',string>;
+export interface InputProps extends Omit<InputBaseProps,'classes'> {classes?:Partial<InputClasses>; disableUnderline?:boolean; notched?:boolean;}
+export interface OutlinedInputProps extends Omit<InputBaseProps,'classes'|'slots'|'slotProps'> {
+ classes?:Partial<OutlinedInputClasses>; label?:React.ReactNode; notched?:boolean;
+ slots?:NonNullable<InputBaseProps['slots']>&{notchedOutline?:React.ElementType};
+ slotProps?:NonNullable<InputBaseProps['slotProps']>&{notchedOutline?:OutlinedInputOutlineProps|((ownerState:OutlinedInputOwnerState)=>OutlinedInputOutlineProps)};
+}
+export interface OutlinedInputOwnerState extends Omit<OutlinedInputProps,'slots'|'slotProps'> {}
+export type OutlinedInputOutlineProps=React.FieldsetHTMLAttributes<HTMLFieldSetElement>&{ref?:React.Ref<HTMLFieldSetElement>;sx?:SxProps<Theme>};
+export const Input:React.ForwardRefExoticComponent<InputProps & React.RefAttributes<HTMLDivElement>> & {muiName:string};
+export const OutlinedInput:React.ForwardRefExoticComponent<OutlinedInputProps & React.RefAttributes<HTMLDivElement>> & {muiName:string};
+export const inputClasses:Readonly<InputClasses>;
+export const outlinedInputClasses:Readonly<OutlinedInputClasses>;
+export function getInputUtilityClass(slot:string):string;
+export function getOutlinedInputUtilityClass(slot:string):string;
