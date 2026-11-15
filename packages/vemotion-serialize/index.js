@@ -182,6 +182,28 @@ You should wrap it with \`css\` like this:
 css\`${replaced}\``);
 }
 
+// Cache only the name of exact final CSS, never interpolation results or the
+// mutable linked keyframes. Callbacks still execute on every serialization.
+// Both entry count and retained input length are bounded for request-driven CSS.
+const recentNames = new Map(), nameKeys = [];
+let nameCursor = 0;
+function styleName(styles) {
+  const found = recentNames.get(styles);
+  if (found !== undefined) return found;
+  let labels = '';
+  for (const match of styles.matchAll(LABEL)) labels += '-' + match[1];
+  const name = hashString(styles) + labels;
+  if (styles.length <= 16384) {
+    if (nameKeys.length === 256) {
+      recentNames.delete(nameKeys[nameCursor]);
+      nameKeys[nameCursor] = styles;
+      nameCursor = (nameCursor + 1) % 256;
+    } else nameKeys.push(styles);
+    recentNames.set(styles, name);
+  }
+  return name;
+}
+
 /**
  * Serializes style arguments: a tagged template's strings and values, or
  * interpolations. Returns the styles, their name (the hash of the styles and
@@ -210,9 +232,7 @@ export function serializeStyles(args, registered, mergedProps) {
     }
   }
 
-  let identifierName = '';
-  for (const match of styles.matchAll(LABEL)) identifierName += '-' + match[1];
-  const name = hashString(styles) + identifierName;
+  const name = styleName(styles);
   const serialized = {name, styles, next: serialization.keyframes};
   if (isDevelopment) serialized.toString = () => STRINGIFIED_STYLES_MESSAGE;
   return serialized;

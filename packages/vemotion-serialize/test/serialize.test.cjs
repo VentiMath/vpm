@@ -36,3 +36,16 @@ test('each call collects only its own keyframes (nested calls in functions)', as
   for (let next = result.next; next; next = next.next) names.push(next.name);
   assert.deepEqual(names, ['inner', 'outer']);
 });
+
+test('repeated exact CSS retains live callbacks, Unicode and fresh keyframe chains', async()=>{
+ const serialize=await load();let calls=0;
+ const frame={name:'same',styles:'@keyframes same{to{opacity:1}}',anim:1};
+ const style=()=>{calls++;return {content:'"∑😀"',animationName:frame,label:'Contest'}};
+ const a=serialize([style],undefined,{});a.next.styles='mutated by caller';
+ frame.styles='@keyframes same{to{opacity:0}}';
+ const b=serialize([style],undefined,{});
+ assert.equal(calls,2);assert.equal(a.name,b.name);assert.notEqual(a.next,b.next);assert.equal(b.next.styles,frame.styles);
+ for(let i=0;i<600;i++)serialize([{width:i}]);
+ assert.equal(serialize([style],undefined,{}).name,b.name);
+ assert.notEqual(serialize([{content:'"Ā"'}]).name,serialize([{content:'"\\0"'}]).name);
+});

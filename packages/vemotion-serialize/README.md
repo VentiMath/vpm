@@ -35,3 +35,8 @@ development and production builds, vemotion-serialize gives the same names,
 styles, keyframes, messages and errors as the original, and Emotion's suite
 passes with it in place of the original; see the
 [conformance record](../../scripts/emotion-conformance/README.md).
+
+Names for recently serialized exact CSS strings use a bounded 256-entry cache
+(strings over 16,384 code units bypass storage). Interpolations, callbacks,
+diagnostics and keyframe chains are evaluated afresh. This avoids repeated
+Unicode-safe hashing without treating mutable style objects as immutable.

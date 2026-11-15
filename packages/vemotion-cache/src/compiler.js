@@ -22,19 +22,26 @@ export class StyleCompiler {
     // Repeated insertion of the same CSS needs neither a concatenation nor a
     // hash lookup. Compare both inputs; a reused serialized name is irrelevant.
     if (selector === this.previousSelector && styles === this.previousStyles && this.previousCSS !== undefined) return this.previousCSS;
-    const source = this.source(selector, styles);
     const store = this.storage;
-    let css = store.rules.get(source);
+    // The selector is small. Resolve it before hashing the full CSS, and still
+    // compare the exact styles so class-name collisions cannot reuse wrong CSS.
+    let bucket = store.rules.get(selector);
+    let css = bucket?.get(styles);
     if (css === undefined) {
-      css = serialize(compile(source), middleware(this.plugins));
+      css = serialize(compile(this.source(selector, styles)), middleware(this.plugins));
       // FIFO eviction uses a bounded ring, without allocating a Map iterator
       // for every new style once the store is full.
       if (store.keys.length === COMPILED_RULE_LIMIT) {
-        store.rules.delete(store.keys[store.cursor]);
-        store.keys[store.cursor] = source;
+        const [oldSelector, oldStyles] = store.keys[store.cursor];
+        const oldBucket = store.rules.get(oldSelector);
+        oldBucket.delete(oldStyles);
+        if (!oldBucket.size) store.rules.delete(oldSelector);
+        store.keys[store.cursor] = [selector, styles];
         store.cursor = (store.cursor + 1) % COMPILED_RULE_LIMIT;
-      } else store.keys.push(source);
-      store.rules.set(source, css);
+      } else store.keys.push([selector, styles]);
+      bucket = store.rules.get(selector);
+      if (!bucket) store.rules.set(selector, bucket = new Map());
+      bucket.set(styles, css);
     }
     this.previousSelector = selector;
     this.previousStyles = styles;

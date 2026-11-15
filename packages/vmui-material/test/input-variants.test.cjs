@@ -23,3 +23,15 @@ test('base and variant overrides compose with app padding, defaults and sx',()=>
  const t=theme({components:{MuiInputBase:{styleOverrides:{input:{letterSpacing:'2px'}}},MuiOutlinedInput:{defaultProps:{color:'secondary'},styleOverrides:{input:{padding:'6px 12px'},inputSizeSmall:{padding:'4px 12px'},notchedOutline:{borderStyle:'dashed'}}}}});
  const html=render(h(api.ThemeProvider,{theme:t},h(api.OutlinedInput,{size:'small',sx:{maxWidth:300},label:'Contest'})));for(const pattern of [/MuiInputBase-colorSecondary/,/letter-spacing:2px/,/padding:4px 12px/,/border-style:dashed/,/max-width:300px/])assert.match(html,pattern);
 });
+test('derived input sx runs once, follows overrides and leaves the base component intact',()=>{
+ for(const control of [api,peer('@mui/material')]){
+  let sxCalls=0,missing=0;
+  const Base=control.styled('div',{name:'ProbeBase',slot:'Root',overridesResolver:(_,o)=>{missing++;return o.root}})({padding:1});
+  const Derived=control.styled(Base)({padding:2});
+  const callback=()=>{sxCalls++;return {padding:3}};
+  for(const C of [Derived,Base,control.Input,control.OutlinedInput]){sxCalls=0;const html=render(h(C,{sx:callback}));assert.equal(sxCalls,1);assert.match(html,/padding:24px/);}
+  assert.equal(missing,0,'absent theme overrides do no resolver work');
+  const t=theme({components:{ProbeBase:{styleOverrides:{root:{padding:5}}}}});
+  const html=render(h(control.ThemeProvider,{theme:t},h(Derived,{sx:{padding:3}})));assert.ok(html.lastIndexOf('padding:24px')>html.lastIndexOf('padding:5px'));
+ }
+});

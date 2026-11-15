@@ -177,3 +177,12 @@ Bun outlined (+1.1% median) and complete fields (+5.5%) versus Material 9.
 Multiline SSR takes 7.7% less Node time and 14.6% less Bun time than Material 9;
 it also takes less time than app 7. All samples and identical-source controls
 are retained. These are SSR costs, not browser typing or application latency.
+
+The [input styling follow-up](bench/input-variants-optimized/README.md) removes
+repeated inherited `sx` evaluation and empty override resolution. Exact CSS names
+are cached with count/length limits; compiled rules look up selectors before full
+CSS, preserving exact-content checks, per-cache custom plugins and FIFO eviction.
+Node no longer establishes a standard-input or full-field slowdown in this run;
+outlined SSR takes 9–13% less time and multiline about 25% less than the two
+controls. Bun takes less time in seven of eight cases; the app full-field direction
+is unestablished. These are local SSR measurements, not browser latency claims.

@@ -64,3 +64,7 @@ faster, while constructing its cache costs about 0.18 microseconds more. Bun's
 repeated lookup costs about 5–11 nanoseconds more. The complete styled stack
 shows no established server-rendering improvement on either runtime; raw
 measurements and control variation are retained in the linked reports.
+
+Server compilation indexes its bounded rule store by selector and exact CSS,
+avoiding a concatenated full-rule lookup on hits. Selector or serialized-name
+collisions cannot reuse another rule's CSS. Custom-plugin caches remain isolated.

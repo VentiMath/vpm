@@ -93,6 +93,7 @@ function resolveVariants(variants, props) {
 		)
 		.map((v) => resolveStyle(v.style, state));
 }
+const sxResolvers = new WeakSet();
 function createStyled({
 	themeId,
 	defaultTheme = systemDefaultTheme,
@@ -108,13 +109,11 @@ function createStyled({
 			skipSx = false,
 			...engineOptions
 		} = options;
-		const selected = (props) => {
-			const theme =
-				props.theme && Object.keys(props.theme).length
-					? props.theme
-					: defaultTheme;
-			return { ...props, theme: (themeId && theme[themeId]) || theme };
+		const themeFor = (props) => {
+			const theme = props.theme && Object.keys(props.theme).length ? props.theme : defaultTheme;
+			return (themeId && theme[themeId]) || theme;
 		};
+		const selected = props => ({...props, theme: themeFor(props)});
 		const label =
 			options.label ||
 			(process.env.NODE_ENV !== "production" && name
@@ -146,22 +145,25 @@ function createStyled({
 					);
 			if (name && overridesResolver)
 				prepared.push((props) => {
-					const p = selected(props),
-						values = p.theme.components?.[name]?.styleOverrides || {};
-					return overridesResolver(
-						p,
-						Object.fromEntries(
-							Object.entries(values).map(([k, v]) => [k, resolveStyle(v, p)]),
-						),
-					);
+					const theme = themeFor(props), values = theme.components?.[name]?.styleOverrides;
+					if (!values) return null;
+					const p = {...props, theme}, resolved = {};
+					for (const key of Object.keys(values)) Object.defineProperty(resolved,key,{value:resolveStyle(values[key],p),enumerable:true,writable:true,configurable:true});
+					return overridesResolver(p,resolved);
 				});
 			if (name && !skipVariantsResolver)
 				prepared.push((props) => {
-					const p = selected(props);
-					return resolveVariants(p.theme.components?.[name]?.variants, p);
+					const theme = themeFor(props), variants = theme.components?.[name]?.variants;
+					return variants?.length ? resolveVariants(variants,{...props,theme}) : null;
 				});
-			if (!skipSx)
-				prepared.push((props) => sx.unstable_styleFunctionSx(selected(props)));
+			// Derived styled components resolve sx once, after all inherited styles.
+			// The original component retains its captured render styles.
+			engine.internal_mutateStyles(tag, inherited => inherited.filter(value => !sxResolvers.has(value)));
+			if (!skipSx) {
+				const resolveSx = props => props.sx ? sx.unstable_styleFunctionSx(selected(props)) : null;
+				sxResolvers.add(resolveSx);
+				prepared.push(resolveSx);
+			}
 			const component = engine.default(tag, {
 				...engineOptions,
 				label,
