@@ -418,3 +418,22 @@ export interface FormControlLabelProps extends Omit<React.LabelHTMLAttributes<HT
 export const FormControlLabel:React.ForwardRefExoticComponent<FormControlLabelProps & React.RefAttributes<HTMLLabelElement>>;
 export const formControlLabelClasses:Readonly<FormControlLabelClasses>;
 export function getFormControlLabelUtilityClass(slot:string):string;
+
+export type RadioClasses=Record<'root'|'checked'|'disabled'|'colorPrimary'|'colorSecondary'|'sizeSmall',string>;
+export interface RadioProps extends Omit<CheckboxProps,'indeterminate'|'indeterminateIcon'|'classes'|'slotProps'> {classes?:Partial<RadioClasses>;slotProps?:{root?:Partial<ButtonBaseProps<'span'>>|((state:RadioProps)=>Partial<ButtonBaseProps<'span'>>);input?:CheckboxInputSlotProps|((state:RadioProps)=>CheckboxInputSlotProps)}}
+export const Radio:React.ForwardRefExoticComponent<RadioProps & React.RefAttributes<HTMLSpanElement>>;
+export type FormGroupClasses=Record<'root'|'row'|'error',string>;
+export interface FormGroupProps extends React.HTMLAttributes<HTMLDivElement> {row?:boolean;classes?:Partial<FormGroupClasses>;sx?:SxProps<Theme>}
+export const FormGroup:React.ForwardRefExoticComponent<FormGroupProps & React.RefAttributes<HTMLDivElement>>;
+export interface RadioGroupActions {focus():void}
+export interface RadioGroupProps extends Omit<FormGroupProps,'onChange'|'defaultValue'> {defaultValue?:any;value?:any;name?:string;onChange?:(event:React.ChangeEvent<HTMLInputElement>,value:string)=>void;actions?:React.Ref<RadioGroupActions>}
+export const RadioGroup:React.ForwardRefExoticComponent<RadioGroupProps & React.RefAttributes<HTMLDivElement>>;
+export interface RadioGroupState {name:string;value:any;onChange(event:React.ChangeEvent<HTMLInputElement>,value:string):void}
+export function useRadioGroup():RadioGroupState|undefined;
+export type RadioGroupClasses=FormGroupClasses;
+export const radioClasses:Readonly<RadioClasses>;
+export function getRadioUtilityClass(slot:string):string;
+export const radioGroupClasses:Readonly<RadioGroupClasses>;
+export function getRadioGroupUtilityClass(slot:string):string;
+export const formGroupClasses:Readonly<FormGroupClasses>;
+export function getFormGroupUtilityClass(slot:string):string;

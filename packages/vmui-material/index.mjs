@@ -52,3 +52,4 @@ export const {Menu,menuClasses,getMenuUtilityClass,Popover,popoverClasses,getPop
 export const {Select,selectClasses,getSelectUtilityClass}=a;
 
 export const {Checkbox,FormControlLabel,checkboxClasses,formControlLabelClasses,getCheckboxUtilityClass,getFormControlLabelUtilityClass}=a;
+export const {Radio,radioClasses,getRadioUtilityClass,RadioGroup,radioGroupClasses,getRadioGroupUtilityClass,FormGroup,formGroupClasses,getFormGroupUtilityClass,useRadioGroup}=a;

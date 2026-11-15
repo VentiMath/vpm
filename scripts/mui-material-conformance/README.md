@@ -252,3 +252,10 @@ The prepared SSR benchmark includes 12-item menus, dense menus, icon/text menus,
 standalone primary/secondary text and closed popup rendering. Theme and tree
 preparation precede timing; all isolated process pairs, controls and hashes are
 retained in the package report. No browser speed or app adoption claim follows.
+
+Radio/RadioGroup/FormGroup: `radio-contract.cjs` compares 388 public SSR cases
+against current9/app7; `radio-browser.cjs` covers settings and team-choice forms,
+native keyboard navigation, refs, hydration, canceled/uncanceled resets and
+light/dark/RTL/CSS-variable/theme-override styles. Run again with
+`VPM_REACT_MODE=development`. `radio-controls.test.cjs` covers value identity,
+coercion, explicit overrides, nested contexts and custom slots.

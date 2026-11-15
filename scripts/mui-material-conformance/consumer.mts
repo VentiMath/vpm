@@ -239,3 +239,15 @@ Checkbox({checked:'yes'});
 FormControlLabel({control:React.createElement(Checkbox),label:'A',labelPlacement:'left'});
 // @ts-expect-error a control element is required
 FormControlLabel({label:'A'});
+
+import {Radio,RadioGroup,FormGroup,useRadioGroup,type RadioGroupActions} from 'vmui-material';
+Radio({value:'early',size:'small',inputRef:React.createRef<HTMLInputElement>(),onChange:(e,v)=>{const checked:boolean=v;void checked;void e.target.checked;}});
+RadioGroup({name:'flight',defaultValue:'early',row:true,actions:React.createRef<RadioGroupActions>(),onChange:(e,value)=>{const v:string=value;void v;void e.target.value;}});
+FormGroup({row:true,sx:{gap:2}});
+const radioState=useRadioGroup();if(radioState){const name:string=radioState.name;void name;}
+// @ts-expect-error checked is boolean
+Radio({checked:'true'});
+// @ts-expect-error row is boolean
+RadioGroup({row:'yes'});
+// @ts-expect-error Radio has no mixed state
+Radio({indeterminate:true});

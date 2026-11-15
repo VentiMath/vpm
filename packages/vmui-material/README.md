@@ -1,6 +1,6 @@
 # vmui-material
 
-Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox and FormControlLabel, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
+Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup and FormGroup, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
 
 ```js
 import { Button, ToggleButton, ToggleButtonGroup } from 'vmui-material';
@@ -25,7 +25,7 @@ The earlier button and text/icon benchmarks predate the custom native-root corre
 
 [Conformance](../../scripts/mui-material-conformance/README.md), [button benchmarks](bench/results/README.md), [text/icon benchmarks](bench/text/README.md), [Box benchmarks](bench/box/README.md), [surface/icon benchmarks](bench/surfaces/README.md), [form benchmarks](bench/forms/README.md), [input benchmarks](bench/input/README.md) and [provenance](PROVENANCE.json) record the measured scope. Supported runtimes are Node 24, Bun 1.4.4 and modern browsers.
 
-Current application priorities (reviewed at `3aa9eb28`, November 13, 2026): Material remains in shared theme/navigation, authentication, public pages and table components while many feature pages use Astryx. A static non-test source inventory found Typography imports in 164 files, Box in 99, styles in 88, Paper in 43 and Divider in 15. These are import counts, not route reachability or adoption percentages. The Box/theme boundary and SVG sprite root are covered. Paper, Divider and the Icon fallback are also covered. The shared FormControl/FormLabel/FormHelperText foundation is covered; InputBase is now covered too; next are Radio/RadioGroup, Switch and the table’s remaining Material peers. A complete app cutover requires those callers, including dependencies’ imports, to pass together.
+Current application priorities (reviewed at `3aa9eb28`, November 13, 2026): Material remains in shared theme/navigation, authentication, public pages and table components while many feature pages use Astryx. A static non-test source inventory found Typography imports in 164 files, Box in 99, styles in 88, Paper in 43 and Divider in 15. These are import counts, not route reachability or adoption percentages. The Box/theme boundary and SVG sprite root are covered. Paper, Divider and the Icon fallback are also covered. The shared FormControl/FormLabel/FormHelperText foundation is covered; InputBase is now covered too; next are Switch and the table’s remaining Material peers. A complete app cutover requires those callers, including dependencies’ imports, to pass together.
 
 The `styles` entry exposes `ThemeProvider`, `useTheme`, `styled`, `GlobalStyles`,
 `useThemeProps`, `useMediaQuery` and `useColorScheme`. Pass an existing resolved
@@ -333,3 +333,30 @@ SSR time and 16–25% less Bun time. Against Material 9, small Checkbox SSR uses
 precision. Bun uses 19–30% less time across all four current-version workloads.
 All samples and controls are retained, including noisy comparisons. No case
 establishes a regression; these are local SSR costs, not interaction speed claims.
+
+## Radio and group controls
+
+`Radio`, `RadioGroup`, `useRadioGroup` and `FormGroup` cover the WARML team/flight
+choices and Fuse settings Controllers reviewed at app main `446bc73d`.
+Native radio inputs provide arrow-key selection, disabled-option skipping,
+labels, required validation and form submission. Explicit child checked/name
+props override group defaults; generated names isolate unnamed groups.
+Group actions focus the selected enabled input. Object values use identity;
+other values use their DOM string representation.
+
+The group default is restored after an uncanceled native form reset, without
+emitting change callbacks. Input/slot refs, current slot callbacks, app7 aliases,
+theme defaults/overrides, CSS variables, RTL and stable hydration are covered.
+Standard radio glyph geometry is credited Material design data; no upstream
+component runtime is used. The native input is the only interactive element.
+
+Verification includes 388 current/app SSR comparisons, React19.3.1 production
+and development Chrome checks, Hook Form settings and team-choice fixtures,
+keyboard navigation, resets, refs and theme changes. [Radio measurements](bench/radio/README.md)
+measure prepared SSR work, not gesture latency or whole-app throughput.
+Material remains partial; this unit does not publish or switch the app.
+
+The isolated Radio workloads use 13–26% less Bun SSR time than app Material7.
+Node comparisons are inconclusive: pair variation and identical-source controls
+are too large to establish a direction. Every sample is retained; these results
+do not imply a browser interaction speedup.
