@@ -1,6 +1,6 @@
 # vmui-material
 
-Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover and Select, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
+Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox and FormControlLabel, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
 
 ```js
 import { Button, ToggleButton, ToggleButtonGroup } from 'vmui-material';
@@ -25,7 +25,7 @@ The earlier button and text/icon benchmarks predate the custom native-root corre
 
 [Conformance](../../scripts/mui-material-conformance/README.md), [button benchmarks](bench/results/README.md), [text/icon benchmarks](bench/text/README.md), [Box benchmarks](bench/box/README.md), [surface/icon benchmarks](bench/surfaces/README.md), [form benchmarks](bench/forms/README.md), [input benchmarks](bench/input/README.md) and [provenance](PROVENANCE.json) record the measured scope. Supported runtimes are Node 24, Bun 1.4.4 and modern browsers.
 
-Current application priorities (reviewed at `3aa9eb28`, November 13, 2026): Material remains in shared theme/navigation, authentication, public pages and table components while many feature pages use Astryx. A static non-test source inventory found Typography imports in 164 files, Box in 99, styles in 88, Paper in 43 and Divider in 15. These are import counts, not route reachability or adoption percentages. The Box/theme boundary and SVG sprite root are covered. Paper, Divider and the Icon fallback are also covered. The shared FormControl/FormLabel/FormHelperText foundation is covered; InputBase is now covered too; next are Checkbox/FormControlLabel and the table’s remaining Material peers. A complete app cutover requires those callers, including dependencies’ imports, to pass together.
+Current application priorities (reviewed at `3aa9eb28`, November 13, 2026): Material remains in shared theme/navigation, authentication, public pages and table components while many feature pages use Astryx. A static non-test source inventory found Typography imports in 164 files, Box in 99, styles in 88, Paper in 43 and Divider in 15. These are import counts, not route reachability or adoption percentages. The Box/theme boundary and SVG sprite root are covered. Paper, Divider and the Icon fallback are also covered. The shared FormControl/FormLabel/FormHelperText foundation is covered; InputBase is now covered too; next are Radio/RadioGroup, Switch and the table’s remaining Material peers. A complete app cutover requires those callers, including dependencies’ imports, to pass together.
 
 The `styles` entry exposes `ThemeProvider`, `useTheme`, `styled`, `GlobalStyles`,
 `useThemeProps`, `useMediaQuery` and `useColorScheme`. Pass an existing resolved
@@ -301,3 +301,35 @@ use 24–26% less Node time and 29–31% less Bun time; complete TextField dropd
 use 25.6% less Bun time. The app7 complete-field Node result is inconclusive
 because identical-source controls vary substantially. All raw samples and
 controls are retained; no measured case establishes a regression.
+
+
+Checkbox and FormControlLabel cover WARML interest/confirmation Controllers,
+authentication remember/terms fields and table selection. The input owns native
+focus, label activation, Space toggling, validation and form submission; its outer
+wrapper adds no competing button role or tab stop. Controlled/default checked
+values, custom icons, mixed table selection, disabled state, required labels,
+label placement, input/root refs, slots and app theme overrides are covered.
+FormControlLabel also composes unchanged control Radio/Switch components in the
+test fixture; those runtime implementations remain pending.
+
+Native indeterminate state follows Material 9, improving on app7's visual-only
+mixed state. Native form reset also restores the icon and subsequent click
+behavior; both upstream controls leave the icon stale. Canceled resets remain
+canceled. Current input/typography slots take precedence over retained app7
+`inputProps`, `inputRef` and `componentsProps.typography` aliases. Existing
+Typography labels are retained without another wrapper.
+
+Verification includes 936 current/app SSR comparisons, production and development
+Chrome checks with React 19.3.1, current/app Hook Form Controllers, native reset,
+labels and accessibility, theme/CSS-variable/RTL state matrices, refs and hydration.
+[Checkbox measurements](bench/checkbox/README.md) use prepared 12-control SSR
+workloads and the isolated process harness. They do not measure click latency or
+application throughput. The package remains partial, with no release or app
+cutover in this unit.
+
+Against app Material 7, the four Checkbox/label workloads use 5–17% less Node
+SSR time and 16–25% less Bun time. Against Material 9, small Checkbox SSR uses
+10.6% less Node time; the other Node differences are unestablished at this
+precision. Bun uses 19–30% less time across all four current-version workloads.
+All samples and controls are retained, including noisy comparisons. No case
+establishes a regression; these are local SSR costs, not interaction speed claims.

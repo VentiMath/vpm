@@ -398,3 +398,23 @@ export interface SelectProps<Value=unknown> extends Omit<InputBaseProps,'classes
 export function Select<Value=unknown>(props:SelectProps<Value>):React.ReactElement|null;
 export const selectClasses:Readonly<SelectClasses>;
 export function getSelectUtilityClass(slot:string):string;
+
+export type CheckboxClasses=Record<'root'|'checked'|'disabled'|'indeterminate'|'colorPrimary'|'colorSecondary'|'sizeSmall'|'sizeMedium',string>;
+export type CheckboxInputSlotProps=React.InputHTMLAttributes<HTMLInputElement>&{ref?:React.Ref<HTMLInputElement>;sx?:SxProps<Theme>};
+export interface CheckboxProps extends Omit<ButtonBaseProps<'span'>,'children'|'onChange'|'classes'|'nativeButton'|'component'> {
+ checked?:boolean;defaultChecked?:boolean;checkedIcon?:React.ReactNode;icon?:React.ReactNode;indeterminateIcon?:React.ReactNode;indeterminate?:boolean;color?:ButtonColor|'default';size?:'small'|'medium'|'large'|(string&{});edge?:'start'|'end'|false;disableFocusRipple?:boolean;required?:boolean;readOnly?:boolean;name?:string;value?:unknown;autoFocus?:boolean;component?:React.ElementType;inputRef?:React.Ref<HTMLInputElement>;inputProps?:CheckboxInputSlotProps;classes?:Partial<CheckboxClasses>;
+ onChange?:(event:React.ChangeEvent<HTMLInputElement>,checked:boolean)=>void;
+ slots?:{root?:React.ElementType;input?:React.ElementType};slotProps?:{root?:Partial<ButtonBaseProps<'span'>>|((state:CheckboxProps)=>Partial<ButtonBaseProps<'span'>>);input?:CheckboxInputSlotProps|((state:CheckboxProps)=>CheckboxInputSlotProps)};
+}
+export const Checkbox:React.ForwardRefExoticComponent<CheckboxProps & React.RefAttributes<HTMLSpanElement>>;
+export const checkboxClasses:Readonly<CheckboxClasses>;
+export function getCheckboxUtilityClass(slot:string):string;
+export type FormControlLabelClasses=Record<'root'|'labelPlacementEnd'|'labelPlacementStart'|'labelPlacementTop'|'labelPlacementBottom'|'disabled'|'label'|'error'|'required'|'asterisk',string>;
+export interface FormControlLabelProps extends Omit<React.LabelHTMLAttributes<HTMLLabelElement>,'children'|'onChange'> {
+ control:React.ReactElement;label:React.ReactNode;checked?:boolean;disabled?:boolean;required?:boolean;disableTypography?:boolean;labelPlacement?:'end'|'start'|'top'|'bottom';name?:string;value?:unknown;inputRef?:React.Ref<HTMLInputElement>;classes?:Partial<FormControlLabelClasses>;sx?:SxProps<Theme>;
+ onChange?:(event:React.SyntheticEvent,checked:boolean)=>void;
+ slots?:{typography?:React.ElementType};slotProps?:{typography?:TypographyProps|((state:FormControlLabelProps)=>TypographyProps)};componentsProps?:{typography?:TypographyProps};
+}
+export const FormControlLabel:React.ForwardRefExoticComponent<FormControlLabelProps & React.RefAttributes<HTMLLabelElement>>;
+export const formControlLabelClasses:Readonly<FormControlLabelClasses>;
+export function getFormControlLabelUtilityClass(slot:string):string;

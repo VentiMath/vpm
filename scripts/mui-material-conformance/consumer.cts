@@ -197,3 +197,13 @@ Select<number>({value:['amc']});
 Select({variant:'ghost'});
 // @ts-expect-error open is boolean
 Select({open:'yes'});
+
+import {Checkbox,FormControlLabel} from 'vmui-material';
+Checkbox({checked:true,indeterminate:true,slotProps:{input:{ref:React.createRef<HTMLInputElement>(),'aria-label':'Select all'}},onChange:(event,checked)=>{const b:boolean=checked;const input:HTMLInputElement=event.target;void b;void input;}});
+FormControlLabel({control:React.createElement(Checkbox),label:'Confirm',labelPlacement:'start',ref:React.createRef<HTMLLabelElement>(),slotProps:{typography:{variant:'body2'}}});
+// @ts-expect-error checked is boolean
+Checkbox({checked:'yes'});
+// @ts-expect-error label placement is constrained
+FormControlLabel({control:React.createElement(Checkbox),label:'A',labelPlacement:'left'});
+// @ts-expect-error a control element is required
+FormControlLabel({label:'A'});

@@ -98,3 +98,7 @@ assert.equal(renderToString(React.createElement(api.Menu,{open:false},'hidden'))
 assert.equal(api.Select,require('vmui-material/Select').default);
 const dropdown=renderToString(React.createElement(api.TextField,{id:'schedule',select:true,value:'once',label:'Schedule'},React.createElement(api.MenuItem,{value:'once'},'Once')));
 assert.match(dropdown,/role="combobox"/);assert.match(dropdown,/>Once<\/div>/);
+
+for(const name of ['Checkbox','FormControlLabel'])assert.equal(api[name],require('vmui-material/'+name).default);
+const checkbox=renderToString(React.createElement(api.FormControlLabel,{label:'Confirm',control:React.createElement(api.Checkbox,{checked:true,required:true,name:'consent'})}));
+assert.match(checkbox,/type="checkbox"/);assert.match(checkbox,/checked=""/);assert.match(checkbox,/required=""/);

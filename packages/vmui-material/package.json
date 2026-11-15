@@ -777,6 +777,46 @@
         "types": "./selectClasses.d.cts",
         "default": "./selectClasses.cjs"
       }
+    },
+    "./Checkbox": {
+      "import": {
+        "types": "./Checkbox.d.mts",
+        "default": "./Checkbox.mjs"
+      },
+      "require": {
+        "types": "./Checkbox.d.cts",
+        "default": "./Checkbox.cjs"
+      }
+    },
+    "./checkboxClasses": {
+      "import": {
+        "types": "./checkboxClasses.d.mts",
+        "default": "./checkboxClasses.mjs"
+      },
+      "require": {
+        "types": "./checkboxClasses.d.cts",
+        "default": "./checkboxClasses.cjs"
+      }
+    },
+    "./FormControlLabel": {
+      "import": {
+        "types": "./FormControlLabel.d.mts",
+        "default": "./FormControlLabel.mjs"
+      },
+      "require": {
+        "types": "./FormControlLabel.d.cts",
+        "default": "./FormControlLabel.cjs"
+      }
+    },
+    "./formControlLabelClasses": {
+      "import": {
+        "types": "./formControlLabelClasses.d.mts",
+        "default": "./formControlLabelClasses.mjs"
+      },
+      "require": {
+        "types": "./formControlLabelClasses.d.cts",
+        "default": "./formControlLabelClasses.cjs"
+      }
     }
   },
   "files": [
