@@ -13,14 +13,14 @@ export function makeTheme({mode='light',rtl=false,variables=false,custom=false}=
  MuiInput:{styleOverrides:{root:{fontWeight:500},underline:{'&::before':{borderBottomWidth:2}}}}
  }}:{})});}
 function Probe({id}){const s=useFormControl();return <output id={id}>{JSON.stringify({focused:s.focused,filled:s.filled,adornedStart:s.adornedStart})}</output>}
-export function VariantScene({mode='light',rtl=false,variables=false,custom=false,disabled=false,error=false,tick=0}){
+export function VariantScene({mode='light',rtl=false,variables=false,custom=false,disabled=false,error=false,tick=0,narrow=false}){
  const theme=React.useMemo(()=>makeTheme({mode,rtl,variables,custom}),[mode,rtl,variables,custom]);
  const cache=React.useMemo(()=>createCache({key:rtl?'variantrtl':'variantltr',stylisPlugins:rtl?[rtlPlugin]:[]}),[rtl]);
  const refs=React.useRef({}),form=useForm({defaultValues:{number:0,notes:'one\ntwo'}}),[value,setValue]=React.useState('');
  React.useEffect(()=>{window.variantControls={refs,form,setValue}},[form]);// The fixture cache lives with this document; StrictMode effect replay must not flush live styles.
 
  return <CacheProvider value={cache}><ThemeProvider theme={theme}><main id="variants" dir={rtl?'rtl':'ltr'} data-tick={tick} style={{padding:20,fontFamily:'Arial',fontSize:16}}>
- {[['standard',Input],['outlined',OutlinedInput]].map(([kind,Field])=><section key={kind} style={{width:280}}>
+ {[['standard',Input],['outlined',OutlinedInput]].map(([kind,Field])=><section key={kind} style={{width:narrow?180:280}}>
  <FormControl required disabled={disabled} error={error} variant={kind==='standard'?'standard':'outlined'} fullWidth><InputLabel ref={node=>{refs.current[kind+"Label"]=node}} htmlFor={kind}>Contest</InputLabel><Field id={kind} label={kind==='outlined'?'Contest':undefined} value={value} onChange={e=>setValue(e.target.value)} inputRef={node=>{refs.current[kind]=node}} aria-describedby={kind+'-help'}/><FormHelperText id={kind+'-help'}>Choose a contest</FormHelperText><Probe id={kind+'-state'}/></FormControl>
  <Field id={kind+'-small'} size="small" label={kind==='outlined'?'Fee':undefined} startAdornment={<InputAdornment ref={node=>{refs.current[kind+"Adornment"]=node}} position="start" disablePointerEvents>$</InputAdornment>} endAdornment={<InputAdornment position="end"><button aria-label="Show fee">kg</button></InputAdornment>} defaultValue="12" disabled={disabled} error={error}/>
  <Field id={kind+'-notes'} multiline minRows={2} maxRows={4} label={kind==='outlined'?'Notes':undefined} defaultValue={'one\ntwo\nthree'} fullWidth disabled={disabled}/>

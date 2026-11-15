@@ -32,6 +32,8 @@ let server,child,socket,sequence=0;const pending=new Map(),exceptions=[];
     await evaluate('window.renderVariants('+JSON.stringify({mode,rtl,variables,custom,...flags})+');'+settle);
     styles.push({mode,rtl,variables,custom,flags,values:await evaluate(snapshot)});
    }
+   await evaluate('window.renderVariants({custom:true,narrow:true});'+settle);
+   styles.push({mode:'light',rtl:false,variables:false,custom:true,flags:{},narrow:true,values:await evaluate(snapshot)});
    await evaluate('window.renderVariants({});'+settle);
    assert.equal(await evaluate('document.getElementById("context-isolation").textContent'),'isolated');
    assert.equal(await evaluate('document.querySelector("label[for=standard]").dataset.shrink'),'false');
@@ -92,6 +94,9 @@ let server,child,socket,sequence=0;const pending=new Map(),exceptions=[];
     const name=v.id||v.tag;
     if(name==='outlined-small'&&['paddingTop','paddingBottom'].includes(key)||name==='number'&&['paddingTop','paddingBottom'].includes(key))assert.deepEqual([expected,actual],['6px','4px']);
     else if(name==='outlined-small'&&['paddingLeft','paddingRight'].includes(key))assert.deepEqual([expected,actual],['12px','8px']);
+    // In constrained containers the retained app padding moves eight pixels
+    // into input content width instead of shrinking the outer root.
+    else if(name==='outlined-small'&&key==='width')assert.ok(Math.abs(parseFloat(actual)-parseFloat(expected)-8)<.02,'exact legacy horizontal padding redistribution');
     else if(['DIV','FIELDSET'].includes(name)&&['height','width'].includes(key))assert.ok(Math.abs(parseFloat(expected)-parseFloat(actual)-(key==='height'?4:8))<.02,name+' '+key+' '+expected+' / '+actual+' legacy padding geometry '+JSON.stringify({mode:a.mode,rtl:a.rtl,variables:a.variables,flags:a.flags}));
     else assert.fail('Unexpected Material 9 difference '+name+' '+key+': '+expected+' / '+actual);
     v.css[key]=expected;
