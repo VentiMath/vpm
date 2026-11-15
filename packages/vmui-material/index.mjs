@@ -46,3 +46,4 @@ export const {Input,inputClasses,getInputUtilityClass}=a;
 export const {OutlinedInput,outlinedInputClasses,getOutlinedInputUtilityClass}=a;
 export const {InputLabel,inputLabelClasses,getInputLabelUtilityClass}=a;
 export const {InputAdornment,inputAdornmentClasses,getInputAdornmentUtilityClass}=a;
+export const {TextField,textFieldClasses,getTextFieldUtilityClass}=a;

@@ -8,7 +8,7 @@
   "implementation": {
     "kind": "independent implementation",
     "replacementStatus": "partial; remaining component families pending",
-    "targetScope": "Twenty-two components: button controls, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel and InputAdornment; createSvgIcon and the scoped resolved-theme bridge. Includes controlled/uncontrolled native inputs, custom slots/refs, autofill state, client-owned textarea measurement, and shared input focus/filled/required/error state, native label and helper accessibility, form theme overrides, surfaces/elevations, horizontal/vertical and labelled dividers, font-icon fallback, current custom-root props, nested/CSS-variable themes and responsive sx. Full Material theme creation and remaining families are not implemented.",
+    "targetScope": "Twenty-three components: button controls, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment and the TextField wrapper; createSvgIcon and the scoped resolved-theme bridge. Includes controlled/uncontrolled native inputs, custom slots/refs, autofill state, client-owned textarea measurement, and shared input focus/filled/required/error state, native label and helper accessibility, form theme overrides, surfaces/elevations, horizontal/vertical and labelled dividers, font-icon fallback, current custom-root props, nested/CSS-variable themes and responsive sx. Full Material theme creation and remaining families are not implemented.",
     "independentComponents": [
       "ButtonBase",
       "Button",
@@ -31,9 +31,10 @@
       "Input",
       "OutlinedInput",
       "InputLabel",
-      "InputAdornment"
+      "InputAdornment",
+      "TextField"
     ],
-    "remainingWork": "TextField and remaining form controls; remaining surfaces and data display; navigation, menus, tabs and overlays; full Material theme creation and remaining app-used exports; whole-app integration and consumer release."
+    "remainingWork": "Select/MenuItem to complete TextField dropdown callers; default FilledInput if needed; remaining form controls; remaining surfaces and data display; navigation, menus, tabs and overlays; full Material theme creation and remaining app-used exports; whole-app integration and consumer release."
   },
   "changes": [
     "Written independently over VPM System and its styling closure; no upstream Material runtime, Babel or prop-types ships.",
@@ -50,7 +51,8 @@
     "Independent FormControl state provider and useFormControl; FormLabel and FormHelperText inherit only undefined options, preserve explicit false, expose native label/helper semantics and reset stale focus on disable. Initial filled/adornment state supports recognized Input/Select children for SSR. Shared provider identity across CJS/ESM context entries; no upstream input code ships.",
     "Independent InputBase renders native inputs and textareas over VPM styles and FormControl context. Preserves value ownership, input/slot prop precedence, refs and React Hook Form callbacks; follows Material9 native input aria-label placement. Native slot roots do not leak the internal classes object. Multiline measurement is a client-owned node in the field ownerDocument with width-sensitive ResizeObserver scheduling and cleanup; no hidden mirror is serialized into SSR. Measurement lifetime follows the live DOM ref, including custom-root replacement, rather than only the outer component lifetime.",
     "Independent standard Input and OutlinedInput compose the owned InputBase engine. Includes underline focus/error/disabled states, outlined fieldset/legend notch, initial value and adornment form state, required labels, current outline slots and legacy app padding overrides. Native slot roots omit internal ownerState and classes attributes that upstream can leak. No upstream Material runtime is included.",
-    "InputLabel inherits live shrink/focus/filled/adornment state with explicit overrides, native labels and required asterisks. InputAdornment supports string typography, custom roots, pointer behavior and isolated child form context. Both preserve app theme overrides, CSS variables, RTL and refs."
+    "InputLabel inherits live shrink/focus/filled/adornment state with explicit overrides, native labels and required asterisks. InputAdornment supports string typography, custom roots, pointer behavior and isolated child form context. Both preserve app theme overrides, CSS variables, RTL and refs.",
+    "TextField composes independent standard/outlined inputs, labels and helper text with generated or explicit IDs, validation, multiline sizing, modern slots and legacy app aliases. Current Material 9 non-native select label semantics are preserved. Select/MenuItem and FilledInput are explicit unimplemented defaults; caller-supplied select/input slots are verified, and no upstream runtime is shipped."
   ],
   "caller": {
     "scope": "Navigation actions, contest forms, family area/reminder toggles, palette selector and navbar Fab. Building this subset does not switch VentiMath dependencies. Navigation search and link roots, theme typography and icon sizing, and @mui/icons-material consumers in MustangMath, I2MC and IMO. FuseSvgIcon instead uses styled Box, SVG sprite references and an Icon fallback. Material icons and FuseSvgIcon are distinct callers. Shared external-link actions combine IconButton with motion.button and inherited variants. Paper appears in contest registration/results and public authentication panels; Divider in shared navigation and vertical toolbars; Icon in palette selection and FuseSvgIcon\u2019s non-SVG fallback. Form foundations are used by FuseSettings number/radio/switch controllers and palette selection; the shared theme changes label typography, control color and helper margins. Browser checks use synthetic settings forms and unchanged upstream InputBase through a test-only context bridge. InputBase is an indirect dependency of TextField/table fields, not a direct app import. Audited NumberFormController numeric limits, shared DataTable search/filter styling, ARML multiline preferences and WARML fixed-row contact fields. Synthetic acceptance uses unchanged current/app React Hook Form Controllers.",
@@ -75,6 +77,7 @@
     "https://mui.com/material-ui/api/input/",
     "https://mui.com/material-ui/api/outlined-input/",
     "https://mui.com/material-ui/api/input-label/",
-    "https://mui.com/material-ui/api/input-adornment/"
+    "https://mui.com/material-ui/api/input-adornment/",
+    "https://mui.com/material-ui/api/text-field/"
   ]
 }

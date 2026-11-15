@@ -1,0 +1,11 @@
+'use strict';
+process.env.NODE_ENV='production';
+const assert=require('node:assert/strict'),{peer}=require('./paths.cjs'),R=peer('react'),h=R.createElement,render=peer('react-dom/server').renderToStaticMarkup,own=require(require('./prepare.cjs'));
+const old=new Set(['Input','OutlinedInput','InputBase'].flatMap(n=>['inputSizeSmall','inputMultiline','inputAdornedStart','inputAdornedEnd','inputHiddenLabel',...(n==='InputBase'?[]:['colorSecondary','sizeSmall','multiline','adornedStart','adornedEnd','formControl'])].map(s=>'Mui'+n+'-'+s)));
+function norm(html){return html.replace(/<style[\s\S]*?<\/style>/g,'').replace(/<textarea aria-hidden="true"[\s\S]*?<\/textarea>/g,'').replace(/ class="([^"]*)"/g,(_,s)=>' class="'+[...new Set(s.split(' ').filter(c=>!c.startsWith('css-')&&!old.has(c)))].sort().join(' ')+'"').replace(/<([\w-]+)([^>]*)>/g,(_,tag,attrs)=>'<'+tag+[...attrs.matchAll(/([\w:-]+)="([^"]*)"/g)].map(x=>' '+x[1]+'="'+x[2]+'"').sort().join('')+'>');}
+const cases=[];
+for(const variant of ['outlined','standard'])for(const size of ['small','medium'])for(const multiline of [false,true])for(const state of [{},{disabled:true},{error:true,required:true}])for(const value of ['',0,'Contest'])for(const text of [{},{label:'Contest',helperText:'Enter a name'},{label:0,helperText:0},{label:'<unsafe>',helperText:' '}])cases.push({variant,size,multiline,...state,defaultValue:value,...text});
+cases.push({id:'fixed',type:'number',name:'amount',slotProps:{htmlInput:{min:0,max:100,step:5,'aria-label':'Amount'}}},{type:'datetime-local',slotProps:{inputLabel:{shrink:true}}},{label:'Contest',slotProps:{inputLabel:{shrink:false},input:{notched:true}}},{label:'Name',slotProps:{root:{'data-root':'yes',className:'slot'},input:()=>({readOnly:true}),formHelperText:{component:'aside'}},helperText:'Help'},{id:'outer',slotProps:{htmlInput:{id:'inner'}}},{rows:3,multiline:true},{inputRef:()=>{},value:'controlled',onChange(){},autoComplete:'off',autoFocus:true});
+let checks=0;for(const pkg of ['@mui/material','mui-material-app'])for(const p of cases){const control=peer(pkg);assert.equal(norm(render(h(own.TextField,p))),norm(render(h(control.TextField,p))),pkg+' '+JSON.stringify(p));checks++;}
+console.log(checks+' TextField visible SSR, attributes, label/helper IDs and slot comparisons pass');
+module.exports={norm};

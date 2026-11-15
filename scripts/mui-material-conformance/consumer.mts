@@ -194,3 +194,16 @@ InputAdornment({children:'$'});
 InputAdornment({position:'left'});
 // @ts-expect-error label shrink is boolean
 InputLabel({shrink:'yes'});
+
+import TextField,{type TextFieldProps} from 'vmui-material/TextField';
+TextField({id:'contest',label:'Contest',required:true,helperText:'Required',inputRef:React.createRef<HTMLInputElement>(),onChange:e=>{const value:string=e.target.value;void value;},slotProps:{htmlInput:{maxLength:100},inputLabel:s=>({shrink:s.error})}});
+TextField({variant:'standard',slotProps:{input:{disableUnderline:true,inputRef:React.createRef<HTMLInputElement>()}}});
+const noteField:TextFieldProps={multiline:true,minRows:2,maxRows:5};
+TextField({type:'number',slotProps:{htmlInput:{min:0,max:100,step:5}}});
+// @ts-expect-error outlined fields do not expose the standard underline switch
+TextField<'outlined'>({variant:'outlined',slotProps:{input:{disableUnderline:true}}});
+// @ts-expect-error invalid variant
+TextField({variant:'ghost'});
+// @ts-expect-error numeric/string rows only
+TextField({minRows:{}});
+void noteField;

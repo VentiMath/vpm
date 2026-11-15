@@ -1,6 +1,6 @@
 # vmui-material
 
-Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel and InputAdornment, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
+Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment and TextField, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
 
 ```js
 import { Button, ToggleButton, ToggleButtonGroup } from 'vmui-material';
@@ -19,13 +19,13 @@ Typography covers semantic variants, custom roots, truncation, spacing and physi
 
 For existing callers, Typography retains Material 7’s `paragraph`, direct System props and CSS/palette-path colors that Material 9 dropped. Explicit root ARIA attributes take precedence over SVG child attributes; a supplied title makes a decorative child accessible unless the root explicitly hides it. Unknown typography variants and icon sizes cannot read inherited object properties.
 
-TextField wrappers, remaining surfaces and display components, navigation, menus/overlays, full Material theme creation and the remaining app-used exports still need implementation. No upstream Material implementation is bundled, and no app dependency or release has been changed by this work. Runtime dependencies are the VPM System closure, with React as a peer.
+Select/MenuItem and remaining form controls, remaining surfaces and display components, navigation, menus/overlays, full Material theme creation and the remaining app-used exports still need implementation. No upstream Material implementation is bundled, and no app dependency or release has been changed by this work. Runtime dependencies are the VPM System closure, with React as a peer.
 
 The earlier button and text/icon benchmarks predate the custom native-root correction. The earlier button measurements found Node icon-button SSR about 20% slower than both controls. The new Typography/Link/SvgIcon measurements are inconclusive on Node and Bun: process-pair variation and identical-source controls do not establish a speedup or regression in any case. Raw samples, including large control differences, are retained. These are isolated SSR costs, not application interaction measurements.
 
 [Conformance](../../scripts/mui-material-conformance/README.md), [button benchmarks](bench/results/README.md), [text/icon benchmarks](bench/text/README.md), [Box benchmarks](bench/box/README.md), [surface/icon benchmarks](bench/surfaces/README.md), [form benchmarks](bench/forms/README.md), [input benchmarks](bench/input/README.md) and [provenance](PROVENANCE.json) record the measured scope. Supported runtimes are Node 24, Bun 1.4.4 and modern browsers.
 
-Current application priorities (reviewed at `3aa9eb28`, November 13, 2026): Material remains in shared theme/navigation, authentication, public pages and table components while many feature pages use Astryx. A static non-test source inventory found Typography imports in 164 files, Box in 99, styles in 88, Paper in 43 and Divider in 15. These are import counts, not route reachability or adoption percentages. The Box/theme boundary and SVG sprite root are covered. Paper, Divider and the Icon fallback are also covered. The shared FormControl/FormLabel/FormHelperText foundation is covered; InputBase is now covered too; next are TextField, menus and the table’s Material peers. A complete app cutover requires those callers, including dependencies’ imports, to pass together.
+Current application priorities (reviewed at `3aa9eb28`, November 13, 2026): Material remains in shared theme/navigation, authentication, public pages and table components while many feature pages use Astryx. A static non-test source inventory found Typography imports in 164 files, Box in 99, styles in 88, Paper in 43 and Divider in 15. These are import counts, not route reachability or adoption percentages. The Box/theme boundary and SVG sprite root are covered. Paper, Divider and the Icon fallback are also covered. The shared FormControl/FormLabel/FormHelperText foundation is covered; InputBase is now covered too; next are Select/MenuItem, menus and the table’s Material peers. A complete app cutover requires those callers, including dependencies’ imports, to pass together.
 
 The `styles` entry exposes `ThemeProvider`, `useTheme`, `styled`, `GlobalStyles`,
 `useThemeProps`, `useMediaQuery` and `useColorScheme`. Pass an existing resolved
@@ -89,7 +89,7 @@ can opt out of inherited error, disabled, required or focused state.
 The browser fixture models FuseSettings and palette selection, including the
 app's secondary control color, label typography and helper margins. It also
 checks an unchanged upstream InputBase against the owned context through a
-test-only bridge. No upstream input code ships. InputBase has since been implemented below. Input and OutlinedInput are implemented below; InputLabel and InputAdornment are next, then TextField. The FormControl context and hook subpaths share one
+test-only bridge. No upstream input code ships. InputBase, Input, OutlinedInput, InputLabel, InputAdornment and the native TextField paths are now implemented below. The FormControl context and hook subpaths share one
 identity across CJS/ESM consumers.
 
 The form benchmark records **12.4% more Bun time** for the combined 12-field
@@ -126,8 +126,8 @@ cleanup. Custom `inputComponent` implementations own their own sizing.
 React Hook Form 7.92.0 and app 7.56.0 Controllers are exercised unchanged, including
 number values, refs, setValue, setFocus and reset. Browser checks include simulated
 autofill animation signals; they do not certify individual password managers.
-InputLabel and TextField still need implementation before
-VentiMath can cut over these callers.
+InputLabel and native TextField composition are implemented below. Select/MenuItem
+and the remaining app dependencies still gate a complete Material cutover.
 
 The initial InputBase SSR measurements showed multiline trees taking **10.7% less Node
 time and 6.2% less Bun time** than Material 9. Single-line Bun trees take **15.1%
@@ -166,8 +166,8 @@ Current `notchedOutline` slots and callback slot props are supported. VentiMath'
 legacy small-input, multiline and adornment padding override keys are retained.
 Native slot roots do not receive internal `ownerState` or `classes` objects;
 upstream Input leaks these for a native root. This intentional difference is
-asserted before DOM comparison. The standard and outlined components are separate
-from the remaining InputLabel/TextField work; building them is not app adoption.
+asserted before DOM comparison. The standard and outlined components now compose with InputLabel and TextField
+below; building them is not app adoption.
 
 [Input/OutlinedInput measurements](bench/input-variants/README.md) cover prepared
 12-control standard, outlined, multiline and complete-field trees. Standard
@@ -208,3 +208,32 @@ outlined and full-field directions are unestablished; multiline takes 20.5% less
 Bun establishes lower time for multiline against both controls and outlined
 against app 7; other directions are unestablished. No case establishes a
 regression. All samples and controls are retained in the report.
+
+
+TextField covers standard and outlined search, password, numeric/date and multiline
+inputs used by VentiMath, including React Hook Form value/reset/focus, generated
+hydration-safe IDs, label/helper associations, required/error states, root versus
+input refs, adornments and theme overrides. Modern slot objects/callbacks win over
+the retained Material 7 `InputProps`, `inputProps`, `InputLabelProps`,
+`FormHelperTextProps` and `SelectProps` aliases. Those aliases do not leak onto DOM
+nodes. Top-level ARIA props retain root placement; use `slotProps.htmlInput` to
+name the actual input when there is no label.
+
+**Select/MenuItem remain the next dependency:** `select` currently requires an
+explicit `slots.select` component. The test-only adapter checks real current/app
+Select keyboard selection, focus and label/helper wiring. No Select implementation
+is bundled, and these dropdown callers are not ready for a default app cutover.
+Filled TextField has no observed app caller; it requires `slots.input` until
+FilledInput is implemented. Unsupported defaults throw instead of silently
+rendering another control. Non-native selects follow Material 9’s ARIA-associated
+label div; Material 7 used a label pointing at the combobox div.
+
+[TextField measurements](bench/text-field/README.md) record isolated prepared
+12-field SSR workloads, with all comparison pairs and identical-source controls.
+
+Against app Material 7, outlined and multiline SSR take 22–30% less Node time
+and about 21% less Bun time. Complete form SSR takes 16.5% less on Node and
+12.8% less on Bun. Against Material 9, standard and multiline are lower on both
+runtimes, and outlined is lower on Bun; the remaining directions are
+unestablished at this precision. These measurements do not establish browser
+interaction or application throughput improvements.

@@ -207,3 +207,11 @@ checks label transforms, pointer behavior, inherited state, theme overrides,
 light/dark/RTL/variable themes, live shrink/focus, React Hook Form, accessible
 names and hydration in production and development React. It is included in
 clean npm/Bun archive consumption and strict NodeNext/Bundler declaration checks.
+
+
+TextField has 590 visible SSR comparisons against both Material controls, plus
+app-shaped Chrome cases for search refs/ARIA, password/numeric/date inputs,
+multiline notes, Hook Form, labels/helpers, hydration and the explicit Select
+slot boundary. The pinned Select and its context adapter are test controls only;
+Select/MenuItem are not shipped or marked implemented. Non-native label divs
+follow Material 9; the Material 7 label difference is asserted explicitly.

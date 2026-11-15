@@ -86,3 +86,7 @@ for(const name of ['Input','OutlinedInput']){const html=renderToString(React.cre
 
 const decorated=renderToString(React.createElement(api.FormControl,null,React.createElement(api.InputLabel,{htmlFor:'fee'},'Fee'),React.createElement(api.OutlinedInput,{id:'fee',label:'Fee',defaultValue:0,startAdornment:React.createElement(api.InputAdornment,{position:'start'},'$')})));
 assert.match(decorated,/data-shrink="true"/);assert.match(decorated,/MuiInputAdornment-positionStart/);assert.match(decorated,/for="fee"/);
+
+const textField=renderToString(React.createElement(api.TextField,{id:'contest',label:'Contest',helperText:'Name',required:true}));
+assert.match(textField,/id="contest-helper-text"/);assert.match(textField,/aria-describedby="contest-helper-text"/);assert.match(textField,/for="contest"/);
+assert.equal(api.TextField,require('vmui-material/TextField').default);

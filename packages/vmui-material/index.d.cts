@@ -326,3 +326,21 @@ export type InputAdornmentProps<C extends React.ElementType='div'>=InputAdornmen
 export const InputAdornment:TextComponent<InputAdornmentOwnProps,'div'>;
 export const inputAdornmentClasses:Readonly<InputAdornmentClasses>;
 export function getInputAdornmentUtilityClass(slot:string):string;
+
+export type TextFieldVariants='outlined'|'standard'|'filled';
+export interface TextFieldOwnerState extends Omit<FormControlOwnProps,'classes'> {autoFocus:boolean; color:ButtonColor; disabled:boolean; error:boolean; fullWidth:boolean; multiline:boolean; required:boolean; select:boolean; variant:TextFieldVariants; label?:React.ReactNode; helperText?:React.ReactNode; value?:unknown;}
+export type TextFieldSlotProps<P>=P|((ownerState:TextFieldOwnerState)=>P);
+export interface TextFieldSelectSlotProps {native?:boolean; multiple?:boolean; displayEmpty?:boolean; renderValue?:(value:any)=>React.ReactNode; onChange?:(event:any,child?:React.ReactNode)=>void; [key:string]:any;}
+export interface TextFieldSlots {root?:React.ElementType;input?:React.ElementType;inputLabel?:React.ElementType;htmlInput?:React.ElementType;formHelperText?:React.ElementType;select?:React.ElementType;}
+export interface TextFieldProps<V extends TextFieldVariants=TextFieldVariants> extends Omit<FormControlProps,'children'|'onChange'|'onFocus'|'onBlur'|'defaultValue'|'classes'|'variant'> {
+ autoComplete?:string; autoFocus?:boolean; children?:React.ReactNode; classes?:Partial<TextFieldClasses>; defaultValue?:unknown; helperText?:React.ReactNode; id?:string; inputRef?:React.Ref<any>; label?:React.ReactNode; maxRows?:number|string; minRows?:number|string; multiline?:boolean; name?:string; placeholder?:string; rows?:number|string; select?:boolean; type?:React.HTMLInputTypeAttribute; value?:unknown; variant?:V;
+ onChange?:React.ChangeEventHandler<HTMLInputElement|HTMLTextAreaElement>; onBlur?:React.FocusEventHandler<HTMLInputElement|HTMLTextAreaElement>; onFocus?:React.FocusEventHandler<HTMLInputElement|HTMLTextAreaElement>;
+ slots?:TextFieldSlots;
+ slotProps?:{root?:TextFieldSlotProps<FormControlProps>;input?:TextFieldSlotProps<Partial<V extends 'standard'?InputProps:OutlinedInputProps>>;inputLabel?:TextFieldSlotProps<InputLabelProps>;htmlInput?:TextFieldSlotProps<InputBaseComponentProps>;formHelperText?:TextFieldSlotProps<FormHelperTextProps>;select?:TextFieldSlotProps<TextFieldSelectSlotProps>};
+ /** Legacy app Material 7 aliases; slotProps take precedence. */
+ InputProps?:Partial<V extends 'standard'?InputProps:OutlinedInputProps>; InputLabelProps?:InputLabelProps; inputProps?:InputBaseComponentProps; FormHelperTextProps?:FormHelperTextProps; SelectProps?:TextFieldSelectSlotProps;
+}
+export type TextFieldClasses=Record<'root',string>;
+export function TextField<V extends TextFieldVariants=TextFieldVariants>(props:TextFieldProps<V>):React.ReactElement|null;
+export const textFieldClasses:Readonly<TextFieldClasses>;
+export function getTextFieldUtilityClass(slot:string):string;

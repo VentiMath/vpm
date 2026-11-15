@@ -587,6 +587,26 @@
         "types": "./inputAdornmentClasses.d.cjs",
         "default": "./inputAdornmentClasses.cjs"
       }
+    },
+    "./TextField": {
+      "import": {
+        "types": "./TextField.d.mjs",
+        "default": "./TextField.mjs"
+      },
+      "require": {
+        "types": "./TextField.d.cjs",
+        "default": "./TextField.cjs"
+      }
+    },
+    "./textFieldClasses": {
+      "import": {
+        "types": "./textFieldClasses.d.mjs",
+        "default": "./textFieldClasses.mjs"
+      },
+      "require": {
+        "types": "./textFieldClasses.d.cjs",
+        "default": "./textFieldClasses.cjs"
+      }
     }
   },
   "files": [
