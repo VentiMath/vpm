@@ -310,7 +310,8 @@ wrapper adds no competing button role or tab stop. Controlled/default checked
 values, custom icons, mixed table selection, disabled state, required labels,
 label placement, input/root refs, slots and app theme overrides are covered.
 FormControlLabel also composes unchanged control Radio/Switch components in the
-test fixture; those runtime implementations remain pending.
+Checkbox test fixture. Radio now has its own implementation and group-specific
+checks; Switch remains pending.
 
 Native indeterminate state follows Material 9, improving on app7's visual-only
 mixed state. Native form reset also restores the icon and subsequent click
