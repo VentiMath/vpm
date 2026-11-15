@@ -269,3 +269,12 @@ chipUtility.root satisfies string;chipClasses.label satisfies string;
 Chip({size:'large'});
 // @ts-expect-error ref must match the root
 Chip({component:'a',ref:React.createRef<HTMLButtonElement>()});
+
+import Avatar, { type AvatarProps } from 'vmui-material/Avatar';
+import avatarUtility from 'vmui-material/avatarClasses';
+const avatarProps:AvatarProps={alt:'Student',src:'/student.png',variant:'rounded',slotProps:{img:{ref:React.createRef<HTMLImageElement>(),referrerPolicy:'no-referrer',onError:e=>e.currentTarget.removeAttribute('src')}}};
+Avatar(avatarProps);Avatar({component:'a',href:'/profile',ref:React.createRef<HTMLAnchorElement>(),children:'A'});avatarUtility.root satisfies string;
+// @ts-expect-error unsupported variant
+Avatar({variant:'triangle'});
+// @ts-expect-error image ref must be an image
+Avatar({slotProps:{img:{ref:React.createRef<HTMLButtonElement>()}}});

@@ -230,3 +230,5 @@ Switch({size:'large'});
 
 import Chip from 'vmui-material/Chip';
 Chip({label:'Confirmed',color:'success',variant:'outlined'});
+import Avatar from 'vmui-material/Avatar';
+Avatar({children:'A',src:'/person.png',alt:'Student'});

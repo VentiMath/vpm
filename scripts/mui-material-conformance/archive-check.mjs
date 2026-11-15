@@ -112,3 +112,7 @@ assert.equal(api.Chip,require('vmui-material/Chip').default);
 assert.equal(api.chipClasses,require('vmui-material/chipClasses').default);
 const chipHtml=renderToString(React.createElement(api.Chip,{label:'Roommate',onDelete(){}}));
 assert.match(chipHtml,/MuiChip-deleteIcon/);assert.match(chipHtml,/role="button"/);
+
+assert.equal(api.Avatar,require('vmui-material/Avatar').default);
+assert.equal(api.avatarClasses,require('vmui-material/avatarClasses').default);
+assert.match(renderToString(React.createElement(api.Avatar,{src:'/student.png',alt:'Student'})),/alt="Student"/);

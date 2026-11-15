@@ -1,0 +1,1 @@
+"use strict";const a=require("./avatar-control.cjs");module.exports=a.Avatar;module.exports.default=a.Avatar;module.exports.avatarClasses=a.avatarClasses;module.exports.getAvatarUtilityClass=a.getAvatarUtilityClass;

@@ -287,3 +287,12 @@ callback; explicit disabled ARIA is preserved.
 run those in isolated processes with both controls. Avatar and SvgIcon inputs
 are unchanged controls; the package runtime uses only owned components.
 Exact archives rerun these through `VPM_MATERIAL_BROWSER_FILTER=chip-browser.cjs`.
+
+
+Avatar: `avatar-contract.cjs` compares 144 current/app SSR combinations.
+`avatar-browser.cjs` checks actual profile/initial/Chip patterns, unchanged
+AvatarGroup composition, real loaded/missing/responsive image requests, a stale
+failure after source replacement, cached-error hydration, refs and theme/RTL
+styles. The runtime uses the rendered image, not an auxiliary preloader.
+Build with `avatar-build.cjs`; prepared SSR benchmarks are `bench/avatar.cjs`.
+Use `VPM_MATERIAL_BROWSER_FILTER=avatar-browser.cjs` for exact archive checks.

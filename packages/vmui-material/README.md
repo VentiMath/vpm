@@ -1,6 +1,6 @@
 # vmui-material
 
-Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch and Chip, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
+Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip and Avatar, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
 
 ```js
 import { Button, ToggleButton, ToggleButtonGroup } from 'vmui-material';
@@ -410,7 +410,7 @@ ButtonBase now preserves an explicit `aria-disabled` value. Current utility
 classes are exported,
 not app7’s deprecated compound class aliases. The cancel glyph is public
 Material design data; the component behavior is independently written.
-Avatar is an unchanged test control and remains a separate pending component.
+The subsequent Avatar unit replaces the earlier unchanged Avatar test control.
 
 The current9/app7 comparisons cover 672 SSR cases, light/dark and variable
 themes, RTL, keyboard/click/drag callbacks, disabled behavior, hydration and
@@ -422,3 +422,30 @@ The prepared eight-Chip SSR workloads use 16–29% less Node time and 23–35%
 less Bun time across current9/app7 comparisons. Every process pair shows lower
 time beyond the identical-source control spread. Raw samples and source hashes
 are retained. These results do not establish a browser or application speedup.
+
+
+## Avatar
+
+`Avatar` covers UserMenu photos/initials, activity images, roommate Chip adornments
+and the avatars inside authentication/coming-soon groups (app main `2cfe38df`).
+It supports circular/rounded/square roots, image/initial/person fallbacks,
+responsive image candidates, image request attributes, custom slots, refs,
+theme overrides and `sx`. Legacy `imgProps` remains supported; `slotProps.img`
+takes precedence. AvatarGroup itself remains an unchanged test caller.
+
+The actual rendered image owns loading and failure state. No separate preload
+request ignores the image slot’s referrer/cross-origin policy. Cached failures
+are detected after mounting/hydration, source changes retry, and stale requests
+cannot overwrite the active photo or update an unmounted avatar. Public Person
+SVG geometry is design data; no upstream component implementation is copied.
+
+Current9/app7 SSR and Chrome checks cover theme/RTL/CSS variables, the app’s
+36px/13px override, Chip/group composition, missing and changing images, refs,
+focus/node identity and hydration. [Avatar measurements](bench/avatar/README.md)
+measure prepared SSR trees only. Material now has 40 independently implemented
+components and remains partial and unreleased.
+
+Bun SSR uses 18–34% less time across all current/app workloads. Node establishes
+19–28% less time for current initial/photo/Chip cases and 22% less for app Chip
+composition. The other Node comparisons remain inconclusive under the measured
+control variation. These are local SSR results, not app interaction timings.

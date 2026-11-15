@@ -937,6 +937,26 @@
         "types": "./chipClasses.d.cts",
         "default": "./chipClasses.cjs"
       }
+    },
+    "./Avatar": {
+      "import": {
+        "types": "./Avatar.d.mts",
+        "default": "./Avatar.mjs"
+      },
+      "require": {
+        "types": "./Avatar.d.cts",
+        "default": "./Avatar.cjs"
+      }
+    },
+    "./avatarClasses": {
+      "import": {
+        "types": "./avatarClasses.d.mts",
+        "default": "./avatarClasses.mjs"
+      },
+      "require": {
+        "types": "./avatarClasses.d.cts",
+        "default": "./avatarClasses.cjs"
+      }
     }
   },
   "files": [

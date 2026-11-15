@@ -56,3 +56,5 @@ export const {Radio,radioClasses,getRadioUtilityClass,RadioGroup,radioGroupClass
 export const {Switch,switchClasses,getSwitchUtilityClass}=a;
 
 export const {Chip,chipClasses,getChipUtilityClass}=a;
+
+export const {Avatar,avatarClasses,getAvatarUtilityClass}=a;

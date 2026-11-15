@@ -461,3 +461,17 @@ export type ChipProps<C extends React.ElementType='div'>=ChipOwnProps&Omit<React
 export const Chip:<C extends React.ElementType='div'>(props:ChipProps<C>)=>React.ReactElement|null;
 export const chipClasses:Readonly<ChipClasses>;
 export function getChipUtilityClass(slot:string):string;
+
+export type AvatarClasses=Record<'root'|'colorDefault'|'circular'|'rounded'|'square'|'img'|'fallback',string>;
+export type AvatarRootSlotProps=React.HTMLAttributes<HTMLElement>&{ref?:React.Ref<HTMLElement>;sx?:SxProps<Theme>};
+export type AvatarImageSlotProps=React.ImgHTMLAttributes<HTMLImageElement>&{ref?:React.Ref<HTMLImageElement>;sx?:SxProps<Theme>};
+export interface AvatarOwnProps {
+ alt?:string;src?:string;srcSet?:string;sizes?:string;children?:React.ReactNode;variant?:'circular'|'rounded'|'square';
+ classes?:Partial<AvatarClasses>;sx?:SxProps<Theme>;imgProps?:AvatarImageSlotProps;
+ slots?:{root?:React.ElementType;img?:React.ElementType;fallback?:React.ElementType};
+ slotProps?:{root?:AvatarRootSlotProps|((state:AvatarOwnProps)=>AvatarRootSlotProps);img?:AvatarImageSlotProps|((state:AvatarOwnProps)=>AvatarImageSlotProps);fallback?:Partial<SvgIconProps>|((state:AvatarOwnProps)=>Partial<SvgIconProps>)};
+}
+export type AvatarProps<C extends React.ElementType='div'>=AvatarOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof AvatarOwnProps>&{component?:C};
+export const Avatar:<C extends React.ElementType='div'>(props:AvatarProps<C>)=>React.ReactElement|null;
+export const avatarClasses:Readonly<AvatarClasses>;
+export function getAvatarUtilityClass(slot:string):string;

@@ -1,0 +1,2936 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-15T20:21:07.059Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/mui-material-conformance/avatar-bench-entry.jsx": "8dfd499382f85295f6f7af4fbd6f09fbd835b20fa5e0f14b8cadfe52a747097f",
+    "../../scripts/mui-material-conformance/avatar-build.cjs": "e4e00b4f92893e65d86774215bca432bb116be5357ffa660466d22299dbb5028",
+    "../../scripts/mui-material-conformance/avatar-scene.jsx": "0a0ca9461cbc4752f13cd6519eb0c01a14c9328c9b3e62415d2dcfa37466548d",
+    "../../scripts/mui-material-conformance/input-decorations-scene.jsx": "5c347916c11063227c790f8f36e4b95d61bf04e2e3fec09c2c0f91075f36b36b",
+    "../../scripts/mui-material-conformance/text-field-scene.jsx": "b58726e5f376b37870e8d922c16149602002dbf4f6fee4c554c9595f2df205c8",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/app-upstream/avatar-bench.cjs": "605ffe434d95785cb70e32f4e778cf6c7ed7cbed61f7392e3aa205f139388e21",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/app-vpm/avatar-bench.cjs": "32379da23bce5726ded8b8370037809e04199c13e54a21b0ac2333a5ba509ba9",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/current-upstream/avatar-bench.cjs": "841cd144a7d2fa3455a40d79804bedd200b59d65d22db843b2362459df5a9156",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/current-vpm/avatar-bench.cjs": "3e09a9e7e307628d697210069f8c912d40587feef6bd048b4dfcb7ab77a1f321",
+    "../../scripts/mui-system-conformance/package-lock.json": "ddadfff23ccbae1816cb53aa88c03f4279279b3014993b39c62b7b1676faa633",
+    "../vemotion-babel-plugin/index.cjs": "e5bf72ac7bc3e7429c7fd385d680260211ce95b7e0e4316bb69f611a45029369",
+    "../vemotion-babel-plugin/src": "31538914c8f6834d1c48e1eda455f8655afa6b7e7aaf597c044a311bac473b74",
+    "../vemotion-cache/index.js": "a4391dfaa7d6330038ccb0b39ffff0af5a48066b27b0316eece0b6562a94abaa",
+    "../vemotion-cache/src": "6d560802fa6d75bfd7179e31c5427593220b0931c4b5b953dca79c86bacb30dd",
+    "../vemotion-hash/index.js": "96b215f0e2ae15c729dbc5eac185aab2e484ae1b67490ebcd94d5709056cd4e5",
+    "../vemotion-is-prop-valid/index.js": "5993ac5f383ac427e13b3b739eea889aefbf57af365dba833582890a10b52344",
+    "../vemotion-memoize/index.js": "9b0b8759044ffed69cfcc0548304888144cd1e2ffb794ed99726c51ab3a38c60",
+    "../vemotion-react/_isolated-hnrs.js": "03518aa3cc4cd476a205dd63745b0db44c7df9f9eba4ce11b232fb26055abdcf",
+    "../vemotion-react/index.js": "41d7839fc57c4dc975e17143eb363b1f68efde4cb9e9778f006b81ec10dc1259",
+    "../vemotion-react/jsx-dev-runtime.js": "a110b06d83cebb2ee63b0ea0224f4ff394355da4ab6a3b7aed0e69c2dfb1704b",
+    "../vemotion-react/jsx-runtime.js": "d4cf2669f60829205ad963371e5edc535f0413fadecc8bf56ad4e174fd87f38f",
+    "../vemotion-react/src": "f3fa58f006f4c35c1c8ee16c2384334e3697f7923b3440db92a117260aa648ba",
+    "../vemotion-serialize/index.js": "c5fc672aac873af6b663291fdd3b8c0c72a6e271458be622e9de5154e2874801",
+    "../vemotion-serialize/src": "2f1c965c2df5db9fad836cf20b73677ad8c24814e34ce224b957c9c0a4b376e9",
+    "../vemotion-sheet/index.js": "370197e943ace72eb9feb1ef45c8b22b76904e7dee222fa2106dda556df3c2a7",
+    "../vemotion-sheet/src": "2f1c965c2df5db9fad836cf20b73677ad8c24814e34ce224b957c9c0a4b376e9",
+    "../vemotion-styled/base.js": "2c0d8fb8493f8ec54e67182ff81335ce4ee2fd3503b6d563e473fc08f6e770dd",
+    "../vemotion-styled/index.js": "d2c6ecd98351625a2c3d2c8126ff4b3761a0b8ca82066b5cbec5055961aa2b93",
+    "../vemotion-styled/src": "8d1258141f1423dcabcc14f4037b3f878a1302dbea67718f709780a553642600",
+    "../vemotion-unitless/index.js": "068105a5301790ad6ff590e36f620f1548a809f59e222a7075f52544665c85d5",
+    "../vemotion-use-insertion-effect-with-fallbacks/index.js": "c9bc22b0c67ed348c3b377f69484dae1e32ac76fbaf7af198ddbd729be039e66",
+    "../vemotion-use-insertion-effect-with-fallbacks/src": "3304c3023c2ddc417a0e21a4bfff163baf1f4792dfd7073d54ba75418f8b2fae",
+    "../vemotion-utils/index.js": "8d92f8c8a9bdbb347324c097e7e1c6a23004bf9bb61fa6391e912df0ec39ccf3",
+    "../vemotion-utils/src": "3304c3023c2ddc417a0e21a4bfff163baf1f4792dfd7073d54ba75418f8b2fae",
+    "../vemotion-weak-memoize/index.js": "3e44339d2b635f8ccca795abacc5f4e395c6598894dc0520ff997eda25eca99d",
+    "../vmui-private-theming/ThemeProvider.cjs": "1a9d3eb6c1ccc48c5d9332295e40af36917d1e6648d12f750de0c50ac9f82564",
+    "../vmui-private-theming/ThemeProvider.mjs": "46256569d2dd107cec05e4ccdf472197a191e663234a32704f2fd968d61e7abd",
+    "../vmui-private-theming/index.cjs": "dbea69c9f4dccb3914c34d8bbffc813f470bf4c9eb0d61f6b41612b18c27b5da",
+    "../vmui-private-theming/index.mjs": "7d7e0dfbbc9e98b983de15f56153013d35c1be470bcb66edf5a7bdafb8362af3",
+    "../vmui-private-theming/useTheme.cjs": "a510ba26fed37a3b028a2ebbaf51e3c9daf8e4e5a0c3f47b785f00891832da65",
+    "../vmui-private-theming/useTheme.mjs": "6f8bc2ed0d6a8d2323f10e23d26b25256b284bf6a570cc058fb6693e34032ded",
+    "../vmui-styled-engine/GlobalStyles.cjs": "f2389d1af2f9e02a49087610c78f4c011254a4f191edaa9da0a43209131649d2",
+    "../vmui-styled-engine/GlobalStyles.mjs": "921cebc2abc1ebd5bc7a17366f1f01cbab72d6ab5bf37a73efcd41ed748e8c51",
+    "../vmui-styled-engine/StyledEngineProvider.cjs": "bfead354f2d307038620421321a5e653f24a4b83f9217207eaa1eef174b0e90c",
+    "../vmui-styled-engine/StyledEngineProvider.mjs": "9934fbd41b842081688ecc1b311934709ec0d8eecd814df97acfd55eda3335cb",
+    "../vmui-styled-engine/index.cjs": "3883e5d988d7fb95c8f7b9e1a68f0722503d8f85944f4a0b21cd33010ac13a6b",
+    "../vmui-styled-engine/index.mjs": "5b0497c8c2e0f5873d6aef91b66a8a9497950c5c384788ac4b5ad16f5cbcc2f9",
+    "../vmui-system/Box.cjs": "b64b6a88be592977443812e88f8ffcd322f91b8be67e67ce9498431e4759442b",
+    "../vmui-system/Box.mjs": "21321a7ad67cb60e3ecebfa2a745229f7dc5e157a2ea9f849d17ec92b95f8114",
+    "../vmui-system/Container.cjs": "e5b343d9d6d100b338a0e56f92ecab49d95c474e2cbbe14fb75ac3f1b9a095b7",
+    "../vmui-system/Container.mjs": "27b64fcd5ebaff98ed97105da2a9c501ee43370a5955bb3ade6e97c86640c9b4",
+    "../vmui-system/DefaultPropsProvider.cjs": "e32e451936582001bdba5f84b954357cdf8c725b9dab2a00ff7256be07b7214b",
+    "../vmui-system/DefaultPropsProvider.mjs": "f8d343ffa887ae7d66aa9e71998d955acbaacffe254eb87183d551fa57ee9544",
+    "../vmui-system/GlobalStyles.cjs": "204f09c030c315a082c087578fecb9ac35e3f3a594ecb85969d6fca0f9c02c11",
+    "../vmui-system/GlobalStyles.mjs": "59da1b6d2e56c6134f749ecabad4d1df79ce76e30888dc529bac180970004b33",
+    "../vmui-system/Grid.cjs": "4ca2fca568728b0dfc4d5d9e9917c996369d9f14a445fa0359ad5c3ca7b0f996",
+    "../vmui-system/Grid.mjs": "5ebd81226ce7cdb73e7aaeb4b11f5995789584f2c43b63ba0373826508a2f558",
+    "../vmui-system/InitColorSchemeScript.cjs": "f5d958140169b55a2cc741bc05164619ac9c142ab1167d94bb68df7a182a9f4a",
+    "../vmui-system/InitColorSchemeScript.mjs": "b4d810d5aaf45a3dcddeb5c0fb1f31c810a0bf7bbcc8530ee99732ea13ac67ea",
+    "../vmui-system/RtlProvider.cjs": "5bb89c64918fab9e47c008742bca8cb7f32d024277575b7647a2eb2cf2db05f2",
+    "../vmui-system/RtlProvider.mjs": "5af7be25286fddf304077e8f31c265ded0cd8a5cd7bc732cac756e107a7d1e9d",
+    "../vmui-system/Stack.cjs": "ba257160041d5c6b9a37c8fb51a3972820ce4481265953280570f4e26acb5c68",
+    "../vmui-system/Stack.mjs": "35633dc42f472ba32506901028b2bd0182602eb27b293c914b297eea3afa7dec",
+    "../vmui-system/ThemeProvider.cjs": "6be5417b9b8d26bb43b00eaad127197b25f2e68deae73573110a98ad55507053",
+    "../vmui-system/ThemeProvider.mjs": "d8d3add5be8e4d3aa2ad4af70acbf35ace684075643b5ca9bf04e4019263ee3f",
+    "../vmui-system/borders.cjs": "7c0f94d8efd492acba687d8df77e8ad0f4e45ef2518360f90cd09ebeda99c474",
+    "../vmui-system/borders.mjs": "298e2c19c85eb7157fdfbb860ab222e7e8f936991922b4756b79e9db8f13dc9e",
+    "../vmui-system/breakpoints.cjs": "707735fe09f5f263761d65fadc74afcb6d5bb3dcba5db4c72d692560e14c2a0f",
+    "../vmui-system/breakpoints.mjs": "cb3dba12099937a43e952a7ef50dbf763cc23aecf6302c182fff7cd9614b60ba",
+    "../vmui-system/colorManipulator.cjs": "8dca5753c5c2940196673eaace10e3b8e64f0e497863dc2cd8b2d7ff82a3d094",
+    "../vmui-system/colorManipulator.mjs": "4139f8352993b5369060bb719b40ed03ce2c5ce68e9edadc01e68546551962b6",
+    "../vmui-system/colors.cjs": "56cf0820050ee5d563bbaa983f6114ef26bb443092f9a22348a1fd1371db7407",
+    "../vmui-system/compose.cjs": "5309ab8adfffff6caed4bbe5fbcc154d127cf1aaf8881f8415f84a99efcedf3d",
+    "../vmui-system/compose.mjs": "da201a17433a28b3f795701f7d32b849f5e584258c86016ab78f915be3c8be71",
+    "../vmui-system/createBox.cjs": "48f5d57f508c1194ba00cc8ba6071c7ee8eb51511fdfb9f0b6a817b4fd54fd9e",
+    "../vmui-system/createBox.mjs": "d51887118f2ede63c55a111181217d6fb0b619e882ea94f546abca590ca4f656",
+    "../vmui-system/createBreakpoints.cjs": "f103076893d26bba729bcdb358ce8410e5abe9d4c1667ccb2caf36259444558c",
+    "../vmui-system/createBreakpoints.mjs": "f62adabc5215b2c93a3b870aa931b15bcbbf6d8f0ba9da0b801c954105b3d4b6",
+    "../vmui-system/createStyled.cjs": "35643ad0bca0719804a11e44b105186ad6e70de113f7dbc8cd00534b80b26ccc",
+    "../vmui-system/createStyled.mjs": "e14a03be4c660cd96d68f89a4a48c4c0663282801a7c4bf30b0fea88d8c50c06",
+    "../vmui-system/createTheme.cjs": "ef66b46f1765583e1f1a78db274a9c5c734a817bc51a9c268905a06bfdca4b00",
+    "../vmui-system/createTheme.mjs": "3f9b31a383461582d8aa7f51155ff1874015f5370c72a75cae0b8d06f845de25",
+    "../vmui-system/cssContainerQueries.cjs": "43cdac47291af1a1b4287e7ca68c689466ee479821c0808bf17634ae78e4c141",
+    "../vmui-system/cssContainerQueries.mjs": "ecaa8cc0793ea045cb67902d6d73e3d597dcf5adc662b8cbe0665313112bd6ff",
+    "../vmui-system/cssGrid.cjs": "dd8a548c547b6ab4f9c24b56217207bd7a65139c540caef3e0b0daff07a6a0b9",
+    "../vmui-system/cssGrid.mjs": "6a9220dfd8f26ea0e57132266e752f7bdee4067341f8192646084af73901ce01",
+    "../vmui-system/cssVars.cjs": "76f379d9cb127f254ebd9ce1f089b44a3727bc3e66817295cc4116dce875f1c6",
+    "../vmui-system/cssVars.mjs": "ad9f227cbb7638ab24556fe0709c99c2e8e525f976819753f87a8896b68463be",
+    "../vmui-system/display.cjs": "640ba4c444d713d74536fd252b268b6ab5e12a2db8d9a81d19c1c078db084aac",
+    "../vmui-system/display.mjs": "63325f27891e1dd087b5fbdb4671ad04465be3ad04b34eb5a478e9634a42cb5e",
+    "../vmui-system/flexbox.cjs": "fdc54462f82546497b54f16b07360450a7d4daf4ab75788d3e3cf21f40df2a9d",
+    "../vmui-system/flexbox.mjs": "42b9ea2bdcf803400c81358b672d7e696a9688caf7e08273031e2a6154179805",
+    "../vmui-system/index.cjs": "815536114e6591be4bc3545eec525a3843cf3c315bd3b15a2ba44af29a21f366",
+    "../vmui-system/index.mjs": "2ff8e95b96c9987c982c6f69484037cecd1db7abbc33902c0413f68c227e5ada",
+    "../vmui-system/layout.cjs": "1e834fb9a67911b39def8f3eca37235fb790407a3bf534dbbb751ae6d54ec170",
+    "../vmui-system/palette.cjs": "93aaa58e6747f0a63f7f51884b320566c6e1f136c678e4e0328ab2f7f9ace400",
+    "../vmui-system/palette.mjs": "1c4bdeb92399b1382dff078d9bcfcdb1cfe93eb21df9adb7500647e9b855d00a",
+    "../vmui-system/positions.cjs": "fbf0e2493aab65226a197ffa87f485b92524ad62e34f812614857e1b84cdc4a8",
+    "../vmui-system/positions.mjs": "166f56d449726f55d5c6418c71fabf4e93801aea7220df1832f0363e9b94dc53",
+    "../vmui-system/react.cjs": "10a90e43f3bd281ea0c99259a56c7e398eec35d85ee111478689af1238b48f16",
+    "../vmui-system/shadows.cjs": "e2b3ee2ba7c465b059a99e0257115d0e632e1b313d98ddd8db31c2dead4df177",
+    "../vmui-system/shadows.mjs": "3f5d98175756fc768897b4f66820c2a251118b805e4c99778aa3a7b868481116",
+    "../vmui-system/sizing.cjs": "6272f9251dfadb216aac6987c36770b3622d72c46ed50b81b52aa1bff4947b94",
+    "../vmui-system/sizing.mjs": "75a1437c227788501e8d2ae9d34705154e90d961223eed6eee05a5aa99376c1b",
+    "../vmui-system/spacing.cjs": "df5bd7265242e184046ece61efcbce52b001cf479937aa86a5b9a9a5e4caef0f",
+    "../vmui-system/spacing.mjs": "06ba3be7ad24d588d91da1cddd523068d9613cfea7473a6b78554b410c487949",
+    "../vmui-system/style.cjs": "de7dde015cae1a05cd0beffe1df9c77ec5b63dda22bef976dccae76f5506e446",
+    "../vmui-system/style.mjs": "f9320a99cdfeec7573f6d257ec5693b0914d0b56ed9987ce36174de95c9b6d33",
+    "../vmui-system/styleFunctionSx.cjs": "21844aad8bfe3166f6a0ef449972fc95c03126446f1b4f23e4cbd44b250bcf1a",
+    "../vmui-system/styleFunctionSx.mjs": "8cdf559dcdb7d91d7dad1e192b1a6df1027aa5ec5b8d2ca8e5be55a310d30de2",
+    "../vmui-system/styled.cjs": "634c4b206aa5fc01f953edad02c3a771f30742514d0839cca499abc092dab4b5",
+    "../vmui-system/styled.mjs": "73d39c4637e3b9e3739121efb0f0f4be98918190c29f543ca16b6b44cafa9d40",
+    "../vmui-system/sx.cjs": "f41de5dfa31e16e1121e75a46765b07496b4423e5981ebb5c9dbafac3acf457c",
+    "../vmui-system/theme.cjs": "8d3a6dea5a341c0dbe98690abfa0dd70f54201b5b3636fe45557245de1e1be7e",
+    "../vmui-system/typography.cjs": "987ea252bdab27a30c20b837387a8aab7f71fcb302ed9efe9d25259995c5194f",
+    "../vmui-system/typography.mjs": "6be7933e862afa30b0ea0ed67a7c9eee76ee75fddac2cec6b98e1d010f7e749d",
+    "../vmui-system/useMediaQuery.cjs": "42a285cd890c3f206a15c171d5b65ae8540cc43ecd81df8631c6e104a941f234",
+    "../vmui-system/useMediaQuery.mjs": "3d0c7b297574f8922479c9440b76afba587f802e99ff30c94d6c2be12c06a17d",
+    "../vmui-system/useTheme.cjs": "975e4bd16a686d713f9ce92d1402ba2c9adc5864869e3643d3119dd53bf69c99",
+    "../vmui-system/useTheme.mjs": "e25cae231af64953959efc125dbfcdc96962221e1f3631da0cb632fa922ed645",
+    "../vmui-system/useThemeProps.cjs": "a63dbc2cc4d9073b8ad97998b9d70e4507c47694c1cdabedd1cf1b8e7dcbd4c4",
+    "../vmui-system/useThemeProps.mjs": "1b8b8a33d7e3cce93633c2fbef1a8141633d7bca47aff1e834e5817b30bb1973",
+    "../vmui-system/useThemeWithoutDefault.cjs": "96b8e6465fb4473f30875e7e25e99bdf138b4637c1dd09b6d2cb48d13ce23dac",
+    "../vmui-system/useThemeWithoutDefault.mjs": "26ce4314b640064fd50d74109b653cb08b1c562bfa2d423a1b22d650a2fb6b71",
+    "../vmui-system/variables.cjs": "6eb072abb5fe13f347097ed98a3086d29605c817a226b70cef005f0826e5941f",
+    "../vmui-utils/ClassNameGenerator.cjs": "6213feb83273586f7de134f72c421782ffa48819586511baf9d1dc6fc36f7f20",
+    "../vmui-utils/ClassNameGenerator.mjs": "6b66d354f6624e6aec303690dd064d2149f94f18ec52bab5187b3c19c224eca5",
+    "../vmui-utils/HTMLElementType.cjs": "ae07ceb3ea431b1e2d0fda4c1bff885e7bd7d4c69244b661dc46e32a99a54b56",
+    "../vmui-utils/HTMLElementType.mjs": "35b1f8f9751f75a8e6d6703412ef13f45b607fb30108c9b71c5bf65eaf0b2a86",
+    "../vmui-utils/appendOwnerState.cjs": "8a8203ab3e0f9008cb7148631f32c754adbbef0be3ff752ee11893eea63df253",
+    "../vmui-utils/appendOwnerState.mjs": "024d6e38a09777eafab126e99df13bb5933ac5b7299c3b1dd8a4e00ce37ba9bb",
+    "../vmui-utils/capitalize.cjs": "466ace0ba91f0eb59598533df1bf92203904e75ce9d24ed73d447d4bd2f6b683",
+    "../vmui-utils/capitalize.mjs": "2e692f2ba8c915e8a5fbebedb2a4dd6f8afe19cbfecf16cb2acb366f4f6bda5f",
+    "../vmui-utils/chainPropTypes.cjs": "64738c503dc44f8f3538d7503ceb60041c88004b587d72c77eff07da7f153d9b",
+    "../vmui-utils/chainPropTypes.mjs": "af29dc439c14f6941b8f1740bb877635d63019990652c2e760a0f93fcd055792",
+    "../vmui-utils/clamp.cjs": "4ea234c98488fe2b1f1a668b7ce56c3fcfb6b0d94532d94bb2ec8aaec093c5e8",
+    "../vmui-utils/clamp.mjs": "d1588edd0c58ed7ab6c3863dc4043aee60b16d0ecba0297847eba23afa6a3499",
+    "../vmui-utils/composeClasses.cjs": "c72db2f2d0199bfb167898f06e6c10c994f31a0956751ec5fbc8a8d4840d824f",
+    "../vmui-utils/composeClasses.mjs": "57bae69bf2452e63eb458aae908e79f066ebed3661b70a4995fd08b9b8efc49f",
+    "../vmui-utils/contains.cjs": "a978b047810fe70d07612d47e8c4da1c515a4f02fc2be0689afd5169eec8e207",
+    "../vmui-utils/contains.mjs": "2f0f88211bb69776a090c7079ecf21671d51d99c78f2686fe4b342ec6c7f4898",
+    "../vmui-utils/createChainedFunction.cjs": "b6c57fef271d0f5aa19c198c5b41c03f407da749ea5271b42684a9e1e6a5e36a",
+    "../vmui-utils/createChainedFunction.mjs": "45cfae0309fa596f9032c7b83a39e6f29c4b6557cfe26d46cdb6915cdbf6960c",
+    "../vmui-utils/debounce.cjs": "3852b1cbbc7bbdf38e86cffd14f6a5ae27eb29c2d6d9f46e06fd775be04338f1",
+    "../vmui-utils/debounce.mjs": "26756d5d85c3bbea438493a450065ce18c8d8eec741bf546a3d107bdeb35f33e",
+    "../vmui-utils/deepmerge.cjs": "eca6c9c4308d7254fc21112281f966a4b27258b65dc837960903712b2585bb95",
+    "../vmui-utils/deepmerge.mjs": "8d68c51ee253afcd699872a9cb24c33484291d4512e9858d5c0c81b166bbe74a",
+    "../vmui-utils/deprecatedPropType.cjs": "167e8146d593467fb628e4cbe0348527046498a892866f5ce52b26aa63fc9fe3",
+    "../vmui-utils/deprecatedPropType.mjs": "bf695ea438eabe1b79325ebe3b667aae7920e6236c92c86d1586ff7c0efa8471",
+    "../vmui-utils/elementAcceptingRef.cjs": "c3421533a636766a14fb32441d7507e8506e498e0425436433cb22a67074d62e",
+    "../vmui-utils/elementAcceptingRef.mjs": "cb11878271169ddf73f4930a1dd249bbb94fcd3bdd1110c2149ebcfe8a104f52",
+    "../vmui-utils/elementTypeAcceptingRef.cjs": "a953e733808c3739d29c32aea176434d5e28cc9b77f6c5ab4b14a52903c821dc",
+    "../vmui-utils/elementTypeAcceptingRef.mjs": "5df95de2599172dbad31500c360950dd646ef1e92dfe1e0c55d9b1e094441b89",
+    "../vmui-utils/exactProp.cjs": "2bcb71df8c0b0ca80b54f7dfba8799ddf1dd7e03833bbacee7f9bdcfc732e94d",
+    "../vmui-utils/exactProp.mjs": "d983c6d76089d649c0b77aa7b7f21b2381168f88e87cb287983ae735c44dcffd",
+    "../vmui-utils/extractEventHandlers.cjs": "78953d2b46eb154b71204565e5fab23da43f22a70d875fd42643c3ef971efc49",
+    "../vmui-utils/extractEventHandlers.mjs": "fadb22d0e37dbc35d78087a25d208e173fdf5cb0b8079b0f21d57c7c63eced31",
+    "../vmui-utils/fastDeepAssign.cjs": "1c7f60e965c16ae9261d2ec53511094ebd2c0ad05d640f39d4a063860cfe8d68",
+    "../vmui-utils/fastDeepAssign.mjs": "c00d95130cb7edc275b9c683f6397ec6b125bace48704c2980ed76d0497eb969",
+    "../vmui-utils/fastObjectShallowCompare.cjs": "3d207409294c330d9da814abd02982724ea40d5b8f83cb877ddb98dc021eed5b",
+    "../vmui-utils/fastObjectShallowCompare.mjs": "462c19ca96f1bd7651abe9325ef2f99afd6bded597b4bb45f0f909bf6a55a292",
+    "../vmui-utils/formatMuiErrorMessage.cjs": "723a68f4343f18b51cd81c0b0e8da94b95b4a531663c8e09a8ce9745c2ce6fac",
+    "../vmui-utils/formatMuiErrorMessage.mjs": "8204857f95fa3243d72503e31963b8a53f9be5f1224cf0c1cea5e3e1f62a090c",
+    "../vmui-utils/generateUtilityClass.cjs": "865be2049fbb4ef4ed4c1bd0d1a2b7f0af898a128f5e5b883d191a9811d9105b",
+    "../vmui-utils/generateUtilityClass.mjs": "2555c0761da1d35820df28989dbd2fab9c9f23165d318368de6d6a21ce0a5759",
+    "../vmui-utils/generateUtilityClasses.cjs": "2803d15c8920eb6b06bebd7fbef6f3881ed394644244c1bb893ddf1e7d132cee",
+    "../vmui-utils/generateUtilityClasses.mjs": "db8a623b630b813b748fd28847eb700f8c271ef262efe780e32d4c37a8b571d4",
+    "../vmui-utils/getActiveElement.cjs": "f9811ccea626e9c4bec30750f457102bb216ffdebf9f09e010b1b80ea9bc1255",
+    "../vmui-utils/getActiveElement.mjs": "9a0ae08abbab81f40d4f3b73cd53cf1f5e84b938f8f4c936d2cbdb8cb394a87b",
+    "../vmui-utils/getDisplayName.cjs": "4b7bf675dac24e974a549a4ad7399c9a0afa33fd1d1d6d267bc455dd6135bd05",
+    "../vmui-utils/getDisplayName.mjs": "c67ce4c3aacef24079ca3cbce7ea6723825e5b5389d0e71055aa4c19ef3548c8",
+    "../vmui-utils/getEventTarget.cjs": "04576c4987304ebd227e45aa400540b2029dd2fc8b0973a628a2f8504e2b4bfa",
+    "../vmui-utils/getEventTarget.mjs": "dafa6f09dc81512dfac498b71c5555d3011f2bca308a16de02d20fae8cb7fc16",
+    "../vmui-utils/getReactElementRef.cjs": "65da43940aeb639cde709fbd6a50d19fee97344a6a815b91cf3fbc444bb4b675",
+    "../vmui-utils/getReactElementRef.mjs": "a89736dbacb73ba8222d50db8f04b3fae63909e74060ece95b060921929c15f3",
+    "../vmui-utils/getReactNodeRef.cjs": "f03ceec5ab58570e197a0936a5b2edf91fda6cd9fe0b55eef166811c13c0d195",
+    "../vmui-utils/getReactNodeRef.mjs": "a78888e7ad099bc748916ed352f793e70d21753bba42b3cf1f3f963136f195d2",
+    "../vmui-utils/getScrollbarSize.cjs": "305a54493f23f3c4c012e9543ccf6ed7ccfb1260646b783f0155bb663d637554",
+    "../vmui-utils/getScrollbarSize.mjs": "8d1056ff3f76efdf899db221ed316210af1ceeb2bc87a3d365799759e13da474",
+    "../vmui-utils/getValidReactChildren.cjs": "56a8cdfcbd4f092cf90df912fa1bf1f8b63a7efd41df51e51d53cc6c397eb21d",
+    "../vmui-utils/getValidReactChildren.mjs": "61735aa08c9cc0b47a08ee7913a9f86fc17c85422e5a5802f5162a76c5383a68",
+    "../vmui-utils/index.cjs": "f22a51b57dee4397510ff87dcf78fc1eb04efecf593199db40f73c949e724b4e",
+    "../vmui-utils/index.mjs": "77990978ca4ed32ebd07630d3c319a066bc94fc382ac8fa767aa3f3a36d8b1cd",
+    "../vmui-utils/integerPropType.cjs": "e5035039ece3f358faadbb3e83425e6dae8477ee78f56b8f30ce89d651f57888",
+    "../vmui-utils/integerPropType.mjs": "6d9d4e48215e61ba0079c22cb9ee2377702cb0e6bbf9da6ee4109712f637aec9",
+    "../vmui-utils/isEventHandler.cjs": "146211ece8a4e9e441c420367eee0982fcbd007036b88acf36d07755caed9edb",
+    "../vmui-utils/isEventHandler.mjs": "a6189e34d88e7ef1fc813d0829727dd7ee7d49791500c288a347b722a87adf6c",
+    "../vmui-utils/isFocusVisible.cjs": "b776e3144ef25e863c6b095a6c7b7d4302fed4fbd8e6348d4ef2d203b9871590",
+    "../vmui-utils/isFocusVisible.mjs": "782be519cca00feabeedbd98d3c6be7e26671db3ae1001f2c03ee1d15951fa4e",
+    "../vmui-utils/isHostComponent.cjs": "769315ceb1ee854e06d43beba185c5b354c5ce095bf7fe0e7e3cb312416df466",
+    "../vmui-utils/isHostComponent.mjs": "25342e31eefd28ff2cda6d93093e8c438b8e6748e4de9479fb2597a2075af91b",
+    "../vmui-utils/isMuiElement.cjs": "7fa1fe9310462136f212b1d117440e1cb0742c23c404f9a7e75b1f64978a21e1",
+    "../vmui-utils/isMuiElement.mjs": "a4b2dcc904d61e2a494297a2e912c431423201f065cb8c1f1c7370ad846f9ca6",
+    "../vmui-utils/isObjectEmpty.cjs": "62fd3fc5eaba83aeb31631222c615a963887a6fb4f415bf8ac07c2d3ffa240df",
+    "../vmui-utils/isObjectEmpty.mjs": "003c055a84dfb20e387bc60d3c7f613153a43d4b2811ac159ad0e6e84caf07fa",
+    "../vmui-utils/mergeSlotProps.cjs": "a8daacba191afee6604a728f790af6ac8df4b8a7e0614b6c255c145b726f86f9",
+    "../vmui-utils/mergeSlotProps.mjs": "1266f954d524754a8986c43959a4d97f2eea8c17678c9cdb8b01f9f5d481f413",
+    "../vmui-utils/omitEventHandlers.cjs": "17bf9548b222c01ab58cc32a4197c6937fa45b5b5a2549104c8ee73ad8536280",
+    "../vmui-utils/omitEventHandlers.mjs": "1419a8093c5ca368ef2b8855b28d40a0e4717c4e8afd77fd667eb56f8194b7e6",
+    "../vmui-utils/ownerDocument.cjs": "e79c2f3cb745e8353896b562033f543f90e686223f31feab36c1c912106a6539",
+    "../vmui-utils/ownerDocument.mjs": "f307880079a0cc4f955057ac984d3d9d6b49903341df5f33590813ac23f172c2",
+    "../vmui-utils/ownerWindow.cjs": "4df70d53bea011e95887cb9578134f702bcac248f0c633e9903d8eef2b0d7c1d",
+    "../vmui-utils/ownerWindow.mjs": "4451fb7cf84a6726ce56b0840e757e19b33df8a2364ca08e6e54fb7a96681dbc",
+    "../vmui-utils/ponyfillGlobal.cjs": "3a6768da253fb5a95c27f26fa5183d718d57c4198417e4d7c7aa2cc381aff353",
+    "../vmui-utils/ponyfillGlobal.mjs": "79630c23987e5e0d73d901650d6c4c047866550943a3359ae7b9fcd799b13984",
+    "../vmui-utils/refType.cjs": "26ff33f2aa9e70f9d433a64b20fef79923584526f6495c0c4215581823de5981",
+    "../vmui-utils/refType.mjs": "e21241aac8108cb860d1ee4384493248d6516dc40d83bb999624ffcd5be8643a",
+    "../vmui-utils/requirePropFactory.cjs": "98cc50e167116ea8829229cd94ac09bd894d7eace9b349b780edd1a8ffac2b5d",
+    "../vmui-utils/requirePropFactory.mjs": "85b2f0d2a5a5066fb1881d586252e3f20469d6855b8974308f35650defd535f4",
+    "../vmui-utils/resolveComponentProps.cjs": "2eed5ced5371e33378eadd57661f95639a901d84c4198c11bcb8253ef457b6c9",
+    "../vmui-utils/resolveComponentProps.mjs": "f9cb286b32275b46665c38d82bb7edde27cc2694a9028889f9bdae1752a603ea",
+    "../vmui-utils/resolveProps.cjs": "1f099674e7c14401cb2913fe9327ce27e160c19f1929330f0598b07850fdc2a6",
+    "../vmui-utils/resolveProps.mjs": "fc3be909aa068e1342e410f3053275ad6683b1a596da83e45157972a2d43653b",
+    "../vmui-utils/setRef.cjs": "68a6dfb4a9daffe2e8824b28f013956130cfcdf640ad1c03d5c3435a70ee9ba5",
+    "../vmui-utils/setRef.mjs": "0a04ecc2557457d45067549d045357aecf36a7c8a06520d3819e64e56f3df0ee",
+    "../vmui-utils/types.cjs": "8222b8169ee86f25cdccd84d340340060ae3f0cff55e2ea9d344d7c332733b71",
+    "../vmui-utils/types.mjs": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+    "../vmui-utils/unsupportedProp.cjs": "a3e57a2c7488380da74053d727fc5ad792fcf8c2d5eea6c3b2c840ba2062577b",
+    "../vmui-utils/unsupportedProp.mjs": "a8e07cade9a92be7828a165340e6f14e6d1305333cbd47f6ff3ee1a42835c280",
+    "../vmui-utils/useControlled.cjs": "45c96219323d0eb7d35598fb6fccf5a46fd27572fd1f1c18845786249cf5f903",
+    "../vmui-utils/useControlled.mjs": "d72870d1da14f4887927b023ff7cfd73cc80f458a9ee68b6d1186cb11e94ded2",
+    "../vmui-utils/useEnhancedEffect.cjs": "88b1545639ad5c3830ab0d12c43c9c7a44997f96c8c4cd59b8f9e3c33a0b6a22",
+    "../vmui-utils/useEnhancedEffect.mjs": "e72913a283a73c4e9d40b72992e67c110788399f885926b9d4855206bbcf20ed",
+    "../vmui-utils/useEventCallback.cjs": "7754ef7e6385a1f9353c4220d54b687ad3f28491bb97c8de6baf9ac3a4cc5f9b",
+    "../vmui-utils/useEventCallback.mjs": "ad5c9394f901b04968c3449e3afdc18b31829b4f7fbed5ff2b5f1304ff211666",
+    "../vmui-utils/useForcedRerendering.cjs": "8b64edc8e001008ebb452bf0d63ad06eb34c835905a389dd7e0caf75088200fb",
+    "../vmui-utils/useForcedRerendering.mjs": "51f98f5cc2d671a7aa41133b57eb9761f3bc74171b5ae2698d748e8cd393835a",
+    "../vmui-utils/useForkRef.cjs": "b5c5e91a25c17e0789c9c3b2b390414386c2e6f3b684067bae0f5542008121e8",
+    "../vmui-utils/useForkRef.mjs": "2cbbdefebc9ab2fbd5f88a42ae87cfa552e1704dcf01fc226741cba544996461",
+    "../vmui-utils/useId.cjs": "cc06466f2b4ca78a4150ffd480d91950e42e453eeecb56e3a190ac84ddd0e63a",
+    "../vmui-utils/useId.mjs": "205ce4c2fcdc41f67f07237e5943f4836836982f5da02c166e50765fdd9580cb",
+    "../vmui-utils/useIsFocusVisible.cjs": "dea7b9e2629de0cf357a31ee5b4af5cc574dfe0f0274d4248fa841aeb23ec2fa",
+    "../vmui-utils/useIsFocusVisible.mjs": "9754952abc66c23012117b1b4c124513738c71884aab937b2724868bad278a99",
+    "../vmui-utils/useLazyRef.cjs": "ab90b2aa3535b2f8c7c1fade50dee0219dcb7b2f3b23e6682c9008414589f5ba",
+    "../vmui-utils/useLazyRef.mjs": "414b1670eb2a2019e3be75ec9cd3f3e048fbfeafed9e78c41aabea7604740d4e",
+    "../vmui-utils/useOnMount.cjs": "efeaffaa9193f472e3b706b347cacfc111401b2e84c62a5e6a7d89db21f08407",
+    "../vmui-utils/useOnMount.mjs": "b4433238ca80b96d0c8795b533f6bb5b203c1a5b246f45a91db369332cd2d4c2",
+    "../vmui-utils/usePreviousProps.cjs": "48fafcaa6402a4a9457e886fdd13854e758e52c6f3cb1ae10f4cf808708502d7",
+    "../vmui-utils/usePreviousProps.mjs": "9373442f3040fdc57a80ff1203a9516fe230884df562dbdb3ab135dbe615baf6",
+    "../vmui-utils/useRovingTabIndex.cjs": "d776ecd08c45a1bf6ea3f4f07b1bbf444cd390548a0812caa3cca481091ecc08",
+    "../vmui-utils/useRovingTabIndex.mjs": "16ccd5cb31651a22ac18b027df2d50e756bdd52bb786108453fff57cb80c27a4",
+    "../vmui-utils/useSlotProps.cjs": "eb4c13e7a9f4c4548d4036948f56188eb95fa18d022e4f20ebd92490fe94b743",
+    "../vmui-utils/useSlotProps.mjs": "6cf10363d7a82bd2a8fd485bb78e820de20beeeca73564c8facf35a4bcc27481",
+    "../vmui-utils/useTimeout.cjs": "12d8bf715f9204bc7277f8d38ccab77d04d81e3346ee95974e8cf1c928b5815a",
+    "../vmui-utils/useTimeout.mjs": "e13b8903020e575d7276488482d9f5daf79d260c82e54f6e588de1ab9dd0adeb",
+    "../vmui-utils/useValueAsRef.cjs": "e456e0847118fcf87786e656b9b3c94c6372317be9a03e19eb27b24e7a9e86d2",
+    "../vmui-utils/useValueAsRef.mjs": "ee10057829e2a45b3c3ffc93b3d5926379940c20d2eccab1020f3ed9cc8aefa1",
+    "../vmui-utils/visuallyHidden.cjs": "42f063bac5cbde8cc992e6bcccbc58235d3657ee56b2e1fa59257213d460a979",
+    "../vmui-utils/visuallyHidden.mjs": "cea799abdd7a78ddacbbb5a892f2516aa1e39f42c460f8083f9dbf40f729a0af",
+    "PROVENANCE.json": "4d2d9841b3639b4290c70816546af5e4a711f555e591f30f8ca907860e4ca451",
+    "avatar-control.cjs": "e1f2567ca6f84ff9eeca673ba7284efa40caf45b81c610348b184c8d98dea31e",
+    "bench/avatar.cjs": "d284cea8444789284357ad540922daaeae0ac62cdbf889b42b1df25567f5ea05",
+    "buttons.cjs": "1478ebf7f407320e431575ea5baed648a2d483de500c9ddacffd4b5f62a42a3a",
+    "check-controls.cjs": "949418cb135c3487a4d78a4dcc98438bd59ca24b89072f37d0740763eaf8227c",
+    "chip-control.cjs": "e04892122a24347db9d6853ddc9506a0db72db86c213efc01d567da5ed1f5c06",
+    "forms.cjs": "31b0280783062a13a15a629c6600a052c6eb8196fa413278087f035f85387088",
+    "index.cjs": "1d62bd420516bed090bf9c668089a5c272f43547edf8a876a4e3f8926d004b3d",
+    "input-base.cjs": "6ae03af38c5523ef9c1ed2ee4085410374c402be2016cf074de747d13e7c15ac",
+    "input-decorations.cjs": "aa69712a3fe8089671258d3560d5b9e956a3ca00dba2049e243754fa22456f76",
+    "input-variants.cjs": "788afdf00b15a9adf5e8e9c1645c586e1aae93086ac7178abfa74446c0c42f8c",
+    "lists.cjs": "9914dfa218a6203bd5125e2ca41f3bd754611511f8040ccdbbb980051a84c4e7",
+    "menus.cjs": "8b2b02112e60868623348108babcea78f409ca1b713a3946fb166d1cfe7c1aea",
+    "package.json": "90073b49e6fa87c6242ef6a02667aac0a9706e1bdf8f42f2a8623146e87061cb",
+    "radio-controls.cjs": "c8eff8dc50691230641b1664ef159ef7f3f5f0100ad4aac76a4bb2969a41192a",
+    "select-input.cjs": "256dd778cd45fa24e0d47e2806098046cbd4ff5c18e64b96c8cb2f65cd1aa11d",
+    "surfaces.cjs": "76dba2de164f93a2f31d9f08d7a4353ff4ced7f68814d31341cb1851c1deddb0",
+    "text-field.cjs": "901585bd50e2658499e140e661aea2b86b29251c0c66d65c1d22ac2f6185f6c0",
+    "text.cjs": "344b9dc7bf08a46b8241932f051677704870e2ab48804afdd8a9da6fffae1cbf",
+    "theme.cjs": "c8f10a217705c2e142da705773511879c7a3b3cc617cab08616813cdb57286d7"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 60215,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 initial Avatar SSR",
+            "iterations": 70,
+            "samples": [
+              138199.4000000004,
+              123938.09999999966,
+              125914.28571428522,
+              114486.31428571373,
+              145080.95714285705,
+              144233.32857142878,
+              141370.84285714294,
+              116492.85714285691,
+              140866.67142857192,
+              172288.68571428556,
+              133064.28571428586,
+              127533.92857142833
+            ]
+          },
+          {
+            "case": "Material9 photo Avatar SSR",
+            "iterations": 73,
+            "samples": [
+              148495.99999999948,
+              148087.3287671236,
+              144679.21917808274,
+              141824.2054794534,
+              148509.13698630192,
+              144694.643835617,
+              146452.05479452098,
+              158880.13698630148,
+              143461.19178082194,
+              144461.19178082162,
+              167091.8904109578,
+              143858.43835616438
+            ]
+          },
+          {
+            "case": "Material9 fallback Avatar SSR",
+            "iterations": 53,
+            "samples": [
+              206143.07547169738,
+              180527.5283018863,
+              214067.60377358555,
+              238439.4716981111,
+              228010.22641509539,
+              197614.79245283155,
+              206567.60377358482,
+              205869.49056604132,
+              179429.24528301775,
+              204422.94339622918,
+              208291.66037735788,
+              183164.3207547174
+            ]
+          },
+          {
+            "case": "Material9 chip Avatar SSR",
+            "iterations": 32,
+            "samples": [
+              337649.7187500007,
+              290708.3437500049,
+              316493.5,
+              297029.9687500031,
+              336369.7812499993,
+              317274.75000000285,
+              328236.96875000506,
+              266414.0624999973,
+              336889.31249999854,
+              327279.9375000019,
+              307743.5000000008,
+              456807.2812500006
+            ]
+          },
+          {
+            "case": "App7 initial Avatar SSR",
+            "iterations": 89,
+            "samples": [
+              132897.9438202255,
+              137440.07865168672,
+              138276.2134831466,
+              124157.77528089973,
+              129250.94382022465,
+              151776.68539325913,
+              136276.68539325905,
+              129864.23595505461,
+              121860.49438202153,
+              136658.70786516782,
+              135292.13483146255,
+              146117.03370786508
+            ]
+          },
+          {
+            "case": "App7 photo Avatar SSR",
+            "iterations": 66,
+            "samples": [
+              163687.49999999942,
+              132411.62121211702,
+              164082.69696969938,
+              158859.22727272482,
+              140484.22727272956,
+              159850.37878788193,
+              162159.090909089,
+              137345.33333332834,
+              158130.0454545478,
+              217085.84848485055,
+              132709.6060606023,
+              139309.9696969688
+            ]
+          },
+          {
+            "case": "App7 fallback Avatar SSR",
+            "iterations": 55,
+            "samples": [
+              215566.6545454551,
+              176206.05454545844,
+              176812.8727272762,
+              196897.72727273192,
+              176104.54545454725,
+              2002127.2727272762,
+              3953287.890909087,
+              2156169.6909090974,
+              370272.72727273154,
+              467254.54545454675,
+              214237.87272727746,
+              233808.32727273382
+            ]
+          },
+          {
+            "case": "App7 chip Avatar SSR",
+            "iterations": 34,
+            "samples": [
+              473283.0882352948,
+              625118.8823529419,
+              819882.3529411692,
+              363273.29411765543,
+              325308.82352941314,
+              864001.2352941271,
+              390178.9117647053,
+              508870.11764706695,
+              584859.0588235338,
+              342917.8823529422,
+              477628.67647059145,
+              294615.2058823506
+            ]
+          }
+        ],
+        "checksum": 357822066
+      },
+      "vpm": {
+        "pid": 60257,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 initial Avatar SSR",
+            "iterations": 70,
+            "samples": [
+              96613.09999999941,
+              92486.31428571425,
+              82211.31428571361,
+              93408.3285714288,
+              83247.61428571443,
+              88831.54285714291,
+              98759.52857142838,
+              88442.25714285747,
+              86651.78571428587,
+              90833.9285714289,
+              94288.68571428585,
+              86464.28571428584
+            ]
+          },
+          {
+            "case": "Material9 photo Avatar SSR",
+            "iterations": 73,
+            "samples": [
+              102444.06849315116,
+              103312.21917808201,
+              119030.24657534256,
+              108941.78082191676,
+              105702.05479451979,
+              109398.39726027407,
+              100492.57534246582,
+              101404.68493150739,
+              102357.301369863,
+              125702.05479452184,
+              112064.49315068468,
+              108295.65753424627
+            ]
+          },
+          {
+            "case": "Material9 fallback Avatar SSR",
+            "iterations": 53,
+            "samples": [
+              160096.69811320613,
+              158251.56603773608,
+              174574.67924528176,
+              225483.49056603672,
+              157718.56603773468,
+              161070.75471698082,
+              165796.3962264165,
+              157032.22641509285,
+              164569.96226415137,
+              165831.75471698123,
+              161435.52830188788,
+              169881.30188679378
+            ]
+          },
+          {
+            "case": "Material9 chip Avatar SSR",
+            "iterations": 32,
+            "samples": [
+              214480.46874999703,
+              189864.593749995,
+              189902.34375000626,
+              209459.62499999383,
+              221542.96875000058,
+              211483.0937499974,
+              214302.06250000338,
+              171658.87499999854,
+              236589.84374999648,
+              243199.21875000006,
+              215959.62500000355,
+              194789.06249999994
+            ]
+          },
+          {
+            "case": "App7 initial Avatar SSR",
+            "iterations": 89,
+            "samples": [
+              96524.34831460605,
+              101361.88764045073,
+              112418.06741573078,
+              91526.21348314651,
+              81736.88764045079,
+              90084.73033707796,
+              85890.44943820288,
+              102744.8539325837,
+              84216.76404494453,
+              85156.83146067224,
+              92487.3595505626,
+              91082.86516854013
+            ]
+          },
+          {
+            "case": "App7 photo Avatar SSR",
+            "iterations": 66,
+            "samples": [
+              122972.8484848472,
+              118900.25757576028,
+              111772.72727272655,
+              95788.51515151531,
+              111552.39393939485,
+              114803.03030303027,
+              105225.37878787743,
+              94257.57575757582,
+              110262.63636363459,
+              111555.5454545453,
+              144434.98484848588,
+              99354.78787878598
+            ]
+          },
+          {
+            "case": "App7 fallback Avatar SSR",
+            "iterations": 55,
+            "samples": [
+              151884.83636363593,
+              188670.45454545322,
+              181425.7454545441,
+              181999.23636362987,
+              158997.72727272482,
+              159576.52727272283,
+              156981.0545454526,
+              164947.72727272986,
+              160810.59999999276,
+              154762.89090908968,
+              169854.54545453898,
+              172511.363636361
+            ]
+          },
+          {
+            "case": "App7 chip Avatar SSR",
+            "iterations": 34,
+            "samples": [
+              191979.1764705812,
+              199394.61764705114,
+              192674.0294117655,
+              201691.17647059038,
+              208718.14705881607,
+              189118.88235293992,
+              209047.79411764993,
+              170136.02941175818,
+              208655.61764705542,
+              186605.38235294283,
+              212637.2647058842,
+              212757.3529411861
+            ]
+          }
+        ],
+        "checksum": 343343932
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 60285,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 initial Avatar SSR",
+            "iterations": 117,
+            "samples": [
+              114200.85470085501,
+              104201.92307692296,
+              100438.03418803442,
+              87007.47863247848,
+              102521.01709401705,
+              98022.79487179471,
+              82235.75213675202,
+              96225.7863247864,
+              85665.95726495732,
+              89165.59829059812,
+              102349.35897435895,
+              87348.29059829039
+            ]
+          },
+          {
+            "case": "Material9 photo Avatar SSR",
+            "iterations": 121,
+            "samples": [
+              113872.24793388443,
+              111912.87603305813,
+              112180.44628099108,
+              108497.93388429735,
+              110568.52892561964,
+              111227.27272727333,
+              115443.87603305778,
+              98413.56198347129,
+              101524.79338842958,
+              112067.83471074371,
+              126240.0082644627,
+              128849.85950413204
+            ]
+          },
+          {
+            "case": "Material9 fallback Avatar SSR",
+            "iterations": 59,
+            "samples": [
+              166354.50847457693,
+              169735.86440677938,
+              155713.9830508481,
+              185253.54237288228,
+              174004.94915254271,
+              161117.2372881348,
+              156843.91525423885,
+              180930.77966101977,
+              145365.10169491754,
+              155152.5423728813,
+              146144.77966101808,
+              151496.47457627198
+            ]
+          },
+          {
+            "case": "Material9 chip Avatar SSR",
+            "iterations": 57,
+            "samples": [
+              203890.35087719336,
+              206440.0526315782,
+              216480.99999999846,
+              189369.14035087905,
+              203411.54385964968,
+              179923.24561403526,
+              205641.82456140165,
+              181498.5263157875,
+              177318.71929824768,
+              233278.50877192983,
+              207510.2280701773,
+              207699.5614035073
+            ]
+          },
+          {
+            "case": "App7 initial Avatar SSR",
+            "iterations": 115,
+            "samples": [
+              104459.78260869473,
+              103788.40000000072,
+              91802.89565217367,
+              84536.5999999993,
+              90209.78260869607,
+              95322.4608695643,
+              80218.11304347862,
+              79294.93043478073,
+              80400.72173913041,
+              81389.86086956601,
+              80628.62608695547,
+              83098.9130434773
+            ]
+          },
+          {
+            "case": "App7 photo Avatar SSR",
+            "iterations": 81,
+            "samples": [
+              118884.25925925968,
+              110048.3456790092,
+              117031.37037036664,
+              115437.7530864184,
+              109619.34567901299,
+              115651.23456789984,
+              119671.80246913667,
+              139158.4320987628,
+              112952.16049382609,
+              113043.72839506384,
+              107183.64197531133,
+              102527.25925926073
+            ]
+          },
+          {
+            "case": "App7 fallback Avatar SSR",
+            "iterations": 55,
+            "samples": [
+              192641.65454545614,
+              184867.41818181722,
+              152594.6909090883,
+              379700.0000000067,
+              339675.7636363708,
+              175976.50909090752,
+              165059.85454544896,
+              165149.25454546095,
+              174046.96363636586,
+              190128.0363636364,
+              175321.19999999518,
+              131922.72727272377
+            ]
+          },
+          {
+            "case": "App7 chip Avatar SSR",
+            "iterations": 60,
+            "samples": [
+              219919.43333333285,
+              203292.36666667231,
+              229381.24999999822,
+              224693.74999999822,
+              232083.33333333637,
+              217245.83333333008,
+              208068.74999999916,
+              199284.03333333335,
+              216988.9000000012,
+              207643.06666666624,
+              556343.0500000019,
+              469165.28333332884
+            ]
+          }
+        ],
+        "checksum": 399984044
+      },
+      "upstream": {
+        "pid": 60293,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 initial Avatar SSR",
+            "iterations": 117,
+            "samples": [
+              122626.06837606816,
+              131813.3931623932,
+              128909.54700854719,
+              126895.29914529902,
+              144630.7008547007,
+              125783.47863247889,
+              131563.39316239324,
+              127437.67521367483,
+              136131.4102564101,
+              128030.27350427334,
+              121772.78632478572,
+              119836.53846153789
+            ]
+          },
+          {
+            "case": "Material9 photo Avatar SSR",
+            "iterations": 121,
+            "samples": [
+              137858.81818181838,
+              137792.35537190156,
+              146688.0165289253,
+              153916.32231404958,
+              426116.39669421455,
+              148290.9752066118,
+              156415.97520661156,
+              137034.77685950464,
+              145713.84297520702,
+              138391.52892561955,
+              149268.5950413225,
+              140065.42975206673
+            ]
+          },
+          {
+            "case": "Material9 fallback Avatar SSR",
+            "iterations": 59,
+            "samples": [
+              197844.6271186416,
+              172946.33898305328,
+              210764.83050847406,
+              226027.54237288027,
+              217574.15254237226,
+              185634.18644067744,
+              216966.8135593229,
+              190392.66101695073,
+              194115.83050847353,
+              170813.55932203346,
+              180471.76271186615,
+              190380.6440677958
+            ]
+          },
+          {
+            "case": "Material9 chip Avatar SSR",
+            "iterations": 57,
+            "samples": [
+              294383.05263158184,
+              269644.73684210243,
+              291394.73684210575,
+              300967.84210526524,
+              296855.2631578947,
+              309611.8421052651,
+              300122.07017544,
+              289748.54385964724,
+              310698.0877192982,
+              271489.77192982467,
+              266972.9473684224,
+              264877.19298245537
+            ]
+          },
+          {
+            "case": "App7 initial Avatar SSR",
+            "iterations": 115,
+            "samples": [
+              124909.78260869309,
+              125077.90434782414,
+              130874.99999999873,
+              127172.8260869563,
+              126203.61739130242,
+              123694.92173913149,
+              127772.82608695596,
+              131374.26956521702,
+              126541.66956521611,
+              126539.13043478377,
+              129133.69565217379,
+              128123.54782608963
+            ]
+          },
+          {
+            "case": "App7 photo Avatar SSR",
+            "iterations": 81,
+            "samples": [
+              185131.1728395064,
+              128746.39506173233,
+              142266.97530864525,
+              125230.45679012127,
+              145182.09876543417,
+              131430.03703703752,
+              144346.7160493858,
+              129713.46913580553,
+              141979.93827160588,
+              132386.8271604927,
+              150703.18518518782,
+              129941.86419753556
+            ]
+          },
+          {
+            "case": "App7 fallback Avatar SSR",
+            "iterations": 55,
+            "samples": [
+              169128.8000000069,
+              193156.8181818131,
+              183000.000000001,
+              197678.78181817816,
+              182042.43636363655,
+              192754.54545454934,
+              168688.63636363213,
+              197534.09090909292,
+              176281.8181818147,
+              177693.18181817653,
+              196833.327272725,
+              172954.5454545504
+            ]
+          },
+          {
+            "case": "App7 chip Avatar SSR",
+            "iterations": 60,
+            "samples": [
+              310138.1999999982,
+              276706.950000001,
+              303218.0500000019,
+              295802.0833333269,
+              272605.55000000296,
+              304340.26666666794,
+              292614.583333337,
+              324015.96666666894,
+              311824.9999999989,
+              288852.08333332837,
+              306509.03333333496,
+              286381.93333332916
+            ]
+          }
+        ],
+        "checksum": 321907917
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 60308,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 initial Avatar SSR",
+            "iterations": 83,
+            "samples": [
+              134173.6867469879,
+              124402.6144578315,
+              135734.93975903638,
+              133533.13253012073,
+              127683.73493975926,
+              129087.34939759027,
+              129134.03614457816,
+              122580.32530120495,
+              125802.21686746961,
+              132891.0602409641,
+              124206.32530120475,
+              127347.38554216888
+            ]
+          },
+          {
+            "case": "Material9 photo Avatar SSR",
+            "iterations": 61,
+            "samples": [
+              154732.9344262298,
+              129385.24590163815,
+              185619.54098360552,
+              148855.19672131084,
+              139635.93442622927,
+              124622.95081967174,
+              165446.0491803283,
+              209916.67213114645,
+              133228.81967213025,
+              148405.04918032687,
+              144665.98360655873,
+              128579.22950819721
+            ]
+          },
+          {
+            "case": "Material9 fallback Avatar SSR",
+            "iterations": 52,
+            "samples": [
+              225947.11538461462,
+              180330.13461538433,
+              330929.48076922935,
+              249042.46153846107,
+              191370.99999999936,
+              273720.34615384473,
+              227154.63461538724,
+              189513.61538461677,
+              222649.846153847,
+              212068.92307692178,
+              175610.57692307714,
+              196524.03846153605
+            ]
+          },
+          {
+            "case": "Material9 chip Avatar SSR",
+            "iterations": 30,
+            "samples": [
+              326805.56666666694,
+              350433.33333333826,
+              274534.7000000038,
+              330062.50000000064,
+              319316.66666666843,
+              329231.9333333353,
+              333808.33333333157,
+              338070.83333333593,
+              280609.7333333279,
+              285891.66666666494,
+              270079.1666666646,
+              322093.0666666694
+            ]
+          },
+          {
+            "case": "App7 initial Avatar SSR",
+            "iterations": 78,
+            "samples": [
+              136697.1153846139,
+              120940.166666666,
+              136197.11538461404,
+              119274.03846154087,
+              143741.46153846095,
+              118036.85897436003,
+              134085.46153846147,
+              142886.21794871805,
+              129404.91025640837,
+              145229.70512820603,
+              126644.2307692305,
+              139725.43589743625
+            ]
+          },
+          {
+            "case": "App7 photo Avatar SSR",
+            "iterations": 71,
+            "samples": [
+              133042.845070423,
+              146890.8450704245,
+              150161.3943662025,
+              160380.87323944073,
+              137853.8732394421,
+              161377.9295774639,
+              144347.42253521545,
+              158092.14084506943,
+              138407.85915493104,
+              161786.97183098667,
+              137734.74647886885,
+              155812.78873239338
+            ]
+          },
+          {
+            "case": "App7 fallback Avatar SSR",
+            "iterations": 60,
+            "samples": [
+              183549.31666666138,
+              212911.80000000622,
+              171722.21666667156,
+              218677.7833333281,
+              174463.1833333339,
+              210204.86666667086,
+              175571.5333333304,
+              201826.38333333973,
+              204596.5333333394,
+              206727.7666666693,
+              194954.16666666188,
+              213865.28333333292
+            ]
+          },
+          {
+            "case": "App7 chip Avatar SSR",
+            "iterations": 38,
+            "samples": [
+              302343.18421052146,
+              287762.05263157433,
+              277479.15789473156,
+              321268.6315789477,
+              302867.31578948285,
+              300390.3421052584,
+              284040.57894737745,
+              311393.6578947328,
+              299296.05263156956,
+              281486.84210526355,
+              320914.4736842015,
+              269483.5526315872
+            ]
+          }
+        ],
+        "checksum": 332617090
+      },
+      "vpm": {
+        "pid": 60334,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 initial Avatar SSR",
+            "iterations": 83,
+            "samples": [
+              77033.6385542164,
+              105622.49397590342,
+              94877.01204819293,
+              94687.2409638553,
+              98187.25301204815,
+              87559.24096385502,
+              101873.99999999975,
+              114439.25301204853,
+              84470.89156626553,
+              87957.8313253012,
+              81527.61445783144,
+              85737.95180722936
+            ]
+          },
+          {
+            "case": "Material9 photo Avatar SSR",
+            "iterations": 61,
+            "samples": [
+              119545.77049180472,
+              120024.59016393467,
+              112844.95081967082,
+              146404.37704917986,
+              121858.60655737632,
+              109219.9508196722,
+              108816.93442622952,
+              107822.40983606609,
+              104400.95081967267,
+              128988.3934426229,
+              120633.19672131083,
+              110263.6557377052
+            ]
+          },
+          {
+            "case": "Material9 fallback Avatar SSR",
+            "iterations": 52,
+            "samples": [
+              189156.25000000076,
+              157056.90384615204,
+              180840.53846153946,
+              168534.4615384609,
+              178505.61538461506,
+              164411.05769230874,
+              151625.8076923057,
+              164161.84615384677,
+              156164.26923076922,
+              144277.23076922933,
+              156522.44230769313,
+              152939.90384615285
+            ]
+          },
+          {
+            "case": "Material9 chip Avatar SSR",
+            "iterations": 30,
+            "samples": [
+              188756.93333332796,
+              168061.09999999992,
+              227843.03333333659,
+              207448.60000000548,
+              189847.19999999317,
+              165309.73333333348,
+              202988.89999999877,
+              205926.39999999848,
+              201527.76666667097,
+              183552.76666666212,
+              213248.59999999718,
+              213122.233333335
+            ]
+          },
+          {
+            "case": "App7 initial Avatar SSR",
+            "iterations": 78,
+            "samples": [
+              142404.91025640996,
+              76738.7820512824,
+              97520.29487179489,
+              94199.24358974186,
+              87712.6025641042,
+              85118.58974358907,
+              89276.17948717899,
+              89977.56410256513,
+              91891.5641025659,
+              84291.6666666666,
+              99497.85897435667,
+              90224.8974358949
+            ]
+          },
+          {
+            "case": "App7 photo Avatar SSR",
+            "iterations": 71,
+            "samples": [
+              109904.92957746387,
+              122947.77464788714,
+              104309.85915492885,
+              95731.22535211119,
+              113596.83098591413,
+              118801.63380281591,
+              119464.78873239395,
+              125933.67605633932,
+              116003.52112675954,
+              121748.23943662016,
+              129458.92957746366,
+              446811.619718311
+            ]
+          },
+          {
+            "case": "App7 fallback Avatar SSR",
+            "iterations": 60,
+            "samples": [
+              170515.28333333487,
+              169747.91666666913,
+              184511.79999999946,
+              168024.29999999428,
+              172799.29999999696,
+              174029.16666666596,
+              138047.9166666646,
+              160007.6333333315,
+              168070.83333333142,
+              159639.5833333266,
+              147934.03333333117,
+              170252.08333332863
+            ]
+          },
+          {
+            "case": "App7 chip Avatar SSR",
+            "iterations": 38,
+            "samples": [
+              211460.52631578833,
+              201841.0263157971,
+              210620.6052631502,
+              195844.3157894683,
+              170635.947368414,
+              200928.73684210356,
+              169627.21052631852,
+              231266.44736842203,
+              216672.15789473534,
+              170725.86842104292,
+              210060.28947369102,
+              172144.7368421004
+            ]
+          }
+        ],
+        "checksum": 346457441
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 60337,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 initial Avatar SSR",
+            "iterations": 106,
+            "samples": [
+              91914.69811320743,
+              83107.31132075461,
+              86855.34905660359,
+              95306.20754716994,
+              84207.16037735881,
+              90319.57547169799,
+              81015.7169811322,
+              95559.75471698139,
+              76492.92452830187,
+              94238.20754717005,
+              87395.0471698117,
+              90145.44339622674
+            ]
+          },
+          {
+            "case": "Material9 photo Avatar SSR",
+            "iterations": 89,
+            "samples": [
+              124461.60674157323,
+              126388.5730337072,
+              104159.64044943848,
+              123117.51685393228,
+              109218.62921348323,
+              114913.39325842606,
+              256900.28089887707,
+              131492.9775280893,
+              152972.37078651722,
+              115111.42696629326,
+              109909.65168539359,
+              115942.41573033635
+            ]
+          },
+          {
+            "case": "Material9 fallback Avatar SSR",
+            "iterations": 50,
+            "samples": [
+              179474.160000002,
+              167496.65999999933,
+              171942.50000000012,
+              175940.8200000007,
+              175036.66000000067,
+              166871.6799999993,
+              155441.6600000013,
+              160948.33999999994,
+              166338.3399999998,
+              213565.83999999883,
+              173295.82000000073,
+              158314.18000000212
+            ]
+          },
+          {
+            "case": "Material9 chip Avatar SSR",
+            "iterations": 46,
+            "samples": [
+              191909.43478260736,
+              213234.60869565303,
+              212120.47826087082,
+              206798.91304347542,
+              241469.21739130624,
+              197022.63043478504,
+              193148.56521739034,
+              200297.08695651902,
+              202042.5869565236,
+              189087.8478260892,
+              202045.30434782358,
+              193931.15217391588
+            ]
+          },
+          {
+            "case": "App7 initial Avatar SSR",
+            "iterations": 116,
+            "samples": [
+              96381.46551724238,
+              84475.57758620601,
+              83747.48275862046,
+              87313.93965517351,
+              86583.33620689777,
+              83112.78448275846,
+              88032.68965517293,
+              88834.76724137859,
+              86292.02586206867,
+              86364.58620689633,
+              85079.37931034544,
+              93469.82758620665
+            ]
+          },
+          {
+            "case": "App7 photo Avatar SSR",
+            "iterations": 89,
+            "samples": [
+              94893.25842696673,
+              111641.38202246996,
+              115614.70786517,
+              109284.179775279,
+              110471.91011235821,
+              128261.69662921375,
+              111774.33707865256,
+              226019.6629213501,
+              197593.64044943795,
+              136262.64044943597,
+              128392.32584269412,
+              165582.86516853992
+            ]
+          },
+          {
+            "case": "App7 fallback Avatar SSR",
+            "iterations": 69,
+            "samples": [
+              182332.7246376813,
+              164867.14492753707,
+              160023.55072463537,
+              159347.23188405295,
+              147448.6666666646,
+              145353.2608695597,
+              144597.82608695526,
+              153291.0579710164,
+              149097.23188406054,
+              151155.79710144617,
+              152575.4927536226,
+              158439.01449275305
+            ]
+          },
+          {
+            "case": "App7 chip Avatar SSR",
+            "iterations": 47,
+            "samples": [
+              243028.3829787205,
+              194851.93617021575,
+              420027.48936170543,
+              212336.0000000019,
+              190682.61702127435,
+              221187.063829783,
+              213706.57446808805,
+              208915.76595745102,
+              174627.6595744677,
+              220218.95744680305,
+              250414.00000000457,
+              204742.0212765962
+            ]
+          }
+        ],
+        "checksum": 385075980
+      },
+      "upstream": {
+        "pid": 60371,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 initial Avatar SSR",
+            "iterations": 106,
+            "samples": [
+              122679.63207547198,
+              133672.16981132107,
+              135726.01886792446,
+              126170.5943396225,
+              140190.64150943398,
+              126446.54716981106,
+              120522.79245283025,
+              130202.44339622662,
+              126240.9528301884,
+              134125.38679245271,
+              123766.90566037764,
+              127136.0094339625
+            ]
+          },
+          {
+            "case": "Material9 photo Avatar SSR",
+            "iterations": 89,
+            "samples": [
+              144171.80898876366,
+              146816.01123595427,
+              148139.98876404564,
+              159288.85393258513,
+              152629.6853932592,
+              147382.95505618083,
+              141496.71910112363,
+              144817.41573033662,
+              142994.8539325842,
+              142218.6292134821,
+              147892.31460674165,
+              144512.1685393258
+            ]
+          },
+          {
+            "case": "Material9 fallback Avatar SSR",
+            "iterations": 50,
+            "samples": [
+              202635.00000000023,
+              206903.33999999892,
+              200055.81999999777,
+              206790.00000000084,
+              233634.16000000143,
+              217247.50000000314,
+              194288.32000000056,
+              213897.49999999822,
+              202316.6600000013,
+              169684.15999999706,
+              221034.15999999925,
+              177448.33999999627
+            ]
+          },
+          {
+            "case": "Material9 chip Avatar SSR",
+            "iterations": 46,
+            "samples": [
+              254519.93478260766,
+              285010.8695652174,
+              290001.82608696,
+              296480.0869565253,
+              260478.26086956458,
+              286929.3478260874,
+              292185.695652175,
+              306378.6086956507,
+              277204.7173913081,
+              309730.065217393,
+              333528.9999999986,
+              298626.8260869575
+            ]
+          },
+          {
+            "case": "App7 initial Avatar SSR",
+            "iterations": 116,
+            "samples": [
+              121449.35344827578,
+              142095.90517241356,
+              137198.9913793092,
+              126405.1724137932,
+              133593.74999999843,
+              139343.38793103507,
+              120576.86206896607,
+              130308.9051724124,
+              138605.24137930953,
+              118482.0344827558,
+              136257.5431034484,
+              129947.55172413644
+            ]
+          },
+          {
+            "case": "App7 photo Avatar SSR",
+            "iterations": 89,
+            "samples": [
+              140300.56179775315,
+              153575.37078651742,
+              155324.89887640256,
+              140696.6292134824,
+              147938.6629213489,
+              142715.82022471458,
+              153949.89887640346,
+              143407.3033707862,
+              143844.56179775216,
+              140230.337078653,
+              140568.82022471787,
+              149738.76404494068
+            ]
+          },
+          {
+            "case": "App7 fallback Avatar SSR",
+            "iterations": 69,
+            "samples": [
+              190480.0724637689,
+              204500.5942028987,
+              181030.18840579552,
+              209242.75362318914,
+              194812.20289855258,
+              183742.15942029204,
+              195673.30434782218,
+              186329.7101449264,
+              192122.57971014257,
+              182570.04347825664,
+              189826.08695652112,
+              195187.79710144532
+            ]
+          },
+          {
+            "case": "App7 chip Avatar SSR",
+            "iterations": 47,
+            "samples": [
+              263653.38297872327,
+              374923.765957453,
+              276504.42553191324,
+              304418.42553190846,
+              261344.87234042914,
+              296210.10638297873,
+              265217.2127659566,
+              294745.5744680794,
+              273909.57446807966,
+              283672.0000000048,
+              290051.4255319204,
+              280302.29787233844
+            ]
+          }
+        ],
+        "checksum": 307328030
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 60373,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 initial Avatar SSR",
+            "iterations": 72,
+            "samples": [
+              127101.2638888891,
+              133971.06944444438,
+              108932.29166666647,
+              132785.87500000012,
+              137141.79166666677,
+              120861.69444444374,
+              121210.06944444444,
+              108087.37499999983,
+              156888.319444445,
+              137091.44444444455,
+              128097.22222222241,
+              111564.23611111107
+            ]
+          },
+          {
+            "case": "Material9 photo Avatar SSR",
+            "iterations": 76,
+            "samples": [
+              154303.17105263137,
+              157433.65789473717,
+              157317.98684210592,
+              163171.05263157983,
+              155198.47368421018,
+              157933.11842105296,
+              174779.06578947292,
+              127368.97368420997,
+              149215.46052631573,
+              160109.10526315877,
+              158038.36842105348,
+              184392.53947368392
+            ]
+          },
+          {
+            "case": "Material9 fallback Avatar SSR",
+            "iterations": 42,
+            "samples": [
+              234425.5952380947,
+              434244.04761904746,
+              208152.78571428952,
+              205027.78571428623,
+              190705.3571428605,
+              211022.80952380798,
+              202851.19047618884,
+              314206.3571428556,
+              219116.07142857023,
+              185923.59523809893,
+              244951.38095238374,
+              193247.02380952527
+            ]
+          },
+          {
+            "case": "Material9 chip Avatar SSR",
+            "iterations": 38,
+            "samples": [
+              293755.47368420626,
+              295525.23684210546,
+              332148.0263157893,
+              265286.18421052315,
+              298643.63157894573,
+              300637.0526315765,
+              257515.36842105188,
+              293580.05263157486,
+              300762.0789473704,
+              343189.68421052286,
+              339007.65789474006,
+              324475.8684210542
+            ]
+          },
+          {
+            "case": "App7 initial Avatar SSR",
+            "iterations": 63,
+            "samples": [
+              144723.53968253918,
+              112430.55555555728,
+              131581.34920634743,
+              134850.5238095222,
+              119230.15873015621,
+              131091.9206349202,
+              143090.60317460203,
+              122669.31746031722,
+              142115.0793650798,
+              109878.96825396626,
+              129253.9682539687,
+              138402.77777777618
+            ]
+          },
+          {
+            "case": "App7 photo Avatar SSR",
+            "iterations": 75,
+            "samples": [
+              157782.21333333326,
+              134433.33333333308,
+              157309.4400000021,
+              133048.3333333359,
+              157893.8933333302,
+              138987.226666668,
+              163860.54666666797,
+              134472.77333333355,
+              151554.4399999999,
+              139382.7733333334,
+              168332.77333333172,
+              143042.21333333163
+            ]
+          },
+          {
+            "case": "App7 fallback Avatar SSR",
+            "iterations": 54,
+            "samples": [
+              201994.59259258758,
+              194999.24074074006,
+              208175.92592592756,
+              186493.0555555525,
+              182511.57407407675,
+              188266.20370370822,
+              177688.2777777768,
+              269651.2407407378,
+              207314.81481481786,
+              210706.0185185219,
+              180520.07407407105,
+              200229.9444444462
+            ]
+          },
+          {
+            "case": "App7 chip Avatar SSR",
+            "iterations": 34,
+            "samples": [
+              334825.97058823286,
+              276655.6176470524,
+              301797.7941176468,
+              294346.82352940826,
+              304568.61764705804,
+              338622.5294117567,
+              288352.9411764598,
+              322857.8235294154,
+              299693.6176470546,
+              284828.4411764807,
+              286751.20588235697,
+              294159.3235294102
+            ]
+          }
+        ],
+        "checksum": 337783824
+      },
+      "vpm": {
+        "pid": 60375,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 initial Avatar SSR",
+            "iterations": 72,
+            "samples": [
+              136464.69444444482,
+              130285.30555555543,
+              133710.63888888952,
+              120899.3055555562,
+              136287.61111111092,
+              136455.44444444447,
+              130995.37500000006,
+              136938.6527777776,
+              133832.18055555562,
+              146296.87499999968,
+              140230.33333333343,
+              142131.94444444435
+            ]
+          },
+          {
+            "case": "Material9 photo Avatar SSR",
+            "iterations": 76,
+            "samples": [
+              130832.23684210423,
+              170946.27631579022,
+              150734.6578947381,
+              151006.0263157892,
+              145420.4999999987,
+              153320.7236842106,
+              131043.30263157905,
+              153041.1184210526,
+              147344.84210526347,
+              153927.0789473694,
+              143144.18421052647,
+              134237.38157894748
+            ]
+          },
+          {
+            "case": "Material9 fallback Avatar SSR",
+            "iterations": 42,
+            "samples": [
+              244705.35714285853,
+              192398.8095238087,
+              241361.09523809474,
+              211837.30952380877,
+              235454.3571428578,
+              191780.7619047651,
+              225062.50000000297,
+              180149.80952380894,
+              379314.47619048087,
+              257090.28571428204,
+              194038.69047619082,
+              265723.21428571263
+            ]
+          },
+          {
+            "case": "Material9 chip Avatar SSR",
+            "iterations": 38,
+            "samples": [
+              290678.73684210243,
+              329135.97368421603,
+              267165.55263158167,
+              304082.2368421076,
+              302026.31578947604,
+              264656.8157894738,
+              292502.18421053,
+              292851.9736842107,
+              302062.49999999773,
+              315480.2631578916,
+              274054.8421052632,
+              294319.07894736825
+            ]
+          },
+          {
+            "case": "App7 initial Avatar SSR",
+            "iterations": 63,
+            "samples": [
+              120121.69841269526,
+              150749.9999999983,
+              126017.85714285879,
+              175830.6825396818,
+              124550.93650793523,
+              144030.4285714276,
+              131332.0158730156,
+              152107.79365079434,
+              148189.80952381142,
+              127411.36507936192,
+              174816.14285714112,
+              127849.20634920575
+            ]
+          },
+          {
+            "case": "App7 photo Avatar SSR",
+            "iterations": 75,
+            "samples": [
+              154248.33333333785,
+              154813.33333333168,
+              135954.4533333307,
+              205619.43999999735,
+              140186.66666666223,
+              142000.55999999677,
+              136093.3333333378,
+              163130.00000000102,
+              125739.99999999919,
+              160178.33333333328,
+              142565.56000000273,
+              154725.56000000017
+            ]
+          },
+          {
+            "case": "App7 fallback Avatar SSR",
+            "iterations": 54,
+            "samples": [
+              191002.31481482094,
+              196094.12962962675,
+              178608.0185185239,
+              219924.38888888602,
+              167295.51851851825,
+              186557.87037037214,
+              193934.40740740247,
+              189547.83333333582,
+              209517.75925926052,
+              178545.53703704436,
+              200707.5740740742,
+              191901.99999999366
+            ]
+          },
+          {
+            "case": "App7 chip Avatar SSR",
+            "iterations": 34,
+            "samples": [
+              322653.20588234154,
+              271058.82352940866,
+              288492.6470588144,
+              310550.23529411835,
+              284096.82352941995,
+              274650.73529411067,
+              309170.3529411836,
+              285653.2058823605,
+              280144.6176470643,
+              324164.2058823452,
+              305435.0588235379,
+              319867.6470588132
+            ]
+          }
+        ],
+        "checksum": 298184966
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 60410,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 initial Avatar SSR",
+            "iterations": 91,
+            "samples": [
+              138174.91208791203,
+              125607.14285714286,
+              124024.72527472524,
+              124746.34065934083,
+              129449.17582417587,
+              143026.09890109836,
+              127280.68131868119,
+              124190.93406593415,
+              119037.08791208745,
+              119169.86813186848,
+              116344.78021978032,
+              120683.60439560456
+            ]
+          },
+          {
+            "case": "Material9 photo Avatar SSR",
+            "iterations": 80,
+            "samples": [
+              149336.97499999992,
+              137854.6874999998,
+              133569.27499999927,
+              145483.33749999927,
+              142749.99999999948,
+              136196.35000000015,
+              169855.21250000063,
+              142480.72499999864,
+              141909.37500000017,
+              144929.68750000017,
+              141448.9500000002,
+              132911.46249999883
+            ]
+          },
+          {
+            "case": "Material9 fallback Avatar SSR",
+            "iterations": 54,
+            "samples": [
+              197867.27777777825,
+              320587.2037037049,
+              216121.12962962885,
+              204665.88888888914,
+              222712.9629629619,
+              192252.31481481876,
+              199099.537037038,
+              216044.7592592576,
+              193638.888888889,
+              168502.31481481405,
+              188361.1111111097,
+              185400.4629629605
+            ]
+          },
+          {
+            "case": "Material9 chip Avatar SSR",
+            "iterations": 37,
+            "samples": [
+              256370.48648648462,
+              273092.3513513517,
+              261445.94594594263,
+              292525.8918918939,
+              295619.3783783776,
+              255145.27027026765,
+              288082.1891891923,
+              272256.7567567559,
+              313210.5675675649,
+              775246.6216216215,
+              384576.56756756746,
+              331659.918918917
+            ]
+          },
+          {
+            "case": "App7 initial Avatar SSR",
+            "iterations": 87,
+            "samples": [
+              126970.78160919575,
+              138027.2988505734,
+              134556.98850574842,
+              119749.52873563141,
+              123197.3218390804,
+              144468.8620689672,
+              134965.5172413815,
+              137858.7126436778,
+              131066.09195402263,
+              139662.82758620693,
+              137478.44827586133,
+              128064.1839080456
+            ]
+          },
+          {
+            "case": "App7 photo Avatar SSR",
+            "iterations": 65,
+            "samples": [
+              159947.43076922672,
+              141448.0769230767,
+              209832.0615384602,
+              138263.46153846316,
+              166656.41538461036,
+              141492.30769230946,
+              157921.79999999952,
+              137987.18461538065,
+              123328.21538462107,
+              160576.92307692306,
+              139912.18461538106,
+              166923.0769230755
+            ]
+          },
+          {
+            "case": "App7 fallback Avatar SSR",
+            "iterations": 55,
+            "samples": [
+              187381.05454545305,
+              207866.67272726513,
+              202347.727272726,
+              188326.50909091008,
+              187484.09090908765,
+              220356.8181818231,
+              196238.63636363074,
+              171775.763636362,
+              191081.81818182027,
+              181584.09090908454,
+              215276.52727272653,
+              192282.58181818257
+            ]
+          },
+          {
+            "case": "App7 chip Avatar SSR",
+            "iterations": 36,
+            "samples": [
+              276527.7777777758,
+              301270.83333333203,
+              314998.833333334,
+              289834.47222222167,
+              267016.1944444468,
+              300724.5277777757,
+              296244.2222222232,
+              340126.1666666768,
+              284444.444444451,
+              267030.0833333259,
+              329189.80555555463,
+              274810.1944444493
+            ]
+          }
+        ],
+        "checksum": 342533946
+      },
+      "upstream": {
+        "pid": 60496,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 initial Avatar SSR",
+            "iterations": 91,
+            "samples": [
+              131292.5824175826,
+              133609.89010989014,
+              127154.76923076969,
+              131135.52747252752,
+              135010.98901098903,
+              129151.09890109881,
+              132297.6263736264,
+              128062.27472527456,
+              124692.30769230747,
+              133283.42857142832,
+              130362.63736263737,
+              122396.97802197804
+            ]
+          },
+          {
+            "case": "Material9 photo Avatar SSR",
+            "iterations": 80,
+            "samples": [
+              138493.23750000054,
+              137148.43749999945,
+              154539.0624999996,
+              150659.37499999933,
+              152642.7124999998,
+              152828.6374999993,
+              139000.00000000006,
+              151277.0875000001,
+              161156.2499999991,
+              156529.68750000015,
+              150535.93749999977,
+              150408.33750000075
+            ]
+          },
+          {
+            "case": "Material9 fallback Avatar SSR",
+            "iterations": 54,
+            "samples": [
+              259913.59259259535,
+              209948.31481481536,
+              206300.1481481487,
+              202949.85185185194,
+              253363.42592592482,
+              261848.77777777897,
+              193010.03703703743,
+              211945.9814814827,
+              239411.2592592558,
+              190112.66666666834,
+              160745.37037036827,
+              196910.4999999992
+            ]
+          },
+          {
+            "case": "Material9 chip Avatar SSR",
+            "iterations": 37,
+            "samples": [
+              276756.75675675704,
+              292192.5675675662,
+              327556.2972973013,
+              284779.27027026727,
+              293325.4324324345,
+              273064.1891891869,
+              303554.05405405053,
+              295272.5135135158,
+              271054.05405405397,
+              275961.7027027039,
+              276721.8378378402,
+              306978.6216216275
+            ]
+          },
+          {
+            "case": "App7 initial Avatar SSR",
+            "iterations": 87,
+            "samples": [
+              123122.60919540268,
+              138141.28735632414,
+              121437.74712643759,
+              134460.25287356306,
+              123691.09195402291,
+              133449.7126436773,
+              127562.26436781407,
+              135365.89655172557,
+              113699.71264367587,
+              132117.33333333416,
+              120028.25287356306,
+              139558.90804597674
+            ]
+          },
+          {
+            "case": "App7 photo Avatar SSR",
+            "iterations": 65,
+            "samples": [
+              152457.69230768929,
+              134288.4615384579,
+              128763.46153846568,
+              161251.27692307965,
+              132639.73846154002,
+              156122.43076923102,
+              141608.98461538568,
+              157447.43076922814,
+              143608.96923076673,
+              154685.26153845934,
+              136172.43076923143,
+              152216.0153846156
+            ]
+          },
+          {
+            "case": "App7 fallback Avatar SSR",
+            "iterations": 55,
+            "samples": [
+              183406.05454545352,
+              196458.34545454735,
+              192543.94545454986,
+              198489.40000000023,
+              197768.18181818188,
+              209343.1818181836,
+              178655.2909090956,
+              186337.12727273218,
+              192637.87272726736,
+              196767.41818181903,
+              200203.78181817997,
+              188821.9818181824
+            ]
+          },
+          {
+            "case": "App7 chip Avatar SSR",
+            "iterations": 36,
+            "samples": [
+              301530.08333333116,
+              299237.249999995,
+              281114.583333331,
+              279516.2222222163,
+              308805.55555554817,
+              297422.4722222264,
+              300840.27777777717,
+              290956.0000000005,
+              279070.6111110997,
+              299386.55555555574,
+              286287.02777777764,
+              319310.1666666583
+            ]
+          }
+        ],
+        "checksum": 306220321
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "Material9 initial Avatar SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 135631.84285714314,
+          "vpmNs": 89832.7357142859,
+          "changePct": -33.767223225814334
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 127733.97435897408,
+          "vpmNs": 97124.29059829056,
+          "changePct": -23.96361963549364
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 128385.54216867476,
+          "vpmNs": 91322.53614457825,
+          "changePct": -28.86852008258267
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 126791.27830188678,
+          "vpmNs": 88770.24528301922,
+          "changePct": -29.987104419233358
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 127599.24305555575,
+          "vpmNs": 136371.5277777777,
+          "changePct": 6.874872069893523
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 130749.08241758245,
+          "vpmNs": 124468.6373626375,
+          "changePct": -4.803433369334598
+        }
+      ]
+    },
+    {
+      "case": "Material9 photo Avatar SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 145573.34931506898,
+          "vpmNs": 106998.85616438303,
+          "changePct": -26.498320834260635
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 146200.92975206615,
+          "vpmNs": 111990.35537190092,
+          "changePct": -23.39969686798914
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 146535.5163934428,
+          "vpmNs": 116195.36065573778,
+          "changePct": -20.704984350853728
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 145816.71348314546,
+          "vpmNs": 119529.96629213431,
+          "changePct": -18.027252544029913
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 157683.38815789507,
+          "vpmNs": 149039.7500000008,
+          "changePct": -5.481641572312634
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 150968.23124999972,
+          "vpmNs": 142195.0499999994,
+          "changePct": -5.811276437008884
+        }
+      ]
+    },
+    {
+      "case": "Material9 fallback Avatar SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 206006.28301886935,
+          "vpmNs": 163002.7452830196,
+          "changePct": -20.87486706990912
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 192254.24576271215,
+          "vpmNs": 158980.57627118682,
+          "changePct": -17.3071181650745
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 217359.3846153844,
+          "vpmNs": 160609.37499999942,
+          "changePct": -26.108838003844937
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 204712.50000000052,
+          "vpmNs": 169719.57999999973,
+          "changePct": -17.093689931001144
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 209587.79761904874,
+          "vpmNs": 230258.42857143038,
+          "changePct": 9.862516418991628
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 208124.23148148204,
+          "vpmNs": 198483.4074074081,
+          "changePct": -4.632244888280457
+        }
+      ]
+    },
+    {
+      "case": "Material9 chip Avatar SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 322277.3437500024,
+          "vpmNs": 212892.5781250004,
+          "changePct": -33.94119001733307
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 292888.89473684377,
+          "vpmNs": 204766.0877192975,
+          "changePct": -30.087452478088416
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 324449.31666666816,
+          "vpmNs": 202258.3333333349,
+          "changePct": -37.66103889159042
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 291093.7608695675,
+          "vpmNs": 201169.83695652132,
+          "changePct": -30.891738677057756
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 299640.3421052611,
+          "vpmNs": 293585.52631578944,
+          "changePct": -2.0206944588738507
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 288485.9189189167,
+          "vpmNs": 290304.0405405431,
+          "changePct": 0.6302288958988544
+        }
+      ]
+    },
+    {
+      "case": "App7 initial Avatar SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 135784.41011236078,
+          "vpmNs": 91304.53932584332,
+          "changePct": -32.757715521031194
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 126857.24782608621,
+          "vpmNs": 83817.7565217383,
+          "changePct": -33.927498855526586
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 135141.28846153774,
+          "vpmNs": 90101.23076923002,
+          "changePct": -33.32812510894956
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 131951.3275862054,
+          "vpmNs": 86473.96120689705,
+          "changePct": -34.4652586762323
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 131336.6349206338,
+          "vpmNs": 137681.2222222216,
+          "changePct": 4.830782595748562
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 129839.79885057412,
+          "vpmNs": 134761.25287356495,
+          "changePct": 3.7904048423971215
+        }
+      ]
+    },
+    {
+      "case": "App7 photo Avatar SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 158494.6363636363,
+          "vpmNs": 111553.96969697007,
+          "changePct": -29.616564789593035
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 137183.3827160493,
+          "vpmNs": 114240.74074074111,
+          "changePct": -16.72406782882464
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 148526.1197183135,
+          "vpmNs": 119133.21126760493,
+          "changePct": -19.789723522336377
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 143625.93258426918,
+          "vpmNs": 121938.20224719188,
+          "changePct": -15.100149358022463
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 147298.32666666576,
+          "vpmNs": 148406.9466666703,
+          "changePct": 0.752635841215854
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 147912.49230769117,
+          "vpmNs": 149707.05384615448,
+          "changePct": 1.2132589414626471
+        }
+      ]
+    },
+    {
+      "case": "App7 fallback Avatar SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 224687.49090909446,
+          "vpmNs": 162879.1636363613,
+          "changePct": -27.50857514259215
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 182521.21818181878,
+          "vpmNs": 175648.85454545135,
+          "changePct": -3.765240942848358
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 203211.45833333957,
+          "vpmNs": 168909.3750000003,
+          "changePct": -16.879994668938192
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 191301.32608695573,
+          "vpmNs": 152933.2753623195,
+          "changePct": -20.05634331421001
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 197614.59259259314,
+          "vpmNs": 191452.1574074073,
+          "changePct": -3.118410996039378
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 194548.10909090735,
+          "vpmNs": 191682.2000000014,
+          "changePct": -1.4731107407303434
+        }
+      ]
+    },
+    {
+      "case": "App7 chip Avatar SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 475455.8823529431,
+          "vpmNs": 200542.89705882076,
+          "changePct": -57.82092419040625
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 299510.06666666444,
+          "vpmNs": 218582.63333333147,
+          "changePct": -27.019937671544113
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 299843.19736841397,
+          "vpmNs": 201384.88157895033,
+          "changePct": -32.83660148157005
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 281987.1489361716,
+          "vpmNs": 213021.28723404498,
+          "changePct": -24.457093864847433
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 297020.22058823146,
+          "vpmNs": 296963.85294117616,
+          "changePct": -0.01897771368685186
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 298329.86111111066,
+          "vpmNs": 293039.3472222224,
+          "changePct": -1.7733772506661083
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "Material9 initial Avatar SSR",
+      "upstream_ns": 128060,
+      "vpm_ns": 90578,
+      "change_pct": -29.4,
+      "upstream_first_pct": -31.3,
+      "vpm_first_pct": -27,
+      "process_range_pct": "-33.8, -24.0, -28.9, -30.0",
+      "control_max_abs_pct": 6.9,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "Material9 photo Avatar SSR",
+      "upstream_ns": 146009,
+      "vpm_ns": 114093,
+      "change_pct": -22.1,
+      "upstream_first_pct": -23.6,
+      "vpm_first_pct": -20.7,
+      "process_range_pct": "-26.5, -23.4, -20.7, -18.0",
+      "control_max_abs_pct": 5.8,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "Material9 fallback Avatar SSR",
+      "upstream_ns": 205359,
+      "vpm_ns": 161806,
+      "change_pct": -19.1,
+      "upstream_first_pct": -23.5,
+      "vpm_first_pct": -17.2,
+      "process_range_pct": "-20.9, -17.3, -26.1, -17.1",
+      "control_max_abs_pct": 9.9,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "Material9 chip Avatar SSR",
+      "upstream_ns": 307583,
+      "vpm_ns": 203512,
+      "change_pct": -32.4,
+      "upstream_first_pct": -35.8,
+      "vpm_first_pct": -30.5,
+      "process_range_pct": "-33.9, -30.1, -37.7, -30.9",
+      "control_max_abs_pct": 2,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "App7 initial Avatar SSR",
+      "upstream_ns": 133546,
+      "vpm_ns": 88288,
+      "change_pct": -33.6,
+      "upstream_first_pct": -33,
+      "vpm_first_pct": -34.2,
+      "process_range_pct": "-32.8, -33.9, -33.3, -34.5",
+      "control_max_abs_pct": 4.8,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "App7 photo Avatar SSR",
+      "upstream_ns": 146076,
+      "vpm_ns": 116687,
+      "change_pct": -18.3,
+      "upstream_first_pct": -24.7,
+      "vpm_first_pct": -15.9,
+      "process_range_pct": "-29.6, -16.7, -19.8, -15.1",
+      "control_max_abs_pct": 1.2,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "App7 fallback Avatar SSR",
+      "upstream_ns": 197256,
+      "vpm_ns": 165894,
+      "change_pct": -18.5,
+      "upstream_first_pct": -22.2,
+      "vpm_first_pct": -11.9,
+      "process_range_pct": "-27.5, -3.8, -16.9, -20.1",
+      "control_max_abs_pct": 3.1,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "App7 chip Avatar SSR",
+      "upstream_ns": 299677,
+      "vpm_ns": 207203,
+      "change_pct": -29.9,
+      "upstream_first_pct": -45.3,
+      "vpm_first_pct": -25.7,
+      "process_range_pct": "-57.8, -27.0, -32.8, -24.5",
+      "control_max_abs_pct": 1.8,
+      "evidence": "lower time in every pair, beyond control spread"
+    }
+  ]
+}
