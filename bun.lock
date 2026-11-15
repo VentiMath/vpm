@@ -758,6 +758,7 @@
       },
       "peerDependencies": {
         "react": "^19.3.0",
+        "react-dom": "^19.3.0",
       },
     },
     "packages/vmui-private-theming": {
@@ -1397,6 +1398,10 @@
     "packages/vredux": {
       "name": "vredux",
       "version": "5.0.1",
+    },
+    "packages/vreselect": {
+      "name": "vreselect",
+      "version": "5.3.0",
     },
     "packages/vretry": {
       "name": "vretry",
@@ -2221,6 +2226,8 @@
     "vread-package-up": ["vread-package-up@workspace:packages/vread-package-up"],
 
     "vredux": ["vredux@workspace:packages/vredux"],
+
+    "vreselect": ["vreselect@workspace:packages/vreselect"],
 
     "vretry": ["vretry@workspace:packages/vretry"],
 
