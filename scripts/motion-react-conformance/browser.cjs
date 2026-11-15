@@ -25,6 +25,25 @@ let server,child,socket,id=0;const pending=new Map(),errors=[];
    assert.equal(await evaluate('window.motionTest.events.current.length'),count,variant+' rerender restarts '+kind);
    checks++;
   }
+  await evaluate("window.mountMotion({kind:'replace-root'});new Promise(r=>setTimeout(r,60))");
+  await evaluate("window.oldRoot=document.querySelector('#subject');window.updateMotion({kind:'replace-root',tag:'a'});new Promise(r=>setTimeout(r,550))");
+  assert.equal(await evaluate("document.querySelector('#subject').tagName"),'A');
+  const rootOpacity=await evaluate("getComputedStyle(document.querySelector('#subject')).opacity");
+  console.log(variant+' replaced custom root opacity '+rootOpacity);
+  assert.equal(rootOpacity,'1',variant+' replacement root finishes animation');
+  await evaluate("window.updateMotion({kind:'replace-root',tag:null});new Promise(r=>setTimeout(r,40))");
+  assert.equal(await evaluate('document.querySelector("#subject")'),null);
+  await evaluate("window.updateMotion({kind:'replace-root',tag:'button'});new Promise(r=>setTimeout(r,550))");
+  const restoredOpacity=await evaluate("getComputedStyle(document.querySelector('#subject')).opacity");
+  console.log(variant+' restored root opacity '+restoredOpacity);
+  // The pinned controls leave a root restored after null at its initial pose.
+  // VPM deliberately resumes ownership instead of leaving it invisible.
+  assert.equal(restoredOpacity,variant==='vpm'?'1':'0',variant+' restored root ownership');
+  await evaluate("window.mountMotion({kind:'replace-root',freshRef:true});new Promise(r=>setTimeout(r,550))");
+  const refEvents=await evaluate('window.motionTest.events.current.length');
+  await evaluate("window.updateMotion({kind:'replace-root',freshRef:true,tick:1});new Promise(r=>setTimeout(r,100))");
+  assert.equal(await evaluate('window.motionTest.ref.current===document.querySelector("#subject")'),true);
+  assert.equal(await evaluate('window.motionTest.events.current.length'),refEvents,variant+' callback ref changes do not restart playback');checks++;
   await evaluate("window.mountMotion({kind:'variants'});new Promise(r=>setTimeout(r,550))");
   assert.deepEqual(await evaluate("[...document.querySelectorAll('[id^=item-]')].map(n=>getComputedStyle(n).opacity)"),['1','1','1']);
   assert.deepEqual(await evaluate("window.motionTest.events.current.filter(x=>x.startsWith('end-'))"),['end-0','end-1','end-2']);

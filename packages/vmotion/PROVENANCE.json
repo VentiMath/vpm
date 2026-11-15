@@ -21,7 +21,8 @@
     "Native React nodes preserve focus and identity across unrelated rerenders; animation specifications are snapshotted and unchanged specifications do not restart.",
     "Variant ownership crosses ordinary wrappers and respects independent animation scopes. Mounted children participate without restarting the parent.",
     "Owned animation work is stopped and element bindings released on unmount; stale completions are suppressed.",
-    "Dynamic reduced-motion configuration and user preference changes stop transform playback; initial=false and SSR hydration preserve initial markup."
+    "Dynamic reduced-motion configuration and user preference changes stop transform playback; initial=false and SSR hydration preserve initial markup.",
+    "Custom roots transfer animation ownership when their DOM element changes or disappears and returns. Old node bindings are released and stale completion suppressed; ref-only changes on the same node retain playback. Compared with current/app controls using the Material-style polymorphic root boundary. The pinned controls recover direct DOM replacement but leave a null-restored root at its initial pose; VPM deliberately resumes it."
   ],
   "references": [
     "https://motion.dev/docs/react-motion-component",

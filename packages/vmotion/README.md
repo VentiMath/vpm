@@ -56,3 +56,22 @@ Versus Motion 14, Node takes 2.5–5.9% more. Raw process-pair variation and
 identical-source controls are retained; no browser-performance claim follows.
 
 Runtime targets are Node 24, Bun 1.4.4, React 19.3 and modern browsers.
+
+
+Custom root lifecycle follow-up: a React component may replace its DOM element
+without unmounting its Motion wrapper. Animation ownership now follows that
+replacement, releases the previous element, and resumes on a root that returns
+after rendering null. A callback ref changing identity on the same element does
+not restart playback. The app's polymorphic root boundary motivated this check;
+current/app/VPM browser fixtures verify replacement endpoints and ref identity.
+The pinned controls leave a root restored after null at opacity zero; VPM
+deliberately resumes it to its target.
+This does not establish identical intermediate animation trajectories or app
+adoption. [Follow-up SSR measurements](bench/root-lifecycle/README.md) retain
+isolated controls; this is a lifecycle correction, not a new speed claim.
+
+The follow-up benchmark records about 7% more Node time for simple fade SSR
+against both controls. Other Node directions are unestablished. Bun is lower
+for all three Material-independent Motion 14 cases (about 12%); app 12 fade is
+unestablished, while variants and initial-false are lower. These SSR comparisons
+do not measure the browser lifecycle correction.

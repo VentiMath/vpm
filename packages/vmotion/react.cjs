@@ -213,9 +213,22 @@ function create(Component) {
     // React diffs this stable initial pose while the DOM animator owns later frames.
     // Ordinary style props remain live and are not captured in the initial pose.
     const [firstStyle] = React.useState(() => cssStyle(values(resolve(props, initialBlocked ? animate : initial), initialBlocked)));
-    const [record] = React.useState(() => ({ node: null, props: null, children: /* @__PURE__ */ new Set(), controls: [], generation: 0, alive: false, first: true, lastAuto: null }));
+    const [record] = React.useState(() => ({ node: null, ownedNode: null, props: null, children: /* @__PURE__ */ new Set(), controls: [], generation: 0, alive: false, first: true, lastAuto: null }));
     const ref = React.useCallback((node) => {
-      record.node = node;
+      // A custom React root may replace its DOM element without unmounting
+      // this Motion component. Transfer animation ownership to the new node.
+      const previous = record.ownedNode;
+      if (previous !== node) {
+        if (previous) {
+          stop(record);
+          dom.releaseElement(previous);
+        }
+        if (record.alive) {
+          record.lastAuto = null;
+          record.first = false;
+        }
+      }
+      record.node = record.ownedNode = node;
       let cleanup;
       if (typeof forwardedRef === "function") cleanup = forwardedRef(node);
       else if (forwardedRef) forwardedRef.current = node;
@@ -223,11 +236,19 @@ function create(Component) {
         if (typeof cleanup === "function") cleanup();
         else if (typeof forwardedRef === "function") forwardedRef(null);
         else if (forwardedRef) forwardedRef.current = null;
-        record.node = null;
+        if (record.node === node) record.node = null;
+        // React detaches and reattaches callback refs even when the DOM stays
+        // put. Defer retirement until that synchronous ref cycle has finished.
+        queueMicrotask(() => {
+          if (record.ownedNode !== node || record.node === node) return;
+          stop(record);
+          dom.releaseElement(node);
+          record.ownedNode = null;
+          record.lastAuto = null;
+        });
       };
     }, [record, forwardedRef]);
     useLayout(() => {
-      const mountedNode = record.node;
       record.alive = true;
       record.parent = context?.record;
       record.parent?.children.add(record);
@@ -236,7 +257,8 @@ function create(Component) {
         queue.delete(record);
         record.parent?.children.delete(record);
         stop(record);
-        if (mountedNode) dom.releaseElement(mountedNode);
+        if (record.ownedNode) dom.releaseElement(record.ownedNode);
+        record.ownedNode = null;
         record.lastAuto = null;
       };
     }, [record, context?.record]);

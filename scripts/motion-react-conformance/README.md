@@ -10,7 +10,7 @@ source was copied or imported into the owned package.
 - Eleven Node/Bun tests compare initial SSR for three patterns and three tree
   sizes against both controls, plus escaped content, custom roots, stable factory
   identity, input ownership and explicit unsupported-prop errors.
-- Forty Chrome scenarios cover entrances, child order and dynamic insertion,
+- Forty-three Chrome scenarios cover entrances, child order and dynamic insertion,
   independent variant scopes, initial=false, stable rerenders/focus, CSS-variable
   bell repeat/reset, style updates,
   Strict Mode, active-unmount cleanup, reduced motion and retained-node hydration.
@@ -43,3 +43,5 @@ production processes, balanced AB/BA pairs and identical-source controls. The
 initial style generation are timed. All raw samples and source/bundle hashes are
 retained. This measures server rendering, not animation setup after mount,
 interaction latency, browser paint, or app startup.
+
+Custom root replacement, null/restore and callback-ref changes are now checked against both controls. These remain part of the existing app-shaped React contract; no new gesture/layout/primitive scope is claimed.
