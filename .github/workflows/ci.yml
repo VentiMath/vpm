@@ -217,6 +217,14 @@ jobs:
           node scripts/jwt-decode-conformance/types.cjs
           node scripts/jwt-decode-conformance/browser.cjs
           node scripts/jwt-decode-conformance/archives.cjs
+      - run: npm --prefix scripts/nanoid-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: Independent Nano ID and PostCSS caller
+        run: |
+          node --test packages/vnanoid/test/*.test.cjs
+          node scripts/nanoid-conformance/probe.cjs
+          node scripts/nanoid-conformance/types.cjs
+          node scripts/nanoid-conformance/browser.cjs
+          node scripts/nanoid-conformance/archives.cjs
       - run: npm --prefix scripts/js-cookie-conformance ci --ignore-scripts --no-audit --no-fund
       - name: Browser cookies and Amplify storage
         run: |
@@ -1047,6 +1055,8 @@ jobs:
         run: |
           bun test packages/vjwt-decode/test/decode.test.cjs
           bun scripts/jwt-decode-conformance/run.cjs
+      - run: npm --prefix scripts/nanoid-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: bun scripts/nanoid-conformance/probe.cjs
       - run: npm --prefix scripts/js-cookie-conformance ci --ignore-scripts --no-audit --no-fund
       - run: |
           bun test packages/vjs-cookie/test

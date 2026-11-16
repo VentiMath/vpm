@@ -438,6 +438,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vbytes](packages/vbytes) | bytes 3.1.2 | Complete-input parsing that fails explicitly on invalid limits, exact decimal scaling, validated format options, and literal group separators. |
 | [viconv-lite](packages/viconv-lite) | iconv-lite 0.7.3 | Complete encoding tables, corrected multibyte/UTF-7 chunk boundaries, safer option and stream lifecycles, and removal of safer-buffer. |
 | [vraw-body](packages/vraw-body) | raw-body 3.0.2 | Premature-close settlement, strict byte counts, earlier length rejection, controlled chunk/decoder errors, and an entirely VPM dependency tree. |
+| [vnanoid](packages/vnanoid) | nanoid 6.0.2; app 3.3.11 | Independent secure and non-secure identifiers, platform cryptography, unbiased custom alphabets, explicit invalid-input rejection and independently owned random bytes. Unchanged PostCSS 8.5.8 caller, browser crypto, types and exact archives verified. [Measurements](packages/vnanoid/bench/results/README.md); release/adoption remain separate. |
 | [vjs-cookie](packages/vjs-cookie) | js-cookie 3.0.8; app 3.0.5 | Independent zero-dependency browser cookie API. Safe prototype-named data, own-only attributes, explicit invalid expiry/control-character rejection, converter/default snapshots and live reads. Unchanged Amplify CookieStorage, native browser path/expiry, types and exact archives verified. [Measurements](packages/vjs-cookie/bench/results/README.md). Release and app adoption remain separate. |
 | [vqs](packages/vqs) | qs 6.17.0 | Zero runtime dependencies, native percent encoding, validated numeric limits, no parameter-limit wraparound, and wide-array serialization without variadic calls. |
 | [vonce](packages/vonce) | once 1.4.0 | Private call state, read-only status, descriptor-safe callback metadata, symbol support, and removal of wrappy. |
@@ -453,9 +454,9 @@ version-scoped integration aliases remain limited to their tested baselines.
 ## Current verification
 
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
-recorded by the tests. All 136 Node runtime packages' public declarations compile
+recorded by the tests. All 137 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **228 packages**, including two declaration-only packages and
+compiler in NodeNext and bundler resolution modes. The catalog covers **229 packages**, including two declaration-only packages and
 browser packages `vcss-box-model`, `vuse-sync-external-store`, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,

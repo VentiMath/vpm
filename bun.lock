@@ -806,6 +806,10 @@
         "react": "^19.3.0",
       },
     },
+    "packages/vnanoid": {
+      "name": "vnanoid",
+      "version": "6.0.2",
+    },
     "packages/vnegotiator": {
       "name": "vnegotiator",
       "version": "0.1.0",
@@ -2084,6 +2088,8 @@
     "vmui-system": ["vmui-system@workspace:packages/vmui-system"],
 
     "vmui-utils": ["vmui-utils@workspace:packages/vmui-utils"],
+
+    "vnanoid": ["vnanoid@workspace:packages/vnanoid"],
 
     "vnegotiator": ["vnegotiator@workspace:packages/vnegotiator"],
 

@@ -1,0 +1,55 @@
+{
+  "name": "vnanoid",
+  "version": "6.0.2",
+  "description": "Independent secure and non-secure compact identifier generation",
+  "type": "commonjs",
+  "main": "./index.cjs",
+  "module": "./index.mjs",
+  "types": "./index.d.cts",
+  "exports": {
+    ".": {
+      "browser": {
+        "types": "./index.d.mts",
+        "default": "./index.browser.mjs"
+      },
+      "import": {
+        "types": "./index.d.mts",
+        "default": "./index.mjs"
+      },
+      "require": {
+        "types": "./index.d.cts",
+        "default": "./index.cjs"
+      }
+    },
+    "./non-secure": {
+      "import": {
+        "types": "./non-secure.d.mts",
+        "default": "./non-secure.mjs"
+      },
+      "require": {
+        "types": "./non-secure.d.cts",
+        "default": "./non-secure.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "*.cjs",
+    "*.mjs",
+    "*.mts",
+    "*.cts",
+    "README.md",
+    "PROVENANCE.json",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=24"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vnanoid"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "upstream": {
+    "name": "nanoid",
+    "version": "6.0.2",
+    "repository": "https://github.com/ai/nanoid",
+    "checked": "2026-11-16"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "independent application implementation",
+    "targetScope": "Secure nanoid/customAlphabet/customRandom/random/urlAlphabet and non-secure subpath for Node 24, Bun 1.4.4 and modern browsers. PostCSS 8.5.8 consumes non-secure nanoid(6).",
+    "remainingWork": "Release and VentiMath adoption. CLI and legacy runtime shims are outside this module contract."
+  },
+  "caller": {
+    "revision": "82457c3c4d840704155d04742b88c6b7e28a66e5",
+    "package": "postcss 8.5.8",
+    "appControl": "nanoid 3.3.11"
+  },
+  "changes": [
+    "Independent runtime from public API declarations, documentation and black-box behavior; no upstream implementation source copied.",
+    "Secure IDs use platform cryptography, power-of-two masking or unbiased rejection sampling. No Math.random fallback.",
+    "Returned random byte arrays have independent ownership; pool refills cannot mutate them.",
+    "Invalid sizes/alphabets and malformed or stalled custom random sources fail explicitly. Size cap is 1 MiB. Custom deterministic sequences are not upstream byte-for-byte compatible.",
+    "Private per-generator character reservoirs amortize byte-to-character encoding while consuming every accepted random symbol once. No identifier result is cached or reused."
+  ],
+  "references": [
+    "https://github.com/ai/nanoid#api"
+  ]
+}

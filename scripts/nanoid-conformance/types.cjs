@@ -1,0 +1,3 @@
+'use strict';
+const path=require('node:path'),{compile,clean}=require('../platform-types.cjs'),dir=process.argv[2]||__dirname,base=path.resolve(__dirname,'../../packages/vnanoid');
+for(const bundler of [false,true]){const r=compile({compilerOptions:{strict:true,noEmit:true,skipLibCheck:false,target:'ES2022',lib:['ES2022','DOM'],module:bundler?'ESNext':'NodeNext',moduleResolution:bundler?'Bundler':'NodeNext',types:[],...(!process.argv[2]?{paths:{'vnanoid':[base+'/index.d.mts'],'vnanoid/non-secure':[base+'/non-secure.d.mts']}}:{})},files:[dir+'/consumer.mts',...(!bundler?[dir+'/consumer.cts']:[])]});if(r.status){console.error(r.output);process.exit(1)}clean(r)}console.log('Strict TS7 Nano ID consumers pass NodeNext/Bundler');

@@ -1,0 +1,6 @@
+'use strict';
+const path=require('node:path'),assert=require('node:assert/strict');
+const root=path.resolve(__dirname,'..'),fixture=path.resolve(root,'../../scripts/nanoid-conformance/node_modules');
+const cases=[];
+for(const control of ['nanoid','nanoid-app'])for(const kind of ['PostCSS six','secure 21','secure 64','custom hex','custom decimal'])cases.push({name:(control==='nanoid'?'Current ':'App ')+kind,make(file){const api=require(file===root?root:fixture+'/'+control);if(kind==='PostCSS six'){const non=require(file===root?root+'/non-secure.cjs':fixture+'/'+control+'/non-secure');return()=>non.nanoid(6)}if(kind==='secure 21')return()=>api.nanoid();if(kind==='secure 64')return()=>api.nanoid(64);const make=api.customAlphabet(kind==='custom hex'?'0123456789abcdef':'0123456789',21);return()=>make()},validate(value){assert.equal(value.length,kind==='PostCSS six'?6:kind==='secure 64'?64:21);assert.match(value,kind==='custom hex'?/^[a-f0-9]+$/:kind==='custom decimal'?/^[0-9]+$/:/^[A-Za-z0-9_-]+$/)}});
+require('../../../scripts/bench-process.cjs').run({root,upstream:'upstream',vpm:root,cases,files:['engine.cjs','index.cjs','index.mjs','index.browser.mjs','non-secure.cjs','package.json','PROVENANCE.json','bench/compare.cjs','../../scripts/nanoid-conformance/package-lock.json']}).catch(e=>{console.error(e);process.exitCode=1});
