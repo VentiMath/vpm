@@ -296,3 +296,14 @@ failure after source replacement, cached-error hydration, refs and theme/RTL
 styles. The runtime uses the rendered image, not an auxiliary preloader.
 Build with `avatar-build.cjs`; prepared SSR benchmarks are `bench/avatar.cjs`.
 Use `VPM_MATERIAL_BROWSER_FILTER=avatar-browser.cjs` for exact archive checks.
+
+
+CircularProgress: `progress-contract.cjs` compares 147 current/app combinations,
+including custom ranges and track geometry against Material9. App7's deprecated
+circle variant classes and missing default min/max ARIA are normalized only in
+the app control. `progress-browser.cjs` checks theme/CSS-variable/RTL overrides,
+WARML-style saving buttons, updates without DOM replacement, disabled shrink,
+reduced-motion preferences, browser accessibility, refs and hydration in both
+React modes. Range clamping and invalid-input rejection are deliberate changes.
+Use `progress-build.cjs` before `bench/progress.cjs`, and
+`VPM_MATERIAL_BROWSER_FILTER=progress-browser.cjs` for exact archives.

@@ -116,3 +116,7 @@ assert.match(chipHtml,/MuiChip-deleteIcon/);assert.match(chipHtml,/role="button"
 assert.equal(api.Avatar,require('vmui-material/Avatar').default);
 assert.equal(api.avatarClasses,require('vmui-material/avatarClasses').default);
 assert.match(renderToString(React.createElement(api.Avatar,{src:'/student.png',alt:'Student'})),/alt="Student"/);
+
+assert.equal(api.CircularProgress,require('vmui-material/CircularProgress').default);
+assert.equal(api.circularProgressClasses,require('vmui-material/circularProgressClasses').default);
+assert.match(renderToString(React.createElement(api.CircularProgress,{variant:'determinate',value:25})),/aria-valuenow="25"/);

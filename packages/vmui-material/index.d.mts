@@ -475,3 +475,13 @@ export type AvatarProps<C extends React.ElementType='div'>=AvatarOwnProps&Omit<R
 export const Avatar:<C extends React.ElementType='div'>(props:AvatarProps<C>)=>React.ReactElement|null;
 export const avatarClasses:Readonly<AvatarClasses>;
 export function getAvatarUtilityClass(slot:string):string;
+
+export type CircularProgressClasses=Record<'root'|'determinate'|'indeterminate'|'colorPrimary'|'colorSecondary'|'svg'|'track'|'circle'|'circleDisableShrink',string>;
+export interface CircularProgressProps extends Omit<React.HTMLAttributes<HTMLSpanElement>,'children'> {
+ color?:ButtonColor;size?:number|string;thickness?:number;variant?:'determinate'|'indeterminate';
+ disableShrink?:boolean;enableTrackSlot?:boolean;min?:number;max?:number;value?:number;
+ classes?:Partial<CircularProgressClasses>;sx?:SxProps<Theme>;ref?:React.Ref<HTMLSpanElement>;
+}
+export const CircularProgress:React.ForwardRefExoticComponent<CircularProgressProps>;
+export const circularProgressClasses:Readonly<CircularProgressClasses>;
+export function getCircularProgressUtilityClass(slot:string):string;

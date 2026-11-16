@@ -1,0 +1,8 @@
+'use strict';
+const {test}=require('node:test'),assert=require('node:assert/strict'),{peer}=require('../../../scripts/mui-material-conformance/paths.cjs'),R=peer('react'),r=peer('react-dom/server').renderToStaticMarkup,own=require(require('../../../scripts/mui-material-conformance/prepare.cjs'));
+const render=props=>r(R.createElement(own.CircularProgress,props)).replace(/<style[\s\S]*?<\/style>/g,'');
+test('spinner exposes an indeterminate progressbar, label and requested size',()=>{const s=render({size:24,'aria-label':'Loading exams'});assert.match(s,/role="progressbar"/);assert.match(s,/aria-label="Loading exams"/);assert.match(s,/width:24px/);assert.doesNotMatch(s,/aria-valuenow/)});
+test('custom range controls both accessible progress and stroke geometry',()=>{const s=render({variant:'determinate',min:10,max:30,value:20,enableTrackSlot:true});assert.match(s,/aria-valuenow="20"/);assert.match(s,/aria-valuemin="10"/);assert.match(s,/aria-valuemax="30"/);assert.match(s,/stroke-dashoffset:63.460px/);assert.match(s,/MuiCircularProgress-track/);assert.match(s,/aria-hidden="true"/)});
+test('out-of-range progress is clamped consistently for geometry and accessibility',()=>{const s=render({variant:'determinate',value:150});assert.match(s,/aria-valuenow="100"/);assert.match(s,/stroke-dashoffset:0.000px/)});
+test('invalid ranges and thickness fail explicitly',()=>{for(const props of [{min:10,max:10},{value:NaN},{max:Infinity},{thickness:0},{thickness:45}])assert.throws(()=>render(props),RangeError)});
+test('caller ARIA and style overrides retain precedence',()=>{const s=render({variant:'determinate',value:10,'aria-valuenow':11,style:{width:32}});assert.match(s,/aria-valuenow="11"/);assert.match(s,/width:32px/)});

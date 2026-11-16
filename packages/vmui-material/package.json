@@ -957,6 +957,26 @@
         "types": "./avatarClasses.d.cts",
         "default": "./avatarClasses.cjs"
       }
+    },
+    "./CircularProgress": {
+      "import": {
+        "types": "./CircularProgress.d.mts",
+        "default": "./CircularProgress.mjs"
+      },
+      "require": {
+        "types": "./CircularProgress.d.cts",
+        "default": "./CircularProgress.cjs"
+      }
+    },
+    "./circularProgressClasses": {
+      "import": {
+        "types": "./circularProgressClasses.d.mts",
+        "default": "./circularProgressClasses.mjs"
+      },
+      "require": {
+        "types": "./circularProgressClasses.d.cts",
+        "default": "./circularProgressClasses.cjs"
+      }
     }
   },
   "files": [

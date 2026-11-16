@@ -1,6 +1,6 @@
 # vmui-material
 
-Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip and Avatar, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
+Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar and CircularProgress, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
 
 ```js
 import { Button, ToggleButton, ToggleButtonGroup } from 'vmui-material';
@@ -25,7 +25,7 @@ The earlier button and text/icon benchmarks predate the custom native-root corre
 
 [Conformance](../../scripts/mui-material-conformance/README.md), [button benchmarks](bench/results/README.md), [text/icon benchmarks](bench/text/README.md), [Box benchmarks](bench/box/README.md), [surface/icon benchmarks](bench/surfaces/README.md), [form benchmarks](bench/forms/README.md), [input benchmarks](bench/input/README.md) and [provenance](PROVENANCE.json) record the measured scope. Supported runtimes are Node 24, Bun 1.4.4 and modern browsers.
 
-Current application priorities (reviewed at `3aa9eb28`, November 13, 2026): Material remains in shared theme/navigation, authentication, public pages and table components while many feature pages use Astryx. A static non-test source inventory found Typography imports in 164 files, Box in 99, styles in 88, Paper in 43 and Divider in 15. These are import counts, not route reachability or adoption percentages. The Box/theme boundary and SVG sprite root are covered. Paper, Divider and the Icon fallback are also covered. The shared FormControl/FormLabel/FormHelperText foundation is covered; InputBase is now covered too; Switch is now covered; the table’s remaining Material peers are still pending. A complete app cutover requires those callers, including dependencies’ imports, to pass together.
+Current application priorities (reviewed at `82457c3c`, November 16, 2026): Material remains in shared theme/navigation, authentication, public pages and table components while many feature pages use Astryx. Static non-test source imports include Typography in 164 files, Box in 99, styles in 90, Paper in 43 and Skeleton in 35. These are import counts, not route reachability or adoption percentages. See the [current inventory and remaining families](../../docs/FRONTEND.md).
 
 The `styles` entry exposes `ThemeProvider`, `useTheme`, `styled`, `GlobalStyles`,
 `useThemeProps`, `useMediaQuery` and `useColorScheme`. Pass an existing resolved
@@ -449,3 +449,26 @@ Bun SSR uses 18–34% less time across all current/app workloads. Node establish
 19–28% less time for current initial/photo/Chip cases and 22% less for app Chip
 composition. The other Node comparisons remain inconclusive under the measured
 control variation. These are local SSR results, not app interaction timings.
+
+
+CircularProgress covers contest results, Mustang exam loading, WARML submission
+buttons and roommate activity indicators. It supports current9 determinate
+`min`/`max` ranges and the optional track, along with the app's existing sizes,
+colors, shared defaults and `sx`. Progress and geometry update on the same DOM
+node. Animation uses CSS and respects reduced motion. Invalid finite ranges
+and thicknesses throw; values outside a valid range clamp consistently for
+both the arc and accessible value, instead of drawing a backwards arc. Explicit
+ARIA overrides remain caller-owned. App7's deprecated circle variant classes
+are not emitted; its override keys remain supported. These loading indicators
+are built and tested; the whole Material dependency remains partial/unreleased.
+[Progress measurements](bench/progress/README.md).
+
+The [current application inventory](../../docs/FRONTEND.md) distinguishes built
+component scope from the families still blocking a complete Material cutover.
+
+
+The eight-spinner SSR fixtures use 5–22% less time than current Material on Node
+and 16–20% less on Bun. The saving-button composition uses about 14% less than
+the app's Material7 control on both runtimes; standalone app-control comparisons
+remain inconclusive. These include the shared theme and, for saving buttons,
+owned button composition. They do not measure browser frame rate or app latency.

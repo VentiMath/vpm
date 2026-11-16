@@ -278,3 +278,12 @@ Avatar(avatarProps);Avatar({component:'a',href:'/profile',ref:React.createRef<HT
 Avatar({variant:'triangle'});
 // @ts-expect-error image ref must be an image
 Avatar({slotProps:{img:{ref:React.createRef<HTMLButtonElement>()}}});
+
+import CircularProgress, {type CircularProgressProps} from 'vmui-material/CircularProgress';
+import progressClasses from 'vmui-material/circularProgressClasses';
+const progressProps:CircularProgressProps={variant:'determinate',min:10,max:30,value:20,enableTrackSlot:true,size:'2rem',ref:React.createRef<HTMLSpanElement>(),'aria-label':'Results loaded'};
+CircularProgress(progressProps);progressClasses.track satisfies string;
+// @ts-expect-error finite numeric input required
+CircularProgress({value:'50'});
+// @ts-expect-error unknown variant
+CircularProgress({variant:'buffer'});
