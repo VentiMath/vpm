@@ -21,7 +21,8 @@
     "Secure IDs use platform cryptography, power-of-two masking or unbiased rejection sampling. No Math.random fallback.",
     "Returned random byte arrays have independent ownership; pool refills cannot mutate them.",
     "Invalid sizes/alphabets and malformed or stalled custom random sources fail explicitly. Size cap is 1 MiB. Custom deterministic sequences are not upstream byte-for-byte compatible.",
-    "Private per-generator character reservoirs amortize byte-to-character encoding while consuming every accepted random symbol once. No identifier result is cached or reused."
+    "Private per-generator character reservoirs amortize byte-to-character encoding while consuming every accepted random symbol once. No identifier result is cached or reused.",
+    "Non-secure six-character IDs use a fixed-length path; other URL IDs avoid the generic alphabet closure. One fresh Math.random draw per symbol and the existing mapping, validation, zero-size behavior and secure implementation are preserved."
   ],
   "references": [
     "https://github.com/ai/nanoid#api"

@@ -44,11 +44,17 @@ and Bun 1.4.4, with current and app-pinned controls. They measure ID generation,
 not end-to-end CSS build time.
 
 
-In these steady-state measurements, secure IDs and custom hex/decimal IDs use
-35–65% less time than current Nano ID across Node/Bun, and 78–90% less than the
-app's older control. The actual six-character non-secure PostCSS operation has
-no established improvement: Node is 99 ns versus current 92 ns (7% more), and
-Bun is 39 ns versus app 35 ns (15% more). The other two comparisons are
-inconclusive. Those small per-ID costs do not establish a CSS build regression
-or speedup. Generator construction and initial pool refill are outside these
-steady-state measurements; each secure generator lazily owns a bounded buffer.
+The non-secure implementation preserves one fresh `Math.random()` draw per
+character and the same alphabet mapping. PostCSS's six-character path avoids
+the generic alphabet closure and loop; the general path retains strict size
+validation. No entropy is pooled or reused in the non-secure API. The secure
+implementation remains unchanged.
+
+[Current upstream comparisons](bench/results/README.md) do not establish a
+remaining non-secure regression or a speedup beyond the control spread.
+[Direct before/after measurements](bench/non-secure/README.md) show 5–7% less
+time than our previous implementation on Node and Bun. That control loads the
+pinned historical source from Git and verifies its SHA-256; it does not commit
+another runtime copy. Generator construction and secure pool initialization
+remain outside these steady-state measurements. These checks support the
+independent implementation; they are not application speed guarantees.

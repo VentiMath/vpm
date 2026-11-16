@@ -24,3 +24,11 @@ avoid hanging the suite, and the owned zero-size path is tested directly.
 Run the scripts with Node 24, and run unit/probe checks with Bun 1.4.4. Run
 `bench/compare.cjs` with no concurrent tests/builds. Four balanced isolated
 comparison pairs and two identical-source pairs retain all timings and hashes.
+
+
+The non-secure regression test feeds all 64 alphabet indices and both random
+boundaries through the fixed six-character and general paths. It checks exact
+output mapping, one fresh draw per character, empty output and rejection before
+random access for invalid sizes. The secure API is unchanged. `bench/non-secure.cjs`
+compares the previous VPM implementation at `a8e36cfb` using a hash-verified Git
+source; fetch that commit first if reproducing from a shallow checkout.

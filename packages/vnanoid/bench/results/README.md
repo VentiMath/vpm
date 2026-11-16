@@ -23,41 +23,45 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-16T22:43:24.755Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-16T23:05:17.745Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| Current PostCSS six | 92 | 99 | 7.3% | 7.2% | 7.3% | 1.6% | higher time in every pair, beyond control spread |
-| Current secure 21 | 31 | 20 | -38.1% | -37.2% | -39.1% | 5.3% | lower time in every pair, beyond control spread |
-| Current secure 64 | 75 | 37 | -50.3% | -51.1% | -49.3% | 6.1% | lower time in every pair, beyond control spread |
-| Current custom hex | 33 | 18 | -43.1% | -41.8% | -45.2% | 7% | lower time in every pair, beyond control spread |
-| Current custom decimal | 161 | 62 | -61.2% | -60.3% | -61.9% | 4.4% | lower time in every pair, beyond control spread |
-| App PostCSS six | 93 | 96 | 2.4% | 6.3% | 2.1% | 3.7% | unestablished at this precision |
-| App secure 21 | 142 | 20 | -86.3% | -86.1% | -86.5% | 2.9% | lower time in every pair, beyond control spread |
-| App secure 64 | 342 | 35 | -89.7% | -90% | -89.5% | 5.1% | lower time in every pair, beyond control spread |
-| App custom hex | 171 | 20 | -88.4% | -87.5% | -88.4% | 1.7% | lower time in every pair, beyond control spread |
-| App custom decimal | 375 | 60 | -83.9% | -84.8% | -83.8% | 4.9% | lower time in every pair, beyond control spread |
+| Current PostCSS six | 92 | 94 | 1.2% | 1.2% | 3.7% | 4.5% | unestablished at this precision |
+| Current non-secure 21 | 302 | 296 | -0.9% | -0.7% | -1.9% | 2.8% | unestablished at this precision |
+| Current secure 21 | 33 | 20 | -40% | -38% | -42.9% | 2.1% | lower time in every pair, beyond control spread |
+| Current secure 64 | 76 | 35 | -53.3% | -53.3% | -53.1% | 2.2% | lower time in every pair, beyond control spread |
+| Current custom hex | 33 | 18 | -44.9% | -43.2% | -46.1% | 7.7% | lower time in every pair, beyond control spread |
+| Current custom decimal | 161 | 62 | -62% | -61.3% | -62% | 1.7% | lower time in every pair, beyond control spread |
+| App PostCSS six | 95 | 91 | -4.4% | -2.5% | -6% | 2.4% | unestablished at this precision |
+| App non-secure 21 | 293 | 292 | -0.3% | 0.1% | -0.3% | 3.6% | unestablished at this precision |
+| App secure 21 | 143 | 20 | -86% | -85.3% | -86.6% | 3.5% | lower time in every pair, beyond control spread |
+| App secure 64 | 345 | 36 | -89.7% | -89.5% | -89.7% | 5.9% | lower time in every pair, beyond control spread |
+| App custom hex | 171 | 20 | -88.2% | -87.9% | -88.2% | 3.5% | lower time in every pair, beyond control spread |
+| App custom decimal | 377 | 62 | -83.6% | -83.8% | -83.6% | 5.1% | lower time in every pair, beyond control spread |
 
 ## Bun 1.4.4
 
-Recorded 2026-11-16T22:44:11.720Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-16T23:06:16.028Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| Current PostCSS six | 30 | 30 | 2.9% | 3.4% | 0.4% | 8.3% | unestablished at this precision |
-| Current secure 21 | 24 | 15 | -38% | -38% | -38.3% | 1.7% | lower time in every pair, beyond control spread |
-| Current secure 64 | 56 | 28 | -49.8% | -49.1% | -50.1% | 7% | lower time in every pair, beyond control spread |
-| Current custom hex | 25 | 16 | -35.5% | -35.3% | -38.8% | 17.8% | lower time in every pair, beyond control spread |
-| Current custom decimal | 130 | 45 | -65.1% | -65.1% | -65.2% | 4.6% | lower time in every pair, beyond control spread |
-| App PostCSS six | 35 | 39 | 15% | 17.3% | 10.4% | 7.1% | higher time in every pair, beyond control spread |
-| App secure 21 | 101 | 23 | -77.8% | -73% | -83.3% | 5% | lower time in every pair, beyond control spread |
-| App secure 64 | 295 | 34 | -88.4% | -88.2% | -88.9% | 0.7% | lower time in every pair, beyond control spread |
-| App custom hex | 148 | 19 | -87.3% | -88.3% | -86.6% | 5.6% | lower time in every pair, beyond control spread |
-| App custom decimal | 347 | 44 | -87.1% | -87% | -87.5% | 1.4% | lower time in every pair, beyond control spread |
+| Current PostCSS six | 30 | 31 | 3.3% | 0.5% | 5.3% | 2.4% | unestablished at this precision |
+| Current non-secure 21 | 116 | 108 | -6.8% | -6.8% | -7.6% | 6.9% | unestablished at this precision |
+| Current secure 21 | 25 | 14 | -42.9% | -38.1% | -51% | 34.9% | lower time in every pair, beyond control spread |
+| Current secure 64 | 59 | 31 | -47.4% | -46.3% | -49.9% | 1.8% | lower time in every pair, beyond control spread |
+| Current custom hex | 31 | 18 | -42.6% | -34.4% | -46.7% | 9.4% | lower time in every pair, beyond control spread |
+| Current custom decimal | 130 | 45 | -65.7% | -62.6% | -67.1% | 5.7% | lower time in every pair, beyond control spread |
+| App PostCSS six | 42 | 36 | -14% | -8.2% | -14% | 1.8% | unestablished at this precision |
+| App non-secure 21 | 121 | 121 | -1.2% | -3.3% | 0.3% | 4.2% | unestablished at this precision |
+| App secure 21 | 107 | 23 | -78.7% | -75% | -81.2% | 1.5% | lower time in every pair, beyond control spread |
+| App secure 64 | 295 | 36 | -87.8% | -87.2% | -88.3% | 2% | lower time in every pair, beyond control spread |
+| App custom hex | 147 | 16 | -89.1% | -89.1% | -87.5% | 5.2% | lower time in every pair, beyond control spread |
+| App custom decimal | 356 | 45 | -87.4% | -87.3% | -87.7% | 5.7% | lower time in every pair, beyond control spread |
 
 ## Reproduce
 

@@ -38,3 +38,18 @@ test('identifier boundaries consume the entropy stream exactly once',()=>{
  const split=make(),whole=make();assert.equal(split.nanoid(4090)+split.nanoid(12),whole.nanoid(4102));
  const h1=make().customAlphabet('0123456789abcdef'),h2=make().customAlphabet('0123456789abcdef');assert.equal(h1(4090)+h1(12),h2(4102));
 });
+test('non-secure fast and general paths preserve one fresh draw per symbol and every alphabet index',()=>{
+ const original=Math.random;
+ try{
+  for(const size of [0,1,5,6,7,21,64,65,129]){
+   let calls=0;Math.random=()=>((calls++%64)+0.5)/64;
+   const expected=Array.from({length:size},(_,i)=>api.urlAlphabet[i%64]).join('');
+   assert.equal(non.nanoid(size),expected);assert.equal(calls,size);
+  }
+  Math.random=()=>0;assert.equal(non.nanoid(6),api.urlAlphabet[0].repeat(6));
+  Math.random=()=>1-Number.EPSILON;assert.equal(non.nanoid(6),api.urlAlphabet[63].repeat(6));
+  Math.random=()=>{throw Error('called')};
+  for(const size of ['6',NaN,6.1,-6,Infinity,1048577])assert.throws(()=>non.nanoid(size),RangeError);
+  assert.equal(non.nanoid(0),'');
+ }finally{Math.random=original}
+});
