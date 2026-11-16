@@ -62,3 +62,5 @@ export const {Avatar,avatarClasses,getAvatarUtilityClass}=a;
 export const {CircularProgress,circularProgressClasses,getCircularProgressUtilityClass}=a;
 
 export const {Skeleton,skeletonClasses,getSkeletonUtilityClass}=a;
+
+export const {Container,containerClasses,getContainerUtilityClass}=a;

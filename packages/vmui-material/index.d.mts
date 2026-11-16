@@ -496,3 +496,14 @@ export type SkeletonProps<C extends React.ElementType='span'>=SkeletonOwnProps&O
 export const Skeleton:<C extends React.ElementType='span'>(props:SkeletonProps<C>)=>React.ReactElement|null;
 export const skeletonClasses:Readonly<SkeletonClasses>;
 export function getSkeletonUtilityClass(slot:string):string;
+
+export type ContainerClasses=Record<'root'|'disableGutters'|'fixed'|'maxWidthXs'|'maxWidthSm'|'maxWidthMd'|'maxWidthLg'|'maxWidthXl',string>;
+export type ContainerClassKey=keyof ContainerClasses;
+export interface ContainerOwnProps {
+ children?:React.ReactNode;disableGutters?:boolean;fixed?:boolean;maxWidth?:import('vmui-system').Breakpoint|false;
+ classes?:Partial<ContainerClasses>;sx?:SxProps<Theme>;
+}
+export type ContainerProps<C extends React.ElementType='div'>=ContainerOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof ContainerOwnProps>&{component?:C};
+export const Container:<C extends React.ElementType='div'>(props:ContainerProps<C>)=>React.ReactElement|null;
+export const containerClasses:Readonly<ContainerClasses>;
+export function getContainerUtilityClass(slot:string):string;

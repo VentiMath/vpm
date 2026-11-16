@@ -124,3 +124,7 @@ assert.match(renderToString(React.createElement(api.CircularProgress,{variant:'d
 assert.equal(api.Skeleton,require('vmui-material/Skeleton').default);
 assert.equal(api.skeletonClasses,require('vmui-material/skeletonClasses').default);
 assert.match(renderToString(React.createElement(api.Skeleton,{variant:'rounded',height:112})),/MuiSkeleton-rounded/);
+
+assert.equal(api.Container,require('vmui-material/Container').default);
+assert.equal(api.containerClasses.root,require('vmui-material/containerClasses').default.root);
+assert.match(renderToString(React.createElement(api.Container,{maxWidth:'sm',sx:{py:4}},'WARML')),/MuiContainer-maxWidthSm/);

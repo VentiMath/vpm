@@ -296,3 +296,12 @@ Skeleton(skeletonProps);Skeleton({component:'div',ref:React.createRef<HTMLDivEle
 Skeleton({animation:'spin'});
 // @ts-expect-error dimensions are numeric or CSS strings
 Skeleton({width:new Date()});
+
+import Container, {type ContainerProps} from 'vmui-material/Container';
+import containerUtilities from 'vmui-material/containerClasses';
+const containerProps:ContainerProps={maxWidth:'sm',fixed:true,disableGutters:false,sx:{py:4},ref:React.createRef<HTMLDivElement>()};
+Container(containerProps);Container({component:'a',href:'/results',ref:React.createRef<HTMLAnchorElement>()});containerUtilities.maxWidthSm satisfies string;
+// @ts-expect-error maxWidth is a breakpoint or false
+Container({maxWidth:true});
+// @ts-expect-error native div has no href
+Container({href:'/results'});

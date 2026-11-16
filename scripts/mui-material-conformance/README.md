@@ -318,3 +318,18 @@ Browser accessibility confirms measurement children stay absent even if a child'
 visibility is overridden. Direct text and zero are deliberately hidden as well.
 Use `skeleton-build.cjs`, `bench/skeleton.cjs` and
 `VPM_MATERIAL_BROWSER_FILTER=skeleton-browser.cjs` for packed install checks.
+
+## Container
+
+`container-contract.cjs` compares current Material 9.5.0 and app 7.2.0 markup.
+`container-browser.cjs` compares geometry across 12 viewport widths, custom
+breakpoints (including em units), RTL, variable themes, overrides, sx and fixed
+caps. It also checks custom-root refs, stable DOM/focus and hydration in production
+and development React. The shared archive runner repeats this fixture after exact
+package installation. `container-bench-entry.jsx` models WARML practice, public
+results and contest signup props; the isolated benchmark lives in
+[the package](../../packages/vmui-material/bench/container/README.md).
+
+Before timing Container, run `node scripts/mui-material-conformance/container-build.cjs`
+to rebuild the comparison bundles from the local sources. Run Node and Bun
+benchmarks sequentially, with browser checks and other tests finished first.

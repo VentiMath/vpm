@@ -1,6 +1,6 @@
 # vmui-material
 
-Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress and Skeleton, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
+Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton and Container, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
 
 ```js
 import { Button, ToggleButton, ToggleButtonGroup } from 'vmui-material';
@@ -495,3 +495,19 @@ patterns. Current-control comparisons are lower on Node and Bun; the Node/app
 archive comparison is inconclusive because of control variation. All raw samples
 are retained in the linked report. These are server-rendering measurements,
 not browser responsiveness or application latency claims.
+
+Container independently implements the responsive page wrapper used by public
+results, club articles, contest registration and WARML practice. Its 23 direct
+source callers were checked against VentiMath main `ed4b5a05` on November 16,
+2026. The contract includes fluid and fixed widths, all standard and custom
+breakpoints, disabled gutters, theme spacing/defaults/overrides/variants,
+responsive `sx`, custom component roots, refs and hydration. An explicit small
+cap stays in force above larger fixed breakpoints. Runtime code is written in
+house over VPM System; upstream declarations and black-box rendered output are
+comparison fixtures only. [Container measurements](bench/container/README.md)
+record SSR costs, not whole-page load or browser interaction speed.
+
+The Container SSR baseline shows 22–32% less time in four Node cases; two Node
+comparisons remain inconclusive because the identical-code controls vary too
+much. All six Bun comparisons show 36–43% less time. These are synthetic page
+wrappers using application props, not application performance measurements.
