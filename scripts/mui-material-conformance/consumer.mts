@@ -287,3 +287,12 @@ CircularProgress(progressProps);progressClasses.track satisfies string;
 CircularProgress({value:'50'});
 // @ts-expect-error unknown variant
 CircularProgress({variant:'buffer'});
+
+import Skeleton, {type SkeletonProps} from 'vmui-material/Skeleton';
+import skeletonUtilities from 'vmui-material/skeletonClasses';
+const skeletonProps:SkeletonProps={variant:'rounded',animation:'wave',width:'70%',height:120,children:0,sx:{mb:2},ref:React.createRef<HTMLSpanElement>()};
+Skeleton(skeletonProps);Skeleton({component:'div',ref:React.createRef<HTMLDivElement>(),role:'presentation'});skeletonUtilities.rounded satisfies string;
+// @ts-expect-error animation is pulse, wave or false
+Skeleton({animation:'spin'});
+// @ts-expect-error dimensions are numeric or CSS strings
+Skeleton({width:new Date()});

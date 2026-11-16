@@ -977,6 +977,26 @@
         "types": "./circularProgressClasses.d.cts",
         "default": "./circularProgressClasses.cjs"
       }
+    },
+    "./Skeleton": {
+      "import": {
+        "types": "./Skeleton.d.mts",
+        "default": "./Skeleton.mjs"
+      },
+      "require": {
+        "types": "./Skeleton.d.cts",
+        "default": "./Skeleton.cjs"
+      }
+    },
+    "./skeletonClasses": {
+      "import": {
+        "types": "./skeletonClasses.d.mts",
+        "default": "./skeletonClasses.mjs"
+      },
+      "require": {
+        "types": "./skeletonClasses.d.cts",
+        "default": "./skeletonClasses.cjs"
+      }
     }
   },
   "files": [

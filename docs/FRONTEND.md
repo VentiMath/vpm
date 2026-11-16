@@ -18,17 +18,17 @@ headers/sidebar, directory transitions and the notification bell. They need:
 
 [vmotion](../packages/vmotion) implements and tests this application subset over
 [vmotion-dom](../packages/vmotion-dom). Release and actual app integration remain.
-The next useful Motion step is a consumer acceptance/release pass for these
-callers. Broad gestures, dragging, layout projection, AnimatePresence, sequence
+Motion is parked. When resumed, the useful next step is a consumer
+acceptance/release pass for these callers. Broad gestures, dragging, layout projection, AnimatePresence, sequence
 editing, arbitrary 3D and other unobserved APIs are not a prerequisite for this
 inventory. The entire upstream Motion API is **not** complete.
 
 ## Material
 
-[vmui-material](../packages/vmui-material) now has 41 independently implemented
+[vmui-material](../packages/vmui-material) now has 42 independently implemented
 components. It covers button controls; text/icons; Box/Paper/Divider; the form,
-input, Select, checkbox/radio/switch foundation; menus; Chip, Avatar and loading
-spinners. Its resolved-theme bridge is built, but full Material theme creation
+input, Select, checkbox/radio/switch foundation; menus; Chip, Avatar, loading
+spinners and Skeleton placeholders. Its resolved-theme bridge is built, but full Material theme creation
 and all app-used component families are not. It cannot replace the entire
 `@mui/material` dependency yet.
 
@@ -36,7 +36,6 @@ The largest unbuilt families in direct source use are:
 
 | Family | Source imports | Why it matters |
 | --- | ---: | --- |
-| Skeleton | 35 | Loading placeholders while content arrives |
 | Card / CardContent | 24 / 8 | Content panels, including Mustang Math |
 | Container | 23 | Public results and form page layout |
 | Tooltip | 17 | Action explanations and compact shared controls |
@@ -53,8 +52,12 @@ Dependencies such as Material React Table may also consume components that do
 not appear as direct app imports; they need unchanged-caller acceptance before
 a complete package override.
 
-**Next bounded Material unit: Skeleton.** It reaches substantially more callers
-than another small authentication-only display helper. CircularProgress already
-covers current contest results, Mustang exam loading and WARML save states.
+**Next bounded Material unit: Container.** Its 23 direct source callers include
+public contest results and WARML forms. Skeleton now covers the shared Fuse
+fallbacks, contest archives/exams/search and WARML practice/signup loading shapes
+in 35 files. CircularProgress covers contest results, Mustang exam loading and
+WARML save states. These are independent VPM implementations; application
+adoption remains separate until the required Material surface is complete.
+
 Nano ID is separate build infrastructure: PostCSS 8.5.8 uses its non-secure entry
-to label anonymous CSS inputs. Building it does not change Motion or Material.
+to label anonymous CSS inputs. It is independently implemented and caller-tested.

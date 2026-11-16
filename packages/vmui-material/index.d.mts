@@ -485,3 +485,14 @@ export interface CircularProgressProps extends Omit<React.HTMLAttributes<HTMLSpa
 export const CircularProgress:React.ForwardRefExoticComponent<CircularProgressProps>;
 export const circularProgressClasses:Readonly<CircularProgressClasses>;
 export function getCircularProgressUtilityClass(slot:string):string;
+
+export type SkeletonClasses=Record<'root'|'text'|'rectangular'|'rounded'|'circular'|'pulse'|'wave'|'withChildren'|'fitContent'|'heightAuto',string>;
+export interface SkeletonOwnProps {
+ animation?:'pulse'|'wave'|false;variant?:'text'|'rectangular'|'rounded'|'circular'|(string&{});
+ width?:number|string;height?:number|string;children?:React.ReactNode;
+ classes?:Partial<SkeletonClasses>;sx?:SxProps<Theme>;
+}
+export type SkeletonProps<C extends React.ElementType='span'>=SkeletonOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof SkeletonOwnProps>&{component?:C};
+export const Skeleton:<C extends React.ElementType='span'>(props:SkeletonProps<C>)=>React.ReactElement|null;
+export const skeletonClasses:Readonly<SkeletonClasses>;
+export function getSkeletonUtilityClass(slot:string):string;

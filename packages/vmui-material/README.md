@@ -1,6 +1,6 @@
 # vmui-material
 
-Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar and CircularProgress, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
+Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress and Skeleton, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
 
 ```js
 import { Button, ToggleButton, ToggleButtonGroup } from 'vmui-material';
@@ -472,3 +472,26 @@ and 16–20% less on Bun. The saving-button composition uses about 14% less than
 the app's Material7 control on both runtimes; standalone app-control comparisons
 remain inconclusive. These include the shared theme and, for saving buttons,
 owned button composition. They do not measure browser frame rate or app latency.
+
+
+Skeleton covers shared Fuse loading screens, AMC/AIME/Putnam/IMO and other contest
+archives/exams, archive search and WARML practice/signup placeholders. Text,
+rectangular, rounded and circular shapes support percentage/number dimensions,
+`height`, `width`, `sx`, custom roots, theme defaults/overrides and pulse/wave/off
+animations. Existing DOM and refs survive size/theme changes and hydration.
+
+Measurement children are inert and hidden, including plain text and zero, so
+placeholder content cannot become an accidental action or screen-reader item.
+This intentionally strengthens upstream's child-element visibility rule.
+Reduced motion stops both pulse and wave. The loading region's announcement is
+caller-owned; the skeleton does not invent a status message. The runtime uses
+VPM System and its owned styling closure, with React as a peer.
+[Skeleton measurements](bench/skeleton/README.md). Material remains partial;
+no app dependency or release was changed.
+
+
+The baseline SSR fixtures use actual archive, signup and Fuse loading prop
+patterns. Current-control comparisons are lower on Node and Bun; the Node/app
+archive comparison is inconclusive because of control variation. All raw samples
+are retained in the linked report. These are server-rendering measurements,
+not browser responsiveness or application latency claims.

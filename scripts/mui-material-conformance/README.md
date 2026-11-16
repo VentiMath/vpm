@@ -307,3 +307,14 @@ reduced-motion preferences, browser accessibility, refs and hydration in both
 React modes. Range clamping and invalid-input rejection are deliberate changes.
 Use `progress-build.cjs` before `bench/progress.cjs`, and
 `VPM_MATERIAL_BROWSER_FILTER=progress-browser.cjs` for exact archives.
+
+
+Skeleton: `skeleton-contract.cjs` compares 384 current/app SSR combinations,
+normalizing only VPM's deliberate native inert attribute for measurement children.
+`skeleton-browser.cjs` compares actual Fuse/contest/WARML prop patterns, dimensions,
+CSS variables, light/dark themes, RTL and narrow/wide layouts. It checks live sizes,
+refs, DOM preservation, hydration, pulse/wave/off and reduced-motion behavior.
+Browser accessibility confirms measurement children stay absent even if a child's
+visibility is overridden. Direct text and zero are deliberately hidden as well.
+Use `skeleton-build.cjs`, `bench/skeleton.cjs` and
+`VPM_MATERIAL_BROWSER_FILTER=skeleton-browser.cjs` for packed install checks.

@@ -120,3 +120,7 @@ assert.match(renderToString(React.createElement(api.Avatar,{src:'/student.png',a
 assert.equal(api.CircularProgress,require('vmui-material/CircularProgress').default);
 assert.equal(api.circularProgressClasses,require('vmui-material/circularProgressClasses').default);
 assert.match(renderToString(React.createElement(api.CircularProgress,{variant:'determinate',value:25})),/aria-valuenow="25"/);
+
+assert.equal(api.Skeleton,require('vmui-material/Skeleton').default);
+assert.equal(api.skeletonClasses,require('vmui-material/skeletonClasses').default);
+assert.match(renderToString(React.createElement(api.Skeleton,{variant:'rounded',height:112})),/MuiSkeleton-rounded/);

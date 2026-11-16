@@ -1,0 +1,2398 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-16T23:18:52.730Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/mui-material-conformance/input-decorations-scene.jsx": "5c347916c11063227c790f8f36e4b95d61bf04e2e3fec09c2c0f91075f36b36b",
+    "../../scripts/mui-material-conformance/skeleton-bench-entry.jsx": "17510c7af2e1291d5f18ea31cfb50fe504993263c0ff38e7a4a237e739b6a707",
+    "../../scripts/mui-material-conformance/skeleton-build.cjs": "205140ed0f15df88c081648e8fe2aa0968dd706b0405893683847808694bc7b7",
+    "../../scripts/mui-material-conformance/skeleton-scene.jsx": "d684c7c22c02d02d48c288ba897b185fc7d880a4683a2311ecd9df5932417d59",
+    "../../scripts/mui-material-conformance/text-field-scene.jsx": "b58726e5f376b37870e8d922c16149602002dbf4f6fee4c554c9595f2df205c8",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/app-upstream/skeleton-bench.cjs": "860765ea563fba7d07603d34f9fdff211e6cf022d8f4d18425c5b38d2cf26ccb",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/app-vpm/skeleton-bench.cjs": "ac51052e4dfd1b6ad46e4daf182a75c4c12977fc1dac1714530d4155ee353f9e",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/current-upstream/skeleton-bench.cjs": "1ab1acfa9f8dbf58da70580c078b183bd2d712aa7f2401128070e81c7663d350",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/current-vpm/skeleton-bench.cjs": "742999f8ade665d730ff46e423afcab0fd6076f891b3dada9819130bcfb4875e",
+    "../../scripts/mui-system-conformance/package-lock.json": "ddadfff23ccbae1816cb53aa88c03f4279279b3014993b39c62b7b1676faa633",
+    "../vemotion-babel-plugin/index.cjs": "e5bf72ac7bc3e7429c7fd385d680260211ce95b7e0e4316bb69f611a45029369",
+    "../vemotion-babel-plugin/src": "31538914c8f6834d1c48e1eda455f8655afa6b7e7aaf597c044a311bac473b74",
+    "../vemotion-cache/index.js": "a4391dfaa7d6330038ccb0b39ffff0af5a48066b27b0316eece0b6562a94abaa",
+    "../vemotion-cache/src": "6d560802fa6d75bfd7179e31c5427593220b0931c4b5b953dca79c86bacb30dd",
+    "../vemotion-hash/index.js": "96b215f0e2ae15c729dbc5eac185aab2e484ae1b67490ebcd94d5709056cd4e5",
+    "../vemotion-is-prop-valid/index.js": "5993ac5f383ac427e13b3b739eea889aefbf57af365dba833582890a10b52344",
+    "../vemotion-memoize/index.js": "9b0b8759044ffed69cfcc0548304888144cd1e2ffb794ed99726c51ab3a38c60",
+    "../vemotion-react/_isolated-hnrs.js": "03518aa3cc4cd476a205dd63745b0db44c7df9f9eba4ce11b232fb26055abdcf",
+    "../vemotion-react/index.js": "41d7839fc57c4dc975e17143eb363b1f68efde4cb9e9778f006b81ec10dc1259",
+    "../vemotion-react/jsx-dev-runtime.js": "a110b06d83cebb2ee63b0ea0224f4ff394355da4ab6a3b7aed0e69c2dfb1704b",
+    "../vemotion-react/jsx-runtime.js": "d4cf2669f60829205ad963371e5edc535f0413fadecc8bf56ad4e174fd87f38f",
+    "../vemotion-react/src": "f3fa58f006f4c35c1c8ee16c2384334e3697f7923b3440db92a117260aa648ba",
+    "../vemotion-serialize/index.js": "c5fc672aac873af6b663291fdd3b8c0c72a6e271458be622e9de5154e2874801",
+    "../vemotion-serialize/src": "2f1c965c2df5db9fad836cf20b73677ad8c24814e34ce224b957c9c0a4b376e9",
+    "../vemotion-sheet/index.js": "370197e943ace72eb9feb1ef45c8b22b76904e7dee222fa2106dda556df3c2a7",
+    "../vemotion-sheet/src": "2f1c965c2df5db9fad836cf20b73677ad8c24814e34ce224b957c9c0a4b376e9",
+    "../vemotion-styled/base.js": "2c0d8fb8493f8ec54e67182ff81335ce4ee2fd3503b6d563e473fc08f6e770dd",
+    "../vemotion-styled/index.js": "d2c6ecd98351625a2c3d2c8126ff4b3761a0b8ca82066b5cbec5055961aa2b93",
+    "../vemotion-styled/src": "8d1258141f1423dcabcc14f4037b3f878a1302dbea67718f709780a553642600",
+    "../vemotion-unitless/index.js": "068105a5301790ad6ff590e36f620f1548a809f59e222a7075f52544665c85d5",
+    "../vemotion-use-insertion-effect-with-fallbacks/index.js": "c9bc22b0c67ed348c3b377f69484dae1e32ac76fbaf7af198ddbd729be039e66",
+    "../vemotion-use-insertion-effect-with-fallbacks/src": "3304c3023c2ddc417a0e21a4bfff163baf1f4792dfd7073d54ba75418f8b2fae",
+    "../vemotion-utils/index.js": "8d92f8c8a9bdbb347324c097e7e1c6a23004bf9bb61fa6391e912df0ec39ccf3",
+    "../vemotion-utils/src": "3304c3023c2ddc417a0e21a4bfff163baf1f4792dfd7073d54ba75418f8b2fae",
+    "../vemotion-weak-memoize/index.js": "3e44339d2b635f8ccca795abacc5f4e395c6598894dc0520ff997eda25eca99d",
+    "../vmui-private-theming/ThemeProvider.cjs": "1a9d3eb6c1ccc48c5d9332295e40af36917d1e6648d12f750de0c50ac9f82564",
+    "../vmui-private-theming/ThemeProvider.mjs": "46256569d2dd107cec05e4ccdf472197a191e663234a32704f2fd968d61e7abd",
+    "../vmui-private-theming/index.cjs": "dbea69c9f4dccb3914c34d8bbffc813f470bf4c9eb0d61f6b41612b18c27b5da",
+    "../vmui-private-theming/index.mjs": "7d7e0dfbbc9e98b983de15f56153013d35c1be470bcb66edf5a7bdafb8362af3",
+    "../vmui-private-theming/useTheme.cjs": "a510ba26fed37a3b028a2ebbaf51e3c9daf8e4e5a0c3f47b785f00891832da65",
+    "../vmui-private-theming/useTheme.mjs": "6f8bc2ed0d6a8d2323f10e23d26b25256b284bf6a570cc058fb6693e34032ded",
+    "../vmui-styled-engine/GlobalStyles.cjs": "f2389d1af2f9e02a49087610c78f4c011254a4f191edaa9da0a43209131649d2",
+    "../vmui-styled-engine/GlobalStyles.mjs": "921cebc2abc1ebd5bc7a17366f1f01cbab72d6ab5bf37a73efcd41ed748e8c51",
+    "../vmui-styled-engine/StyledEngineProvider.cjs": "bfead354f2d307038620421321a5e653f24a4b83f9217207eaa1eef174b0e90c",
+    "../vmui-styled-engine/StyledEngineProvider.mjs": "9934fbd41b842081688ecc1b311934709ec0d8eecd814df97acfd55eda3335cb",
+    "../vmui-styled-engine/index.cjs": "3883e5d988d7fb95c8f7b9e1a68f0722503d8f85944f4a0b21cd33010ac13a6b",
+    "../vmui-styled-engine/index.mjs": "5b0497c8c2e0f5873d6aef91b66a8a9497950c5c384788ac4b5ad16f5cbcc2f9",
+    "../vmui-system/Box.cjs": "b64b6a88be592977443812e88f8ffcd322f91b8be67e67ce9498431e4759442b",
+    "../vmui-system/Box.mjs": "21321a7ad67cb60e3ecebfa2a745229f7dc5e157a2ea9f849d17ec92b95f8114",
+    "../vmui-system/Container.cjs": "e5b343d9d6d100b338a0e56f92ecab49d95c474e2cbbe14fb75ac3f1b9a095b7",
+    "../vmui-system/Container.mjs": "27b64fcd5ebaff98ed97105da2a9c501ee43370a5955bb3ade6e97c86640c9b4",
+    "../vmui-system/DefaultPropsProvider.cjs": "e32e451936582001bdba5f84b954357cdf8c725b9dab2a00ff7256be07b7214b",
+    "../vmui-system/DefaultPropsProvider.mjs": "f8d343ffa887ae7d66aa9e71998d955acbaacffe254eb87183d551fa57ee9544",
+    "../vmui-system/GlobalStyles.cjs": "204f09c030c315a082c087578fecb9ac35e3f3a594ecb85969d6fca0f9c02c11",
+    "../vmui-system/GlobalStyles.mjs": "59da1b6d2e56c6134f749ecabad4d1df79ce76e30888dc529bac180970004b33",
+    "../vmui-system/Grid.cjs": "4ca2fca568728b0dfc4d5d9e9917c996369d9f14a445fa0359ad5c3ca7b0f996",
+    "../vmui-system/Grid.mjs": "5ebd81226ce7cdb73e7aaeb4b11f5995789584f2c43b63ba0373826508a2f558",
+    "../vmui-system/InitColorSchemeScript.cjs": "f5d958140169b55a2cc741bc05164619ac9c142ab1167d94bb68df7a182a9f4a",
+    "../vmui-system/InitColorSchemeScript.mjs": "b4d810d5aaf45a3dcddeb5c0fb1f31c810a0bf7bbcc8530ee99732ea13ac67ea",
+    "../vmui-system/RtlProvider.cjs": "5bb89c64918fab9e47c008742bca8cb7f32d024277575b7647a2eb2cf2db05f2",
+    "../vmui-system/RtlProvider.mjs": "5af7be25286fddf304077e8f31c265ded0cd8a5cd7bc732cac756e107a7d1e9d",
+    "../vmui-system/Stack.cjs": "ba257160041d5c6b9a37c8fb51a3972820ce4481265953280570f4e26acb5c68",
+    "../vmui-system/Stack.mjs": "35633dc42f472ba32506901028b2bd0182602eb27b293c914b297eea3afa7dec",
+    "../vmui-system/ThemeProvider.cjs": "6be5417b9b8d26bb43b00eaad127197b25f2e68deae73573110a98ad55507053",
+    "../vmui-system/ThemeProvider.mjs": "d8d3add5be8e4d3aa2ad4af70acbf35ace684075643b5ca9bf04e4019263ee3f",
+    "../vmui-system/borders.cjs": "7c0f94d8efd492acba687d8df77e8ad0f4e45ef2518360f90cd09ebeda99c474",
+    "../vmui-system/borders.mjs": "298e2c19c85eb7157fdfbb860ab222e7e8f936991922b4756b79e9db8f13dc9e",
+    "../vmui-system/breakpoints.cjs": "707735fe09f5f263761d65fadc74afcb6d5bb3dcba5db4c72d692560e14c2a0f",
+    "../vmui-system/breakpoints.mjs": "cb3dba12099937a43e952a7ef50dbf763cc23aecf6302c182fff7cd9614b60ba",
+    "../vmui-system/colorManipulator.cjs": "8dca5753c5c2940196673eaace10e3b8e64f0e497863dc2cd8b2d7ff82a3d094",
+    "../vmui-system/colorManipulator.mjs": "4139f8352993b5369060bb719b40ed03ce2c5ce68e9edadc01e68546551962b6",
+    "../vmui-system/colors.cjs": "56cf0820050ee5d563bbaa983f6114ef26bb443092f9a22348a1fd1371db7407",
+    "../vmui-system/compose.cjs": "5309ab8adfffff6caed4bbe5fbcc154d127cf1aaf8881f8415f84a99efcedf3d",
+    "../vmui-system/compose.mjs": "da201a17433a28b3f795701f7d32b849f5e584258c86016ab78f915be3c8be71",
+    "../vmui-system/createBox.cjs": "48f5d57f508c1194ba00cc8ba6071c7ee8eb51511fdfb9f0b6a817b4fd54fd9e",
+    "../vmui-system/createBox.mjs": "d51887118f2ede63c55a111181217d6fb0b619e882ea94f546abca590ca4f656",
+    "../vmui-system/createBreakpoints.cjs": "f103076893d26bba729bcdb358ce8410e5abe9d4c1667ccb2caf36259444558c",
+    "../vmui-system/createBreakpoints.mjs": "f62adabc5215b2c93a3b870aa931b15bcbbf6d8f0ba9da0b801c954105b3d4b6",
+    "../vmui-system/createStyled.cjs": "35643ad0bca0719804a11e44b105186ad6e70de113f7dbc8cd00534b80b26ccc",
+    "../vmui-system/createStyled.mjs": "e14a03be4c660cd96d68f89a4a48c4c0663282801a7c4bf30b0fea88d8c50c06",
+    "../vmui-system/createTheme.cjs": "ef66b46f1765583e1f1a78db274a9c5c734a817bc51a9c268905a06bfdca4b00",
+    "../vmui-system/createTheme.mjs": "3f9b31a383461582d8aa7f51155ff1874015f5370c72a75cae0b8d06f845de25",
+    "../vmui-system/cssContainerQueries.cjs": "43cdac47291af1a1b4287e7ca68c689466ee479821c0808bf17634ae78e4c141",
+    "../vmui-system/cssContainerQueries.mjs": "ecaa8cc0793ea045cb67902d6d73e3d597dcf5adc662b8cbe0665313112bd6ff",
+    "../vmui-system/cssGrid.cjs": "dd8a548c547b6ab4f9c24b56217207bd7a65139c540caef3e0b0daff07a6a0b9",
+    "../vmui-system/cssGrid.mjs": "6a9220dfd8f26ea0e57132266e752f7bdee4067341f8192646084af73901ce01",
+    "../vmui-system/cssVars.cjs": "76f379d9cb127f254ebd9ce1f089b44a3727bc3e66817295cc4116dce875f1c6",
+    "../vmui-system/cssVars.mjs": "ad9f227cbb7638ab24556fe0709c99c2e8e525f976819753f87a8896b68463be",
+    "../vmui-system/display.cjs": "640ba4c444d713d74536fd252b268b6ab5e12a2db8d9a81d19c1c078db084aac",
+    "../vmui-system/display.mjs": "63325f27891e1dd087b5fbdb4671ad04465be3ad04b34eb5a478e9634a42cb5e",
+    "../vmui-system/flexbox.cjs": "fdc54462f82546497b54f16b07360450a7d4daf4ab75788d3e3cf21f40df2a9d",
+    "../vmui-system/flexbox.mjs": "42b9ea2bdcf803400c81358b672d7e696a9688caf7e08273031e2a6154179805",
+    "../vmui-system/index.cjs": "815536114e6591be4bc3545eec525a3843cf3c315bd3b15a2ba44af29a21f366",
+    "../vmui-system/index.mjs": "2ff8e95b96c9987c982c6f69484037cecd1db7abbc33902c0413f68c227e5ada",
+    "../vmui-system/layout.cjs": "1e834fb9a67911b39def8f3eca37235fb790407a3bf534dbbb751ae6d54ec170",
+    "../vmui-system/palette.cjs": "93aaa58e6747f0a63f7f51884b320566c6e1f136c678e4e0328ab2f7f9ace400",
+    "../vmui-system/palette.mjs": "1c4bdeb92399b1382dff078d9bcfcdb1cfe93eb21df9adb7500647e9b855d00a",
+    "../vmui-system/positions.cjs": "fbf0e2493aab65226a197ffa87f485b92524ad62e34f812614857e1b84cdc4a8",
+    "../vmui-system/positions.mjs": "166f56d449726f55d5c6418c71fabf4e93801aea7220df1832f0363e9b94dc53",
+    "../vmui-system/react.cjs": "10a90e43f3bd281ea0c99259a56c7e398eec35d85ee111478689af1238b48f16",
+    "../vmui-system/shadows.cjs": "e2b3ee2ba7c465b059a99e0257115d0e632e1b313d98ddd8db31c2dead4df177",
+    "../vmui-system/shadows.mjs": "3f5d98175756fc768897b4f66820c2a251118b805e4c99778aa3a7b868481116",
+    "../vmui-system/sizing.cjs": "6272f9251dfadb216aac6987c36770b3622d72c46ed50b81b52aa1bff4947b94",
+    "../vmui-system/sizing.mjs": "75a1437c227788501e8d2ae9d34705154e90d961223eed6eee05a5aa99376c1b",
+    "../vmui-system/spacing.cjs": "df5bd7265242e184046ece61efcbce52b001cf479937aa86a5b9a9a5e4caef0f",
+    "../vmui-system/spacing.mjs": "06ba3be7ad24d588d91da1cddd523068d9613cfea7473a6b78554b410c487949",
+    "../vmui-system/style.cjs": "de7dde015cae1a05cd0beffe1df9c77ec5b63dda22bef976dccae76f5506e446",
+    "../vmui-system/style.mjs": "f9320a99cdfeec7573f6d257ec5693b0914d0b56ed9987ce36174de95c9b6d33",
+    "../vmui-system/styleFunctionSx.cjs": "21844aad8bfe3166f6a0ef449972fc95c03126446f1b4f23e4cbd44b250bcf1a",
+    "../vmui-system/styleFunctionSx.mjs": "8cdf559dcdb7d91d7dad1e192b1a6df1027aa5ec5b8d2ca8e5be55a310d30de2",
+    "../vmui-system/styled.cjs": "634c4b206aa5fc01f953edad02c3a771f30742514d0839cca499abc092dab4b5",
+    "../vmui-system/styled.mjs": "73d39c4637e3b9e3739121efb0f0f4be98918190c29f543ca16b6b44cafa9d40",
+    "../vmui-system/sx.cjs": "f41de5dfa31e16e1121e75a46765b07496b4423e5981ebb5c9dbafac3acf457c",
+    "../vmui-system/theme.cjs": "8d3a6dea5a341c0dbe98690abfa0dd70f54201b5b3636fe45557245de1e1be7e",
+    "../vmui-system/typography.cjs": "987ea252bdab27a30c20b837387a8aab7f71fcb302ed9efe9d25259995c5194f",
+    "../vmui-system/typography.mjs": "6be7933e862afa30b0ea0ed67a7c9eee76ee75fddac2cec6b98e1d010f7e749d",
+    "../vmui-system/useMediaQuery.cjs": "42a285cd890c3f206a15c171d5b65ae8540cc43ecd81df8631c6e104a941f234",
+    "../vmui-system/useMediaQuery.mjs": "3d0c7b297574f8922479c9440b76afba587f802e99ff30c94d6c2be12c06a17d",
+    "../vmui-system/useTheme.cjs": "975e4bd16a686d713f9ce92d1402ba2c9adc5864869e3643d3119dd53bf69c99",
+    "../vmui-system/useTheme.mjs": "e25cae231af64953959efc125dbfcdc96962221e1f3631da0cb632fa922ed645",
+    "../vmui-system/useThemeProps.cjs": "a63dbc2cc4d9073b8ad97998b9d70e4507c47694c1cdabedd1cf1b8e7dcbd4c4",
+    "../vmui-system/useThemeProps.mjs": "1b8b8a33d7e3cce93633c2fbef1a8141633d7bca47aff1e834e5817b30bb1973",
+    "../vmui-system/useThemeWithoutDefault.cjs": "96b8e6465fb4473f30875e7e25e99bdf138b4637c1dd09b6d2cb48d13ce23dac",
+    "../vmui-system/useThemeWithoutDefault.mjs": "26ce4314b640064fd50d74109b653cb08b1c562bfa2d423a1b22d650a2fb6b71",
+    "../vmui-system/variables.cjs": "6eb072abb5fe13f347097ed98a3086d29605c817a226b70cef005f0826e5941f",
+    "../vmui-utils/ClassNameGenerator.cjs": "6213feb83273586f7de134f72c421782ffa48819586511baf9d1dc6fc36f7f20",
+    "../vmui-utils/ClassNameGenerator.mjs": "6b66d354f6624e6aec303690dd064d2149f94f18ec52bab5187b3c19c224eca5",
+    "../vmui-utils/HTMLElementType.cjs": "ae07ceb3ea431b1e2d0fda4c1bff885e7bd7d4c69244b661dc46e32a99a54b56",
+    "../vmui-utils/HTMLElementType.mjs": "35b1f8f9751f75a8e6d6703412ef13f45b607fb30108c9b71c5bf65eaf0b2a86",
+    "../vmui-utils/appendOwnerState.cjs": "8a8203ab3e0f9008cb7148631f32c754adbbef0be3ff752ee11893eea63df253",
+    "../vmui-utils/appendOwnerState.mjs": "024d6e38a09777eafab126e99df13bb5933ac5b7299c3b1dd8a4e00ce37ba9bb",
+    "../vmui-utils/capitalize.cjs": "466ace0ba91f0eb59598533df1bf92203904e75ce9d24ed73d447d4bd2f6b683",
+    "../vmui-utils/capitalize.mjs": "2e692f2ba8c915e8a5fbebedb2a4dd6f8afe19cbfecf16cb2acb366f4f6bda5f",
+    "../vmui-utils/chainPropTypes.cjs": "64738c503dc44f8f3538d7503ceb60041c88004b587d72c77eff07da7f153d9b",
+    "../vmui-utils/chainPropTypes.mjs": "af29dc439c14f6941b8f1740bb877635d63019990652c2e760a0f93fcd055792",
+    "../vmui-utils/clamp.cjs": "4ea234c98488fe2b1f1a668b7ce56c3fcfb6b0d94532d94bb2ec8aaec093c5e8",
+    "../vmui-utils/clamp.mjs": "d1588edd0c58ed7ab6c3863dc4043aee60b16d0ecba0297847eba23afa6a3499",
+    "../vmui-utils/composeClasses.cjs": "c72db2f2d0199bfb167898f06e6c10c994f31a0956751ec5fbc8a8d4840d824f",
+    "../vmui-utils/composeClasses.mjs": "57bae69bf2452e63eb458aae908e79f066ebed3661b70a4995fd08b9b8efc49f",
+    "../vmui-utils/contains.cjs": "a978b047810fe70d07612d47e8c4da1c515a4f02fc2be0689afd5169eec8e207",
+    "../vmui-utils/contains.mjs": "2f0f88211bb69776a090c7079ecf21671d51d99c78f2686fe4b342ec6c7f4898",
+    "../vmui-utils/createChainedFunction.cjs": "b6c57fef271d0f5aa19c198c5b41c03f407da749ea5271b42684a9e1e6a5e36a",
+    "../vmui-utils/createChainedFunction.mjs": "45cfae0309fa596f9032c7b83a39e6f29c4b6557cfe26d46cdb6915cdbf6960c",
+    "../vmui-utils/debounce.cjs": "3852b1cbbc7bbdf38e86cffd14f6a5ae27eb29c2d6d9f46e06fd775be04338f1",
+    "../vmui-utils/debounce.mjs": "26756d5d85c3bbea438493a450065ce18c8d8eec741bf546a3d107bdeb35f33e",
+    "../vmui-utils/deepmerge.cjs": "eca6c9c4308d7254fc21112281f966a4b27258b65dc837960903712b2585bb95",
+    "../vmui-utils/deepmerge.mjs": "8d68c51ee253afcd699872a9cb24c33484291d4512e9858d5c0c81b166bbe74a",
+    "../vmui-utils/deprecatedPropType.cjs": "167e8146d593467fb628e4cbe0348527046498a892866f5ce52b26aa63fc9fe3",
+    "../vmui-utils/deprecatedPropType.mjs": "bf695ea438eabe1b79325ebe3b667aae7920e6236c92c86d1586ff7c0efa8471",
+    "../vmui-utils/elementAcceptingRef.cjs": "c3421533a636766a14fb32441d7507e8506e498e0425436433cb22a67074d62e",
+    "../vmui-utils/elementAcceptingRef.mjs": "cb11878271169ddf73f4930a1dd249bbb94fcd3bdd1110c2149ebcfe8a104f52",
+    "../vmui-utils/elementTypeAcceptingRef.cjs": "a953e733808c3739d29c32aea176434d5e28cc9b77f6c5ab4b14a52903c821dc",
+    "../vmui-utils/elementTypeAcceptingRef.mjs": "5df95de2599172dbad31500c360950dd646ef1e92dfe1e0c55d9b1e094441b89",
+    "../vmui-utils/exactProp.cjs": "2bcb71df8c0b0ca80b54f7dfba8799ddf1dd7e03833bbacee7f9bdcfc732e94d",
+    "../vmui-utils/exactProp.mjs": "d983c6d76089d649c0b77aa7b7f21b2381168f88e87cb287983ae735c44dcffd",
+    "../vmui-utils/extractEventHandlers.cjs": "78953d2b46eb154b71204565e5fab23da43f22a70d875fd42643c3ef971efc49",
+    "../vmui-utils/extractEventHandlers.mjs": "fadb22d0e37dbc35d78087a25d208e173fdf5cb0b8079b0f21d57c7c63eced31",
+    "../vmui-utils/fastDeepAssign.cjs": "1c7f60e965c16ae9261d2ec53511094ebd2c0ad05d640f39d4a063860cfe8d68",
+    "../vmui-utils/fastDeepAssign.mjs": "c00d95130cb7edc275b9c683f6397ec6b125bace48704c2980ed76d0497eb969",
+    "../vmui-utils/fastObjectShallowCompare.cjs": "3d207409294c330d9da814abd02982724ea40d5b8f83cb877ddb98dc021eed5b",
+    "../vmui-utils/fastObjectShallowCompare.mjs": "462c19ca96f1bd7651abe9325ef2f99afd6bded597b4bb45f0f909bf6a55a292",
+    "../vmui-utils/formatMuiErrorMessage.cjs": "723a68f4343f18b51cd81c0b0e8da94b95b4a531663c8e09a8ce9745c2ce6fac",
+    "../vmui-utils/formatMuiErrorMessage.mjs": "8204857f95fa3243d72503e31963b8a53f9be5f1224cf0c1cea5e3e1f62a090c",
+    "../vmui-utils/generateUtilityClass.cjs": "865be2049fbb4ef4ed4c1bd0d1a2b7f0af898a128f5e5b883d191a9811d9105b",
+    "../vmui-utils/generateUtilityClass.mjs": "2555c0761da1d35820df28989dbd2fab9c9f23165d318368de6d6a21ce0a5759",
+    "../vmui-utils/generateUtilityClasses.cjs": "2803d15c8920eb6b06bebd7fbef6f3881ed394644244c1bb893ddf1e7d132cee",
+    "../vmui-utils/generateUtilityClasses.mjs": "db8a623b630b813b748fd28847eb700f8c271ef262efe780e32d4c37a8b571d4",
+    "../vmui-utils/getActiveElement.cjs": "f9811ccea626e9c4bec30750f457102bb216ffdebf9f09e010b1b80ea9bc1255",
+    "../vmui-utils/getActiveElement.mjs": "9a0ae08abbab81f40d4f3b73cd53cf1f5e84b938f8f4c936d2cbdb8cb394a87b",
+    "../vmui-utils/getDisplayName.cjs": "4b7bf675dac24e974a549a4ad7399c9a0afa33fd1d1d6d267bc455dd6135bd05",
+    "../vmui-utils/getDisplayName.mjs": "c67ce4c3aacef24079ca3cbce7ea6723825e5b5389d0e71055aa4c19ef3548c8",
+    "../vmui-utils/getEventTarget.cjs": "04576c4987304ebd227e45aa400540b2029dd2fc8b0973a628a2f8504e2b4bfa",
+    "../vmui-utils/getEventTarget.mjs": "dafa6f09dc81512dfac498b71c5555d3011f2bca308a16de02d20fae8cb7fc16",
+    "../vmui-utils/getReactElementRef.cjs": "65da43940aeb639cde709fbd6a50d19fee97344a6a815b91cf3fbc444bb4b675",
+    "../vmui-utils/getReactElementRef.mjs": "a89736dbacb73ba8222d50db8f04b3fae63909e74060ece95b060921929c15f3",
+    "../vmui-utils/getReactNodeRef.cjs": "f03ceec5ab58570e197a0936a5b2edf91fda6cd9fe0b55eef166811c13c0d195",
+    "../vmui-utils/getReactNodeRef.mjs": "a78888e7ad099bc748916ed352f793e70d21753bba42b3cf1f3f963136f195d2",
+    "../vmui-utils/getScrollbarSize.cjs": "305a54493f23f3c4c012e9543ccf6ed7ccfb1260646b783f0155bb663d637554",
+    "../vmui-utils/getScrollbarSize.mjs": "8d1056ff3f76efdf899db221ed316210af1ceeb2bc87a3d365799759e13da474",
+    "../vmui-utils/getValidReactChildren.cjs": "56a8cdfcbd4f092cf90df912fa1bf1f8b63a7efd41df51e51d53cc6c397eb21d",
+    "../vmui-utils/getValidReactChildren.mjs": "61735aa08c9cc0b47a08ee7913a9f86fc17c85422e5a5802f5162a76c5383a68",
+    "../vmui-utils/index.cjs": "f22a51b57dee4397510ff87dcf78fc1eb04efecf593199db40f73c949e724b4e",
+    "../vmui-utils/index.mjs": "77990978ca4ed32ebd07630d3c319a066bc94fc382ac8fa767aa3f3a36d8b1cd",
+    "../vmui-utils/integerPropType.cjs": "e5035039ece3f358faadbb3e83425e6dae8477ee78f56b8f30ce89d651f57888",
+    "../vmui-utils/integerPropType.mjs": "6d9d4e48215e61ba0079c22cb9ee2377702cb0e6bbf9da6ee4109712f637aec9",
+    "../vmui-utils/isEventHandler.cjs": "146211ece8a4e9e441c420367eee0982fcbd007036b88acf36d07755caed9edb",
+    "../vmui-utils/isEventHandler.mjs": "a6189e34d88e7ef1fc813d0829727dd7ee7d49791500c288a347b722a87adf6c",
+    "../vmui-utils/isFocusVisible.cjs": "b776e3144ef25e863c6b095a6c7b7d4302fed4fbd8e6348d4ef2d203b9871590",
+    "../vmui-utils/isFocusVisible.mjs": "782be519cca00feabeedbd98d3c6be7e26671db3ae1001f2c03ee1d15951fa4e",
+    "../vmui-utils/isHostComponent.cjs": "769315ceb1ee854e06d43beba185c5b354c5ce095bf7fe0e7e3cb312416df466",
+    "../vmui-utils/isHostComponent.mjs": "25342e31eefd28ff2cda6d93093e8c438b8e6748e4de9479fb2597a2075af91b",
+    "../vmui-utils/isMuiElement.cjs": "7fa1fe9310462136f212b1d117440e1cb0742c23c404f9a7e75b1f64978a21e1",
+    "../vmui-utils/isMuiElement.mjs": "a4b2dcc904d61e2a494297a2e912c431423201f065cb8c1f1c7370ad846f9ca6",
+    "../vmui-utils/isObjectEmpty.cjs": "62fd3fc5eaba83aeb31631222c615a963887a6fb4f415bf8ac07c2d3ffa240df",
+    "../vmui-utils/isObjectEmpty.mjs": "003c055a84dfb20e387bc60d3c7f613153a43d4b2811ac159ad0e6e84caf07fa",
+    "../vmui-utils/mergeSlotProps.cjs": "a8daacba191afee6604a728f790af6ac8df4b8a7e0614b6c255c145b726f86f9",
+    "../vmui-utils/mergeSlotProps.mjs": "1266f954d524754a8986c43959a4d97f2eea8c17678c9cdb8b01f9f5d481f413",
+    "../vmui-utils/omitEventHandlers.cjs": "17bf9548b222c01ab58cc32a4197c6937fa45b5b5a2549104c8ee73ad8536280",
+    "../vmui-utils/omitEventHandlers.mjs": "1419a8093c5ca368ef2b8855b28d40a0e4717c4e8afd77fd667eb56f8194b7e6",
+    "../vmui-utils/ownerDocument.cjs": "e79c2f3cb745e8353896b562033f543f90e686223f31feab36c1c912106a6539",
+    "../vmui-utils/ownerDocument.mjs": "f307880079a0cc4f955057ac984d3d9d6b49903341df5f33590813ac23f172c2",
+    "../vmui-utils/ownerWindow.cjs": "4df70d53bea011e95887cb9578134f702bcac248f0c633e9903d8eef2b0d7c1d",
+    "../vmui-utils/ownerWindow.mjs": "4451fb7cf84a6726ce56b0840e757e19b33df8a2364ca08e6e54fb7a96681dbc",
+    "../vmui-utils/ponyfillGlobal.cjs": "3a6768da253fb5a95c27f26fa5183d718d57c4198417e4d7c7aa2cc381aff353",
+    "../vmui-utils/ponyfillGlobal.mjs": "79630c23987e5e0d73d901650d6c4c047866550943a3359ae7b9fcd799b13984",
+    "../vmui-utils/refType.cjs": "26ff33f2aa9e70f9d433a64b20fef79923584526f6495c0c4215581823de5981",
+    "../vmui-utils/refType.mjs": "e21241aac8108cb860d1ee4384493248d6516dc40d83bb999624ffcd5be8643a",
+    "../vmui-utils/requirePropFactory.cjs": "98cc50e167116ea8829229cd94ac09bd894d7eace9b349b780edd1a8ffac2b5d",
+    "../vmui-utils/requirePropFactory.mjs": "85b2f0d2a5a5066fb1881d586252e3f20469d6855b8974308f35650defd535f4",
+    "../vmui-utils/resolveComponentProps.cjs": "2eed5ced5371e33378eadd57661f95639a901d84c4198c11bcb8253ef457b6c9",
+    "../vmui-utils/resolveComponentProps.mjs": "f9cb286b32275b46665c38d82bb7edde27cc2694a9028889f9bdae1752a603ea",
+    "../vmui-utils/resolveProps.cjs": "1f099674e7c14401cb2913fe9327ce27e160c19f1929330f0598b07850fdc2a6",
+    "../vmui-utils/resolveProps.mjs": "fc3be909aa068e1342e410f3053275ad6683b1a596da83e45157972a2d43653b",
+    "../vmui-utils/setRef.cjs": "68a6dfb4a9daffe2e8824b28f013956130cfcdf640ad1c03d5c3435a70ee9ba5",
+    "../vmui-utils/setRef.mjs": "0a04ecc2557457d45067549d045357aecf36a7c8a06520d3819e64e56f3df0ee",
+    "../vmui-utils/types.cjs": "8222b8169ee86f25cdccd84d340340060ae3f0cff55e2ea9d344d7c332733b71",
+    "../vmui-utils/types.mjs": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+    "../vmui-utils/unsupportedProp.cjs": "a3e57a2c7488380da74053d727fc5ad792fcf8c2d5eea6c3b2c840ba2062577b",
+    "../vmui-utils/unsupportedProp.mjs": "a8e07cade9a92be7828a165340e6f14e6d1305333cbd47f6ff3ee1a42835c280",
+    "../vmui-utils/useControlled.cjs": "45c96219323d0eb7d35598fb6fccf5a46fd27572fd1f1c18845786249cf5f903",
+    "../vmui-utils/useControlled.mjs": "d72870d1da14f4887927b023ff7cfd73cc80f458a9ee68b6d1186cb11e94ded2",
+    "../vmui-utils/useEnhancedEffect.cjs": "88b1545639ad5c3830ab0d12c43c9c7a44997f96c8c4cd59b8f9e3c33a0b6a22",
+    "../vmui-utils/useEnhancedEffect.mjs": "e72913a283a73c4e9d40b72992e67c110788399f885926b9d4855206bbcf20ed",
+    "../vmui-utils/useEventCallback.cjs": "7754ef7e6385a1f9353c4220d54b687ad3f28491bb97c8de6baf9ac3a4cc5f9b",
+    "../vmui-utils/useEventCallback.mjs": "ad5c9394f901b04968c3449e3afdc18b31829b4f7fbed5ff2b5f1304ff211666",
+    "../vmui-utils/useForcedRerendering.cjs": "8b64edc8e001008ebb452bf0d63ad06eb34c835905a389dd7e0caf75088200fb",
+    "../vmui-utils/useForcedRerendering.mjs": "51f98f5cc2d671a7aa41133b57eb9761f3bc74171b5ae2698d748e8cd393835a",
+    "../vmui-utils/useForkRef.cjs": "b5c5e91a25c17e0789c9c3b2b390414386c2e6f3b684067bae0f5542008121e8",
+    "../vmui-utils/useForkRef.mjs": "2cbbdefebc9ab2fbd5f88a42ae87cfa552e1704dcf01fc226741cba544996461",
+    "../vmui-utils/useId.cjs": "cc06466f2b4ca78a4150ffd480d91950e42e453eeecb56e3a190ac84ddd0e63a",
+    "../vmui-utils/useId.mjs": "205ce4c2fcdc41f67f07237e5943f4836836982f5da02c166e50765fdd9580cb",
+    "../vmui-utils/useIsFocusVisible.cjs": "dea7b9e2629de0cf357a31ee5b4af5cc574dfe0f0274d4248fa841aeb23ec2fa",
+    "../vmui-utils/useIsFocusVisible.mjs": "9754952abc66c23012117b1b4c124513738c71884aab937b2724868bad278a99",
+    "../vmui-utils/useLazyRef.cjs": "ab90b2aa3535b2f8c7c1fade50dee0219dcb7b2f3b23e6682c9008414589f5ba",
+    "../vmui-utils/useLazyRef.mjs": "414b1670eb2a2019e3be75ec9cd3f3e048fbfeafed9e78c41aabea7604740d4e",
+    "../vmui-utils/useOnMount.cjs": "efeaffaa9193f472e3b706b347cacfc111401b2e84c62a5e6a7d89db21f08407",
+    "../vmui-utils/useOnMount.mjs": "b4433238ca80b96d0c8795b533f6bb5b203c1a5b246f45a91db369332cd2d4c2",
+    "../vmui-utils/usePreviousProps.cjs": "48fafcaa6402a4a9457e886fdd13854e758e52c6f3cb1ae10f4cf808708502d7",
+    "../vmui-utils/usePreviousProps.mjs": "9373442f3040fdc57a80ff1203a9516fe230884df562dbdb3ab135dbe615baf6",
+    "../vmui-utils/useRovingTabIndex.cjs": "d776ecd08c45a1bf6ea3f4f07b1bbf444cd390548a0812caa3cca481091ecc08",
+    "../vmui-utils/useRovingTabIndex.mjs": "16ccd5cb31651a22ac18b027df2d50e756bdd52bb786108453fff57cb80c27a4",
+    "../vmui-utils/useSlotProps.cjs": "eb4c13e7a9f4c4548d4036948f56188eb95fa18d022e4f20ebd92490fe94b743",
+    "../vmui-utils/useSlotProps.mjs": "6cf10363d7a82bd2a8fd485bb78e820de20beeeca73564c8facf35a4bcc27481",
+    "../vmui-utils/useTimeout.cjs": "12d8bf715f9204bc7277f8d38ccab77d04d81e3346ee95974e8cf1c928b5815a",
+    "../vmui-utils/useTimeout.mjs": "e13b8903020e575d7276488482d9f5daf79d260c82e54f6e588de1ab9dd0adeb",
+    "../vmui-utils/useValueAsRef.cjs": "e456e0847118fcf87786e656b9b3c94c6372317be9a03e19eb27b24e7a9e86d2",
+    "../vmui-utils/useValueAsRef.mjs": "ee10057829e2a45b3c3ffc93b3d5926379940c20d2eccab1020f3ed9cc8aefa1",
+    "../vmui-utils/visuallyHidden.cjs": "42f063bac5cbde8cc992e6bcccbc58235d3657ee56b2e1fa59257213d460a979",
+    "../vmui-utils/visuallyHidden.mjs": "cea799abdd7a78ddacbbb5a892f2516aa1e39f42c460f8083f9dbf40f729a0af",
+    "PROVENANCE.json": "3a58eacb82fab7ba5e741a978a45e207740afbd95341f8a006b5b29f3f086c29",
+    "avatar-control.cjs": "e1f2567ca6f84ff9eeca673ba7284efa40caf45b81c610348b184c8d98dea31e",
+    "bench/skeleton.cjs": "8257a296ae6ecddd604f1ad4803777aeb3537db5920f34050bd6a2e860d180ab",
+    "buttons.cjs": "1478ebf7f407320e431575ea5baed648a2d483de500c9ddacffd4b5f62a42a3a",
+    "check-controls.cjs": "949418cb135c3487a4d78a4dcc98438bd59ca24b89072f37d0740763eaf8227c",
+    "chip-control.cjs": "e04892122a24347db9d6853ddc9506a0db72db86c213efc01d567da5ed1f5c06",
+    "forms.cjs": "31b0280783062a13a15a629c6600a052c6eb8196fa413278087f035f85387088",
+    "index.cjs": "737eb352d67e426827aeeba9cb69b7910209e4b419c63f1443c9d126fd08d870",
+    "input-base.cjs": "6ae03af38c5523ef9c1ed2ee4085410374c402be2016cf074de747d13e7c15ac",
+    "input-decorations.cjs": "aa69712a3fe8089671258d3560d5b9e956a3ca00dba2049e243754fa22456f76",
+    "input-variants.cjs": "788afdf00b15a9adf5e8e9c1645c586e1aae93086ac7178abfa74446c0c42f8c",
+    "lists.cjs": "9914dfa218a6203bd5125e2ca41f3bd754611511f8040ccdbbb980051a84c4e7",
+    "menus.cjs": "8b2b02112e60868623348108babcea78f409ca1b713a3946fb166d1cfe7c1aea",
+    "package.json": "5a97654a3cb488dc21410b10d6f7698732b308ba4ae2e05967be695140e70767",
+    "progress-control.cjs": "c9c6cddc22dddcbd31d356c570ef1edb756728948c30f04412d950d306ec668a",
+    "radio-controls.cjs": "c8eff8dc50691230641b1664ef159ef7f3f5f0100ad4aac76a4bb2969a41192a",
+    "select-input.cjs": "256dd778cd45fa24e0d47e2806098046cbd4ff5c18e64b96c8cb2f65cd1aa11d",
+    "skeleton-control.cjs": "dcc8de3893050daa4fe7362f0e8f9a0b6ad480363d5fb79d2bf6072da404eb8e",
+    "surfaces.cjs": "76dba2de164f93a2f31d9f08d7a4353ff4ced7f68814d31341cb1851c1deddb0",
+    "text-field.cjs": "901585bd50e2658499e140e661aea2b86b29251c0c66d65c1d22ac2f6185f6c0",
+    "text.cjs": "344b9dc7bf08a46b8241932f051677704870e2ab48804afdd8a9da6fffae1cbf",
+    "theme.cjs": "c8f10a217705c2e142da705773511879c7a3b3cc617cab08616813cdb57286d7"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 16128,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 archive Skeleton SSR",
+            "iterations": 102,
+            "samples": [
+              107526.549019608,
+              110745.09803921562,
+              118004.07843137287,
+              112591.50980392148,
+              114616.83333333346,
+              113360.70588235297,
+              114389.7058823525,
+              110754.49019607861,
+              161206.29411764696,
+              175323.52941176452,
+              132922.39215686283,
+              111152.37254902002
+            ]
+          },
+          {
+            "case": "Material9 signup Skeleton SSR",
+            "iterations": 71,
+            "samples": [
+              138411.39436619772,
+              133073.94366197224,
+              116842.73239436638,
+              137186.04225352182,
+              158772.30985915478,
+              124635.5633802811,
+              157542.8309859147,
+              146832.1690140841,
+              121679.5774647896,
+              154871.4788732388,
+              121509.98591549286,
+              124728.28169014155
+            ]
+          },
+          {
+            "case": "Material9 fuse Skeleton SSR",
+            "iterations": 74,
+            "samples": [
+              121740.41891891857,
+              107240.98648648652,
+              156005.6216216241,
+              114731.97297297357,
+              103034.9054054058,
+              142168.91891892004,
+              123074.89189189144,
+              99873.31081081081,
+              121907.64864864857,
+              104645.2702702715,
+              122500.00000000073,
+              117755.62162162371
+            ]
+          },
+          {
+            "case": "App7 archive Skeleton SSR",
+            "iterations": 73,
+            "samples": [
+              105593.60273972344,
+              114518.26027397234,
+              97293.95890411206,
+              101315.63013698587,
+              128102.73972602721,
+              108388.12328767109,
+              99970.31506849427,
+              117551.36986301308,
+              93377.849315069,
+              109025.68493150732,
+              116467.46575342435,
+              97694.63013698791
+            ]
+          },
+          {
+            "case": "App7 signup Skeleton SSR",
+            "iterations": 67,
+            "samples": [
+              122502.49253731196,
+              143832.71641791068,
+              126573.99999999997,
+              139616.92537313254,
+              117598.88059701728,
+              121068.40298507626,
+              143637.43283582205,
+              115662.31343283731,
+              113600.74626865903,
+              146460.2089552249,
+              117800.98507462631,
+              114744.40298507577
+            ]
+          },
+          {
+            "case": "App7 fuse Skeleton SSR",
+            "iterations": 78,
+            "samples": [
+              114497.32051282052,
+              125300.74358973929,
+              103996.25641025523,
+              110956.73076923235,
+              146255.871794869,
+              103503.74358974407,
+              114723.28205127851,
+              122822.1153846148,
+              117729.70512820042,
+              136211.53846154298,
+              107088.67948718155,
+              109745.73076923196
+            ]
+          }
+        ],
+        "checksum": 176478836
+      },
+      "vpm": {
+        "pid": 16133,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 archive Skeleton SSR",
+            "iterations": 102,
+            "samples": [
+              86623.37254901999,
+              78752.4509803918,
+              74751.6274509803,
+              79678.51960784307,
+              77834.96078431372,
+              77636.84313725521,
+              79512.25490196086,
+              84704.25490196086,
+              81489.37254901956,
+              83480.39215686261,
+              81153.59803921577,
+              78648.69607843105
+            ]
+          },
+          {
+            "case": "Material9 signup Skeleton SSR",
+            "iterations": 71,
+            "samples": [
+              103164.32394366324,
+              96213.0281690147,
+              102213.6056338026,
+              158859.7464788733,
+              99645.53521126778,
+              84183.09859155056,
+              89619.14084507107,
+              94651.40845070373,
+              99896.12676056335,
+              92210.0845070424,
+              91276.98591549195,
+              105654.35211267542
+            ]
+          },
+          {
+            "case": "Material9 fuse Skeleton SSR",
+            "iterations": 74,
+            "samples": [
+              93447.63513513499,
+              83020.27027027051,
+              83136.82432432372,
+              83725.78378378335,
+              78990.41891891859,
+              86985.91891891744,
+              78243.81081081196,
+              82713.97297297376,
+              71003.93243243198,
+              94025.33783783708,
+              88565.31081081,
+              94451.01351351345
+            ]
+          },
+          {
+            "case": "App7 archive Skeleton SSR",
+            "iterations": 73,
+            "samples": [
+              69198.63013698363,
+              82175.21917808196,
+              84163.24657534386,
+              68716.89041095623,
+              78494.30136986347,
+              86058.78082191764,
+              69200.91780822164,
+              80974.87671233005,
+              87047.9452054783,
+              69095.31506849281,
+              90325.34246575342,
+              72974.89041095779
+            ]
+          },
+          {
+            "case": "App7 signup Skeleton SSR",
+            "iterations": 67,
+            "samples": [
+              100633.70149253645,
+              102533.58208955324,
+              110695.2835820904,
+              113832.08955224074,
+              88622.52238806032,
+              102856.34328358098,
+              102430.9701492542,
+              91363.8059701484,
+              95653.59701492634,
+              104089.55223880497,
+              95496.26865671924,
+              86481.34328358428
+            ]
+          },
+          {
+            "case": "App7 fuse Skeleton SSR",
+            "iterations": 78,
+            "samples": [
+              72639.961538462,
+              87261.7435897423,
+              82727.02564102311,
+              69686.96153846092,
+              77840.80769230957,
+              79309.83333333422,
+              66971.15384615524,
+              74830.12820512742,
+              81162.39743589678,
+              79167.20512820318,
+              84553.4230769224,
+              72186.97435897434
+            ]
+          }
+        ],
+        "checksum": 196101984
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 16134,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 archive Skeleton SSR",
+            "iterations": 112,
+            "samples": [
+              87958.7053571425,
+              100516.00000000047,
+              77196.4285714282,
+              81271.57142857148,
+              81631.69642857123,
+              79734.75000000009,
+              105719.4910714284,
+              76031.9910714285,
+              82224.70535714268,
+              80574.41071428581,
+              84851.93750000012,
+              79053.93749999996
+            ]
+          },
+          {
+            "case": "Material9 signup Skeleton SSR",
+            "iterations": 98,
+            "samples": [
+              101489.37755102057,
+              104046.76530612278,
+              116357.5612244901,
+              92992.34693877546,
+              87164.5408163271,
+              98370.75510204135,
+              95430.27551020417,
+              108153.90816326595,
+              88658.16326530588,
+              86952.80612244934,
+              96766.15306122413,
+              96052.72448979522
+            ]
+          },
+          {
+            "case": "Material9 fuse Skeleton SSR",
+            "iterations": 107,
+            "samples": [
+              92423.68224299031,
+              79788.9439252337,
+              89789.33644859873,
+              88992.21495327073,
+              86686.13084112102,
+              81179.90654205688,
+              87586.44859813103,
+              94263.24299065465,
+              86812.70093457923,
+              87285.0467289713,
+              98366.82242990681,
+              96679.51401869129
+            ]
+          },
+          {
+            "case": "App7 archive Skeleton SSR",
+            "iterations": 131,
+            "samples": [
+              80645.03816793858,
+              87023.53435114499,
+              79536.89312977139,
+              78163.80152671765,
+              85959.9236641215,
+              80323.47328244284,
+              84650.1297709913,
+              88115.13740458034,
+              77859.73282442724,
+              86104.96183206048,
+              90643.1297709912,
+              78392.81679389387
+            ]
+          },
+          {
+            "case": "App7 signup Skeleton SSR",
+            "iterations": 98,
+            "samples": [
+              92923.04081632628,
+              87675.16326530749,
+              90547.61224489752,
+              91459.60204081608,
+              101315.05102040879,
+              98912.84693877627,
+              96786.13265306031,
+              93233.84693877591,
+              94576.1122448992,
+              83769.97959183715,
+              104614.3673469399,
+              91244.89795918376
+            ]
+          },
+          {
+            "case": "App7 fuse Skeleton SSR",
+            "iterations": 117,
+            "samples": [
+              79077.6324786332,
+              81766.73504273557,
+              79162.39316239463,
+              87992.1623931622,
+              84884.97435897466,
+              83436.61538461504,
+              82173.07692307764,
+              87341.17094017025,
+              86000.35042735159,
+              80891.38461538365,
+              83425.93162393103,
+              87854.34188034081
+            ]
+          }
+        ],
+        "checksum": 209120288
+      },
+      "upstream": {
+        "pid": 16137,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 archive Skeleton SSR",
+            "iterations": 112,
+            "samples": [
+              110668.89285714256,
+              117369.79464285723,
+              111303.93750000016,
+              103307.29464285732,
+              114053.94642857151,
+              106219.86607142832,
+              109937.13392857123,
+              106652.90178571445,
+              113550.59821428526,
+              102927.45535714281,
+              114516.74107142854,
+              117009.66964285696
+            ]
+          },
+          {
+            "case": "Material9 signup Skeleton SSR",
+            "iterations": 98,
+            "samples": [
+              133636.9081632662,
+              128620.74489795903,
+              116106.71428571451,
+              130555.2755102036,
+              131782.73469387775,
+              119708.33673469351,
+              132076.53061224462,
+              132533.16326530607,
+              122322.27551020496,
+              120109.26530612142,
+              124536.13265306072,
+              122127.96938775468
+            ]
+          },
+          {
+            "case": "Material9 fuse Skeleton SSR",
+            "iterations": 107,
+            "samples": [
+              109825.93457943974,
+              116213.78504672823,
+              104566.19626168325,
+              114159.65420560795,
+              114443.9252336448,
+              117272.57943925269,
+              110747.66355140314,
+              100436.14018691696,
+              106311.52336448556,
+              114575.93457944058,
+              106742.99065420702,
+              114285.0467289714
+            ]
+          },
+          {
+            "case": "App7 archive Skeleton SSR",
+            "iterations": 131,
+            "samples": [
+              110083.01526717575,
+              121861.32824427584,
+              114331.10687022854,
+              114374.36641221427,
+              112244.58778625925,
+              114515.90839694554,
+              118876.90839694533,
+              111518.12977099331,
+              118579.51908396927,
+              121740.7786259541,
+              113180.34351144978,
+              112080.15267175488
+            ]
+          },
+          {
+            "case": "App7 signup Skeleton SSR",
+            "iterations": 98,
+            "samples": [
+              150488.9387755082,
+              142931.55102040825,
+              146655.18367346938,
+              128690.0510204082,
+              149630.94897959253,
+              146318.87755102033,
+              137371.17346938842,
+              146773.80612244763,
+              149806.12244898232,
+              142288.26530612257,
+              164023.8163265297,
+              144931.9693877544
+            ]
+          },
+          {
+            "case": "App7 fuse Skeleton SSR",
+            "iterations": 117,
+            "samples": [
+              112409.89743589677,
+              110381.7692307693,
+              137789.17948717892,
+              104512.46153846495,
+              121488.96581196762,
+              106274.21367521453,
+              122874.64102564238,
+              114070.8717948733,
+              121560.89743589642,
+              108347.9316239313,
+              116997.50427350152,
+              115480.0598290608
+            ]
+          }
+        ],
+        "checksum": 143538848
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 16166,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 archive Skeleton SSR",
+            "iterations": 98,
+            "samples": [
+              121396.25510204097,
+              109756.80612244904,
+              114676.8775510205,
+              99919.64285714284,
+              112668.79591836726,
+              119864.3673469389,
+              147152.20408163243,
+              150707.90816326556,
+              112188.3469387756,
+              114380.9591836736,
+              149396.26530612228,
+              122094.80612244878
+            ]
+          },
+          {
+            "case": "Material9 signup Skeleton SSR",
+            "iterations": 68,
+            "samples": [
+              132290.4411764712,
+              139725.48529411663,
+              124380.51470588153,
+              148430.76470588264,
+              113601.72058823536,
+              120858.45588235349,
+              141082.10294117598,
+              127925.8529411757,
+              129491.42647058873,
+              116693.61764705855,
+              119811.88235294085,
+              131367.6470588234
+            ]
+          },
+          {
+            "case": "Material9 fuse Skeleton SSR",
+            "iterations": 87,
+            "samples": [
+              114526.82758620713,
+              115011.97701149402,
+              99610.14942528686,
+              126535.43678160971,
+              120300.28735632091,
+              106649.4252873551,
+              115806.03448275682,
+              116166.19540229984,
+              110472.70114942416,
+              108822.32183908153,
+              120990.8965517241,
+              113832.8620689668
+            ]
+          },
+          {
+            "case": "App7 archive Skeleton SSR",
+            "iterations": 84,
+            "samples": [
+              104941.4761904743,
+              124232.64285714488,
+              103462.29761904625,
+              128064.48809523576,
+              103542.16666666529,
+              106398.32142857132,
+              123375.49999999792,
+              104150.29761904699,
+              107659.22619047582,
+              115087.2976190488,
+              105591.26190476252,
+              120240.58333333544
+            ]
+          },
+          {
+            "case": "App7 signup Skeleton SSR",
+            "iterations": 77,
+            "samples": [
+              128235.93506493431,
+              141498.92207792145,
+              124982.67532467772,
+              122298.16883117057,
+              136458.8831168848,
+              133529.22077921915,
+              140307.89610389498,
+              114235.38961039057,
+              136171.53246753322,
+              119357.68831168897,
+              130832.7922077905,
+              139325.22077922025
+            ]
+          },
+          {
+            "case": "App7 fuse Skeleton SSR",
+            "iterations": 76,
+            "samples": [
+              104546.05263157646,
+              133651.31578947106,
+              107700.11842105543,
+              128805.92105262908,
+              109381.57894736975,
+              112876.64473684346,
+              132556.4736842077,
+              113499.44736842213,
+              125495.0657894788,
+              122468.7499999989,
+              119706.69736842267,
+              130772.48684210549
+            ]
+          }
+        ],
+        "checksum": 176891550
+      },
+      "vpm": {
+        "pid": 16167,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 archive Skeleton SSR",
+            "iterations": 98,
+            "samples": [
+              75180.70408163227,
+              75315.0510204082,
+              81342.25510204083,
+              83475.34693877562,
+              79847.79591836738,
+              77055.27551020423,
+              73916.24489795903,
+              78536.9897959182,
+              86682.82653061212,
+              73329.51020408144,
+              87668.36734693874,
+              78231.71428571457
+            ]
+          },
+          {
+            "case": "Material9 signup Skeleton SSR",
+            "iterations": 68,
+            "samples": [
+              106702.80882353007,
+              92981.61764705944,
+              123288.60294117557,
+              98713.85294117626,
+              91408.08823529349,
+              97076.58823529475,
+              92013.47058823431,
+              91134.80882352994,
+              88400.11764705897,
+              87272.66176470541,
+              92123.16176470548,
+              99020.82352941058
+            ]
+          },
+          {
+            "case": "Material9 fuse Skeleton SSR",
+            "iterations": 87,
+            "samples": [
+              108878.3563218398,
+              102536.88505747114,
+              92354.8850574706,
+              91733.2413793098,
+              107574.24137931067,
+              96390.80459770077,
+              83804.11494252925,
+              88403.25287356378,
+              90602.49425287393,
+              81544.54022988521,
+              85590.51724137919,
+              95284.00000000022
+            ]
+          },
+          {
+            "case": "App7 archive Skeleton SSR",
+            "iterations": 84,
+            "samples": [
+              85054.07142857143,
+              70575.39285714093,
+              78779.26190476122,
+              80441.46428571388,
+              80246.5238095243,
+              71476.19047618934,
+              81337.7976190471,
+              79305.05952380903,
+              78641.8571428569,
+              75370.53571428487,
+              76804.07142857164,
+              79260.90476190612
+            ]
+          },
+          {
+            "case": "App7 signup Skeleton SSR",
+            "iterations": 77,
+            "samples": [
+              100278.12987013104,
+              87961.03896104076,
+              95272.72727272744,
+              106941.01298701174,
+              93892.85714285968,
+              99965.37662337604,
+              93590.90909090916,
+              93794.90909091086,
+              103798.15584415509,
+              98799.7922077904,
+              100951.2987012982,
+              81537.33766233595
+            ]
+          },
+          {
+            "case": "App7 fuse Skeleton SSR",
+            "iterations": 76,
+            "samples": [
+              70315.23684210434,
+              86668.85526315881,
+              74453.9473684211,
+              67052.63157894742,
+              84249.44736842271,
+              89820.18421052748,
+              74913.36842105356,
+              88999.46052631429,
+              76381.02631578871,
+              81909.53947368336,
+              80290.56578947359,
+              70053.18421052881
+            ]
+          }
+        ],
+        "checksum": 192467232
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 16170,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 archive Skeleton SSR",
+            "iterations": 111,
+            "samples": [
+              94917.03603603618,
+              80142.64864864846,
+              88720.3423423424,
+              76553.67567567562,
+              79179.43243243267,
+              88059.68468468482,
+              79343.46846846884,
+              93607.36036036047,
+              79694.81981982008,
+              77835.96396396396,
+              90281.16216216215,
+              79672.6756756755
+            ]
+          },
+          {
+            "case": "Material9 signup Skeleton SSR",
+            "iterations": 107,
+            "samples": [
+              105774.53271028,
+              100026.48598130784,
+              106705.21495327113,
+              89829.83177570022,
+              84244.93457943869,
+              99265.1869158884,
+              89269.08411214933,
+              101100.85046728919,
+              97893.30841121542,
+              103274.92523364416,
+              93052.17757009367,
+              105223.90654205614
+            ]
+          },
+          {
+            "case": "Material9 fuse Skeleton SSR",
+            "iterations": 119,
+            "samples": [
+              93053.2184873944,
+              79925.07563025196,
+              88317.57142857196,
+              87252.453781513,
+              92681.36974789928,
+              91959.38655462199,
+              81195.72268907547,
+              92939.07563025216,
+              90939.07563025264,
+              86246.84873949576,
+              76398.80672268802,
+              83721.63865546169
+            ]
+          },
+          {
+            "case": "App7 archive Skeleton SSR",
+            "iterations": 119,
+            "samples": [
+              88711.13445378101,
+              85461.48739495748,
+              95471.29411764807,
+              81635.15966386604,
+              91827.03361344435,
+              79183.82352941346,
+              96898.45378151204,
+              89586.48739495715,
+              84198.17647058833,
+              87218.48739495719,
+              91547.2689075633,
+              102481.78991596738
+            ]
+          },
+          {
+            "case": "App7 signup Skeleton SSR",
+            "iterations": 92,
+            "samples": [
+              99800.27173913225,
+              102659.42391304327,
+              96837.8695652187,
+              92110.51086956362,
+              83370.92391304453,
+              92583.78260869409,
+              110690.21739130291,
+              105620.46739130437,
+              95745.92391304477,
+              96134.95652174063,
+              94990.48913043541,
+              95415.76086956599
+            ]
+          },
+          {
+            "case": "App7 fuse Skeleton SSR",
+            "iterations": 118,
+            "samples": [
+              85001.76271186359,
+              85209.38983050756,
+              86425.84745762641,
+              80519.77118644009,
+              86824.1525423724,
+              86351.33898304941,
+              88368.64406779669,
+              79557.90677966102,
+              84058.26271186308,
+              88211.51694915142,
+              86973.86440677886,
+              86470.69491525399
+            ]
+          }
+        ],
+        "checksum": 192700121
+      },
+      "upstream": {
+        "pid": 16174,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 archive Skeleton SSR",
+            "iterations": 111,
+            "samples": [
+              104703.45945945973,
+              111782.65765765758,
+              104824.70270270259,
+              108368.2432432435,
+              117381.7567567569,
+              110682.80180180195,
+              114094.59459459438,
+              114053.30630630637,
+              112992.1171171171,
+              105921.17117117117,
+              100409.16216216225,
+              107315.69369369355
+            ]
+          },
+          {
+            "case": "Material9 signup Skeleton SSR",
+            "iterations": 107,
+            "samples": [
+              134329.04672897176,
+              133947.81308411184,
+              120118.38317757005,
+              132628.5046728969,
+              121816.5887850463,
+              124141.73831775642,
+              128776.86915887872,
+              123350.46728971931,
+              131229.7476635509,
+              124479.36448598148,
+              124788.9439252342,
+              118424.45794392434
+            ]
+          },
+          {
+            "case": "Material9 fuse Skeleton SSR",
+            "iterations": 119,
+            "samples": [
+              136776.9579831937,
+              121398.10924369738,
+              110302.87394957873,
+              117688.37815126032,
+              124481.78991596687,
+              102587.53781512564,
+              115360.29411764738,
+              102641.10924369653,
+              102208.68067226968,
+              117216.73109243721,
+              117623.24369747988,
+              116915.61344537722
+            ]
+          },
+          {
+            "case": "App7 archive Skeleton SSR",
+            "iterations": 119,
+            "samples": [
+              120813.0252100851,
+              124504.20168067253,
+              124695.73109243708,
+              138165.26050420117,
+              127769.95798319203,
+              120136.90756302516,
+              125419.81512604901,
+              107583.68907563023,
+              116102.2352941163,
+              114411.76470588244,
+              119936.27731092357,
+              114325.63025210056
+            ]
+          },
+          {
+            "case": "App7 signup Skeleton SSR",
+            "iterations": 92,
+            "samples": [
+              146377.71739130237,
+              133242.7499999999,
+              147471.02173913122,
+              140931.60869565164,
+              131772.19565217328,
+              139755.4347826095,
+              137729.1739130442,
+              141569.29347826046,
+              137836.50000000405,
+              148087.8695652178,
+              135307.52173913084,
+              167586.04347825953
+            ]
+          },
+          {
+            "case": "App7 fuse Skeleton SSR",
+            "iterations": 118,
+            "samples": [
+              119415.60169491252,
+              101446.33050847499,
+              125928.32203389955,
+              109495.76271186204,
+              119522.24576270964,
+              105299.08474576187,
+              120814.61864407067,
+              114766.24576271283,
+              107984.4661016939,
+              121056.84745762442,
+              109656.77966101655,
+              126386.99999999933
+            ]
+          }
+        ],
+        "checksum": 139979616
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 16189,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 archive Skeleton SSR",
+            "iterations": 74,
+            "samples": [
+              116508.44594594587,
+              99521.9594594601,
+              131404.28378378417,
+              111064.18918918919,
+              96542.79729729782,
+              104545.60810810824,
+              105451.01351351297,
+              106557.43243243224,
+              107908.21621621621,
+              97340.0945945947,
+              123524.20270270243,
+              100747.7432432432
+            ]
+          },
+          {
+            "case": "Material9 signup Skeleton SSR",
+            "iterations": 88,
+            "samples": [
+              132448.38636363714,
+              130098.01136363628,
+              125207.38636363599,
+              114353.21590909097,
+              115025.56818181826,
+              129973.48863636401,
+              120074.80681818225,
+              110846.12499999996,
+              110225.85227272751,
+              117113.15909090945,
+              110011.36363636408,
+              118102.73863636408
+            ]
+          },
+          {
+            "case": "Material9 fuse Skeleton SSR",
+            "iterations": 89,
+            "samples": [
+              110332.86516853904,
+              98510.30337078549,
+              119440.0786516857,
+              114471.44943820199,
+              110467.69662921384,
+              96155.42696629296,
+              123117.51685393228,
+              113332.39325842718,
+              102036.51685393463,
+              113573.03370786458,
+              117258.42696629126,
+              116621.71910112203
+            ]
+          },
+          {
+            "case": "App7 archive Skeleton SSR",
+            "iterations": 79,
+            "samples": [
+              102688.8101265815,
+              122348.63291139189,
+              105864.97468354444,
+              118114.97468354476,
+              96989.45569620196,
+              105637.65822784942,
+              117225.74683544217,
+              112274.79746835516,
+              109242.08860759376,
+              135301.6962025293,
+              100851.26582278383,
+              113512.1265822766
+            ]
+          },
+          {
+            "case": "App7 signup Skeleton SSR",
+            "iterations": 83,
+            "samples": [
+              121920.6867469893,
+              138164.156626506,
+              118628.51807228824,
+              136355.92771084342,
+              133409.13253012014,
+              118694.27710843389,
+              136025.6024096384,
+              109798.68674698663,
+              134055.7228915675,
+              117379.51807228992,
+              136421.18072289124,
+              126558.22891566371
+            ]
+          },
+          {
+            "case": "App7 fuse Skeleton SSR",
+            "iterations": 89,
+            "samples": [
+              129819.28089887722,
+              123025.75280898894,
+              117367.97752808833,
+              135170.87640449585,
+              108915.73033707707,
+              121914.78651685645,
+              115917.59550561986,
+              116106.7415730358,
+              115675.56179775392,
+              112727.05617977736,
+              136374.52808988397,
+              109933.9887640413
+            ]
+          }
+        ],
+        "checksum": 179684816
+      },
+      "vpm": {
+        "pid": 16190,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 archive Skeleton SSR",
+            "iterations": 74,
+            "samples": [
+              119747.74324324327,
+              96693.1216216213,
+              119121.05405405392,
+              112063.62162162169,
+              110059.68918918962,
+              112720.16216216153,
+              93322.0675675672,
+              112611.486486486,
+              101264.64864864862,
+              108987.60810810755,
+              116634.56756756785,
+              109581.64864864848
+            ]
+          },
+          {
+            "case": "Material9 signup Skeleton SSR",
+            "iterations": 88,
+            "samples": [
+              131111.27272727236,
+              130091.38636363622,
+              117855.59090909135,
+              123512.78409090842,
+              123026.98863636347,
+              129494.7954545452,
+              139707.38636363673,
+              133007.5681818179,
+              123422.35227272623,
+              132940.34090909112,
+              129179.44318181831,
+              120276.04545454551
+            ]
+          },
+          {
+            "case": "Material9 fuse Skeleton SSR",
+            "iterations": 89,
+            "samples": [
+              130490.16853932536,
+              106280.89887640516,
+              124505.15730337087,
+              123468.15730337168,
+              122077.7191011235,
+              107525.2808988751,
+              119817.41573033892,
+              120712.55056179673,
+              116937.7415730339,
+              99788.85393258443,
+              122177.89887640567,
+              154881.56179775248
+            ]
+          },
+          {
+            "case": "App7 archive Skeleton SSR",
+            "iterations": 79,
+            "samples": [
+              114545.88607594941,
+              119986.29113923937,
+              98047.46835443094,
+              124368.1392405057,
+              107566.45569620248,
+              116730.49367088794,
+              120311.189873418,
+              107031.11392405235,
+              132330.69620253134,
+              104080.1645569612,
+              123188.81012658171,
+              105339.13924050581
+            ]
+          },
+          {
+            "case": "App7 signup Skeleton SSR",
+            "iterations": 83,
+            "samples": [
+              133433.22891566445,
+              139065.25301204823,
+              144939.2530120464,
+              123299.20481927576,
+              142716.3734939746,
+              139565.2650602401,
+              124807.72289156546,
+              149852.91566264993,
+              142334.84337349577,
+              129084.33734939963,
+              123282.62650602625,
+              135410.14457831238
+            ]
+          },
+          {
+            "case": "App7 fuse Skeleton SSR",
+            "iterations": 89,
+            "samples": [
+              140999.99999999974,
+              136222.85393258414,
+              112953.65168539167,
+              125910.5730337069,
+              133929.77528089914,
+              114454.59550561302,
+              122990.64044943887,
+              162085.67415730684,
+              113717.69662921426,
+              107459.74157303823,
+              126351.59550561359,
+              109739.235955055
+            ]
+          }
+        ],
+        "checksum": 161554976
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 16251,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 archive Skeleton SSR",
+            "iterations": 79,
+            "samples": [
+              109523.73417721456,
+              113339.13924050589,
+              129227.84810126587,
+              107615.5063291138,
+              113611.27848101298,
+              118566.98734177185,
+              106430.91139240464,
+              113104.43037974679,
+              124848.6329113925,
+              110011.07594936716,
+              112213.07594936679,
+              114820.15189873397
+            ]
+          },
+          {
+            "case": "Material9 signup Skeleton SSR",
+            "iterations": 66,
+            "samples": [
+              141835.2272727275,
+              116024.6212121203,
+              144071.33333333264,
+              122986.10606060574,
+              125616.15151515133,
+              121739.9090909098,
+              104477.89393939365,
+              134419.196969697,
+              118626.25757575787,
+              126655.30303030265,
+              125136.36363636387,
+              107869.31818181805
+            ]
+          },
+          {
+            "case": "Material9 fuse Skeleton SSR",
+            "iterations": 89,
+            "samples": [
+              122055.71910112412,
+              121553.84269662842,
+              118043.07865168595,
+              111209.26966292204,
+              110775.75280898799,
+              127342.69662921302,
+              117708.33707865176,
+              103277.14606741506,
+              109663.39325842567,
+              114273.40449438234,
+              125492.04494381954,
+              104634.83146067416
+            ]
+          },
+          {
+            "case": "App7 archive Skeleton SSR",
+            "iterations": 85,
+            "samples": [
+              109310.29411764725,
+              103184.31764705887,
+              118705.39999999893,
+              109055.39999999906,
+              117938.71764705941,
+              101895.09411764661,
+              97499.99999999892,
+              134958.82352941035,
+              101384.79999999992,
+              115539.21176470579,
+              100693.14117647136,
+              108060.78823529252
+            ]
+          },
+          {
+            "case": "App7 signup Skeleton SSR",
+            "iterations": 72,
+            "samples": [
+              117139.47222222031,
+              129468.16666666589,
+              137626.1527777779,
+              114432.29166666747,
+              146526.0416666657,
+              119941.55555555607,
+              124986.68055555603,
+              133754.63888888818,
+              111420.7222222237,
+              142368.055555557,
+              121359.94444444502,
+              113397.56944444288
+            ]
+          },
+          {
+            "case": "App7 fuse Skeleton SSR",
+            "iterations": 88,
+            "samples": [
+              129853.69318181742,
+              111038.35227272767,
+              114081.4431818197,
+              124842.32954545342,
+              115278.40909091033,
+              123266.57954545795,
+              106651.98863636698,
+              126568.1818181809,
+              110474.89772727722,
+              112925.65909091289,
+              130310.61363636292,
+              112062.49999999975
+            ]
+          }
+        ],
+        "checksum": 184533995
+      },
+      "upstream": {
+        "pid": 16252,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 archive Skeleton SSR",
+            "iterations": 79,
+            "samples": [
+              105866.02531645534,
+              125048.51898734231,
+              118996.83544303819,
+              101220.98734177239,
+              124940.40506329121,
+              124852.31645569635,
+              159282.16455696244,
+              179217.29113924043,
+              126381.86075949384,
+              102150.8354430377,
+              114441.9873417726,
+              122936.17721518964
+            ]
+          },
+          {
+            "case": "Material9 signup Skeleton SSR",
+            "iterations": 66,
+            "samples": [
+              118998.10606060631,
+              141856.06060605994,
+              139231.06060605912,
+              118783.45454545585,
+              145551.7727272739,
+              122380.06060605908,
+              128715.90909090822,
+              125458.33333333369,
+              107435.60606060541,
+              129312.50000000009,
+              102157.81818181892,
+              132125.63636363595
+            ]
+          },
+          {
+            "case": "Material9 fuse Skeleton SSR",
+            "iterations": 89,
+            "samples": [
+              123856.74157303327,
+              127215.83146067464,
+              105534.64044943759,
+              125965.35955056174,
+              122168.0786516858,
+              118097.38202247205,
+              102784.16853932565,
+              117976.59550561776,
+              114250.93258426922,
+              102886.23595505761,
+              111196.62921348381,
+              124576.78651685201
+            ]
+          },
+          {
+            "case": "App7 archive Skeleton SSR",
+            "iterations": 85,
+            "samples": [
+              117495.09411764688,
+              126019.11764705779,
+              128147.54117646984,
+              145996.07058823548,
+              138629.41176470593,
+              124403.43529411782,
+              105655.8823529432,
+              115996.5647058845,
+              146459.7999999997,
+              106917.15294117731,
+              144454.90588235343,
+              109496.08235294043
+            ]
+          },
+          {
+            "case": "App7 signup Skeleton SSR",
+            "iterations": 72,
+            "samples": [
+              133700.2222222231,
+              125271.40277777625,
+              130129.05555555361,
+              137628.4722222244,
+              127549.76388888886,
+              146979.1666666664,
+              123237.84722222008,
+              124826.97222222328,
+              143936.34722221943,
+              121726.27777777874,
+              127738.41666666878,
+              118767.36111111085
+            ]
+          },
+          {
+            "case": "App7 fuse Skeleton SSR",
+            "iterations": 88,
+            "samples": [
+              120894.42045454617,
+              120892.98863636538,
+              112124.99999999955,
+              127894.40909090838,
+              106550.65909091118,
+              116098.01136363661,
+              132686.54545454305,
+              115565.8181818198,
+              122370.73863636541,
+              113947.44318181953,
+              120316.76136363311,
+              103784.09090908874
+            ]
+          }
+        ],
+        "checksum": 159062432
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "Material9 archive Skeleton SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 113875.20588235273,
+          "vpmNs": 79595.38725490196,
+          "changePct": -30.10296961646427
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 110986.41517857136,
+          "vpmNs": 81451.63392857136,
+          "changePct": -26.611167864535556
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 117270.6224489797,
+          "vpmNs": 78384.35204081639,
+          "changePct": -33.159430380853784
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 109525.52252252272,
+          "vpmNs": 79918.73423423427,
+          "changePct": -27.03186216911235
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 106004.22297297261,
+          "vpmNs": 111061.65540540565,
+          "changePct": 4.7709725995751295
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 123894.24683544299,
+          "vpmNs": 113221.78481012634,
+          "changePct": -8.614170793169984
+        }
+      ]
+    },
+    {
+      "case": "Material9 signup Skeleton SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 135129.99295774702,
+          "vpmNs": 97929.28169014124,
+          "changePct": -27.529573896475988
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 126578.43877550987,
+          "vpmNs": 96409.43877550968,
+          "changePct": -23.83423297984082
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 128708.63970588222,
+          "vpmNs": 92552.38970588247,
+          "changePct": -28.091548541435905
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 124634.15420560783,
+          "vpmNs": 99645.83644859811,
+          "changePct": -20.049333921572345
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 117607.94886363676,
+          "vpmNs": 129337.11931818175,
+          "changePct": 9.973110293883835
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 127087.12121212095,
+          "vpmNs": 124061.2348484848,
+          "changePct": -2.3809543679769507
+        }
+      ]
+    },
+    {
+      "case": "Material9 fuse Skeleton SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 119748.02027027114,
+          "vpmNs": 83431.30405405353,
+          "changePct": -30.327613044667313
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 112453.65887850555,
+          "vpmNs": 88289.33177570088,
+          "changePct": -21.488253333679175
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 114769.40229885057,
+          "vpmNs": 92044.06321839019,
+          "changePct": -19.800869068992256
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 117066.17226890722,
+          "vpmNs": 87785.01260504249,
+          "changePct": -25.012485756008452
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 113452.71348314588,
+          "vpmNs": 121395.1348314601,
+          "changePct": 7.000644677832346
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 118036.98876404492,
+          "vpmNs": 115990.87078651704,
+          "changePct": -1.7334549101536756
+        }
+      ]
+    },
+    {
+      "case": "App7 archive Skeleton SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 106990.86301369726,
+          "vpmNs": 79734.58904109677,
+          "changePct": -25.475328644756402
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 114352.7366412214,
+          "vpmNs": 82647.58396946493,
+          "changePct": -27.72574894401567
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 107028.77380952357,
+          "vpmNs": 79020.08333333366,
+          "changePct": -26.169308943066348
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 120474.96638655514,
+          "vpmNs": 89148.81092436909,
+          "changePct": -26.002211415169164
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 110758.44303797446,
+          "vpmNs": 115638.18987341868,
+          "changePct": 4.405756077458722
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 125211.2764705878,
+          "vpmNs": 108558.09411764579,
+          "changePct": -13.30006595440616
+        }
+      ]
+    },
+    {
+      "case": "App7 signup Skeleton SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 121785.44776119411,
+          "vpmNs": 101532.33582089533,
+          "changePct": -16.630157635920984
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 146487.03061224485,
+          "vpmNs": 93078.4438775511,
+          "changePct": -36.45960090219027
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 132181.00649350483,
+          "vpmNs": 97036.25974025892,
+          "changePct": -26.58834857258624
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 140343.52173913055,
+          "vpmNs": 95940.4402173927,
+          "changePct": -31.638853700902537
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 129983.68072289194,
+          "vpmNs": 137237.6987951803,
+          "changePct": 5.580714465035785
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 127644.09027777883,
+          "vpmNs": 123173.31250000052,
+          "changePct": -3.5025340915110226
+        }
+      ]
+    },
+    {
+      "case": "App7 fuse Skeleton SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 114610.3012820495,
+          "vpmNs": 78504.00641025638,
+          "changePct": -31.503533685805053
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 114775.46581196705,
+          "vpmNs": 83431.27350427303,
+          "changePct": -27.309139706776875
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 121087.72368421078,
+          "vpmNs": 78335.79605263115,
+          "changePct": -35.3065747136134
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 117090.92372881268,
+          "vpmNs": 86388.5932203379,
+          "changePct": -26.220931162506332
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 116737.35955056208,
+          "vpmNs": 124450.60674157288,
+          "changePct": 6.60735108341215
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 118207.38636363487,
+          "vpmNs": 114679.92613636501,
+          "changePct": -2.984128433749922
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "Material9 archive Skeleton SSR",
+      "upstream_ns": 112431,
+      "vpm_ns": 79757,
+      "change_pct": -28.6,
+      "upstream_first_pct": -31.6,
+      "vpm_first_pct": -26.8,
+      "process_range_pct": "-30.1, -26.6, -33.2, -27.0",
+      "control_max_abs_pct": 8.6,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "Material9 signup Skeleton SSR",
+      "upstream_ns": 127644,
+      "vpm_ns": 97169,
+      "change_pct": -25.7,
+      "upstream_first_pct": -27.8,
+      "vpm_first_pct": -21.9,
+      "process_range_pct": "-27.5, -23.8, -28.1, -20.0",
+      "control_max_abs_pct": 10,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "Material9 fuse Skeleton SSR",
+      "upstream_ns": 115918,
+      "vpm_ns": 88037,
+      "change_pct": -23.3,
+      "upstream_first_pct": -25.1,
+      "vpm_first_pct": -23.3,
+      "process_range_pct": "-30.3, -21.5, -19.8, -25.0",
+      "control_max_abs_pct": 7,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "App7 archive Skeleton SSR",
+      "upstream_ns": 110691,
+      "vpm_ns": 81191,
+      "change_pct": -26.1,
+      "upstream_first_pct": -25.8,
+      "vpm_first_pct": -26.9,
+      "process_range_pct": "-25.5, -27.7, -26.2, -26.0",
+      "control_max_abs_pct": 13.3,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "App7 signup Skeleton SSR",
+      "upstream_ns": 136262,
+      "vpm_ns": 96488,
+      "change_pct": -29.1,
+      "upstream_first_pct": -21.6,
+      "vpm_first_pct": -34,
+      "process_range_pct": "-16.6, -36.5, -26.6, -31.6",
+      "control_max_abs_pct": 5.6,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "App7 fuse Skeleton SSR",
+      "upstream_ns": 115933,
+      "vpm_ns": 80968,
+      "change_pct": -29.4,
+      "upstream_first_pct": -33.4,
+      "vpm_first_pct": -26.8,
+      "process_range_pct": "-31.5, -27.3, -35.3, -26.2",
+      "control_max_abs_pct": 6.6,
+      "evidence": "lower time in every pair, beyond control spread"
+    }
+  ]
+}

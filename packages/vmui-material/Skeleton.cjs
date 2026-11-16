@@ -1,0 +1,1 @@
+"use strict";const a=require("./skeleton-control.cjs");module.exports=a.Skeleton;module.exports.default=a.Skeleton;module.exports.skeletonClasses=a.skeletonClasses;module.exports.getSkeletonUtilityClass=a.getSkeletonUtilityClass;
