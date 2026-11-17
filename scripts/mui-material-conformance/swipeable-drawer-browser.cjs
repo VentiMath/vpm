@@ -36,7 +36,12 @@ let server,child,socket,sequence=0,control='';const pending=new Map(),exceptions
    const name=version+'-'+kind;if(process.env.VPM_SWIPE_CONTROL&&process.env.VPM_SWIPE_CONTROL!==name)continue;
    // A fresh tab isolates Chrome's native gesture recognizer, including pinch state.
    if(control){const old=activeTarget;({targetId:activeTarget}=await send('Target.createTarget',{url:'about:blank'}));const pages=await(await fetch('http://127.0.0.1:'+port+'/json/list')).json();socket.close();socket=new WebSocket(pages.find(t=>t.id===activeTarget).webSocketDebuggerUrl);await new Promise((r,j)=>{socket.onopen=r;socket.onerror=j});socket.onmessage=handleMessage;await send('Target.closeTarget',{targetId:old});await send('Runtime.enable');await send('Emulation.setFocusEmulationEnabled',{enabled:true});await send('Emulation.setDeviceMetricsOverride',{width:960,height:700,deviceScaleFactor:1,mobile:false});}
-   control=name;await send('Emulation.setTouchEmulationEnabled',{enabled:true,maxTouchPoints:2});console.log('Checking '+name);await send('Emulation.resetPageScaleFactor');await send('Page.navigate',{url:'http://127.0.0.1:'+server.address().port+'/'+name});await wait('window.drawerControls');if(version==='app'&&kind==='upstream')await evaluate('window.renderDrawerRaw=window.renderDrawer;window.renderDrawer=props=>window.renderDrawerRaw({legacyPaper:true,...props})');
+   control=name;await send('Emulation.setTouchEmulationEnabled',{enabled:true,maxTouchPoints:2});console.log('Checking '+name);await send('Emulation.resetPageScaleFactor');await send('Page.navigate',{url:'http://127.0.0.1:'+server.address().port+'/'+name});await wait('window.drawerControls');
+   // A rightward edge gesture must exercise the drawer, not browser Back to
+   // the previous control page (or the initial empty document).
+   await send('Page.resetNavigationHistory');
+   assert.equal((await send('Page.getNavigationHistory')).entries.length,1);
+   if(version==='app'&&kind==='upstream')await evaluate('window.renderDrawerRaw=window.renderDrawer;window.renderDrawer=props=>window.renderDrawerRaw({legacyPaper:true,...props})');
    const values=[];
    for(const variant of ['temporary'])for(const anchor of ['left','right'])for(const rtl of [false,true])for(const mode of ['light','dark']){
     await evaluate('window.renderDrawer('+JSON.stringify({variant,anchor,rtl,mode,variables:true,custom:true})+');'+settle);await evaluate('window.drawerControls.setOpen(true);'+settle);await wait('document.getElementById("drawer-paper")');values.push({variant,anchor,rtl,mode,value:await evaluate(snapshot)});
@@ -82,7 +87,7 @@ let server,child,socket,sequence=0,control='';const pending=new Map(),exceptions
    await touch([scrollRect[0]+scrollRect[2]-20,scrollRect[1]+35],[scrollRect[0]+20,scrollRect[1]+35]);
    assert.equal(await evaluate('document.getElementById("scene").dataset.open'),'true',name+' scroll owns the gesture');assert.equal(await evaluate('document.getElementById("touch-scroll").scrollLeft>0'),true,name+' native scrolling');
    await evaluate('window.renderDrawer({reset:61,keepMounted:true,externalPaperRef:false,disableSwipeToOpen:false,disableDiscovery:true,minFlingVelocity:1e9});'+settle);
-   await wait(`document.querySelector('[data-testid="swipe-area"]')`);await touch([5,300],[220,300]);await wait('document.getElementById("scene").dataset.open==="true"');
+   await wait(`document.querySelector('[data-testid="swipe-area"]')`);await touch([5,300],[220,300]);assert.equal(await evaluate('location.pathname'),'/'+name,'Edge swipe must remain on its fixture page');await wait('document.getElementById("scene")?.dataset.open==="true"');
    if(kind==='vpm'){
     assert.equal(await evaluate('getComputedStyle(document.querySelector(".MuiBackdrop-root")).visibility==="visible"&&getComputedStyle(document.querySelector(".MuiBackdrop-root")).opacity==="1"&&!document.getElementById("drawer-root").hasAttribute("aria-hidden")'),true,name+' accepted opening is accessible');
     await touch([220,300],[20,300],{cancel:true});assert.equal(await evaluate('document.getElementById("scene").dataset.open'),'true',name+' cancellation');
