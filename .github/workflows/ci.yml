@@ -232,6 +232,13 @@ jobs:
           node scripts/jwt-decode-conformance/types.cjs
           node scripts/jwt-decode-conformance/browser.cjs
           node scripts/jwt-decode-conformance/archives.cjs
+      - run: npm --prefix scripts/camelize-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: Independent camelize and unchanged style converter
+        run: |
+          node --test packages/vcamelize/test/*.test.cjs
+          node scripts/camelize-conformance/probe.cjs
+          node scripts/camelize-conformance/types.cjs
+          node scripts/camelize-conformance/archives.cjs
       - run: npm --prefix scripts/nanoid-conformance ci --ignore-scripts --no-audit --no-fund
       - name: Independent Nano ID and PostCSS caller
         run: |
@@ -1075,6 +1082,8 @@ jobs:
         run: |
           bun test packages/vjwt-decode/test/decode.test.cjs
           bun scripts/jwt-decode-conformance/run.cjs
+      - run: npm --prefix scripts/camelize-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: bun scripts/camelize-conformance/probe.cjs
       - run: npm --prefix scripts/nanoid-conformance ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/nanoid-conformance/probe.cjs
       - run: npm --prefix scripts/js-cookie-conformance ci --ignore-scripts --no-audit --no-fund

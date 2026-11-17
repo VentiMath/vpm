@@ -59,6 +59,10 @@
       "name": "vbytes",
       "version": "0.1.0",
     },
+    "packages/vcamelize": {
+      "name": "vcamelize",
+      "version": "1.0.1",
+    },
     "packages/vclsx": {
       "name": "vclsx",
       "version": "2.1.1",
@@ -1876,6 +1880,8 @@
     "vbody-parser": ["vbody-parser@workspace:packages/vbody-parser"],
 
     "vbytes": ["vbytes@workspace:packages/vbytes"],
+
+    "vcamelize": ["vcamelize@workspace:packages/vcamelize"],
 
     "vclsx": ["vclsx@workspace:packages/vclsx"],
 

@@ -1,0 +1,22 @@
+{
+  "upstream": {
+    "name": "camelize",
+    "version": "1.0.1",
+    "repository": "https://github.com/ljharb/camelize",
+    "integrity": "sha512-dU+Tx2fsypxTgtLoE36npi3UqcjSSMNYfkqgmoEhtZrraP5VWq0K7FkWVTYa8eMPtnU/G2txVsfdCJTn9uzpuQ=="
+  },
+  "checked": "2026-11-16",
+  "license": "MIT",
+  "implementation": {
+    "kind": "independent",
+    "targetScope": "String conversion and recursive own enumerable object-key conversion, including sparse arrays and unchanged Date/RegExp values"
+  },
+  "source": "Written from public README examples and black-box observations. No upstream runtime source read or copied. Cycles throw a named TypeError instead of overflowing the call stack.",
+  "caller": {
+    "name": "css-to-react-native",
+    "version": "3.2.0",
+    "path": "styled-components 6.6.0 (current), 6.1.17 (app) -> css-to-react-native -> camelize",
+    "revision": "7970b7e54faeea97a828f62dd7bb2577abf77d95",
+    "adoption": "Not yet installed in VentiMath."
+  }
+}
