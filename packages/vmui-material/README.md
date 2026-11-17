@@ -1,6 +1,6 @@
 # vmui-material
 
-Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card, CardContent, CardActionArea, AvatarGroup, Tooltip and Collapse, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
+Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card, CardContent, CardActionArea, AvatarGroup, Tooltip, Collapse, DialogTitle, DialogContent and DialogActions, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
 
 ```js
 import { Button, ToggleButton, ToggleButtonGroup } from 'vmui-material';
@@ -620,3 +620,29 @@ Node/Bun SSR and declaration checks accompany Chrome lifecycle, measured layout,
 focus/child identity, cancellation, reduced-motion and hydration checks, including
 fresh package installs. [Measurements](bench/collapse/README.md) cover synthetic
 SSR only; they do not measure browser animation frame rates or application speed.
+
+
+## Dialog structure
+
+DialogTitle, DialogContent and DialogActions cover the app's WARML confirmations
+and contact forms, family reminders, external-link confirmation, and settings
+panels. Title composes owned Typography with heading semantics, inherited or
+explicit IDs, typography props and custom roots. Content owns flexible scrolling,
+optional dividers and heading-adjacent padding. Actions preserve native child
+buttons and optional inter-button spacing, including wrapping caller layouts.
+All three accept theme defaults/overrides, classes, `sx`, DOM attributes and refs.
+
+The internal title context is ready for the independently implemented Dialog.
+**Dialog itself remains unbuilt:** these components do not supply modal focus,
+backdrops, dismissal or automatic dialog ID generation. A test-only upstream
+Dialog exercises their layout, native buttons and explicit accessible labeling;
+it is not a runtime dependency. Context ID inheritance is tested separately.
+
+Current/app comparisons cover Node and Bun markup, strict declarations, Chrome
+light/dark and CSS-variable themes, RTL, narrow screens, stable drafts/focus/scroll,
+refs and hydration. [SSR measurements](bench/dialog-parts/README.md) isolate fresh
+processes with same-code controls; they do not measure browser opening latency.
+
+Build the dialog measurement fixtures with
+`node scripts/mui-material-conformance/dialog-parts-build.cjs` before running
+the benchmark commands in the report.

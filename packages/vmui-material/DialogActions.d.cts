@@ -1,0 +1,1 @@
+export {DialogActions as default,dialogActionsClasses,getDialogActionsUtilityClass,type DialogActionsProps,type DialogActionsOwnProps,type DialogActionsClasses,type DialogActionsClassKey} from "./index.mjs";

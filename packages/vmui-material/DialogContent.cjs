@@ -1,0 +1,1 @@
+"use strict";const a=require("./dialog-parts.cjs");module.exports=a.DialogContent;module.exports.default=a.DialogContent;module.exports.dialogContentClasses=a.dialogContentClasses;module.exports.getDialogContentUtilityClass=a.getDialogContentUtilityClass;

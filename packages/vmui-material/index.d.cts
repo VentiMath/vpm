@@ -593,3 +593,25 @@ export type CollapseProps<C extends React.ElementType='div'>=CollapseOwnProps&Om
 export const Collapse:TextComponent<CollapseOwnProps,'div'>;
 export const collapseClasses:Readonly<CollapseClasses>;
 export function getCollapseUtilityClass(slot:string):string;
+
+export interface DialogTitleOwnProps extends Omit<TypographyOwnProps,'classes'> {classes?:Partial<DialogTitleClasses>}
+export type DialogTitleClasses=Record<'root',string>;
+export type DialogContentClasses=Record<'root'|'dividers',string>;
+export type DialogActionsClasses=Record<'root'|'spacing',string>;
+export interface DialogContentOwnProps {children?:React.ReactNode;dividers?:boolean;classes?:Partial<DialogContentClasses>;sx?:SxProps<Theme>}
+export interface DialogActionsOwnProps {children?:React.ReactNode;disableSpacing?:boolean;classes?:Partial<DialogActionsClasses>;sx?:SxProps<Theme>}
+export type DialogTitleProps<C extends React.ElementType='h2'>=DialogTitleOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof DialogTitleOwnProps>&{component?:C};
+export type DialogContentProps=DialogContentOwnProps&Omit<React.ComponentPropsWithRef<'div'>,keyof DialogContentOwnProps>;
+export type DialogActionsProps=DialogActionsOwnProps&Omit<React.ComponentPropsWithRef<'div'>,keyof DialogActionsOwnProps>;
+export const DialogTitle:TextComponent<DialogTitleOwnProps,'h2'>;
+export const DialogContent:React.ForwardRefExoticComponent<DialogContentProps>;
+export const DialogActions:React.ForwardRefExoticComponent<DialogActionsProps>;
+export type DialogTitleClassKey=keyof DialogTitleClasses;
+export const dialogTitleClasses:Readonly<DialogTitleClasses>;
+export function getDialogTitleUtilityClass(slot:string):string;
+export type DialogContentClassKey=keyof DialogContentClasses;
+export const dialogContentClasses:Readonly<DialogContentClasses>;
+export function getDialogContentUtilityClass(slot:string):string;
+export type DialogActionsClassKey=keyof DialogActionsClasses;
+export const dialogActionsClasses:Readonly<DialogActionsClasses>;
+export function getDialogActionsUtilityClass(slot:string):string;

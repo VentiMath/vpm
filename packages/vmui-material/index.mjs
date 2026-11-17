@@ -74,3 +74,6 @@ export const {AvatarGroup,avatarGroupClasses,getAvatarGroupUtilityClass}=a;
 export const {Tooltip,tooltipClasses,getTooltipUtilityClass}=a;
 
 export const {Collapse,collapseClasses,getCollapseUtilityClass}=a;
+export const {DialogTitle,dialogTitleClasses,getDialogTitleUtilityClass}=a;
+export const {DialogContent,dialogContentClasses,getDialogContentUtilityClass}=a;
+export const {DialogActions,dialogActionsClasses,getDialogActionsUtilityClass}=a;

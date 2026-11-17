@@ -354,3 +354,17 @@ void getCollapseUtilityClass("root");void collapseClasses.wrapper;
 const invalidCollapse:CollapseProps={orientation:"diagonal"};
 // @ts-expect-error automatic timing uses the documented auto value
 const invalidCollapseTiming:CollapseProps={timeout:"slow"};
+
+import DialogTitle, {type DialogTitleProps} from "vmui-material/DialogTitle";
+import DialogContent, {type DialogContentProps} from "vmui-material/DialogContent";
+import DialogActions, {type DialogActionsProps} from "vmui-material/DialogActions";
+import dialogContentClasses from "vmui-material/dialogContentClasses";
+const titleProps:DialogTitleProps={id:"title",variant:"h6",sx:{fontWeight:700}};
+React.createElement(DialogTitle<"h3">,{...titleProps,component:"h3",ref:React.createRef<HTMLHeadingElement>()},"Edit reminder");
+React.createElement(DialogContent,{dividers:true,ref:React.createRef<HTMLDivElement>(),sx:{pt:"1rem !important"}},"Fields");
+React.createElement(DialogActions,{disableSpacing:true,sx:{flexWrap:"wrap"}},"Save");
+void dialogContentClasses.dividers;
+// @ts-expect-error divider state is boolean
+const invalidDialogContent:DialogContentProps={dividers:"yes"};
+// @ts-expect-error spacing state is boolean
+const invalidDialogActions:DialogActionsProps={disableSpacing:1};

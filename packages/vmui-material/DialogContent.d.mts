@@ -1,0 +1,1 @@
+export {DialogContent as default,dialogContentClasses,getDialogContentUtilityClass,type DialogContentProps,type DialogContentOwnProps,type DialogContentClasses,type DialogContentClassKey} from "./index.mjs";

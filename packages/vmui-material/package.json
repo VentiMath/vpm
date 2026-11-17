@@ -1137,6 +1137,66 @@
         "types": "./collapseClasses.d.cts",
         "default": "./collapseClasses.cjs"
       }
+    },
+    "./DialogTitle": {
+      "import": {
+        "types": "./DialogTitle.d.mts",
+        "default": "./DialogTitle.mjs"
+      },
+      "require": {
+        "types": "./DialogTitle.d.cts",
+        "default": "./DialogTitle.cjs"
+      }
+    },
+    "./dialogTitleClasses": {
+      "import": {
+        "types": "./dialogTitleClasses.d.mts",
+        "default": "./dialogTitleClasses.mjs"
+      },
+      "require": {
+        "types": "./dialogTitleClasses.d.cts",
+        "default": "./dialogTitleClasses.cjs"
+      }
+    },
+    "./DialogContent": {
+      "import": {
+        "types": "./DialogContent.d.mts",
+        "default": "./DialogContent.mjs"
+      },
+      "require": {
+        "types": "./DialogContent.d.cts",
+        "default": "./DialogContent.cjs"
+      }
+    },
+    "./dialogContentClasses": {
+      "import": {
+        "types": "./dialogContentClasses.d.mts",
+        "default": "./dialogContentClasses.mjs"
+      },
+      "require": {
+        "types": "./dialogContentClasses.d.cts",
+        "default": "./dialogContentClasses.cjs"
+      }
+    },
+    "./DialogActions": {
+      "import": {
+        "types": "./DialogActions.d.mts",
+        "default": "./DialogActions.mjs"
+      },
+      "require": {
+        "types": "./DialogActions.d.cts",
+        "default": "./DialogActions.cjs"
+      }
+    },
+    "./dialogActionsClasses": {
+      "import": {
+        "types": "./dialogActionsClasses.d.mts",
+        "default": "./dialogActionsClasses.mjs"
+      },
+      "require": {
+        "types": "./dialogActionsClasses.d.cts",
+        "default": "./dialogActionsClasses.cjs"
+      }
     }
   },
   "files": [
