@@ -414,3 +414,10 @@ checks, `types.cjs`, and exact archives filtered to `swipeable-drawer-browser.cj
 Build `swipeable-drawer-build.cjs` before sequential Node/Bun measurement runs of
 `packages/vmui-material/bench/swipeable-drawer.cjs`. These measure SSR composition,
 not native gesture performance or real-device acceptance.
+
+Autocomplete has 960 current9/app7 SSR/filter comparisons and app-shaped native
+Chrome controls for school/student selectors, Hook Form, option changes, IME,
+keyboard/ARIA, theme overrides, retained inputs and hydration. Run
+`autocomplete-contract.cjs`, `autocomplete-browser.cjs` (production/development)
+and the fresh archive gate. Its independent implementation targets the current
+API; the controlled free-solo popup difference from app7 is explicit in the check.

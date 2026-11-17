@@ -17,3 +17,5 @@ Object.assign(module.exports,require("./drawers.cjs"));
 Object.assign(module.exports,require("./swipeable-drawers.cjs"));
 
 Object.assign(module.exports,require('./tables.cjs'));
+
+Object.assign(module.exports,require('./autocomplete-control.cjs'));

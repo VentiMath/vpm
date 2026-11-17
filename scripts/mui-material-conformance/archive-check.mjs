@@ -159,3 +159,6 @@ assert.match(renderToString(React.createElement(api.SwipeableDrawer,{variant:'pe
 
 for(const name of ["Table", "TableHead", "TableBody", "TableFooter", "TableRow", "TableCell", "TableContainer"]) assert.equal(api[name],require("vmui-material/"+name).default);
 assert.match(renderToString(React.createElement(api.Table,null,React.createElement(api.TableHead,null,React.createElement(api.TableRow,null,React.createElement(api.TableCell,{sortDirection:"asc"},"Score"))))),/aria-sort="ascending"/);
+
+assert.equal(api.Autocomplete,require('vmui-material/Autocomplete').default);assert.equal(api.createFilterOptions,require('vmui-material/Autocomplete').createFilterOptions);assert.equal(api.autocompleteClasses,require('vmui-material/autocompleteClasses').default);
+assert.match(renderToString(React.createElement(api.Autocomplete,{options:['School'],multiple:true,freeSolo:true,value:['New school'],renderInput:p=>React.createElement(api.TextField,{...p,label:'Schools'})})),/role="combobox"/);

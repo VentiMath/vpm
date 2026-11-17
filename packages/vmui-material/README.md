@@ -841,3 +841,32 @@ in-place palette changes remain evaluated. [Optimized measurements](bench/tables
 remove the earlier multi-fold median gap. Node differences do not clear the
 control spread; Bun's app results-table case remains 32% slower. This is not
 a claim of complete SSR parity or application latency improvement.
+
+## Autocomplete
+
+The independent Autocomplete covers WARML school entry (multiple/free-solo),
+practice and profile student selectors, ARML's View as field and the Hook Form
+example. It composes the owned TextField input, Chip, Paper and IconButton
+foundations, with Floating UI placement in the input's owner document. It adds
+no upstream runtime dependency. Material now has 65 independent components.
+
+Value, input text and popup state can be controlled separately. Supported
+behavior includes string/object options, custom labels/equality/disabled options,
+accent/case filtering, free-solo creation, multiple removable tags, localized
+loading/empty text, grouping, refs, theme overrides and `sx`. Input focus stays
+on the combobox while active-descendant navigation selects options; IME Enter
+does not commit a partial word. The app-shaped checks cover Hook Form updates,
+reset/focus, changing option lists, clearing, read-only/disabled state, native
+keyboard selection, popup alignment, stable input nodes and hydration.
+
+The current9/app7 controls agree across 960 SSR/filter comparisons. Chrome tests
+compare light/dark, CSS-variable and RTL themes, including the shared compact
+Autocomplete overrides. One intentional current-API difference: a controlled
+free-solo field with a newly typed value does not reopen an unrelated full list,
+where app7 does. This follows Material9. The exported API is the documented
+application subset: mapped `getOptionValue`, virtualization and standalone
+`useAutocomplete` are not supplied. This does not make the entire Material
+package ready for an application override.
+
+[Autocomplete measurements](bench/autocomplete/README.md) compare eight empty,
+selected and multiple-school fields. They measure SSR, not typing latency.

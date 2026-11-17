@@ -25,19 +25,16 @@ inventory. The entire upstream Motion API is **not** complete.
 
 ## Material
 
-[vmui-material](../packages/vmui-material) now has 64 independently implemented
+[vmui-material](../packages/vmui-material) now has 65 independently implemented
 components. It covers button controls; text/icons; Box/Paper/Divider; the form,
 input, Select, checkbox/radio/switch foundation; menus; Chip, Avatar, loading
-spinners, Skeleton placeholders, Container page layouts and Card/CardContent panels and their linked CardActionArea roots, plus AvatarGroup, Tooltip, Collapse, Slide, Drawer, SwipeableDrawer, the seven Table primitives and Dialog with its title/content/action/description components. Its resolved-theme bridge is built,
+spinners, Skeleton placeholders, Container page layouts and Card/CardContent panels and their linked CardActionArea roots, plus AvatarGroup, Tooltip, Collapse, Slide, Drawer, SwipeableDrawer, the seven Table primitives, Autocomplete and Dialog with its title/content/action/description components. Its resolved-theme bridge is built,
 but full Material theme creation
 and all app-used component families are not. It cannot replace the entire
 `@mui/material` dependency yet.
 
-The largest unbuilt families in direct source use are:
-
-| Family | Source imports | Why it matters |
-| --- | ---: | --- |
-| Autocomplete | 5 | Searchable selection inputs |
+Autocomplete now covers the five direct school/student selection callers.
+Further work must include indirect consumers in the adopted table package.
 
 Theme/style imports occur in 90 files. The shared theme factory and remaining
 layout/overlay families are adoption requirements, not peripheral polish.
@@ -45,8 +42,8 @@ Dependencies such as Material React Table may also consume components that do
 not appear as direct app imports; they need unchanged-caller acceptance before
 a complete package override.
 
-**Next Material unit: Autocomplete**, used by the remaining Material selection
-callers. The seven Table primitives now cover direct results and score grids. SwipeableDrawer now covers shared navigation, page sidebars and notification
+**Next Material units: TableSortLabel and Pagination**, used by the adopted
+Material React Table in the math-resources and contest-season grids. The seven Table primitives now cover direct results and score grids. SwipeableDrawer now covers shared navigation, page sidebars and notification
 panels, with native swipe-close, scroll arbitration, cancellation and retained content. DialogContentText now covers external-link and WARML
 confirmations and the FuseDialog example. Dialog and Slide cover the eleven
 Material Dialog imports and the two settings panels' transition APIs. Description

@@ -1,0 +1,3 @@
+import React from 'react';import {renderToString} from 'react-dom/server';import {Autocomplete,TextField} from '@buttons';
+const options=['Café School','Cambridge','École','West Academy'];
+export function prepare(kind){const fields=Array.from({length:8},(_,i)=>React.createElement(Autocomplete,{key:i,id:'school-'+i,options,size:'small',multiple:kind==='tags',freeSolo:kind==='tags',value:kind==='tags'?['Café School','New school']:kind==='selected'?'Cambridge':null,renderInput:p=>React.createElement(TextField,{...p,label:'School'})}));const node=React.createElement('section',null,fields);return()=>renderToString(node);}

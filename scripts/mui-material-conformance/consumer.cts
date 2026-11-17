@@ -376,3 +376,6 @@ React.createElement(TableContainer,{component:Paper,elevation:0,sx:{maxHeight:'7
 React.createElement(TableCell,{sortDirection:'sideways'});
 // @ts-expect-error sticky headers belong to Table, not TableRow
 const invalidTableRow:import('vmui-material').TableRowProps={stickyHeader:true};
+
+import Autocomplete = require('vmui-material/Autocomplete');
+const autocompleteNode=React.createElement(Autocomplete.default<string>,{options:['School'],renderInput:params=>React.createElement(TextField.default,params)});

@@ -711,3 +711,42 @@ export type TableContainerProps<C extends React.ElementType="div">=TableBaseProp
 export const TableContainer:<C extends React.ElementType="div">(props:TableContainerProps<C>)=>React.ReactElement|null;
 export const tableContainerClasses:Readonly<Record<string,string>>;
 export function getTableContainerUtilityClass(slot:string):string;
+
+export interface CreateFilterOptionsConfig<T> { ignoreAccents?:boolean; ignoreCase?:boolean; limit?:number; matchFrom?:'any'|'start'; stringify?:(option:T)=>string; trim?:boolean; }
+export interface FilterOptionsState<T> {inputValue:string;getOptionLabel:(option:T)=>string;}
+export function createFilterOptions<T>(config?:CreateFilterOptionsConfig<T>):(options:readonly T[],state:FilterOptionsState<T>)=>T[];
+export type AutocompleteFreeSoloValueMapping<F> = F extends true ? string : never;
+export type AutocompleteValue<T,M,D,F> = M extends true ? (T|AutocompleteFreeSoloValueMapping<F>)[] : D extends true ? NonNullable<T|AutocompleteFreeSoloValueMapping<F>> : T|AutocompleteFreeSoloValueMapping<F>|null;
+export type AutocompleteChangeReason = 'createOption'|'selectOption'|'removeOption'|'blur'|'clear';
+export type AutocompleteInputChangeReason = 'input'|'reset'|'clear'|'blur'|'selectOption'|'removeOption';
+export type AutocompleteCloseReason = 'toggleInput'|'escape'|'selectOption'|'removeOption'|'blur'|'createOption';
+export interface AutocompleteRenderInputParams {
+ id:string;disabled:boolean;fullWidth:boolean;size?:'small';InputLabelProps:{htmlFor:string;id:string};
+ InputProps:{ref:React.Ref<HTMLElement>;className:string;startAdornment:React.ReactNode;endAdornment:React.ReactNode};inputProps:React.InputHTMLAttributes<HTMLInputElement>&{ref:React.Ref<HTMLInputElement>};
+}
+export interface AutocompleteProps<T,M extends boolean|undefined=false,D extends boolean|undefined=false,F extends boolean|undefined=false> extends Omit<React.HTMLAttributes<HTMLDivElement>,'defaultValue'|'onChange'|'children'> {
+ options:readonly T[];renderInput:(params:AutocompleteRenderInputParams)=>React.ReactNode;
+ multiple?:M;disableClearable?:D;freeSolo?:F;value?:AutocompleteValue<T,M,D,F>;defaultValue?:AutocompleteValue<T,M,D,F>;inputValue?:string;open?:boolean;
+ onChange?:(event:React.SyntheticEvent,value:AutocompleteValue<T,M,D,F>,reason:AutocompleteChangeReason,details?:{option:T|AutocompleteFreeSoloValueMapping<F>})=>void;
+ onInputChange?:(event:React.SyntheticEvent|null,value:string,reason:AutocompleteInputChangeReason)=>void;
+ onOpen?:(event:React.SyntheticEvent)=>void;onClose?:(event:React.SyntheticEvent,reason:AutocompleteCloseReason)=>void;
+ onHighlightChange?:(event:React.SyntheticEvent,option:T|null,reason:'keyboard'|'mouse'|'touch'|'auto')=>void;
+ getOptionLabel?:(option:T|AutocompleteFreeSoloValueMapping<F>)=>string;getOptionKey?:(option:T)=>string|number;getOptionDisabled?:(option:T)=>boolean;isOptionEqualToValue?:(option:T,value:T|AutocompleteFreeSoloValueMapping<F>)=>boolean;
+ filterOptions?:(options:T[],state:FilterOptionsState<T>)=>T[];filterSelectedOptions?:boolean;
+ disabled?:boolean;readOnly?:boolean;disableCloseOnSelect?:boolean;disableListWrap?:boolean;disabledItemsFocusable?:boolean;includeInputInList?:boolean;
+ autoHighlight?:boolean;autoSelect?:boolean;autoComplete?:boolean;clearOnBlur?:boolean;clearOnEscape?:boolean;selectOnFocus?:boolean;handleHomeEndKeys?:boolean;openOnFocus?:boolean;blurOnSelect?:boolean|'mouse'|'touch';
+ forcePopupIcon?:boolean|'auto';fullWidth?:boolean;size?:'small'|'medium';limitTags?:number;getLimitTagsText?:(more:number)=>React.ReactNode;
+ renderTags?:(value:T[],getTagProps:(params:{index:number})=>{key:number;tabIndex:number;disabled:boolean;onDelete?:(event:React.SyntheticEvent)=>void},ownerState:AutocompleteProps<T,M,D,F>)=>React.ReactNode;
+ renderValue?:(value:AutocompleteValue<T,M,D,F>,getItemProps:(params?:{index?:number})=>{key:number;tabIndex:number;disabled:boolean;onDelete?:(event:React.SyntheticEvent)=>void},ownerState:AutocompleteProps<T,M,D,F>)=>React.ReactNode;
+ renderOption?:(props:React.HTMLAttributes<HTMLLIElement>&{key:React.Key},option:T,state:{selected:boolean;index:number;inputValue:string},ownerState:AutocompleteProps<T,M,D,F>)=>React.ReactNode;
+ groupBy?:(option:T)=>string;renderGroup?:(params:{key:number;group:string;children:React.ReactNode})=>React.ReactNode;
+ loading?:boolean;loadingText?:React.ReactNode;noOptionsText?:React.ReactNode;clearText?:string;openText?:string;closeText?:string;clearIcon?:React.ReactNode;popupIcon?:React.ReactNode;
+ disablePortal?:boolean;classes?:Partial<Record<AutocompleteClassKey,string>>;sx?:SxProps<Theme>;
+ slots?:{listbox?:React.ElementType;paper?:React.ElementType;popper?:React.ElementType};
+ slotProps?:Partial<Record<'listbox'|'paper'|'popper'|'chip'|'clearIndicator'|'popupIndicator',Record<string,unknown>|((state:AutocompleteProps<T,M,D,F>)=>Record<string,unknown>)>>;
+ ChipProps?:Partial<ChipProps>;ListboxProps?:React.HTMLAttributes<HTMLElement>&{ref?:React.Ref<HTMLElement>};ListboxComponent?:React.ElementType;PaperComponent?:React.ElementType;PopperComponent?:React.ElementType;
+}
+export function Autocomplete<T,M extends boolean|undefined=false,D extends boolean|undefined=false,F extends boolean|undefined=false>(props:AutocompleteProps<T,M,D,F>&React.RefAttributes<HTMLDivElement>):React.ReactElement|null;
+export type AutocompleteClassKey='root'|'expanded'|'fullWidth'|'focused'|'focusVisible'|'tag'|'tagSizeSmall'|'tagSizeMedium'|'hasPopupIcon'|'hasClearIcon'|'inputRoot'|'input'|'inputFocused'|'endAdornment'|'clearIndicator'|'popupIndicator'|'popupIndicatorOpen'|'popper'|'popperDisablePortal'|'paper'|'listbox'|'loading'|'noOptions'|'option'|'groupLabel'|'groupUl';
+export const autocompleteClasses:Readonly<Record<AutocompleteClassKey,string>>;
+export function getAutocompleteUtilityClass(slot:string):string;

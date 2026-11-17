@@ -1417,6 +1417,26 @@
         "types": "./tableContainerClasses.d.cts",
         "default": "./tableContainerClasses.cjs"
       }
+    },
+    "./Autocomplete": {
+      "import": {
+        "types": "./Autocomplete.d.mts",
+        "default": "./Autocomplete.mjs"
+      },
+      "require": {
+        "types": "./Autocomplete.d.cts",
+        "default": "./Autocomplete.cjs"
+      }
+    },
+    "./autocompleteClasses": {
+      "import": {
+        "types": "./autocompleteClasses.d.mts",
+        "default": "./autocompleteClasses.mjs"
+      },
+      "require": {
+        "types": "./autocompleteClasses.d.cts",
+        "default": "./autocompleteClasses.cjs"
+      }
     }
   },
   "files": [

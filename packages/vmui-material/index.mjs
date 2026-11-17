@@ -95,3 +95,5 @@ export const TableFooter=tables.TableFooter,tableFooterClasses=tables.tableFoote
 export const TableRow=tables.TableRow,tableRowClasses=tables.tableRowClasses,getTableRowUtilityClass=tables.getTableRowUtilityClass;
 export const TableCell=tables.TableCell,tableCellClasses=tables.tableCellClasses,getTableCellUtilityClass=tables.getTableCellUtilityClass;
 export const TableContainer=tables.TableContainer,tableContainerClasses=tables.tableContainerClasses,getTableContainerUtilityClass=tables.getTableContainerUtilityClass;
+
+export const {Autocomplete,autocompleteClasses,getAutocompleteUtilityClass,createFilterOptions}=a;

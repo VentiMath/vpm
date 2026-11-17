@@ -422,3 +422,16 @@ React.createElement(TableContainer,{component:Paper,elevation:0,sx:{maxHeight:'7
 React.createElement(TableCell,{sortDirection:'sideways'});
 // @ts-expect-error sticky headers belong to Table, not TableRow
 const invalidTableRow:import('vmui-material').TableRowProps={stickyHeader:true};
+
+import {Autocomplete,createFilterOptions,type AutocompleteProps} from 'vmui-material';
+import AutocompleteEntry from 'vmui-material/Autocomplete';
+const schoolOptions=[{id:1,label:'School'}];
+const schoolControl:AutocompleteProps<typeof schoolOptions[number]>= {options:schoolOptions,value:schoolOptions[0],isOptionEqualToValue:(a,b)=>a.id===b.id,onChange:(e,v,reason)=>{const id:number|undefined=v?.id;},renderInput:params=>React.createElement(TextField,{...params,label:'School'})};
+React.createElement(Autocomplete<typeof schoolOptions[number]>,schoolControl);
+AutocompleteEntry({options:['School'],multiple:true,freeSolo:true,value:['New school'],onChange:(e,value)=>{const names:string[]=value;},renderInput:params=>React.createElement(TextField,params)});
+const filterSchools=createFilterOptions<typeof schoolOptions[number]>({stringify:school=>school.label});
+filterSchools(schoolOptions,{inputValue:'School',getOptionLabel:o=>o.label});
+// @ts-expect-error a multi-select value is an array
+const badAutocompleteValue:AutocompleteProps<string,true>={options:['A'],value:'A',renderInput:()=>null};
+// @ts-expect-error undeclared upstream value-mapping API is outside this application subset
+const unsupportedMappedAutocomplete:AutocompleteProps<{id:number}>={options:[{id:1}],getOptionValue:o=>o.id,renderInput:()=>null};
