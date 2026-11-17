@@ -1,0 +1,13 @@
+'use strict';
+const {test}=require('node:test'),assert=require('node:assert/strict'),{peer}=require('../../../scripts/mui-material-conformance/paths.cjs'),R=peer('react'),r=peer('react-dom/server').renderToStaticMarkup,M=require(require('../../../scripts/mui-material-conformance/prepare.cjs'));
+const {targetOpen,scrollConsumes}=require('../swipe-gesture.cjs');
+const output=p=>r(R.createElement(M.SwipeableDrawer,{onOpen(){},onClose(){},...p},'Navigation')).replace(/<style[\s\S]*?<\/style>/g,'');
+test('SwipeableDrawer retains closed inline panel content by default',()=>{const html=output({open:false,disablePortal:true,disableSwipeToOpen:true});assert.match(html,/Navigation/);assert.match(html,/visibility:hidden/);assert.match(html,/pointer-events:none/);assert.doesNotMatch(html,/disableSwipeToOpen=|hysteresis=|swipeAreaWidth=/)});
+test('SwipeableDrawer preserves Drawer variants and explicit mounting policy',()=>{assert.equal(output({open:false,disablePortal:true,ModalProps:{keepMounted:false}}),'');assert.match(output({variant:'permanent',open:false}),/MuiDrawer-docked/);assert.doesNotMatch(output({variant:'permanent',open:false}),/visibility:hidden|pointer-events:none/)});
+test('swipe hysteresis requires deliberate travel, while a fling can complete early',()=>{assert.equal(targetOpen(true,.7,0),true);assert.equal(targetOpen(true,.3,0),false);assert.equal(targetOpen(false,.4,0),false);assert.equal(targetOpen(false,.6,0),true);assert.equal(targetOpen(true,.9,-600),false);assert.equal(targetOpen(false,.1,600),true);assert.equal(targetOpen(true,.9,-400),true);assert.equal(targetOpen(true,.6,0,.2),false);assert.equal(targetOpen(false,.6,0,.8),false)});
+test('direction reversal uses the final velocity, and cancelled gestures need no threshold decision',()=>{assert.equal(targetOpen(true,.2,600),true);assert.equal(targetOpen(false,.8,-600),false);assert.equal(targetOpen(true,.4,0,.52,Infinity),false)});
+test('nested scrollable content keeps its available movement before the drawer',()=>{
+ const doc={defaultView:{getComputedStyle:el=>el.css}},paper={ownerDocument:doc,contains:el=>el===paper||el.parentElement===paper},el={nodeType:1,parentElement:paper,matches:()=>false,css:{overflowX:'auto',overflowY:'auto',direction:'ltr'},scrollLeft:0,scrollTop:10,scrollWidth:600,clientWidth:200,scrollHeight:500,clientHeight:100};paper.matches=()=>false;paper.css={overflowX:'visible',overflowY:'visible'};
+ assert.equal(scrollConsumes(el,paper,true,-20),true);assert.equal(scrollConsumes(el,paper,true,20),false);el.scrollLeft=400;assert.equal(scrollConsumes(el,paper,true,-20),false);assert.equal(scrollConsumes(el,paper,false,20),true);
+ el.css.direction='rtl';el.scrollLeft=-100;assert.equal(scrollConsumes(el,paper,true,20),true);
+});

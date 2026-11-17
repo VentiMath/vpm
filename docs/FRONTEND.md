@@ -25,10 +25,10 @@ inventory. The entire upstream Motion API is **not** complete.
 
 ## Material
 
-[vmui-material](../packages/vmui-material) now has 56 independently implemented
+[vmui-material](../packages/vmui-material) now has 57 independently implemented
 components. It covers button controls; text/icons; Box/Paper/Divider; the form,
 input, Select, checkbox/radio/switch foundation; menus; Chip, Avatar, loading
-spinners, Skeleton placeholders, Container page layouts and Card/CardContent panels and their linked CardActionArea roots, plus AvatarGroup, Tooltip, Collapse, Slide, Drawer and Dialog with its title/content/action/description components. Its resolved-theme bridge is built,
+spinners, Skeleton placeholders, Container page layouts and Card/CardContent panels and their linked CardActionArea roots, plus AvatarGroup, Tooltip, Collapse, Slide, Drawer, SwipeableDrawer and Dialog with its title/content/action/description components. Its resolved-theme bridge is built,
 but full Material theme creation
 and all app-used component families are not. It cannot replace the entire
 `@mui/material` dependency yet.
@@ -37,7 +37,6 @@ The largest unbuilt families in direct source use are:
 
 | Family | Source imports | Why it matters |
 | --- | ---: | --- |
-| SwipeableDrawer | 11 | Shared navigation and side panels |
 | Table primitives | 8 each for Table/body/cell/head/row | Results and remaining direct Material tables |
 | Autocomplete | 5 | Searchable selection inputs |
 
@@ -47,14 +46,15 @@ Dependencies such as Material React Table may also consume components that do
 not appear as direct app imports; they need unchanged-caller acceptance before
 a complete package override.
 
-**Next Material unit: SwipeableDrawer** for the shared
-navigation and side panels. DialogContentText now covers external-link and WARML
+**Next Material unit: the Table primitives** used by results and direct Material
+tables. SwipeableDrawer now covers shared navigation, page sidebars and notification
+panels, with native swipe-close, scroll arbitration, cancellation and retained content. DialogContentText now covers external-link and WARML
 confirmations and the FuseDialog example. Dialog and Slide cover the eleven
 Material Dialog imports and the two settings panels' transition APIs. Description
 IDs, theme styling, focus/dismissal, retained DOM/ref ownership and hydration are
 checked. Drawer now covers the two permanent desktop sidebar wrappers and provides
-temporary/persistent panels over owned Slide and shared modal behavior. SwipeableDrawer
-and standalone modal exports remain unfinished.
+temporary/persistent panels over owned Slide and shared modal behavior. Standalone
+modal exports and the remaining Material families are unfinished.
 Collapse now covers
 the seven navigation and exam-preview imports at app `a7ce009f`, including
 child identity, changing content heights and interrupted transitions. Tooltip now covers 16 rendering caller files (17 imports)

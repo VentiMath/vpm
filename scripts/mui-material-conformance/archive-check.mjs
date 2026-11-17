@@ -153,3 +153,6 @@ assert.match(renderToString(React.createElement(api.AvatarGroup,{max:2},['A','B'
 assert.equal(api.Drawer, require('vmui-material/Drawer').default);
 assert.equal(api.drawerClasses, require('vmui-material/drawerClasses').default);
 assert.match(renderToString(React.createElement(api.Drawer,{variant:'permanent',open:false},'Practice')), /MuiDrawer-docked/);
+
+assert.equal(api.SwipeableDrawer, require('vmui-material/SwipeableDrawer').default);
+assert.match(renderToString(React.createElement(api.SwipeableDrawer,{variant:'permanent',onOpen(){},onClose(){}},'Navigation')),/MuiDrawer-docked/);

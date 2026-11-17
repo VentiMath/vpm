@@ -396,5 +396,21 @@ repeats Drawer and Dialog against exact installed packages. Build `drawer-build.
 before running `packages/vmui-material/bench/drawer.cjs` with Node and Bun,
 sequentially after other checks finish. [Measurements](../../packages/vmui-material/bench/drawer/README.md)
 include the resolved theme and real inline paper content for all three variants.
-The app's SwipeableDrawer callers are the next unit; no swipe gesture support or
-whole-app adoption is claimed here.
+SwipeableDrawer's gesture checks are described below; whole-app adoption is separate.
+
+
+## SwipeableDrawer
+
+`swipeable-drawer-contract.cjs` checks 192 current/app SSR cases. The browser fixture
+adds real CDP touch input: all edges and RTL, short and completing swipes, native
+nested scrolling, fling thresholds, optional opening, cancellation, multiple touches,
+controlled refusal, backdrop policy and retained drafts. It retains Drawer focus,
+nested-overlay, iframe and hydration checks. The current upstream loses swipe behavior
+with an external paper ref; its gesture control omits the ref, while VPM keeps it.
+The app7 gesture control uses its legacy PaperProps form. Each comparison uses a fresh Chrome tab to isolate native touch recognition after multi-touch probes. The other structural differences and legacy Escape behavior are documented under Drawer.
+
+Run production and `VPM_REACT_MODE=development` browser checks, Node/Bun unit and SSR
+checks, `types.cjs`, and exact archives filtered to `swipeable-drawer-browser.cjs,drawer-browser.cjs`.
+Build `swipeable-drawer-build.cjs` before sequential Node/Bun measurement runs of
+`packages/vmui-material/bench/swipeable-drawer.cjs`. These measure SSR composition,
+not native gesture performance or real-device acceptance.

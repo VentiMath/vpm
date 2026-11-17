@@ -1,6 +1,6 @@
 # vmui-material
 
-Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card, CardContent, CardActionArea, AvatarGroup, Tooltip, Collapse, DialogTitle, DialogContent, DialogActions, Dialog, Slide, DialogContentText and Drawer, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
+Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card, CardContent, CardActionArea, AvatarGroup, Tooltip, Collapse, DialogTitle, DialogContent, DialogActions, Dialog, Slide, DialogContentText, Drawer and SwipeableDrawer, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
 
 ```js
 import { Button, ToggleButton, ToggleButtonGroup } from 'vmui-material';
@@ -696,7 +696,7 @@ completion; mount/unmount options; cancellation on reversal or removal; and the
 current reduced-motion policy with explicit opt-out. Closed content follows
 viewport and container resizing. Placement uses the child's document, including
 iframe viewports. It preserves mounted drafts and focus through parent updates.
-The child must accept a DOM ref and forwarded style. Drawer composes this Slide implementation; SwipeableDrawer remains pending.
+The child must accept a DOM ref and forwarded style. Drawer and SwipeableDrawer compose this Slide implementation.
 
 Node/Bun SSR and strict declaration checks accompany Chrome comparisons of
 geometry, lifecycle and both settings-panel shapes, including RTL, responsive
@@ -733,8 +733,8 @@ they are not measurements of browser interaction or assistive-technology latency
 Drawer covers VentiMath's permanent desktop sidebars in `FusePageCardedSidebar`
 and `FusePageSimpleSidebar`: left/right placement, custom root and paper classes,
 and the paper width set through `sx`. It also provides persistent and temporary
-panels, the foundation needed for the mobile sidebars. **SwipeableDrawer is not
-implemented yet**, and this partial package is not ready for a whole-app override.
+panels, the foundation used by SwipeableDrawer for mobile sidebars. This partial
+package is not ready for a whole-app override.
 
 The implementation composes owned Paper and Slide with the private modal behavior
 shared with Dialog. It adds no dependency. It supports all four edges and RTL,
@@ -769,3 +769,46 @@ The recorded permanent-sidebar cases take 28–37% less time on Node 24 and
 control spread. Current Material 9 persistent/temporary Node medians are lower,
 but noisy identical-source controls leave those two directions unestablished.
 All raw samples, including the noisy controls, are retained in the report.
+
+
+## SwipeableDrawer
+
+SwipeableDrawer covers the app's shared mobile navigation, page sidebars,
+notification and quick panels. These callers use left/right temporary panels,
+`disableSwipeToOpen`, no-op `onOpen`, controlled close callbacks, scrollable
+children and default or explicit `ModalProps.keepMounted`. Their custom classes,
+paper widths, themes and refs continue through the owned Drawer.
+
+The gesture controller is independently written. It supports four edges and RTL,
+distance and fling thresholds, optional edge discovery/opening, swipe area slots,
+child-scroll arbitration, cancelled/multiple touches, retained drafts and parent
+refusal of an open/close request. It observes the paper's own document, limits one
+active drawer gesture per document and respects newer modal overlays. Idle panels
+have only passive touch-start listeners; scroll-blocking listeners exist only
+while considering a gesture. They and completion timers are removed on cleanup.
+`disableBackdropTransition` disables the fade as well as gesture opacity updates.
+Reduced-motion timing uses the owned theme policy.
+
+Current slots and the legacy `SwipeAreaProps`/Drawer prop forms are available.
+Paper refs remain usable during swipes. The pinned Material 9.5.0 control loses
+swipe behavior with an external paper ref, so its touch comparison uses no such
+ref; VPM is tested with the ref present. Retired app7 classes and sentinel nodes
+follow Drawer’s documented differences. This package does not promise identical
+finger-tracking curves or physics; compatibility checks cover outcomes, geometry,
+scrolling, focus, callbacks and retained nodes.
+
+Edge opening relies on retained paper content (the default). The app disables
+edge opening; `keepMounted:false` is supported for ordinary controlled panels
+but is not a verified edge-opening combination. Native Chrome touch checks do
+not establish physical iOS/Safari or Android device acceptance. No app switch or
+whole-Material release is claimed.
+
+[SwipeableDrawer measurements](bench/swipeable-drawer/README.md) cover resolved-theme
+SSR for the three variants with inline content. They do not measure touch frame
+rates or input latency. Build `scripts/mui-material-conformance/swipeable-drawer-build.cjs`
+before running the package benchmark.
+
+In these local SSR fixtures, elapsed time is 31–52% lower on Node 24 and 29–47%
+lower on Bun 1.4.4 across current/app controls. Every comparison pair is beyond
+the identical-source control spread. These are server-rendering measurements,
+not claims about swipe responsiveness or production application speed.

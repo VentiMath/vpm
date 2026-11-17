@@ -1267,6 +1267,16 @@
         "types": "./drawerClasses.d.cts",
         "default": "./drawerClasses.cjs"
       }
+    },
+    "./SwipeableDrawer": {
+      "import": {
+        "types": "./SwipeableDrawer.d.mts",
+        "default": "./SwipeableDrawer.mjs"
+      },
+      "require": {
+        "types": "./SwipeableDrawer.d.cts",
+        "default": "./SwipeableDrawer.cjs"
+      }
     }
   },
   "files": [

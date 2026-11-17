@@ -15,4 +15,5 @@ function enter(doc,root,lock){
  }
  sync();return {top:()=>state.entries.at(-1)===entry,release(){const i=state.entries.indexOf(entry);if(i>=0)state.entries.splice(i,1);sync();if(!state.entries.length)documents.delete(doc);}};
 }
-module.exports={enter};
+function ownsGesture(doc,root){const top=documents.get(doc)?.entries.at(-1)?.root;return !top||top===root;}
+module.exports={enter,ownsGesture};

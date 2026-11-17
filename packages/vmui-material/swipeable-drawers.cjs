@@ -1,0 +1,26 @@
+'use strict';
+const React=require('react'),{createPortal}=require('react-dom'),{Drawer}=require('./drawers.cjs'),{useTheme,useThemeProps}=require('./theme.cjs'),{useRefs}=require('./modal-primitives.cjs'),{installSwipe}=require('./swipe-gesture.cjs');
+const layout=typeof document==='undefined'?React.useEffect:React.useLayoutEffect;
+const h=React.createElement,empty=Object.freeze({}),resolve=(value,state)=>(typeof value==='function'?value(state):value)||empty;
+const SwipeableDrawer=React.forwardRef(function SwipeableDrawer(input,forwarded){
+ const p=useThemeProps({props:input,name:'MuiSwipeableDrawer'}),theme=useTheme();
+ const {open=false,variant='temporary',anchor='left',onOpen,onClose,allowSwipeInChildren=false,disableBackdropTransition=false,disableDiscovery=false,disableSwipeToOpen:requestedDisable,hysteresis=.52,minFlingVelocity=450,swipeAreaWidth=20,SwipeAreaProps=empty,slots=empty,slotProps=empty,PaperProps,ModalProps=empty,transitionDuration={enter:theme.transitions?.duration?.enteringScreen??225,exit:theme.transitions?.duration?.leavingScreen??195},...rest}=p;
+ const root=React.useRef(),paper=React.useRef(),area=React.useRef(),controller=React.useRef(),current=React.useRef(),[doc,setDoc]=React.useState(null);
+ const physical=theme.direction==='rtl'?(anchor==='left'?'right':anchor==='right'?'left':anchor):anchor;
+ const disableSwipeToOpen=requestedDisable??/iPad|iPhone|iPod/.test(doc?.defaultView.navigator.userAgent||'');
+ current.current={open,anchor:physical,onOpen,onClose,allowSwipeInChildren,disableBackdropTransition,disableDiscovery,disableSwipeToOpen,hysteresis,minFlingVelocity,swipeAreaWidth,transitionDuration,reducedMotion:theme.motion?.reducedMotion};
+ const captureRoot=React.useCallback(node=>{if(node)setDoc(node.ownerDocument)},[]);
+ const rootRef=useRefs(root,forwarded,captureRoot);
+ const state={...p,open,variant,anchor,elevation:p.elevation??16,exited:!open};
+ const backdropProps=resolve(slotProps.backdrop??rest.BackdropProps,state),paperProps=resolve(slotProps.paper??PaperProps,state),swipeProps=resolve(slotProps.swipeArea??SwipeAreaProps,state);
+ const paperRef=useRefs(paper,paperProps.ref),areaRef=useRefs(area,swipeProps.ref);
+ React.useEffect(()=>{const container=ModalProps.container??rest.container,target=typeof container==='function'?container():container;setDoc(target?.ownerDocument||root.current?.ownerDocument||document)},[ModalProps.container,rest.container]);
+ React.useEffect(()=>{if(!doc||variant!=='temporary')return;const owned=installSwipe({doc,read:()=>current.current,root,paper,area});controller.current=owned;return()=>{owned.dispose();if(controller.current===owned)controller.current=null}},[doc,variant]);
+ React.useEffect(()=>{controller.current?.cancel()},[physical,disableSwipeToOpen]);
+ layout(()=>{controller.current?.sync()},[open]);
+ const Area=slots.swipeArea||'div',horizontal=physical==='left'||physical==='right';
+ const {swipeArea:unusedSlot,...drawerSlots}=slots,{swipeArea:unusedProps,...drawerProps}=slotProps;
+ const areaNode=doc&&variant==='temporary'&&!disableSwipeToOpen?h(Area,{'aria-hidden':true,...(typeof Area==='string'?empty:{ownerState:state}),...swipeProps,ref:areaRef,style:{position:'fixed',zIndex:(theme.zIndex?.drawer??1200)-1,[physical]:0,...(horizontal?{top:0,bottom:0,width:swipeAreaWidth}:{left:0,right:0,height:swipeAreaWidth}),...(open?{pointerEvents:'none'}:empty),...swipeProps.style}}):null;
+ return h(React.Fragment,null,h(Drawer,{...rest,open,variant,anchor,onClose,transitionDuration,ref:rootRef,ModalProps:{keepMounted:true,...ModalProps},slots:drawerSlots,slotProps:{...drawerProps,backdrop:{...backdropProps,...(disableBackdropTransition?{transitionDuration:0}:empty)},paper:{...paperProps,style:{...(variant==='temporary'&&!open&&!allowSwipeInChildren?{pointerEvents:'none'}:empty),...paperProps.style},ref:paperRef}}}),areaNode?createPortal(areaNode,typeof (ModalProps.container??rest.container)==='function'?(ModalProps.container??rest.container)()||doc.body:ModalProps.container??rest.container??doc.body):null);
+});
+SwipeableDrawer.displayName='SwipeableDrawer';module.exports={SwipeableDrawer};

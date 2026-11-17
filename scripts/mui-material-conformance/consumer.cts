@@ -358,3 +358,12 @@ void drawerClasses.docked;
 const wrongDrawerVariant:DrawerProps={variant:'floating'};
 // @ts-expect-error anchor is a physical edge
 const wrongDrawerAnchor:DrawerProps={anchor:'middle'};
+
+import SwipeableDrawer,{type SwipeableDrawerProps} from 'vmui-material/SwipeableDrawer';
+const navigation:SwipeableDrawerProps={open:true,anchor:'right',disableSwipeToOpen:true,onOpen:()=>{},onClose:()=>{},ModalProps:{keepMounted:true},ref:React.createRef<HTMLDivElement>(),classes:{paper:'FuseSidePanel-paper'}};
+React.createElement(SwipeableDrawer,navigation,'Navigation');
+React.createElement(SwipeableDrawer,{onOpen:e=>void e.type,onClose:e=>void e.type,allowSwipeInChildren:(e,area,paper)=>paper.contains(e.target as Node)&&area.offsetWidth>0,slotProps:{swipeArea:s=>({title:s.anchor})},hysteresis:.6});
+// @ts-expect-error controlled requests require both callbacks
+const missingSwipeCallbacks:SwipeableDrawerProps={onOpen:()=>{}};
+// @ts-expect-error hysteresis is numeric
+const wrongSwipeThreshold:SwipeableDrawerProps={...navigation,hysteresis:'half'};

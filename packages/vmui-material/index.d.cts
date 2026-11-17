@@ -662,9 +662,19 @@ export interface DrawerProps extends Omit<React.HTMLAttributes<HTMLDivElement>,'
  classes?:Partial<DrawerClasses>;sx?:SxProps<Theme>;ref?:React.Ref<HTMLDivElement>;ModalProps?:DrawerModalProps;
  PaperProps?:DialogPaperProps;SlideProps?:Partial<SlideProps>;transitionDuration?:DialogTransitionProps['timeout'];
  slots?:{root?:React.ElementType;docked?:React.ElementType;paper?:React.ElementType;backdrop?:React.ElementType;transition?:React.ElementType};
- slotProps?:{root?:DrawerSlot<DrawerModalProps&DialogElementProps>;docked?:DrawerSlot<DialogElementProps>;paper?:DrawerSlot<DialogPaperProps>;backdrop?:DrawerSlot<DialogElementProps&{invisible?:boolean;classes?:{root?:string}}> ;transition?:DrawerSlot<Partial<SlideProps>>};
+ slotProps?:{root?:DrawerSlot<DrawerModalProps&DialogElementProps>;docked?:DrawerSlot<DialogElementProps>;paper?:DrawerSlot<DialogPaperProps>;backdrop?:DrawerSlot<DialogElementProps&{invisible?:boolean;classes?:{root?:string};transitionDuration?:DialogTransitionProps['timeout']}> ;transition?:DrawerSlot<Partial<SlideProps>>};
 }
 export type DrawerOwnerState=Omit<DrawerProps,'slots'|'slotProps'>&{anchor:'left'|'right'|'top'|'bottom';variant:'permanent'|'persistent'|'temporary';open:boolean;elevation:number;exited:boolean};
 export const Drawer:React.ForwardRefExoticComponent<DrawerProps>;
 export const drawerClasses:Readonly<DrawerClasses>;
 export function getDrawerUtilityClass(slot:string):string;
+
+export interface SwipeableDrawerProps extends Omit<DrawerProps,'onOpen'|'onClose'|'slots'|'slotProps'> {
+ onOpen:(event:React.SyntheticEvent|Event)=>void;onClose:(event:React.SyntheticEvent|Event)=>void;
+ allowSwipeInChildren?:boolean|((event:TouchEvent,swipeArea:HTMLDivElement,paper:HTMLDivElement)=>boolean);
+ disableBackdropTransition?:boolean;disableDiscovery?:boolean;disableSwipeToOpen?:boolean;hysteresis?:number;minFlingVelocity?:number;swipeAreaWidth?:number;
+ SwipeAreaProps?:DialogElementProps;
+ slots?:DrawerProps['slots']&{swipeArea?:React.ElementType};
+ slotProps?:DrawerProps['slotProps']&{swipeArea?:DrawerSlot<DialogElementProps>};
+}
+export const SwipeableDrawer:React.ForwardRefExoticComponent<SwipeableDrawerProps>;

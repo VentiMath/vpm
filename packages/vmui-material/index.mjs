@@ -84,3 +84,5 @@ export const Slide=a.Slide;
 export const {DialogContentText,dialogContentTextClasses,getDialogContentTextUtilityClass}=a;
 
 export const {Drawer,drawerClasses,getDrawerUtilityClass}=a;
+
+export const SwipeableDrawer=a.SwipeableDrawer;
