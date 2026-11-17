@@ -250,6 +250,13 @@ jobs:
           node scripts/jwt-decode-conformance/types.cjs
           node scripts/jwt-decode-conformance/browser.cjs
           node scripts/jwt-decode-conformance/archives.cjs
+      - run: npm --prefix scripts/idb-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: IndexedDB wrappers and unchanged Firebase browser storage
+        run: |
+          node --test packages/vidb/test/*.test.cjs
+          node scripts/idb-conformance/types.cjs
+          node scripts/idb-conformance/browser.cjs
+          node scripts/idb-conformance/archives.cjs
       - run: npm --prefix scripts/camelize-conformance ci --ignore-scripts --no-audit --no-fund
       - name: Independent camelize and unchanged style converter
         run: |
@@ -1106,6 +1113,8 @@ jobs:
         run: |
           bun test packages/vjwt-decode/test/decode.test.cjs
           bun scripts/jwt-decode-conformance/run.cjs
+      - run: npm --prefix scripts/idb-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: bun test packages/vidb/test
       - run: npm --prefix scripts/camelize-conformance ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/camelize-conformance/probe.cjs
       - run: npm --prefix scripts/nanoid-conformance ci --ignore-scripts --no-audit --no-fund

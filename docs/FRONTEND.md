@@ -64,3 +64,15 @@ required Material surface is complete. Motion remains parked.
 
 Nano ID is separate build infrastructure: PostCSS 8.5.8 uses its non-secure entry
 to label anonymous CSS inputs. It is independently implemented and caller-tested.
+
+## Browser persistence
+
+[vidb](../packages/vidb) independently covers the promise-based IndexedDB layer
+beneath the app's Firebase SDKs. Native Chrome tests run unchanged Firebase
+heartbeat and installation persistence with synthetic records and mocked network
+responses. Transaction commit/abort, cursors, blocked upgrades/deletion and type
+consumers are checked separately. It adds no runtime dependencies.
+
+The package targets idb 8.0.4 and checks the app's 7.1.1 contract. Building this leaf
+does not complete Firebase's frontend SDKs, migrate application storage, or verify
+live push registration or Amplify DataStore. Publication and adoption are separate.

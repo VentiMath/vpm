@@ -1,0 +1,21 @@
+{
+  "upstream": {
+    "name": "idb",
+    "version": "8.0.4",
+    "repository": "https://github.com/jakearchibald/idb",
+    "integrity": "sha512-jd0ITCrN+Zah4J7R/Z2jnR3W7A4BXDAjmo62MwWuSjxCiueUAf7X5rbodEdidWzeknwXHmLpdZkoiiCppNi30Q=="
+  },
+  "checked": "2026-11-17",
+  "license": "MIT",
+  "implementation": {
+    "kind": "independent",
+    "targetScope": "Promise-wrapped IndexedDB databases, transactions, requests, stores, indexes and cursors; read/write shortcuts; async iteration; upgrade/blocked/termination callbacks; native wrap/unwrap and schema-aware declarations. Browser storage for Firebase callers. No polyfill or background transaction keepalive."
+  },
+  "source": "Written from public API documentation, declaration signatures and black-box controls; no upstream idb runtime read or copied. Two intentional differences: done observes actual complete/abort instead of a preventable request error; wrapping an already settled request resolves its result rather than awaiting an event that already happened.",
+  "caller": {
+    "revision": "a7ce009ffa67fbd1411f1a44788e04cb1a7b16d1",
+    "path": "VentiMath frontend -> @firebase/app 0.14.9, @firebase/installations 0.6.20 and @firebase/messaging 0.12.24 -> idb 7.1.1; @aws-amplify/datastore also pins idb 5.0.6",
+    "verified": "Unchanged Firebase app heartbeat and installation SDKs in Chrome with synthetic IndexedDB records and mocked registration/token responses. Messaging storage shapes are covered by the shared transaction/store API, but a live push registration and Amplify DataStore integration are not claimed. No application dependency change or live data access."
+  },
+  "references": ["https://github.com/jakearchibald/idb", "https://w3c.github.io/IndexedDB/"]
+}

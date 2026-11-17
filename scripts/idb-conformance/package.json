@@ -1,0 +1,14 @@
+{
+  "name": "vpm-idb-conformance",
+  "private": true,
+  "description": "Pinned black-box IndexedDB controls and unchanged Firebase callers",
+  "dependencies": {
+    "idb": "8.0.4",
+    "idb-app": "npm:idb@7.1.1",
+    "fake-indexeddb": "6.2.5",
+    "@firebase/app": "0.14.9",
+    "@firebase/installations": "0.6.20",
+    "@firebase/messaging": "0.12.24",
+    "esbuild": "0.25.12"
+  }
+}

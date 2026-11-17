@@ -602,6 +602,10 @@
       "name": "viconv-lite",
       "version": "0.1.0",
     },
+    "packages/vidb": {
+      "name": "vidb",
+      "version": "8.0.4",
+    },
     "packages/vipaddr": {
       "name": "vipaddr",
       "version": "0.1.0",
@@ -2032,6 +2036,8 @@
     "vi18next": ["vi18next@workspace:packages/vi18next"],
 
     "viconv-lite": ["viconv-lite@workspace:packages/viconv-lite"],
+
+    "vidb": ["vidb@workspace:packages/vidb"],
 
     "vipaddr": ["vipaddr@workspace:packages/vipaddr"],
 
