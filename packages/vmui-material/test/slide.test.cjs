@@ -1,0 +1,7 @@
+'use strict';
+const {test}=require('node:test'),assert=require('node:assert/strict'),{peer}=require('../../../scripts/mui-material-conformance/paths.cjs'),R=peer('react'),r=peer('react-dom/server').renderToStaticMarkup,M=require(require('../../../scripts/mui-material-conformance/prepare.cjs'));
+const output=p=>r(R.createElement(M.Slide,p,R.createElement('section',{id:'child',style:{color:'blue'}},'Settings')));
+test('Slide preserves its child root without adding a wrapper',()=>{assert.equal(output({in:true,appear:false}),'<section id="child" style="color:blue">Settings</section>')});
+test('Slide retains closed content hidden unless mounting is deferred',()=>{assert.match(output({in:false}),/visibility:hidden/);assert.equal(output({in:false,mountOnEnter:true}),'');assert.equal(output({in:false,unmountOnExit:true}),'')});
+test('Slide passes DOM props and gives the child style final priority',()=>{assert.equal(output({id:'outer',style:{color:'red',borderRadius:3},direction:'left'}),'<section id="outer" style="visibility:hidden;color:blue;border-radius:3px">Settings</section>')});
+test('Slide consumes transition-only flags and preserves explicit visibility',()=>{const text=r(R.createElement(M.Slide,{in:false,timeout:30,direction:'up',container:null,disablePrefersReducedMotion:true},R.createElement('div',{style:{visibility:'visible'}},'Panel')));assert.equal(text,'<div style="visibility:visible">Panel</div>')});

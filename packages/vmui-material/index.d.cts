@@ -638,3 +638,9 @@ export type DialogOwnerState=DialogProps&{exited:boolean;fullScreen:boolean;full
 export const Dialog:React.ForwardRefExoticComponent<DialogProps>;
 export const dialogClasses:Readonly<DialogClasses>;
 export function getDialogUtilityClass(slot:string):string;
+
+export interface SlideProps extends Omit<DialogTransitionProps,'children'|'classes'|'sx'>, Omit<React.HTMLAttributes<HTMLElement>,'children'> {
+ children:React.ReactElement;direction?:'left'|'right'|'up'|'down';
+ container?:Element|null|((node:Element)=>Element|null);ref?:React.Ref<HTMLElement>;
+}
+export const Slide:React.ForwardRefExoticComponent<SlideProps>;

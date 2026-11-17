@@ -1217,6 +1217,16 @@
         "types": "./dialogClasses.d.cts",
         "default": "./dialogClasses.cjs"
       }
+    },
+    "./Slide": {
+      "import": {
+        "types": "./Slide.d.mts",
+        "default": "./Slide.mjs"
+      },
+      "require": {
+        "types": "./Slide.d.cts",
+        "default": "./Slide.cjs"
+      }
     }
   },
   "files": [

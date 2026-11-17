@@ -378,3 +378,11 @@ void dialogClasses.paperFullScreen;
 const missingDialogOpen:DialogProps={};
 // @ts-expect-error scroll is a fixed documented option
 const invalidDialogScroll:DialogProps={open:true,scroll:"viewport"};
+
+import Slide, { type SlideProps } from 'vmui-material/Slide';
+const slideOptions:SlideProps={children:React.createElement('div'),in:true,direction:'left',container:node=>node.ownerDocument.body,ref:React.createRef<HTMLElement>(),timeout:{enter:100,exit:50},onEnter:(node,appearing)=>{node.focus();void appearing;},disablePrefersReducedMotion:true};
+React.createElement(Slide,slideOptions);
+// @ts-expect-error directions are physical edges
+React.createElement(Slide,{children:React.createElement('div'),direction:'diagonal'});
+// @ts-expect-error a child element is required
+React.createElement(Slide,{in:true});

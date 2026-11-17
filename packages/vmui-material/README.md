@@ -1,6 +1,6 @@
 # vmui-material
 
-Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card, CardContent, CardActionArea, AvatarGroup, Tooltip, Collapse, DialogTitle, DialogContent, DialogActions and Dialog, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
+Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card, CardContent, CardActionArea, AvatarGroup, Tooltip, Collapse, DialogTitle, DialogContent, DialogActions, Dialog and Slide, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
 
 ```js
 import { Button, ToggleButton, ToggleButtonGroup } from 'vmui-material';
@@ -666,9 +666,8 @@ and the app's legacy `TransitionComponent` remain supported, as does the app's
 `disableEscapeKeyDown` option. Current Material handles that last policy through
 `onClose`; both forms remain available here.
 
-Settings-panel Slide wrappers are tested unchanged as caller-provided transitions.
-Slide itself is still pending, as are the standalone Modal, Fade and Backdrop
-component APIs. Custom root, container, paper and backdrop slots must forward
+Settings-panel Slide wrappers now use the owned Slide implementation in the
+VPM fixtures. Standalone Modal, Fade and Backdrop component APIs remain pending. Custom root, container, paper and backdrop slots must forward
 native DOM props and refs. This is not a replacement for every Material family.
 
 Current/app browser checks cover layout, themes, RTL, native keyboard navigation,
@@ -681,3 +680,32 @@ than the current Material control, beyond the same-code control spread in every
 pair. Closed/default-portal SSR produces no visible dialog content; those cases
 measure the server-side shell, not a rendered form. These measurements do not
 claim faster browser opening or animation frame rates.
+
+
+## Slide
+
+Slide covers the settings and theme-selection panels, the two direct Material
+Slide callers in VentiMath. Both keep their existing Dialog transition shape:
+legacy `TransitionComponent` and current `slots.transition`, with direction
+selected by the resolved theme, invisible backdrops and responsive fixed paper.
+Slide uses the owned transition engine and adds no dependencies or wrapper DOM.
+
+It supports all four physical directions; viewport or element-container edges;
+forwarded and child refs; appearance and enter/exit callbacks; timed or custom
+completion; mount/unmount options; cancellation on reversal or removal; and the
+current reduced-motion policy with explicit opt-out. Closed content follows
+viewport and container resizing. Placement uses the child's document, including
+iframe viewports. It preserves mounted drafts and focus through parent updates.
+The child must accept a DOM ref and forwarded style. Drawer and SwipeableDrawer
+are not completed by this change.
+
+Node/Bun SSR and strict declaration checks accompany Chrome comparisons of
+geometry, lifecycle and both settings-panel shapes, including RTL, responsive
+widths, reduced motion, interruption, refs, iframe ownership and hydration.
+[Controlled SSR measurements](bench/slide/README.md) compare closed, appearing
+and already-open children with a resolved CSS-variable theme provider and
+synthetic settings content. Current-control SSR takes 27.6–29.2% less time on
+Node 24 and 37.8–42.0% less on Bun 1.4.4, beyond the same-code control spread
+in every comparison pair. These are composition measurements, not isolated
+Slide operation costs, browser frame rates or opening latency. Build fixtures with
+`node scripts/mui-material-conformance/slide-build.cjs` before benchmarking.
