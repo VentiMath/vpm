@@ -644,3 +644,11 @@ export interface SlideProps extends Omit<DialogTransitionProps,'children'|'class
  container?:Element|null|((node:Element)=>Element|null);ref?:React.Ref<HTMLElement>;
 }
 export const Slide:React.ForwardRefExoticComponent<SlideProps>;
+
+export interface DialogContentTextOwnProps extends Omit<TypographyOwnProps,'classes'> {classes?:Partial<DialogContentTextClasses>}
+export type DialogContentTextClasses=Record<'root',string>;
+export type DialogContentTextProps<C extends React.ElementType='p'>=DialogContentTextOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof DialogContentTextOwnProps>&{component?:C};
+export const DialogContentText:TextComponent<DialogContentTextOwnProps,'p'>;
+export type DialogContentTextClassKey=keyof DialogContentTextClasses;
+export const dialogContentTextClasses:Readonly<DialogContentTextClasses>;
+export function getDialogContentTextUtilityClass(slot:string):string;

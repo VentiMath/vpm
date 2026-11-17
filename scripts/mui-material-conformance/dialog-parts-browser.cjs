@@ -24,7 +24,7 @@ let server,child,socket,sequence=0;const pending=new Map(),exceptions=[];
  await send('Runtime.enable');await send('Emulation.setFocusEmulationEnabled',{enabled:true});let comparisons=0;
 
  const wait=condition=>evaluate(`(async()=>{for(let i=0;i<300;i++){if(${condition})return;await new Promise(r=>setTimeout(r,10))}throw Error('Timed out: '+${JSON.stringify(condition)})})()`);
- const snapshot=`[...document.querySelectorAll('#parts .MuiDialogTitle-root,#parts .MuiDialogContent-root,#parts .MuiDialogActions-root,#live-actions > button,#wrapped > button')].map(el=>({id:el.id,tag:el.tagName,css:Object.fromEntries(['display','width','height','paddingLeft','paddingRight','paddingTop','paddingBottom','marginLeft','marginRight','flexGrow','flexShrink','flexBasis','flexWrap','gap','borderTopWidth','borderBottomWidth','borderColor','fontSize','fontWeight','letterSpacing','overflowY'].map(k=>[k,getComputedStyle(el)[k]]))}))`;
+ const snapshot=`[...document.querySelectorAll('#parts .MuiDialogTitle-root,#parts .MuiDialogContent-root,#parts .MuiDialogActions-root,#parts .MuiDialogContentText-root,#live-actions > button,#wrapped > button')].map(el=>({id:el.id,tag:el.tagName,css:Object.fromEntries(['display','width','height','paddingLeft','paddingRight','paddingTop','paddingBottom','marginLeft','marginRight','flexGrow','flexShrink','flexBasis','flexWrap','gap','borderTopWidth','borderBottomWidth','borderColor','color','fontSize','fontWeight','letterSpacing','overflowY'].map(k=>[k,getComputedStyle(el)[k]]))}))`;
  for(const version of ['current','app']){
   const captures=[],focusCaptures=[];
   for(const kind of ['upstream','vpm']){
@@ -36,12 +36,12 @@ let server,child,socket,sequence=0;const pending=new Map(),exceptions=[];
    }
    captures.push(styles);
    await evaluate('window.renderVariants({});'+settle);
-   assert.equal(await evaluate('window.dialogControls.titleRef.current===document.getElementById("live-title")&&window.dialogControls.contentRef.current===document.getElementById("live-content")&&window.dialogControls.actionsRef.current===document.getElementById("live-actions")'),true);
+   assert.equal(await evaluate('window.dialogControls.titleRef.current===document.getElementById("live-title")&&window.dialogControls.contentRef.current===document.getElementById("live-content")&&window.dialogControls.actionsRef.current===document.getElementById("live-actions")&&window.dialogControls.descriptionRef.current===document.getElementById("opt-out-description")'),true);
    assert.equal(await evaluate('getComputedStyle(document.getElementById("live-content")).paddingTop'),'0px');
    assert.equal(await evaluate('getComputedStyle(document.getElementById("without-title")).paddingTop'),'20px');
    assert.equal(await evaluate('getComputedStyle(document.getElementById("save")).marginLeft'),'8px');
-   await evaluate('window.saved=document.getElementById("focus");window.saved.focus();window.saved.value="Unsaved edit";window.scroller=document.getElementById("live-content");window.scroller.scrollTop=80;window.renderVariants({tick:1});'+settle);
-   assert.equal(await evaluate('window.saved===document.getElementById("focus")&&document.activeElement===window.saved&&window.saved.value==="Unsaved edit"&&window.scroller.scrollTop===80'),true);
+   await evaluate('window.savedDescription=document.getElementById("opt-out-description");window.saved=document.getElementById("focus");window.saved.focus();window.saved.value="Unsaved edit";window.scroller=document.getElementById("live-content");window.scroller.scrollTop=80;window.renderVariants({tick:1});'+settle);
+   assert.equal(await evaluate('window.savedDescription===document.getElementById("opt-out-description")&&window.saved===document.getElementById("focus")&&document.activeElement===window.saved&&window.saved.value==="Unsaved edit"&&window.scroller.scrollTop===80'),true);
    await evaluate('window.dialogControls.setTitle(false);'+settle);assert.equal(await evaluate('getComputedStyle(window.scroller).paddingTop'),'20px');assert.equal(await evaluate('window.dialogControls.titleRef.current'),null);
    await evaluate('window.dialogControls.setTitle(true);window.dialogControls.setDividers(true);window.dialogControls.setSpacing(false);'+settle);
    assert.equal(await evaluate('getComputedStyle(window.scroller).paddingTop'),'16px');assert.equal(await evaluate('getComputedStyle(window.scroller).borderTopWidth'),'1px');
@@ -54,10 +54,10 @@ let server,child,socket,sequence=0;const pending=new Map(),exceptions=[];
    // focus its container; compare the observed result before testing native Tab.
    focusCaptures.push(await evaluate('({id:document.activeElement.id,role:document.activeElement.getAttribute("role"),tag:document.activeElement.tagName})'));
    await evaluate('document.getElementById("overlay-input").focus()');
-   const ax=await send('Accessibility.getFullAXTree');assert(ax.nodes.some(n=>n.role?.value==='dialog'&&n.name?.value==='Edit reminder'));
+   const ax=await send('Accessibility.getFullAXTree');assert(ax.nodes.some(n=>n.role?.value==='dialog'&&n.name?.value==='Edit reminder'&&n.description?.value==='Update this reminder.'));
    await send('Input.dispatchKeyEvent',{type:'keyDown',key:'Tab',code:'Tab',windowsVirtualKeyCode:9});await send('Input.dispatchKeyEvent',{type:'keyUp',key:'Tab',code:'Tab',windowsVirtualKeyCode:9});assert.equal(await evaluate('document.activeElement.id'),'overlay-close');
    await evaluate('document.getElementById("overlay-close").click();'+settle);await wait('!document.getElementById("overlay-input")');assert.equal(await evaluate('document.activeElement.id'),'cancel');
-   await evaluate('window.unmountVariants();'+settle);assert.equal(await evaluate('window.dialogControls.titleRef.current===null&&window.dialogControls.contentRef.current===null&&window.dialogControls.actionsRef.current===null'),true);
+   await evaluate('window.unmountVariants();'+settle);assert.equal(await evaluate('window.dialogControls.titleRef.current===null&&window.dialogControls.contentRef.current===null&&window.dialogControls.actionsRef.current===null&&window.dialogControls.descriptionRef.current===null'),true);
    await send('Page.navigate',{url:'http://127.0.0.1:'+server.address().port+'/'+name+'-hydrate'});await wait('window.hydrationReady');await evaluate(settle);
    assert.equal(await evaluate('window.savedHydrated===document.getElementById("hydrated")'),true);assert.equal(await evaluate('document.querySelector("#hydrated h2").id'),'hydrated-title');
   }

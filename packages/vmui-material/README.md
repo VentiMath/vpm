@@ -1,6 +1,6 @@
 # vmui-material
 
-Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card, CardContent, CardActionArea, AvatarGroup, Tooltip, Collapse, DialogTitle, DialogContent, DialogActions, Dialog and Slide, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
+Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card, CardContent, CardActionArea, AvatarGroup, Tooltip, Collapse, DialogTitle, DialogContent, DialogActions, Dialog, Slide and DialogContentText, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
 
 ```js
 import { Button, ToggleButton, ToggleButtonGroup } from 'vmui-material';
@@ -709,3 +709,21 @@ Node 24 and 37.8–42.0% less on Bun 1.4.4, beyond the same-code control spread
 in every comparison pair. These are composition measurements, not isolated
 Slide operation costs, browser frame rates or opening latency. Build fixtures with
 `node scripts/mui-material-conformance/slide-build.cjs` before benchmarking.
+
+## DialogContentText
+
+DialogContentText covers the external-link confirmation, WARML opt-out message
+and FuseDialog documentation example. It composes owned Typography with a paragraph
+root, body text and secondary palette color. Typography props, custom roots,
+refs, theme defaults/overrides, CSS-variable colors and sx remain available.
+The caller supplies the description ID and Dialog's aria-describedby association.
+
+Current/app comparisons cover light/dark, RTL, responsive layout, custom styling,
+stable DOM/ref ownership, accessible dialog descriptions and hydration. Upstream's
+duplicate root-class token is emitted once; class membership is unchanged. The
+existing legacy Typography paragraph behavior remains available for app callers.
+The full Material package is still partial and unreleased.
+
+[Description measurements](bench/dialog-text/README.md) compare single-description
+and confirmation-structure SSR. They include Typography, theme and styling costs;
+they are not measurements of browser interaction or assistive-technology latency.

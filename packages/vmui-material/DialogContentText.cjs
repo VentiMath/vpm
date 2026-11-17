@@ -1,0 +1,1 @@
+"use strict";const a=require("./dialog-text.cjs");module.exports=a.DialogContentText;module.exports.default=a.DialogContentText;module.exports.dialogContentTextClasses=a.dialogContentTextClasses;module.exports.getDialogContentTextUtilityClass=a.getDialogContentTextUtilityClass;

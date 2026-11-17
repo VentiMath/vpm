@@ -25,10 +25,10 @@ inventory. The entire upstream Motion API is **not** complete.
 
 ## Material
 
-[vmui-material](../packages/vmui-material) now has 54 independently implemented
+[vmui-material](../packages/vmui-material) now has 55 independently implemented
 components. It covers button controls; text/icons; Box/Paper/Divider; the form,
 input, Select, checkbox/radio/switch foundation; menus; Chip, Avatar, loading
-spinners, Skeleton placeholders, Container page layouts and Card/CardContent panels and their linked CardActionArea roots, plus AvatarGroup, Tooltip, Collapse, Slide and Dialog with its title/content/action components. Its resolved-theme bridge is built,
+spinners, Skeleton placeholders, Container page layouts and Card/CardContent panels and their linked CardActionArea roots, plus AvatarGroup, Tooltip, Collapse, Slide and Dialog with its title/content/action/description components. Its resolved-theme bridge is built,
 but full Material theme creation
 and all app-used component families are not. It cannot replace the entire
 `@mui/material` dependency yet.
@@ -47,12 +47,12 @@ Dependencies such as Material React Table may also consume components that do
 not appear as direct app imports; they need unchanged-caller acceptance before
 a complete package override.
 
-**Next Material unit: DialogContentText.** It is used by external-link and WARML
-confirmations and the FuseDialog example. Dialog and Slide now cover the eleven
-Material Dialog imports and the two settings panels' legacy/current transition
-APIs. Modal focus/dismissal, nested ownership, sizing, RTL slide direction,
-transition cancellation and retained drafts are checked. Standalone modal
-primitives and Drawer/SwipeableDrawer remain unfinished.
+**Next Material unit: Drawer**, followed by SwipeableDrawer for the shared
+navigation and side panels. DialogContentText now covers external-link and WARML
+confirmations and the FuseDialog example. Dialog and Slide cover the eleven
+Material Dialog imports and the two settings panels' transition APIs. Description
+IDs, theme styling, focus/dismissal, retained DOM/ref ownership and hydration are
+checked. Standalone modal primitives and Drawer/SwipeableDrawer remain unfinished.
 Collapse now covers
 the seven navigation and exam-preview imports at app `a7ce009f`, including
 child identity, changing content heights and interrupted transitions. Tooltip now covers 16 rendering caller files (17 imports)

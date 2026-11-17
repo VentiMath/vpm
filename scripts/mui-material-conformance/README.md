@@ -373,3 +373,8 @@ Production/development React 19.3.1 and installed archives are checked.
 Build `scripts/mui-material-conformance/avatar-group-build.cjs`, then run
 `packages/vmui-material/bench/avatar-group.cjs` separately with Node and Bun after
 other checks finish. [Measurements](../../packages/vmui-material/bench/avatar-group/README.md).
+
+DialogContentText is included in the dialog-parts matrices: three real source
+callers, current/app themes, description IDs and accessible dialog descriptions,
+custom roots, refs, retained nodes and hydration. The dedicated measurement entry
+is `packages/vmui-material/bench/dialog-text.cjs`. Material remains partial.

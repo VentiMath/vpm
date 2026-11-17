@@ -386,3 +386,10 @@ React.createElement(Slide,slideOptions);
 React.createElement(Slide,{children:React.createElement('div'),direction:'diagonal'});
 // @ts-expect-error a child element is required
 React.createElement(Slide,{in:true});
+
+import DialogContentText, {type DialogContentTextProps} from 'vmui-material/DialogContentText';
+const descriptionProps:DialogContentTextProps={id:'description',color:'text.secondary',sx:{mb:2},ref:React.createRef<HTMLParagraphElement>()};
+React.createElement(DialogContentText,descriptionProps,'Leave this page?');
+React.createElement(DialogContentText<'a'>,{component:'a',href:'/help',ref:React.createRef<HTMLAnchorElement>()},'Help');
+// @ts-expect-error paragraph roots do not accept href
+const invalidDescription:DialogContentTextProps={href:'/help'};

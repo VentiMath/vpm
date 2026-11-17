@@ -1,6 +1,6 @@
 'use strict';process.env.NODE_ENV='production';
 const assert=require('node:assert/strict'),{peer}=require('./paths.cjs'),R=peer('react'),h=R.createElement,r=peer('react-dom/server').renderToStaticMarkup,own=require(require('./prepare.cjs'));
-function norm(html){return html.replace(/<style[\s\S]*?<\/style>/g,'').replace(/ class="([^"]*)"/g,(_,s)=>' class="'+s.split(' ').filter(c=>!c.startsWith('css-')).sort().join(' ')+'"').replace(/<([\w-]+)([^>]*)>/g,(_,tag,attrs)=>'<'+tag+[...attrs.matchAll(/([\w:-]+)="([^"]*)"/g)].map(x=>' '+x[1]+'="'+x[2]+'"').sort().join('')+'>');}
+function norm(html){return html.replace(/<style[\s\S]*?<\/style>/g,'').replace(/ class="([^"]*)"/g,(_,s)=>' class="'+[...new Set(s.split(' ').filter(c=>!c.startsWith('css-')))].sort().join(' ')+'"').replace(/<([\w-]+)([^>]*)>/g,(_,tag,attrs)=>'<'+tag+[...attrs.matchAll(/([\w:-]+)="([^"]*)"/g)].map(x=>' '+x[1]+'="'+x[2]+'"').sort().join('')+'>');}
 let checks=0;
 for(const name of ['@mui/material','mui-material-app']){
  const up=peer(name);
@@ -12,10 +12,11 @@ for(const name of ['@mui/material','mui-material-app']){
   const theme=up.createTheme({components:custom?{[component==='DialogContent'?'MuiDialogContent':'MuiDialogActions']:{defaultProps:{[prop]:!flag},styleOverrides:{root:{padding:0}}}}:{}});
   assert.equal(norm(r(h(own.ThemeProvider,{theme},h(own[component],p,'Body')))),norm(r(h(up.ThemeProvider,{theme},h(up[component],p,'Body')))));checks++;
  }
- for(const n of ['dialogTitleClasses','dialogContentClasses','dialogActionsClasses'])assert.deepEqual(own[n],up[n]);
+ for(const p of [{},{id:'description',className:'caller'},{component:'section',variant:'body2',color:'primary',noWrap:true},{gutterBottom:true,align:'center',classes:{root:'custom'}}]){assert.equal(norm(r(h(own.DialogContentText,p,'Description'))),norm(r(h(up.DialogContentText,p,'Description'))));checks++;}
+ for(const n of ['dialogContentTextClasses','dialogTitleClasses','dialogContentClasses','dialogActionsClasses'])assert.deepEqual(own[n],up[n]);
 }
 const base=require('./dialog-parts-build.cjs');
 for(const version of ['current','app'])for(const titleId of [undefined,'inherited'])for(const id of [undefined,'explicit','',null]){
  const p={titleId,id};assert.equal(norm(require(base+'/'+version+'-vpm/dialog-parts-ssr.cjs').context(p)),norm(require(base+'/'+version+'-upstream/dialog-parts-ssr.cjs').context(p)),JSON.stringify(p));checks++;
 }
-console.log(checks+' DialogTitle/Content/Actions current/app markup, title IDs, classes and theme-default comparisons pass');
+console.log(checks+' DialogTitle/Content/Text/Actions current/app markup, title IDs, classes and theme-default comparisons pass');

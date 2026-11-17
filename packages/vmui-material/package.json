@@ -1227,6 +1227,26 @@
         "types": "./Slide.d.cts",
         "default": "./Slide.cjs"
       }
+    },
+    "./DialogContentText": {
+      "import": {
+        "types": "./DialogContentText.d.mts",
+        "default": "./DialogContentText.mjs"
+      },
+      "require": {
+        "types": "./DialogContentText.d.cts",
+        "default": "./DialogContentText.cjs"
+      }
+    },
+    "./dialogContentTextClasses": {
+      "import": {
+        "types": "./dialogContentTextClasses.d.mts",
+        "default": "./dialogContentTextClasses.mjs"
+      },
+      "require": {
+        "types": "./dialogContentTextClasses.d.cts",
+        "default": "./dialogContentTextClasses.cjs"
+      }
     }
   },
   "files": [
