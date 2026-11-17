@@ -24,5 +24,6 @@
   },
   "references": [
     "https://github.com/JedWatson/classnames#readme"
-  ]
+  ],
+  "optimization": "Separate default/bound hot loops, cached unshadowable own-property intrinsic, reusable dedupe collector and direct result assembly. Unseparated class strings avoid regex splitting. Deep traversal and all dictionary safety rules remain; active arrays can shrink without trapping traversal."
 }

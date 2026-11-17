@@ -35,6 +35,16 @@ on Node 24 and Bun 1.4.4. Strict types and fresh/frozen packed installs are chec
 No UMD/global script build is supplied. Application adoption and release remain
 separate; this does not imply contest pages use Redoc.
 
-[Benchmarks](bench/results/README.md) retain isolated processes, balanced order,
+[Current benchmarks](bench/optimized/README.md) retain isolated processes, balanced order,
 same-code controls and source hashes. They measure helper calls, not application
 rendering speed.
+
+The optimized collectors keep ordinary joins separate from CSS-module resolution.
+A cached own-property intrinsic retains prototype safety with less Node overhead;
+dedupe reuses its collector and avoids splitting strings without whitespace.
+The Redoc-shaped Node case takes 14% less time than upstream in every recorded
+pair. Nested classes, bindings and dedupe are within the recorded control
+precision on Node (bindings/dedupe retain slightly higher medians). All four Bun
+cases take less time in every pair. These measurements do not establish an
+application-level speedup. [Initial measurements](bench/results/README.md) remain
+as the historical baseline; no correctness protection was removed.
