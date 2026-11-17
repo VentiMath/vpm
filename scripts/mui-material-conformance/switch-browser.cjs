@@ -31,7 +31,9 @@ let server,child,socket,sequence=0;const pending=new Map(),exceptions=[];
    await evaluate("(async()=>{for(let i=0;i<300;i++){if(window.switchControls)return;await new Promise(r=>setTimeout(r,20))}throw Error('Switch fixture unavailable')})()");
    const styles=[];
    for(const mode of ['light','dark'])for(const rtl of [false,true])for(const variables of [false,true])for(const custom of [false,true])for(const disabled of [false,true]){
-    await evaluate('window.renderVariants('+JSON.stringify({mode,rtl,variables,custom,disabled})+');'+settle);styles.push(await evaluate(snapshot));
+    await evaluate('window.renderVariants('+JSON.stringify({mode,rtl,variables,custom,disabled})+');'+settle);// A timer can fire before a transition starts under CI load. Observe its
+    // actual completion instead of comparing an intermediate opacity value.
+    await evaluate(`(async()=>{const root=document.getElementById('switches');for(let n=0;n<8;n++){await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));root.getBoundingClientRect();const animations=root.getAnimations({subtree:true}).filter(a=>a.playState==='running');if(!animations.length)return;await Promise.race([Promise.all(animations.map(a=>a.finished.catch(()=>{}))),new Promise((_,reject)=>setTimeout(()=>reject(Error('Switch transition timeout')),3000))]);}throw Error('Switch transitions did not settle')})()`);styles.push(await evaluate(snapshot));
    }
    captures.push(styles);comparisons+=styles.length;
    await evaluate('window.renderVariants({});'+settle);
