@@ -3,9 +3,14 @@ const React=require('react'),{styled,useThemeProps}=require('./theme.cjs'),{alph
 const h=React.createElement,empty=Object.freeze({}),TableContext=React.createContext(null),SectionContext=React.createContext(null);
 const cap=s=>s[0].toUpperCase()+s.slice(1),join=(...a)=>a.filter(Boolean).join(' ');
 const utility=(name,slot)=>slot==='selected'?'Mui-selected':'Mui'+name+'-'+slot;
-const classes=(name,slots,custom)=>slots.filter(Boolean).map(slot=>join(utility(name,slot),Object.hasOwn(custom,slot)&&custom[slot])).join(' ');
+const classes=(name,slots,custom)=>{let text='';for(let i=0;i<slots.length;i++){const slot=slots[i];if(!slot)continue;if(text)text+=' ';text+=utility(name,slot);if(Object.hasOwn(custom,slot)&&custom[slot])text+=' '+custom[slot];}return text;};
+// Cache only primitive color computations. Theme objects/overrides stay live,
+// including in-place palette changes and CSS-variable themes.
+const colors=new Map();
+function cachedColor(key,compute){if(colors.has(key))return colors.get(key);const value=compute();if(colors.size===128)colors.delete(colors.keys().next().value);colors.set(key,value);return value;}
+
 const bodyText=theme=>theme.typography.body2||{fontFamily:theme.typography.fontFamily,fontWeight:theme.typography.fontWeightRegular,fontSize:'0.875rem',lineHeight:1.43,letterSpacing:'0.01071em'};
-const tint=(c,a)=>/var\(|calc\(/.test(c+String(a))?`rgb(from ${c} r g b / ${a})`:alpha(c,a);
+const tint=(c,a)=>/var\(|calc\(/.test(c+String(a))?`rgb(from ${c} r g b / ${a})`:cachedColor('alpha:'+c+':'+a,()=>alpha(c,a));
 const TableRoot=styled('table',{name:'MuiTable',slot:'Root',overridesResolver:({ownerState:s},o)=>[o.root,s.stickyHeader&&o.stickyHeader]})(({theme,ownerState:s})=>({display:'table',width:'100%',borderCollapse:s.stickyHeader?'separate':'collapse',borderSpacing:0,'& caption':{...bodyText(theme),padding:16,color:(theme.vars?.palette||theme.palette).text.secondary,textAlign:'left',captionSide:'bottom'}}));
 const Table=React.forwardRef(function Table(input,ref){
  const p=useThemeProps({props:input,name:'MuiTable'}),{component='table',size='medium',padding='normal',stickyHeader=false,classes:custom=empty,className,children,...rest}=p;
@@ -30,7 +35,7 @@ const TableRow=React.forwardRef(function TableRow(input,ref){
 });
 const CellRoot=styled('td',{name:'MuiTableCell',slot:'Root',overridesResolver:({ownerState:s},o)=>[o.root,o[s.variant],o['size'+cap(s.size)],s.padding!=='normal'&&o['padding'+cap(s.padding)],s.align!=='inherit'&&o['align'+cap(s.align)],s.stickyHeader&&o.stickyHeader]})(({theme,ownerState:s})=>{
  const p=theme.vars?.palette||theme.palette;
- const border=p.TableCell?.border||(theme.palette.mode==='dark'?darken:lighten)(alpha(theme.palette.divider,1),theme.palette.mode==='dark'?.68:.88);
+ const border=p.TableCell?.border||cachedColor('border:'+theme.palette.mode+':'+theme.palette.divider,()=>(theme.palette.mode==='dark'?darken:lighten)(alpha(theme.palette.divider,1),theme.palette.mode==='dark'?.68:.88));
  const css={...bodyText(theme),display:'table-cell',verticalAlign:'inherit',borderBottom:'1px solid '+border,textAlign:'left',padding:16};
  if(s.variant==='head')Object.assign(css,{color:p.text.primary,lineHeight:'1.5rem',fontWeight:theme.typography.fontWeightMedium});
  if(s.variant==='body')css.color=p.text.primary;

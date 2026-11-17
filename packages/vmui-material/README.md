@@ -834,3 +834,10 @@ TableSortLabel, TablePagination and remaining families are still separate work.
 [Table SSR measurements](bench/tables/README.md) use twenty-row synthetic results,
 coach scores and themed tables. These do not measure browser sorting throughput.
 Build `scripts/mui-material-conformance/tables-build.cjs` before benchmarking.
+
+Table color computations are now bounded by primitive inputs, and utility-class
+assembly avoids intermediate arrays. Theme defaults, `sx`, live overrides and
+in-place palette changes remain evaluated. [Optimized measurements](bench/tables-optimized/README.md)
+remove the earlier multi-fold median gap. Node differences do not clear the
+control spread; Bun's app results-table case remains 32% slower. This is not
+a claim of complete SSR parity or application latency improvement.
