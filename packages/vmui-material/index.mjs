@@ -68,3 +68,5 @@ export const {Container,containerClasses,getContainerUtilityClass}=a;
 export const {Card,cardClasses,getCardUtilityClass,CardContent,cardContentClasses,getCardContentUtilityClass}=a;
 
 export const {CardActionArea,cardActionAreaClasses,getCardActionAreaUtilityClass}=a;
+
+export const {AvatarGroup,avatarGroupClasses,getAvatarGroupUtilityClass}=a;

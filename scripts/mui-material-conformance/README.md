@@ -359,3 +359,17 @@ with the existing button-family browser suite after the native typography fix.
 Build with `node scripts/mui-material-conformance/card-action-build.cjs`, then run
 `node packages/vmui-material/bench/card-action.cjs` and the same command with Bun
 sequentially after other checks finish. [Recorded results](../../packages/vmui-material/bench/card-action/README.md).
+
+## AvatarGroup
+
+`avatar-group-contract.cjs` checks 644 current9/app7 SSR cases covering ordering,
+max/total boundaries, spacing, variants and surplus slots. `avatar-group-browser.cjs`
+checks 168 cases across light/dark, variable/custom themes, RTL and two widths,
+including focused member identity during reorder, changing surplus, refs and
+hydration. It uses the four-member primary-border pattern present in eight app
+message sections at `47e3b4ef`, with synthetic initials instead of real profiles.
+Production/development React 19.3.1 and installed archives are checked.
+
+Build `scripts/mui-material-conformance/avatar-group-build.cjs`, then run
+`packages/vmui-material/bench/avatar-group.cjs` separately with Node and Bun after
+other checks finish. [Measurements](../../packages/vmui-material/bench/avatar-group/README.md).

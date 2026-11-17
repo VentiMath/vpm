@@ -1,0 +1,1 @@
+export {AvatarGroup as default,avatarGroupClasses,getAvatarGroupUtilityClass,type AvatarGroupProps,type AvatarGroupOwnProps,type AvatarGroupOwnerState,type AvatarGroupClasses,type AvatarGroupClassKey} from "./index.mjs";

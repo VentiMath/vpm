@@ -328,3 +328,11 @@ const area:CardActionAreaProps={disabled:false,action:React.createRef<ButtonBase
 CardActionArea(area);CardActionArea({component:'a',href:'/exam',ref:React.createRef<HTMLAnchorElement>()});
 // @ts-expect-error disabled must be boolean
 CardActionArea({disabled:'yes'});
+
+import AvatarGroup from 'vmui-material/AvatarGroup';
+import {avatarGroupClasses} from 'vmui-material';
+React.createElement(AvatarGroup,{max:4,total:12,spacing:'small',renderSurplus:n=>String(n),ref:React.createRef<HTMLDivElement>(),slotProps:{surplus:state=>({title:String(state.max)})}});
+AvatarGroup({component:'section','aria-label':'Members'});
+// @ts-expect-error spacing is a keyword or number
+React.createElement(AvatarGroup,{spacing:'wide'});
+void avatarGroupClasses.avatar;

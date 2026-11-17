@@ -1,0 +1,8 @@
+"use strict";process.env.NODE_ENV='production';
+const assert=require('node:assert/strict'),{peer}=require('./paths.cjs'),R=peer('react'),render=peer('react-dom/server').renderToStaticMarkup,own=require(require('./prepare.cjs'));
+function norm(s){return s.replace(/<style[\s\S]*?<\/style>/g,'').replace(/ class="([^"]*)"/g,(_,s)=>' class="'+s.split(' ').filter(c=>!c.startsWith('css-')).sort().join(' ')+'"').replace(/<([\w-]+)([^>]*)>/g,(_,tag,attrs)=>'<'+tag+[...attrs.matchAll(/([\w:-]+)="([^"]*)"/g)].map(x=>' '+x[1]+'="'+x[2]+'"').sort().join('')+'>');}
+function output(lib,p,count){return norm(render(R.createElement(lib.AvatarGroup,p,Array.from({length:count},(_,i)=>R.createElement(lib.Avatar,{key:i,'data-child':i,className:'child',variant:i===1?'square':undefined},String(i))))))}
+let checks=0;
+for(const name of ['@mui/material','mui-material-app']){const up=peer(name);for(const count of [0,1,4,6])for(const max of [2,3,5,8])for(const total of [undefined,0,1,4,10])for(const spacing of ['small','medium',0,5]){const p={max,total,spacing,variant:'rounded',classes:{root:'group',avatar:'member'}};assert.equal(output(own,p,count),output(up,p,count),JSON.stringify({name,p,count}));checks++}assert.deepEqual(own.avatarGroupClasses,up.avatarGroupClasses);}
+const up=peer('@mui/material');for(const surplus of ['span',undefined])for(const props of [{title:'extra'},s=>({'data-max':s.max})]){const p={max:3,slots:{surplus},slotProps:{surplus:props},renderSurplus:n=>'More '+n};assert.equal(output(own,p,5),output(up,p,5));checks++;}
+console.log(checks+' AvatarGroup current/app SSR, ordering, max/total and surplus comparisons pass');

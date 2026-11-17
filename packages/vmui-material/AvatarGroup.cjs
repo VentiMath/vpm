@@ -1,0 +1,1 @@
+"use strict";const a=require("./avatar-group.cjs");module.exports=a.AvatarGroup;module.exports.default=a.AvatarGroup;module.exports.avatarGroupClasses=a.avatarGroupClasses;module.exports.getAvatarGroupUtilityClass=a.getAvatarGroupUtilityClass;

@@ -536,3 +536,19 @@ export type CardActionAreaProps<C extends React.ElementType='button'>=CardAction
 export const CardActionArea:TextComponent<CardActionAreaOwnProps,'button'>;
 export const cardActionAreaClasses:Readonly<CardActionAreaClasses>;
 export function getCardActionAreaUtilityClass(slot:string):string;
+
+export type AvatarGroupClasses=Record<'root'|'avatar',string>;
+export type AvatarGroupClassKey=keyof AvatarGroupClasses;
+export interface AvatarGroupOwnProps {
+ children?:React.ReactNode; classes?:Partial<AvatarGroupClasses>;
+ max?:number; total?:number; spacing?:'small'|'medium'|number;
+ variant?:AvatarOwnProps['variant']; renderSurplus?:(surplus:number)=>React.ReactNode;
+ sx?:SxProps<Theme>;
+ slots?:{surplus?:React.ElementType};
+ slotProps?:{surplus?:Partial<AvatarProps>|((state:AvatarGroupOwnerState)=>Partial<AvatarProps>)};
+}
+export type AvatarGroupOwnerState=AvatarGroupOwnProps&{component:React.ElementType;max:number;spacing:'small'|'medium'|number;variant:NonNullable<AvatarOwnProps['variant']>};
+export type AvatarGroupProps<C extends React.ElementType='div'>=AvatarGroupOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof AvatarGroupOwnProps>&{component?:C};
+export const AvatarGroup:TextComponent<AvatarGroupOwnProps,'div'>;
+export const avatarGroupClasses:Readonly<AvatarGroupClasses>;
+export function getAvatarGroupUtilityClass(slot:string):string;

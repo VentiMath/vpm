@@ -1,6 +1,6 @@
 # vmui-material
 
-Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card, CardContent and CardActionArea, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
+Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card, CardContent, CardActionArea and AvatarGroup, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
 
 ```js
 import { Button, ToggleButton, ToggleButtonGroup } from 'vmui-material';
@@ -550,3 +550,19 @@ native buttons now match browser typography; styled buttons retain their own
 styles. The existing button-family Chrome suite passes with that correction.
 [CardActionArea measurements](bench/card-action/README.md) cover synthetic article
 and exam SSR, not navigation latency. Material remains partial and unreleased.
+
+## Avatar groups
+
+AvatarGroup is independently written over the owned Avatar. The eight direct
+VentiMath callers at `47e3b4ef` are authentication and coming-soon message
+sections: four avatars with primary-theme borders. This is a source-use count,
+not a claim about route traffic or production bundle membership.
+
+It preserves overlapping order, small/medium/numeric spacing, max/total overflow,
+custom surplus renderers/slots, individual variants, theme defaults/overrides,
+CSS variables, RTL, roots/refs and stable member DOM. A focused member survives
+parent renders and list changes; refs clear when members or the group unmount.
+Current 9.5.0/app 7.2.0 SSR and Chrome comparisons, strict types and installed
+archives are checked. [Measurements](bench/avatar-group/README.md) cover synthetic
+community and overflow groups. Material now has 47 independently built components
+and remains partial/unreleased; publication and app adoption are separate.

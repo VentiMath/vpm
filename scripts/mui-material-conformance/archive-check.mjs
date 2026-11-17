@@ -137,3 +137,7 @@ assert.match(renderToString(React.createElement(api.Card,{variant:'outlined'},Re
 
 assert.equal(api.CardActionArea,require('vmui-material/CardActionArea').default);
 assert.match(renderToString(React.createElement(api.CardActionArea,{href:'/exam',disableRipple:true},'Open')),/MuiCardActionArea-focusHighlight/);
+
+assert.equal(api.AvatarGroup,require('vmui-material/AvatarGroup').default);
+assert.equal(api.avatarGroupClasses.root,require('vmui-material/avatarGroupClasses').default.root);
+assert.match(renderToString(React.createElement(api.AvatarGroup,{max:2},['A','B','C'].map(x=>React.createElement(api.Avatar,{key:x},x)))),/>\+2</);

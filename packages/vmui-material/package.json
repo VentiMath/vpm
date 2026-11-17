@@ -1077,6 +1077,26 @@
         "types": "./cardActionAreaClasses.d.cts",
         "default": "./cardActionAreaClasses.cjs"
       }
+    },
+    "./AvatarGroup": {
+      "import": {
+        "types": "./AvatarGroup.d.mts",
+        "default": "./AvatarGroup.mjs"
+      },
+      "require": {
+        "types": "./AvatarGroup.d.cts",
+        "default": "./AvatarGroup.cjs"
+      }
+    },
+    "./avatarGroupClasses": {
+      "import": {
+        "types": "./avatarGroupClasses.d.mts",
+        "default": "./avatarGroupClasses.mjs"
+      },
+      "require": {
+        "types": "./avatarGroupClasses.d.cts",
+        "default": "./avatarGroupClasses.cjs"
+      }
     }
   },
   "files": [
