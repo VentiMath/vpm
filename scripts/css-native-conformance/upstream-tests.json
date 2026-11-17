@@ -1,0 +1,39 @@
+{
+  "upstream-parser": {
+    "revision": "d4a582692533fc87cbab348136e1dbea365d5a94",
+    "files": {
+      "upstream-parser/LICENSE": "3687447039151857a6ba378db062172c7f33d4aa70a615c87a43a9c50e990485",
+      "upstream-parser/test/index.js": "de40fbfc2b3cc83f392fef1d20f932ec5d5a58d4c0961cd54321925d86ed1e96",
+      "upstream-parser/test/parse.js": "0dbbff9b64cb3a116873ba2361d7c7ce5a6ee286058adc507d6abcbe72967765",
+      "upstream-parser/test/stringify.js": "0332c74762e9002f9891824abc710dfd0cceeacda3a60a8c76a1f389a94ffb55",
+      "upstream-parser/test/unit.js": "e123691219918e554ad8f34ce7c69c4995ef3c39abf2d4ae80fcf9e1b6e07c3a"
+    }
+  },
+  "upstream-converter": {
+    "revision": "9b0612094f4af293183824801524ea5400322067",
+    "files": {
+      "upstream-converter/package.json": "d2194e504da35ced59864d1d7654290dadf04cd16acd9dafa60270a0fccb1f08",
+      "upstream-converter/src/__tests__/aspectRatio.js": "93d91e42b05663dfe1090ab0f6bfe28d9f34f8071c72ca62fefd0d47fecc864f",
+      "upstream-converter/src/__tests__/border.js": "3b1753447b2a27732e26cbb25b0db15b07d3857c6e108f9989adf65c03dbf793",
+      "upstream-converter/src/__tests__/borderColor.js": "146e135c2dfdc3a2431464869496a7389603cfd341d32406e8067173c4ade0a7",
+      "upstream-converter/src/__tests__/boxModel.js": "a31142257ff44403feddeeae871756638b0a53754edcc20ec027a4154c337fb7",
+      "upstream-converter/src/__tests__/boxShadow.js": "82d139ace63f890386e6247f0c7effb8cba10304a0b524c4ba333b03e6a7971c",
+      "upstream-converter/src/__tests__/colors.js": "a96de1ecb92a987e18752021d37bc3b745c3a8d10502cf0199846e9b3d7b61be",
+      "upstream-converter/src/__tests__/flex.js": "8a86e82abc12ed8e403d726decbe2dbf4a78370dedc56bb1510d5201e5c9d4cf",
+      "upstream-converter/src/__tests__/flexFlow.js": "f7cc5ee7a3bf00879ba6d2a48b822227aaa87903c996db84145fb8011bf6e0d0",
+      "upstream-converter/src/__tests__/font.js": "ab25ef500811d988132d3449585e1a100456ab892933f16f857eebbc958f9006",
+      "upstream-converter/src/__tests__/fontFamily.js": "add45ac08b3071d97f38072e4d10f2f106a01bc4698699a3aed2440ba67148b1",
+      "upstream-converter/src/__tests__/fontVariant.js": "8f9f71be9ccd492b5d0fa073f148a14b4a690e8c259fea02f616404c6b9182ca",
+      "upstream-converter/src/__tests__/fontWeight.js": "f0ca88771c68c7a1cf84aa0095899ddf6e6bf0d3e4b999ee84a0d1af37c7770a",
+      "upstream-converter/src/__tests__/index.js": "5d4472980a76ba38950b58f542071d6a93f2eec33658ce6f212478c8599232c9",
+      "upstream-converter/src/__tests__/placeContent.js": "b736168ee6f5f7c6b0e08e874711dd0ab87417a8d4db4b81e55a157d97b68b68",
+      "upstream-converter/src/__tests__/shadowOffsets.js": "6b1a2d0dfa1c609a0f316e2e54556b3db5ad887a57a2eb3b8780c7369d574ebe",
+      "upstream-converter/src/__tests__/textDecoration.js": "9bfaeccf6cb292f094a5ea6b1e24613ef9ded10f7ad0c737c74fc4d1713f08a9",
+      "upstream-converter/src/__tests__/textDecorationLine.js": "d3b082b2044df16ffb3e73e2e108087d6196fcf370b4a1739f3ea76c06b915f0",
+      "upstream-converter/src/__tests__/textShadow.js": "cf54069378a29abd20521251a9eb1c15fa6b3fc8a73b91c27adbfd0cc5fb03dd",
+      "upstream-converter/src/__tests__/transform.js": "ee3eb322e81b7a0dfc8eb3628b6a317e340753ae8f8c03b251fd815143ab60e4",
+      "upstream-converter/src/__tests__/units.js": "f3d00df8f042a7dce0e9d29a95c31a030b97a1141460e3384dbcdec62551bdd5",
+      "upstream-converter/LICENSE.md": "9200b800b2460900fe3bff06010726f3a29079511e80245f43a24ef89c0e9d38"
+    }
+  }
+}

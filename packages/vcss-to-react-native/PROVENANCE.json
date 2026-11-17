@@ -1,0 +1,23 @@
+{
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete",
+    "targetScope": "Public tuple converter, property names and all 3.2.0 shorthands"
+  },
+  "caller": {
+    "revision": "a7ce009ffa67fbd1411f1a44788e04cb1a7b16d1",
+    "scope": "Installed css-to-react-native 3.2.0 under styled-components 6.1.17. VentiMath uses the web StyleSheetManager iframe demo API; this converter serves the native entry, not browser style rendering."
+  },
+  "upstream": {
+    "name": "css-to-react-native",
+    "version": "3.2.0",
+    "repository": "https://github.com/styled-components/css-to-react-native",
+    "checked": "2026-11-17"
+  },
+  "changes": [
+    "Independently written declaration grammars; runtime dependencies are exclusively VPM implementations.",
+    "Includes cyan/magenta, case-insensitive named colors and CSS comments; transform:none yields an empty transform list.",
+    "Rejects trailing tokens in background/font-weight, mixed none with decoration lines, and unclosed functions instead of discarding or accepting malformed input.",
+    "Own data-property writes avoid inherited setters; color membership excludes prototype names."
+  ]
+}

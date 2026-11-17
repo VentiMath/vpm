@@ -109,6 +109,15 @@
       "name": "vcss-color-keywords",
       "version": "1.0.0",
     },
+    "packages/vcss-to-react-native": {
+      "name": "vcss-to-react-native",
+      "version": "3.2.0",
+      "dependencies": {
+        "vcamelize": "1.0.1",
+        "vcss-color-keywords": "1.0.0",
+        "vpostcss-value-parser": "4.2.0",
+      },
+    },
     "packages/vcssjanus": {
       "name": "vcssjanus",
       "version": "2.3.1",
@@ -1918,6 +1927,8 @@
     "vcss-box-model": ["vcss-box-model@workspace:packages/vcss-box-model"],
 
     "vcss-color-keywords": ["vcss-color-keywords@workspace:packages/vcss-color-keywords"],
+
+    "vcss-to-react-native": ["vcss-to-react-native@workspace:packages/vcss-to-react-native"],
 
     "vcssjanus": ["vcssjanus@workspace:packages/vcssjanus"],
 

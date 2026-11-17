@@ -262,6 +262,16 @@ jobs:
           node scripts/jwt-decode-conformance/types.cjs
           node scripts/jwt-decode-conformance/browser.cjs
           node scripts/jwt-decode-conformance/archives.cjs
+      - run: npm --prefix scripts/css-native-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: Independent CSS value parser and native converter
+        run: |
+          node --test packages/vpostcss-value-parser/test/*.test.cjs packages/vcss-to-react-native/test/*.test.cjs
+          node scripts/css-native-conformance/parser.cjs
+          node scripts/css-native-conformance/converter.cjs
+          node scripts/css-native-conformance/differential.cjs
+          VCSS_NATIVE_ENTRY="$PWD/packages/vcss-to-react-native/index.cjs" node scripts/css-native-conformance/caller.cjs
+          node scripts/css-native-conformance/types.cjs
+          node scripts/css-native-conformance/archives.cjs
       - run: npm --prefix scripts/css-colors-conformance ci --ignore-scripts --no-audit --no-fund
       - name: CSS color table and unchanged CSS converter
         run: |
@@ -1143,6 +1153,14 @@ jobs:
         run: |
           bun test packages/vjwt-decode/test/decode.test.cjs
           bun scripts/jwt-decode-conformance/run.cjs
+      - run: npm --prefix scripts/css-native-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: Independent CSS value parser and native converter
+        run: |
+          bun test packages/vpostcss-value-parser/test/*.test.cjs packages/vcss-to-react-native/test/*.test.cjs
+          bun scripts/css-native-conformance/parser.cjs
+          bun scripts/css-native-conformance/converter.cjs
+          bun scripts/css-native-conformance/differential.cjs
+          VCSS_NATIVE_ENTRY="$PWD/packages/vcss-to-react-native/index.cjs" bun scripts/css-native-conformance/caller.cjs
       - run: npm --prefix scripts/css-colors-conformance ci --ignore-scripts --no-audit --no-fund
       - run: bun test packages/vcss-color-keywords/test
       - run: bun scripts/css-colors-conformance/probe.cjs

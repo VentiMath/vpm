@@ -90,3 +90,14 @@ packed installs pass; publication and application adoption remain separate.
 data beneath css-to-react-native and styled-components. All existing entries match;
 cyan and magenta also work in border/shadow shorthands, which upstream rejects.
 This is a data-ownership and standards-coverage change, not a claimed speedup.
+
+## CSS-to-native dependency chain
+
+`vcss-to-react-native` now independently covers the 3.2.0 converter and its
+shorthands using `vpostcss-value-parser`, `vcamelize` and
+`vcss-color-keywords`. Public API tests, malformed-input checks and the unchanged
+styled-components 6.1.17 native caller verify the chain. VentiMath's direct
+styled-components usage is currently the **web** iframe `StyleSheetManager` demo;
+it does not exercise native style conversion. The converter can replace the
+installed dependency without claiming that styled-components itself is rewritten
+or that the browser application has adopted this release.
