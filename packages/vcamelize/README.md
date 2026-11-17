@@ -19,8 +19,9 @@ converter, not a general serializer for Maps, Sets or custom classes.
 
 VentiMath installs this leaf through styled-components and css-to-react-native
 3.2.0. Current styled-components 6.6.0 still uses that converter. The unchanged
-converter is tested with the replacement on Node 24 and Bun 1.4.4; application
-adoption and a public release have not happened yet. The earlier `shallowequal`
+converter is tested with the replacement on Node 24 and Bun 1.4.4. The
+[camelize-1.0.1 release](https://github.com/VentiMath/vpm/releases/tag/camelize-1.0.1)
+is available as an immutable archive; application adoption remains separate. The earlier `shallowequal`
 dependency is absent from current styled-components, so it was not rebuilt.
 
 Eight focused tests, 8,014 differential inputs and 16 converter calls cover the
@@ -33,3 +34,7 @@ The three CSS-name fixtures take about 61–63% less time on Node and 49–64% l
 on Bun. Nested object conversion takes 30% less time on Bun. Node's nested-object
 median is 9% higher, but overlaps the control spread; no direction is established
 at this precision. The actual CSS converter calls the string path.
+
+Keep the original `camelize` import name and apply the release's
+`consumer-package.json` override. [Installation](../../docs/INSTALLATION.md#camelize)
+includes the exact URL and archive verification commands.

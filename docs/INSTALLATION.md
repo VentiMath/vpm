@@ -657,3 +657,29 @@ node scripts/pack-leaf-release.cjs --leaf js-cookie --ref COMMIT --tag js-cookie
 node scripts/check-leaf-release.cjs RELEASE_DIRECTORY
 node scripts/check-leaf-release.cjs RELEASE_DIRECTORY --published
 ```
+
+## Camelize
+
+[camelize-1.0.1](https://github.com/VentiMath/vpm/releases/tag/camelize-1.0.1)
+ships independently written `vcamelize` with zero dependencies. The CSS converter
+beneath styled-components keeps its original import name:
+
+```json
+{
+  "overrides": {
+    "camelize": "https://github.com/VentiMath/vpm/releases/download/camelize-1.0.1/vcamelize-1.0.1.tgz"
+  }
+}
+```
+
+Fresh/frozen npm and Bun installs verify the unchanged css-to-react-native 3.2.0
+caller, all packed source-file hashes, Node/Bun tests and strict type consumers.
+`consumer-package.json`, `release-manifest.json` and `SHA256SUMS` accompany the
+archive. This dependency override alone does not establish production bundle
+use or application deployment.
+
+```sh
+node scripts/pack-leaf-release.cjs --leaf camelize --ref COMMIT --tag camelize-1.0.1 --out EMPTY_DIRECTORY
+node scripts/check-leaf-release.cjs RELEASE_DIRECTORY
+node scripts/check-leaf-release.cjs RELEASE_DIRECTORY --published
+```
