@@ -11,12 +11,12 @@
     "kind": "independent",
     "targetScope": "String conversion and recursive own enumerable object-key conversion, including sparse arrays and unchanged Date/RegExp values"
   },
-  "source": "Written from public README examples and black-box observations. No upstream runtime source read or copied. Cycles throw a named TypeError instead of overflowing the call stack.",
+  "source": "Written from public README examples and black-box observations. No upstream runtime source read or copied. Cycles throw a named TypeError instead of overflowing the call stack. Date/RegExp preservation is realm-independent; custom toStringTag values cannot spoof built-in brands or force a getter read.",
   "caller": {
     "name": "css-to-react-native",
     "version": "3.2.0",
     "path": "styled-components 6.6.0 (current), 6.1.17 (app) -> css-to-react-native -> camelize",
     "revision": "7970b7e54faeea97a828f62dd7bb2577abf77d95",
-    "adoption": "Not yet installed in VentiMath."
+    "adoption": "The camelize-1.0.1 archive is adopted in VentiMath main a7ce009ffa67fbd1411f1a44788e04cb1a7b16d1. This source revision fixes cross-realm object preservation; that correction is not yet in a published archive."
   }
 }

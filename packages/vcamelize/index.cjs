@@ -14,8 +14,21 @@ function name(value) {
   }
   return start ? result+value.slice(start) : value;
 }
+const objectTag=Object.prototype.toString;
+const dateTime=Date.prototype.getTime;
+const regexpSource=Object.getOwnPropertyDescriptor(RegExp.prototype,'source').get;
+function preserved(value) {
+  if(!(Symbol.toStringTag in value)) {
+    const tag=objectTag.call(value);
+    return tag==='[object Date]'||tag==='[object RegExp]';
+  }
+  // A custom tag can lie or throw. Check native internal slots without reading it.
+  try { dateTime.call(value); return true; } catch {}
+  try { regexpSource.call(value); return true; } catch {}
+  return false;
+}
 function object(value, active) {
-  if(value===null||typeof value!=='object'||value instanceof Date||value instanceof RegExp) return value;
+  if(value===null||typeof value!=='object'||preserved(value)) return value;
   if(active.has(value)) throw new TypeError('vcamelize does not accept cyclic objects');
   active.add(value);
   try {

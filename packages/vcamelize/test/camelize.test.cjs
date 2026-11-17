@@ -8,3 +8,18 @@ test('sparse arrays keep holes and ignore non-index properties',()=>{const a=[];
 test('colliding keys follow insertion order and inputs stay unchanged',()=>{const x={'a-b':1,a_b:2};assert.deepEqual(c(x),{aB:2});assert.deepEqual(Object.keys(x),['a-b','a_b'])});
 test('cycles fail explicitly and repeated noncyclic branches remain valid',()=>{const x={};x.self=x;assert.throws(()=>c(x),{name:'TypeError',message:/cyclic/});const y=[];y.push(y);assert.throws(()=>c(y),/cyclic/);const shared={a_b:2};assert.deepEqual(c({x:shared,y:shared}),{x:{aB:2},y:{aB:2}})});
 test('untrusted data does not change output or global prototypes',()=>{const out=c(JSON.parse('{"__proto__":{"polluted":true},"constructor":{"prototype":{"polluted":true}}}'));assert.equal(Object.getPrototypeOf(out),Object.prototype);assert.equal({}.polluted,undefined);assert.equal(Object.hasOwn(out,'constructor'),true);assert.deepEqual(out._proto_,{polluted:true})});
+test('foreign Date and RegExp values preserve identity at every nesting level',()=>{
+ const vm=require('node:vm');
+ const {date,invalid,pattern}=vm.runInNewContext('({date:new Date(1234),invalid:new Date(NaN),pattern:/ab+/gi})');
+ pattern.lastIndex=3;date.extra_key='keep';
+ for(const value of [date,invalid,pattern]){assert.equal(c(value),value);const nested=c({some_key:[value,{other_key:value}]});assert.equal(nested.someKey[0],value);assert.equal(nested.someKey[1].otherKey,value)}
+ assert.equal(pattern.lastIndex,3);assert.equal(date.extra_key,'keep');
+});
+test('type tags cannot disguise ordinary objects or hide genuine foreign builtins',()=>{
+ const vm=require('node:vm');
+ for(const tag of ['Date','RegExp']){const fake={some_key:1,[Symbol.toStringTag]:tag};assert.deepEqual(c(fake),{someKey:1})}
+ for(const value of vm.runInNewContext('[new Date(0),/test/u]')){
+  Object.defineProperty(value,Symbol.toStringTag,{get(){throw Error('must not read custom tag')}});
+  assert.equal(c(value),value);
+ }
+});
