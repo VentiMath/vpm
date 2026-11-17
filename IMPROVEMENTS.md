@@ -5803,9 +5803,12 @@ pipeline is 70.5% lower on Node; Bun's median is 14.5% higher but remains
 inconclusive against 24% identical-source control variation. No overall Bun
 Checkout speedup is claimed.
 
-VLX source now independently rasterizes its own formula/problem drawings and
+Published VLX 0.3.0 independently rasterizes its own formula/problem drawings and
 encodes PNGs, removing resvg and its native-platform dependency from the package.
-The published 0.2.3 archive remains unchanged until release/adoption. Node/Bun
+The app still pins native-backed 0.2.3 until its separate repin. Node/Bun
 pixel controls cover all shipped outlines and embedded figures; current app
 layout tests pass. General SVG/CSS/font rendering is outside this scope.
-[Owned PNG measurements](packages/vlx/bench/raster/README.md).
+[Optimized PNG measurements](packages/vlx/bench/raster-optimized/README.md):
+all 1,800 decoded drawings stay identical to the initial owned renderer.
+Node formula/page rendering uses about 80% less time; complete pictures remain
+about 2× native resvg. Public archives pass clean installs with no native addon.
