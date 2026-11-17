@@ -86,3 +86,11 @@ live push registration or Amplify DataStore. Publication and adoption are separa
 binding and dedupe APIs are independently built. An unchanged Redoc 2.5.0 renders
 a synthetic API identically on Node and Bun through the replacement. Types and
 packed installs pass; publication and application adoption remain separate.
+
+
+## CSS named colors
+
+[vcss-color-keywords](../packages/vcss-color-keywords) provides independent CSS-standard
+data beneath css-to-react-native and styled-components. All existing entries match;
+cyan and magenta also work in border/shadow shorthands, which upstream rejects.
+This is a data-ownership and standards-coverage change, not a claimed speedup.

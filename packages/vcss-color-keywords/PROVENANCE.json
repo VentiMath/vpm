@@ -1,0 +1,31 @@
+{
+  "upstream": {
+    "name": "css-color-keywords",
+    "version": "1.0.0",
+    "repository": "https://github.com/sonnylazuardi/css-color-keywords",
+    "checked": "2026-11-17"
+  },
+  "implementation": {
+    "kind": "independent standards data",
+    "targetScope": "148 CSS named colors; package lookup and JSON/CJS/ESM entries",
+    "replacementStatus": "complete"
+  },
+  "changes": [
+    "Color values reconstructed from normative CSS Color Level 3 data, plus the CSS Color Level 4 rebeccapurple value; no upstream runtime or table was copied.",
+    "Includes the standard cyan and magenta aliases missing from css-color-keywords 1.0.0. Context-dependent transparent/currentColor and system colors are not fixed RGB named colors.",
+    "Zero dependencies; values retain lowercase six-digit hex and conventional object lookup semantics."
+  ],
+  "caller": {
+    "revision": "a7ce009ffa67fbd1411f1a44788e04cb1a7b16d1",
+    "scope": "css-to-react-native 3.2.0 beneath styled-components 6.1.17 in VentiMath. Unchanged converter acceptance uses synthetic border/text-shadow/box-shadow declarations; no app dependency switch."
+  },
+  "references": [
+    "https://www.w3.org/TR/css-color-3/#svg-color",
+    "https://www.w3.org/TR/css-color-4/#named-colors"
+  ],
+  "dataSource": {
+    "url": "https://www.w3.org/TR/css-color-3/",
+    "sha256": "5961922f98ea1e713bfceb41d252ed9cc1c9431c7acf5e185044fdd9ad660185",
+    "note": "Only normative color-name/RGB facts are used. CSS4 adds rebeccapurple (#663399)."
+  }
+}

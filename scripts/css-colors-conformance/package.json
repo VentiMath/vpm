@@ -1,0 +1,8 @@
+{
+  "name": "vpm-css-color-controls",
+  "private": true,
+  "dependencies": {
+    "css-color-keywords": "1.0.0",
+    "css-to-react-native": "3.2.0"
+  }
+}
