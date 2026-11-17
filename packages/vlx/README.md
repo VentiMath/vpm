@@ -150,6 +150,12 @@ peer. It rasterizes VLX's SVG and performs no TeX parsing or layout. SVG page
 export needs no native rasterizer. `vlx/png` also exports asynchronous
 `renderPng(renderer, tex, {scale: 2, background: 'white'})` for a single expression.
 
+“Optional” describes which VLX features need the peer, not whether PNG callers
+can omit it. VentiMath explicitly installs it for Discord pictures. Resvg's own
+optional dependencies are platform-specific native binaries; the applicable
+binary is needed on the machine rendering PNGs. This stage is still upstream
+code. See [backend rasterization status](../../docs/BACKEND.md#why-resvg-says-optional).
+
 ## Automatic equation references (0.2.0)
 
 Render one complete reference scope with `renderDocument`, or with
