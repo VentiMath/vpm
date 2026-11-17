@@ -5,3 +5,5 @@ module.exports={...require("./buttons.cjs"),...text,...require("./theme.cjs"),..
 Object.assign(module.exports,require("./collapses.cjs"));
 
 Object.assign(module.exports,require("./dialog-parts.cjs"));
+
+Object.assign(module.exports,require("./dialogs.cjs"));

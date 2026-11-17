@@ -1,6 +1,6 @@
 # vmui-material
 
-Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card, CardContent, CardActionArea, AvatarGroup, Tooltip, Collapse, DialogTitle, DialogContent and DialogActions, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
+Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card, CardContent, CardActionArea, AvatarGroup, Tooltip, Collapse, DialogTitle, DialogContent, DialogActions and Dialog, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
 
 ```js
 import { Button, ToggleButton, ToggleButtonGroup } from 'vmui-material';
@@ -632,11 +632,10 @@ optional dividers and heading-adjacent padding. Actions preserve native child
 buttons and optional inter-button spacing, including wrapping caller layouts.
 All three accept theme defaults/overrides, classes, `sx`, DOM attributes and refs.
 
-The internal title context is ready for the independently implemented Dialog.
-**Dialog itself remains unbuilt:** these components do not supply modal focus,
-backdrops, dismissal or automatic dialog ID generation. A test-only upstream
-Dialog exercises their layout, native buttons and explicit accessible labeling;
-it is not a runtime dependency. Context ID inheritance is tested separately.
+The internal title context is shared with the independently implemented Dialog.
+The original structure-only fixture also uses an upstream Dialog control with
+explicit labeling; it is not a runtime dependency. Full Dialog checks now cover
+the generated title IDs and modal lifecycle as described below.
 
 Current/app comparisons cover Node and Bun markup, strict declarations, Chrome
 light/dark and CSS-variable themes, RTL, narrow screens, stable drafts/focus/scroll,
@@ -646,3 +645,39 @@ processes with same-code controls; they do not measure browser opening latency.
 Build the dialog measurement fixtures with
 `node scripts/mui-material-conformance/dialog-parts-build.cjs` before running
 the benchmark commands in the report.
+
+
+## Dialog
+
+Dialog covers the eleven Material dialog import files in VentiMath: confirmations,
+WARML forms, family reminders and the shared settings panels. Astryx dialogs are
+separate callers. The implementation composes owned Paper, title context and the
+VPM transition engine, sharing document-level overlay ownership with Menu and
+Popover. It adds no runtime dependencies.
+
+It supports generated/explicit accessible title IDs, descriptions and dialog or
+alertdialog roles; focus containment and restoration; nested menus/dialogs;
+background accessibility and scroll ownership; backdrop-drag guards and Escape
+close reasons; portals/custom containers; retained content; width/fullscreen and
+paper/body scrolling; theme/CSS-variable styles; refs and transition callbacks.
+Nested dialogs preserve initial autofocus and return focus to their opener, including
+React Strict Mode. Default fade work is cancellable on reversal and unmount. Custom transition slots
+and the app's legacy `TransitionComponent` remain supported, as does the app's
+`disableEscapeKeyDown` option. Current Material handles that last policy through
+`onClose`; both forms remain available here.
+
+Settings-panel Slide wrappers are tested unchanged as caller-provided transitions.
+Slide itself is still pending, as are the standalone Modal, Fade and Backdrop
+component APIs. Custom root, container, paper and backdrop slots must forward
+native DOM props and refs. This is not a replacement for every Material family.
+
+Current/app browser checks cover layout, themes, RTL, native keyboard navigation,
+draft retention, dismissal, nested ownership, transition interruption, iframe
+containers and hydration. Node/Bun semantics, strict types and fresh package
+installs accompany the [controlled SSR measurements](bench/dialog/README.md).
+Build their fixtures with `node scripts/mui-material-conformance/dialog-build.cjs`.
+Inline form SSR takes 50.1% less time on Node 24 and 51.8% less on Bun 1.4.4
+than the current Material control, beyond the same-code control spread in every
+pair. Closed/default-portal SSR produces no visible dialog content; those cases
+measure the server-side shell, not a rendered form. These measurements do not
+claim faster browser opening or animation frame rates.

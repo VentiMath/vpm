@@ -1,0 +1,10 @@
+'use strict';process.env.NODE_ENV='production';
+const assert=require('node:assert/strict'),{peer}=require('./paths.cjs'),R=peer('react'),h=R.createElement,r=peer('react-dom/server').renderToStaticMarkup,own=require(require('./prepare.cjs'));
+// Project only public semantic attributes. Focus-trap sentinels and the app's
+// deprecated paperScroll classes are deliberately not an HTML identity contract.
+function projection(lib,p){const html=r(h(lib.Dialog,p,h(lib.DialogTitle,null,'Heading'),h(lib.DialogContent,null,'Contents'))).replace(/<style[\s\S]*?<\/style>/g,'');const paper=[...html.matchAll(/<[^>]+>/g)].map(m=>m[0]).find(tag=>/\bMuiDialog-paper\b/.test(tag)),title=html.match(/<h2[^>]*>/)?.[0];const attrs=tag=>Object.fromEntries([...String(tag||'').matchAll(/(role|aria-[\w-]+|id)="([^"]*)"/g)].map(m=>[m[1],m[2]]));return {paper:attrs(paper),title:attrs(title),rendered:!!paper,backdrop:html.includes('MuiBackdrop-root'),fullWidth:html.includes('MuiDialog-paperFullWidth'),fullScreen:html.includes('MuiDialog-paperFullScreen')};}
+let checks=0;
+for(const name of ['@mui/material','mui-material-app']){const up=peer(name);for(const open of [false,true])for(const disablePortal of [false,true])for(const keepMounted of [false,true])for(const maxWidth of [false,'xs','sm','md','lg','xl'])for(const scroll of ['paper','body']){const p={open,disablePortal,keepMounted,maxWidth,scroll,fullWidth:true,'aria-describedby':'details'};assert.deepEqual(projection(own,p),projection(up,p),JSON.stringify({name,p}));checks++}
+ for(const role of name==='@mui/material'?['dialog','alertdialog']:['dialog'])for(const modal of [true,false])for(const hideBackdrop of [true,false]){const p={open:true,disablePortal:true,fullScreen:true,role,'aria-modal':modal,'aria-labelledby':'explicit',hideBackdrop};assert.deepEqual(projection(own,p),projection(up,p));checks++}}
+assert.deepEqual(own.dialogClasses,peer('@mui/material').dialogClasses);
+console.log(checks+' Dialog current/app portal, retained SSR, labeling, role, size and backdrop comparisons pass');

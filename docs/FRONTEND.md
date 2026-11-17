@@ -25,10 +25,10 @@ inventory. The entire upstream Motion API is **not** complete.
 
 ## Material
 
-[vmui-material](../packages/vmui-material) now has 52 independently implemented
+[vmui-material](../packages/vmui-material) now has 53 independently implemented
 components. It covers button controls; text/icons; Box/Paper/Divider; the form,
 input, Select, checkbox/radio/switch foundation; menus; Chip, Avatar, loading
-spinners, Skeleton placeholders, Container page layouts and Card/CardContent panels and their linked CardActionArea roots, plus AvatarGroup, Tooltip, Collapse and the three dialog structure components. Its resolved-theme bridge is built,
+spinners, Skeleton placeholders, Container page layouts and Card/CardContent panels and their linked CardActionArea roots, plus AvatarGroup, Tooltip, Collapse and Dialog with its title/content/action components. Its resolved-theme bridge is built,
 but full Material theme creation
 and all app-used component families are not. It cannot replace the entire
 `@mui/material` dependency yet.
@@ -37,7 +37,6 @@ The largest unbuilt families in direct source use are:
 
 | Family | Source imports | Why it matters |
 | --- | ---: | --- |
-| Dialog | 11 | Modal lifecycle for confirmations and forms; title/content/actions are built |
 | SwipeableDrawer | 11 | Shared navigation and side panels |
 | Table primitives | 8 each for Table/body/cell/head/row | Results and remaining direct Material tables |
 | Autocomplete | 5 | Searchable selection inputs |
@@ -48,10 +47,11 @@ Dependencies such as Material React Table may also consume components that do
 not appear as direct app imports; they need unchanged-caller acceptance before
 a complete package override.
 
-**Next Material unit: Dialog and its remaining overlay dependencies.** Its title,
-content and actions now cover the app's 8/8/9 importing files, including WARML
-forms and family reminders. The modal focus/dismissal lifecycle and automatic
-parent/heading labeling still need implementation and unchanged-caller checks.
+**Next Material unit: Slide.** The two Material settings panels supply it through
+both transition extension APIs. Dialog now covers the eleven Material import
+files: portals, title IDs, modal focus/dismissal, shared nested ownership, sizing
+and retained drafts. Slide is still an unchanged test control, not VPM runtime.
+DialogContentText and the remaining standalone modal primitives also remain.
 Collapse now covers
 the seven navigation and exam-preview imports at app `a7ce009f`, including
 child identity, changing content heights and interrupted transitions. Tooltip now covers 16 rendering caller files (17 imports)

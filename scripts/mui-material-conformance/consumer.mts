@@ -368,3 +368,13 @@ void dialogContentClasses.dividers;
 const invalidDialogContent:DialogContentProps={dividers:"yes"};
 // @ts-expect-error spacing state is boolean
 const invalidDialogActions:DialogActionsProps={disableSpacing:1};
+
+import Dialog, {type DialogProps} from "vmui-material/Dialog";
+import dialogClasses from "vmui-material/dialogClasses";
+const dialogProps:DialogProps={open:true,fullWidth:true,maxWidth:"sm",onClose:(_event,reason)=>{const valid:"backdropClick"|"escapeKeyDown"=reason;void valid},slotProps:{paper:{component:"section",ref:React.createRef<HTMLElement>()},backdrop:{invisible:true},transition:{onExited:node=>node.focus()}}};
+React.createElement(Dialog,{...dialogProps,ref:React.createRef<HTMLDivElement>()},"Form");
+void dialogClasses.paperFullScreen;
+// @ts-expect-error a controlled dialog requires open
+const missingDialogOpen:DialogProps={};
+// @ts-expect-error scroll is a fixed documented option
+const invalidDialogScroll:DialogProps={open:true,scroll:"viewport"};

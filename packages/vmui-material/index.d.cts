@@ -615,3 +615,26 @@ export function getDialogContentUtilityClass(slot:string):string;
 export type DialogActionsClassKey=keyof DialogActionsClasses;
 export const dialogActionsClasses:Readonly<DialogActionsClasses>;
 export function getDialogActionsUtilityClass(slot:string):string;
+
+export type DialogClasses=Record<'root'|'backdrop'|'container'|'scrollPaper'|'scrollBody'|'paper'|'paperWidthFalse'|'paperWidthXs'|'paperWidthSm'|'paperWidthMd'|'paperWidthLg'|'paperWidthXl'|'paperFullWidth'|'paperFullScreen',string>;
+export type DialogClassKey=keyof DialogClasses;
+export type DialogTransitionProps=Omit<CollapseOwnProps,'orientation'|'collapsedSize'|'slots'|'slotProps'|'timeout'>&{timeout?:number|{appear?:number;enter?:number;exit?:number};children?:React.ReactElement};
+export type DialogElementProps=React.HTMLAttributes<HTMLDivElement>&{ref?:React.Ref<HTMLDivElement>;sx?:SxProps<Theme>};
+export type DialogPaperProps=Partial<PaperOwnProps>&Omit<React.HTMLAttributes<HTMLElement>,keyof PaperOwnProps>&{component?:React.ElementType;ref?:React.Ref<HTMLElement>};
+export type DialogSlot<T>=T|((state:DialogOwnerState)=>T);
+export interface DialogProps extends Omit<React.HTMLAttributes<HTMLDivElement>,'onClose'|'role'> {
+ open:boolean;onClose?:(event:React.SyntheticEvent|Event|{},reason:'backdropClick'|'escapeKeyDown')=>void;
+ fullScreen?:boolean;fullWidth?:boolean;maxWidth?:false|'xs'|'sm'|'md'|'lg'|'xl';scroll?:'body'|'paper';role?:'dialog'|'alertdialog';
+ container?:Element|null|(()=>Element|null);disablePortal?:boolean;keepMounted?:boolean;closeAfterTransition?:boolean;
+ disableAutoFocus?:boolean;disableEnforceFocus?:boolean;disableRestoreFocus?:boolean;disableEscapeKeyDown?:boolean;disableScrollLock?:boolean;hideBackdrop?:boolean;
+ onTransitionEnter?:()=>void;onTransitionExited?:()=>void;transitionDuration?:DialogTransitionProps['timeout'];
+ classes?:Partial<DialogClasses>;sx?:SxProps<Theme>;ref?:React.Ref<HTMLDivElement>;
+ PaperComponent?:React.ElementType;PaperProps?:DialogPaperProps;BackdropComponent?:React.ElementType;BackdropProps?:DialogElementProps&{invisible?:boolean};
+ TransitionComponent?:React.ElementType;TransitionProps?:DialogTransitionProps;
+ slots?:{root?:React.ElementType;paper?:React.ElementType;backdrop?:React.ElementType;container?:React.ElementType;transition?:React.ElementType};
+ slotProps?:{root?:DialogSlot<DialogElementProps>;paper?:DialogSlot<DialogPaperProps>;backdrop?:DialogSlot<DialogElementProps&{invisible?:boolean}>;container?:DialogSlot<DialogElementProps>;transition?:DialogSlot<DialogTransitionProps>};
+}
+export type DialogOwnerState=DialogProps&{exited:boolean;fullScreen:boolean;fullWidth:boolean;scroll:'paper'|'body'};
+export const Dialog:React.ForwardRefExoticComponent<DialogProps>;
+export const dialogClasses:Readonly<DialogClasses>;
+export function getDialogUtilityClass(slot:string):string;

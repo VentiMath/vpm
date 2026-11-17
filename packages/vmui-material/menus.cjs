@@ -6,22 +6,7 @@ const {MenuList}=require('./lists.cjs');
 const h=React.createElement,empty=Object.freeze({}),layout=typeof document==='undefined'?React.useEffect:React.useLayoutEffect;
 const join=(...parts)=>parts.filter(Boolean).join(' '),resolve=(p,s)=>typeof p==='function'?p(s):p||empty;
 function useRefs(a,b){return React.useMemo(()=>node=>{const refs=[a,b],clean=refs.map(ref=>typeof ref==='function'?ref(node):ref&&(ref.current=node));return()=>refs.forEach((ref,i)=>{if(typeof clean[i]==='function')clean[i]();else if(typeof ref==='function')ref(null);else if(ref)ref.current=null;});},[a,b]);}
-// Overlays share ownership per document, including iframe documents. Closing one
-// must not unlock scrolling or expose a sibling behind another open overlay.
-const documents=new WeakMap();
-function enter(doc,root,lock){
- let state=documents.get(doc);if(!state){state={entries:[],hidden:new Map(),scroll:null};documents.set(doc,state);}
- const entry={root,lock};state.entries.push(entry);
- function sync(){
-  for(const [node,value]of state.hidden){if(value===null)node.removeAttribute('aria-hidden');else node.setAttribute('aria-hidden',value);}state.hidden.clear();
-  const top=state.entries.at(-1)?.root;
-  if(top)for(const node of doc.body.children)if(!node.contains(top)&&!['SCRIPT','STYLE','LINK'].includes(node.tagName)&&!node.hasAttribute('aria-live')){state.hidden.set(node,node.getAttribute('aria-hidden'));node.setAttribute('aria-hidden','true');}
-  const needs=state.entries.some(e=>e.lock);
-  if(needs&&!state.scroll){const body=doc.body,view=doc.defaultView,width=Math.max(0,view.innerWidth-doc.documentElement.clientWidth);state.scroll={overflow:body.style.overflow,paddingRight:body.style.paddingRight};body.style.overflow='hidden';if(width)body.style.paddingRight=(parseFloat(view.getComputedStyle(body).paddingRight)||0)+width+'px';}
-  if(!needs&&state.scroll){Object.assign(doc.body.style,state.scroll);state.scroll=null;}
- }
- sync();return {top:()=>state.entries.at(-1)===entry,release(){const i=state.entries.indexOf(entry);if(i>=0)state.entries.splice(i,1);sync();if(!state.entries.length)documents.delete(doc);}};
-}
+const {enter}=require('./overlay-owner.cjs');
 const Root=styled('div',{name:'MuiPopover',slot:'Root',overridesResolver:(_,o)=>o.root})(({theme})=>({position:'fixed',inset:0,zIndex:theme.zIndex?.modal??1300}));
 const Sheet=styled(Paper,{name:'MuiPopover',slot:'Paper',overridesResolver:(_,o)=>o.paper})({position:'absolute',overflowY:'auto',overflowX:'hidden',minWidth:16,minHeight:16,maxWidth:'calc(100% - 32px)',maxHeight:'calc(100% - 32px)',outline:0});
 const point=(value,length)=>typeof value==='number'?value:value==='center'?length/2:value==='bottom'||value==='right'?length:0;

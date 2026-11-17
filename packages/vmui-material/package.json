@@ -1197,6 +1197,26 @@
         "types": "./dialogActionsClasses.d.cts",
         "default": "./dialogActionsClasses.cjs"
       }
+    },
+    "./Dialog": {
+      "import": {
+        "types": "./Dialog.d.mts",
+        "default": "./Dialog.mjs"
+      },
+      "require": {
+        "types": "./Dialog.d.cts",
+        "default": "./Dialog.cjs"
+      }
+    },
+    "./dialogClasses": {
+      "import": {
+        "types": "./dialogClasses.d.mts",
+        "default": "./dialogClasses.mjs"
+      },
+      "require": {
+        "types": "./dialogClasses.d.cts",
+        "default": "./dialogClasses.cjs"
+      }
     }
   },
   "files": [
