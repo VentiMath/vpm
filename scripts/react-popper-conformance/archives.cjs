@@ -61,6 +61,9 @@ try {
       JSON.stringify({
         private: true,
         type: "module",
+        // @types/react permits new csstype releases. Keep this archive check
+        // reproducible rather than resolving an unverified tarball at runtime.
+        overrides: { csstype: "3.2.3" },
         dependencies: {
           "vreact-popper":
             "file:" + scratch + "/" + packs.get("vreact-popper").filename,
@@ -84,6 +87,7 @@ try {
         : ["install", "--ignore-scripts", "--frozen-lockfile"],
       dir,
     );
+    assert.equal(JSON.parse(fs.readFileSync(dir + "/node_modules/csstype/package.json")).version, "3.2.3");
     for (const file of ["index.cjs", "index.mjs", "index.d.cts", "index.d.mts"])
       assert.equal(
         fs.readFileSync(dir + "/node_modules/vreact-popper/" + file, "utf8"),
