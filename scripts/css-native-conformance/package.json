@@ -1,0 +1,11 @@
+{
+  "name": "vpm-css-native-conformance",
+  "private": true,
+  "dependencies": {
+    "postcss-value-parser": "4.2.0",
+    "css-to-react-native": "3.2.0",
+    "styled-components": "6.1.17",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  }
+}

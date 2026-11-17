@@ -1,0 +1,22 @@
+{
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete",
+    "targetScope": "Public value lexer, mutable AST, walk, stringify and unit APIs"
+  },
+  "caller": {
+    "revision": "a7ce009ffa67fbd1411f1a44788e04cb1a7b16d1",
+    "scope": "Installed css-to-react-native 3.2.0 under styled-components 6.1.17. VentiMath uses the web StyleSheetManager iframe demo API; this converter serves the native entry, not browser style rendering."
+  },
+  "upstream": {
+    "name": "postcss-value-parser",
+    "version": "4.2.0",
+    "repository": "https://github.com/postcss/postcss-value-parser",
+    "checked": "2026-11-17"
+  },
+  "changes": [
+    "Independently written iterative parse/traversal/serialization avoids stack exhaustion at deep function nesting.",
+    "Malformed source offsets stay within input; overlapping /*/ remains an unclosed comment rather than losing a slash.",
+    "Slash-adjacent whitespace is consistently owned by the divider, including after a closed function."
+  ]
+}

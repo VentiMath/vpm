@@ -925,6 +925,10 @@
       "name": "vpngjs",
       "version": "7.0.0",
     },
+    "packages/vpostcss-value-parser": {
+      "name": "vpostcss-value-parser",
+      "version": "4.2.0",
+    },
     "packages/vprojectify": {
       "name": "vprojectify",
       "version": "0.1.0",
@@ -2150,6 +2154,8 @@
     "vperfect-scrollbar": ["vperfect-scrollbar@workspace:packages/vperfect-scrollbar"],
 
     "vpngjs": ["vpngjs@workspace:packages/vpngjs"],
+
+    "vpostcss-value-parser": ["vpostcss-value-parser@workspace:packages/vpostcss-value-parser"],
 
     "vprojectify": ["vprojectify@workspace:packages/vprojectify"],
 
