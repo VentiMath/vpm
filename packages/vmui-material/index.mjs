@@ -82,3 +82,5 @@ export const {Dialog,dialogClasses,getDialogUtilityClass}=a;
 export const Slide=a.Slide;
 
 export const {DialogContentText,dialogContentTextClasses,getDialogContentTextUtilityClass}=a;
+
+export const {Drawer,drawerClasses,getDrawerUtilityClass}=a;

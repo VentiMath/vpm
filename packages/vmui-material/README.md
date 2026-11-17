@@ -1,6 +1,6 @@
 # vmui-material
 
-Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card, CardContent, CardActionArea, AvatarGroup, Tooltip, Collapse, DialogTitle, DialogContent, DialogActions, Dialog, Slide and DialogContentText, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
+Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card, CardContent, CardActionArea, AvatarGroup, Tooltip, Collapse, DialogTitle, DialogContent, DialogActions, Dialog, Slide, DialogContentText and Drawer, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
 
 ```js
 import { Button, ToggleButton, ToggleButtonGroup } from 'vmui-material';
@@ -696,8 +696,7 @@ completion; mount/unmount options; cancellation on reversal or removal; and the
 current reduced-motion policy with explicit opt-out. Closed content follows
 viewport and container resizing. Placement uses the child's document, including
 iframe viewports. It preserves mounted drafts and focus through parent updates.
-The child must accept a DOM ref and forwarded style. Drawer and SwipeableDrawer
-are not completed by this change.
+The child must accept a DOM ref and forwarded style. Drawer composes this Slide implementation; SwipeableDrawer remains pending.
 
 Node/Bun SSR and strict declaration checks accompany Chrome comparisons of
 geometry, lifecycle and both settings-panel shapes, including RTL, responsive
@@ -727,3 +726,46 @@ The full Material package is still partial and unreleased.
 [Description measurements](bench/dialog-text/README.md) compare single-description
 and confirmation-structure SSR. They include Typography, theme and styling costs;
 they are not measurements of browser interaction or assistive-technology latency.
+
+
+## Drawer
+
+Drawer covers VentiMath's permanent desktop sidebars in `FusePageCardedSidebar`
+and `FusePageSimpleSidebar`: left/right placement, custom root and paper classes,
+and the paper width set through `sx`. It also provides persistent and temporary
+panels, the foundation needed for the mobile sidebars. **SwipeableDrawer is not
+implemented yet**, and this partial package is not ready for a whole-app override.
+
+The implementation composes owned Paper and Slide with the private modal behavior
+shared with Dialog. It adds no dependency. It supports all four edges and RTL,
+resolved theme defaults/overrides, elevation, portal containers, `keepMounted`,
+focus containment/restoration, topmost Escape dismissal, guarded backdrop clicks,
+scroll ownership, current slots and legacy `PaperProps`, `SlideProps` and
+`ModalProps`. Current root slot options take priority over legacy modal options.
+Native/custom roots preserve refs and application content across ordinary rerenders.
+
+Current Material 9 utility classes and temporary-paper dialog semantics are the
+default. App 7's retired paper-anchor classes and upstream focus sentinel elements
+are not emitted; direct document-local keyboard handling preserves focus behavior.
+Unlike the current 9.5.0 control, the legacy `disableEscapeKeyDown` flag remains
+effective, preserving app 7 behavior. Current callers can also veto dismissal in
+`onClose`. The owned theme's reduced-motion policy also applies to panel/backdrop transitions.
+A custom transition must forward its ref and complete the enter/exit callbacks.
+
+Comparison fixtures cover current Material 9.5.0 and app 7.2.0 server output,
+four-edge geometry, light/dark and CSS-variable themes, RTL, retained field state,
+keyboard access, nested Dialog ownership, iframe portals and permanent-panel
+hydration. Checks use synthetic content, not live navigation writes.
+
+[Drawer measurements](bench/drawer/README.md) include the resolved-theme provider
+and server rendering of each panel variant with retained input/button content.
+Temporary panels use `disablePortal` to measure real output, rather than an empty
+server portal. These are composition costs, not browser animation or app latency.
+Build fixtures with `node scripts/mui-material-conformance/drawer-build.cjs` before
+running `bench/drawer.cjs`.
+
+The recorded permanent-sidebar cases take 28–37% less time on Node 24 and
+29–32% less on Bun 1.4.4 against current/app controls, beyond their recorded
+control spread. Current Material 9 persistent/temporary Node medians are lower,
+but noisy identical-source controls leave those two directions unestablished.
+All raw samples, including the noisy controls, are retained in the report.

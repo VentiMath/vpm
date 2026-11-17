@@ -1247,6 +1247,26 @@
         "types": "./dialogContentTextClasses.d.cts",
         "default": "./dialogContentTextClasses.cjs"
       }
+    },
+    "./Drawer": {
+      "import": {
+        "types": "./Drawer.d.mts",
+        "default": "./Drawer.mjs"
+      },
+      "require": {
+        "types": "./Drawer.d.cts",
+        "default": "./Drawer.cjs"
+      }
+    },
+    "./drawerClasses": {
+      "import": {
+        "types": "./drawerClasses.d.mts",
+        "default": "./drawerClasses.mjs"
+      },
+      "require": {
+        "types": "./drawerClasses.d.cts",
+        "default": "./drawerClasses.cjs"
+      }
     }
   },
   "files": [

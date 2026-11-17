@@ -393,3 +393,14 @@ React.createElement(DialogContentText,descriptionProps,'Leave this page?');
 React.createElement(DialogContentText<'a'>,{component:'a',href:'/help',ref:React.createRef<HTMLAnchorElement>()},'Help');
 // @ts-expect-error paragraph roots do not accept href
 const invalidDescription:DialogContentTextProps={href:'/help'};
+
+import Drawer, {type DrawerProps} from 'vmui-material/Drawer';
+import drawerClasses from 'vmui-material/drawerClasses';
+const sidebar:DrawerProps={variant:'permanent',anchor:'left',open:false,classes:{paper:'FusePageCarded-sidebar'},sx:{'& .MuiPaper-root':{width:'240px'}},ref:React.createRef<HTMLDivElement>()};
+React.createElement(Drawer,sidebar,'Practice');
+React.createElement(Drawer,{open:true,ModalProps:{keepMounted:true,disableRestoreFocus:true},slotProps:{paper:s=>({component:'section','aria-label':s.anchor}),transition:{direction:'right',onExited:node=>node.focus()},root:{disableScrollLock:true}},onClose:(_event,reason)=>{const closed:'escapeKeyDown'|'backdropClick'=reason;void closed;}});
+void drawerClasses.docked;
+// @ts-expect-error drawer variants have a fixed set
+const wrongDrawerVariant:DrawerProps={variant:'floating'};
+// @ts-expect-error anchor is a physical edge
+const wrongDrawerAnchor:DrawerProps={anchor:'middle'};

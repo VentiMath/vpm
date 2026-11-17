@@ -652,3 +652,19 @@ export const DialogContentText:TextComponent<DialogContentTextOwnProps,'p'>;
 export type DialogContentTextClassKey=keyof DialogContentTextClasses;
 export const dialogContentTextClasses:Readonly<DialogContentTextClasses>;
 export function getDialogContentTextUtilityClass(slot:string):string;
+
+export type DrawerClasses=Record<'root'|'docked'|'paper'|'anchorLeft'|'anchorRight'|'anchorTop'|'anchorBottom'|'modal',string>;
+export type DrawerClassKey=keyof DrawerClasses;
+export type DrawerModalProps=Pick<DialogProps,'container'|'disablePortal'|'keepMounted'|'closeAfterTransition'|'disableAutoFocus'|'disableEnforceFocus'|'disableRestoreFocus'|'disableEscapeKeyDown'|'disableScrollLock'|'hideBackdrop'|'onTransitionEnter'|'onTransitionExited'|'onClose'|'BackdropProps'|'BackdropComponent'>&{open?:boolean;ref?:React.Ref<HTMLDivElement>;classes?:Partial<Record<'root'|'backdrop',string>>};
+export type DrawerSlot<T>=T|((state:DrawerOwnerState)=>T);
+export interface DrawerProps extends Omit<React.HTMLAttributes<HTMLDivElement>,'onClose'>,DrawerModalProps {
+ anchor?:'left'|'right'|'top'|'bottom';variant?:'permanent'|'persistent'|'temporary';elevation?:number;open?:boolean;
+ classes?:Partial<DrawerClasses>;sx?:SxProps<Theme>;ref?:React.Ref<HTMLDivElement>;ModalProps?:DrawerModalProps;
+ PaperProps?:DialogPaperProps;SlideProps?:Partial<SlideProps>;transitionDuration?:DialogTransitionProps['timeout'];
+ slots?:{root?:React.ElementType;docked?:React.ElementType;paper?:React.ElementType;backdrop?:React.ElementType;transition?:React.ElementType};
+ slotProps?:{root?:DrawerSlot<DrawerModalProps&DialogElementProps>;docked?:DrawerSlot<DialogElementProps>;paper?:DrawerSlot<DialogPaperProps>;backdrop?:DrawerSlot<DialogElementProps&{invisible?:boolean;classes?:{root?:string}}> ;transition?:DrawerSlot<Partial<SlideProps>>};
+}
+export type DrawerOwnerState=Omit<DrawerProps,'slots'|'slotProps'>&{anchor:'left'|'right'|'top'|'bottom';variant:'permanent'|'persistent'|'temporary';open:boolean;elevation:number;exited:boolean};
+export const Drawer:React.ForwardRefExoticComponent<DrawerProps>;
+export const drawerClasses:Readonly<DrawerClasses>;
+export function getDrawerUtilityClass(slot:string):string;

@@ -102,6 +102,7 @@ jobs:
           node scripts/mui-material-conformance/dialog-parts-contract.cjs
           node scripts/mui-material-conformance/dialog-contract.cjs
           node scripts/mui-material-conformance/slide-contract.cjs
+          node scripts/mui-material-conformance/drawer-contract.cjs
           node scripts/mui-material-conformance/lists-contract.cjs
           node scripts/mui-material-conformance/types.cjs
           node scripts/mui-material-conformance/browser.cjs
@@ -147,6 +148,7 @@ jobs:
           node scripts/mui-material-conformance/dialog-parts-browser.cjs
           node scripts/mui-material-conformance/dialog-browser.cjs
           node scripts/mui-material-conformance/slide-browser.cjs
+          node scripts/mui-material-conformance/drawer-browser.cjs
           VPM_REACT_MODE=development node scripts/mui-material-conformance/skeleton-browser.cjs
           VPM_REACT_MODE=development node scripts/mui-material-conformance/container-browser.cjs
           VPM_REACT_MODE=development node scripts/mui-material-conformance/cards-browser.cjs
@@ -157,6 +159,7 @@ jobs:
           VPM_REACT_MODE=development node scripts/mui-material-conformance/dialog-parts-browser.cjs
           VPM_REACT_MODE=development node scripts/mui-material-conformance/dialog-browser.cjs
           VPM_REACT_MODE=development node scripts/mui-material-conformance/slide-browser.cjs
+          VPM_REACT_MODE=development node scripts/mui-material-conformance/drawer-browser.cjs
           VPM_REACT_MODE=development node scripts/mui-material-conformance/checkbox-browser.cjs
           node scripts/mui-material-conformance/archives.cjs
       - name: Motion React application patterns
@@ -1068,6 +1071,7 @@ jobs:
           bun scripts/mui-material-conformance/dialog-parts-contract.cjs
           bun scripts/mui-material-conformance/dialog-contract.cjs
           bun scripts/mui-material-conformance/slide-contract.cjs
+          bun scripts/mui-material-conformance/drawer-contract.cjs
           bun scripts/mui-material-conformance/lists-contract.cjs
           bun test packages/vmui-system/test/system.test.cjs
           bun scripts/mui-system-conformance/primitives.cjs

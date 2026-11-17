@@ -378,3 +378,23 @@ DialogContentText is included in the dialog-parts matrices: three real source
 callers, current/app themes, description IDs and accessible dialog descriptions,
 custom roots, refs, retained nodes and hydration. The dedicated measurement entry
 is `packages/vmui-material/bench/dialog-text.cjs`. Material remains partial.
+
+## Drawer
+
+`drawer-contract.cjs` compares 192 current9/app7 SSR combinations across variants,
+edges, open state, portals and retained content. `drawer-browser.cjs` checks
+four-edge geometry with light/dark CSS-variable themes and RTL, the two permanent
+sidebar prop shapes, temporary keyboard/focus/dismissal, nested Dialog ownership,
+retained drafts, interrupted transitions, custom roots/refs, iframe portals and
+hydration. App 7 and VPM retain `disableEscapeKeyDown`; the current 9.5.0 control
+ignores it, which is asserted explicitly. Retired app7 paper-anchor classes and
+upstream focus sentinels are excluded from structural SSR equality; browser checks
+compare actual geometry, accessibility and focus behavior independently.
+
+Production and development React 19.3.1 are checked. The shared archive runner
+repeats Drawer and Dialog against exact installed packages. Build `drawer-build.cjs`
+before running `packages/vmui-material/bench/drawer.cjs` with Node and Bun,
+sequentially after other checks finish. [Measurements](../../packages/vmui-material/bench/drawer/README.md)
+include the resolved theme and real inline paper content for all three variants.
+The app's SwipeableDrawer callers are the next unit; no swipe gesture support or
+whole-app adoption is claimed here.

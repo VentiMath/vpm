@@ -11,3 +11,5 @@ Object.assign(module.exports,require("./dialogs.cjs"));
 Object.assign(module.exports,require("./slides.cjs"));
 
 Object.assign(module.exports,require("./dialog-text.cjs"));
+
+Object.assign(module.exports,require("./drawers.cjs"));

@@ -149,3 +149,7 @@ assert.match(renderToString(React.createElement(api.CardActionArea,{href:'/exam'
 assert.equal(api.AvatarGroup,require('vmui-material/AvatarGroup').default);
 assert.equal(api.avatarGroupClasses.root,require('vmui-material/avatarGroupClasses').default.root);
 assert.match(renderToString(React.createElement(api.AvatarGroup,{max:2},['A','B','C'].map(x=>React.createElement(api.Avatar,{key:x},x)))),/>\+2</);
+
+assert.equal(api.Drawer, require('vmui-material/Drawer').default);
+assert.equal(api.drawerClasses, require('vmui-material/drawerClasses').default);
+assert.match(renderToString(React.createElement(api.Drawer,{variant:'permanent',open:false},'Practice')), /MuiDrawer-docked/);
