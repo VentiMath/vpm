@@ -86,3 +86,12 @@ export const {DialogContentText,dialogContentTextClasses,getDialogContentTextUti
 export const {Drawer,drawerClasses,getDrawerUtilityClass}=a;
 
 export const SwipeableDrawer=a.SwipeableDrawer;
+
+import tables from './tables.cjs';
+export const Table=tables.Table,tableClasses=tables.tableClasses,getTableUtilityClass=tables.getTableUtilityClass;
+export const TableHead=tables.TableHead,tableHeadClasses=tables.tableHeadClasses,getTableHeadUtilityClass=tables.getTableHeadUtilityClass;
+export const TableBody=tables.TableBody,tableBodyClasses=tables.tableBodyClasses,getTableBodyUtilityClass=tables.getTableBodyUtilityClass;
+export const TableFooter=tables.TableFooter,tableFooterClasses=tables.tableFooterClasses,getTableFooterUtilityClass=tables.getTableFooterUtilityClass;
+export const TableRow=tables.TableRow,tableRowClasses=tables.tableRowClasses,getTableRowUtilityClass=tables.getTableRowUtilityClass;
+export const TableCell=tables.TableCell,tableCellClasses=tables.tableCellClasses,getTableCellUtilityClass=tables.getTableCellUtilityClass;
+export const TableContainer=tables.TableContainer,tableContainerClasses=tables.tableContainerClasses,getTableContainerUtilityClass=tables.getTableContainerUtilityClass;

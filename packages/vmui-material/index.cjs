@@ -15,3 +15,5 @@ Object.assign(module.exports,require("./dialog-text.cjs"));
 Object.assign(module.exports,require("./drawers.cjs"));
 
 Object.assign(module.exports,require("./swipeable-drawers.cjs"));
+
+Object.assign(module.exports,require('./tables.cjs'));

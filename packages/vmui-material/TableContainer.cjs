@@ -1,0 +1,1 @@
+'use strict';const api=require('./tables.cjs');module.exports=api.TableContainer;module.exports.default=api.TableContainer;module.exports.tableContainerClasses=api.tableContainerClasses;module.exports.getTableContainerUtilityClass=api.getTableContainerUtilityClass;

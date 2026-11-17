@@ -156,3 +156,6 @@ assert.match(renderToString(React.createElement(api.Drawer,{variant:'permanent',
 
 assert.equal(api.SwipeableDrawer, require('vmui-material/SwipeableDrawer').default);
 assert.match(renderToString(React.createElement(api.SwipeableDrawer,{variant:'permanent',onOpen(){},onClose(){}},'Navigation')),/MuiDrawer-docked/);
+
+for(const name of ["Table", "TableHead", "TableBody", "TableFooter", "TableRow", "TableCell", "TableContainer"]) assert.equal(api[name],require("vmui-material/"+name).default);
+assert.match(renderToString(React.createElement(api.Table,null,React.createElement(api.TableHead,null,React.createElement(api.TableRow,null,React.createElement(api.TableCell,{sortDirection:"asc"},"Score"))))),/aria-sort="ascending"/);

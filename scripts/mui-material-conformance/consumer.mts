@@ -413,3 +413,12 @@ React.createElement(SwipeableDrawer,{onOpen:e=>void e.type,onClose:e=>void e.typ
 const missingSwipeCallbacks:SwipeableDrawerProps={onOpen:()=>{}};
 // @ts-expect-error hysteresis is numeric
 const wrongSwipeThreshold:SwipeableDrawerProps={...navigation,hysteresis:'half'};
+
+import {Table,TableBody,TableCell,TableContainer,TableFooter,TableHead,TableRow} from 'vmui-material';
+import TableEntry from 'vmui-material/Table';
+React.createElement(Table,{ref:React.createRef<HTMLTableElement>(),size:'small',stickyHeader:true},React.createElement(TableHead,null,React.createElement(TableRow,{selected:true},React.createElement(TableCell,{sortDirection:'asc',scope:'col',colSpan:2},'Score'))));
+React.createElement(TableContainer,{component:Paper,elevation:0,sx:{maxHeight:'70vh'}},React.createElement(TableEntry,null,React.createElement(TableBody),React.createElement(TableFooter)));
+// @ts-expect-error sorting uses the documented ascending/descending tokens
+React.createElement(TableCell,{sortDirection:'sideways'});
+// @ts-expect-error sticky headers belong to Table, not TableRow
+const invalidTableRow:import('vmui-material').TableRowProps={stickyHeader:true};

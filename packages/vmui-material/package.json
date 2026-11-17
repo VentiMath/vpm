@@ -1277,6 +1277,146 @@
         "types": "./SwipeableDrawer.d.cts",
         "default": "./SwipeableDrawer.cjs"
       }
+    },
+    "./Table": {
+      "import": {
+        "types": "./Table.d.mts",
+        "default": "./Table.mjs"
+      },
+      "require": {
+        "types": "./Table.d.cts",
+        "default": "./Table.cjs"
+      }
+    },
+    "./TableHead": {
+      "import": {
+        "types": "./TableHead.d.mts",
+        "default": "./TableHead.mjs"
+      },
+      "require": {
+        "types": "./TableHead.d.cts",
+        "default": "./TableHead.cjs"
+      }
+    },
+    "./TableBody": {
+      "import": {
+        "types": "./TableBody.d.mts",
+        "default": "./TableBody.mjs"
+      },
+      "require": {
+        "types": "./TableBody.d.cts",
+        "default": "./TableBody.cjs"
+      }
+    },
+    "./TableFooter": {
+      "import": {
+        "types": "./TableFooter.d.mts",
+        "default": "./TableFooter.mjs"
+      },
+      "require": {
+        "types": "./TableFooter.d.cts",
+        "default": "./TableFooter.cjs"
+      }
+    },
+    "./TableRow": {
+      "import": {
+        "types": "./TableRow.d.mts",
+        "default": "./TableRow.mjs"
+      },
+      "require": {
+        "types": "./TableRow.d.cts",
+        "default": "./TableRow.cjs"
+      }
+    },
+    "./TableCell": {
+      "import": {
+        "types": "./TableCell.d.mts",
+        "default": "./TableCell.mjs"
+      },
+      "require": {
+        "types": "./TableCell.d.cts",
+        "default": "./TableCell.cjs"
+      }
+    },
+    "./TableContainer": {
+      "import": {
+        "types": "./TableContainer.d.mts",
+        "default": "./TableContainer.mjs"
+      },
+      "require": {
+        "types": "./TableContainer.d.cts",
+        "default": "./TableContainer.cjs"
+      }
+    },
+    "./tableClasses": {
+      "import": {
+        "types": "./tableClasses.d.mts",
+        "default": "./tableClasses.mjs"
+      },
+      "require": {
+        "types": "./tableClasses.d.cts",
+        "default": "./tableClasses.cjs"
+      }
+    },
+    "./tableHeadClasses": {
+      "import": {
+        "types": "./tableHeadClasses.d.mts",
+        "default": "./tableHeadClasses.mjs"
+      },
+      "require": {
+        "types": "./tableHeadClasses.d.cts",
+        "default": "./tableHeadClasses.cjs"
+      }
+    },
+    "./tableBodyClasses": {
+      "import": {
+        "types": "./tableBodyClasses.d.mts",
+        "default": "./tableBodyClasses.mjs"
+      },
+      "require": {
+        "types": "./tableBodyClasses.d.cts",
+        "default": "./tableBodyClasses.cjs"
+      }
+    },
+    "./tableFooterClasses": {
+      "import": {
+        "types": "./tableFooterClasses.d.mts",
+        "default": "./tableFooterClasses.mjs"
+      },
+      "require": {
+        "types": "./tableFooterClasses.d.cts",
+        "default": "./tableFooterClasses.cjs"
+      }
+    },
+    "./tableRowClasses": {
+      "import": {
+        "types": "./tableRowClasses.d.mts",
+        "default": "./tableRowClasses.mjs"
+      },
+      "require": {
+        "types": "./tableRowClasses.d.cts",
+        "default": "./tableRowClasses.cjs"
+      }
+    },
+    "./tableCellClasses": {
+      "import": {
+        "types": "./tableCellClasses.d.mts",
+        "default": "./tableCellClasses.mjs"
+      },
+      "require": {
+        "types": "./tableCellClasses.d.cts",
+        "default": "./tableCellClasses.cjs"
+      }
+    },
+    "./tableContainerClasses": {
+      "import": {
+        "types": "./tableContainerClasses.d.mts",
+        "default": "./tableContainerClasses.mjs"
+      },
+      "require": {
+        "types": "./tableContainerClasses.d.cts",
+        "default": "./tableContainerClasses.cjs"
+      }
     }
   },
   "files": [

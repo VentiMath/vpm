@@ -1,6 +1,6 @@
 # vmui-material
 
-Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card, CardContent, CardActionArea, AvatarGroup, Tooltip, Collapse, DialogTitle, DialogContent, DialogActions, Dialog, Slide, DialogContentText, Drawer and SwipeableDrawer, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
+Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card, CardContent, CardActionArea, AvatarGroup, Tooltip, Collapse, DialogTitle, DialogContent, DialogActions, Dialog, Slide, DialogContentText, Drawer, SwipeableDrawer, Table, TableHead, TableBody, TableFooter, TableRow, TableCell and TableContainer, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
 
 ```js
 import { Button, ToggleButton, ToggleButtonGroup } from 'vmui-material';
@@ -812,3 +812,25 @@ In these local SSR fixtures, elapsed time is 31–52% lower on Node 24 and 29–
 lower on Bun 1.4.4 across current/app controls. Every comparison pair is beyond
 the identical-source control spread. These are server-rendering measurements,
 not claims about swipe responsiveness or production application speed.
+
+## Tables
+
+Table, TableHead, TableBody, TableFooter, TableRow, TableCell and TableContainer
+cover VentiMath’s direct results and score grids. Table provides size, padding
+and sticky-header defaults; sections determine cell semantics. Header cells use
+`th`/`scope="col"`, explicit row headers preserve `scope="row"`, and
+`sortDirection` exposes native `aria-sort`. Sorting itself stays with the caller.
+Nested tables reset their own context. Rows support selected and hover styles;
+containers provide horizontal overflow and can compose Paper.
+
+All seven support refs, custom roots, utility classes, resolved theme defaults,
+overrides, CSS variables, RTL and `sx`. Custom section/row roots receive table
+roles. Synthetic caller checks cover compact sticky score grids, keyboard
+sorting, retained row/input/focus identity, scrolling, hydration and accessibility.
+The current Material 9.5.0 and app 7.2.0 controls agree on the verified contracts.
+This adds seven components (64 total), not a complete Material replacement;
+TableSortLabel, TablePagination and remaining families are still separate work.
+
+[Table SSR measurements](bench/tables/README.md) use twenty-row synthetic results,
+coach scores and themed tables. These do not measure browser sorting throughput.
+Build `scripts/mui-material-conformance/tables-build.cjs` before benchmarking.

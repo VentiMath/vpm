@@ -678,3 +678,36 @@ export interface SwipeableDrawerProps extends Omit<DrawerProps,'onOpen'|'onClose
  slotProps?:DrawerProps['slotProps']&{swipeArea?:DrawerSlot<DialogElementProps>};
 }
 export const SwipeableDrawer:React.ForwardRefExoticComponent<SwipeableDrawerProps>;
+
+export interface TableBaseProps {children?:React.ReactNode;className?:string;classes?:Partial<Record<string,string>>;sx?:SxProps<Theme>;}
+export interface TableOwnProps extends TableBaseProps {padding?:'normal'|'checkbox'|'none';size?:'small'|'medium';stickyHeader?:boolean;}
+export interface TableCellOwnProps extends TableBaseProps {align?:'inherit'|'left'|'center'|'right'|'justify';padding?:'normal'|'checkbox'|'none';size?:'small'|'medium';variant?:'head'|'body'|'footer';sortDirection?:'asc'|'desc'|false;}
+export interface TableRowOwnProps extends TableBaseProps {hover?:boolean;selected?:boolean;}
+export type TableProps<C extends React.ElementType="table">=TableOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof TableOwnProps>&{component?:C};
+export const Table:<C extends React.ElementType="table">(props:TableProps<C>)=>React.ReactElement|null;
+export const tableClasses:Readonly<Record<string,string>>;
+export function getTableUtilityClass(slot:string):string;
+export type TableHeadProps<C extends React.ElementType="thead">=TableBaseProps&Omit<React.ComponentPropsWithRef<C>,keyof TableBaseProps>&{component?:C};
+export const TableHead:<C extends React.ElementType="thead">(props:TableHeadProps<C>)=>React.ReactElement|null;
+export const tableHeadClasses:Readonly<Record<string,string>>;
+export function getTableHeadUtilityClass(slot:string):string;
+export type TableBodyProps<C extends React.ElementType="tbody">=TableBaseProps&Omit<React.ComponentPropsWithRef<C>,keyof TableBaseProps>&{component?:C};
+export const TableBody:<C extends React.ElementType="tbody">(props:TableBodyProps<C>)=>React.ReactElement|null;
+export const tableBodyClasses:Readonly<Record<string,string>>;
+export function getTableBodyUtilityClass(slot:string):string;
+export type TableFooterProps<C extends React.ElementType="tfoot">=TableBaseProps&Omit<React.ComponentPropsWithRef<C>,keyof TableBaseProps>&{component?:C};
+export const TableFooter:<C extends React.ElementType="tfoot">(props:TableFooterProps<C>)=>React.ReactElement|null;
+export const tableFooterClasses:Readonly<Record<string,string>>;
+export function getTableFooterUtilityClass(slot:string):string;
+export type TableRowProps<C extends React.ElementType="tr">=TableRowOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof TableRowOwnProps>&{component?:C};
+export const TableRow:<C extends React.ElementType="tr">(props:TableRowProps<C>)=>React.ReactElement|null;
+export const tableRowClasses:Readonly<Record<string,string>>;
+export function getTableRowUtilityClass(slot:string):string;
+export type TableCellProps<C extends React.ElementType="td">=TableCellOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof TableCellOwnProps>&{component?:C};
+export const TableCell:<C extends React.ElementType="td">(props:TableCellProps<C>)=>React.ReactElement|null;
+export const tableCellClasses:Readonly<Record<string,string>>;
+export function getTableCellUtilityClass(slot:string):string;
+export type TableContainerProps<C extends React.ElementType="div">=TableBaseProps&Omit<React.ComponentPropsWithRef<C>,keyof TableBaseProps>&{component?:C};
+export const TableContainer:<C extends React.ElementType="div">(props:TableContainerProps<C>)=>React.ReactElement|null;
+export const tableContainerClasses:Readonly<Record<string,string>>;
+export function getTableContainerUtilityClass(slot:string):string;

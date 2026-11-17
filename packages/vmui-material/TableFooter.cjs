@@ -1,0 +1,1 @@
+'use strict';const api=require('./tables.cjs');module.exports=api.TableFooter;module.exports.default=api.TableFooter;module.exports.tableFooterClasses=api.tableFooterClasses;module.exports.getTableFooterUtilityClass=api.getTableFooterUtilityClass;

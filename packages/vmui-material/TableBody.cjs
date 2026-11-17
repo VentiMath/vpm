@@ -1,0 +1,1 @@
+'use strict';const api=require('./tables.cjs');module.exports=api.TableBody;module.exports.default=api.TableBody;module.exports.tableBodyClasses=api.tableBodyClasses;module.exports.getTableBodyUtilityClass=api.getTableBodyUtilityClass;
