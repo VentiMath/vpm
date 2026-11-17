@@ -690,3 +690,38 @@ Revision r2 preserves Date/RegExp values from other realms, including nested
 values and custom type tags. Package version 1.0.1 remains the API baseline;
 the original release URLs are unchanged. No caller settings or import changes
 are required beyond repinning the override.
+
+## CSS-to-React-Native
+
+[CSS-to-React-Native 3.2.0](https://github.com/VentiMath/vpm/releases/tag/css-to-react-native-3.2.0)
+contains the independent converter and its complete four-package VPM closure.
+For an existing styled-components dependency, preserve its imports and override
+only the converter:
+
+```json
+{
+  "overrides": {
+    "css-to-react-native": "https://github.com/VentiMath/vpm/releases/download/css-to-react-native-3.2.0/vcss-to-react-native-3.2.0.tgz"
+  }
+}
+```
+
+A direct consumer can use that same URL as the `css-to-react-native` dependency.
+The archive pins `vpostcss-value-parser` 4.2.0, `vcss-color-keywords` 1.0.0 and
+`vcamelize` 1.0.1 to this release's URLs; no helper overrides or npm registrations
+are required. The camelize archive includes the cross-realm object fix.
+
+The public bytes, source hashes, fresh/frozen npm/Bun installs, CJS/ESM exports,
+strict declarations and unchanged styled-components 6.1.17 native caller are
+verified. [Compatibility notes](../packages/vcss-to-react-native/README.md)
+cover color aliases, comment handling and stricter shorthand validation.
+VentiMath's current direct caller is the web iframe `StyleSheetManager`; the
+native converter is an installed dependency, not that browser rendering path.
+Application adoption remains separate. Performance recordings are noisy and do
+not establish a general speed advantage.
+
+```sh
+node scripts/pack-css-native-release.cjs --ref COMMIT_SHA --tag css-to-react-native-3.2.0 --out /absolute/empty/directory
+node scripts/check-css-native-release.cjs /absolute/directory
+node scripts/check-css-native-release.cjs /absolute/directory --published
+```
