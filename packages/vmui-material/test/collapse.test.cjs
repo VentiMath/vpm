@@ -1,0 +1,7 @@
+"use strict";
+const {test}=require('node:test'),assert=require('node:assert/strict'),{peer}=require('../../../scripts/mui-material-conformance/paths.cjs'),R=peer('react'),render=peer('react-dom/server').renderToStaticMarkup,own=require(require('../../../scripts/mui-material-conformance/prepare.cjs'));
+const output=p=>render(R.createElement(own.Collapse,p,R.createElement('button',null,'Exam'))).replace(/<style[\s\S]*?<\/style>/g,'');
+test('closed previews retain mounted content by default',()=>{assert.match(output({}),/MuiCollapse-hidden/);assert.match(output({}),/>Exam</);assert.equal(output({mountOnEnter:true}),'');assert.equal(output({unmountOnExit:true}),'')});
+test('initial open state is entered unless appearance is requested',()=>{assert.match(output({in:true}),/MuiCollapse-entered/);assert.doesNotMatch(output({in:true,appear:true}),/MuiCollapse-entered|MuiCollapse-hidden/)});
+test('nonzero collapsed content remains visible and horizontal mode uses width',()=>{assert.doesNotMatch(output({collapsedSize:14}),/MuiCollapse-hidden/);assert.match(output({orientation:'horizontal',collapsedSize:'2em'}),/min-width:2em/)});
+test('current slot functions see the state and never leak it to native elements',()=>{let state;const html=output({slots:{root:'section',wrapper:'article'},slotProps:{root:s=>{state=s;return {'data-phase':s.state}}}});assert.equal(state.state,'exited');assert.match(html,/<section [^>]*data-phase="exited"/);assert.doesNotMatch(html,/ownerState|collapsedSize|mountOnEnter/)});

@@ -1,0 +1,1 @@
+export { Collapse as default, getCollapseUtilityClass, collapseClasses, type CollapseProps, type CollapseOwnProps, type CollapseOwnerState, type CollapseClasses, type CollapseClassKey } from "./index.mjs";

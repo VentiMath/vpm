@@ -25,10 +25,10 @@ inventory. The entire upstream Motion API is **not** complete.
 
 ## Material
 
-[vmui-material](../packages/vmui-material) now has 48 independently implemented
+[vmui-material](../packages/vmui-material) now has 49 independently implemented
 components. It covers button controls; text/icons; Box/Paper/Divider; the form,
 input, Select, checkbox/radio/switch foundation; menus; Chip, Avatar, loading
-spinners, Skeleton placeholders, Container page layouts and Card/CardContent panels and their linked CardActionArea roots, plus AvatarGroup and Tooltip. Its resolved-theme bridge is built, but full Material theme creation
+spinners, Skeleton placeholders, Container page layouts and Card/CardContent panels and their linked CardActionArea roots, plus AvatarGroup, Tooltip and Collapse. Its resolved-theme bridge is built, but full Material theme creation
 and all app-used component families are not. It cannot replace the entire
 `@mui/material` dependency yet.
 
@@ -39,7 +39,6 @@ The largest unbuilt families in direct source use are:
 | Dialog / content/title/actions | 11 / 8 / 8 / 9 | Confirmations and forms, including WARML |
 | SwipeableDrawer | 11 | Shared navigation and side panels |
 | Table primitives | 8 each for Table/body/cell/head/row | Results and remaining direct Material tables |
-| Collapse | 7 | Expandable content |
 | Autocomplete | 5 | Searchable selection inputs |
 
 Theme/style imports occur in 90 files. The shared theme factory and remaining
@@ -48,8 +47,11 @@ Dependencies such as Material React Table may also consume components that do
 not appear as direct app imports; they need unchanged-caller acceptance before
 a complete package override.
 
-**Next bounded Material unit: Collapse.** Its seven direct imports cover expandable
-content and navigation. Tooltip now covers 16 rendering caller files (17 imports)
+**Next bounded Material unit: DialogTitle, DialogContent and DialogActions.**
+These build the content structure for the app's confirmation and form dialogs;
+the Dialog overlay/focus lifecycle remains a subsequent unit. Collapse now covers
+the seven navigation and exam-preview imports at app `a7ce009f`, including
+child identity, changing content heights and interrupted transitions. Tooltip now covers 16 rendering caller files (17 imports)
 at app `47e3b4ef`, including keyboard/touch access, controlled copy notices and the
 shared theme override. AvatarGroup covers eight authentication/coming-soon message
 sections; CardActionArea covers linked club articles and Math Is Cool cards.

@@ -1117,6 +1117,26 @@
         "types": "./tooltipClasses.d.cts",
         "default": "./tooltipClasses.cjs"
       }
+    },
+    "./Collapse": {
+      "import": {
+        "types": "./Collapse.d.mts",
+        "default": "./Collapse.mjs"
+      },
+      "require": {
+        "types": "./Collapse.d.cts",
+        "default": "./Collapse.cjs"
+      }
+    },
+    "./collapseClasses": {
+      "import": {
+        "types": "./collapseClasses.d.mts",
+        "default": "./collapseClasses.mjs"
+      },
+      "require": {
+        "types": "./collapseClasses.d.cts",
+        "default": "./collapseClasses.cjs"
+      }
     }
   },
   "files": [
@@ -1147,7 +1167,8 @@
   },
   "dependencies": {
     "vmui-system": "9.5.0",
-    "vfloating-ui-dom": "workspace:*"
+    "vfloating-ui-dom": "workspace:*",
+    "vreact-transition-group": "4.4.5"
   },
   "peerDependencies": {
     "react": "^19.3.0",

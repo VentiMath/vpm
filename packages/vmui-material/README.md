@@ -1,6 +1,6 @@
 # vmui-material
 
-Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card, CardContent, CardActionArea, AvatarGroup and Tooltip, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
+Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card, CardContent, CardActionArea, AvatarGroup, Tooltip and Collapse, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
 
 ```js
 import { Button, ToggleButton, ToggleButtonGroup } from 'vmui-material';
@@ -594,3 +594,29 @@ unmount and custom ref cleanup. Strict declarations and clean npm/Bun archive
 installs are checked. [Measurements](bench/tooltip/README.md) cover synthetic
 server-rendered navigation hints and copy notices; they do not measure client
 positioning or VentiMath page throughput. Material remains partial and unreleased.
+
+
+## Collapse
+
+Collapse covers VentiMath's seven navigation and contest-preview callers. It
+composes VPM's own Transition lifecycle; no upstream Material or transition
+runtime is shipped. Closed content stays mounted by default. After entering,
+natural sizing accommodates asynchronously loaded math and preview content.
+
+Vertical and horizontal measurement, collapsed sizes, appear/enter/exit callbacks,
+mount/unmount options, interruption, end listeners, component/slot refs, theme
+styles and `sx` are supported. Current Material's reduced-motion policy works
+with the resolved theme, including `system` and `always`, with an explicit opt-out.
+Native custom slots do not receive a stray `ownerState` HTML attribute; slot
+callbacks receive the transition state.
+
+`timeout="auto"` uses the supplied theme's `getAutoHeightDuration`. Without a
+resolved Material transition helper, a separate height-sensitive timing heuristic
+is used. The app uses standard timing, and its resolved-theme behavior is checked
+against both Material 9.5.0 and the app's 7.2.0. Custom theme creation remains
+outside this package's implemented scope.
+
+Node/Bun SSR and declaration checks accompany Chrome lifecycle, measured layout,
+focus/child identity, cancellation, reduced-motion and hydration checks, including
+fresh package installs. [Measurements](bench/collapse/README.md) cover synthetic
+SSR only; they do not measure browser animation frame rates or application speed.

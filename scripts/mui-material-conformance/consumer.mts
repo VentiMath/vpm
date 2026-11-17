@@ -344,3 +344,13 @@ React.createElement(Tooltip,hint);void tooltipClasses.arrow;
 React.createElement(Tooltip,{...hint,placement:'middle'});
 // @ts-expect-error title is required
 React.createElement(Tooltip,{children:React.createElement('span')});
+
+import Collapse, {type CollapseProps, getCollapseUtilityClass} from "vmui-material/Collapse";
+import collapseClasses from "vmui-material/collapseClasses";
+const collapseProps:CollapseProps={in:true,timeout:{enter:200,exit:100},onEntering:(node,appear)=>{node.focus();void appear},slotProps:{wrapper:s=>({title:s.state})},sx:{m:1}};
+React.createElement(Collapse,{...collapseProps,ref:React.createRef<HTMLDivElement>()},"Exam preview");
+void getCollapseUtilityClass("root");void collapseClasses.wrapper;
+// @ts-expect-error only horizontal and vertical orientations
+const invalidCollapse:CollapseProps={orientation:"diagonal"};
+// @ts-expect-error automatic timing uses the documented auto value
+const invalidCollapseTiming:CollapseProps={timeout:"slow"};

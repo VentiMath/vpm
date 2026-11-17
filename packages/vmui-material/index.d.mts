@@ -573,3 +573,23 @@ export type TooltipOwnerState=TooltipProps&{arrow:boolean;open:boolean;touch:boo
 export const Tooltip:React.ForwardRefExoticComponent<TooltipProps>;
 export const tooltipClasses:Readonly<TooltipClasses>;
 export function getTooltipUtilityClass(slot:string):string;
+
+export type CollapseClasses=Record<'root'|'horizontal'|'vertical'|'entered'|'hidden'|'wrapper'|'wrapperInner',string>;
+export type CollapseClassKey=keyof CollapseClasses;
+export type CollapsePhase='entering'|'entered'|'exiting'|'exited'|'unmounted';
+export type CollapseSlotProps=React.HTMLAttributes<HTMLDivElement>&{ref?:React.Ref<HTMLDivElement>;sx?:SxProps<Theme>};
+export interface CollapseOwnProps {
+ children?:React.ReactNode; in?:boolean; collapsedSize?:string|number; orientation?:'vertical'|'horizontal';
+ timeout?:number|{appear?:number;enter?:number;exit?:number}|'auto'; easing?:string|{enter?:string;exit?:string};
+ appear?:boolean;enter?:boolean;exit?:boolean;mountOnEnter?:boolean;unmountOnExit?:boolean;disablePrefersReducedMotion?:boolean;
+ onEnter?:(node:HTMLElement,isAppearing:boolean)=>void;onEntering?:(node:HTMLElement,isAppearing:boolean)=>void;onEntered?:(node:HTMLElement,isAppearing:boolean)=>void;
+ onExit?:(node:HTMLElement)=>void;onExiting?:(node:HTMLElement)=>void;onExited?:(node:HTMLElement)=>void;addEndListener?:(node:HTMLElement,done:()=>void)=>void;
+ classes?:Partial<CollapseClasses>;sx?:SxProps<Theme>;
+ slots?:{root?:React.ElementType;wrapper?:React.ElementType;wrapperInner?:React.ElementType};
+ slotProps?:{[K in 'root'|'wrapper'|'wrapperInner']?:CollapseSlotProps|((state:CollapseOwnerState)=>CollapseSlotProps)};
+}
+export type CollapseOwnerState=CollapseOwnProps&{state:CollapsePhase;orientation:'vertical'|'horizontal';in:boolean};
+export type CollapseProps<C extends React.ElementType='div'>=CollapseOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof CollapseOwnProps>&{component?:C};
+export const Collapse:TextComponent<CollapseOwnProps,'div'>;
+export const collapseClasses:Readonly<CollapseClasses>;
+export function getCollapseUtilityClass(slot:string):string;
