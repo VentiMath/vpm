@@ -23,29 +23,29 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-17T06:01:38.001Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-17T06:28:58.521Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| hyphenated CSS property | 194 | 75 | -61.2% | -61.5% | -61.2% | 2.6% | lower time in every pair, beyond control spread |
-| already camel-cased property | 56 | 20 | -63.3% | -62.7% | -63.6% | 2.6% | lower time in every pair, beyond control spread |
-| vendor CSS property | 288 | 114 | -60.4% | -60.3% | -60.4% | 0.9% | lower time in every pair, beyond control spread |
-| nested object keys | 1419 | 1555 | 9% | 8.5% | 10.1% | 3.1% | higher time in every pair, beyond control spread |
+| hyphenated CSS property | 194 | 75 | -61.4% | -61% | -61.5% | 2.1% | lower time in every pair, beyond control spread |
+| already camel-cased property | 55 | 21 | -62.4% | -61.6% | -63.5% | 8.4% | lower time in every pair, beyond control spread |
+| vendor CSS property | 289 | 115 | -59.9% | -59.9% | -59.3% | 0.9% | lower time in every pair, beyond control spread |
+| nested object keys | 1422 | 1559 | 10.2% | 10.2% | 10% | 1.3% | higher time in every pair, beyond control spread |
 
 ## Bun 1.4.4
 
-Recorded 2026-11-17T06:01:54.644Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-17T06:29:14.971Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| hyphenated CSS property | 105 | 41 | -61.6% | -61.3% | -61.6% | 2.3% | lower time in every pair, beyond control spread |
-| already camel-cased property | 29 | 14 | -52.7% | -48.6% | -56.8% | 2.5% | lower time in every pair, beyond control spread |
-| vendor CSS property | 163 | 61 | -62.7% | -62.7% | -62.7% | 1.3% | lower time in every pair, beyond control spread |
-| nested object keys | 886 | 640 | -27.7% | -27.2% | -27.9% | 0.5% | lower time in every pair, beyond control spread |
+| hyphenated CSS property | 106 | 41 | -61.2% | -62.3% | -60.7% | 1.6% | lower time in every pair, beyond control spread |
+| already camel-cased property | 29 | 15 | -48.9% | -48.9% | -52.7% | 2.9% | lower time in every pair, beyond control spread |
+| vendor CSS property | 162 | 61 | -62.7% | -61.6% | -62.8% | 3.1% | lower time in every pair, beyond control spread |
+| nested object keys | 871 | 668 | -22.7% | -24.6% | -22.7% | 0.6% | lower time in every pair, beyond control spread |
 
 ## Reproduce
 

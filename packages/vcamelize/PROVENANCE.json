@@ -17,6 +17,6 @@
     "version": "3.2.0",
     "path": "styled-components 6.6.0 (current), 6.1.17 (app) -> css-to-react-native -> camelize",
     "revision": "7970b7e54faeea97a828f62dd7bb2577abf77d95",
-    "adoption": "The camelize-1.0.1 archive is adopted in VentiMath main a7ce009ffa67fbd1411f1a44788e04cb1a7b16d1. This source revision fixes cross-realm object preservation; that correction is not yet in a published archive."
+    "adoption": "The original camelize-1.0.1 archive is adopted in VentiMath main a7ce009ffa67fbd1411f1a44788e04cb1a7b16d1. The cross-realm correction is packaged separately as camelize-1.0.1-r2; adoption of that revision is separate."
   }
 }

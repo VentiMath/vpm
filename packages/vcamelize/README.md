@@ -22,7 +22,7 @@ converter, not a general serializer for Maps, Sets or custom classes.
 VentiMath installs this leaf through styled-components and css-to-react-native
 3.2.0. Current styled-components 6.6.0 still uses that converter. The unchanged
 converter is tested with the replacement on Node 24 and Bun 1.4.4. The
-[camelize-1.0.1 release](https://github.com/VentiMath/vpm/releases/tag/camelize-1.0.1)
+[camelize-1.0.1-r2 release](https://github.com/VentiMath/vpm/releases/tag/camelize-1.0.1-r2)
 is available as an immutable archive; the original archive is adopted at app main `a7ce009f`. The earlier `shallowequal`
 dependency is absent from current styled-components, so it was not rebuilt.
 
@@ -32,10 +32,10 @@ Types avoid pretending that the original object property names survive renaming.
 [Measurements](bench/results/README.md) use isolated processes with balanced
 ordering and same-implementation controls; they do not measure app performance.
 
-The three CSS-name fixtures take about 60–63% less time on Node and 53–63% less
-on Bun. Nested object conversion takes 28% less time on Bun. Node's nested-object
-case takes 9% more time than upstream in this recording, beyond the control
-spread. The actual CSS converter calls the unchanged string path.
+The CSS-name fixtures remain faster than upstream on both Node and Bun; the
+actual CSS converter calls this unchanged string path. Nested-object conversion
+has a Node regression relative to upstream, retained explicitly in the linked
+measurements. Each recording includes the control spread and source hashes.
 
 Keep the original `camelize` import name and apply the release's
 `consumer-package.json` override. [Installation](../../docs/INSTALLATION.md#camelize)
@@ -46,6 +46,6 @@ includes the exact URL and archive verification commands.
 The published `camelize-1.0.1` archive used realm-local `instanceof` checks and
 converted foreign Date/RegExp values to ordinary objects. The source now
 preserves their identity at the root and inside objects/arrays, including
-invalid dates and custom type tags. The corrected source is not yet in a new
-release; the existing archive and consumer URL are unchanged. VentiMath's
+invalid dates and custom type tags. The correction is packaged as `camelize-1.0.1-r2`; the original archive is
+unchanged. Repin its override to the r2 URL to consume the fix. VentiMath's
 css-to-react-native caller supplies strings and is unaffected by this defect.

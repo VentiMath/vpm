@@ -660,14 +660,14 @@ node scripts/check-leaf-release.cjs RELEASE_DIRECTORY --published
 
 ## Camelize
 
-[camelize-1.0.1](https://github.com/VentiMath/vpm/releases/tag/camelize-1.0.1)
+[camelize-1.0.1-r2](https://github.com/VentiMath/vpm/releases/tag/camelize-1.0.1-r2)
 ships independently written `vcamelize` with zero dependencies. The CSS converter
 beneath styled-components keeps its original import name:
 
 ```json
 {
   "overrides": {
-    "camelize": "https://github.com/VentiMath/vpm/releases/download/camelize-1.0.1/vcamelize-1.0.1.tgz"
+    "camelize": "https://github.com/VentiMath/vpm/releases/download/camelize-1.0.1-r2/vcamelize-1.0.1.tgz"
   }
 }
 ```
@@ -679,7 +679,12 @@ archive. This dependency override alone does not establish production bundle
 use or application deployment.
 
 ```sh
-node scripts/pack-leaf-release.cjs --leaf camelize --ref COMMIT --tag camelize-1.0.1 --out EMPTY_DIRECTORY
+node scripts/pack-leaf-release.cjs --leaf camelize --ref COMMIT --tag camelize-1.0.1-r2 --out EMPTY_DIRECTORY
 node scripts/check-leaf-release.cjs RELEASE_DIRECTORY
 node scripts/check-leaf-release.cjs RELEASE_DIRECTORY --published
 ```
+
+Revision r2 preserves Date/RegExp values from other realms, including nested
+values and custom type tags. Package version 1.0.1 remains the API baseline;
+the original release URLs are unchanged. No caller settings or import changes
+are required beyond repinning the override.
