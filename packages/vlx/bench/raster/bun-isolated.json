@@ -1,0 +1,1617 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-17T19:35:36.956Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/vlx-conformance/load.cjs": "b01cc805e6dea6ba1efcc8ff4ebbce4cabb36f2279761818fce830026c42889d",
+    "../../scripts/vlx-conformance/node_modules/@resvg/resvg-js": "43a2a57493cfb22f52b61da0ab56bdde55406b58231f166c9c10eacd18257039",
+    "../../scripts/vlx-conformance/node_modules/@resvg/resvg-js-darwin-arm64": "4f5b2fd43843915e8144d82a994975ef2576c3bae40c2790437ae3e3b79875bb",
+    "../../scripts/vlx-conformance/package-lock.json": "7e329326df23b12251c17862a32f51deabeb36050fa6a61bd833d8b55acaccd4",
+    "../vpngjs/index.cjs": "9d497984c6cf755e5cd6e703f522abd0d5ca83abb9e74d7fcaa438184cf349d3",
+    "PROVENANCE.json": "e1edd7100da43986f3cf303d3403585af9ec2bdc589a8bf9354fc31ee8d3eff7",
+    "bench/raster.cjs": "588989ce48bfc20217611b7e408e8396e160e008ee3565c5e4e9311b992c38f6",
+    "dom.cjs": "1e4f76d9a2320d90981663ec1a1410db8a17cfde255ec0e38bde18caece78f60",
+    "equations.cjs": "0150689c44fccb5ad601ab4a41fffd28e28ad2e78e6715705bb66d9bd334ca39",
+    "font/glyphs.json": "a5872e0e53c10ee3a53839ca64e626085faff365f9790a11600bc034616e60aa",
+    "index.cjs": "98c697e45af65d830e3e1e8aaa9fd6751d351b285a145690fbf8a21bc9312d0d",
+    "layout.cjs": "2ef2e0a189929f347b5e9c02d24d43a7e1904b695cfce0325cc8ed6fb9c5d7ef",
+    "macros.cjs": "5aff2c783f69cdc8fcb28affd779e6f135ffa6a9ac1b9024afe988dd4a27f034",
+    "markup.cjs": "759359064a89773bf9a564f5f14fc8988a20779507b97548d4455a75db61aca9",
+    "math-cache.cjs": "85ca276d9daad6fe8d8c2c1e3d45a9cdf843d9606c80c76c985dbff0ea9b58bd",
+    "nodes.cjs": "302724654d5458c1e4337ae6077c3c1a725f709ffb9746dd1690134864669019",
+    "package.json": "6c4e5da26c6242ba2af430b1a720a02cb6d18a541df58413d15c6fd07287c0d8",
+    "png.cjs": "21364b7821831e2f772a032be61e69a6a4528755601197590842aa1a7c7f1119",
+    "problem-prose.cjs": "f1426e80895ffb1c039d8a5ed8084c7e8a9c5d5336ddb3189a55980d26eb1521",
+    "problem.cjs": "494086e7bd4b12b106b9257489137180fd1163c8662d789e4e616938d2dab82a",
+    "raster-paths.cjs": "9c62267f90b4a1698a37ae34fdbdc6d5d15dc96c2127edd662752b90308cba2c",
+    "raster-png.cjs": "f38fc08ec5a3d9c0aa061d4adcf6d79a79d966ef63f8ceef17c65f0d949bc9bb",
+    "raster.cjs": "31c20c9e76b4120f269e72001c5b26109bdee1748f063b0ecc7a99541bfae69f",
+    "react-renderer.cjs": "1fdab51f8dc792082bbe3bba0f7aab38f021ee6622ba1aefaef54740cd0e7aab",
+    "react.cjs": "4b47ae9fc06f19b735ef9c53f703508fbce214022d88ebed3adb8608ac0b2177",
+    "render-tree.cjs": "30fa2f7fd50a57bad3fcd8e2a70040800d49befe9b00c9fcc07d208f5ae36206",
+    "source.cjs": "166bd7a5ccb7481a9cacd660e62bbbf92feb58d922d4632888708e900d97d7f6",
+    "styles.cjs": "e943e99b37e0a11d64cfe2844b47ef1d5ae86551bcba059634802fe2f0091c3c",
+    "tex.cjs": "ea145e3584f0e50146d1d048900620606a1882c4748173293b7eed90f9dbb05c",
+    "typography.cjs": "339126be881984ede33a147bb4b4dcf99f224bf93d0efd7a2444c583be91926b"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 3323,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "formula PNG / resvg 2.6.2",
+            "iterations": 29,
+            "samples": [
+              407954.03448275884,
+              299985.6206896558,
+              298831.89655172493,
+              287152.3103448265,
+              307867.82758620795,
+              331257.2068965508,
+              339541.65517241304,
+              295639.3793103459,
+              307578.9999999992,
+              298054.58620689576,
+              286110.65517241217,
+              271281.620689655
+            ]
+          },
+          {
+            "case": "problem PNG / resvg 2.6.2",
+            "iterations": 4,
+            "samples": [
+              4090125.0000000005,
+              3461823.00000001,
+              3220239.499999991,
+              3115291.7500000116,
+              3178656.250000017,
+              3529051.9999999786,
+              2920531.2500000102,
+              3005010.499999997,
+              3289125.0000000126,
+              2982749.999999953,
+              2996291.5000000405,
+              3408218.7500000033
+            ]
+          },
+          {
+            "case": "problem with figure PNG / resvg 2.6.2",
+            "iterations": 1,
+            "samples": [
+              10435083.000000076,
+              10495125.000000143,
+              10304959.000000054,
+              10376417.000000173,
+              10600292.000000082,
+              11247166.99999999,
+              10926416.999999901,
+              10914625.000000115,
+              10406083.000000307,
+              10911999.999999806,
+              10419458.000000304,
+              10464291.000000231
+            ]
+          },
+          {
+            "case": "layout and picture PNG / resvg 2.6.2",
+            "iterations": 4,
+            "samples": [
+              3405604.2500000102,
+              3105489.749999947,
+              3263479.249999932,
+              3260958.2499999306,
+              3210593.74999993,
+              3222635.49999991,
+              3248979.2500000475,
+              3362156.249999998,
+              3401718.7499999865,
+              3347906.2500000508,
+              3385906.250000062,
+              3548718.7500000345
+            ]
+          }
+        ],
+        "checksum": 4160
+      },
+      "vpm": {
+        "pid": 3355,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "formula PNG / resvg 2.6.2",
+            "iterations": 29,
+            "samples": [
+              14438626.44827586,
+              14503728.448275853,
+              14423451.172413792,
+              14517798.862068973,
+              14413231.310344819,
+              14492754.310344841,
+              14579362.068965502,
+              14628176.724137936,
+              14389522.999999983,
+              14462658.03448277,
+              14341955.448275853,
+              14643984.20689655
+            ]
+          },
+          {
+            "case": "problem PNG / resvg 2.6.2",
+            "iterations": 4,
+            "samples": [
+              81498781.24999987,
+              80239333.25000007,
+              81126072.99999991,
+              83764010.50000004,
+              86928916.7500001,
+              81356322.75000034,
+              80467031.24999976,
+              80646114.49999984,
+              80205489.50000012,
+              80112677.25000016,
+              98230896.00000003,
+              81584916.7499996
+            ]
+          },
+          {
+            "case": "problem with figure PNG / resvg 2.6.2",
+            "iterations": 1,
+            "samples": [
+              98586750.0000022,
+              94279790.9999972,
+              96193832.99999754,
+              93593207.9999984,
+              92503124.99999927,
+              106207207.9999998,
+              99468541.00000201,
+              97148250.00000201,
+              103440290.99999897,
+              97303790.99999845,
+              97910583.00000077,
+              95598374.99999776
+            ]
+          },
+          {
+            "case": "layout and picture PNG / resvg 2.6.2",
+            "iterations": 4,
+            "samples": [
+              121601312.49999996,
+              90426499.99999958,
+              82407104.24999997,
+              90541093.75000007,
+              97233677.25000025,
+              82483520.75000003,
+              86804489.50000027,
+              89680718.74999987,
+              159113395.99999973,
+              99520322.99999973,
+              93002510.25000034,
+              103945114.75000036
+            ]
+          }
+        ],
+        "checksum": 2336
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 3551,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "formula PNG / resvg 2.6.2",
+            "iterations": 1,
+            "samples": [
+              30444166.000000224,
+              22658917.0000002,
+              30783207.999999832,
+              31281917.00000025,
+              21004207.999999836,
+              21073750.00000002,
+              26314417.00000005,
+              26880916.999999955,
+              31845499.999999903,
+              63613291.00000012,
+              34750000,
+              22186541.999999918
+            ]
+          },
+          {
+            "case": "problem PNG / resvg 2.6.2",
+            "iterations": 1,
+            "samples": [
+              122147375.00000046,
+              104435124.99999997,
+              129926833.99999987,
+              95902500.00000015,
+              122312625.00000048,
+              100728957.99999969,
+              105490333.00000155,
+              121948542.00000009,
+              124827665.99999923,
+              107880709.00000094,
+              126317458.99999987,
+              144195000.00000152
+            ]
+          },
+          {
+            "case": "problem with figure PNG / resvg 2.6.2",
+            "iterations": 1,
+            "samples": [
+              119956416.0000009,
+              129582207.9999998,
+              143994332.99999872,
+              141628749.99999985,
+              127910292.00000048,
+              105265625,
+              130290917.00000209,
+              133871999.99999939,
+              117351791.00000095,
+              136667249.9999986,
+              142846790.99999994,
+              140789791.99999958
+            ]
+          },
+          {
+            "case": "layout and picture PNG / resvg 2.6.2",
+            "iterations": 1,
+            "samples": [
+              113267417.00000276,
+              141679250.00000104,
+              115798625.00000308,
+              110220000.00000116,
+              123107332.99999993,
+              104305041.99999996,
+              110568542.0000009,
+              108842875.0000021,
+              158835083.99999845,
+              156617707.99999794,
+              122476916.99999996,
+              101266415.99999857
+            ]
+          }
+        ],
+        "checksum": 2688
+      },
+      "upstream": {
+        "pid": 3892,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "formula PNG / resvg 2.6.2",
+            "iterations": 1,
+            "samples": [
+              327999.9999999745,
+              781292.0000001213,
+              880333.999999948,
+              826499.9999998963,
+              607625.0000000983,
+              406666.9999999704,
+              1242291.9999999066,
+              844457.9999998041,
+              874249.9999998473,
+              356084.00000000984,
+              323292.00000003766,
+              319625.0000000873
+            ]
+          },
+          {
+            "case": "problem PNG / resvg 2.6.2",
+            "iterations": 1,
+            "samples": [
+              5295250.000000124,
+              6499208.000000181,
+              6936000.000000149,
+              106509292.0000002,
+              181859792.0000002,
+              94295791.00000001,
+              5581083.999999919,
+              64486875.00000005,
+              34553917.000000186,
+              15955541.999999696,
+              35888458.00000036,
+              33396374.999999806
+            ]
+          },
+          {
+            "case": "problem with figure PNG / resvg 2.6.2",
+            "iterations": 1,
+            "samples": [
+              25589917.000000242,
+              28413416.999999754,
+              37662125.000000745,
+              25230625.000000145,
+              18488500.000000387,
+              37178458.00000032,
+              17949666.999999862,
+              22854666.99999961,
+              29905582.99999975,
+              26334583.999999266,
+              16253457.999999227,
+              16814791.000000697
+            ]
+          },
+          {
+            "case": "layout and picture PNG / resvg 2.6.2",
+            "iterations": 1,
+            "samples": [
+              36375500.000000104,
+              17957999.999999627,
+              18416666.99999951,
+              13481542.000000445,
+              11970082.99999925,
+              15228041.999999732,
+              15845416.999999544,
+              25387499.999999817,
+              20693583.000000216,
+              25086666.00000015,
+              61004750.00000006,
+              10379791.000000296
+            ]
+          }
+        ],
+        "checksum": 14752
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 3917,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "formula PNG / resvg 2.6.2",
+            "iterations": 15,
+            "samples": [
+              946736.1333333428,
+              1010019.4000000102,
+              970974.9999999985,
+              923666.6666666679,
+              4694008.333333326,
+              11653361.133333327,
+              4131277.8000000133,
+              1133822.2000000014,
+              821538.8666666665,
+              1891905.600000003,
+              1228950.0000000012,
+              1792158.3333333274
+            ]
+          },
+          {
+            "case": "problem PNG / resvg 2.6.2",
+            "iterations": 1,
+            "samples": [
+              205924540.9999994,
+              53076208.00000041,
+              26901125.00000032,
+              327487000.00000006,
+              163572374.99999973,
+              95709374.99999945,
+              698238375.0000008,
+              153188207.99999958,
+              309437832.99999994,
+              54492707.99999977,
+              66552499.999999784,
+              33527082.999999948
+            ]
+          },
+          {
+            "case": "problem with figure PNG / resvg 2.6.2",
+            "iterations": 1,
+            "samples": [
+              55021332.99999878,
+              18056791.999999404,
+              23240042.000001267,
+              22252583.999999844,
+              22409290.99999994,
+              18167292.00000009,
+              17626541.999999974,
+              29924790.99999946,
+              30333540.99999997,
+              35645207.99999991,
+              22828125,
+              17900917.000000846
+            ]
+          },
+          {
+            "case": "layout and picture PNG / resvg 2.6.2",
+            "iterations": 1,
+            "samples": [
+              5997792.000000117,
+              6305916.9999996815,
+              6991541.000001234,
+              5259500.000000116,
+              14348958.000000494,
+              10076333.999999406,
+              11174124.99999955,
+              10130875.000000741,
+              8355999.999999767,
+              7624917.000001006,
+              7386542.00000019,
+              4963042.000001224
+            ]
+          }
+        ],
+        "checksum": 3680
+      },
+      "vpm": {
+        "pid": 4103,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "formula PNG / resvg 2.6.2",
+            "iterations": 15,
+            "samples": [
+              28873555.533333335,
+              27313480.533333372,
+              27770852.79999998,
+              21197933.333333336,
+              27306786.06666667,
+              33767533.33333339,
+              35281172.266666666,
+              24009313.86666671,
+              41908527.80000005,
+              26652058.33333336,
+              35418377.79999999,
+              25849338.86666658
+            ]
+          },
+          {
+            "case": "problem PNG / resvg 2.6.2",
+            "iterations": 1,
+            "samples": [
+              120249499.9999999,
+              101170167.00000022,
+              121496667.00000125,
+              130216458.00000079,
+              116168041.99999933,
+              119774499.99999954,
+              126305083.99999963,
+              118528667.00000049,
+              113286666.9999985,
+              131861792.00000152,
+              119012957.99999934,
+              132686291.99999851
+            ]
+          },
+          {
+            "case": "problem with figure PNG / resvg 2.6.2",
+            "iterations": 1,
+            "samples": [
+              194828916.9999989,
+              245176332.99999943,
+              205485415.99999952,
+              221012083.00000143,
+              205724125.00000063,
+              236872665.99999928,
+              200215667.0000004,
+              165028124.99999708,
+              224176209.0000011,
+              182449999.99999708,
+              326862457.9999996,
+              229682708.00000027
+            ]
+          },
+          {
+            "case": "layout and picture PNG / resvg 2.6.2",
+            "iterations": 1,
+            "samples": [
+              177180834.0000025,
+              306879582.9999981,
+              246932457.99999568,
+              343186582.9999952,
+              366126917.00000143,
+              228006375.00000447,
+              156425458.99999824,
+              151489583.00000232,
+              340782125.0000052,
+              164474833.0000002,
+              147272291.00000113,
+              124777625.00000244
+            ]
+          }
+        ],
+        "checksum": 2368
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 4468,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "formula PNG / resvg 2.6.2",
+            "iterations": 2,
+            "samples": [
+              8254875.000000084,
+              21334208.499999933,
+              15729583.000000048,
+              14545437.499999935,
+              15201312.499999858,
+              14961708.499999987,
+              14544478.99999991,
+              15007354.000000078,
+              22633937.5,
+              24468604.499999855,
+              22691541.500000086,
+              34641312.50000014
+            ]
+          },
+          {
+            "case": "problem PNG / resvg 2.6.2",
+            "iterations": 1,
+            "samples": [
+              59433915.999999955,
+              45508292.00000044,
+              46141166.99999977,
+              38807999.99999999,
+              53393167.00000018,
+              32837333.99999983,
+              32055999.999999586,
+              31228707.999999642,
+              26783250.000000406,
+              25498083.999999836,
+              32863000.000000283,
+              29323999.999999613
+            ]
+          },
+          {
+            "case": "problem with figure PNG / resvg 2.6.2",
+            "iterations": 1,
+            "samples": [
+              57301666.999999724,
+              70065416.99999979,
+              336607042.00000143,
+              209459666.99999917,
+              235080332.99999988,
+              142734500.00000048,
+              180806540.9999999,
+              138220584.0000006,
+              144268040.99999934,
+              72913290.99999894,
+              74430791.9999992,
+              195327250.00000027
+            ]
+          },
+          {
+            "case": "layout and picture PNG / resvg 2.6.2",
+            "iterations": 1,
+            "samples": [
+              26953374.99999732,
+              42709290.99999921,
+              21820375.00000297,
+              34304374.99999971,
+              33949375.00000015,
+              33783125.00000174,
+              35552459.00000227,
+              31138791.00000122,
+              35228624.99999974,
+              41043208.99999948,
+              38402999.99999843,
+              49960583.000000045
+            ]
+          }
+        ],
+        "checksum": 3360
+      },
+      "upstream": {
+        "pid": 4723,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "formula PNG / resvg 2.6.2",
+            "iterations": 2,
+            "samples": [
+              663645.9999999716,
+              358708.4999999206,
+              775020.4999999823,
+              666458.4999998624,
+              321937.50000010367,
+              302249.99999995815,
+              292916.5000000467,
+              372250.0000001219,
+              678270.9999999952,
+              734750.0000000764,
+              570604.000000003,
+              536562.4999999454
+            ]
+          },
+          {
+            "case": "problem PNG / resvg 2.6.2",
+            "iterations": 1,
+            "samples": [
+              4186584.000000039,
+              3263875.0000000983,
+              6622417.000000041,
+              9010707.999999795,
+              6671207.999999751,
+              4734041.000000161,
+              5381499.99999996,
+              6118457.999999919,
+              4734124.999999949,
+              6521959.000000152,
+              4745292.000000063,
+              7777458.000000024
+            ]
+          },
+          {
+            "case": "problem with figure PNG / resvg 2.6.2",
+            "iterations": 1,
+            "samples": [
+              18477041.99999998,
+              21418499.99999977,
+              27203999.999999724,
+              27697750.00000027,
+              22403874.99999997,
+              20964332.999999896,
+              19002083.99999974,
+              22232375.00000005,
+              13231458.999999631,
+              15377916.999999797,
+              16890625,
+              35747666.00000021
+            ]
+          },
+          {
+            "case": "layout and picture PNG / resvg 2.6.2",
+            "iterations": 1,
+            "samples": [
+              31241624.999999657,
+              33626583.99999964,
+              16785582.999999862,
+              22530958.999999713,
+              8400749.99999979,
+              4536207.999999533,
+              8229624.999999942,
+              8647375.000000466,
+              14245124.999999462,
+              14852541.99999963,
+              14167583.000000376,
+              34437459.00000067
+            ]
+          }
+        ],
+        "checksum": 8768
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 4756,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "formula PNG / resvg 2.6.2",
+            "iterations": 19,
+            "samples": [
+              493414.47368420917,
+              1011434.2105263177,
+              603782.8947368398,
+              521168.8421052618,
+              488657.89473684103,
+              366127.15789473633,
+              336572.3684210623,
+              705181.9999999943,
+              723230.263157898,
+              325449.57894736785,
+              396098.6842105285,
+              569956.157894742
+            ]
+          },
+          {
+            "case": "problem PNG / resvg 2.6.2",
+            "iterations": 3,
+            "samples": [
+              4959555.333333355,
+              6500569.333333336,
+              4345514.000000018,
+              4014277.666666658,
+              4933110.999999978,
+              4400041.666666615,
+              5064388.999999967,
+              7303305.66666665,
+              6126166.666666601,
+              12897722.333333379,
+              7248277.999999952,
+              5111235.999999963
+            ]
+          },
+          {
+            "case": "problem with figure PNG / resvg 2.6.2",
+            "iterations": 1,
+            "samples": [
+              28106416.999999966,
+              42231874.99999995,
+              31622290.999999676,
+              29434208.000000127,
+              24799499.999999624,
+              26662166.999999955,
+              24673249.999999825,
+              21880250.00000016,
+              18548208.00000016,
+              22609666.000000287,
+              30556541.00000038,
+              25998541.999999817
+            ]
+          },
+          {
+            "case": "layout and picture PNG / resvg 2.6.2",
+            "iterations": 2,
+            "samples": [
+              7900521.000000026,
+              6370541.499999945,
+              5520666.499999606,
+              5382520.999999997,
+              7299917.0000002775,
+              5491208.00000037,
+              7297375.0000001015,
+              8148979.000000054,
+              15590521.00000008,
+              12660770.500000127,
+              12148874.999999862,
+              8179042.000000209
+            ]
+          }
+        ],
+        "checksum": 3776
+      },
+      "vpm": {
+        "pid": 4815,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "formula PNG / resvg 2.6.2",
+            "iterations": 19,
+            "samples": [
+              914026.3157894782,
+              1269407.894736847,
+              1525541.6315789453,
+              1407657.8947368418,
+              824098.6842105199,
+              1031585.526315786,
+              989026.3157894878,
+              1800234.6315789556,
+              838603.0526315776,
+              1357449.578947365,
+              1102388.1578947494,
+              1211918.8947368506
+            ]
+          },
+          {
+            "case": "problem PNG / resvg 2.6.2",
+            "iterations": 3,
+            "samples": [
+              9685749.999999946,
+              9623124.999999922,
+              12454972.333333293,
+              14102402.666666724,
+              13306486.333333395,
+              9252111.00000009,
+              5742639.000000053,
+              13219764.000000091,
+              81445138.66666663,
+              142367610.99999997,
+              56823597.33333335,
+              42771402.66666659
+            ]
+          },
+          {
+            "case": "problem with figure PNG / resvg 2.6.2",
+            "iterations": 1,
+            "samples": [
+              36375208.0000013,
+              56134500.00000012,
+              33501833.00000026,
+              41253582.99999971,
+              36357207.99999945,
+              58888417.00000012,
+              52538334.00000076,
+              44351209.00000038,
+              47662417.00000137,
+              24592374.999998357,
+              28961250.00000029,
+              26096583.000000466
+            ]
+          },
+          {
+            "case": "layout and picture PNG / resvg 2.6.2",
+            "iterations": 2,
+            "samples": [
+              56618812.49999987,
+              45718520.50000052,
+              47254104.00000055,
+              18697833.500000343,
+              13494812.50000008,
+              20186625.000000276,
+              41420270.49999979,
+              76753646.00000012,
+              91707395.49999963,
+              44876374.99999983,
+              29419583.500000045,
+              41236104.00000052
+            ]
+          }
+        ],
+        "checksum": 2688
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 4911,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "formula PNG / resvg 2.6.2",
+            "iterations": 5,
+            "samples": [
+              5663708.20000002,
+              5075624.999999946,
+              9510916.599999927,
+              1452674.9999999993,
+              2367491.599999994,
+              1689441.6000000094,
+              1426808.4000000271,
+              1182650.0000000123,
+              921541.6000000006,
+              1772716.600000058,
+              1390016.6000000355,
+              1178575.0000000007
+            ]
+          },
+          {
+            "case": "problem PNG / resvg 2.6.2",
+            "iterations": 2,
+            "samples": [
+              12925187.499999993,
+              34119041.99999981,
+              20264979.00000004,
+              10863583.500000004,
+              8582833.499999652,
+              6991395.999999895,
+              4700395.999999728,
+              4369541.499999741,
+              3751166.9999998957,
+              4214541.499999995,
+              3932291.500000247,
+              3715271.00000003
+            ]
+          },
+          {
+            "case": "problem with figure PNG / resvg 2.6.2",
+            "iterations": 1,
+            "samples": [
+              21826166.99999926,
+              14956749.999999374,
+              10904249.999999592,
+              10823875.000000043,
+              10825791.999999637,
+              10684208.000000581,
+              10675166.999999419,
+              10805000.00000029,
+              10730166.99999971,
+              10594291.000000339,
+              11041124.999999737,
+              10890374.99999995
+            ]
+          },
+          {
+            "case": "layout and picture PNG / resvg 2.6.2",
+            "iterations": 3,
+            "samples": [
+              3645374.9999997546,
+              4067208.3333332315,
+              3502680.666666796,
+              3593194.666666629,
+              3901291.6666667177,
+              3903653.0000000005,
+              4308569.333333253,
+              4463930.333333337,
+              3984319.333333284,
+              3630805.666666674,
+              3779944.3333333326,
+              3860889.000000194
+            ]
+          }
+        ],
+        "checksum": 3648
+      },
+      "upstream": {
+        "pid": 5029,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "formula PNG / resvg 2.6.2",
+            "iterations": 5,
+            "samples": [
+              389974.99999998126,
+              329933.40000000445,
+              415708.3999999941,
+              311691.6000000174,
+              289008.40000001155,
+              318650.0000000024,
+              513049.9999999983,
+              568858.3999999992,
+              393299.99999999924,
+              393733.3999999964,
+              699616.5999999903,
+              362566.599999991
+            ]
+          },
+          {
+            "case": "problem PNG / resvg 2.6.2",
+            "iterations": 2,
+            "samples": [
+              3490499.999999997,
+              3611958.000000072,
+              2957270.50000005,
+              3266312.4999999125,
+              3608771.000000047,
+              3498083.500000007,
+              3043979.4999999776,
+              3072541.9999999986,
+              3123333.499999944,
+              3124854.4999999693,
+              3464000.0000000554,
+              3210437.5000000116
+            ]
+          },
+          {
+            "case": "problem with figure PNG / resvg 2.6.2",
+            "iterations": 1,
+            "samples": [
+              17314292.000000022,
+              24683500.000000093,
+              137201332.99999997,
+              104300041.99999985,
+              20078042.000000097,
+              21492999.999999937,
+              16755125.000000134,
+              13577833.999999711,
+              15182290.999999622,
+              15930624.999999963,
+              13770125.000000007,
+              20104333.000000224
+            ]
+          },
+          {
+            "case": "layout and picture PNG / resvg 2.6.2",
+            "iterations": 3,
+            "samples": [
+              6364833.333333232,
+              4668069.666666573,
+              5881833.333333361,
+              5547124.999999899,
+              11940583.333333356,
+              16012652.666666782,
+              6344610.999999986,
+              4898847.333333379,
+              3833166.6666666325,
+              5898916.666666689,
+              4679249.999999987,
+              4286347.333333348
+            ]
+          }
+        ],
+        "checksum": 5888
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "formula PNG / resvg 2.6.2",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 299408.7586206904,
+          "vpmNs": 14477706.172413805,
+          "changePct": 4735.431748593255
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 694458.5000001098,
+          "vpmNs": 28662541.50000009,
+          "changePct": 4027.3224389931956
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 1181386.1000000013,
+          "vpmNs": 27542166.666666675,
+          "changePct": 2231.3433827151553
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 553583.2499999742,
+          "vpmNs": 15465447.749999953,
+          "changePct": 2693.6986442419775
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 507291.65789473546,
+          "vpmNs": 1157153.5263158,
+          "changePct": 128.10418982996813
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 391637.4999999902,
+          "vpmNs": 1571058.3000000045,
+          "changePct": 301.15114104242923
+        }
+      ]
+    },
+    {
+      "case": "problem PNG / resvg 2.6.2",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 3199447.875000004,
+          "vpmNs": 81241197.87500012,
+          "changePct": 2439.2255491894834
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 33975146,
+          "vpmNs": 122047958.50000027,
+          "changePct": 259.22717889129973
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 124448791.49999952,
+          "vpmNs": 120011999.99999972,
+          "changePct": -3.5651543470390568
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 5749978.999999939,
+          "vpmNs": 32850167.000000056,
+          "changePct": 471.3093386949831
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 5087812.499999965,
+          "vpmNs": 13263125.166666742,
+          "changePct": 160.68423643101696
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 3238374.999999962,
+          "vpmNs": 5845895.999999812,
+          "changePct": 80.51942718183906
+        }
+      ]
+    },
+    {
+      "case": "problem with figure PNG / resvg 2.6.2",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 10479708.000000186,
+          "vpmNs": 97226020.50000024,
+          "changePct": 827.7550529079485
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 25410271.000000194,
+          "vpmNs": 132081458.50000075,
+          "changePct": 419.7955523575476
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 22618707.99999997,
+          "vpmNs": 213368104.000001,
+          "changePct": 843.3257814725815
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 21191416.499999832,
+          "vpmNs": 143501270.4999999,
+          "changePct": 577.1669581408164
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 26330354.49999989,
+          "vpmNs": 38814395.50000051,
+          "changePct": 47.413114016374806
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 18696167.00000006,
+          "vpmNs": 10824833.49999984,
+          "changePct": -42.10132215870877
+        }
+      ]
+    },
+    {
+      "case": "layout and picture PNG / resvg 2.6.2",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 3305692.7499999916,
+          "vpmNs": 91771802.00000021,
+          "changePct": 2676.1745854934775
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 18187333.499999568,
+          "vpmNs": 114533021.00000292,
+          "changePct": 529.7405884155895
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 7505729.500000598,
+          "vpmNs": 202593604.5000035,
+          "changePct": 2599.186061794358
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 14548833.499999546,
+          "vpmNs": 34766499.999999724,
+          "changePct": 138.96417537530286
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 7600219.000000152,
+          "vpmNs": 43148322.74999981,
+          "changePct": 467.72472937949476
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 5714479.166666631,
+          "vpmNs": 3881090.333333456,
+          "changePct": -32.08321843270674
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "formula PNG / resvg 2.6.2",
+      "upstream_ns": 624021,
+      "vpm_ns": 21503807,
+      "change_pct": 3360.5,
+      "upstream_first_pct": 3483.4,
+      "vpm_first_pct": 3360.5,
+      "process_range_pct": "4735.4, 4027.3, 2231.3, 2693.7",
+      "control_max_abs_pct": 301.2,
+      "evidence": "higher time in every pair, beyond control spread"
+    },
+    {
+      "case": "problem PNG / resvg 2.6.2",
+      "upstream_ns": 19862562,
+      "vpm_ns": 100626599,
+      "change_pct": 365.3,
+      "upstream_first_pct": 1217.8,
+      "vpm_first_pct": 365.3,
+      "process_range_pct": "2439.2, 259.2, -3.6, 471.3",
+      "control_max_abs_pct": 160.7,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "problem with figure PNG / resvg 2.6.2",
+      "upstream_ns": 21905062,
+      "vpm_ns": 137791365,
+      "change_pct": 702.5,
+      "upstream_first_pct": 835.5,
+      "vpm_first_pct": 498.5,
+      "process_range_pct": "827.8, 419.8, 843.3, 577.2",
+      "control_max_abs_pct": 47.4,
+      "evidence": "higher time in every pair, beyond control spread"
+    },
+    {
+      "case": "layout and picture PNG / resvg 2.6.2",
+      "upstream_ns": 11027282,
+      "vpm_ns": 103152412,
+      "change_pct": 1564.5,
+      "upstream_first_pct": 2637.7,
+      "vpm_first_pct": 334.4,
+      "process_range_pct": "2676.2, 529.7, 2599.2, 139.0",
+      "control_max_abs_pct": 467.7,
+      "evidence": "unestablished at this precision"
+    }
+  ]
+}

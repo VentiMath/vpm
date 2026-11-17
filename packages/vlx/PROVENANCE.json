@@ -1,8 +1,8 @@
 {
   "implementation": {
-    "kind": "independent parser and layout implementation",
+    "kind": "independent parser, layout and bounded PNG rasterizer implementation",
     "replacementStatus": "complete for documented application scope",
-    "targetScope": "Independent TeX parsing/layout for web math and complete problem PNG/SVG composition: prose, paragraphs, ordered figures, arrays, choice grids and bounded PNG validation. Document-scoped equation numbering, forward/back references and native React/HTML reference navigation."
+    "targetScope": "Independent TeX parsing/layout for web math and complete problem PNG/SVG composition: prose, paragraphs, ordered figures, arrays, choice grids and bounded PNG validation. Document-scoped equation numbering, forward/back references and native React/HTML reference navigation. PNG output now owns outline flattening, transforms, fill/stroke coverage, embedded figure compositing and PNG encoding for VLX-generated drawings."
   },
   "fontData": {
     "package": "@mathjax/mathjax-newcm-font",
@@ -16,11 +16,6 @@
   "referenceEngines": {
     "katex": "0.19.1",
     "@mathjax/src": "4.1.3"
-  },
-  "optionalRasterizer": {
-    "package": "@resvg/resvg-js",
-    "version": "2.6.2",
-    "role": "Existing native SVG-to-PNG engine, not a TeX parser or layout implementation."
   },
   "changes": [
     "One independent syntax tree and layout for web and image output; no engine routing or fallback.",
@@ -48,11 +43,23 @@
     "VLX 0.2.1 places indexed-root degrees over their radical hook using the MathML Core default degree-raise proportion. Problem pictures lay out standalone paragraph math in display style, draw bold choice labels, and treat break-only math as paragraph flow. Synthetic negative controls reproduce all four defects on 0.2.0; ordinary square-root geometry and 114 historic React controls are preserved.",
     "VLX 0.2.2 adds real New Computer Modern outlines for application-used Unicode fractions, ordinals, accented letters and custom operators. Fullwidth comma/colon retain one-em cells and original semantic characters; untaken soft hyphens have no ink or advance. The saved 20835-problem corpus has zero failures after these glyph fixes and four independently verified statement-only data repairs. Corrupt controls and malformed delimiters remain errors.",
     "VLX 0.2.3 adds bounded itemize/enumerate page layout with hanging indentation, nested lists, custom text/math labels and figures. Adjacent apostrophes and closing quotes retain context across inline math. All 83 list-bearing statements in the saved 20835-problem corpus render as lists; source data remains unchanged. This is Node problem-picture support, not a general LaTeX document compiler.",
-    "Partial formula selections retain native clipboard behavior instead of expanding to the full TeX annotation. React verification now pins 19.3.1 in source and archived consumers."
+    "Partial formula selections retain native clipboard behavior instead of expanding to the full TeX annotation. React verification now pins 19.3.1 in source and archived consumers.",
+    "Own PNG rasterization for single formulas and full Discord problem pages, removing the resvg runtime peer and platform binaries. PNG APIs and layout geometry are unchanged. Existing public 0.2.3 release remains native-backed until a new release and app repin. Source limits cover pixels, image bytes, path subdivisions and sampling work."
   ],
   "acceptance": {
     "status": "pending",
-    "remainingWork": "Actual VoiceOver/Safari and NVDA/Chrome speech/navigation checks and WebKit/Firefox visual acceptance. VentiMath frontend and Discord problem pictures consume VLX0.2.3 on audited main; source follow-ups still require a separate release and repin.",
+    "remainingWork": "Actual VoiceOver/Safari and NVDA/Chrome speech/navigation checks and WebKit/Firefox visual acceptance. VentiMath frontend and Discord problem pictures consume VLX0.2.3 on audited main; source follow-ups still require a separate release and repin. Publish and adopt the owned PNG rasterizer; private source benchmark results do not establish production latency.",
     "scopeLimits": "Arbitrary TeX packages and advanced macro programming are outside the verified application scope. Equation references are document-scoped; cross-document references and arbitrary TeX counters are not implemented."
+  },
+  "rasterizer": {
+    "kind": "independent implementation",
+    "scope": "Private VLX-generated SVG vocabulary only: paths, rectangles, ellipses, translation/scaling/skew, fills/strokes/dashes and embedded PNG figures. No general SVG/CSS/fonts or remote resources.",
+    "dependencies": "Owned vpngjs figure decoder and native node:zlib compression/CRC; no native addon or npm rasterizer.",
+    "control": {
+      "package": "@resvg/resvg-js",
+      "version": "2.6.2",
+      "role": "Test-only comparison; absent from fresh package installs."
+    },
+    "acceptance": "1800 identical-drawing pixel controls on Node/Bun, all 1662 shipped outlines, public PNG tests and 30 unchanged app layout tests (69 rendering calls). Different antialiasing is documented; exact PNG bytes are not promised."
   }
 }

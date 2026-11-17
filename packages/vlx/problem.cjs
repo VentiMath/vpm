@@ -155,8 +155,8 @@ function renderProblemSvg(problem){
  return {svg,width:WIDTH,height};
 }
 function renderProblemPng(problem){
- const {svg}=renderProblemSvg(problem),{Resvg}=require('@resvg/resvg-js');
- return Buffer.from(new Resvg(svg,{font:{loadSystemFonts:false}}).render().asPng());
+ const {svg}=renderProblemSvg(problem);
+ return require('./raster.cjs').renderSvgPng(svg).data;
 }
 exports.renderProblemSvg=renderProblemSvg;
 exports.renderProblemPng=renderProblemPng;

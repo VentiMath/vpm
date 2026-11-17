@@ -625,6 +625,7 @@ jobs:
       - run: npm --prefix scripts/vlx-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node --test scripts/vlx-conformance/dom.test.cjs scripts/vlx-conformance/launch-chrome.test.cjs
       - run: node scripts/vlx-conformance/build-font.cjs --check
+      - run: node scripts/vlx-conformance/raster.cjs
       - run: node scripts/vlx-conformance/archives.cjs
       - run: node scripts/vlx-conformance/browser.cjs
       - name: Check VLX release archives
@@ -1395,6 +1396,7 @@ jobs:
       - run: npm --prefix scripts/vlx-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node --test scripts/vlx-conformance/dom.test.cjs scripts/vlx-conformance/launch-chrome.test.cjs
       - run: node scripts/vlx-conformance/build-font.cjs --check
+      - run: bun scripts/vlx-conformance/raster.cjs
       - run: node scripts/vlx-conformance/archives.cjs
       - run: npm --prefix scripts/png-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/png-conformance/archives.cjs

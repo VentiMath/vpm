@@ -145,16 +145,24 @@ const page = renderProblemSvg(problem); // {svg, width, height}
 const bytes = renderProblemPng(problem); // Buffer, typed as Uint8Array
 ```
 
-PNG methods require an explicitly installed `@resvg/resvg-js` 2.6.2 optional
-peer. It rasterizes VLX's SVG and performs no TeX parsing or layout. SVG page
-export needs no native rasterizer. `vlx/png` also exports asynchronous
-`renderPng(renderer, tex, {scale: 2, background: 'white'})` for a single expression.
+The source PNG methods now use VLX's independently written rasterizer. They
+flatten the same glyph paths, draw rules and curves, composite embedded PNG
+figures and encode RGBA PNGs with the runtime's built-in zlib. No resvg package,
+native addon, system font or external image lookup is required.
+`renderPng(renderer, tex, {scale: 2, background: 'white'})` remains available from
+`vlx/png`; page methods retain the API shown above.
 
-“Optional” describes which VLX features need the peer, not whether PNG callers
-can omit it. VentiMath explicitly installs it for Discord pictures. Resvg's own
-optional dependencies are platform-specific native binaries; the applicable
-binary is needed on the machine rendering PNGs. This stage is still upstream
-code. See [backend rasterization status](../../docs/BACKEND.md#why-resvg-says-optional).
+This rasterizer accepts only VLX's own generated drawing vocabulary. It is not
+an implementation of resvg's general SVG, CSS or font API. Fixed font outlines
+retain their existing attribution. Image/pixel/geometry/work budgets still fail
+explicitly. Vector and browser output are unchanged. Antialiasing differs from
+resvg along edges; the tests check dimensions, ink placement, thin rules, holes,
+colors, transparency and embedded figures rather than byte-identical PNGs.
+
+**Release status:** the published `vlx-0.2.3` archive still needs resvg. These
+source changes require a new release and VentiMath repin before its Functions
+dependency and platform binaries can be removed. See the [backend inventory](../../docs/BACKEND.md#why-resvg-says-optional)
+and [owned PNG measurements](bench/raster/README.md).
 
 ## Automatic equation references (0.2.0)
 
@@ -318,7 +326,7 @@ Legacy prose commands outside the documented page-list support remain caller wor
   font characters, double primes and invisible operator markers; it is not a proof
   of full accessibility or visual equivalence.
 - Clean npm/Bun archives exercise CJS/ESM, TypeScript 7 without ambient DOM/Node
-  types, browser bundling, sibling VPM dependencies and optional PNG rasterization.
+  types, browser bundling, sibling VPM dependencies and PNG rasterization without resvg.
   [Benchmarks](bench/results/README.md) keep all balanced process pairs, source
   hashes and identical-source controls.
 
@@ -365,3 +373,19 @@ uses 0.2.3, as does the Discord problem-picture caller on main `e14f4023`.
 The latter calls `renderProblemPng` from `vlx/problem` in Functions. Browser and assistive-technology acceptance remains open, as recorded
 in [ACCESSIBILITY.md](ACCESSIBILITY.md), without labeling the implementation
 or frontend adoption unfinished.
+
+The owned rasterizer is checked against resvg 2.6.2 on 1,800 identical drawings,
+including all 1,662 shipped glyph outlines, formulas at two resolutions and six
+complete synthetic pages. Edge pixels need not match: small accents/thin rules
+show the largest relative antialiasing difference (19.8% of their small ink
+area); solid marks stay within one pixel in both directions. Separate analytic
+pixel tests verify fill holes, fractional coverage, stroke widths, dash gaps,
+transparent figure colors and lossless PNG encoding through an independent
+decoder. The current app's 30 unchanged picture-layout tests pass with 69 calls
+to the owned renderer. These checks do not imply a new production-wide audit.
+
+The new JavaScript raster path costs more CPU than the native control: the
+synthetic complete-picture benchmark records about 31 ms versus 3.3 ms on Node
+24.22.1. Bun 1.4.4 records about 103 ms versus 11 ms, with large same-code control
+variation, so that comparison does not establish a precise slowdown. The change
+removes the native dependency; it is not a rendering-speed claim.

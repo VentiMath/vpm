@@ -1,0 +1,13 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const root=path.resolve(__dirname,'..'),fixture=path.resolve(root,'../../scripts/vlx-conformance'),upstream=fixture+'/node_modules/@resvg/resvg-js';
+const {renderMath}=require(root),{renderProblemSvg}=require(fixture+'/load.cjs')('problem');
+const page={statement:String.raw`Find $x$ when $3x+2=17$. Then compare $\frac{1}{2}+\frac{3}{4}$.`,options:{A:'3',B:'4',C:String.raw`10\sqrt[3]{10}`,D:'6'}};
+const figureSvg='<svg xmlns="http://www.w3.org/2000/svg" width="160" height="100"><path d="M10 90L80 10L150 90Z" fill="none" stroke="black" stroke-width="3"/></svg>';
+const figure=new(require(upstream).Resvg)(figureSvg).render().asPng(),withFigure={...page,figure:{png:figure,width:240}};
+const drawings=[['formula PNG',renderMath(String.raw`\frac{3}{7}+10\sqrt[3]{10}`,{fontSize:32,display:true}).svg],['problem PNG',renderProblemSvg(page).svg],['problem with figure PNG',renderProblemSvg(withFigure).svg]];
+const cases=drawings.map(([name,svg])=>({name:name+' / resvg 2.6.2',make:file=>file===root?()=>require(root+'/raster.cjs').renderSvgPng(svg,{background:'white'}).data:()=>new(require(upstream).Resvg)(svg,{background:'white',font:{loadSystemFonts:false}}).render().asPng(),validate:png=>{assert.equal(png[0],137);assert.equal(png[1],80);}}));
+cases.push({name:'layout and picture PNG / resvg 2.6.2',make:file=>file===root?()=>require(root+'/problem.cjs').renderProblemPng(page):()=>new(require(upstream).Resvg)(renderProblemSvg(page).svg,{font:{loadSystemFonts:false}}).render().asPng(),validate:png=>assert.equal(png[0],137)});
+const files=[...fs.readdirSync(root).filter(f=>f.endsWith('.cjs')),'font/glyphs.json','package.json','PROVENANCE.json','bench/raster.cjs','../vpngjs/index.cjs','../../scripts/vlx-conformance/package-lock.json','../../scripts/vlx-conformance/load.cjs','../../scripts/vlx-conformance/node_modules/@resvg/resvg-js'];
+for(const name of fs.readdirSync(fixture+'/node_modules/@resvg'))if(name.startsWith('resvg-js-')&&fs.existsSync(fixture+'/node_modules/@resvg/'+name+'/package.json'))files.push('../../scripts/vlx-conformance/node_modules/@resvg/'+name);
+require('../../../scripts/bench-process.cjs').run({root,upstream,vpm:root,cases,files}).catch(e=>{console.error(e);process.exitCode=1});

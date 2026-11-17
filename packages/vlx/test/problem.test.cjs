@@ -29,7 +29,7 @@ test('choice figures override placeholders, retain size, order, labels and rows'
  boxes.forEach((b,i)=>{assert.ok(b.right-b.left>=278);assert.ok(b.bottom-b.top>=229);assert.ok(b.left>=36&&b.right<924);if(i<3)assert.equal(b.top,boxes[0].top);else assert.equal(b.top,boxes[3].top);});assert.ok(boxes[3].top>boxes[2].bottom);
  const labeled={statement:'',optionFigures:{A:{...figures.A,includesChoiceLabel:true}}};assert.ok(pngSize(renderProblemPng(labeled)).height<pngSize(renderProblemPng({statement:'',optionFigures:{A:figures.A}})).height);
 });
-test('untrusted figures and layout budgets fail before native rendering',()=>{
+test('untrusted figures and layout budgets fail before rasterization',()=>{
  const png=picture(40,30),bad=Buffer.from(png);bad[29]^=1;
  for(const bytes of [bad,png.subarray(0,24),new Uint8Array(40)])assert.throws(()=>renderProblemSvg({statement:'',figure:{png:bytes,width:20}}));
  for(const width of [0,-1,NaN,Infinity])assert.throws(()=>renderProblemSvg({statement:'',figure:{png,width}}));
