@@ -1,0 +1,5 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),{execFileSync}=require('node:child_process');
+const root=path.resolve(__dirname,'../..'),ref='36dd58fe255ebf315edaa26749cc352abe53c00b',out=path.join(__dirname,'node_modules/.vlx-before-raster-optimization');
+fs.mkdirSync(out,{recursive:true});for(const file of execFileSync('git',['ls-tree','-r','--name-only',ref,'--','packages/vlx'],{cwd:root,encoding:'utf8'}).trim().split('\n')){if(!/\.(?:cjs|mjs|json)$/.test(file)||file.includes('/bench/')||file.includes('/test/'))continue;const dest=path.join(out,file.slice('packages/vlx/'.length));fs.mkdirSync(path.dirname(dest),{recursive:true});fs.writeFileSync(dest,execFileSync('git',['show',ref+':'+file],{cwd:root,maxBuffer:8e6}));}
+fs.mkdirSync(out+'/node_modules',{recursive:true});if(!fs.existsSync(out+'/node_modules/vpngjs'))fs.symlinkSync(root+'/packages/vpngjs',out+'/node_modules/vpngjs','dir');fs.writeFileSync(out+'/baseline.json',JSON.stringify({sourceCommit:ref})+'\n');console.log(out);

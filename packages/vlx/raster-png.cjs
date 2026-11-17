@@ -4,7 +4,13 @@ function chunk(type,data){const out=Buffer.allocUnsafe(data.length+12);out.write
 function encodePng({width,height,data}){
  if(!Number.isSafeInteger(width)||!Number.isSafeInteger(height)||width<1||height<1||width*height>16777216||data.length!==width*height*4)throw new RangeError('Invalid raster dimensions');
  const stride=width*4,filtered=Buffer.allocUnsafe((stride+1)*height);
- for(let y=0;y<height;y++){const source=y*stride,dest=y*(stride+1);let upScore=0,subScore=0;for(let i=0;i<stride;i++){const v=data[source+i],u=(v-(y?data[source-stride+i]:0))&255,s=(v-(i>=4?data[source+i-4]:0))&255;upScore+=Math.min(u,256-u);subScore+=Math.min(s,256-s);}const up=upScore<=subScore;filtered[dest]=up?2:1;for(let i=0;i<stride;i++)filtered[dest+i+1]=data[source+i]-(up?(y?data[source-stride+i]:0):(i>=4?data[source+i-4]:0));}
+ // Text pages have long identical rows; the Up filter encodes those as zeroes.
+ // Use Sub on the first row and Up thereafter. Both are lossless PNG filters.
+ for(let y=0;y<height;y++){const source=y*stride,dest=y*(stride+1);filtered[dest]=y?2:1;
+  if(y&&Buffer.isBuffer(data)&&data.subarray(source,source+stride).equals(data.subarray(source-stride,source))){filtered.fill(0,dest+1,dest+stride+1);continue;}
+  if(y){for(let i=0;i<stride;i++)filtered[dest+i+1]=data[source+i]-data[source-stride+i];}
+  else {for(let i=0;i<stride;i++)filtered[dest+i+1]=data[source+i]-(i>=4?data[source+i-4]:0);}
+ }
  const header=Buffer.alloc(13);header.writeUInt32BE(width);header.writeUInt32BE(height,4);header[8]=8;header[9]=6;
  return Buffer.concat([Buffer.from([137,80,78,71,13,10,26,10]),chunk('IHDR',header),chunk('IDAT',deflateSync(filtered,{level:6})),chunk('IEND',Buffer.alloc(0))]);
 }

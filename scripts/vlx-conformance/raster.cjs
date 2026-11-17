@@ -2,10 +2,12 @@
 // Compare identical VLX drawings; resvg is a test-only pixel control.
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),{Resvg}=require('@resvg/resvg-js'),{PNG}=require('../../packages/vpngjs');
 const {renderMath}=require('../../packages/vlx'),{renderProblemSvg}=require('./load.cjs')('problem'),{rasterize,renderSvgPng}=require('../../packages/vlx/raster.cjs'),{encodePng}=require('../../packages/vlx/raster-png.cjs');
-const summary={drawings:0,maxRelativeDifference:0,maxInkChange:0,worst:null};
+const previous=process.env.VLX_RASTER_PREVIOUS&&require(process.env.VLX_RASTER_PREVIOUS).rasterize;
+const summary={maxPreviousChannelDifference:0,drawings:0,maxRelativeDifference:0,maxInkChange:0,worst:null};
 function check(name,svg,options={}){
  const control=new Resvg(svg,{font:{loadSystemFonts:false},background:options.background==='transparent'?undefined:'white',...(options.width?{fitTo:{mode:'width',value:options.width}}:{})}).render();
  const a=PNG.sync.read(control.asPng()),b=rasterize(svg,{background:'white',...options});assert.deepEqual([b.width,b.height],[a.width,a.height],name+' dimensions');
+ if(previous){const old=previous(svg,{background:'white',...options});assert.equal(old.data.length,b.data.length);let max=0;for(let i=0;i<b.data.length;i++)max=Math.max(max,Math.abs(old.data[i]-b.data[i]));summary.maxPreviousChannelDifference=Math.max(summary.maxPreviousChannelDifference,max);assert.ok(max<=1,name+' changed previous pixels by '+max);}
  let difference=0,inkA=0,inkB=0;for(let i=0;i<a.data.length;i+=4){let da=0,db=0;for(let c=0;c<3;c++){const ca=(255-a.data[i+c])*a.data[i+3]/255,cb=(255-b.data[i+c])*b.data[i+3]/255;difference+=Math.abs(ca-cb);da+=ca;db+=cb;}inkA+=da;inkB+=db;}
  // AA may differ within an edge pixel; neither implementation may lose or
  // invent an isolated solid mark farther than one pixel from the other.

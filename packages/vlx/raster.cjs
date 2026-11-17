@@ -11,26 +11,48 @@ function blend(data,i,r,g,b,coverage){if(coverage<=0)return;coverage=Math.min(1,
 // subrows, splitting additionally at vertices so thin horizontal rules retain
 // their exact vertical coverage instead of snapping to a sampling grid.
 function paint(polygons,ink,surface,budget){
- if(!ink)return;const {width,height,data}=surface,edges=[];let lo=Infinity,hi=-Infinity;
- for(const points of polygons)for(let i=0;i<points.length;i++){const a=points[i],b=points[(i+1)%points.length];if(a[1]===b[1])continue;const lower=a[1]<b[1]?a:b,upper=a[1]<b[1]?b:a;edges.push([lower[0],lower[1],upper[1],(upper[0]-lower[0])/(upper[1]-lower[1]),a[1]<b[1]?1:-1]);lo=Math.min(lo,lower[1]);hi=Math.max(hi,upper[1]);}
+ if(!ink)return;const {width,height,data}=surface,edges=[];let lo=Infinity,hi=-Infinity,minPoint=Infinity,maxPoint=-Infinity;
+ for(const points of polygons)for(let i=0;i<points.length;i++){const a=points[i],b=points[(i+1)%points.length];minPoint=Math.min(minPoint,a[0]);maxPoint=Math.max(maxPoint,a[0]);if(a[1]===b[1])continue;const lower=a[1]<b[1]?a:b,upper=a[1]<b[1]?b:a;edges.push([lower[0],lower[1],upper[1],(upper[0]-lower[0])/(upper[1]-lower[1]),a[1]<b[1]?1:-1]);lo=Math.min(lo,lower[1]);hi=Math.max(hi,upper[1]);}
  if(!edges.length)return;if(edges.length>2000000)throw new VlxError('LIMIT','Raster edge budget exceeded');
  const first=Math.max(0,Math.floor(lo)),last=Math.min(height,Math.ceil(hi));if(first>=last)return;
  budget.work+=(last-first)*8*edges.length;if(budget.work>300000000)throw new VlxError('LIMIT','Raster sampling budget exceeded');
- const coverage=new Float32Array(width),hits=[];
+ const offset=Math.max(0,Math.floor(minPoint)),limit=Math.min(width,Math.ceil(maxPoint));if(offset>=limit)return;
+ const coverage=new Float32Array(limit-offset),hitsX=[],hitsW=[],active=[];edges.sort((a,b)=>a[1]-b[1]);let next=0;
  for(let y=first;y<last;y++){
   coverage.fill(0);let minX=width,maxX=0;
+  let retained=0;for(let i=0;i<active.length;i++)if(active[i][2]>y)active[retained++]=active[i];active.length=retained;
+  while(next<edges.length&&edges[next][1]<y+1){const e=edges[next++];if(e[2]>y)active.push(e);}
   const cuts=[y,y+1];for(let i=1;i<8;i++)cuts.push(y+i/8);
-  for(const edge of edges){if(edge[1]>y&&edge[1]<y+1)cuts.push(edge[1]);if(edge[2]>y&&edge[2]<y+1)cuts.push(edge[2]);}
+  for(const edge of active){if(edge[1]>y&&edge[1]<y+1)cuts.push(edge[1]);if(edge[2]>y&&edge[2]<y+1)cuts.push(edge[2]);}
   cuts.sort((a,b)=>a-b);
   budget.work+=Math.max(0,cuts.length-9)*edges.length;if(budget.work>300000000)throw new VlxError('LIMIT','Raster sampling budget exceeded');
   for(let sample=1;sample<cuts.length;sample++){
-   const weight=cuts[sample]-cuts[sample-1];if(!weight)continue;const at=(cuts[sample]+cuts[sample-1])/2;hits.length=0;
-   for(const [x,y0,y1,slope,winding]of edges)if(at>=y0&&at<y1)hits.push([x+(at-y0)*slope,winding]);
-   hits.sort((a,b)=>a[0]-b[0]);let winding=0,from=0;
-   for(const [x,direction]of hits){const previous=winding;winding+=direction;if(!previous&&winding)from=x;else if(previous&&!winding){const left=Math.max(0,from),right=Math.min(width,x);if(right<=left)continue;const l=Math.floor(left),r=Math.ceil(right);minX=Math.min(minX,l);maxX=Math.max(maxX,r);for(let px=l;px<r;px++)coverage[px]+=(Math.min(right,px+1)-Math.max(left,px))*weight;}}
+   const weight=cuts[sample]-cuts[sample-1];if(!weight)continue;const at=(cuts[sample]+cuts[sample-1])/2;let count=0;
+   // Small glyph rows avoid pair allocations. Large/adversarial edge sets
+   // retain O(n log n) sorting rather than quadratic insertion work.
+   if(active.length>64){const hits=[];for(const e of active)if(at>=e[1]&&at<e[2])hits.push([e[0]+(at-e[1])*e[3],e[4]]);hits.sort((a,b)=>a[0]-b[0]);count=hits.length;for(let i=0;i<count;i++){hitsX[i]=hits[i][0];hitsW[i]=hits[i][1];}}
+   else {for(let i=0;i<active.length;i++){const e=active[i];if(at<e[1]||at>=e[2])continue;const x=e[0]+(at-e[1])*e[3];let j=count;while(j>0&&hitsX[j-1]>x){hitsX[j]=hitsX[j-1];hitsW[j]=hitsW[j-1];j--;}hitsX[j]=x;hitsW[j]=e[4];count++;}}
+   let winding=0,from=0;
+   for(let i=0;i<count;i++){const x=hitsX[i],previous=winding;winding+=hitsW[i];if(!previous&&winding)from=x;else if(previous&&!winding){const left=Math.max(0,from),right=Math.min(width,x);if(right<=left)continue;const l=Math.floor(left),r=Math.ceil(right);minX=Math.min(minX,l);maxX=Math.max(maxX,r);
+    if(r-l===1)coverage[l-offset]+=(right-left)*weight;
+    else {coverage[l-offset]+=(l+1-left)*weight;for(let px=l+1;px<r-1;px++)coverage[px-offset]+=weight;coverage[r-1-offset]+=(right-r+1)*weight;}
+   }}
   }
-  for(let x=minX;x<maxX;x++)if(coverage[x]>0)blend(data,(y*width+x)*4,ink[0],ink[1],ink[2],Math.min(1,coverage[x])*ink[3]/255);
+  for(let x=minX;x<maxX;x++)if(coverage[x-offset]>0)blend(data,(y*width+x)*4,ink[0],ink[1],ink[2],Math.min(1,coverage[x-offset])*ink[3]/255);
  }
+}
+// Axis-aligned rectangles have separable exact coverage. Fill opaque interiors
+// in bulk; fractional edges still use source-over with their geometric area.
+function fillRect(points,ink,surface,budget){
+ const [a,b,c,d]=points;if(a[1]!==b[1]||b[0]!==c[0]||c[1]!==d[1]||d[0]!==a[0])return false;
+ const x0=Math.min(a[0],c[0]),x1=Math.max(a[0],c[0]),y0=Math.min(a[1],c[1]),y1=Math.max(a[1],c[1]),left=Math.max(0,Math.floor(x0)),right=Math.min(surface.width,Math.ceil(x1)),top=Math.max(0,Math.floor(y0)),bottom=Math.min(surface.height,Math.ceil(y1));
+ // Preserve the reference path's work accounting even though no samples run.
+ budget.work+=Math.max(0,bottom-top)*16+(y0>=0&&y0<surface.height&&y0%1?4:0)+(y1>=0&&y1<surface.height&&y1%1?4:0);if(budget.work>300000000)throw new VlxError('LIMIT','Raster sampling budget exceeded');
+ const rgba=Buffer.from(ink),fullLeft=Math.max(left,Math.ceil(x0)),fullRight=Math.min(right,Math.floor(x1));
+ for(let y=top;y<bottom;y++){const cy=Math.min(y1,y+1)-Math.max(y0,y),row=y*surface.width*4;
+  if(cy===1&&ink[3]===255&&fullRight>fullLeft)surface.data.fill(rgba,row+fullLeft*4,row+fullRight*4);
+  for(let x=left;x<right;x++){if(cy===1&&ink[3]===255&&x>=fullLeft&&x<fullRight){x=fullRight-1;continue;}const coverage=(Math.min(x1,x+1)-Math.max(x0,x))*cy*ink[3]/255;if(coverage>0)blend(surface.data,row+x*4,ink[0],ink[1],ink[2],coverage);}
+ }return true;
 }
 // Interpolate premultiplied RGBA to avoid colored fringes from transparent
 // pixels, then composite into the unpremultiplied PNG output buffer.
@@ -80,7 +102,7 @@ function rasterize(svg,{width:requestedWidth,background}={}){
   else if(tag==='rect'){const x=number(attrs.x),y=number(attrs.y),w=attrs.width==='100%'?viewBox[2]:number(attrs.width),h=attrs.height==='100%'?viewBox[3]:number(attrs.height);if(w<=0||h<=0)continue;contours=[{closed:true,points:[[x,y],[x+w,y],[x+w,y+h],[x,y+h]]}];}
   else {const cx=number(attrs.cx),cy=number(attrs.cy),rx=number(attrs.rx),ry=number(attrs.ry);if(rx<=0||ry<=0)continue;contours=[{closed:true,points:path.circle(0,0,Math.max(rx,ry),tolerance).map(([x,y])=>[cx+x*rx/Math.max(rx,ry),cy+y*ry/Math.max(rx,ry)])}];}
   const fill=color(state.fill,state.color),stroke=color(state.stroke,state.color);
-  if(fill)paint(contours.map(c=>c.points.map(p=>path.apply(m,p))),fill,surface,budget);
+  if(fill){const polygons=contours.map(c=>c.points.map(p=>path.apply(m,p)));if(tag!=='rect'||!fillRect(polygons[0],fill,surface,budget))paint(polygons,fill,surface,budget);}
   if(stroke&&state.strokeWidth>0)paint(path.strokes(contours,state.strokeWidth,state.join,state.dash,state.offset,tolerance).map(polygon=>polygon.map(p=>path.apply(m,p))),stroke,surface,budget);
  }
  if(!surface||stack.length||!ended||svg.slice(cursor).trim())fail('Incomplete drawing');return surface;

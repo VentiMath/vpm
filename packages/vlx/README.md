@@ -26,7 +26,7 @@ equivalence, all possible TeX or a completed application deployment. See the
 Install the public release with no dependency overrides:
 
 ```sh
-bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.2.3/vlx-0.2.3.tgz
+bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.3.0/vlx-0.3.0.tgz
 ```
 
 The release pins its VPM dependency to a sibling archive. See the
@@ -159,10 +159,9 @@ explicitly. Vector and browser output are unchanged. Antialiasing differs from
 resvg along edges; the tests check dimensions, ink placement, thin rules, holes,
 colors, transparency and embedded figures rather than byte-identical PNGs.
 
-**Release status:** the published `vlx-0.2.3` archive still needs resvg. These
-source changes require a new release and VentiMath repin before its Functions
-dependency and platform binaries can be removed. See the [backend inventory](../../docs/BACKEND.md#why-resvg-says-optional)
-and [owned PNG measurements](bench/raster/README.md).
+**Release 0.3.0:** includes the owned PNG renderer and pins its VPM figure
+decoder. VentiMath's existing 0.2.3 pin still requires resvg until adoption.
+See the [optimized measurements](bench/raster-optimized/README.md).
 
 ## Automatic equation references (0.2.0)
 
@@ -384,8 +383,17 @@ transparent figure colors and lossless PNG encoding through an independent
 decoder. The current app's 30 unchanged picture-layout tests pass with 69 calls
 to the owned renderer. These checks do not imply a new production-wide audit.
 
-The new JavaScript raster path costs more CPU than the native control: the
-synthetic complete-picture benchmark records about 31 ms versus 3.3 ms on Node
-24.22.1. Bun 1.4.4 records about 103 ms versus 11 ms, with large same-code control
-variation, so that comparison does not establish a precise slowdown. The change
-removes the native dependency; it is not a rendering-speed claim.
+PNG rasterization now scans only active edges, reuses bounded glyph geometry at
+the required output precision, fills plain rectangles directly and filters PNG
+rows without scoring two alternatives per byte. No complete image is cached.
+The 1,800 controls retain identical decoded pixels relative to the original
+owned renderer; path, sampling and image budgets remain enforced on cache hits.
+The [isolated measurements](bench/raster-optimized/README.md) retain both the
+native control and the previous owned renderer. Compression bytes/sizes may
+change; this is a lossless pixel-preserving optimization, not resvg pixel parity.
+
+The optimized Node 24 measurements reduce owned formula/page PNG time by about
+80%, and figure-page time by 70%. A complete synthetic page takes 6.2 ms versus
+3.1 ms for native resvg, rather than the earlier roughly tenfold gap. Bun's
+complete-page comparison is 4.4 ms versus 3.1 ms; figure pages still regress and
+its previous-renderer controls are very noisy. Native parity is not claimed.

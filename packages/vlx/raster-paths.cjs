@@ -15,7 +15,11 @@ function commands(source){
 const apply=(m,p)=>[m[0]*p[0]+m[2]*p[1]+m[4],m[1]*p[0]+m[3]*p[1]+m[5]];
 const multiply=(a,b)=>[a[0]*b[0]+a[2]*b[1],a[1]*b[0]+a[3]*b[1],a[0]*b[2]+a[2]*b[3],a[1]*b[2]+a[3]*b[3],a[0]*b[4]+a[2]*b[5]+a[4],a[1]*b[4]+a[3]*b[5]+a[5]];
 function transform(value){let result=[1,0,0,1,0,0],end=0;for(const match of value.matchAll(/(translate|scale|skewX)\(([^)]*)\)/g)){if(value.slice(end,match.index).trim())fail('Unsupported drawing transform');const nums=match[2].trim().split(/[\s,]+/).map(Number);if(nums.some(n=>!Number.isFinite(n))||!nums.length||nums.length>2)fail('Invalid transform');let m;switch(match[1]){case 'translate':m=[1,0,0,1,nums[0],nums[1]??0];break;case 'scale':m=[nums[0],0,0,nums[1]??nums[0],0,0];break;default:m=[1,0,Math.tan(nums[0]*Math.PI/180),1,0,0];}result=multiply(result,m);end=match.index+match[0].length;}if(value.slice(end).trim())fail('Unsupported transform');return result;}
+const geometryCache=new Map();let geometryPoints=0;
 function flatten(source,tolerance,budget){
+ const key=source+'\0'+tolerance,cached=geometryCache.get(key);
+ if(cached){budget.points+=cached.count;if(budget.points>2000000)throw new VlxError('LIMIT','Raster geometry budget exceeded');return cached.contours;}
+ const startingPoints=budget.points;
  const contours=[];let points,x=0,y=0,start;
  function put(px,py){if(++budget.points>2000000)throw new VlxError('LIMIT','Raster geometry budget exceeded');points.push([px,py]);x=px;y=py;}
  // Adaptive de Casteljau subdivision, bounded in output-pixel coordinates.
@@ -33,6 +37,11 @@ function flatten(source,tolerance,budget){
   else if(kind==='C')cubic([x,y],v.slice(0,2),v.slice(2,4),v.slice(4,6));
   else if(kind==='Q')cubic([x,y],[x+(v[0]-x)*2/3,y+(v[1]-y)*2/3],[v[2]+(v[0]-v[2])*2/3,v[3]+(v[1]-v[3])*2/3],v.slice(2));
   else if(kind==='Z'){contours.at(-1).closed=true;[x,y]=start;}
+ }
+ const count=budget.points-startingPoints;
+ if(source.length<=32768&&count<=10000){
+  while(geometryCache.size>=512||geometryPoints+count>100000){const first=geometryCache.keys().next().value;geometryPoints-=geometryCache.get(first).count;geometryCache.delete(first);}
+  geometryCache.set(key,{contours,count});geometryPoints+=count;
  }
  return contours;
 }

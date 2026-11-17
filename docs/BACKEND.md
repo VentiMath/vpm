@@ -42,7 +42,7 @@ not a decision to recreate an older upstream release.
 | --- | --- | --- | --- |
 | `stripe` | 17.7.0 | Checkout sessions and signed completion webhooks in `functions/src/payments.ts` | [vstripe](../packages/vstripe): independent app-used APIs targeting current 23.1.0 completed; not released or adopted |
 | `vlx` | 0.2.3 | TeX/page layout in `functions/src/problemPicture.ts` | [VLX](../packages/vlx) release adopted; `mathjax-full` removed from the Functions production dependencies |
-| `@resvg/resvg-js` | 2.6.2 | Rasterizes VLX SVG into Discord PNG pictures | Required by the app’s pinned VLX 0.2.3; VLX source now has an independent rasterizer, awaiting release and app repin |
+| `@resvg/resvg-js` | 2.6.2 | Rasterizes VLX SVG into Discord PNG pictures | Required by the app’s pinned VLX 0.2.3; VLX 0.3.0 has an independent rasterizer; app repin remains |
 | `vpngjs` | 7.0.0 | Figure validation through `vlx/problem` | [Independent PNG reader](../packages/vpngjs), adopted through the VLX release; upstream `pngjs` remains a development comparison dependency |
 
 The Stripe replacement covers Checkout session creation and raw-body snapshot
@@ -69,7 +69,7 @@ math and SVG output do not need it. VentiMath's pinned Functions release still
 needs it for `problemPicture.ts` PNG calls. Do not remove that dependency from
 the app until its VLX URL is updated to a release containing the owned renderer.
 
-VLX source now independently draws its own glyph paths, rules, transforms,
+VLX 0.3.0 independently draws its own glyph paths, rules, transforms,
 colors and embedded figures, then encodes PNGs with built-in zlib. It has no
 resvg runtime dependency. This is the useful app scope, not a generic SVG/CSS/font
 renderer. All 1,662 shipped outlines are included in 1,800 Node/Bun pixel
@@ -77,7 +77,7 @@ comparisons; 30 unchanged app layout tests pass. Antialiasing and performance
 tradeoffs are documented in [VLX](../packages/vlx/README.md).
 
 Resvg's twelve optional packages are operating-system/CPU/native-library builds
-of one renderer. They can disappear from this caller after release/adoption;
+of one renderer. They can disappear from this caller after adoption;
 there is no separate JavaScript rewrite for each platform artifact. Source
 completion and installed application dependencies remain distinct in the atlas.
 

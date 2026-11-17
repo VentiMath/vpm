@@ -20,7 +20,7 @@ try{
  for(const manager of ['npm','bun']){
   const cwd=path.join(temp,manager);fs.mkdirSync(cwd);
   const dependencies=published?{vlx:top.url}:manager==='npm'?{vlx:'file:'+path.join(directory,top.asset)}:{};
-  Object.assign(dependencies,{react:'19.1.0','react-dom':'19.1.0','@types/react':'19.2.14'});
+  Object.assign(dependencies,{react:'19.3.1','react-dom':'19.3.1','@types/react':'19.2.14'});
   fs.writeFileSync(path.join(cwd,'package.json'),JSON.stringify({private:true,type:'module',dependencies,...(!published&&manager==='npm'?{overrides:{vpngjs:'file:'+path.join(directory,png.asset)}}:{})}));
   run(manager,['install','--ignore-scripts',...(manager==='npm'?['--no-audit','--no-fund']:[])],cwd);
   // Bun cannot redirect a release URL before publication. Its local check uses
@@ -37,6 +37,8 @@ try{
   }
   for(const name of ['katex','mathjax-full','@mathjax','@resvg/resvg-js'])assert(!fs.existsSync(path.join(cwd,'node_modules',name)),'Unexpected browser dependency '+name);
   fs.writeFileSync(path.join(cwd,'consumer.mjs'),`import assert from 'node:assert/strict';import {createRequire} from 'node:module';import {createRenderer,renderMath,renderDocument} from 'vlx';import {observeMath} from 'vlx/dom';import {renderProblemSvg} from 'vlx/problem';const require=createRequire(import.meta.url);assert.equal(require('vlx').renderMath,renderMath);assert.equal(require('vlx').renderDocument,renderDocument);const document=renderDocument(${JSON.stringify(equation)},{idPrefix:'release'});assert.equal(document.equations[0].number,1);assert.equal(document.references[0].id,document.equations[0].id);assert.equal(document.references[0].display,'(1)');assert.match(document.html,/<a /);assert.equal(require('vlx/dom').observeMath,observeMath);assert.match(createRenderer().renderText('Find $x^2$.').html,/<math/);assert.match(renderProblemSvg({statement:'Find $x$.'}).svg,/<svg/);`);
+  fs.appendFileSync(path.join(cwd,'consumer.mjs'),`
+const {renderPng}=await import('vlx/png');const {renderProblemPng}=await import('vlx/problem');const {PNG}=require('vpngjs');const picture=await renderPng(createRenderer(),'x^2');assert.equal(PNG.sync.read(picture.data).width,picture.width);const page=PNG.sync.read(renderProblemPng({statement:'Find $x$.',options:{A:'1',B:'2'}}));assert.equal(page.width,960);assert(page.height>0);`);
   for(const runtime of ['node','bun'])run(runtime,['consumer.mjs'],cwd);
   fs.writeFileSync(path.join(cwd,'consumer.ts'),`import {createRenderer,renderMath,renderDocument} from 'vlx';import {observeMath} from 'vlx/dom';const documentResult=renderDocument('text',{numbering:'ams',startNumber:1});const next:number=documentResult.nextNumber;const svg:string=renderMath('x').svg;const host=document.createElement('div');host.innerHTML=createRenderer().renderText('Find $x$.').html;const stop:()=>void=observeMath(host);stop();`);
   for(const mode of ['NodeNext','Bundler']){

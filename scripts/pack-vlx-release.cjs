@@ -22,7 +22,7 @@ function build({ref,tag,out}) {
   for(const name of names) {
    const dir=path.join(temp,'packages',name),original=metadata[name],published=structuredClone(original);
    const provenance=JSON.parse(fs.readFileSync(path.join(dir,'PROVENANCE.json')));
-   if(name==='vlx'){assert.equal(provenance.implementation.kind,'independent parser and layout implementation');assert.ok(tag==='vlx-'+original.version||tag.startsWith('vlx-'+original.version+'-'),'Tag must identify the VLX version');}
+   if(name==='vlx'){assert.equal(provenance.implementation.kind,'independent parser, layout and bounded PNG rasterizer implementation');assert.ok(tag==='vlx-'+original.version||tag.startsWith('vlx-'+original.version+'-'),'Tag must identify the VLX version');}
    else assert.equal(original.version,provenance.upstream.version,name+': package version must match the upstream baseline');
    for(const field of ['dependencies','optionalDependencies'])for(const dependency of Object.keys(published[field]||{})) {
     assert.ok(assets[dependency],name+': dependency is missing from this release: '+dependency);
@@ -42,7 +42,7 @@ function build({ref,tag,out}) {
     if(relative==='package.json')assert.deepEqual(JSON.parse(fs.readFileSync(packed)),published);
     else {const bytes=fs.readFileSync(packed);assert.deepEqual(bytes,fs.readFileSync(path.join(dir,relative)),name+'/'+relative);sourceFiles[relative]=hash(bytes);}
    }
-   for(const required of ['package.json','LICENSE','PROVENANCE.json','README.md',...(name==='vlx'?['ACCESSIBILITY.md','font/NOTICE','font/LICENSE','equations.cjs','dom.cjs','dom.mjs','dom.d.ts','react.cjs','react.mjs','react.d.ts','react-renderer.cjs','react-renderer.mjs','styles.cjs','styles.css']:[])])assert.ok(entries.includes('package/'+required),name+': '+required);
+   for(const required of ['package.json','LICENSE','PROVENANCE.json','README.md',...(name==='vlx'?['raster.cjs','raster-paths.cjs','raster-png.cjs','ACCESSIBILITY.md','font/NOTICE','font/LICENSE','equations.cjs','dom.cjs','dom.mjs','dom.d.ts','react.cjs','react.mjs','react.d.ts','react-renderer.cjs','react-renderer.mjs','styles.cjs','styles.css']:[])])assert.ok(entries.includes('package/'+required),name+': '+required);
    manifest.packages.push({name,version:published.version,asset:assets[name],url:base+'/'+assets[name],sha256:hash(fs.readFileSync(archive)),packageJsonSHA256:hash(fs.readFileSync(path.join(unpack,'package/package.json'))),dependencies:published.dependencies||{},sourceFiles});
   }
   const top=manifest.packages.find(p=>p.name==='vlx');
