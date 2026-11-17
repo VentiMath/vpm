@@ -12,3 +12,9 @@ test('ordered declarations, blacklist, independent results',()=>{
 test('malformed functions and incomplete shorthands fail with declaration context',()=>{
  for(const [name,value] of [['transform','rotate(2deg'],['font','12px'],['padding','1'],['border','red blue'],['background','rgb(1,2,3']])assert.throws(()=>convert([[name,value]]),/Failed to parse declaration/);
 });
+test('ESM default and named exports agree with Babel-compatible CommonJS',async()=>{
+ const path=require('node:path'),{pathToFileURL}=require('node:url');
+ const root=process.env.VCSS_NATIVE_ENTRY?path.dirname(require.resolve(process.env.VCSS_NATIVE_ENTRY)):path.resolve(__dirname,'..');
+ const esm=await import(pathToFileURL(path.join(root,'index.mjs')).href);
+ assert.equal(esm.default,convert);assert.equal(esm.getPropertyName,getPropertyName);assert.equal(esm.getStylesForProperty,getStylesForProperty);
+});

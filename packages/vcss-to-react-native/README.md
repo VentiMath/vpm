@@ -22,4 +22,4 @@ Changes from 3.2.0:
 
 Runtime code was independently written; only test fixtures retain upstream code and attribution. See [provenance](PROVENANCE.json), [verification](../../scripts/css-native-conformance/README.md), [benchmarks](bench/results/README.md) and [installation](../../docs/INSTALLATION.md).
 
-The recorded composite native style takes about 6.3 µs versus 4.4 µs on Node. Other comparisons vary with process order and the heavily loaded host; no general speed advantage is claimed. The isolated-process reports retain all samples and same-code controls.
+The recorded composite native style takes about 6.0 µs versus 4.0 µs on Node (4.0 µs versus 3.3 µs on Bun). Other comparisons vary with process order and the heavily loaded host; no general speed advantage is claimed. The isolated-process reports retain all samples and same-code controls.

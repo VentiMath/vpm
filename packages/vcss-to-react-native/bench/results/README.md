@@ -23,27 +23,27 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-17T23:31:14.255Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-17T23:34:37.393Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| simple declarations | 1606 | 1418 | -10.9% | -22.7% | 50.6% | 77% | unestablished at this precision |
-| box and border shorthands | 2538 | 1846 | -18.7% | 61.4% | -30% | 51.9% | unestablished at this precision |
-| native component style | 4403 | 6345 | 41.6% | 40.1% | 67.2% | 35.7% | higher time in every pair, beyond control spread |
+| simple declarations | 1596 | 1390 | -13.5% | -13.5% | -35.4% | 27.6% | unestablished at this precision |
+| box and border shorthands | 1896 | 1658 | -12.5% | -16.9% | -12.3% | 25% | unestablished at this precision |
+| native component style | 4014 | 5970 | 44.5% | 41.5% | 87.3% | 69.3% | unestablished at this precision |
 
 ## Bun 1.4.4
 
-Recorded 2026-11-17T23:31:49.929Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-17T23:34:54.129Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| simple declarations | 796 | 313 | -57.8% | -69.6% | -55.2% | 38.8% | lower time in every pair, beyond control spread |
-| box and border shorthands | 1988 | 2745 | -16.6% | 42% | -35% | 24.6% | unestablished at this precision |
-| native component style | 4072 | 6160 | 39% | 28.4% | 19548.9% | 36.5% | unestablished at this precision |
+| simple declarations | 497 | 280 | -43.9% | -44.1% | -43.9% | 324.8% | unestablished at this precision |
+| box and border shorthands | 1424 | 1369 | -3.9% | -2.1% | -8.4% | 34.9% | unestablished at this precision |
+| native component style | 3281 | 3970 | 20.5% | 23.1% | 20.1% | 54% | unestablished at this precision |
 
 ## Reproduce
 
