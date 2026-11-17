@@ -333,3 +333,15 @@ results and contest signup props; the isolated benchmark lives in
 Before timing Container, run `node scripts/mui-material-conformance/container-build.cjs`
 to rebuild the comparison bundles from the local sources. Run Node and Bun
 benchmarks sequentially, with browser checks and other tests finished first.
+
+## Card and CardContent
+
+`cards-contract.cjs` checks current Material 9.5.0 and app 7.2.0 markup, elevation
+precedence and theme defaults. `cards-browser.cjs` compares light/dark, variable
+and custom themes, RTL and responsive widths. It checks last-child spacing as
+siblings change, custom roots/refs, stable focus and hydration, plus an unchanged
+upstream CardActionArea keyboard caller. That child is a fixture, not a shipped
+VPM implementation. Both React modes and exact archive installs are checked.
+Before recording [benchmarks](../../packages/vmui-material/bench/cards/README.md),
+run `node scripts/mui-material-conformance/cards-build.cjs`, then time Node and
+Bun sequentially after all other checks finish.

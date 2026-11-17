@@ -507,3 +507,18 @@ export type ContainerProps<C extends React.ElementType='div'>=ContainerOwnProps&
 export const Container:<C extends React.ElementType='div'>(props:ContainerProps<C>)=>React.ReactElement|null;
 export const containerClasses:Readonly<ContainerClasses>;
 export function getContainerUtilityClass(slot:string):string;
+
+export interface CardClasses {root:string}
+export type CardClassKey=keyof CardClasses;
+export interface CardOwnProps extends Omit<PaperOwnProps,'classes'> {raised?:boolean;classes?:Partial<CardClasses>}
+export type CardProps<C extends React.ElementType='div'>=CardOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof CardOwnProps>&{component?:C};
+export const Card:TextComponent<CardOwnProps,'div'>;
+export const cardClasses:Readonly<CardClasses>;
+export function getCardUtilityClass(slot:string):string;
+export interface CardContentClasses {root:string}
+export type CardContentClassKey=keyof CardContentClasses;
+export interface CardContentOwnProps {children?:React.ReactNode;classes?:Partial<CardContentClasses>;sx?:SxProps<Theme>}
+export type CardContentProps<C extends React.ElementType='div'>=CardContentOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof CardContentOwnProps>&{component?:C};
+export const CardContent:TextComponent<CardContentOwnProps,'div'>;
+export const cardContentClasses:Readonly<CardContentClasses>;
+export function getCardContentUtilityClass(slot:string):string;

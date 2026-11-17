@@ -128,3 +128,9 @@ assert.match(renderToString(React.createElement(api.Skeleton,{variant:'rounded',
 assert.equal(api.Container,require('vmui-material/Container').default);
 assert.equal(api.containerClasses.root,require('vmui-material/containerClasses').default.root);
 assert.match(renderToString(React.createElement(api.Container,{maxWidth:'sm',sx:{py:4}},'WARML')),/MuiContainer-maxWidthSm/);
+
+assert.equal(api.Card,require('vmui-material/Card').default);
+assert.equal(api.CardContent,require('vmui-material/CardContent').default);
+assert.equal(api.cardClasses.root,require('vmui-material/cardClasses').default.root);
+assert.equal(api.cardContentClasses.root,require('vmui-material/cardContentClasses').default.root);
+assert.match(renderToString(React.createElement(api.Card,{variant:'outlined'},React.createElement(api.CardContent,null,'Exam'))),/MuiCardContent-root/);

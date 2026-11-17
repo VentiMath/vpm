@@ -25,10 +25,10 @@ inventory. The entire upstream Motion API is **not** complete.
 
 ## Material
 
-[vmui-material](../packages/vmui-material) now has 43 independently implemented
+[vmui-material](../packages/vmui-material) now has 45 independently implemented
 components. It covers button controls; text/icons; Box/Paper/Divider; the form,
 input, Select, checkbox/radio/switch foundation; menus; Chip, Avatar, loading
-spinners, Skeleton placeholders and Container page layouts. Its resolved-theme bridge is built, but full Material theme creation
+spinners, Skeleton placeholders, Container page layouts and Card/CardContent panels. Its resolved-theme bridge is built, but full Material theme creation
 and all app-used component families are not. It cannot replace the entire
 `@mui/material` dependency yet.
 
@@ -36,7 +36,7 @@ The largest unbuilt families in direct source use are:
 
 | Family | Source imports | Why it matters |
 | --- | ---: | --- |
-| Card / CardContent | 24 / 8 | Content panels, including Mustang Math |
+| CardActionArea | 2 | Clickable club articles and Math Is Cool cards |
 | Tooltip | 17 | Action explanations and compact shared controls |
 | Dialog / content/title/actions | 11 / 8 / 8 / 9 | Confirmations and forms, including WARML |
 | SwipeableDrawer | 11 | Shared navigation and side panels |
@@ -51,14 +51,15 @@ Dependencies such as Material React Table may also consume components that do
 not appear as direct app imports; they need unchanged-caller acceptance before
 a complete package override.
 
-**Next bounded Material unit: Card and CardContent.** These are used by contest
-and WARML content panels as well as public article pages. Container is now built;
-its 23 direct imports were rechecked at `ed4b5a05` on November 16, 2026, including
-public results, signup and practice pages. Skeleton covers shared Fuse fallbacks,
-contest archives/exams/search and WARML practice/signup loading shapes in 35 files.
-CircularProgress covers contest results, Mustang exam loading and WARML save
-states. These are independent VPM implementations; application adoption remains
-separate until the required Material surface is complete. Motion remains parked.
+**Next bounded Material unit: CardActionArea.** Two direct source callers use it
+for club articles and Math Is Cool cards. The underlying Card/CardContent and
+ButtonBase implementations are now owned. Card and CardContent were rechecked at
+`7970b7e5` on November 16, 2026: 24 and eight direct source imports, including
+contest exam panels, WARML signup and practice cards. Their shared Paper/Card
+theme overrides, responsive styles and native roots are verified. Container,
+Skeleton and CircularProgress are built too. These are implementation claims;
+application adoption remains separate until the required Material surface is
+complete. Motion remains parked.
 
 Nano ID is separate build infrastructure: PostCSS 8.5.8 uses its non-secure entry
 to label anonymous CSS inputs. It is independently implemented and caller-tested.

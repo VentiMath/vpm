@@ -305,3 +305,20 @@ Container(containerProps);Container({component:'a',href:'/results',ref:React.cre
 Container({maxWidth:true});
 // @ts-expect-error native div has no href
 Container({href:'/results'});
+
+import Card,{type CardProps} from 'vmui-material/Card';
+import CardContent,{type CardContentProps} from 'vmui-material/CardContent';
+import cardUtilities from 'vmui-material/cardClasses';
+import cardContentUtilities from 'vmui-material/cardContentClasses';
+const cardProps:CardProps={raised:true,elevation:2,variant:'outlined',square:false,sx:{p:3},ref:React.createRef<HTMLDivElement>()};
+const contentProps:CardContentProps={sx:{p:0,'&:last-child':{pb:0}},ref:React.createRef<HTMLDivElement>()};
+Card(cardProps);CardContent(contentProps);Card({component:'a',href:'/exam',ref:React.createRef<HTMLAnchorElement>()});CardContent({component:'label',htmlFor:'answer'});
+cardUtilities.root satisfies string;cardContentUtilities.root satisfies string;
+// @ts-expect-error raised is boolean
+Card({raised:'yes'});
+// @ts-expect-error Card elevation is numeric
+Card({elevation:'2'});
+// @ts-expect-error Content does not expose Paper elevation
+CardContent({elevation:2});
+// @ts-expect-error div does not accept href
+CardContent({href:'/exam'});

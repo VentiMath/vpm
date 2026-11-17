@@ -1,6 +1,6 @@
 # vmui-material
 
-Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton and Container, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
+Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card and CardContent, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
 
 ```js
 import { Button, ToggleButton, ToggleButtonGroup } from 'vmui-material';
@@ -511,3 +511,25 @@ The Container SSR baseline shows 22–32% less time in four Node cases; two Node
 comparisons remain inconclusive because the identical-code controls vary too
 much. All six Bun comparisons show 36–43% less time. These are synthetic page
 wrappers using application props, not application performance measurements.
+
+
+Card and CardContent are independently written over the owned Paper surface.
+The 24 direct Card imports and eight CardContent imports were reviewed at
+VentiMath main `7970b7e5` on November 16, 2026: contest exam panels, WARML signup
+and practice cards, and public club articles. Astryx Card is separate and is not
+counted here. Card preserves clipping, elevation/raised/outlined states, custom
+roots/refs, responsive `sx` and the shared Paper/Card theme overrides. Explicit
+elevation takes precedence over raised styling. CardContent preserves its 16px
+padding and 24px final-child bottom spacing, including live sibling changes and
+caller overrides; these design dimensions do not scale with theme spacing.
+
+Current/app comparisons cover light/dark and variable themes, RTL, custom roots,
+ref cleanup, stable DOM/focus, hydration and an unchanged upstream CardActionArea
+keyboard caller. CardActionArea remains test-only and unbuilt; it is the next
+small card-family unit. The whole Material package is still partial and unreleased.
+[Card measurements](bench/cards/README.md) record synthetic exam, signup and
+practice wrapper SSR costs, not application performance or a speed requirement.
+
+The recorded Card fixtures take 22–31% less SSR time on Node and 33–42% less on
+Bun than their current/app controls, with every process pair outside the measured
+control spread. These local component measurements do not predict app latency.

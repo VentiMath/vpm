@@ -64,3 +64,5 @@ export const {CircularProgress,circularProgressClasses,getCircularProgressUtilit
 export const {Skeleton,skeletonClasses,getSkeletonUtilityClass}=a;
 
 export const {Container,containerClasses,getContainerUtilityClass}=a;
+
+export const {Card,cardClasses,getCardUtilityClass,CardContent,cardContentClasses,getCardContentUtilityClass}=a;
