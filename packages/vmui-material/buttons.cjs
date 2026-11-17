@@ -70,7 +70,6 @@ const baseStyle = {
   WebkitAppearance: "none",
   textDecoration: "none",
   color: "inherit",
-  font: "inherit",
   "&::-moz-focus-inner": { borderStyle: "none" },
   "&.Mui-disabled": { pointerEvents: "none", cursor: "default" },
   "@media print": { printColorAdjust: "exact" },

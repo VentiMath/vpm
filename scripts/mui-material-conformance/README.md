@@ -340,8 +340,22 @@ benchmarks sequentially, with browser checks and other tests finished first.
 precedence and theme defaults. `cards-browser.cjs` compares light/dark, variable
 and custom themes, RTL and responsive widths. It checks last-child spacing as
 siblings change, custom roots/refs, stable focus and hydration, plus an unchanged
-upstream CardActionArea keyboard caller. That child is a fixture, not a shipped
-VPM implementation. Both React modes and exact archive installs are checked.
+upstream CardActionArea keyboard caller. The newer `card-action-*` fixtures
+exercise the independently implemented VPM child. Both React modes and exact archive installs are checked.
 Before recording [benchmarks](../../packages/vmui-material/bench/cards/README.md),
 run `node scripts/mui-material-conformance/cards-build.cjs`, then time Node and
 Bun sequentially after all other checks finish.
+
+## CardActionArea
+
+`card-action-contract.cjs` checks 52 current/app SSR and current slot cases.
+`card-action-browser.cjs` checks 176 light/dark, variable/custom-theme, RTL,
+responsive geometry, keyboard/focus, disabled, ref cleanup and hydration cases.
+The article and exam fixtures use the actual app prop patterns at `7970b7e5` with
+a router-shaped link. They do not claim app adoption or an unchanged router test.
+Production/development React 19.3.1 and installed archives are verified, together
+with the existing button-family browser suite after the native typography fix.
+
+Build with `node scripts/mui-material-conformance/card-action-build.cjs`, then run
+`node packages/vmui-material/bench/card-action.cjs` and the same command with Bun
+sequentially after other checks finish. [Recorded results](../../packages/vmui-material/bench/card-action/README.md).

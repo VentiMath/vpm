@@ -1,0 +1,1 @@
+export {CardActionArea as default,cardActionAreaClasses,getCardActionAreaUtilityClass,type CardActionAreaProps,type CardActionAreaClassKey,type CardActionAreaOwnProps,type CardActionAreaClasses} from "./index.mjs";

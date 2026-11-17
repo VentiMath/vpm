@@ -1,0 +1,1 @@
+"use strict";const a=require("./card-action-area.cjs");module.exports=a.CardActionArea;module.exports.default=a.CardActionArea;module.exports.cardActionAreaClasses=a.cardActionAreaClasses;module.exports.getCardActionAreaUtilityClass=a.getCardActionAreaUtilityClass;

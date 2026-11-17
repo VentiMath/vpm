@@ -522,3 +522,17 @@ export type CardContentProps<C extends React.ElementType='div'>=CardContentOwnPr
 export const CardContent:TextComponent<CardContentOwnProps,'div'>;
 export const cardContentClasses:Readonly<CardContentClasses>;
 export function getCardContentUtilityClass(slot:string):string;
+
+export type CardActionAreaClasses=Record<'root'|'focusVisible'|'focusHighlight',string>;
+export type CardActionAreaClassKey=keyof CardActionAreaClasses;
+export type CardActionAreaRootSlotProps=Partial<ButtonBaseProps>&{ref?:React.Ref<HTMLElement>};
+export type CardActionAreaHighlightSlotProps=React.HTMLAttributes<HTMLSpanElement>&{ref?:React.Ref<HTMLSpanElement>;sx?:SxProps<Theme>};
+export interface CardActionAreaOwnProps extends Omit<ButtonBaseOwnProps,'classes'> {
+ classes?:Partial<CardActionAreaClasses>;
+ slots?:{root?:React.ElementType;focusHighlight?:React.ElementType};
+ slotProps?:{root?:CardActionAreaRootSlotProps|((state:CardActionAreaOwnProps)=>CardActionAreaRootSlotProps);focusHighlight?:CardActionAreaHighlightSlotProps|((state:CardActionAreaOwnProps)=>CardActionAreaHighlightSlotProps)};
+}
+export type CardActionAreaProps<C extends React.ElementType='button'>=CardActionAreaOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof CardActionAreaOwnProps>&{component?:C};
+export const CardActionArea:TextComponent<CardActionAreaOwnProps,'button'>;
+export const cardActionAreaClasses:Readonly<CardActionAreaClasses>;
+export function getCardActionAreaUtilityClass(slot:string):string;

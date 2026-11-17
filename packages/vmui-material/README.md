@@ -1,6 +1,6 @@
 # vmui-material
 
-Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card and CardContent, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
+Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card, CardContent and CardActionArea, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
 
 ```js
 import { Button, ToggleButton, ToggleButtonGroup } from 'vmui-material';
@@ -525,11 +525,28 @@ caller overrides; these design dimensions do not scale with theme spacing.
 
 Current/app comparisons cover light/dark and variable themes, RTL, custom roots,
 ref cleanup, stable DOM/focus, hydration and an unchanged upstream CardActionArea
-keyboard caller. CardActionArea remains test-only and unbuilt; it is the next
-small card-family unit. The whole Material package is still partial and unreleased.
+keyboard caller. CardActionArea now has its own independent implementation and
+acceptance fixtures below. The whole Material package is still partial and unreleased.
 [Card measurements](bench/cards/README.md) record synthetic exam, signup and
 practice wrapper SSR costs, not application performance or a speed requirement.
 
 The recorded Card fixtures take 22–31% less SSR time on Node and 33–42% less on
 Bun than their current/app controls, with every process pair outside the measured
 control spread. These local component measurements do not predict app latency.
+
+## Linked article and exam cards
+
+CardActionArea is independently implemented over the owned ButtonBase. Its two
+VentiMath callers at `7970b7e5` are club article links and Math Is Cool exam links.
+It preserves their custom `Link`/`FuseLink` root contract, destination props,
+responsive `sx`, inherited card rounding and full-width clickable surface.
+Pointer hover and keyboard focus use a non-interactive overlay. Current Material
+9 slots and slot callbacks, theme defaults/overrides, disabled state, refs,
+hydration and stable focused DOM are checked against 9.5.0 and app 7.2.0.
+
+The browser fixture uses a router-shaped anchor, not the full application router.
+It also uncovered and corrected ButtonBase's extra `font: inherit` reset: bare
+native buttons now match browser typography; styled buttons retain their own
+styles. The existing button-family Chrome suite passes with that correction.
+[CardActionArea measurements](bench/card-action/README.md) cover synthetic article
+and exam SSR, not navigation latency. Material remains partial and unreleased.

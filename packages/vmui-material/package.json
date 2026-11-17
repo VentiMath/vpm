@@ -1057,6 +1057,26 @@
         "types": "./cardContentClasses.d.cts",
         "default": "./cardContentClasses.cjs"
       }
+    },
+    "./CardActionArea": {
+      "import": {
+        "types": "./CardActionArea.d.mts",
+        "default": "./CardActionArea.mjs"
+      },
+      "require": {
+        "types": "./CardActionArea.d.cts",
+        "default": "./CardActionArea.cjs"
+      }
+    },
+    "./cardActionAreaClasses": {
+      "import": {
+        "types": "./cardActionAreaClasses.d.mts",
+        "default": "./cardActionAreaClasses.mjs"
+      },
+      "require": {
+        "types": "./cardActionAreaClasses.d.cts",
+        "default": "./cardActionAreaClasses.cjs"
+      }
     }
   },
   "files": [

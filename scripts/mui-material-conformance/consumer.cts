@@ -276,3 +276,9 @@ Card({elevation:'2'});
 CardContent({elevation:2});
 // @ts-expect-error div does not accept href
 CardContent({href:'/exam'});
+
+import CardActionArea,{type CardActionAreaProps} from 'vmui-material/CardActionArea';
+const area:CardActionAreaProps={disabled:false,action:React.createRef<ButtonBaseActions>(),slotProps:{focusHighlight:{id:'highlight'}}};
+CardActionArea(area);CardActionArea({component:'a',href:'/exam',ref:React.createRef<HTMLAnchorElement>()});
+// @ts-expect-error disabled must be boolean
+CardActionArea({disabled:'yes'});

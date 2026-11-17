@@ -134,3 +134,6 @@ assert.equal(api.CardContent,require('vmui-material/CardContent').default);
 assert.equal(api.cardClasses.root,require('vmui-material/cardClasses').default.root);
 assert.equal(api.cardContentClasses.root,require('vmui-material/cardContentClasses').default.root);
 assert.match(renderToString(React.createElement(api.Card,{variant:'outlined'},React.createElement(api.CardContent,null,'Exam'))),/MuiCardContent-root/);
+
+assert.equal(api.CardActionArea,require('vmui-material/CardActionArea').default);
+assert.match(renderToString(React.createElement(api.CardActionArea,{href:'/exam',disableRipple:true},'Open')),/MuiCardActionArea-focusHighlight/);

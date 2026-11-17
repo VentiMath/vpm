@@ -66,3 +66,5 @@ export const {Skeleton,skeletonClasses,getSkeletonUtilityClass}=a;
 export const {Container,containerClasses,getContainerUtilityClass}=a;
 
 export const {Card,cardClasses,getCardUtilityClass,CardContent,cardContentClasses,getCardContentUtilityClass}=a;
+
+export const {CardActionArea,cardActionAreaClasses,getCardActionAreaUtilityClass}=a;
