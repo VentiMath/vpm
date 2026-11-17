@@ -875,3 +875,7 @@ package ready for an application override.
 
 [Autocomplete measurements](bench/autocomplete/README.md) compare eight empty,
 selected and multiple-school fields. They measure SSR, not typing latency.
+
+The first isolated Autocomplete measurements do not establish a speed difference
+beyond same-code controls on Node 24 or Bun 1.4.4. All process samples are retained;
+functional independence and caller correctness are the demonstrated result.
