@@ -1097,6 +1097,26 @@
         "types": "./avatarGroupClasses.d.cts",
         "default": "./avatarGroupClasses.cjs"
       }
+    },
+    "./Tooltip": {
+      "import": {
+        "types": "./Tooltip.d.mts",
+        "default": "./Tooltip.mjs"
+      },
+      "require": {
+        "types": "./Tooltip.d.cts",
+        "default": "./Tooltip.cjs"
+      }
+    },
+    "./tooltipClasses": {
+      "import": {
+        "types": "./tooltipClasses.d.mts",
+        "default": "./tooltipClasses.mjs"
+      },
+      "require": {
+        "types": "./tooltipClasses.d.cts",
+        "default": "./tooltipClasses.cjs"
+      }
     }
   },
   "files": [
@@ -1126,7 +1146,8 @@
     "directory": "packages/vmui-material"
   },
   "dependencies": {
-    "vmui-system": "9.5.0"
+    "vmui-system": "9.5.0",
+    "vfloating-ui-dom": "workspace:*"
   },
   "peerDependencies": {
     "react": "^19.3.0",

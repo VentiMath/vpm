@@ -53,5 +53,6 @@ module.exports = (own, version = "current", browser = false) => {
 			"use-insertion-effect-with-fallbacks",
 		])
 			alias["@emotion/" + name] = packages + "/vemotion-" + name;
+	alias["vfloating-ui-utils/dom"]=packages+"/vfloating-ui-utils/dom.mjs";
 	return alias;
 };

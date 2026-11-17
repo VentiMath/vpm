@@ -25,10 +25,10 @@ inventory. The entire upstream Motion API is **not** complete.
 
 ## Material
 
-[vmui-material](../packages/vmui-material) now has 47 independently implemented
+[vmui-material](../packages/vmui-material) now has 48 independently implemented
 components. It covers button controls; text/icons; Box/Paper/Divider; the form,
 input, Select, checkbox/radio/switch foundation; menus; Chip, Avatar, loading
-spinners, Skeleton placeholders, Container page layouts and Card/CardContent panels and their linked CardActionArea roots, plus AvatarGroup. Its resolved-theme bridge is built, but full Material theme creation
+spinners, Skeleton placeholders, Container page layouts and Card/CardContent panels and their linked CardActionArea roots, plus AvatarGroup and Tooltip. Its resolved-theme bridge is built, but full Material theme creation
 and all app-used component families are not. It cannot replace the entire
 `@mui/material` dependency yet.
 
@@ -36,7 +36,6 @@ The largest unbuilt families in direct source use are:
 
 | Family | Source imports | Why it matters |
 | --- | ---: | --- |
-| Tooltip | 17 | Action explanations and compact shared controls |
 | Dialog / content/title/actions | 11 / 8 / 8 / 9 | Confirmations and forms, including WARML |
 | SwipeableDrawer | 11 | Shared navigation and side panels |
 | Table primitives | 8 each for Table/body/cell/head/row | Results and remaining direct Material tables |
@@ -49,13 +48,13 @@ Dependencies such as Material React Table may also consume components that do
 not appear as direct app imports; they need unchanged-caller acceptance before
 a complete package override.
 
-**Next bounded Material unit: Tooltip.** It appears in 17 direct source imports
-for action explanations and shared controls. AvatarGroup is now built and checked
-against `47e3b4ef` for its eight authentication/coming-soon message sections,
-including theme borders, overlap, overflow and member identity. CardActionArea
-covers linked club article and Math Is Cool cards. These are implementation
-claims; application adoption remains separate until the required Material surface
-is complete. Motion remains parked.
+**Next bounded Material unit: Collapse.** Its seven direct imports cover expandable
+content and navigation. Tooltip now covers 16 rendering caller files (17 imports)
+at app `47e3b4ef`, including keyboard/touch access, controlled copy notices and the
+shared theme override. AvatarGroup covers eight authentication/coming-soon message
+sections; CardActionArea covers linked club articles and Math Is Cool cards.
+These are implementation claims; application adoption remains separate until the
+required Material surface is complete. Motion remains parked.
 
 Nano ID is separate build infrastructure: PostCSS 8.5.8 uses its non-secure entry
 to label anonymous CSS inputs. It is independently implemented and caller-tested.

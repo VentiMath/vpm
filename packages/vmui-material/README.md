@@ -1,6 +1,6 @@
 # vmui-material
 
-Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card, CardContent, CardActionArea and AvatarGroup, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
+Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card, CardContent, CardActionArea, AvatarGroup and Tooltip, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
 
 ```js
 import { Button, ToggleButton, ToggleButtonGroup } from 'vmui-material';
@@ -431,7 +431,7 @@ and the avatars inside authentication/coming-soon groups (app main `2cfe38df`).
 It supports circular/rounded/square roots, image/initial/person fallbacks,
 responsive image candidates, image request attributes, custom slots, refs,
 theme overrides and `sx`. Legacy `imgProps` remains supported; `slotProps.img`
-takes precedence. AvatarGroup itself remains an unchanged test caller.
+takes precedence. AvatarGroup is now independently implemented over this Avatar.
 
 The actual rendered image owns loading and failure state. No separate preload
 request ignores the image slot’s referrer/cross-origin policy. Cached failures
@@ -566,3 +566,31 @@ Current 9.5.0/app 7.2.0 SSR and Chrome comparisons, strict types and installed
 archives are checked. [Measurements](bench/avatar-group/README.md) cover synthetic
 community and overflow groups. Material now has 47 independently built components
 and remains partial/unreleased; publication and app adoption are separate.
+
+## Tooltip
+
+Tooltip covers the 16 VentiMath source files that render Material tooltips: navigation
+hints, profile-source and role notes, sync warnings and controlled “Copied!” notices.
+The app inventory is recorded in PROVENANCE.json; Astryx tooltips are separate.
+
+The implementation owns opening/closing timers, hover and keyboard focus, Escape,
+long-press touch, interactive hover, accessible labels/descriptions and trigger ref
+composition. It positions portals with VPM Floating UI, including arrows, viewport
+flipping, cursor following and document-local mounting. The trigger keeps its DOM
+identity and focus during parent updates. Empty titles stay closed; numeric zero
+remains valid. Native title text is removed on hover to avoid a second tooltip.
+
+Root/subpath exports, classes, theme defaults/overrides, `sx`, placement and
+`slotProps.popper.placement` cover the app. Tooltip/arrow slots and refs are
+supported, as are popper containers, `disablePortal` and `keepMounted`. The
+default entry/exit is independently designed CSS with reduced-motion handling,
+not a Grow implementation. Arbitrary Popper modifiers, the full custom Popper/Grow
+contract, and standalone exports for those two components remain outside scope.
+
+Current Material 9.5.0 and app 7.2.0 controls are checked for naming, descriptions,
+empty titles, styles, placement, hover/focus/touch, hydration and stable refs/DOM.
+Additional checks cover touch cancellation, iframe portal ownership, pending-timer
+unmount and custom ref cleanup. Strict declarations and clean npm/Bun archive
+installs are checked. [Measurements](bench/tooltip/README.md) cover synthetic
+server-rendered navigation hints and copy notices; they do not measure client
+positioning or VentiMath page throughput. Material remains partial and unreleased.

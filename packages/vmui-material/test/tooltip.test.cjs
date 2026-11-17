@@ -1,0 +1,6 @@
+'use strict';
+const {test}=require('node:test'),assert=require('node:assert/strict'),{peer}=require('../../../scripts/mui-material-conformance/paths.cjs'),R=peer('react'),render=peer('react-dom/server').renderToStaticMarkup,{Tooltip}=require(require('../../../scripts/mui-material-conformance/prepare.cjs'));
+const output=p=>render(R.createElement(Tooltip,p,R.createElement('button',null,'Reference')));
+test('tooltips escape untrusted text and preserve the trigger without SSR portals',()=>{assert.match(output({title:'<img src=x onerror=alert(1)>',open:true}),/aria-label="&lt;img/);assert.doesNotMatch(output({title:'Hint',open:true}),/role="tooltip"/)});
+test('numeric zero is a valid title, while empty titles cannot open',()=>{assert.match(output({title:0,open:true,id:'zero'}),/aria-labelledby="zero"/);for(const title of ['',false,null,undefined])assert.doesNotMatch(output({title,open:true,id:'empty'}),/aria-labelledby=/)});
+test('descriptions and labels remain distinct',()=>{assert.match(output({title:'Extra detail',describeChild:true}),/title="Extra detail"/);assert.match(output({title:'Extra detail',describeChild:true,open:true,id:'detail'}),/aria-describedby="detail"/);assert.match(output({title:'Label'}),/aria-label="Label"/)});

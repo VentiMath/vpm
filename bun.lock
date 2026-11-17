@@ -762,6 +762,7 @@
       "name": "vmui-material",
       "version": "9.5.0",
       "dependencies": {
+        "vfloating-ui-dom": "workspace:*",
         "vmui-system": "9.5.0",
       },
       "peerDependencies": {

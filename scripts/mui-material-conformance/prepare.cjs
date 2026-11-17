@@ -7,6 +7,7 @@ fs.mkdirSync(out, { recursive: true });
 const alias = Object.fromEntries(
   fs.readdirSync(root + "/packages").map((n) => [n, packages + "/" + n]),
 );
+alias["vfloating-ui-utils/dom"]=packages+"/vfloating-ui-utils/dom.mjs";
 esbuild.buildSync({
   stdin: {
     contents: 'module.exports=require("./index.cjs")',

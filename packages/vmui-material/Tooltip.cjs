@@ -1,0 +1,1 @@
+"use strict";const a=require("./tooltips.cjs");module.exports=a.Tooltip;module.exports.default=a.Tooltip;module.exports.tooltipClasses=a.tooltipClasses;module.exports.getTooltipUtilityClass=a.getTooltipUtilityClass;

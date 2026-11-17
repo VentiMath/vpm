@@ -70,3 +70,5 @@ export const {Card,cardClasses,getCardUtilityClass,CardContent,cardContentClasse
 export const {CardActionArea,cardActionAreaClasses,getCardActionAreaUtilityClass}=a;
 
 export const {AvatarGroup,avatarGroupClasses,getAvatarGroupUtilityClass}=a;
+
+export const {Tooltip,tooltipClasses,getTooltipUtilityClass}=a;

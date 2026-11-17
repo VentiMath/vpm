@@ -552,3 +552,24 @@ export type AvatarGroupProps<C extends React.ElementType='div'>=AvatarGroupOwnPr
 export const AvatarGroup:TextComponent<AvatarGroupOwnProps,'div'>;
 export const avatarGroupClasses:Readonly<AvatarGroupClasses>;
 export function getAvatarGroupUtilityClass(slot:string):string;
+
+export type TooltipClasses=Record<'popper'|'popperInteractive'|'popperArrow'|'popperClose'|'tooltip'|'tooltipArrow'|'arrow'|'touch'|'tooltipPlacementLeft'|'tooltipPlacementRight'|'tooltipPlacementTop'|'tooltipPlacementBottom',string>;
+export type TooltipClassKey=keyof TooltipClasses;
+export type TooltipPlacement='auto'|'auto-start'|'auto-end'|'top'|'bottom'|'left'|'right'|'top-start'|'top-end'|'bottom-start'|'bottom-end'|'left-start'|'left-end'|'right-start'|'right-end';
+export type TooltipElementProps=React.HTMLAttributes<HTMLElement>&{ref?:React.Ref<HTMLElement>;sx?:SxProps<Theme>};
+export type TooltipPopperProps=TooltipElementProps&{placement?:TooltipPlacement;container?:Element|null|(()=>Element|null);disablePortal?:boolean;keepMounted?:boolean};
+export type TooltipSlot<T>=T|((state:TooltipOwnerState)=>T);
+export interface TooltipProps extends Omit<React.HTMLAttributes<HTMLElement>,'title'|'children'> {
+ children:React.ReactElement;title:React.ReactNode;arrow?:boolean;describeChild?:boolean;
+ disableFocusListener?:boolean;disableHoverListener?:boolean;disableInteractive?:boolean;disableTouchListener?:boolean;
+ enterDelay?:number;enterNextDelay?:number;enterTouchDelay?:number;leaveDelay?:number;leaveTouchDelay?:number;
+ followCursor?:boolean;open?:boolean;placement?:TooltipPlacement;
+ onOpen?:(event:React.SyntheticEvent)=>void;onClose?:(event:React.SyntheticEvent|Event)=>void;
+ classes?:Partial<TooltipClasses>;sx?:SxProps<Theme>;ref?:React.Ref<HTMLElement>;
+ slots?:{popper?:React.ElementType;tooltip?:React.ElementType;arrow?:React.ElementType;transition?:React.ElementType};
+ slotProps?:{popper?:TooltipSlot<TooltipPopperProps>;tooltip?:TooltipSlot<TooltipElementProps>;arrow?:TooltipSlot<TooltipElementProps>;transition?:TooltipSlot<{in?:boolean;appear?:boolean;timeout?:number;children?:React.ReactElement}>};
+}
+export type TooltipOwnerState=TooltipProps&{arrow:boolean;open:boolean;touch:boolean;placement:TooltipPlacement;side:string;disableInteractive:boolean};
+export const Tooltip:React.ForwardRefExoticComponent<TooltipProps>;
+export const tooltipClasses:Readonly<TooltipClasses>;
+export function getTooltipUtilityClass(slot:string):string;

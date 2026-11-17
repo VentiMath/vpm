@@ -290,3 +290,11 @@ AvatarGroup({component:'section','aria-label':'Members'});
 // @ts-expect-error spacing is a keyword or number
 React.createElement(AvatarGroup,{spacing:'wide'});
 void avatarGroupClasses.avatar;
+
+import Tooltip,{type TooltipProps,tooltipClasses} from 'vmui-material/Tooltip';
+const hint:TooltipProps={title:'Copied!',children:React.createElement('button'),open:true,arrow:true,slotProps:{popper:{placement:'top'},tooltip:s=>({title:s.side})},ref:React.createRef<HTMLButtonElement>()};
+React.createElement(Tooltip,hint);void tooltipClasses.arrow;
+// @ts-expect-error placement must be a supported side/alignment
+React.createElement(Tooltip,{...hint,placement:'middle'});
+// @ts-expect-error title is required
+React.createElement(Tooltip,{children:React.createElement('span')});
