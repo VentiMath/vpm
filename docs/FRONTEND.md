@@ -76,3 +76,11 @@ consumers are checked separately. It adds no runtime dependencies.
 The package targets idb 8.0.4 and checks the app's 7.1.1 contract. Building this leaf
 does not complete Firebase's frontend SDKs, migrate application storage, or verify
 live push registration or Amplify DataStore. Publication and adoption are separate.
+
+## Documentation class names
+
+[vclassnames](../packages/vclassnames) replaces the dependency beneath Redoc on
+`MockApiDoc.tsx`, not a direct contest-page dependency. Its default, CSS-module
+binding and dedupe APIs are independently built. An unchanged Redoc 2.5.0 renders
+a synthetic API identically on Node and Bun through the replacement. Types and
+packed installs pass; publication and application adoption remain separate.

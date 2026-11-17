@@ -63,6 +63,10 @@
       "name": "vcamelize",
       "version": "1.0.1",
     },
+    "packages/vclassnames": {
+      "name": "vclassnames",
+      "version": "2.5.1",
+    },
     "packages/vclsx": {
       "name": "vclsx",
       "version": "2.1.1",
@@ -1888,6 +1892,8 @@
     "vbytes": ["vbytes@workspace:packages/vbytes"],
 
     "vcamelize": ["vcamelize@workspace:packages/vcamelize"],
+
+    "vclassnames": ["vclassnames@workspace:packages/vclassnames"],
 
     "vclsx": ["vclsx@workspace:packages/vclsx"],
 

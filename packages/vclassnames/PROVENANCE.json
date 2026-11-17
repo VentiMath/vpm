@@ -1,0 +1,28 @@
+{
+  "upstream": {
+    "name": "classnames",
+    "version": "2.5.1",
+    "repository": "https://github.com/JedWatson/classnames",
+    "integrity": "sha512-saHYOzhIQs6wy2sVxTM6bUDsQO4F50V9RQ22qBpEdCW+I+/Wmke2HOl6lS6dTpdxVhb88/I6+Hs+438c3lfUow=="
+  },
+  "checked": "2026-11-17",
+  "license": "MIT",
+  "implementation": {
+    "kind": "independent",
+    "targetScope": "Conditional class strings, nested arrays/dictionaries, custom stringification, CSS module binding and deduplication. CommonJS and ESM; no UMD global."
+  },
+  "source": "Written from public documentation, declaration signatures and black-box behavior. No upstream runtime source read or copied. Bounded traversal follows our owned vclsx design; no external runtime dependency.",
+  "differences": [
+    "Null-prototype dictionaries and non-callable toString fields are supported safely.",
+    "CSS-module mappings consult own properties only, avoiding inherited prototype names.",
+    "Deep arrays use explicit frames; cycles throw TypeError. Shared arrays remain valid."
+  ],
+  "caller": {
+    "revision": "a7ce009ffa67fbd1411f1a44788e04cb1a7b16d1",
+    "path": "src/app/(public)/documentation/components/views/development/MockApiDoc.tsx -> RedocStandalone (redoc 2.5.0) -> classnames 2.5.1",
+    "scope": "Documentation-page caller, not a claim about contest-page traffic or application adoption."
+  },
+  "references": [
+    "https://github.com/JedWatson/classnames#readme"
+  ]
+}

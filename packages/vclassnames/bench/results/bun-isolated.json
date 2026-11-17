@@ -1,0 +1,1596 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-17T11:37:01.504Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/classnames-conformance/package-lock.json": "dc6005c591848b61d698a303e5b62423a19a56b79c06f805ec7245c832af0450",
+    "PROVENANCE.json": "17c28aac9cac8322dc0ce29606e64ab7605ca0548677b865b27c64b857ad3f0d",
+    "bench/compare.cjs": "e37e6fd1591bc2b538c69e936a2696540d57420fdc62ee246310c015ba1dc994",
+    "bind.cjs": "dbf7191fd794d1995c8c49fe54bf11563bc1bf9508e9317e63ac8424c632da80",
+    "dedupe.cjs": "b726e073c6e6ec575fc4365baf1351138ab193e955ffe62f8440cb05ade71610",
+    "index.cjs": "0a428507dd8b00b1e982e8f903f8a23b1a2c0a58ad432a1d449f16cc6466955d",
+    "index.mjs": "eefea6fdd44ef15c365fca28c7cbc98d8f60d1fba44f40855ca6bbb0a40618b4",
+    "package.json": "1085aba6f26b7a9c7c9f1aac02fadcec63d7746de5abe8f30c4f79be22d545d4",
+    "runtime.cjs": "f3c942f2b011cea75cd6459ed386510af1c98ca60dc15fc70d5793e0067f7415"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 64194,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Redoc operation classes",
+            "iterations": 507154,
+            "samples": [
+              23.396412135169953,
+              23.269478304420353,
+              25.15787315095612,
+              24.076101144819944,
+              22.893523466244876,
+              24.42436814064364,
+              23.986550436356712,
+              23.901846381966813,
+              22.359086194725837,
+              22.14868067687519,
+              23.32230446767655,
+              22.838723543538997
+            ]
+          },
+          {
+            "case": "conditional nested classes",
+            "iterations": 124212,
+            "samples": [
+              91.28915080668523,
+              89.92622290922019,
+              91.1754419862811,
+              94.73387434386427,
+              95.19074646572018,
+              92.6893134318741,
+              101.28080217692415,
+              102.94395871574321,
+              105.31054165459042,
+              105.08243969986805,
+              105.33301935400753,
+              106.9451824300387
+            ]
+          },
+          {
+            "case": "CSS module binding",
+            "iterations": 219153,
+            "samples": [
+              47.899376234867944,
+              50.31511318576513,
+              48.65303691941252,
+              46.45765287265058,
+              48.40663372164618,
+              46.39205942880046,
+              45.107947415732326,
+              45.725853627374775,
+              47.62692274347102,
+              44.2778561096585,
+              46.06409220955191,
+              47.39782252581539
+            ]
+          },
+          {
+            "case": "deduplicated state classes",
+            "iterations": 81700,
+            "samples": [
+              125.18053855569049,
+              123.2053243574052,
+              128.11607099143208,
+              122.83302325581471,
+              126.20358629130969,
+              128.30375764994088,
+              129.0656915544662,
+              127.5076499388004,
+              127.56833537331678,
+              126.8324235006107,
+              126.95176254590038,
+              128.86373317013388
+            ]
+          }
+        ],
+        "checksum": 2097056
+      },
+      "vpm": {
+        "pid": 64211,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Redoc operation classes",
+            "iterations": 507154,
+            "samples": [
+              31.00783982774464,
+              34.09615225355612,
+              34.17502376004131,
+              35.316606001332914,
+              37.468319287632546,
+              30.985738059839804,
+              30.502322765866015,
+              30.216330739775344,
+              29.377007772786943,
+              29.172598461216943,
+              34.73295685334238,
+              30.56164005410586
+            ]
+          },
+          {
+            "case": "conditional nested classes",
+            "iterations": 124212,
+            "samples": [
+              82.47995362766885,
+              84.64593598042073,
+              83.52051331594339,
+              83.238398866454,
+              81.33138505136412,
+              83.550703635719,
+              85.34568318680957,
+              85.27524715808478,
+              83.54399735935324,
+              83.63791743148883,
+              84.05521205680581,
+              84.70129295076204
+            ]
+          },
+          {
+            "case": "CSS module binding",
+            "iterations": 219153,
+            "samples": [
+              54.18170410626385,
+              51.97054112880042,
+              54.23626872550217,
+              50.679967876323914,
+              49.12967652735725,
+              52.304020478843,
+              52.75500221306527,
+              50.15636108107148,
+              49.268661619964604,
+              49.13747473226435,
+              53.95089275528953,
+              53.908114422343644
+            ]
+          },
+          {
+            "case": "deduplicated state classes",
+            "iterations": 81700,
+            "samples": [
+              139.72664626682968,
+              136.62536107711114,
+              133.35679314565525,
+              140.33965728273984,
+              136.57997552019327,
+              138.80354957160304,
+              136.07711138310972,
+              135.8195593635277,
+              134.51141982863908,
+              138.02529987760207,
+              137.3434271725812,
+              135.930232558141
+            ]
+          }
+        ],
+        "checksum": 138784
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 64212,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Redoc operation classes",
+            "iterations": 680292,
+            "samples": [
+              15.30672270142824,
+              15.513253132478395,
+              14.792177476730606,
+              15.014140986517551,
+              16.083596455639633,
+              15.998155203941806,
+              15.171426387492469,
+              17.101663697353466,
+              14.952832019191716,
+              16.48011589141136,
+              16.49836981766651,
+              16.482137082311734
+            ]
+          },
+          {
+            "case": "conditional nested classes",
+            "iterations": 137010,
+            "samples": [
+              110.58408145390833,
+              81.80759068681081,
+              81.58042478651257,
+              78.33126049193496,
+              92.30165681337053,
+              80.42022480110936,
+              79.63987300197009,
+              77.95628786219984,
+              84.28004525217104,
+              80.15776950587508,
+              79.7831107218447,
+              79.88802277205983
+            ]
+          },
+          {
+            "case": "CSS module binding",
+            "iterations": 229923,
+            "samples": [
+              47.936339557156,
+              47.98853094296753,
+              46.133379435724116,
+              47.06810975848442,
+              45.53752778103947,
+              46.70911566046033,
+              47.52170509257447,
+              46.61669341475194,
+              47.70637126342251,
+              48.20345941902283,
+              46.433479904141635,
+              63.01004684176902
+            ]
+          },
+          {
+            "case": "deduplicated state classes",
+            "iterations": 49160,
+            "samples": [
+              131.29493490642886,
+              130.28631000813562,
+              131.53307567127604,
+              126.75276647681102,
+              136.00402766476867,
+              137.47034174125628,
+              130.78213995118261,
+              126.88246541904141,
+              132.3594589096831,
+              131.69497558990963,
+              133.71729048006227,
+              129.2632831570392
+            ]
+          }
+        ],
+        "checksum": 2048224
+      },
+      "upstream": {
+        "pid": 64225,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Redoc operation classes",
+            "iterations": 680292,
+            "samples": [
+              22.40802478935516,
+              23.666613748213976,
+              29.37445832083868,
+              23.35847400821999,
+              22.752667971988483,
+              23.014138046603538,
+              22.74366448525044,
+              22.329382088867785,
+              22.187225485526813,
+              23.497875912108306,
+              22.251780117949398,
+              21.97157103126299
+            ]
+          },
+          {
+            "case": "conditional nested classes",
+            "iterations": 137010,
+            "samples": [
+              94.70567841763402,
+              90.9912269177427,
+              88.48441719582502,
+              92.7782059703672,
+              93.96455733158191,
+              96.8825268228603,
+              96.30805050726204,
+              99.55082840668557,
+              111.0910371505732,
+              94.61688197941716,
+              92.35366031676507,
+              93.0132837019194
+            ]
+          },
+          {
+            "case": "CSS module binding",
+            "iterations": 229923,
+            "samples": [
+              45.755352879007425,
+              43.720797832317736,
+              43.92194778251841,
+              42.92469652883788,
+              44.105526632828976,
+              45.876410798397764,
+              45.15297730109697,
+              43.923583112607496,
+              44.16025365013505,
+              44.586665970781866,
+              45.97100768518159,
+              43.25017070932443
+            ]
+          },
+          {
+            "case": "deduplicated state classes",
+            "iterations": 49160,
+            "samples": [
+              136.63293327908553,
+              135.9743694060226,
+              136.15321399511652,
+              127.60882831570305,
+              131.64157851911875,
+              138.92306753457956,
+              135.3980065093569,
+              140.57074857607938,
+              131.7882017900752,
+              128.43858828315885,
+              134.43856794141422,
+              141.2827095199332
+            ]
+          }
+        ],
+        "checksum": 144544
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 64255,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Redoc operation classes",
+            "iterations": 138873,
+            "samples": [
+              24.261670735131926,
+              24.01354474951937,
+              25.862061019780693,
+              23.426079943545602,
+              25.34989522801417,
+              23.734815262865993,
+              26.10808436485136,
+              25.925370662403807,
+              23.712615123170192,
+              26.18189280853721,
+              23.626802906252497,
+              26.26470228194106
+            ]
+          },
+          {
+            "case": "conditional nested classes",
+            "iterations": 111686,
+            "samples": [
+              101.11793778987507,
+              99.9852980677969,
+              104.41177945310972,
+              99.10523252690584,
+              108.13426929069009,
+              106.3591945275145,
+              102.28117221495998,
+              116.89356768081967,
+              112.7330909872316,
+              110.80543667066573,
+              111.7918449940012,
+              116.69994448722359
+            ]
+          },
+          {
+            "case": "CSS module binding",
+            "iterations": 223718,
+            "samples": [
+              72.16991033354496,
+              55.637007303837876,
+              77.46676172681711,
+              96.59482026479772,
+              47.50232435476796,
+              41.3580579121928,
+              39.87982191866542,
+              43.07487551292243,
+              41.087252702062415,
+              44.0468938574458,
+              43.140994466247854,
+              39.72281622399626
+            ]
+          },
+          {
+            "case": "deduplicated state classes",
+            "iterations": 78855,
+            "samples": [
+              131.9050789423615,
+              131.82792467186664,
+              126.13394204552769,
+              130.31725318622773,
+              127.62560395662857,
+              134.35366178428802,
+              135.443738507386,
+              135.48284826580553,
+              132.56187939889537,
+              130.64274935007128,
+              130.40549109124538,
+              125.17383805719228
+            ]
+          }
+        ],
+        "checksum": 2712480
+      },
+      "vpm": {
+        "pid": 64265,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Redoc operation classes",
+            "iterations": 138873,
+            "samples": [
+              29.68539600930348,
+              31.278578269354014,
+              29.663498304206044,
+              31.886745443678844,
+              30.957846377625735,
+              30.21855940319568,
+              30.74211689817315,
+              31.125560764151352,
+              30.20715329833722,
+              29.31485601952847,
+              31.1969713335205,
+              30.45167887206295
+            ]
+          },
+          {
+            "case": "conditional nested classes",
+            "iterations": 111686,
+            "samples": [
+              77.12992675894908,
+              81.98020342746644,
+              81.9458839962034,
+              84.89462421431507,
+              78.24988807907889,
+              79.75149078666983,
+              82.15070823558929,
+              83.21208566875008,
+              82.62823451462117,
+              80.16858872195264,
+              82.46519707035766,
+              77.25192951668097
+            ]
+          },
+          {
+            "case": "CSS module binding",
+            "iterations": 223718,
+            "samples": [
+              51.80759259424802,
+              50.45935508095028,
+              50.26323764739522,
+              50.71228063901861,
+              47.34457665453808,
+              50.641320769897945,
+              49.180964428432105,
+              50.50182372451048,
+              48.77382687132886,
+              48.9397723920293,
+              50.20662172914113,
+              47.58594748746156
+            ]
+          },
+          {
+            "case": "deduplicated state classes",
+            "iterations": 78855,
+            "samples": [
+              137.33117747764888,
+              143.3961067782654,
+              139.6571809016545,
+              140.17289962589498,
+              155.88158011540216,
+              138.54174117050147,
+              139.47171390526842,
+              138.10052628241957,
+              135.90344302834356,
+              136.88204933105143,
+              134.6342400608711,
+              139.77343224906346
+            ]
+          }
+        ],
+        "checksum": 163808
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 64266,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Redoc operation classes",
+            "iterations": 727471,
+            "samples": [
+              15.374036903189234,
+              15.023738403317811,
+              15.137545001793884,
+              15.25965708598692,
+              15.612592117074048,
+              15.074541803040958,
+              15.065205348391881,
+              15.001628930912718,
+              15.482975953680638,
+              14.884156206914074,
+              16.203624611840194,
+              16.15276210323164
+            ]
+          },
+          {
+            "case": "conditional nested classes",
+            "iterations": 108293,
+            "samples": [
+              84.38372748007782,
+              90.8180399471806,
+              80.33760261512789,
+              81.2071602042608,
+              81.73889355729294,
+              82.74503430508035,
+              81.27949174923606,
+              83.56879946072173,
+              78.96516857045245,
+              80.37145521871219,
+              80.16869049707698,
+              81.20368814235505
+            ]
+          },
+          {
+            "case": "CSS module binding",
+            "iterations": 238647,
+            "samples": [
+              44.87992306628578,
+              43.11982551634814,
+              43.213931036216515,
+              43.97342099418782,
+              44.276693191198795,
+              53.79773053924829,
+              44.951677582370536,
+              44.21261528533765,
+              44.39908735496384,
+              45.030073707190645,
+              43.353781945718744,
+              43.83496964135325
+            ]
+          },
+          {
+            "case": "deduplicated state classes",
+            "iterations": 79410,
+            "samples": [
+              129.2144188389351,
+              126.15382193678383,
+              126.61399068127227,
+              131.1941191285722,
+              129.89705326784855,
+              130.85989170129665,
+              129.36763631784316,
+              128.53493262813083,
+              126.59299836292733,
+              134.1009822440483,
+              126.53475632791876,
+              129.62892582798074
+            ]
+          }
+        ],
+        "checksum": 2005344
+      },
+      "upstream": {
+        "pid": 64267,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Redoc operation classes",
+            "iterations": 727471,
+            "samples": [
+              21.531614318646373,
+              21.388309637085214,
+              22.551586248798902,
+              21.64656735457497,
+              21.804133773030124,
+              22.719234168784723,
+              21.890849257221255,
+              21.60338075332217,
+              21.81793775971825,
+              22.085244635181326,
+              22.23971814684019,
+              21.992915181498656
+            ]
+          },
+          {
+            "case": "conditional nested classes",
+            "iterations": 108293,
+            "samples": [
+              101.52472458977033,
+              92.92421486153303,
+              90.58487621545252,
+              94.14274237485282,
+              93.15083154035806,
+              91.05775073181171,
+              96.49707737342244,
+              89.95925867784683,
+              102.4127413590899,
+              102.39850221159323,
+              97.77986573462763,
+              103.88829379553584
+            ]
+          },
+          {
+            "case": "CSS module binding",
+            "iterations": 238647,
+            "samples": [
+              40.082561272506865,
+              39.558775094596044,
+              40.54139796435728,
+              38.82058856805231,
+              38.49846006863697,
+              49.056941842973316,
+              52.43815342325669,
+              39.64013794432797,
+              41.28849304621434,
+              39.20330027194955,
+              39.20539541666162,
+              41.20451545588221
+            ]
+          },
+          {
+            "case": "deduplicated state classes",
+            "iterations": 79410,
+            "samples": [
+              136.3939176426132,
+              131.5540612013622,
+              129.3613272887538,
+              130.43854678252075,
+              132.1265205893478,
+              130.3703311925437,
+              131.0750031482186,
+              131.328447298828,
+              121.6051630776991,
+              122.90696385845752,
+              128.41213952902714,
+              125.94655584939004
+            ]
+          }
+        ],
+        "checksum": 143264
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 64268,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Redoc operation classes",
+            "iterations": 504755,
+            "samples": [
+              22.412027617358955,
+              27.15583203732504,
+              23.081411774028957,
+              23.26062545195193,
+              21.967835880773865,
+              22.354492773721926,
+              22.953131717367853,
+              22.640520648631476,
+              21.924581232479063,
+              21.968002298144643,
+              23.21126090875773,
+              22.248500757793437
+            ]
+          },
+          {
+            "case": "conditional nested classes",
+            "iterations": 119556,
+            "samples": [
+              90.63988423834863,
+              90.61130348957808,
+              91.30309645689067,
+              94.93005788082594,
+              91.979908996621,
+              98.77902405567252,
+              103.39680986315956,
+              99.27286794472849,
+              98.39775502693313,
+              97.73697681421315,
+              97.63277459935118,
+              91.22120177991867
+            ]
+          },
+          {
+            "case": "CSS module binding",
+            "iterations": 216910,
+            "samples": [
+              47.55851274722241,
+              46.844506938361306,
+              44.01633396339458,
+              44.789124521691356,
+              44.0470702134527,
+              44.003273246968895,
+              45.58687935088272,
+              46.03061177446827,
+              44.32560508966878,
+              43.94929233322536,
+              44.688082614909085,
+              45.40458254575624
+            ]
+          },
+          {
+            "case": "deduplicated state classes",
+            "iterations": 83313,
+            "samples": [
+              124.46187269693911,
+              124.87346512549094,
+              121.8567330428636,
+              120.67544080755906,
+              157.29037485146372,
+              124.46286894002125,
+              121.49064371706721,
+              122.76545076998994,
+              126.29132308283069,
+              130.28379724652945,
+              122.73094234993115,
+              126.32032215860838
+            ]
+          }
+        ],
+        "checksum": 1893472
+      },
+      "vpm": {
+        "pid": 64269,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Redoc operation classes",
+            "iterations": 504755,
+            "samples": [
+              22.719190498360586,
+              22.38875097819736,
+              21.61807807748314,
+              21.894616199938614,
+              21.560707670057777,
+              21.993507741379503,
+              21.937458767124618,
+              22.09248249150581,
+              22.294148646373,
+              23.106919198423043,
+              22.01926479182967,
+              22.289112539747002
+            ]
+          },
+          {
+            "case": "conditional nested classes",
+            "iterations": 119556,
+            "samples": [
+              93.3920840442979,
+              93.99360968918293,
+              91.7711532670877,
+              92.54554351099101,
+              90.46179196359859,
+              95.67762387500454,
+              97.07654153702042,
+              96.10594198534592,
+              96.91343805413284,
+              98.35487972163672,
+              97.09431563451429,
+              94.17588410451971
+            ]
+          },
+          {
+            "case": "CSS module binding",
+            "iterations": 216910,
+            "samples": [
+              39.31354017795414,
+              39.63529574477912,
+              38.35845742473839,
+              38.529228712368884,
+              46.23461343414294,
+              43.12291272878153,
+              38.58935503204082,
+              40.532363653128044,
+              38.36921303766551,
+              38.00366511456319,
+              38.676948965008435,
+              39.82834816283271
+            ]
+          },
+          {
+            "case": "deduplicated state classes",
+            "iterations": 83313,
+            "samples": [
+              134.18724568794886,
+              132.2137601574772,
+              128.13325651458945,
+              134.74437362716492,
+              133.01095867391524,
+              133.90367649706582,
+              135.1904864787029,
+              130.66838308547338,
+              131.25002100512557,
+              123.92873861222162,
+              124.45986820784199,
+              122.21132356294768
+            ]
+          }
+        ],
+        "checksum": 145504
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 64270,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Redoc operation classes",
+            "iterations": 476329,
+            "samples": [
+              22.319044190045148,
+              22.416667891310404,
+              21.949115002445755,
+              24.379158102907887,
+              23.568006566889682,
+              23.512723348777843,
+              22.246791608321246,
+              22.373802560835024,
+              22.27408366906073,
+              22.504054970409115,
+              22.35088562737107,
+              21.880273928314274
+            ]
+          },
+          {
+            "case": "conditional nested classes",
+            "iterations": 123470,
+            "samples": [
+              101.26312464566229,
+              118.92530979185247,
+              98.85194784158077,
+              103.25010933830076,
+              98.58704138657089,
+              119.20507005750393,
+              116.6821900056693,
+              121.5254717745206,
+              116.40412245889631,
+              101.06368348586717,
+              95.28934154045568,
+              89.38440106908564
+            ]
+          },
+          {
+            "case": "CSS module binding",
+            "iterations": 237458,
+            "samples": [
+              43.117625011581296,
+              45.220455827977716,
+              44.20869795921799,
+              45.660706314380164,
+              45.59402925991141,
+              45.77458750600116,
+              44.84003486932452,
+              44.50050114125448,
+              42.578055908834415,
+              43.84266691372797,
+              43.4604898550483,
+              43.96373674502423
+            ]
+          },
+          {
+            "case": "deduplicated state classes",
+            "iterations": 83353,
+            "samples": [
+              125.38840833563154,
+              122.21165404964373,
+              121.83025206051454,
+              120.92495770997962,
+              124.38514510575399,
+              123.98873465862198,
+              121.85873333893186,
+              123.3338932012048,
+              121.40934339496118,
+              126.99752858325631,
+              119.7102443823257,
+              122.0931820090457
+            ]
+          }
+        ],
+        "checksum": 2124192
+      },
+      "upstream": {
+        "pid": 64271,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Redoc operation classes",
+            "iterations": 476329,
+            "samples": [
+              26.386436685568164,
+              43.29264227036363,
+              42.922975506425125,
+              25.176315109934524,
+              23.102466992351886,
+              22.427952108731585,
+              24.12128381853718,
+              23.62573977230024,
+              24.030573406196027,
+              25.153221827770256,
+              23.74304314874806,
+              24.840673148181207
+            ]
+          },
+          {
+            "case": "conditional nested classes",
+            "iterations": 123470,
+            "samples": [
+              91.0491131448929,
+              94.81655462865469,
+              94.43251802057178,
+              91.48679841257005,
+              90.77913663238093,
+              93.4812100105284,
+              96.95911557463351,
+              99.9466834048757,
+              98.58197942820124,
+              98.11559893091429,
+              101.03534461812575,
+              99.3686077589699
+            ]
+          },
+          {
+            "case": "CSS module binding",
+            "iterations": 237458,
+            "samples": [
+              36.848444777602744,
+              39.45030700165929,
+              38.5892831574429,
+              38.06831102763436,
+              36.24728583581103,
+              39.13463854660603,
+              40.5912161308524,
+              39.150435024299256,
+              39.40924710896225,
+              39.88336884838599,
+              39.16745277059557,
+              38.40310707577736
+            ]
+          },
+          {
+            "case": "deduplicated state classes",
+            "iterations": 83353,
+            "samples": [
+              128.9735582402575,
+              132.83314337816427,
+              129.98282005446762,
+              135.44603073674668,
+              129.02855326143003,
+              127.84383285544453,
+              129.39296725972702,
+              128.04628507672064,
+              128.20024474224232,
+              123.61633054599032,
+              123.60883231557115,
+              124.91851523040549
+            ]
+          }
+        ],
+        "checksum": 145632
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "Redoc operation classes",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 23.35935830142325,
+          "vpmNs": 30.99678894379222,
+          "changePct": 32.69537863077188
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 22.74816622861946,
+          "vpmNs": 15.755704168210102,
+          "changePct": -30.738574661952946
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 24.805782981573046,
+          "vpmNs": 30.59689788511805,
+          "changePct": 23.345825882000693
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 21.854393508469755,
+          "vpmNs": 15.198601043890402,
+          "changePct": -30.455168943488985
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 22.526274132995216,
+          "vpmNs": 22.055873641667738,
+          "changePct": -2.088230341823205
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 24.480978483359195,
+          "vpmNs": 22.362344094103047,
+          "changePct": -8.654206328788195
+        }
+      ]
+    },
+    {
+      "case": "conditional nested classes",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 98.23577432132217,
+          "vpmNs": 83.59431053360392,
+          "changePct": -14.90441123803542
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 94.29071965549954,
+          "vpmNs": 80.28899715349222,
+          "changePct": -14.849523424112155
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 107.2467319091023,
+          "vpmNs": 81.96304371183493,
+          "changePct": -23.575252827933934
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 95.31990987413764,
+          "vpmNs": 81.24332597674842,
+          "changePct": -14.76772682220978
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 96.28141624008856,
+          "vpmNs": 94.92675398976212,
+          "changePct": -1.4069820565875801
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 95.8878351016441,
+          "vpmNs": 102.25661699198153,
+          "changePct": 6.64190810396994
+        }
+      ]
+    },
+    {
+      "case": "CSS module binding",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 46.927737699232985,
+          "vpmNs": 52.13728080382171,
+          "changePct": 11.101202316586157
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 44.13289014148201,
+          "vpmNs": 47.294907425529445,
+          "changePct": 7.164763680580588
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 43.59394416184683,
+          "vpmNs": 50.23492968826818,
+          "changePct": 15.233734075003724
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 39.86134960841741,
+          "vpmNs": 44.244654238268225,
+          "changePct": 10.996377877093266
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 44.73860356830022,
+          "vpmNs": 38.99524457148129,
+          "changePct": -12.837591115357084
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 39.14253678545264,
+          "vpmNs": 44.35459955023624,
+          "changePct": 13.315597794164091
+        }
+      ]
+    },
+    {
+      "case": "deduplicated state classes",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 127.22970624235039,
+          "vpmNs": 136.6026682986522,
+          "changePct": 7.366960384588128
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 135.68618795768975,
+          "vpmNs": 131.41400528885245,
+          "changePct": -3.148575940662046
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 131.23533701096898,
+          "vpmNs": 139.00672753788496,
+          "changePct": 5.9217210119759445
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 130.40443898753222,
+          "vpmNs": 129.29102757838913,
+          "changePct": -0.853814040218015
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 124.46237081848018,
+          "vpmNs": 131.7318905813014,
+          "changePct": 5.840737015546105
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 128.5869014912499,
+          "vpmNs": 122.15241802934472,
+          "changePct": -5.003996042585291
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "Redoc operation classes",
+      "upstream_ns": 23,
+      "vpm_ns": 23,
+      "change_pct": -3.6,
+      "upstream_first_pct": 28,
+      "vpm_first_pct": -30.6,
+      "process_range_pct": "32.7, -30.7, 23.3, -30.5",
+      "control_max_abs_pct": 8.7,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "conditional nested classes",
+      "upstream_ns": 97,
+      "vpm_ns": 82,
+      "change_pct": -14.9,
+      "upstream_first_pct": -19.2,
+      "vpm_first_pct": -14.8,
+      "process_range_pct": "-14.9, -14.8, -23.6, -14.8",
+      "control_max_abs_pct": 6.6,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "CSS module binding",
+      "upstream_ns": 44,
+      "vpm_ns": 49,
+      "change_pct": 11,
+      "upstream_first_pct": 13.2,
+      "vpm_first_pct": 9.1,
+      "process_range_pct": "11.1, 7.2, 15.2, 11.0",
+      "control_max_abs_pct": 13.3,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "deduplicated state classes",
+      "upstream_ns": 131,
+      "vpm_ns": 134,
+      "change_pct": 2.5,
+      "upstream_first_pct": 6.6,
+      "vpm_first_pct": -2,
+      "process_range_pct": "7.4, -3.1, 5.9, -0.9",
+      "control_max_abs_pct": 5.8,
+      "evidence": "unestablished at this precision"
+    }
+  ]
+}
