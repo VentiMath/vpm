@@ -550,61 +550,61 @@
     },
     "./InputLabel": {
       "import": {
-        "types": "./InputLabel.d.mjs",
+        "types": "./InputLabel.d.mts",
         "default": "./InputLabel.mjs"
       },
       "require": {
-        "types": "./InputLabel.d.cjs",
+        "types": "./InputLabel.d.cts",
         "default": "./InputLabel.cjs"
       }
     },
     "./inputLabelClasses": {
       "import": {
-        "types": "./inputLabelClasses.d.mjs",
+        "types": "./inputLabelClasses.d.mts",
         "default": "./inputLabelClasses.mjs"
       },
       "require": {
-        "types": "./inputLabelClasses.d.cjs",
+        "types": "./inputLabelClasses.d.cts",
         "default": "./inputLabelClasses.cjs"
       }
     },
     "./InputAdornment": {
       "import": {
-        "types": "./InputAdornment.d.mjs",
+        "types": "./InputAdornment.d.mts",
         "default": "./InputAdornment.mjs"
       },
       "require": {
-        "types": "./InputAdornment.d.cjs",
+        "types": "./InputAdornment.d.cts",
         "default": "./InputAdornment.cjs"
       }
     },
     "./inputAdornmentClasses": {
       "import": {
-        "types": "./inputAdornmentClasses.d.mjs",
+        "types": "./inputAdornmentClasses.d.mts",
         "default": "./inputAdornmentClasses.mjs"
       },
       "require": {
-        "types": "./inputAdornmentClasses.d.cjs",
+        "types": "./inputAdornmentClasses.d.cts",
         "default": "./inputAdornmentClasses.cjs"
       }
     },
     "./TextField": {
       "import": {
-        "types": "./TextField.d.mjs",
+        "types": "./TextField.d.mts",
         "default": "./TextField.mjs"
       },
       "require": {
-        "types": "./TextField.d.cjs",
+        "types": "./TextField.d.cts",
         "default": "./TextField.cjs"
       }
     },
     "./textFieldClasses": {
       "import": {
-        "types": "./textFieldClasses.d.mjs",
+        "types": "./textFieldClasses.d.mts",
         "default": "./textFieldClasses.mjs"
       },
       "require": {
-        "types": "./textFieldClasses.d.cjs",
+        "types": "./textFieldClasses.d.cts",
         "default": "./textFieldClasses.cjs"
       }
     },

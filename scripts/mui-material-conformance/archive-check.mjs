@@ -8,6 +8,14 @@ import { ThemeProvider, createTheme } from "vmui-system";
 const require = createRequire(import.meta.url),
   c = require("vmui-material");
 assert.equal(api.Button, c.Button);
+const packageRoot = new URL('.', 'file://' + require.resolve('vmui-material/package.json'));
+function checkTargets(value) {
+  if (typeof value === 'string') {
+    assert.ok(fs.existsSync(new URL(value, packageRoot)), 'Missing Material export target: ' + value);
+  } else for (const target of Object.values(value)) checkTargets(target);
+}
+checkTargets(require('vmui-material/package.json').exports);
+
 for (const key of Object.keys(require("vmui-material/package.json").exports)) {
   if (key === "." || key === "./package.json") continue;
   const id = "vmui-material/" + key.slice(2),
