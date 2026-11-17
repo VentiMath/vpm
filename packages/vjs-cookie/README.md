@@ -48,3 +48,11 @@ Node token writes use 24–27% less; Bun Unicode writes use 22–27% less. Bun
 plain-token writes have no established direction (current-control medians:
 224 ns VPM versus 212 ns upstream). The noisy Node/current Unicode comparison
 also remains inconclusive. Raw samples, controls and source hashes are retained.
+
+## Release
+
+The [js-cookie-3.0.8 release](https://github.com/VentiMath/vpm/releases/tag/js-cookie-3.0.8)
+provides an immutable archive and checksums. Keep existing `js-cookie` imports
+and use the release's `consumer-package.json` override, including for Amplify
+CookieStorage. Source ownership and package publication do not establish app
+adoption or deployment. See [installation](../../docs/INSTALLATION.md#js-cookie).

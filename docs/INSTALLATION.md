@@ -632,3 +632,28 @@ are checked. Live transitions require `nodeRef`; legacy `findDOMNode`,
 `SwitchTransition` and `ReplaceTransition` are not implemented. Review the
 [package contract](../packages/vreact-transition-group/README.md) before using
 other callers. App adoption and production deployment remain separate.
+
+## JS Cookie
+
+[js-cookie-3.0.8](https://github.com/VentiMath/vpm/releases/tag/js-cookie-3.0.8)
+ships the independently written `vjs-cookie` with zero dependencies. Retain the
+original import name and override its transitive copies:
+
+```json
+{
+  "overrides": {
+    "js-cookie": "https://github.com/VentiMath/vpm/releases/download/js-cookie-3.0.8/vjs-cookie-3.0.8.tgz"
+  }
+}
+```
+
+The exact archive is checked through fresh/frozen npm and Bun installs, Node 24
+and Bun 1.4.4 exports/tests, strict types, and Chrome with unchanged Amplify
+CookieStorage. The release also includes `consumer-package.json`,
+`release-manifest.json` and `SHA256SUMS`. This does not change or deploy VentiMath.
+
+```sh
+node scripts/pack-leaf-release.cjs --leaf js-cookie --ref COMMIT --tag js-cookie-3.0.8 --out EMPTY_DIRECTORY
+node scripts/check-leaf-release.cjs RELEASE_DIRECTORY
+node scripts/check-leaf-release.cjs RELEASE_DIRECTORY --published
+```
