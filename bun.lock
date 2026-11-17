@@ -105,6 +105,10 @@
         "vtiny-invariant": "workspace:*",
       },
     },
+    "packages/vcss-color-keywords": {
+      "name": "vcss-color-keywords",
+      "version": "1.0.0",
+    },
     "packages/vcssjanus": {
       "name": "vcssjanus",
       "version": "2.3.1",
@@ -1910,6 +1914,8 @@
     "vcrypto-js": ["vcrypto-js@workspace:packages/vcrypto-js"],
 
     "vcss-box-model": ["vcss-box-model@workspace:packages/vcss-box-model"],
+
+    "vcss-color-keywords": ["vcss-color-keywords@workspace:packages/vcss-color-keywords"],
 
     "vcssjanus": ["vcssjanus@workspace:packages/vcssjanus"],
 
