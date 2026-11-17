@@ -36,17 +36,19 @@ const TableRow=React.forwardRef(function TableRow(input,ref){
 const CellRoot=styled('td',{name:'MuiTableCell',slot:'Root',overridesResolver:({ownerState:s},o)=>[o.root,o[s.variant],o['size'+cap(s.size)],s.padding!=='normal'&&o['padding'+cap(s.padding)],s.align!=='inherit'&&o['align'+cap(s.align)],s.stickyHeader&&o.stickyHeader]})(({theme,ownerState:s})=>{
  const p=theme.vars?.palette||theme.palette;
  const border=p.TableCell?.border||cachedColor('border:'+theme.palette.mode+':'+theme.palette.divider,()=>(theme.palette.mode==='dark'?darken:lighten)(alpha(theme.palette.divider,1),theme.palette.mode==='dark'?.68:.88));
- const css={...bodyText(theme),display:'table-cell',verticalAlign:'inherit',borderBottom:'1px solid '+border,textAlign:'left',padding:16};
- if(s.variant==='head')Object.assign(css,{color:p.text.primary,lineHeight:'1.5rem',fontWeight:theme.typography.fontWeightMedium});
- if(s.variant==='body')css.color=p.text.primary;
- if(s.variant==='footer')Object.assign(css,{color:p.text.secondary,lineHeight:'1.3125rem',fontSize:'0.75rem'});
- if(s.size==='small')Object.assign(css,{padding:'6px 16px','&.MuiTableCell-paddingCheckbox':{width:24,padding:'0 12px 0 16px','& > *':{padding:0}}});
- if(s.padding==='checkbox')Object.assign(css,{width:48,padding:'0 0 0 4px'});
- if(s.padding==='none')css.padding=0;
- if(s.align!=='inherit')css.textAlign=s.align;
- if(s.align==='right')css.flexDirection='row-reverse';
- if(s.stickyHeader)Object.assign(css,{position:'sticky',top:0,zIndex:2,backgroundColor:p.background.default});
- return css;
+ // The structural declarations are fixed. A CSS fragment avoids constructing
+ // and walking another style object for each cell; typography stays an object
+ // so caller-defined typography (including nested styles) remains supported.
+ let css='display:table-cell;vertical-align:inherit;border-bottom:1px solid '+border+';text-align:'+(s.align==='inherit'?'left':s.align)+';padding:16px;';
+ if(s.variant==='head')css+='color:'+p.text.primary+';line-height:1.5rem;font-weight:'+theme.typography.fontWeightMedium+';';
+ if(s.variant==='body')css+='color:'+p.text.primary+';';
+ if(s.variant==='footer')css+='color:'+p.text.secondary+';line-height:1.3125rem;font-size:0.75rem;';
+ if(s.size==='small')css+='padding:6px 16px;&.MuiTableCell-paddingCheckbox{width:24px;padding:0 12px 0 16px;& > *{padding:0;}}';
+ if(s.padding==='checkbox')css+='width:48px;padding:0 0 0 4px;';
+ if(s.padding==='none')css+='padding:0;';
+ if(s.align==='right')css+='flex-direction:row-reverse;';
+ if(s.stickyHeader)css+='position:sticky;top:0;z-index:2;background-color:'+p.background.default+';';
+ return [bodyText(theme),css];
 });
 const TableCell=React.forwardRef(function TableCell(input,ref){
  const p=useThemeProps({props:input,name:'MuiTableCell'}),table=React.useContext(TableContext),section=React.useContext(SectionContext);

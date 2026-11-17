@@ -828,19 +828,24 @@ overrides, CSS variables, RTL and `sx`. Custom section/row roots receive table
 roles. Synthetic caller checks cover compact sticky score grids, keyboard
 sorting, retained row/input/focus identity, scrolling, hydration and accessibility.
 The current Material 9.5.0 and app 7.2.0 controls agree on the verified contracts.
-This adds seven components (64 total), not a complete Material replacement;
+These seven are part of the 65 independent components; Material is still partial;
 TableSortLabel, TablePagination and remaining families are still separate work.
 
 [Table SSR measurements](bench/tables/README.md) use twenty-row synthetic results,
 coach scores and themed tables. These do not measure browser sorting throughput.
 Build `scripts/mui-material-conformance/tables-build.cjs` before benchmarking.
 
-Table color computations are now bounded by primitive inputs, and utility-class
-assembly avoids intermediate arrays. Theme defaults, `sx`, live overrides and
-in-place palette changes remain evaluated. [Optimized measurements](bench/tables-optimized/README.md)
-remove the earlier multi-fold median gap. Node differences do not clear the
-control spread; Bun's app results-table case remains 32% slower. This is not
-a claim of complete SSR parity or application latency improvement.
+Table color computations are bounded by primitive inputs, utility-class assembly
+avoids intermediate arrays, and fixed cell declarations use CSS fragments instead
+of reconstructing style objects. Theme typography, defaults, `sx`, live overrides
+and in-place palette changes remain supported. The first color-cache pass is
+retained in [earlier measurements](bench/tables-optimized/README.md).
+
+[Final Table measurements](bench/tables-fragments/README.md) put current Material9
+comparisons within the control spread on both runtimes. Against app Material7,
+Node still uses 10–18% more time and Bun's results-table case uses 5.3% more, down
+from 32% in the first optimization pass. These are SSR fixtures; complete
+performance parity and application latency improvements are not claimed.
 
 ## Autocomplete
 
