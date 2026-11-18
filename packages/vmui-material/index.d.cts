@@ -823,3 +823,21 @@ export type AlertTitleProps<C extends React.ElementType='div'>=Omit<TypographyPr
 export const AlertTitle:<C extends React.ElementType='div'>(props:AlertTitleProps<C>)=>React.ReactElement|null;
 export const alertTitleClasses:Readonly<Record<AlertTitleClassKey,string>>;
 export function getAlertTitleUtilityClass(slot:string):string;
+
+export interface BadgeOrigin {vertical?:'top'|'bottom';horizontal?:'left'|'right';}
+export type BadgeClassKey='root'|'badge'|'standard'|'dot'|'invisible'|`color${'Primary'|'Secondary'|'Error'|'Warning'|'Info'|'Success'}`|`anchorOrigin${'Top'|'Bottom'}${'Left'|'Right'}${''|'Rectangular'|'Circular'}`|'overlapRectangular'|'overlapCircular';
+export interface BadgeOwnProps {
+ children?:React.ReactNode;badgeContent?:React.ReactNode;anchorOrigin?:BadgeOrigin;color?:'default'|'primary'|'secondary'|'error'|'warning'|'info'|'success'|(string&{});
+ overlap?:'rectangular'|'circular';variant?:'standard'|'dot';invisible?:boolean;max?:number;showZero?:boolean;
+ classes?:Partial<Record<BadgeClassKey,string>>;sx?:SxProps<Theme>;
+ slots?:{root?:React.ElementType;badge?:React.ElementType};
+ slotProps?:{[K in 'root'|'badge']?:BadgeElementProps|((state:BadgeOwnerState)=>BadgeElementProps)};
+}
+export type BadgeElementProps=React.HTMLAttributes<HTMLSpanElement>&{ref?:React.Ref<HTMLSpanElement>;sx?:SxProps<Theme>};
+export type BadgeOwnerState=Omit<BadgeOwnProps,'slots'|'slotProps'>&{invisible:boolean;max:number;displayValue:React.ReactNode;showZero:boolean;anchorOrigin:Required<BadgeOrigin>;color:string;overlap:'rectangular'|'circular';variant:'standard'|'dot'};
+export type BadgeProps<C extends React.ElementType='span'>=BadgeOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof BadgeOwnProps>&{component?:C};
+export const Badge:<C extends React.ElementType='span'>(props:BadgeProps<C>)=>React.ReactElement|null;
+export const badgeClasses:Readonly<Record<BadgeClassKey,string>>;
+export function getBadgeUtilityClass(slot:string):string;
+export const BadgeRoot:React.ComponentType<BadgeElementProps>;
+export const BadgeMark:React.ComponentType<BadgeElementProps&{ownerState:BadgeOwnerState}>;

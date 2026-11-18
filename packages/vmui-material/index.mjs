@@ -106,3 +106,6 @@ export const {LinearProgress,linearProgressClasses,getLinearProgressUtilityClass
 
 import alerts from './alerts.cjs';
 export const {Alert,AlertTitle,alertClasses,alertTitleClasses,getAlertUtilityClass,getAlertTitleUtilityClass}=alerts;
+
+import badges from './badges.cjs';export const {Badge,badgeClasses,getBadgeUtilityClass}=badges;
+export const {BadgeRoot,BadgeMark}=badges;

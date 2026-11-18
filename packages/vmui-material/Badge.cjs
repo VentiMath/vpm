@@ -1,0 +1,1 @@
+'use strict';const a=require('./badges.cjs');module.exports=a.Badge;module.exports.default=a.Badge;module.exports.badgeClasses=a.badgeClasses;module.exports.getBadgeUtilityClass=a.getBadgeUtilityClass;module.exports.BadgeRoot=a.BadgeRoot;module.exports.BadgeMark=a.BadgeMark;

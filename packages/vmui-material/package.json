@@ -1567,6 +1567,26 @@
         "types": "./alertTitleClasses.d.cts",
         "default": "./alertTitleClasses.cjs"
       }
+    },
+    "./Badge": {
+      "import": {
+        "types": "./Badge.d.mts",
+        "default": "./Badge.mjs"
+      },
+      "require": {
+        "types": "./Badge.d.cts",
+        "default": "./Badge.cjs"
+      }
+    },
+    "./badgeClasses": {
+      "import": {
+        "types": "./badgeClasses.d.mts",
+        "default": "./badgeClasses.mjs"
+      },
+      "require": {
+        "types": "./badgeClasses.d.cts",
+        "default": "./badgeClasses.cjs"
+      }
     }
   },
   "files": [

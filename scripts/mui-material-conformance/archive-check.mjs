@@ -171,3 +171,6 @@ const linear=renderToString(React.createElement(api.LinearProgress,{variant:'buf
 const alertHtml=renderToString(React.createElement(api.Alert,{severity:'warning',onClose:()=>{},closeText:'Dismiss'},React.createElement(api.AlertTitle,null,'Capacity')));
 assert.match(alertHtml,/role="alert"/);assert.match(alertHtml,/aria-label="Dismiss"/);assert.match(alertHtml,/MuiAlertTitle-root/);
 assert.equal((await import('vmui-material/Alert')).default,api.Alert);assert.equal((await import('vmui-material/AlertTitle')).default,api.AlertTitle);
+
+const badgeHtml=renderToString(React.createElement(api.Badge,{badgeContent:120,color:'error'},'Reading list'));
+assert.match(badgeHtml,/>99\+<\/span>/);assert.match(badgeHtml,/aria-hidden="true"/);assert.equal((await import('vmui-material/Badge')).default,api.Badge);

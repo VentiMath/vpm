@@ -1,6 +1,6 @@
 # vmui-material
 
-Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card, CardContent, CardActionArea, AvatarGroup, Tooltip, Collapse, DialogTitle, DialogContent, DialogActions, Dialog, Slide, DialogContentText, Drawer, SwipeableDrawer, Table, TableHead, TableBody, TableFooter, TableRow, TableCell, TableContainer, Autocomplete, TableSortLabel, PaginationItem, Pagination, LinearProgress, Alert and AlertTitle, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
+Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card, CardContent, CardActionArea, AvatarGroup, Tooltip, Collapse, DialogTitle, DialogContent, DialogActions, Dialog, Slide, DialogContentText, Drawer, SwipeableDrawer, Table, TableHead, TableBody, TableFooter, TableRow, TableCell, TableContainer, Autocomplete, TableSortLabel, PaginationItem, Pagination, LinearProgress, Alert, AlertTitle and Badge, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
 
 ```js
 import { Button, ToggleButton, ToggleButtonGroup } from 'vmui-material';
@@ -828,7 +828,7 @@ overrides, CSS variables, RTL and `sx`. Custom section/row roots receive table
 roles. Synthetic caller checks cover compact sticky score grids, keyboard
 sorting, retained row/input/focus identity, scrolling, hydration and accessibility.
 The current Material 9.5.0 and app 7.2.0 controls agree on the verified contracts.
-These seven are part of the 71 independent components; Material is still partial;
+These seven are part of the 72 independent components; Material is still partial;
 TablePagination and remaining families are still separate work. TableSortLabel and
 numbered Pagination are now implemented below.
 
@@ -854,7 +854,7 @@ The independent Autocomplete covers WARML school entry (multiple/free-solo),
 practice and profile student selectors, ARML's View as field and the Hook Form
 example. It composes the owned TextField input, Chip, Paper and IconButton
 foundations, with Floating UI placement in the input's owner document. It adds
-no upstream runtime dependency. Material now has 71 independent components.
+no upstream runtime dependency. Material now has 72 independent components.
 
 Value, input text and popup state can be controlled separately. Supported
 behavior includes string/object options, custom labels/equality/disabled options,
@@ -945,7 +945,7 @@ the component runtime is independently written.
 [LinearProgress SSR measurements](bench/linear/README.md) render eight loading,
 capacity or buffer bars per operation. Build `linear-build.cjs` in the Material
 conformance fixture before running the isolated Node/Bun harness. This does not
-measure browser animation speed. Material now has 71 independent components and
+measure browser animation speed. Material now has 72 independent components and
 remains partial; this is not a whole-package release or app cutover.
 
 The recorded SSR cases take 28–70% more time than Material 9.5.0 on Node and
@@ -985,9 +985,45 @@ application adoption and Safari/Firefox acceptance remain separate.
 
 [Alert SSR measurements](bench/alert/README.md) compare eight notices, titled
 notices or dismissible notices per operation. Build `alert-build.cjs` first.
-Material now has 71 independent components and remains partial.
+Material now has 72 independent components and remains partial.
 
 Most recorded timing directions are unestablished at this precision. The
 established regressions are titled notices versus Material 9 on Bun (8.1%) and
 dismissible notices versus app Material 7 on Node (12.7%) and Bun (20.1%). All
 processes, outliers and same-code controls are retained; no speedup is claimed.
+
+
+### Badge
+
+Independent `Badge` covers the reading-list toolbar count. It composes with the
+owned Tooltip, IconButton and SvgIcon, without changing the app's dependency pins.
+Supports numeric/text content, max caps, explicit/zero/missing-content hiding,
+showZero, dots, rectangular/circular overlap, partial anchors, standard/custom
+palette colors, theme defaults/overrides, `sx`, polymorphic roots, current slots
+and merged root/slot refs. Astryx Badge callers are separate.
+
+The last committed visible content and visual props remain while the badge scales
+out. Abandoned renders do not replace that snapshot. Count updates preserve the
+button, badge nodes, keyboard focus and refs; hydration retains the server nodes.
+Reduced-motion preference disables show/hide transitions. Forced-colors mode
+retains a visible border.
+
+The marker follows Material 9's `aria-hidden` default and explicit physical
+anchor placement in RTL. Callers can override marker ARIA and should label the
+surrounding control meaningfully. The browser fixture checks a reading-list
+button with its current item count in the accessible name. Material 7 lacks this
+marker ARIA default and its RTL stylesheet mirrors the anchors; that difference
+is tested separately, not treated as byte-for-byte compatibility. Insets and
+translations use current CSS variables; declarations and class maps match the
+current contract. Screens, counts and menu contents are synthetic.
+
+[Badge SSR measurements](bench/badge/README.md) cover eight count/dot badges or
+reading-list-shaped icon buttons per operation. Build `badge-build.cjs` first.
+Material has 72 independent components and remains partial.
+
+Against Material 9, count rendering takes 20% more Node time; dot and button
+directions are unestablished. Bun takes 11–16% more time in all three cases.
+Against app Material 7, Node takes 14–33% more time, and Bun's button case takes
+19% more; its other two directions are unestablished. These isolated SSR
+measurements retain every process and same-code control. They do not measure
+browser interaction or establish a whole-app regression.

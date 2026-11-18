@@ -1,0 +1,2 @@
+import React from 'react';import {renderToString} from 'react-dom/server';import {Badge,IconButton} from '@buttons';
+export function prepare(kind){const node=React.createElement('div',null,Array.from({length:8},(_,i)=>{const badge=React.createElement(Badge,{key:i,color:'error',variant:kind==='dot'?'dot':'standard',badgeContent:i+1},React.createElement('span',null,'R'));return kind==='button'?React.createElement(IconButton,{key:i,'aria-label':'Reading list',disableRipple:true},badge):badge}));return()=>renderToString(node);}

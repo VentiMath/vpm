@@ -467,3 +467,13 @@ React.createElement(AlertEntry,{severity:'info'},React.createElement(TitleEntry,
 React.createElement(Alert,{variant:'progress'});
 // @ts-expect-error close is a callback
 React.createElement(Alert,{onClose:true});
+
+import {Badge,type BadgeProps,badgeClasses} from 'vmui-material';
+import BadgeEntry from 'vmui-material/Badge';
+const badgeProps:BadgeProps={badgeContent:12,color:'error',anchorOrigin:{horizontal:'right'},slotProps:{badge:s=>({'aria-label':String(s.displayValue)})},sx:{mr:1}};
+React.createElement(Badge,{...badgeProps,ref:React.createRef<HTMLSpanElement>()},'Reading list');
+React.createElement(BadgeEntry,{variant:'dot',classes:{badge:badgeClasses.badge}});
+// @ts-expect-error Badge has no filled variant
+React.createElement(Badge,{variant:'filled'});
+// @ts-expect-error max is numeric
+React.createElement(Badge,{max:'99'});

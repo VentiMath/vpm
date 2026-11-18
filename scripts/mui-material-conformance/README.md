@@ -449,3 +449,13 @@ retained nodes, merged refs and hydration. The original VPM Material React Table
 banner caller checks selected rows, clear-selection and explicit banners.
 Legacy severity override keys have separate regression and app-control browser coverage; current Material 9 ignores
 those old keys. Use `alert-build.cjs` before `bench/alert.cjs`.
+
+
+`badge-contract.cjs` compares current/app count capping, zero/dot/invisibility,
+anchors, colors, roots, classes, defaults and slots. It explicitly separates
+current marker ARIA and inline positioning variables from the older app control.
+`badge-browser.cjs` checks palette/anchor geometry, the reading-list-shaped
+Tooltip/IconButton/Badge caller, retained nodes/focus, hidden exit content,
+keyboard activation, root/slot cleanup, hydration and current RTL. Legacy RTL
+mirroring is asserted separately. Owned reduced-motion and forced-colors checks
+are explicit. `badge-build.cjs` prepares isolated `bench/badge.cjs` comparisons.
