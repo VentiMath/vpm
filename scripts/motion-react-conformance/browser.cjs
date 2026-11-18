@@ -55,6 +55,17 @@ let server,child,socket,id=0;const pending=new Map(),errors=[];
   await evaluate("new Promise(r=>setTimeout(r,60))");
   const bell=await evaluate("(()=>{const s=getComputedStyle(document.querySelector('#subject')),m=new DOMMatrix(s.transform);return {a:m.a,b:m.b,color:s.color}})()");
   assert.ok(Math.abs(bell.a-1)<.001&&Math.abs(bell.b)<.001);assert.equal(bell.color,'rgb(30, 40, 50)');checks++;
+  // The app cancels its six 200ms cycles after one second and leaves the
+  // reset transition unspecified. Exercise that default, not just duration:0.
+  await evaluate("window.mountMotion({kind:'bell'});new Promise(r=>setTimeout(r,60))");
+  await evaluate("window.appBellNode=document.querySelector('#subject');window.motionTest.controls.start({rotate:[0,20,-20,0],color:['var(--mui-palette-secondary-main)'],transition:{duration:.2,repeat:5}});new Promise(r=>setTimeout(r,1000))");
+  await evaluate("window.motionTest.controls.start({rotate:0,scale:1,color:'var(--mui-palette-action-active)'})");
+  const reset=await evaluate("(()=>{const n=document.querySelector('#subject'),s=getComputedStyle(n),m=new DOMMatrix(s.transform);return {same:n===window.appBellNode,a:m.a,b:m.b,d:m.d,color:s.color,events:window.motionTest.events.current.length}})()");
+  assert.equal(reset.same,true,variant+' notification reset retains the node');
+  assert.ok(Math.abs(reset.a-1)<.001&&Math.abs(reset.b)<.001&&Math.abs(reset.d-1)<.001,variant+' default reset completes at its target');
+  assert.equal(reset.color,'rgb(30, 40, 50)',variant+' default reset resolves the active theme color');
+  await evaluate("window.updateMotion({kind:'bell',tick:2});new Promise(r=>setTimeout(r,250))");
+  assert.equal(await evaluate('window.motionTest.events.current.length'),reset.events,variant+' completed bell does not restart on a parent update');checks++;
   await evaluate("window.mountMotion({kind:'fade'},true);new Promise(r=>setTimeout(r,350))");
   assert.equal(await evaluate("getComputedStyle(document.querySelector('#subject')).opacity"),'1',variant+' StrictMode');
   await evaluate("window.detachedMotionNode=document.querySelector('#subject');window.unmountMotion();window.detachedStyle=window.detachedMotionNode.getAttribute('style');new Promise(r=>setTimeout(r,180))");

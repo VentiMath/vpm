@@ -12,9 +12,9 @@
     "remainingWork": "Consumer release and actual VentiMath integration. Gestures, drag/layout projection, AnimatePresence, sequences, useAnimate, SVG-specific geometry and other unobserved Motion APIs are outside this subset."
   },
   "caller": {
-    "revision": "3aa9eb28b225e061994229693fbb0556765a5dc4",
+    "revision": "d0a71aaf413afad1f5a95f6496e0654e145b59f0",
     "appControl": "motion 12.20.5; framer-motion and motion-dom 12.36.0; React 19.3.1",
-    "scope": "43 non-test files, 110 JSX roots in static source inventory; only motion and useAnimation from motion/react. Contest entries, calendar/list entrances, sidebar/directory transitions, repeated notification bell, Material polymorphic roots. Static counts do not establish route reachability or adoption."
+    "scope": "November 18 inventory: 40 non-test files, 99 direct JSX roots (94 divs, five spans), and eight polymorphic component={motion.*} uses; only motion and useAnimation from motion/react. Contest entries, calendar/list entrances, sidebar/directory transitions, repeated notification bell and polymorphic roots. Static counts do not establish route reachability or adoption."
   },
   "changes": [
     "Independently written from public types/API observations and app-shaped black-box controls; no upstream runtime source copied.",
@@ -23,7 +23,8 @@
     "Owned animation work is stopped and element bindings released on unmount; stale completions are suppressed.",
     "Dynamic reduced-motion configuration and user preference changes stop transform playback; initial=false and SSR hydration preserve initial markup.",
     "Custom roots transfer animation ownership when their DOM element changes or disappears and returns. Old node bindings are released and stale completion suppressed; ref-only changes on the same node retain playback. Compared with current/app controls using the Material-style polymorphic root boundary. The pinned controls recover direct DOM replacement but leave a null-restored root at its initial pose; VPM deliberately resumes it.",
-    "Initial rendering removes temporary entry/keyframe arrays and combines prop filtering with validation; child sets are allocated only when a child mounts. Initial styles, variant ownership, custom-root retirement and null/root restoration remain checked. No animation snapshot is cached across requests or reused between callers."
+    "Initial rendering removes temporary entry/keyframe arrays and combines prop filtering with validation; child sets are allocated only when a child mounts. Initial styles, variant ownership, custom-root retirement and null/root restoration remain checked. No animation snapshot is cached across requests or reused between callers.",
+    "Consumer acceptance follows the current notification bell: interrupt six 200ms rotation cycles after one second, reset with the default transition to zero rotation/unit scale/active CSS-variable color, retain the node, and do not restart on a parent update. Both pinned controls and VPM pass; no runtime change or new performance claim."
   ],
   "references": [
     "https://motion.dev/docs/react-motion-component",

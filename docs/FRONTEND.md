@@ -7,8 +7,10 @@ separate; these requirements concern remaining Material and Motion consumers.
 
 ## Motion
 
-43 source files import `motion` from `motion/react`; one also imports
-`useAnimation`. Real callers include AMC10/12 and Putnam entrances, calendar
+Motion was refreshed against main `d0a71aaf` on November 18, 2026: 40 source
+files import `motion` from `motion/react`; one also imports `useAnimation`.
+There are 99 direct JSX roots and eight polymorphic `component={motion.*}` uses.
+Real callers include AMC10/12 and Putnam entrances, calendar
 headers/sidebar, directory transitions and the notification bell. They need:
 
 - DOM/custom component roots, initial poses, animate targets and `initial=false`.
@@ -18,8 +20,10 @@ headers/sidebar, directory transitions and the notification bell. They need:
 
 [vmotion](../packages/vmotion) implements and tests this application subset over
 [vmotion-dom](../packages/vmotion-dom). Release and actual app integration remain.
-Motion is parked. When resumed, the useful next step is a consumer
-acceptance/release pass for these callers. Broad gestures, dragging, layout projection, AnimatePresence, sequence
+The notification bell now has a focused acceptance check for its one-second
+interruption and default-transition reset, alongside the existing entrance,
+variant and lifecycle coverage. The next Motion step is a consumer
+release/integration pass for these callers. Broad gestures, dragging, layout projection, AnimatePresence, sequence
 editing, arbitrary 3D and other unobserved APIs are not a prerequisite for this
 inventory. The entire upstream Motion API is **not** complete.
 
@@ -66,7 +70,8 @@ at app `47e3b4ef`, including keyboard/touch access, controlled copy notices and 
 shared theme override. AvatarGroup covers eight authentication/coming-soon message
 sections; CardActionArea covers linked club articles and Math Is Cool cards.
 These are implementation claims; application adoption remains separate until the
-required Material surface is complete. Motion remains parked.
+required Material surface is complete. Motion follow-ups stay bounded to the
+observed application contract.
 
 Nano ID is separate build infrastructure: PostCSS 8.5.8 uses its non-secure entry
 to label anonymous CSS inputs. It is independently implemented and caller-tested.

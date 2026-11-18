@@ -36,10 +36,11 @@ For an initial keyframe array beginning with null, VPM retains its existing firs
 non-null value; both controls omit that initial style. This is an explicit
 regression check, not a parity claim for that additional case.
 
-The source inventory at VentiMath `3aa9eb28` found 43 non-test files and 110 Motion
-JSX roots, importing only `motion` and `useAnimation` from `motion/react`. Those
-are static counts, including auxiliary screens, not route reachability or proof
-of app adoption. Controls are Framer Motion 14.7.0 and the app's 12.36.0, on React
+The November 18 source inventory at VentiMath `d0a71aaf` found 40 non-test files,
+99 direct Motion JSX roots (94 divs and five spans), and eight polymorphic
+`component={motion.*}` uses. Imports remain limited to `motion` and `useAnimation`
+from `motion/react`. These static counts include auxiliary screens; they do not
+establish route reachability or app adoption. Controls are Framer Motion 14.7.0 and the app's 12.36.0, on React
 19.3.1. Checks use synthetic contest/navigation examples and the app's animation
 values; they do not run the whole application.
 
@@ -90,3 +91,10 @@ continue to cover custom-root replacement/restoration, variants, stable refs,
 StrictMode, unmount and reduced motion.
 
 The benchmark labeled fade includes an opacity/translation entrance; it is not an opacity-only workload. Sparse initial keyframe arrays retain their existing endpoints.
+
+The notification-bell follow-up checks the app's one-second interruption of its
+six 200ms rotation cycles, followed by a reset with no explicit transition.
+Both pinned controls and VPM return to zero rotation, unit scale and the active
+theme color, retain the same node, and stay stopped across a parent rerender.
+This adds consumer acceptance coverage without changing the runtime or making
+a new performance claim.

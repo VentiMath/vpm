@@ -1,7 +1,7 @@
 # Motion React application contract
 
 The owned `vmotion/react` layer targets the non-test VentiMath callers inspected
-at `3aa9eb28`: entrances, inherited hidden/show variants and child staggering,
+at `d0a71aaf`: entrances, inherited hidden/show variants and child staggering,
 initial=false, notification controls, and Material polymorphic roots. The fixed
 controls are Framer Motion 14.7.0 and app 12.36.0 from the sibling Motion fixture;
 React 19.3.1 and esbuild come from the Material System fixture. No upstream runtime
@@ -10,9 +10,10 @@ source was copied or imported into the owned package.
 - Thirteen Node/Bun tests compare initial SSR for three patterns and three tree
   sizes against both controls, plus escaped content, custom roots, stable factory
   identity, input ownership and explicit unsupported-prop errors.
-- Forty-three Chrome scenarios cover entrances, child order and dynamic insertion,
+- Forty-six Chrome scenarios cover entrances, child order and dynamic insertion,
   independent variant scopes, initial=false, stable rerenders/focus, CSS-variable
-  bell repeat/reset, style updates,
+  bell repeat/reset (including the app's one-second interruption and default
+  reset transition), style updates,
   Strict Mode, active-unmount cleanup, reduced motion and retained-node hydration.
   VPM additionally checks controls.set and a live reduced-motion policy change. The set check is an owned regression, not an upstream equivalence claim. Production and
   development builds run separately. Endpoint/ordering/ownership checks do not
