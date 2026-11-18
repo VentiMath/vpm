@@ -118,6 +118,10 @@
         "vpostcss-value-parser": "4.2.0",
       },
     },
+    "packages/vcssesc": {
+      "name": "vcssesc",
+      "version": "3.0.0",
+    },
     "packages/vcssjanus": {
       "name": "vcssjanus",
       "version": "2.3.1",
@@ -1929,6 +1933,8 @@
     "vcss-color-keywords": ["vcss-color-keywords@workspace:packages/vcss-color-keywords"],
 
     "vcss-to-react-native": ["vcss-to-react-native@workspace:packages/vcss-to-react-native"],
+
+    "vcssesc": ["vcssesc@workspace:packages/vcssesc"],
 
     "vcssjanus": ["vcssjanus@workspace:packages/vcssjanus"],
 
