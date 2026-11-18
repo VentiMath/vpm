@@ -446,3 +446,13 @@ React.createElement(SortControl,{IconComponent:()=>React.createElement('svg')});
 function PageHook(){return usePagination({count:10}).items.map(item=>React.createElement(PaginationItem,item));}
 // @ts-expect-error Sort direction is a bounded contract.
 React.createElement(TableSortLabel,{direction:'sideways'});
+
+import {LinearProgress,linearProgressClasses} from 'vmui-material';
+import ProgressEntry from 'vmui-material/LinearProgress';
+React.createElement(LinearProgress,{variant:'buffer',min:10,max:50,value:30,valueBuffer:40,color:'warning','aria-label':'Resources',ref:React.createRef<HTMLSpanElement>(),sx:{height:8}});
+React.createElement(ProgressEntry,{variant:'determinate',value:50,classes:{bar1:'fill'}});
+const progressClass:string=linearProgressClasses.dashed;
+// @ts-expect-error unsupported progress variant
+React.createElement(LinearProgress,{variant:'filled'});
+// @ts-expect-error progress values are numeric
+React.createElement(LinearProgress,{value:'50'});

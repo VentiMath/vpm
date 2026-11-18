@@ -100,3 +100,6 @@ export const {Autocomplete,autocompleteClasses,getAutocompleteUtilityClass,creat
 
 import navigation from './table-navigation.cjs';
 export const {TableSortLabel,tableSortLabelClasses,getTableSortLabelUtilityClass,Pagination,paginationClasses,getPaginationUtilityClass,PaginationItem,paginationItemClasses,getPaginationItemUtilityClass,usePagination}=navigation;
+
+import linear from './linear-progress.cjs';
+export const {LinearProgress,linearProgressClasses,getLinearProgressUtilityClass}=linear;

@@ -165,3 +165,5 @@ assert.match(renderToString(React.createElement(api.Autocomplete,{options:['Scho
 
 const navigation=renderToString(React.createElement(React.Fragment,null,React.createElement(api.TableSortLabel,{active:true},'Resource'),React.createElement(api.Pagination,{count:100,page:10,showLastButton:true})));
 assert.match(navigation,/MuiTableSortLabel-root/);assert.match(navigation,/aria-current="page"/);assert.match(navigation,/Go to last page/);assert.equal(api.usePagination,require('vmui-material/usePagination').default);
+
+const linear=renderToString(React.createElement(api.LinearProgress,{variant:'buffer',min:10,max:50,value:30,valueBuffer:40,'aria-label':'Progress'}));assert.match(linear,/aria-valuenow="30"/);assert.match(linear,/translateX\(-25%\)/);assert.equal(api.LinearProgress,require('vmui-material/LinearProgress').default);

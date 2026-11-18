@@ -421,3 +421,20 @@ keyboard/ARIA, theme overrides, retained inputs and hydration. Run
 `autocomplete-contract.cjs`, `autocomplete-browser.cjs` (production/development)
 and the fresh archive gate. Its independent implementation targets the current
 API; the controlled free-solo popup difference from app7 is explicit in the check.
+
+
+## Table navigation and linear progress
+
+`navigation-contract.cjs` checks 2,552 current/app sorting and pagination contracts.
+`navigation-browser.cjs` checks styles, keyboard behavior, retained focused nodes,
+hydration and the unchanged VPM table pagination caller. Its two legacy Box
+warnings are allowed only on the unchanged current-upstream control.
+
+`linear-contract.cjs` checks 466 current/app progress contracts, including ranges,
+RTL and current fractional/buffer ARIA. `linear-browser.cjs` compares themes,
+colors, animated geometry at a fixed time, capacity updates, inherited colors,
+reduced motion, refs, hydration and unchanged `MRT_LinearProgressBar` behavior.
+Only legacy classes and app 7's missing buffer ARIA are normalized. Nonfinite
+ranges reject; values clamp; reduced-motion indicators retain visible geometry.
+The [LinearProgress measurements](../../packages/vmui-material/bench/linear/README.md)
+use isolated workers and same-code controls; they measure SSR, not animation speed.

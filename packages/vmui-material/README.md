@@ -828,7 +828,7 @@ overrides, CSS variables, RTL and `sx`. Custom section/row roots receive table
 roles. Synthetic caller checks cover compact sticky score grids, keyboard
 sorting, retained row/input/focus identity, scrolling, hydration and accessibility.
 The current Material 9.5.0 and app 7.2.0 controls agree on the verified contracts.
-These seven are part of the 68 independent components; Material is still partial;
+These seven are part of the 69 independent components; Material is still partial;
 TablePagination and remaining families are still separate work. TableSortLabel and
 numbered Pagination are now implemented below.
 
@@ -854,7 +854,7 @@ The independent Autocomplete covers WARML school entry (multiple/free-solo),
 practice and profile student selectors, ARML's View as field and the Hook Form
 example. It composes the owned TextField input, Chip, Paper and IconButton
 foundations, with Floating UI placement in the input's owner document. It adds
-no upstream runtime dependency. Material now has 68 independent components.
+no upstream runtime dependency. Material now has 69 independent components.
 
 Value, input text and popup state can be controlled separately. Supported
 behavior includes string/object options, custom labels/equality/disabled options,
@@ -916,3 +916,39 @@ higher for outlined pagination. On Node, outlined pagination against app Materia
 control spread. Each case renders eight controls. These are measured SSR costs,
 not a browser speed claim; performance follow-up remains without relaxing the
 behavior or theme checks.
+
+
+### LinearProgress
+
+Independent `LinearProgress` covers ARML traveler-grid loading, WARML seat capacity
+and the adopted Material React Table loading indicator. It supports determinate,
+buffer, indeterminate and query modes, current `min`/`max` ranges, standard/custom
+palette colors, inheritance, RTL, resolved themes and CSS-variable tokens, class
+hooks, `sx` and forwarded refs. CSS animations have no JavaScript timers; value and
+theme updates retain the progress nodes. The default-root contract remains a span.
+
+Current Material 9.5.0 and app 7.2.0 are compared separately. The current contract
+preserves fractional accessible values and supplies range ARIA for buffer mode;
+7.2.0 rounds determinate values and lacks buffer ARIA. Deprecated Material 7 bar
+class aliases are not emitted. Existing legacy style-override keys are accepted.
+Invalid nonfinite/reversed ranges throw, out-of-range values clamp to the range,
+and an omitted value defaults to the minimum. Reduced-motion loading remains
+visible without movement; determinate value transitions stop under that preference.
+These explicit differences are checked without weakening the ordinary comparisons.
+
+The test fixture mounts unchanged `MRT_LinearProgressBar` and its real VPM table
+hook using synthetic records. It verifies both loading flags, capacity updates,
+accessible names, retained DOM/focus, refs, hydration and reduced motion in Chrome.
+Animation timing/geometry and palette values are public rendering/design data;
+the component runtime is independently written.
+
+[LinearProgress SSR measurements](bench/linear/README.md) render eight loading,
+capacity or buffer bars per operation. Build `linear-build.cjs` in the Material
+conformance fixture before running the isolated Node/Bun harness. This does not
+measure browser animation speed. Material now has 69 independent components and
+remains partial; this is not a whole-package release or app cutover.
+
+The recorded SSR cases take 28–70% more time than Material 9.5.0 on Node and
+53–81% more on Bun. Against the app's 7.2.0 control the ranges are 12–60% and
+37–70%, respectively. These are measured rendering costs, not a speedup claim;
+reducing them without changing the verified behavior remains follow-up work.

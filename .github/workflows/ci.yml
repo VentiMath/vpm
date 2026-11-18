@@ -106,6 +106,7 @@ jobs:
           node scripts/mui-material-conformance/swipeable-drawer-contract.cjs
           node scripts/mui-material-conformance/tables-contract.cjs
           node scripts/mui-material-conformance/navigation-contract.cjs
+          node scripts/mui-material-conformance/linear-contract.cjs
           node scripts/mui-material-conformance/autocomplete-contract.cjs
           node scripts/mui-material-conformance/lists-contract.cjs
           node scripts/mui-material-conformance/types.cjs
@@ -156,6 +157,7 @@ jobs:
           node scripts/mui-material-conformance/swipeable-drawer-browser.cjs
           node scripts/mui-material-conformance/tables-browser.cjs
           node scripts/mui-material-conformance/navigation-browser.cjs
+          node scripts/mui-material-conformance/linear-browser.cjs
           node scripts/mui-material-conformance/autocomplete-browser.cjs
           VPM_REACT_MODE=development node scripts/mui-material-conformance/skeleton-browser.cjs
           VPM_REACT_MODE=development node scripts/mui-material-conformance/container-browser.cjs
@@ -171,6 +173,7 @@ jobs:
           VPM_REACT_MODE=development node scripts/mui-material-conformance/swipeable-drawer-browser.cjs
           VPM_REACT_MODE=development node scripts/mui-material-conformance/tables-browser.cjs
           VPM_REACT_MODE=development node scripts/mui-material-conformance/navigation-browser.cjs
+          VPM_REACT_MODE=development node scripts/mui-material-conformance/linear-browser.cjs
           VPM_REACT_MODE=development node scripts/mui-material-conformance/autocomplete-browser.cjs
           VPM_REACT_MODE=development node scripts/mui-material-conformance/checkbox-browser.cjs
           node scripts/mui-material-conformance/archives.cjs
@@ -1106,6 +1109,7 @@ jobs:
           bun scripts/mui-material-conformance/swipeable-drawer-contract.cjs
           bun scripts/mui-material-conformance/tables-contract.cjs
           bun scripts/mui-material-conformance/navigation-contract.cjs
+          bun scripts/mui-material-conformance/linear-contract.cjs
           bun scripts/mui-material-conformance/lists-contract.cjs
           bun test packages/vmui-system/test/system.test.cjs
           bun scripts/mui-system-conformance/primitives.cjs

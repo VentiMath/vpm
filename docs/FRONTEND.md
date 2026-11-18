@@ -25,10 +25,10 @@ inventory. The entire upstream Motion API is **not** complete.
 
 ## Material
 
-[vmui-material](../packages/vmui-material) now has 68 independently implemented
+[vmui-material](../packages/vmui-material) now has 69 independently implemented
 components. It covers button controls; text/icons; Box/Paper/Divider; the form,
 input, Select, checkbox/radio/switch foundation; menus; Chip, Avatar, loading
-spinners, Skeleton placeholders, Container page layouts and Card/CardContent panels and their linked CardActionArea roots, plus AvatarGroup, Tooltip, Collapse, Slide, Drawer, SwipeableDrawer, the seven Table primitives, TableSortLabel, PaginationItem, Pagination, Autocomplete and Dialog with its title/content/action/description components. Its resolved-theme bridge is built,
+spinners and LinearProgress, Skeleton placeholders, Container page layouts and Card/CardContent panels and their linked CardActionArea roots, plus AvatarGroup, Tooltip, Collapse, Slide, Drawer, SwipeableDrawer, the seven Table primitives, TableSortLabel, PaginationItem, Pagination, Autocomplete and Dialog with its title/content/action/description components. Its resolved-theme bridge is built,
 but full Material theme creation
 and all app-used component families are not. It cannot replace the entire
 `@mui/material` dependency yet.
@@ -44,8 +44,9 @@ Dependencies such as Material React Table may also consume components that do
 not appear as direct app imports; they need unchanged-caller acceptance before
 a complete package override.
 
-**Next Material unit: LinearProgress**, used by ARML/WARML loading states and
-Material React Table; Alert follows. Sorting and numbered paging for the
+**Next Material unit: Alert**, used in forms and table feedback. LinearProgress
+now covers ARML loading, WARML capacity and the unchanged Material React Table
+loading indicator. Sorting and numbered paging for the
 math-resources and contest-season grids are built and checked against both
 current Material 9.5.0 and app Material 7.2.0. The seven Table primitives now cover direct results and score grids. SwipeableDrawer now covers shared navigation, page sidebars and notification
 panels, with native swipe-close, scroll arbitration, cancellation and retained content. DialogContentText now covers external-link and WARML

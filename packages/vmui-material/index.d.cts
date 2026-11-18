@@ -791,3 +791,14 @@ export interface PaginationProps extends UsePaginationProps,Omit<React.HTMLAttri
 export const Pagination:React.ForwardRefExoticComponent<PaginationProps&React.RefAttributes<HTMLElement>>;
 export const paginationClasses:Readonly<Record<'root'|'ul'|'outlined'|'text',string>>;
 export function getPaginationUtilityClass(slot:string):string;
+
+export interface LinearProgressProps extends Omit<React.HTMLAttributes<HTMLSpanElement>,'children'> {
+ color?:'primary'|'secondary'|'error'|'info'|'success'|'warning'|'inherit'|(string&{});
+ variant?:'determinate'|'indeterminate'|'buffer'|'query';
+ min?:number;max?:number;value?:number;valueBuffer?:number;
+ classes?:Partial<Record<LinearProgressClassKey,string>>;sx?:SxProps<Theme>;
+}
+export type LinearProgressClassKey='root'|'colorPrimary'|'colorSecondary'|'determinate'|'indeterminate'|'buffer'|'query'|'dashed'|'bar'|'bar1'|'bar2';
+export const LinearProgress:React.ForwardRefExoticComponent<LinearProgressProps&React.RefAttributes<HTMLSpanElement>>;
+export const linearProgressClasses:Readonly<Record<LinearProgressClassKey,string>>;
+export function getLinearProgressUtilityClass(slot:string):string;

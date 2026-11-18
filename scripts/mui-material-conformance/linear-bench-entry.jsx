@@ -1,0 +1,2 @@
+import React from 'react';import {renderToString} from 'react-dom/server';import {LinearProgress} from '@buttons';
+export function prepare(kind){const node=React.createElement('div',null,Array.from({length:8},(_,i)=>React.createElement(LinearProgress,{key:i,variant:kind==='loading'?'indeterminate':kind==='buffer'?'buffer':'determinate',value:25+i*5,valueBuffer:80,color:kind==='capacity'?'warning':'primary',...(kind==='capacity'?{sx:{height:8,borderRadius:4}}:{})})));return()=>renderToString(node);}

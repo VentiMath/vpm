@@ -1507,6 +1507,26 @@
         "types": "./paginationItemClasses.d.cts",
         "default": "./paginationItemClasses.cjs"
       }
+    },
+    "./LinearProgress": {
+      "import": {
+        "types": "./LinearProgress.d.mts",
+        "default": "./LinearProgress.mjs"
+      },
+      "require": {
+        "types": "./LinearProgress.d.cts",
+        "default": "./LinearProgress.cjs"
+      }
+    },
+    "./linearProgressClasses": {
+      "import": {
+        "types": "./linearProgressClasses.d.mts",
+        "default": "./linearProgressClasses.mjs"
+      },
+      "require": {
+        "types": "./linearProgressClasses.d.cts",
+        "default": "./linearProgressClasses.cjs"
+      }
     }
   },
   "files": [
