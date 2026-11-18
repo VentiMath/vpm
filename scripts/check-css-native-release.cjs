@@ -32,10 +32,10 @@ function run(cmd,args,cwd=temp,env={}){const r=spawnSync(cmd,args,{cwd,encoding:
   // Ensure the unchanged parent actually resolves this archive, including if
   // a package manager were to put a second copy below styled-components.
   const parent=createRequire(peer.resolve('styled-components/native'));assert.equal(path.dirname(parent.resolve('css-to-react-native/package.json')),entry);
-  fs.writeFileSync(path.join(cwd,'consumer.mjs'),`import assert from 'node:assert/strict';import {createRequire} from 'node:module';import convert from 'css-to-react-native';const require=createRequire(import.meta.url);assert.equal(convert,require('css-to-react-native').default);assert.equal(convert([['border','1px solid cyan']]).borderColor,'cyan');`);
+  fs.writeFileSync(path.join(cwd,'consumer.mjs'),`import assert from 'node:assert/strict';import {createRequire} from 'node:module';import convert,{transformRawValue} from 'css-to-react-native';const require=createRequire(import.meta.url);assert.equal(convert,require('css-to-react-native').default);assert.equal(convert([['border','1px solid cyan']]).borderColor,'cyan');assert.equal(transformRawValue,require('css-to-react-native').transformRawValue);assert.equal(transformRawValue('width','2px'),2);assert.equal(convert([['background','color(display-p3 1 0 .5)']]).backgroundColor,'color(display-p3 1 0 .5)');`);
   for(const runtime of ['node','bun']){
    run(runtime,['consumer.mjs'],cwd);
-   for(const script of ['parser','converter'])console.log(run(runtime,[path.join(fixture,script+'.cjs')],cwd,{VPARSER_ENTRY:locations['vpostcss-value-parser'],VCSS_NATIVE_ENTRY:entry}).trim());
+   for(const script of ['parser','converter','differential'])console.log(run(runtime,[path.join(fixture,script+'.cjs')],cwd,{VPARSER_ENTRY:locations['vpostcss-value-parser'],VCSS_NATIVE_ENTRY:entry}).trim());
    console.log(run(runtime,[path.join(fixture,'caller.cjs'),cwd],cwd).trim());
    for(const [pkg,test]of [['vpostcss-value-parser','parser'],['vcss-to-react-native','converter']])run(runtime,[runtime==='node'?'--test':'test',path.resolve(__dirname,'../packages',pkg,'test',test+'.test.cjs')],cwd,{VPARSER_ENTRY:locations['vpostcss-value-parser'],VCSS_NATIVE_ENTRY:entry});
   }

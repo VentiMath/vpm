@@ -2,7 +2,7 @@
   "implementation": {
     "kind": "independent implementation",
     "replacementStatus": "complete",
-    "targetScope": "Public tuple converter, property names and all 3.2.0 shorthands"
+    "targetScope": "Tuple converter, property-name and raw-value helpers, and all 3.2.0 shorthands"
   },
   "caller": {
     "revision": "a7ce009ffa67fbd1411f1a44788e04cb1a7b16d1",
@@ -18,6 +18,8 @@
     "Independently written declaration grammars; runtime dependencies are exclusively VPM implementations.",
     "Includes cyan/magenta, case-insensitive named colors and CSS comments; transform:none yields an empty transform list.",
     "Rejects trailing tokens in background/font-weight, mixed none with decoration lines, and unclosed functions instead of discarding or accepting malformed input.",
-    "Own data-property writes avoid inherited setters; color membership excludes prototype names."
+    "Own data-property writes avoid inherited setters; color membership excludes prototype names.",
+    "Restores hwb, lab, lch, gray and color function passthrough across color-bearing shorthands, with closed-function and trailing-token safeguards retained.",
+    "Exports transformRawValue through CommonJS, ESM and declarations, preserving raw whitespace and leaving invalid trailing-dot numeric strings unchanged."
   ]
 }

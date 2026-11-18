@@ -12,3 +12,11 @@ assert.equal(differences,34);
 const colors=require('../../packages/vcss-color-keywords');
 for(const c of Object.keys(colors).filter(c=>c!=='cyan'&&c!=='magenta'))for(const p of ['border','box-shadow','text-shadow','background']){const v=p==='border'?'2px solid '+c:p==='background'?c:'1px 2px 3px '+c;assert.deepEqual(call(a,p,v),call(b,p,v));compared++;}
 console.log(`${compared} converter comparisons pass; ${differences} explicitly classified behavior improvements`);
+
+const functionColors=['rgb(1,2,3)','rgba(1,2,3,.5)','hsl(90 20% 30%)','hsla(90,20%,30%,.5)','hwb(90 10% 20%)','lab(50% 20 30 / .5)','lch(50% 40 30)','gray(50% / .5)','color(display-p3 1 0 .5)','color(display-p3 var(--red, 1) 0 0)'];
+let functional=0;
+for(const value of functionColors)for(const [p,v]of [['background',value],['border','1px solid '+value],['border',value+' solid 2px'],['border-color',value+' red'],['box-shadow','1px 2px 3px '+value],['text-shadow',value+' 1px 2px'],['text-decoration','underline '+value]]){assert.deepEqual(call(a,p,v),call(b,p,v),p+': '+v);functional++;}
+const rawValues=['',' ','2px',' 2px ','0','-0','0px','-.5PX','2em','2.','+2.','2.px','1.e3','1e3','1e-3','.5e2','001','1.0','0x10','Infinity','NaN','true','TRUE','false','False','null','undefined','2px 4px','var(--x)','hwb(90 10% 20%)'];
+let raw=0;
+for(const name of ['width','opacity','fontWeight','margin','--custom'])for(const v of rawValues){assert.deepEqual(a.transformRawValue(name,v),b.transformRawValue(name,v),name+': '+JSON.stringify(v));raw++;}
+console.log(`${functional} functional-color shorthand comparisons and ${raw} raw-helper comparisons match upstream`);

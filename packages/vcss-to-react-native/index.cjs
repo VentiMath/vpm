@@ -6,10 +6,10 @@ const unitless=/^(?:aspectRatio|elevation|flex|flexGrow|flexShrink|fontWeight|op
 function getPropertyName(name){return name.startsWith('--')?name:camelize(name);}
 function fail(){throw Error('Invalid CSS value');}
 function literal(value){
-  if(/^[+-]?(?:\d+\.?\d*|\.\d+)(?:e[+-]?\d+)?(?:px)?$/i.test(value))return parseFloat(value);
+  if(/^[+-]?(?:\d+|\d*\.\d+)(?:e[+-]?\d+)?(?:px)?$/i.test(value))return parseFloat(value);
   switch(value.toLowerCase()){case 'true':return true;case 'false':return false;case 'null':return null;case 'undefined':return undefined;default:return value;}
 }
-function scalar(name,value){
+function transformRawValue(name,value){
   if(process.env.NODE_ENV!=='production') {
     if(numeric.test(value)&&Number(value)!==0&&!unitless.test(name))console.warn(`Expected style "${name}: ${value}" to contain units`);
     else if(/px$/i.test(value)&&numeric.test(value.slice(0,-2))&&Number(value.slice(0,-2))!==0&&unitless.test(name))console.warn(`Expected style "${name}: ${value}" to be unitless`);
@@ -31,7 +31,7 @@ function readDimension(n,percent=false,auto=false){
 }
 function dimension(n,percent=false,auto=false){const v=readDimension(n,percent,auto);return v===undefined?fail():v;}
 function readColor(n){
-  if(n?.type==='function'&&/^(?:rgb|rgba|hsl|hsla)$/i.test(n.value)&&!n.unclosed)return parse.stringify(n);
+  if(n?.type==='function'&&/^(?:rgb|rgba|hsl|hsla|hwb|lab|lch|gray|color)$/i.test(n.value)&&!n.unclosed)return parse.stringify(n);
   if(n?.type==='word') {const s=n.value;if(Object.hasOwn(colors,s.toLowerCase())||s.toLowerCase()==='transparent'||/^#(?:[\da-f]{3}|[\da-f]{4}|[\da-f]{6}|[\da-f]{8})$/i.test(s))return s;}
 }
 function color(n){const v=readColor(n);return v===undefined?fail():v;}
@@ -130,7 +130,7 @@ function shorthand(name,ns){
 const specialized=new Set(['margin','padding','borderWidth','borderRadius','borderColor','background','fontFamily','fontWeight','fontVariant','aspectRatio','transform','shadowOffset','textShadowOffset','border','textShadow','boxShadow','flexFlow','flex','placeContent','textDecoration','textDecorationLine','font']);
 function getStylesForProperty(name,value,allowShorthand=true){
   value=value.trim();
-  if(!allowShorthand||!specialized.has(name))return {[name]:scalar(name,value)};
+  if(!allowShorthand||!specialized.has(name))return {[name]:transformRawValue(name,value)};
   try{return shorthand(name,tokens(value));}catch{throw Error(`Failed to parse declaration "${name}: ${value}"`);}
 }
 function transform(styleTuples,shorthandBlacklist=[]){
@@ -140,4 +140,4 @@ function transform(styleTuples,shorthandBlacklist=[]){
   }return result;
 }
 Object.defineProperty(exports,'__esModule',{value:true});
-exports.default=transform;exports.getPropertyName=getPropertyName;exports.getStylesForProperty=getStylesForProperty;
+exports.default=transform;exports.getPropertyName=getPropertyName;exports.getStylesForProperty=getStylesForProperty;exports.transformRawValue=transformRawValue;
