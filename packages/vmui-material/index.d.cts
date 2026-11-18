@@ -802,3 +802,24 @@ export type LinearProgressClassKey='root'|'colorPrimary'|'colorSecondary'|'deter
 export const LinearProgress:React.ForwardRefExoticComponent<LinearProgressProps&React.RefAttributes<HTMLSpanElement>>;
 export const linearProgressClasses:Readonly<Record<LinearProgressClassKey,string>>;
 export function getLinearProgressUtilityClass(slot:string):string;
+
+export type AlertColor='success'|'info'|'warning'|'error';
+export type AlertClassKey='root'|'filled'|'outlined'|'standard'|'colorSuccess'|'colorInfo'|'colorWarning'|'colorError'|'icon'|'message'|'action';
+export type AlertSlot<T>=T|((state:AlertOwnProps)=>T);
+export interface AlertOwnProps extends Omit<PaperOwnProps,'classes'|'variant'> {
+ severity?:AlertColor|(string&{});color?:AlertColor|(string&{});variant?:'standard'|'outlined'|'filled';
+ role?:React.AriaRole;icon?:React.ReactNode;iconMapping?:Partial<Record<AlertColor,React.ReactNode>>&Record<string,React.ReactNode>;
+ action?:React.ReactNode;onClose?:(event:React.SyntheticEvent)=>void;closeText?:string;
+ classes?:Partial<Record<AlertClassKey,string>>;
+ slots?:Partial<Record<'root'|'icon'|'message'|'action'|'closeButton'|'closeIcon',React.ElementType>>;
+ slotProps?:{root?:AlertSlot<Partial<PaperProps>>;icon?:AlertSlot<React.HTMLAttributes<HTMLDivElement>&{ref?:React.Ref<HTMLDivElement>;sx?:SxProps<Theme>}>;message?:AlertSlot<React.HTMLAttributes<HTMLDivElement>&{ref?:React.Ref<HTMLDivElement>;sx?:SxProps<Theme>}>;action?:AlertSlot<React.HTMLAttributes<HTMLDivElement>&{ref?:React.Ref<HTMLDivElement>;sx?:SxProps<Theme>}>;closeButton?:AlertSlot<Partial<IconButtonProps>>;closeIcon?:AlertSlot<Partial<SvgIconProps>>};
+}
+export type AlertProps<C extends React.ElementType='div'>=AlertOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof AlertOwnProps>&{component?:C};
+export const Alert:<C extends React.ElementType='div'>(props:AlertProps<C>)=>React.ReactElement|null;
+export const alertClasses:Readonly<Record<AlertClassKey,string>>;
+export function getAlertUtilityClass(slot:string):string;
+export type AlertTitleClassKey='root';
+export type AlertTitleProps<C extends React.ElementType='div'>=Omit<TypographyProps<C>,'classes'>&{classes?:Partial<Record<AlertTitleClassKey,string>>};
+export const AlertTitle:<C extends React.ElementType='div'>(props:AlertTitleProps<C>)=>React.ReactElement|null;
+export const alertTitleClasses:Readonly<Record<AlertTitleClassKey,string>>;
+export function getAlertTitleUtilityClass(slot:string):string;

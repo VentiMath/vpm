@@ -23,3 +23,5 @@ Object.assign(module.exports,require('./autocomplete-control.cjs'));
 Object.assign(module.exports,require('./table-navigation.cjs'));
 
 Object.assign(module.exports,require('./linear-progress.cjs'));
+
+Object.assign(module.exports,require('./alerts.cjs'));

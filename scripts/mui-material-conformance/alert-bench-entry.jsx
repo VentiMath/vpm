@@ -1,0 +1,2 @@
+import React from 'react';import {renderToString} from 'react-dom/server';import {Alert,AlertTitle} from '@buttons';
+export function prepare(kind){const node=React.createElement('div',null,Array.from({length:8},(_,i)=>React.createElement(Alert,{key:i,severity:kind==='notice'?'info':'warning',...(kind==='close'?{onClose:()=>{}}:{}),sx:{mb:2}},kind==='title'?React.createElement(AlertTitle,null,'Practice capacity'):null,'24 of 20 seats filled.')));return()=>renderToString(node);}

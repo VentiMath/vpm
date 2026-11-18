@@ -456,3 +456,14 @@ const progressClass:string=linearProgressClasses.dashed;
 React.createElement(LinearProgress,{variant:'filled'});
 // @ts-expect-error progress values are numeric
 React.createElement(LinearProgress,{value:'50'});
+
+import {Alert,AlertTitle,type AlertProps,alertClasses} from 'vmui-material';
+import AlertEntry from 'vmui-material/Alert';
+import TitleEntry from 'vmui-material/AlertTitle';
+const alertProps:AlertProps={severity:'warning',variant:'outlined',onClose:e=>e.preventDefault(),slotProps:{message:state=>({className:state.severity}),closeButton:{'aria-label':'Dismiss',size:'small'}},sx:{mb:2}};
+React.createElement(Alert,{...alertProps,ref:React.createRef<HTMLDivElement>()},React.createElement(AlertTitle,null,'Capacity'));
+React.createElement(AlertEntry,{severity:'info'},React.createElement(TitleEntry,{component:'h3'},alertClasses.message));
+// @ts-expect-error progress is not an alert variant
+React.createElement(Alert,{variant:'progress'});
+// @ts-expect-error close is a callback
+React.createElement(Alert,{onClose:true});

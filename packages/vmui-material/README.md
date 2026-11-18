@@ -1,6 +1,6 @@
 # vmui-material
 
-Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card, CardContent, CardActionArea, AvatarGroup, Tooltip, Collapse, DialogTitle, DialogContent, DialogActions, Dialog, Slide, DialogContentText, Drawer, SwipeableDrawer, Table, TableHead, TableBody, TableFooter, TableRow, TableCell and TableContainer, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
+Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card, CardContent, CardActionArea, AvatarGroup, Tooltip, Collapse, DialogTitle, DialogContent, DialogActions, Dialog, Slide, DialogContentText, Drawer, SwipeableDrawer, Table, TableHead, TableBody, TableFooter, TableRow, TableCell, TableContainer, Autocomplete, TableSortLabel, PaginationItem, Pagination, LinearProgress, Alert and AlertTitle, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
 
 ```js
 import { Button, ToggleButton, ToggleButtonGroup } from 'vmui-material';
@@ -828,7 +828,7 @@ overrides, CSS variables, RTL and `sx`. Custom section/row roots receive table
 roles. Synthetic caller checks cover compact sticky score grids, keyboard
 sorting, retained row/input/focus identity, scrolling, hydration and accessibility.
 The current Material 9.5.0 and app 7.2.0 controls agree on the verified contracts.
-These seven are part of the 69 independent components; Material is still partial;
+These seven are part of the 71 independent components; Material is still partial;
 TablePagination and remaining families are still separate work. TableSortLabel and
 numbered Pagination are now implemented below.
 
@@ -854,7 +854,7 @@ The independent Autocomplete covers WARML school entry (multiple/free-solo),
 practice and profile student selectors, ARML's View as field and the Hook Form
 example. It composes the owned TextField input, Chip, Paper and IconButton
 foundations, with Floating UI placement in the input's owner document. It adds
-no upstream runtime dependency. Material now has 69 independent components.
+no upstream runtime dependency. Material now has 71 independent components.
 
 Value, input text and popup state can be controlled separately. Supported
 behavior includes string/object options, custom labels/equality/disabled options,
@@ -945,10 +945,49 @@ the component runtime is independently written.
 [LinearProgress SSR measurements](bench/linear/README.md) render eight loading,
 capacity or buffer bars per operation. Build `linear-build.cjs` in the Material
 conformance fixture before running the isolated Node/Bun harness. This does not
-measure browser animation speed. Material now has 69 independent components and
+measure browser animation speed. Material now has 71 independent components and
 remains partial; this is not a whole-package release or app cutover.
 
 The recorded SSR cases take 28–70% more time than Material 9.5.0 on Node and
 53–81% more on Bun. Against the app's 7.2.0 control the ranges are 12–60% and
 37–70%, respectively. These are measured rendering costs, not a speedup claim;
 reducing them without changing the verified behavior remains follow-up work.
+
+
+### Alert and AlertTitle
+
+Independent notices cover ARML traveler/preferences/highlight messages, WARML
+capacity/room notices, public club-article failures and the adopted table's
+selection/error banner. Standard, outlined and filled variants support severity
+icons independent from color, light/dark and CSS-variable palettes, custom colors,
+RTL, theme defaults, `sx`, class hooks, Paper roots and current slots/slot props.
+Titles compose owned Typography; close buttons compose owned IconButton.
+
+Actions take priority over the close callback, including explicitly supplied
+`0` or `false`. Close labels are localizable, decorative icons remain hidden from
+assistive technology, and keyboard activation sends the caller callback without
+silently removing the alert. Root and slot refs compose and clean up on unmount;
+unchanged renders and hydration retain nodes and focus.
+
+The outline icons are independently drawn and intentionally not pixel-identical.
+Current utility classes are emitted; the app's older `standardInfo` and related
+severity style-override keys remain supported even though Material 9 no longer
+applies them. The comparison uses equivalent current root callbacks for shared
+styling, with separate regression and app-control browser coverage for the legacy keys. SVG geometry and
+the already-documented empty SSR ripple placeholder are excluded from markup
+comparisons; roles, labels, slots, content and classes remain compared.
+
+The Chrome fixture mounts the unchanged `MRT_ToolbarAlertBanner` and its real VPM
+table hook, testing row selection, clearing and explicit error banners. It also
+checks app-shaped notices, action/close callbacks, styles, accessibility, focus,
+refs and hydration in production and development. Synthetic records only;
+application adoption and Safari/Firefox acceptance remain separate.
+
+[Alert SSR measurements](bench/alert/README.md) compare eight notices, titled
+notices or dismissible notices per operation. Build `alert-build.cjs` first.
+Material now has 71 independent components and remains partial.
+
+Most recorded timing directions are unestablished at this precision. The
+established regressions are titled notices versus Material 9 on Bun (8.1%) and
+dismissible notices versus app Material 7 on Node (12.7%) and Bun (20.1%). All
+processes, outliers and same-code controls are retained; no speedup is claimed.

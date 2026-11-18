@@ -103,3 +103,6 @@ export const {TableSortLabel,tableSortLabelClasses,getTableSortLabelUtilityClass
 
 import linear from './linear-progress.cjs';
 export const {LinearProgress,linearProgressClasses,getLinearProgressUtilityClass}=linear;
+
+import alerts from './alerts.cjs';
+export const {Alert,AlertTitle,alertClasses,alertTitleClasses,getAlertUtilityClass,getAlertTitleUtilityClass}=alerts;

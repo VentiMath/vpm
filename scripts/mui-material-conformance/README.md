@@ -438,3 +438,14 @@ Only legacy classes and app 7's missing buffer ARIA are normalized. Nonfinite
 ranges reject; values clamp; reduced-motion indicators retain visible geometry.
 The [LinearProgress measurements](../../packages/vmui-material/bench/linear/README.md)
 use isolated workers and same-code controls; they measure SSR, not animation speed.
+
+
+`alert-contract.cjs` compares current/app Alert and AlertTitle semantics, actions,
+classes, roots, defaults and slots. Its two explicit markup exclusions are
+independently drawn decorative SVG geometry and the existing SSR ripple
+placeholder. `alert-browser.cjs` checks equivalent root-callback themes, current
+and app palettes, RTL, actions and native keyboard close, accessible roles/names,
+retained nodes, merged refs and hydration. The original VPM Material React Table
+banner caller checks selected rows, clear-selection and explicit banners.
+Legacy severity override keys have separate regression and app-control browser coverage; current Material 9 ignores
+those old keys. Use `alert-build.cjs` before `bench/alert.cjs`.

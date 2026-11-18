@@ -167,3 +167,7 @@ const navigation=renderToString(React.createElement(React.Fragment,null,React.cr
 assert.match(navigation,/MuiTableSortLabel-root/);assert.match(navigation,/aria-current="page"/);assert.match(navigation,/Go to last page/);assert.equal(api.usePagination,require('vmui-material/usePagination').default);
 
 const linear=renderToString(React.createElement(api.LinearProgress,{variant:'buffer',min:10,max:50,value:30,valueBuffer:40,'aria-label':'Progress'}));assert.match(linear,/aria-valuenow="30"/);assert.match(linear,/translateX\(-25%\)/);assert.equal(api.LinearProgress,require('vmui-material/LinearProgress').default);
+
+const alertHtml=renderToString(React.createElement(api.Alert,{severity:'warning',onClose:()=>{},closeText:'Dismiss'},React.createElement(api.AlertTitle,null,'Capacity')));
+assert.match(alertHtml,/role="alert"/);assert.match(alertHtml,/aria-label="Dismiss"/);assert.match(alertHtml,/MuiAlertTitle-root/);
+assert.equal((await import('vmui-material/Alert')).default,api.Alert);assert.equal((await import('vmui-material/AlertTitle')).default,api.AlertTitle);
