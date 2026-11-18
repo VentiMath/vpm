@@ -693,7 +693,7 @@ are required beyond repinning the override.
 
 ## CSS-to-React-Native
 
-[CSS-to-React-Native 3.2.0](https://github.com/VentiMath/vpm/releases/tag/css-to-react-native-3.2.0)
+[CSS-to-React-Native 3.2.0 revision 2](https://github.com/VentiMath/vpm/releases/tag/css-to-react-native-3.2.0-r2)
 contains the independent converter and its complete four-package VPM closure.
 For an existing styled-components dependency, preserve its imports and override
 only the converter:
@@ -701,7 +701,7 @@ only the converter:
 ```json
 {
   "overrides": {
-    "css-to-react-native": "https://github.com/VentiMath/vpm/releases/download/css-to-react-native-3.2.0/vcss-to-react-native-3.2.0.tgz"
+    "css-to-react-native": "https://github.com/VentiMath/vpm/releases/download/css-to-react-native-3.2.0-r2/vcss-to-react-native-3.2.0.tgz"
   }
 }
 ```
@@ -721,7 +721,15 @@ Application adoption remains separate. Performance recordings are noisy and do
 not establish a general speed advantage.
 
 ```sh
-node scripts/pack-css-native-release.cjs --ref COMMIT_SHA --tag css-to-react-native-3.2.0 --out /absolute/empty/directory
+node scripts/pack-css-native-release.cjs --ref COMMIT_SHA --tag css-to-react-native-3.2.0-r2 --out /absolute/empty/directory
 node scripts/check-css-native-release.cjs /absolute/directory
 node scripts/check-css-native-release.cjs /absolute/directory --published
 ```
+
+Revision 2 restores `hwb()`, `lab()`, `lch()`, `gray()` and `color()` in
+color-bearing shorthands and exposes `transformRawValue` in CommonJS, ESM and
+types. Raw whitespace is preserved; trailing-dot numeric strings remain strings.
+Unclosed functions and trailing shorthand tokens remain rejected. The 33 unchanged
+styled-components/native caller cases and expanded compatibility comparisons pass
+against the published bytes on Node and Bun. Update only the URL pin and lockfile;
+there are no consumer setting changes. The original release remains available.
