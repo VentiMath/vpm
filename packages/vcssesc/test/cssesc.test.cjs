@@ -1,0 +1,8 @@
+'use strict';
+const {test}=require('node:test'),assert=require('node:assert/strict'),path=require('node:path'),v=require(process.env.VCSSESC_ENTRY||path.resolve(__dirname,'../index.cjs'));
+test('CSS strings escape only the selected quotes and delimit safely',()=>{assert.equal(v('one "two" \'three\'',{quotes:'double',wrap:true}),'"one \\"two\\" \'three\'"');assert.equal(v('A\nB\rC'),'A\\A B\\D C');});
+test('hex termination preserves spaces, following digits and literal backslashes',()=>{assert.equal(v('éa é g é 9'),'\\E9 a \\E9  g \\E9  9');assert.equal(v('é\\a'),'\\E9\\\\a');assert.equal(v('é a',{isIdentifier:true}),'\\E9\\ a');});
+test('identifier prefixes are escaped exactly once even with escapeEverything',()=>{assert.equal(v('1a',{isIdentifier:true}),'\\31 a');assert.equal(v('1a',{isIdentifier:true,escapeEverything:true}),'\\31\\61');assert.equal(v('-',{isIdentifier:true}),'\\-');assert.equal(v('--x',{isIdentifier:true}),'\\--x');assert.equal(v('-1x',{isIdentifier:true}),'\\-1x');});
+test('astral code points and lone surrogates retain the public ASCII serialization',()=>{assert.equal(v('𝌆'),'\\1D306');assert.equal(v('\ud800'),'\\D800');assert.equal(v('\0'),'\\0');});
+test('documented defaults remain mutable while inherited options are ignored',()=>{const saved={...v.options};try{v.options.wrap=true;assert.equal(v('x'),"'x'");assert.equal(v('x',Object.create({wrap:false})),"'x'");assert.equal(v('x',{wrap:false}),'x');}finally{v.options=saved}});
+test('non-string values fail explicitly and option objects are not mutated',()=>{for(const s of [null,undefined,42,{},[]])assert.throws(()=>v(s),TypeError);const p=Object.freeze({isIdentifier:true});assert.equal(v('a b',p),'a\\ b');assert.equal(v.version,'3.0.0');});

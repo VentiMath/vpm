@@ -303,6 +303,13 @@ jobs:
           node scripts/idb-conformance/browser.cjs
           node scripts/idb-conformance/archives.cjs
       - run: npm --prefix scripts/camelize-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/cssesc-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: Independent CSS escaping and unchanged selector callers
+        run: |
+          node --test packages/vcssesc/test/*.test.cjs
+          node scripts/cssesc-conformance/probe.cjs
+          node scripts/cssesc-conformance/types.cjs
+          node scripts/cssesc-conformance/archives.cjs
       - name: Independent camelize and unchanged style converter
         run: |
           node --test packages/vcamelize/test/*.test.cjs
@@ -1183,6 +1190,9 @@ jobs:
       - run: npm --prefix scripts/idb-conformance ci --ignore-scripts --no-audit --no-fund
       - run: bun test packages/vidb/test
       - run: npm --prefix scripts/camelize-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/cssesc-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: bun test packages/vcssesc/test
+      - run: bun scripts/cssesc-conformance/probe.cjs
       - run: bun scripts/camelize-conformance/probe.cjs
       - run: npm --prefix scripts/nanoid-conformance ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/nanoid-conformance/probe.cjs

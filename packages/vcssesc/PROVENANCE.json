@@ -1,0 +1,29 @@
+{
+  "upstream": {
+    "name": "cssesc",
+    "version": "3.0.0",
+    "repository": "https://github.com/mathiasbynens/cssesc",
+    "integrity": "sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg=="
+  },
+  "checked": "2026-11-18",
+  "license": "MIT",
+  "implementation": {
+    "kind": "independent",
+    "targetScope": "CSS string and identifier function API, all documented options and mutable defaults; command-line wrapper is not implemented"
+  },
+  "source": "Written from README contracts, CSS escape syntax and black-box results. No upstream runtime source read or copied. One code-point scanner decides delimiters between emitted tokens; safe ASCII text returns directly.",
+  "changes": [
+    "Leading digits are escaped once when escapeEverything and isIdentifier are combined; upstream duplicates the digit escape tail.",
+    "A single hyphen is escaped as a valid identifier.",
+    "Inherited options are ignored; non-string input throws a named TypeError. UTF-16 lone surrogates and NUL retain upstream serialization, whose interpretation follows CSS replacement-character rules."
+  ],
+  "caller": {
+    "path": "VentiMath frontend build -> @tailwindcss/typography 0.5.16 -> postcss-selector-parser 6.0.10 -> cssesc 3.0.0",
+    "revision": "d0a71aaf413afad1f5a95f6496e0654e145b59f0",
+    "controls": [
+      "postcss-selector-parser 7.2.1",
+      "postcss-selector-parser 6.0.10"
+    ],
+    "verified": "Unchanged class, namespace and quoted attribute mutation/round trips with synthetic selector names; native Chrome identifier selection and CSS string parsing. No app dependency changes or adoption claim."
+  }
+}
