@@ -1,0 +1,1 @@
+'use strict';const api=require('./table-navigation.cjs');module.exports=api.PaginationItem;module.exports.default=api.PaginationItem;module.exports.paginationItemClasses=api.paginationItemClasses;module.exports.getPaginationItemUtilityClass=api.getPaginationItemUtilityClass;

@@ -1,0 +1,1 @@
+import api from './table-navigation.cjs';export default api.TableSortLabel;export const tableSortLabelClasses=api.tableSortLabelClasses,getTableSortLabelUtilityClass=api.getTableSortLabelUtilityClass;

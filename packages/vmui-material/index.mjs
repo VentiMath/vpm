@@ -97,3 +97,6 @@ export const TableCell=tables.TableCell,tableCellClasses=tables.tableCellClasses
 export const TableContainer=tables.TableContainer,tableContainerClasses=tables.tableContainerClasses,getTableContainerUtilityClass=tables.getTableContainerUtilityClass;
 
 export const {Autocomplete,autocompleteClasses,getAutocompleteUtilityClass,createFilterOptions}=a;
+
+import navigation from './table-navigation.cjs';
+export const {TableSortLabel,tableSortLabelClasses,getTableSortLabelUtilityClass,Pagination,paginationClasses,getPaginationUtilityClass,PaginationItem,paginationItemClasses,getPaginationItemUtilityClass,usePagination}=navigation;

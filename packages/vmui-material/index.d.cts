@@ -750,3 +750,44 @@ export function Autocomplete<T,M extends boolean|undefined=false,D extends boole
 export type AutocompleteClassKey='root'|'expanded'|'fullWidth'|'focused'|'focusVisible'|'tag'|'tagSizeSmall'|'tagSizeMedium'|'hasPopupIcon'|'hasClearIcon'|'inputRoot'|'input'|'inputFocused'|'endAdornment'|'clearIndicator'|'popupIndicator'|'popupIndicatorOpen'|'popper'|'popperDisablePortal'|'paper'|'listbox'|'loading'|'noOptions'|'option'|'groupLabel'|'groupUl';
 export const autocompleteClasses:Readonly<Record<AutocompleteClassKey,string>>;
 export function getAutocompleteUtilityClass(slot:string):string;
+
+export interface TableSortLabelOwnProps extends ButtonBaseOwnProps {
+ active?:boolean;direction?:'asc'|'desc';hideSortIcon?:boolean;IconComponent?:React.ElementType;
+ slots?:{root?:React.ElementType;icon?:React.ElementType};
+ slotProps?:Partial<Record<'root'|'icon',Record<string,unknown>|((state:TableSortLabelOwnProps)=>Record<string,unknown>)>>;
+}
+export type TableSortLabelProps<C extends React.ElementType='span'>=TableSortLabelOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof TableSortLabelOwnProps>&{component?:C};
+export const TableSortLabel:<C extends React.ElementType='span'>(props:TableSortLabelProps<C>)=>React.ReactElement|null;
+export const tableSortLabelClasses:Readonly<Record<'root'|'active'|'icon'|'directionAsc'|'directionDesc',string>>;
+export function getTableSortLabelUtilityClass(slot:string):string;
+export type PaginationItemType='page'|'first'|'last'|'previous'|'next'|'start-ellipsis'|'end-ellipsis';
+export interface UsePaginationProps {
+ count?:number;page?:number;defaultPage?:number;boundaryCount?:number;siblingCount?:number;disabled?:boolean;
+ showFirstButton?:boolean;showLastButton?:boolean;hideNextButton?:boolean;hidePrevButton?:boolean;componentName?:string;
+ onChange?:(event:React.ChangeEvent<unknown>,page:number)=>void;
+}
+export interface UsePaginationItem {
+ type:PaginationItemType;page:number|null;selected:boolean;disabled:boolean;onClick:React.ReactEventHandler; 'aria-current'?:'page';
+}
+export interface UsePaginationResult {items:UsePaginationItem[];}
+export function usePagination(props?:UsePaginationProps):UsePaginationResult;
+export interface PaginationItemOwnProps extends Omit<ButtonBaseOwnProps,'children'> {
+ page?:React.ReactNode;selected?:boolean;color?:'standard'|'primary'|'secondary'|(string&{});shape?:'circular'|'rounded';size?:'small'|'medium'|'large';variant?:'text'|'outlined';type?:PaginationItemType;
+ slots?:Partial<Record<'first'|'last'|'previous'|'next',React.ElementType>>;
+ slotProps?:Partial<Record<'first'|'last'|'previous'|'next',Record<string,unknown>|((state:PaginationItemOwnProps)=>Record<string,unknown>)>>;
+ components?:Partial<Record<'First'|'Last'|'Previous'|'Next',React.ElementType>>;
+}
+export type PaginationItemProps<C extends React.ElementType='button'>=PaginationItemOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof PaginationItemOwnProps>&{component?:C};
+export const PaginationItem:<C extends React.ElementType='button'>(props:PaginationItemProps<C>)=>React.ReactElement|null;
+export const paginationItemClasses:Readonly<Record<string,string>>;
+export function getPaginationItemUtilityClass(slot:string):string;
+export interface PaginationRenderItemParams extends UsePaginationItem {color:PaginationItemOwnProps['color'];shape:PaginationItemOwnProps['shape'];size:PaginationItemOwnProps['size'];variant:PaginationItemOwnProps['variant'];'aria-label'?:string;}
+export interface PaginationProps extends UsePaginationProps,Omit<React.HTMLAttributes<HTMLElement>,'onChange'|'children'|'defaultValue'> {
+ color?:PaginationItemOwnProps['color'];shape?:PaginationItemOwnProps['shape'];size?:PaginationItemOwnProps['size'];variant?:PaginationItemOwnProps['variant'];
+ classes?:Partial<Record<'root'|'ul'|'outlined'|'text',string>>;sx?:SxProps<Theme>;
+ getItemAriaLabel?:(type:PaginationItemType,page:number|null,selected:boolean)=>string;
+ renderItem?:(item:PaginationRenderItemParams)=>React.ReactNode;
+}
+export const Pagination:React.ForwardRefExoticComponent<PaginationProps&React.RefAttributes<HTMLElement>>;
+export const paginationClasses:Readonly<Record<'root'|'ul'|'outlined'|'text',string>>;
+export function getPaginationUtilityClass(slot:string):string;

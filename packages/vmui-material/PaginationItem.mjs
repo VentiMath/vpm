@@ -1,0 +1,1 @@
+import api from './table-navigation.cjs';export default api.PaginationItem;export const paginationItemClasses=api.paginationItemClasses,getPaginationItemUtilityClass=api.getPaginationItemUtilityClass;

@@ -1,0 +1,1 @@
+'use strict';const api=require('./table-navigation.cjs');module.exports=api.TableSortLabel;module.exports.default=api.TableSortLabel;module.exports.tableSortLabelClasses=api.tableSortLabelClasses;module.exports.getTableSortLabelUtilityClass=api.getTableSortLabelUtilityClass;

@@ -435,3 +435,14 @@ filterSchools(schoolOptions,{inputValue:'School',getOptionLabel:o=>o.label});
 const badAutocompleteValue:AutocompleteProps<string,true>={options:['A'],value:'A',renderInput:()=>null};
 // @ts-expect-error undeclared upstream value-mapping API is outside this application subset
 const unsupportedMappedAutocomplete:AutocompleteProps<{id:number}>={options:[{id:1}],getOptionValue:o=>o.id,renderInput:()=>null};
+
+import {TableSortLabel,Pagination,PaginationItem,usePagination,type PaginationRenderItemParams} from 'vmui-material';
+import PageControl from 'vmui-material/Pagination';
+import SortControl from 'vmui-material/TableSortLabel';
+React.createElement(TableSortLabel,{active:true,direction:'asc',onClick:()=>{},component:'button'});
+React.createElement(Pagination,{count:10,page:3,onChange:(event,page)=>{page.toFixed();},getItemAriaLabel:(type,page)=>String(page),renderItem:(item:PaginationRenderItemParams)=>React.createElement(PaginationItem,{...item,component:'a',href:'/page/'+item.page})});
+React.createElement(PageControl,{defaultPage:2,showFirstButton:true});
+React.createElement(SortControl,{IconComponent:()=>React.createElement('svg')});
+function PageHook(){return usePagination({count:10}).items.map(item=>React.createElement(PaginationItem,item));}
+// @ts-expect-error Sort direction is a bounded contract.
+React.createElement(TableSortLabel,{direction:'sideways'});

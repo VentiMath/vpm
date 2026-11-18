@@ -162,3 +162,6 @@ assert.match(renderToString(React.createElement(api.Table,null,React.createEleme
 
 assert.equal(api.Autocomplete,require('vmui-material/Autocomplete').default);assert.equal(api.createFilterOptions,require('vmui-material/Autocomplete').createFilterOptions);assert.equal(api.autocompleteClasses,require('vmui-material/autocompleteClasses').default);
 assert.match(renderToString(React.createElement(api.Autocomplete,{options:['School'],multiple:true,freeSolo:true,value:['New school'],renderInput:p=>React.createElement(api.TextField,{...p,label:'Schools'})})),/role="combobox"/);
+
+const navigation=renderToString(React.createElement(React.Fragment,null,React.createElement(api.TableSortLabel,{active:true},'Resource'),React.createElement(api.Pagination,{count:100,page:10,showLastButton:true})));
+assert.match(navigation,/MuiTableSortLabel-root/);assert.match(navigation,/aria-current="page"/);assert.match(navigation,/Go to last page/);assert.equal(api.usePagination,require('vmui-material/usePagination').default);

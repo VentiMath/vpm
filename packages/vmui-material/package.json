@@ -1437,6 +1437,76 @@
         "types": "./autocompleteClasses.d.cts",
         "default": "./autocompleteClasses.cjs"
       }
+    },
+    "./TableSortLabel": {
+      "import": {
+        "types": "./TableSortLabel.d.mts",
+        "default": "./TableSortLabel.mjs"
+      },
+      "require": {
+        "types": "./TableSortLabel.d.cts",
+        "default": "./TableSortLabel.cjs"
+      }
+    },
+    "./Pagination": {
+      "import": {
+        "types": "./Pagination.d.mts",
+        "default": "./Pagination.mjs"
+      },
+      "require": {
+        "types": "./Pagination.d.cts",
+        "default": "./Pagination.cjs"
+      }
+    },
+    "./PaginationItem": {
+      "import": {
+        "types": "./PaginationItem.d.mts",
+        "default": "./PaginationItem.mjs"
+      },
+      "require": {
+        "types": "./PaginationItem.d.cts",
+        "default": "./PaginationItem.cjs"
+      }
+    },
+    "./usePagination": {
+      "import": {
+        "types": "./usePagination.d.mts",
+        "default": "./usePagination.mjs"
+      },
+      "require": {
+        "types": "./usePagination.d.cts",
+        "default": "./usePagination.cjs"
+      }
+    },
+    "./tableSortLabelClasses": {
+      "import": {
+        "types": "./tableSortLabelClasses.d.mts",
+        "default": "./tableSortLabelClasses.mjs"
+      },
+      "require": {
+        "types": "./tableSortLabelClasses.d.cts",
+        "default": "./tableSortLabelClasses.cjs"
+      }
+    },
+    "./paginationClasses": {
+      "import": {
+        "types": "./paginationClasses.d.mts",
+        "default": "./paginationClasses.mjs"
+      },
+      "require": {
+        "types": "./paginationClasses.d.cts",
+        "default": "./paginationClasses.cjs"
+      }
+    },
+    "./paginationItemClasses": {
+      "import": {
+        "types": "./paginationItemClasses.d.mts",
+        "default": "./paginationItemClasses.mjs"
+      },
+      "require": {
+        "types": "./paginationItemClasses.d.cts",
+        "default": "./paginationItemClasses.cjs"
+      }
     }
   },
   "files": [

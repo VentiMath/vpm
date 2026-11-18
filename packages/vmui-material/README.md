@@ -828,8 +828,9 @@ overrides, CSS variables, RTL and `sx`. Custom section/row roots receive table
 roles. Synthetic caller checks cover compact sticky score grids, keyboard
 sorting, retained row/input/focus identity, scrolling, hydration and accessibility.
 The current Material 9.5.0 and app 7.2.0 controls agree on the verified contracts.
-These seven are part of the 65 independent components; Material is still partial;
-TableSortLabel, TablePagination and remaining families are still separate work.
+These seven are part of the 68 independent components; Material is still partial;
+TablePagination and remaining families are still separate work. TableSortLabel and
+numbered Pagination are now implemented below.
 
 [Table SSR measurements](bench/tables/README.md) use twenty-row synthetic results,
 coach scores and themed tables. These do not measure browser sorting throughput.
@@ -853,7 +854,7 @@ The independent Autocomplete covers WARML school entry (multiple/free-solo),
 practice and profile student selectors, ARML's View as field and the Hook Form
 example. It composes the owned TextField input, Chip, Paper and IconButton
 foundations, with Floating UI placement in the input's owner document. It adds
-no upstream runtime dependency. Material now has 65 independent components.
+no upstream runtime dependency. Material now has 68 independent components.
 
 Value, input text and popup state can be controlled separately. Supported
 behavior includes string/object options, custom labels/equality/disabled options,
@@ -879,3 +880,39 @@ selected and multiple-school fields. They measure SSR, not typing latency.
 The first isolated Autocomplete measurements do not establish a speed difference
 beyond same-code controls on Node 24 or Bun 1.4.4. All process samples are retained;
 functional independence and caller correctness are the demonstrated result.
+
+
+### Table sorting and numbered pagination
+
+`TableSortLabel`, `PaginationItem`, `Pagination`, and `usePagination` are independently
+implemented against Material 9.5.0, with comparisons against the app’s 7.2.0 API.
+VentiMath’s math-resources and contest-season tables use these through their shared
+DataTable and Material React Table. Browser checks mount the existing VPM table
+pagination caller, including its one-based page labels and zero-based table state.
+
+The controls support native keyboard activation, controlled and uncontrolled page
+state, bounded sibling/boundary windows, first/last/previous/next controls, translated
+labels, custom item renderers and link roots, current-page accessibility, RTL icons,
+resolved theme defaults/overrides, CSS-variable themes, sizes, colors and shapes.
+Changing parent state preserves focused page nodes. Hydration, refs and cleanup are
+checked in Chrome with production and development React.
+
+The page-window hook rejects invalid fractional, negative or nonfinite counts and
+window sizes, instead of constructing invalid ranges. Disabled and ellipsis hook
+callbacks remain inert even when called directly. Navigation icons use independent
+SVG geometry. Material 7’s deprecated icon/color class aliases are not reproduced;
+current utility classes and caller-provided classes are retained. Ellipsis roots
+preserve caller attributes rather than discarding them.
+
+[Navigation SSR measurements](bench/navigation/README.md) compare eight sort labels
+or eight paginators per render, using separate workers and same-code controls.
+These measurements do not measure browser interaction speed. Build
+`scripts/mui-material-conformance/navigation-build.cjs` before benchmarking.
+Material remains partial; these controls do not constitute a whole-package release.
+
+The recorded Bun medians are 23–27% higher for text pagination and 51–54%
+higher for outlined pagination. On Node, outlined pagination against app Material
+7 is 39% higher; the other Node directions are unestablished under the recorded
+control spread. Each case renders eight controls. These are measured SSR costs,
+not a browser speed claim; performance follow-up remains without relaxing the
+behavior or theme checks.
