@@ -1,0 +1,1593 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-19T05:18:11.999Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/eventemitter3-conformance/package-lock.json": "2ff2924e81cf1307f9c77db30ab537f95e3c4cee3abe0c74d546debef45ba6f1",
+    "PROVENANCE.json": "e1532c6c46792c1d4f6445657336a688ce6052b59f8e1cdfc42ede404b059ff7",
+    "bench/compare.cjs": "69c5ea791e416c0a92771f7a9166570eb5a682f5c1843fc5f0e9aa6106ef4c1c",
+    "index.cjs": "c7c0cf3bcbbd349793624342e9e994e8a60ca165bc6f9d0e6a409f61982d4015",
+    "index.mjs": "2eec4e7379172c97825dab2fe1c67c3283f0bf05548dde827987c7836654af9d",
+    "package.json": "7e7106028430d2486b84163d9755b271bb0d3c18d0ed7aafa64d2360716ccb97"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 35599,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "bind function and invoke",
+            "iterations": 307018,
+            "samples": [
+              26.00444925053255,
+              25.859366551798256,
+              25.53691314515763,
+              33.598466539421075,
+              26.380241549355418,
+              26.511882039489524,
+              26.285237347647286,
+              26.72047241529812,
+              26.099583737761254,
+              25.847699483417827,
+              25.72758926186746,
+              26.47700460559316
+            ]
+          },
+          {
+            "case": "lazy bound method construction and invoke",
+            "iterations": 319397,
+            "samples": [
+              36.21864012498537,
+              35.41973781845159,
+              35.50100971518217,
+              35.43708926508416,
+              35.845020460430206,
+              34.99667498442366,
+              36.45763109860138,
+              35.93568505652844,
+              35.183877744624965,
+              35.06046706763064,
+              35.159221908784616,
+              36.957663973049236
+            ]
+          },
+          {
+            "case": "memoized hit across 16 keys",
+            "iterations": 575218,
+            "samples": [
+              18.550575607856647,
+              18.330876293857145,
+              18.3793361821082,
+              18.752384313425473,
+              18.475894356574333,
+              18.78925207486549,
+              18.844811880017673,
+              18.441849872569986,
+              18.5095772385427,
+              18.82822338661168,
+              18.686320664513417,
+              18.609612355663337
+            ]
+          },
+          {
+            "case": "memoized construction and miss",
+            "iterations": 228802,
+            "samples": [
+              54.057840403493685,
+              53.02983802589135,
+              48.428698175715944,
+              48.54488597127699,
+              47.883283362907065,
+              47.64526970918096,
+              48.7464794888155,
+              48.87195042001388,
+              47.16250295014966,
+              48.59478501062078,
+              48.51137664880567,
+              47.423829337155844
+            ]
+          }
+        ],
+        "checksum": 103488
+      },
+      "vpm": {
+        "pid": 35610,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "bind function and invoke",
+            "iterations": 307018,
+            "samples": [
+              11.681995843891857,
+              12.05398706264773,
+              10.634555628660257,
+              9.823528262186553,
+              9.950286302431742,
+              11.776996788461885,
+              12.68858829124033,
+              11.667341979949088,
+              12.561286308946032,
+              11.58563992990635,
+              12.382961259600341,
+              11.291816766443663
+            ]
+          },
+          {
+            "case": "lazy bound method construction and invoke",
+            "iterations": 319397,
+            "samples": [
+              35.70621514917165,
+              35.62181235265202,
+              35.35451178314135,
+              35.528796450812095,
+              36.47159178076182,
+              35.90294210653195,
+              35.7255234081724,
+              35.25810511682946,
+              35.16965719778196,
+              34.74503204475956,
+              35.6665591724406,
+              36.7087543089007
+            ]
+          },
+          {
+            "case": "memoized hit across 16 keys",
+            "iterations": 575218,
+            "samples": [
+              10.990833040690708,
+              11.187207284890187,
+              10.936577089033939,
+              11.000467648787103,
+              10.993586779273263,
+              10.944980859430682,
+              10.937446324697614,
+              11.291805889245369,
+              11.10260110079994,
+              11.098979865025033,
+              11.528672607602811,
+              11.276738558250953
+            ]
+          },
+          {
+            "case": "memoized construction and miss",
+            "iterations": 228802,
+            "samples": [
+              25.35853270513337,
+              26.252685728271576,
+              26.82067901504349,
+              25.348882439838505,
+              25.837842326553016,
+              25.26274245854498,
+              27.728490135575257,
+              25.682319210496466,
+              26.16691287663558,
+              26.206248197131096,
+              26.940503142455036,
+              25.47635947238255
+            ]
+          }
+        ],
+        "checksum": 10688
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 35611,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "bind function and invoke",
+            "iterations": 557778,
+            "samples": [
+              12.225369232920619,
+              11.412470552800567,
+              11.788890920760576,
+              12.459706191352105,
+              11.315957244638543,
+              11.203979002398817,
+              12.65900949840257,
+              11.426065567304565,
+              12.219467243240107,
+              11.262394716177395,
+              11.329403454420968,
+              12.277809451071857
+            ]
+          },
+          {
+            "case": "lazy bound method construction and invoke",
+            "iterations": 313586,
+            "samples": [
+              35.47538155402337,
+              35.73222337731917,
+              35.70803862417328,
+              36.207770755071905,
+              35.96939914409421,
+              36.01125369117258,
+              38.49581932866886,
+              36.566922630474444,
+              35.528665182756946,
+              36.4426887679934,
+              35.312612807970034,
+              35.82935462680099
+            ]
+          },
+          {
+            "case": "memoized hit across 16 keys",
+            "iterations": 830863,
+            "samples": [
+              10.962297033325566,
+              11.00492259253335,
+              11.342372930314589,
+              11.081450251124329,
+              11.00677849416812,
+              11.011141427648196,
+              11.078140439518952,
+              11.152510100943243,
+              11.094338055732335,
+              11.060889701430868,
+              11.031953523023725,
+              10.954623084672123
+            ]
+          },
+          {
+            "case": "memoized construction and miss",
+            "iterations": 414287,
+            "samples": [
+              25.976154211935143,
+              26.602229855148877,
+              24.176778416894816,
+              28.449381708815626,
+              26.137276815347914,
+              27.00523308720759,
+              26.399271519502424,
+              26.51302116648585,
+              26.45348031678526,
+              26.478827479500907,
+              27.714784678254315,
+              25.844001863442116
+            ]
+          }
+        ],
+        "checksum": 138368
+      },
+      "upstream": {
+        "pid": 35612,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "bind function and invoke",
+            "iterations": 557778,
+            "samples": [
+              25.81829150665674,
+              26.457882885305608,
+              25.41953608783419,
+              26.13233580385023,
+              25.811792505261923,
+              25.89822294891511,
+              26.215924615169442,
+              25.459801211234584,
+              26.1244921814772,
+              26.250660657107318,
+              30.628151343366,
+              26.757808662227614
+            ]
+          },
+          {
+            "case": "lazy bound method construction and invoke",
+            "iterations": 313586,
+            "samples": [
+              35.60546389188269,
+              35.40642120502847,
+              35.97364997161873,
+              36.8790379672562,
+              35.25202655730795,
+              35.94388780111376,
+              35.85632649416722,
+              35.18997659334276,
+              35.13709157934352,
+              34.27329345060038,
+              35.233690279540696,
+              37.0661222120886
+            ]
+          },
+          {
+            "case": "memoized hit across 16 keys",
+            "iterations": 830863,
+            "samples": [
+              18.767585029060168,
+              19.37874595450756,
+              18.91507264133795,
+              19.084926155094113,
+              18.618643506811647,
+              19.153076981403693,
+              17.961194565169194,
+              19.05764367892194,
+              18.92976459416303,
+              18.68769821258127,
+              19.054935651244417,
+              18.854492256846275
+            ]
+          },
+          {
+            "case": "memoized construction and miss",
+            "iterations": 414287,
+            "samples": [
+              48.709389867410465,
+              49.14819436767286,
+              48.18398839451875,
+              48.57482131952033,
+              49.596656424169346,
+              48.60790949269485,
+              49.224733095655786,
+              49.02348372022297,
+              49.12888649655898,
+              49.5786544110726,
+              47.820110213450995,
+              48.93839777738593
+            ]
+          }
+        ],
+        "checksum": 6912
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 35613,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "bind function and invoke",
+            "iterations": 441968,
+            "samples": [
+              25.95201010027873,
+              25.484876733157133,
+              29.896773069543478,
+              23.77594757991528,
+              26.21579164102381,
+              26.55716250950294,
+              26.036387249755638,
+              25.86329779531547,
+              25.863392824819886,
+              25.587542537016255,
+              27.543283676646265,
+              25.808146743655577
+            ]
+          },
+          {
+            "case": "lazy bound method construction and invoke",
+            "iterations": 207285,
+            "samples": [
+              36.907919048652616,
+              36.267096027209234,
+              34.5518682007866,
+              35.26605880792132,
+              35.795325276793,
+              34.76413633403301,
+              35.67270183563682,
+              35.72999493451049,
+              36.30468678389686,
+              34.69699688834233,
+              34.6527727524905,
+              35.53863038811298
+            ]
+          },
+          {
+            "case": "memoized hit across 16 keys",
+            "iterations": 578207,
+            "samples": [
+              18.722101254395024,
+              18.74494428465921,
+              18.484224507832046,
+              18.88409687188166,
+              18.92034340642716,
+              17.999104127068623,
+              18.59015542876516,
+              18.456914219302096,
+              18.74235178750859,
+              18.3948672361282,
+              18.304717860558664,
+              19.40762564271968
+            ]
+          },
+          {
+            "case": "memoized construction and miss",
+            "iterations": 228986,
+            "samples": [
+              48.824674870952734,
+              48.403435144506645,
+              47.92123099228781,
+              48.39142130959976,
+              48.168337802311825,
+              48.826129108329496,
+              48.79483461871062,
+              49.47682391063232,
+              48.87853405885025,
+              49.56544068196399,
+              47.7365428454143,
+              46.869498571964385
+            ]
+          }
+        ],
+        "checksum": 107200
+      },
+      "vpm": {
+        "pid": 35614,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "bind function and invoke",
+            "iterations": 441968,
+            "samples": [
+              12.282941298917612,
+              11.78149096767187,
+              11.270519585128287,
+              11.874162835318437,
+              11.60529042826629,
+              12.332623628860013,
+              11.934121927379332,
+              11.458220957173364,
+              12.009729211164622,
+              12.223830684574475,
+              11.820238116786722,
+              11.301440375773765
+            ]
+          },
+          {
+            "case": "lazy bound method construction and invoke",
+            "iterations": 207285,
+            "samples": [
+              36.38046650746568,
+              34.966553296186405,
+              35.63330679981649,
+              41.020011095834285,
+              36.517557951612574,
+              37.270144969486545,
+              34.332561449212434,
+              34.82785536821283,
+              35.95894541331962,
+              36.42770581566428,
+              35.91532431193763,
+              34.99469329666881
+            ]
+          },
+          {
+            "case": "memoized hit across 16 keys",
+            "iterations": 578207,
+            "samples": [
+              11.101921976039566,
+              11.114242823072013,
+              11.05126018882506,
+              11.011482047087048,
+              10.956932378888528,
+              10.972641285906313,
+              10.943385327400039,
+              10.926522854272006,
+              11.12988082122842,
+              10.958229492206144,
+              11.251017369212004,
+              11.219668734553393
+            ]
+          },
+          {
+            "case": "memoized construction and miss",
+            "iterations": 228986,
+            "samples": [
+              24.643248932249215,
+              25.09414549361107,
+              25.83782414645455,
+              24.55390285868981,
+              25.17948695553451,
+              23.480693142812292,
+              22.762129562506136,
+              25.05993816215847,
+              24.89235149747166,
+              25.93353305442237,
+              25.72155066248624,
+              25.85929707493043
+            ]
+          }
+        ],
+        "checksum": 10496
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 35615,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "bind function and invoke",
+            "iterations": 622908,
+            "samples": [
+              12.340639388160051,
+              12.032542526344148,
+              11.566314768794138,
+              12.416761383703529,
+              11.700965471626622,
+              11.644242809532091,
+              12.239435036955703,
+              12.014682746087685,
+              11.825381918357097,
+              11.981103148458505,
+              12.417965413833194,
+              12.228732011789834
+            ]
+          },
+          {
+            "case": "lazy bound method construction and invoke",
+            "iterations": 303227,
+            "samples": [
+              35.83976031158165,
+              35.77503982165178,
+              36.3451572584235,
+              36.242099153439256,
+              37.063404644045406,
+              34.82388441662505,
+              35.26249971143732,
+              35.652197858370045,
+              35.964254502402625,
+              36.8888951181787,
+              35.68970771072466,
+              36.068961537066386
+            ]
+          },
+          {
+            "case": "memoized hit across 16 keys",
+            "iterations": 901168,
+            "samples": [
+              11.108500301830517,
+              11.036926522024809,
+              11.01704454663286,
+              11.09009751788794,
+              11.113123191236202,
+              11.11113577046681,
+              10.997671910232063,
+              11.042798900981829,
+              11.190199829554532,
+              11.100548399410565,
+              11.04672824600966,
+              11.00155575874856
+            ]
+          },
+          {
+            "case": "memoized construction and miss",
+            "iterations": 427553,
+            "samples": [
+              26.553725503036734,
+              23.529831389324823,
+              26.78527574359208,
+              25.782768452098367,
+              25.690576372987277,
+              25.94571199360078,
+              26.104756603274865,
+              25.30524402822554,
+              25.631617600625034,
+              26.219458172437555,
+              25.633956491943714,
+              25.331556555561907
+            ]
+          }
+        ],
+        "checksum": 146112
+      },
+      "upstream": {
+        "pid": 35616,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "bind function and invoke",
+            "iterations": 622908,
+            "samples": [
+              25.913001598952047,
+              26.223442306086923,
+              25.991265162752818,
+              25.664772325929317,
+              26.16939419625372,
+              25.827717736808683,
+              25.844639978937522,
+              25.681294830055208,
+              26.22812518060455,
+              25.355737925985924,
+              25.964709074213232,
+              26.073673800946487
+            ]
+          },
+          {
+            "case": "lazy bound method construction and invoke",
+            "iterations": 303227,
+            "samples": [
+              35.484828198016984,
+              36.052472240268955,
+              35.338897921359454,
+              35.405267340968834,
+              34.662012287824254,
+              35.838935846741975,
+              36.2944526707717,
+              36.66958417291322,
+              35.80087195401487,
+              36.423619928304525,
+              36.51032394872492,
+              34.388840703499476
+            ]
+          },
+          {
+            "case": "memoized hit across 16 keys",
+            "iterations": 901168,
+            "samples": [
+              18.725512889938354,
+              18.511763622321318,
+              18.208036681284735,
+              19.108488095449356,
+              18.362650471388083,
+              18.50797187649798,
+              18.35987629387642,
+              18.67243399676864,
+              18.62115831898161,
+              19.00020306979378,
+              18.276836283578536,
+              18.825939225538395
+            ]
+          },
+          {
+            "case": "memoized construction and miss",
+            "iterations": 427553,
+            "samples": [
+              48.73011766962193,
+              48.63977799243591,
+              48.12229828816574,
+              48.66677347603723,
+              48.71131064452838,
+              48.09647458911508,
+              48.055349863058126,
+              48.86850285227792,
+              48.21634043030874,
+              48.60800883165368,
+              48.5709748265127,
+              49.68341000998712
+            ]
+          }
+        ],
+        "checksum": 6720
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 35622,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "bind function and invoke",
+            "iterations": 428235,
+            "samples": [
+              25.41361635550576,
+              24.792364005744535,
+              26.828143425922704,
+              26.17604819783528,
+              25.68109098976025,
+              26.718488680280736,
+              25.284306513946806,
+              26.31810337781824,
+              26.938771935969665,
+              26.117669036860637,
+              25.63030111971234,
+              26.46162037199203
+            ]
+          },
+          {
+            "case": "lazy bound method construction and invoke",
+            "iterations": 317934,
+            "samples": [
+              35.55415589399041,
+              35.90380707945666,
+              35.477753244384054,
+              35.302006076732866,
+              35.12246252366829,
+              35.925041046254826,
+              35.97064799612492,
+              35.93028427283644,
+              35.53462982883219,
+              35.40488591971901,
+              35.46896840224702,
+              35.905382878207654
+            ]
+          },
+          {
+            "case": "memoized hit across 16 keys",
+            "iterations": 578633,
+            "samples": [
+              18.142185115608648,
+              18.602393918079336,
+              18.7652052337146,
+              18.849166915817086,
+              18.671954416702842,
+              18.595911398071028,
+              18.70731016032611,
+              18.943499593006212,
+              18.560916850577133,
+              18.88834027786189,
+              18.906054442107493,
+              18.660143821731545
+            ]
+          },
+          {
+            "case": "memoized construction and miss",
+            "iterations": 224492,
+            "samples": [
+              48.35175863727905,
+              47.82983803431822,
+              48.74264116315932,
+              48.34396771377167,
+              49.15858471571369,
+              47.96941539119414,
+              49.702773372770984,
+              47.4458288045904,
+              48.48391033978867,
+              48.45477344404297,
+              47.62994672415945,
+              49.57600716283922
+            ]
+          }
+        ],
+        "checksum": 110400
+      },
+      "vpm": {
+        "pid": 35623,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "bind function and invoke",
+            "iterations": 428235,
+            "samples": [
+              26.129344869055565,
+              27.35063691664625,
+              27.04979041881208,
+              25.72828003315938,
+              26.496451714595974,
+              26.5456863637956,
+              25.716699942788406,
+              25.988555349282528,
+              26.82804534893232,
+              25.862552103401132,
+              25.295106658727207,
+              27.345480869148904
+            ]
+          },
+          {
+            "case": "lazy bound method construction and invoke",
+            "iterations": 317934,
+            "samples": [
+              34.36785307642489,
+              35.6302974831254,
+              35.12586889102789,
+              34.671243088187936,
+              36.02254555977041,
+              34.72903495694055,
+              35.341847679078256,
+              34.94947064485083,
+              36.10065296570983,
+              35.96593003579364,
+              35.88205413702192,
+              43.842039542798354
+            ]
+          },
+          {
+            "case": "memoized hit across 16 keys",
+            "iterations": 578633,
+            "samples": [
+              18.93017681328232,
+              18.946810845561895,
+              18.290450078028844,
+              19.062600992338883,
+              18.93960938971693,
+              19.124241099280567,
+              18.566099755803844,
+              18.320047422113888,
+              18.609089008058643,
+              18.507701772971778,
+              18.580573524150964,
+              18.51605421743997
+            ]
+          },
+          {
+            "case": "memoized construction and miss",
+            "iterations": 224492,
+            "samples": [
+              49.6808705878156,
+              48.7307654615749,
+              50.394334764712774,
+              49.083967357410884,
+              47.94120503180577,
+              48.715918607344534,
+              49.78722627086978,
+              47.20639488266825,
+              48.70700960390587,
+              48.84305454091958,
+              49.6175810273866,
+              49.87723838711357
+            ]
+          }
+        ],
+        "checksum": 7744
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 35624,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "bind function and invoke",
+            "iterations": 388512,
+            "samples": [
+              25.85730942673584,
+              25.630804196524178,
+              26.143550263569722,
+              25.921549398731628,
+              25.244072255168444,
+              25.95897938802405,
+              27.20711586772094,
+              26.74756506877523,
+              28.404419940696826,
+              29.315483176838907,
+              28.096087122148056,
+              30.07157307882374
+            ]
+          },
+          {
+            "case": "lazy bound method construction and invoke",
+            "iterations": 107865,
+            "samples": [
+              35.1801603856674,
+              38.19280582209236,
+              36.721058730820886,
+              36.02573587354572,
+              36.589329254160305,
+              35.50193297176956,
+              34.82130440828787,
+              37.392036341723085,
+              35.7549622212943,
+              36.394261345200846,
+              35.61009595327517,
+              34.85799842395571
+            ]
+          },
+          {
+            "case": "memoized hit across 16 keys",
+            "iterations": 558243,
+            "samples": [
+              18.95120046288091,
+              18.735941158241104,
+              18.6510032369416,
+              18.764229914213026,
+              18.955379646498116,
+              19.079952637113234,
+              19.102643472466237,
+              18.563002133479692,
+              19.194150217736777,
+              19.028525212138923,
+              18.297587251429807,
+              18.86312770603485
+            ]
+          },
+          {
+            "case": "memoized construction and miss",
+            "iterations": 229951,
+            "samples": [
+              49.04541402298713,
+              48.644058951689146,
+              48.724871820517876,
+              47.915642897835106,
+              48.30648703419412,
+              47.940830872664215,
+              50.11828606964011,
+              48.69932289922667,
+              49.25795495562091,
+              47.25444986105698,
+              47.77938343386177,
+              48.3057607925169
+            ]
+          }
+        ],
+        "checksum": 106624
+      },
+      "upstream": {
+        "pid": 35653,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "bind function and invoke",
+            "iterations": 388512,
+            "samples": [
+              26.240502223869534,
+              26.326406906350396,
+              27.149635017708643,
+              27.423971460341047,
+              26.525456099168146,
+              25.238067292644782,
+              26.402873012931405,
+              26.535216415451828,
+              26.14290678280209,
+              26.646965859484393,
+              27.97468289267766,
+              28.7041764475744
+            ]
+          },
+          {
+            "case": "lazy bound method construction and invoke",
+            "iterations": 107865,
+            "samples": [
+              36.137375422982586,
+              36.627580772261496,
+              35.83105734019368,
+              35.68310387985017,
+              35.18325684883852,
+              33.446901219116576,
+              35.898651091642336,
+              35.629407129281944,
+              34.70966485885153,
+              34.76143327307195,
+              35.426996708849906,
+              34.82092430352721
+            ]
+          },
+          {
+            "case": "memoized hit across 16 keys",
+            "iterations": 558243,
+            "samples": [
+              18.58405031500618,
+              18.09292727360679,
+              18.20570790856321,
+              18.91141850412822,
+              18.846557861003088,
+              18.816477770433398,
+              18.533520348665245,
+              18.80013005089184,
+              18.646001830743945,
+              18.844094775930927,
+              18.370136302649556,
+              18.877680508309044
+            ]
+          },
+          {
+            "case": "memoized construction and miss",
+            "iterations": 229951,
+            "samples": [
+              48.718713986892176,
+              48.31482359285248,
+              48.97275071645763,
+              47.76398015229342,
+              49.10303499441135,
+              47.699109810351146,
+              47.29992911533376,
+              44.75880948549951,
+              52.35952442041995,
+              48.10571817474159,
+              47.89897412927142,
+              49.96082643693679
+            ]
+          }
+        ],
+        "checksum": 9472
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "bind function and invoke",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 26.19241054270427,
+          "vpmNs": 11.674668911920472,
+          "changePct": -55.427283438131745
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 26.128413992663717,
+          "vpmNs": 11.60747824403257,
+          "changePct": -55.57526665303261
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 25.90770146254931,
+          "vpmNs": 11.84720047605258,
+          "changePct": -54.27151075838119
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 25.93885533658264,
+          "vpmNs": 12.023612636215915,
+          "changePct": -53.646325251451955
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 26.14685861734796,
+          "vpmNs": 26.312898291825768,
+          "changePct": 0.6350272394391787
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 26.530336257309987,
+          "vpmNs": 26.445557666172476,
+          "changePct": -0.3195533984766241
+        }
+      ]
+    },
+    {
+      "case": "lazy bound method construction and invoke",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 35.469049490133166,
+          "vpmNs": 35.644185762546314,
+          "changePct": 0.49377210534460314
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 35.50594254845558,
+          "vpmNs": 35.8993768854476,
+          "changePct": 1.1080802501020726
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 35.605666111874896,
+          "vpmNs": 35.937134862628625,
+          "changePct": 0.9309438270646009
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 35.81990390037842,
+          "vpmNs": 35.90200740699214,
+          "changePct": 0.22921196785470332
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 35.544392861411296,
+          "vpmNs": 35.48607258110183,
+          "changePct": -0.16407730056569036
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 35.52820191906592,
+          "vpmNs": 35.89034904742001,
+          "changePct": 1.019322985100879
+        }
+      ]
+    },
+    {
+      "case": "memoized hit across 16 keys",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 18.580093981759994,
+          "vpmNs": 11.049723756906069,
+          "changePct": -40.52923646267054
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 18.922418617750488,
+          "vpmNs": 11.046421612227297,
+          "changePct": -41.622570373403434
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 18.656128341580093,
+          "vpmNs": 11.031371117956054,
+          "changePct": -40.869986977042075
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 18.566460970651463,
+          "vpmNs": 11.0684128819488,
+          "changePct": -40.38490749828436
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 18.689632288514474,
+          "vpmNs": 18.594831266104805,
+          "changePct": -0.5072385638530075
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 18.723065940817893,
+          "vpmNs": 18.90716408445788,
+          "changePct": 0.9832692157465406
+        }
+      ]
+    },
+    {
+      "case": "memoized construction and miss",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 48.52813131004133,
+          "vpmNs": 26.002377601594297,
+          "changePct": -46.41792935427962
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 48.98094074880445,
+          "vpmNs": 26.466153898143084,
+          "changePct": -45.966423891543805
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 48.599134881608634,
+          "vpmNs": 25.07704182788477,
+          "changePct": -48.40022998562743
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 48.623893412044794,
+          "vpmNs": 25.736672412542823,
+          "changePct": -47.06990615817798
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 48.40326604066101,
+          "vpmNs": 48.96351094916523,
+          "changePct": 1.1574526975795196
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 48.21027088379704,
+          "vpmNs": 48.47527299294163,
+          "changePct": 0.5496797762936101
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "bind function and invoke",
+      "upstream_ns": 26,
+      "vpm_ns": 12,
+      "change_pct": -54.8,
+      "upstream_first_pct": -54.8,
+      "vpm_first_pct": -54.6,
+      "process_range_pct": "-55.4, -55.6, -54.3, -53.6",
+      "control_max_abs_pct": 0.6,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "lazy bound method construction and invoke",
+      "upstream_ns": 36,
+      "vpm_ns": 36,
+      "change_pct": 0.7,
+      "upstream_first_pct": 0.7,
+      "vpm_first_pct": 0.7,
+      "process_range_pct": "0.5, 1.1, 0.9, 0.2",
+      "control_max_abs_pct": 1,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "memoized hit across 16 keys",
+      "upstream_ns": 19,
+      "vpm_ns": 11,
+      "change_pct": -40.7,
+      "upstream_first_pct": -40.7,
+      "vpm_first_pct": -41,
+      "process_range_pct": "-40.5, -41.6, -40.9, -40.4",
+      "control_max_abs_pct": 1,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "memoized construction and miss",
+      "upstream_ns": 49,
+      "vpm_ns": 26,
+      "change_pct": -46.7,
+      "upstream_first_pct": -47.4,
+      "vpm_first_pct": -46.5,
+      "process_range_pct": "-46.4, -46.0, -48.4, -47.1",
+      "control_max_abs_pct": 1.2,
+      "evidence": "lower time in every pair, beyond control spread"
+    }
+  ]
+}

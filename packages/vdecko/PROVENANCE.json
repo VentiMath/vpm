@@ -1,0 +1,25 @@
+{
+  "upstream": {
+    "name": "decko",
+    "version": "1.2.0",
+    "repository": "https://github.com/developit/decko",
+    "integrity": "sha512-m8FnyHXV1QX+S1cl+KPFDIl6NMkxtKsy6+U/aYyjrOqWMuwAwYWu7ePqrsUHtDR5Y8Yk2pi/KIDSgF+vT4cPOQ=="
+  },
+  "checked": "2026-11-18",
+  "license": "MIT",
+  "implementation": {
+    "kind": "independent",
+    "targetScope": "The bind, memoize and debounce function API and legacy method decorators used by Redoc. No runtime dependencies."
+  },
+  "source": "Written independently from public documentation, type declarations and behavioral probes. No upstream runtime code copied.",
+  "changes": [
+    "Memoizing __proto__ stores a real own cache entry without changing the supplied cache prototype.",
+    "Delayed callbacks retire pending state before invocation so exceptions do not disable the wrapper and recursive calls schedule the next window.",
+    "Declarations cover the documented function API and actual option objects; no Babel runtime is required."
+  ],
+  "caller": {
+    "revision": "d0a71aaf413afad1f5a95f6496e0654e145b59f0",
+    "path": "MockApiDoc -> Redoc 2.5.0 -> decko 1.2.0",
+    "verified": "Unchanged HistoryService and ScrollService in Chrome; no application adoption claim."
+  }
+}

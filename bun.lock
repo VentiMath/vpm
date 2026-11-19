@@ -137,6 +137,10 @@
         "vms": "workspace:*",
       },
     },
+    "packages/vdecko": {
+      "name": "vdecko",
+      "version": "1.2.0",
+    },
     "packages/vdepd": {
       "name": "vdepd",
       "version": "0.1.0",
@@ -1945,6 +1949,8 @@
     "vdate-fns": ["vdate-fns@workspace:packages/vdate-fns"],
 
     "vdebug": ["vdebug@workspace:packages/vdebug"],
+
+    "vdecko": ["vdecko@workspace:packages/vdecko"],
 
     "vdepd": ["vdepd@workspace:packages/vdepd"],
 
