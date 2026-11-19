@@ -5,6 +5,24 @@ Adoption here means a VPM artifact is reachable from VentiMath's committed
 production dependencies. It does not prove that every installed module reaches
 the production bundle or that the corresponding commit has been deployed.
 
+## Dependency removal on November 18, 2026
+
+Application main `211e2186` removes styled-components, the unused Redoc API-docs
+viewer and their dependency chain. Its manifest and lockfile no longer contain
+styled-components, css-to-react-native or the vcss-to-react-native override.
+The converter was installed but never executed by the app; its only importer
+was styled-components' native entry. No converter bug caused the removal.
+
+The VPM converter and helpers remain implemented and tested. They should not be
+counted as currently adopted merely because an earlier app revision installed
+them. Redoc service/SSR checks for vdecko, veventemitter3 and vclassnames remain
+valid historical compatibility evidence, but the removed viewer is no longer an
+active VentiMath caller. The proposed url-template work is therefore deferred
+unless another current caller establishes a need. This is a main-branch dependency
+check, not a production-deployment assertion.
+
+## Earlier adoption baseline
+
 Verified November 8, 2026 against application main `e14f4023`, using its frontend
 and Functions manifests, lockfiles and relevant imports:
 

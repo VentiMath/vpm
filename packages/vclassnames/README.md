@@ -1,7 +1,8 @@
 # vclassnames
 
 Independent conditional class names targeting **classnames 2.5.1**, with no
-runtime dependencies. VentiMath's Redoc documentation page is a current caller.
+runtime dependencies. VentiMath's former Redoc documentation viewer was the recorded caller; app
+main `211e2186` removes it.
 This is separate from `vclsx`: it preserves classnames' custom stringification,
 CSS-module binding and optional deduplication contracts.
 

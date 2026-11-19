@@ -94,8 +94,8 @@ live push registration or Amplify DataStore. Publication and adoption are separa
 
 ## Documentation class names
 
-[vclassnames](../packages/vclassnames) replaces the dependency beneath Redoc on
-`MockApiDoc.tsx`, not a direct contest-page dependency. Its default, CSS-module
+[vclassnames](../packages/vclassnames) was built against the dependency beneath
+Redoc on `MockApiDoc.tsx`, removed in app main `211e2186`. Its default, CSS-module
 binding and dedupe APIs are independently built. An unchanged Redoc 2.5.0 renders
 a synthetic API identically on Node and Bun through the replacement. Types and
 packed installs pass; publication and application adoption remain separate.
@@ -110,21 +110,26 @@ This is a data-ownership and standards-coverage change, not a claimed speedup.
 
 ## CSS-to-native dependency chain
 
-`vcss-to-react-native` now independently covers the 3.2.0 converter and its
-shorthands using `vpostcss-value-parser`, `vcamelize` and
-`vcss-color-keywords`. Public API tests, malformed-input checks and the unchanged
-styled-components 6.1.17 native caller verify the chain. VentiMath's direct
-styled-components usage is currently the **web** iframe `StyleSheetManager` demo;
-it does not exercise native style conversion. The converter can replace the
-installed dependency without claiming that styled-components itself is rewritten
-or that the browser application has adopted this release.
+`vcss-to-react-native` independently covers the 3.2.0 converter and its shorthands
+using `vpostcss-value-parser`, `vcamelize` and `vcss-color-keywords`. Public API
+tests, malformed-input checks and the unchanged styled-components 6.1.17 native
+caller verify the library chain.
+
+App main `211e2186` removes styled-components, css-to-react-native and the converter
+override. The converter was installed but never executed; its only importer was
+the native entry. No package bug caused removal. These implementations remain
+built, but this removed dependency chain is no longer an app adoption target.
 
 ## API documentation helpers
 
-[vdecko](../packages/vdecko) now independently supplies the binding, memoization
-and delayed-call decorators beneath Redoc, alongside
+[vdecko](../packages/vdecko) independently supplies the binding, memoization and
+delayed-call decorators used by Redoc, alongside
 [veventemitter3](../packages/veventemitter3). Unchanged history and scrolling
-services pass in Chrome with each replacement; neither is adopted by the app yet.
-The next untouched leaf candidate is `url-template`: Redoc's OpenAPI utility uses
-it to serialize query, path and header parameters. The current package is 3.1.1;
-Redoc's 2.0.8 contract must be checked as an existing caller when building it.
+services pass in Chrome with each replacement. App main `211e2186` removes the
+unused Redoc viewer, so these are historical caller checks, not evidence of a
+current app need or adoption.
+
+The previously suggested `url-template` leaf served Redoc's OpenAPI parameter
+serialization. It is no longer next in line without another verified app caller.
+AccordionSummary/AccordionDetails remain the next Material unit for WARML, HMMT
+and public article notices.

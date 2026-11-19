@@ -28,7 +28,8 @@ only. Upstream treats that valid string as a request to clear every event.
 Omitting the argument still clears everything. Undocumented mutation of internal
 storage is not a supported API.
 
-VentiMath's public API documentation uses Redoc, which depends on EventEmitter3.
+VentiMath's former API documentation viewer used Redoc and EventEmitter3.
+App main `211e2186` removes that unused viewer; this is a historical caller.
 The [conformance checks](../../scripts/eventemitter3-conformance/README.md) exercise
 its unchanged history and scroll services with this implementation. This does
 not mean VentiMath has adopted the package or that every Redoc interaction has

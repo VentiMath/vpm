@@ -28,7 +28,8 @@ user code, so recursive calls schedule another window and exceptions cannot
 permanently disable the wrapper. Declarations include the function forms and
 actual option objects that upstream's old declarations omit.
 
-The app's caller is Redoc's history and scrolling services. Those unchanged
+The recorded caller was Redoc's history and scrolling services. App main
+`211e2186` removes that unused viewer. Those unchanged
 services pass in Chrome with only Decko replaced. This does not claim app adoption
 or verification of every Redoc screen. Node 24 and Bun 1.4.4 are tested.
 
