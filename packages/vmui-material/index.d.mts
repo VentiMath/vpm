@@ -841,3 +841,10 @@ export const badgeClasses:Readonly<Record<BadgeClassKey,string>>;
 export function getBadgeUtilityClass(slot:string):string;
 export const BadgeRoot:React.ComponentType<BadgeElementProps>;
 export const BadgeMark:React.ComponentType<BadgeElementProps&{ownerState:BadgeOwnerState}>;
+
+export type ListItemButtonClassKey='root'|'focusVisible'|'dense'|'alignItemsFlexStart'|'disabled'|'divider'|'gutters'|'selected';
+export interface ListItemButtonOwnProps extends ButtonBaseOwnProps {alignItems?:'center'|'flex-start';autoFocus?:boolean;dense?:boolean;disableGutters?:boolean;divider?:boolean;selected?:boolean;href?:string;classes?:Partial<Record<ListItemButtonClassKey,string>>;}
+export type ListItemButtonProps<C extends React.ElementType='div'>=ListItemButtonOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof ListItemButtonOwnProps>&{component?:C};
+export const ListItemButton:<C extends React.ElementType='div'>(props:ListItemButtonProps<C>)=>React.ReactElement|null;
+export const listItemButtonClasses:Readonly<Record<ListItemButtonClassKey,string>>;
+export function getListItemButtonUtilityClass(slot:string):string;

@@ -459,3 +459,11 @@ Tooltip/IconButton/Badge caller, retained nodes/focus, hidden exit content,
 keyboard activation, root/slot cleanup, hydration and current RTL. Legacy RTL
 mirroring is asserted separately. Owned reduced-motion and forced-colors checks
 are explicit. `badge-build.cjs` prepares isolated `bench/badge.cjs` comparisons.
+
+ListItemButton adds 778 current/app markup comparisons and 320 browser snapshots
+per mode, plus native/custom-root keyboard activation, focus-visible styling,
+autofocus, disabled handling, refs, stable focused nodes and hydration. The
+current 36px icon minimum and disabled synthetic-click suppression differ from
+app7's 56px and permissive synthetic click; each is checked explicitly. Synthetic
+Fuse-shaped navigation and theme overrides exercise the inspected caller props.
+Dense text descendants no longer receive the root-only dense class.

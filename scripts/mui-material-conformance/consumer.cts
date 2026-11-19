@@ -421,3 +421,10 @@ React.createElement(BadgeEntry,{variant:'dot',classes:{badge:badgeClasses.badge}
 React.createElement(Badge,{variant:'filled'});
 // @ts-expect-error max is numeric
 React.createElement(Badge,{max:'99'});
+
+import {ListItemButton as NavItem,type ListItemButtonProps} from 'vmui-material';
+const navProps:ListItemButtonProps<'a'>={component:'a',href:'#contests',dense:true,selected:true,alignItems:'flex-start'};
+React.createElement(NavItem,navProps);
+// @ts-expect-error unsupported alignment
+const badNav:ListItemButtonProps={alignItems:'stretch'};
+void badNav;

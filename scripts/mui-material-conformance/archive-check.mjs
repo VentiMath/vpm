@@ -174,3 +174,6 @@ assert.equal((await import('vmui-material/Alert')).default,api.Alert);assert.equ
 
 const badgeHtml=renderToString(React.createElement(api.Badge,{badgeContent:120,color:'error'},'Reading list'));
 assert.match(badgeHtml,/>99\+<\/span>/);assert.match(badgeHtml,/aria-hidden="true"/);assert.equal((await import('vmui-material/Badge')).default,api.Badge);
+
+assert.equal(api.ListItemButton, (await import("vmui-material/ListItemButton")).default);
+assert.match(renderToString(React.createElement(api.ListItemButton,{href:"#contests",disableRipple:true},"Contests")), /href="#contests"/);

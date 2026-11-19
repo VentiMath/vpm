@@ -1587,6 +1587,26 @@
         "types": "./badgeClasses.d.cts",
         "default": "./badgeClasses.cjs"
       }
+    },
+    "./ListItemButton": {
+      "import": {
+        "types": "./ListItemButton.d.mts",
+        "default": "./ListItemButton.mjs"
+      },
+      "require": {
+        "types": "./ListItemButton.d.cts",
+        "default": "./ListItemButton.cjs"
+      }
+    },
+    "./listItemButtonClasses": {
+      "import": {
+        "types": "./listItemButtonClasses.d.mts",
+        "default": "./listItemButtonClasses.mjs"
+      },
+      "require": {
+        "types": "./listItemButtonClasses.d.cts",
+        "default": "./listItemButtonClasses.cjs"
+      }
     }
   },
   "files": [

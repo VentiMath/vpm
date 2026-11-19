@@ -29,10 +29,10 @@ inventory. The entire upstream Motion API is **not** complete.
 
 ## Material
 
-[vmui-material](../packages/vmui-material) now has 72 independently implemented
+[vmui-material](../packages/vmui-material) now has 73 independently implemented
 components. It covers button controls; text/icons; Box/Paper/Divider; the form,
 input, Select, checkbox/radio/switch foundation; menus; Chip, Avatar, loading
-spinners, LinearProgress and Alert/AlertTitle feedback and Badge counts, Skeleton placeholders, Container page layouts and Card/CardContent panels and their linked CardActionArea roots, plus AvatarGroup, Tooltip, Collapse, Slide, Drawer, SwipeableDrawer, the seven Table primitives, TableSortLabel, PaginationItem, Pagination, Autocomplete and Dialog with its title/content/action/description components. Its resolved-theme bridge is built,
+spinners, LinearProgress and Alert/AlertTitle feedback and Badge counts and ListItemButton navigation, Skeleton placeholders, Container page layouts and Card/CardContent panels and their linked CardActionArea roots, plus AvatarGroup, Tooltip, Collapse, Slide, Drawer, SwipeableDrawer, the seven Table primitives, TableSortLabel, PaginationItem, Pagination, Autocomplete and Dialog with its title/content/action/description components. Its resolved-theme bridge is built,
 but full Material theme creation
 and all app-used component families are not. It cannot replace the entire
 `@mui/material` dependency yet.
@@ -48,8 +48,9 @@ Dependencies such as Material React Table may also consume components that do
 not appear as direct app imports; they need unchanged-caller acceptance before
 a complete package override.
 
-**Next Material unit: ListItemButton**, used by Fuse navigation and sidebar links.
-Badge now covers the reading-list toolbar count. Alert and
+**Next Material unit: AppBar and Toolbar**, used by the app shell headers and
+footers, palette settings and messenger toolbars. ListItemButton now covers Fuse
+navigation and sidebar links; Badge covers the reading-list toolbar count. Alert and
 AlertTitle now cover ARML/WARML notices, public article failures and the unchanged
 Material React Table selection/error banner. LinearProgress
 now covers ARML loading, WARML capacity and the unchanged Material React Table

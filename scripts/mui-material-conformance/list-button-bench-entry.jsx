@@ -1,0 +1,2 @@
+import React from 'react';import {renderToString} from 'react-dom/server';import {List,ListItemButton,ListItemText,ListItemIcon} from '@buttons';
+export function prepare(kind){const node=<List dense={kind==='dense'}>{Array.from({length:8},(_,i)=><ListItemButton key={i} selected={i===2} component={kind==='links'?'a':'div'} href={kind==='links'?'#contest-'+i:undefined} disableRipple>{kind==='icons'?<ListItemIcon>*</ListItemIcon>:null}<ListItemText primary={'Contest '+i}/></ListItemButton>)}</List>;return()=>renderToString(node);}
