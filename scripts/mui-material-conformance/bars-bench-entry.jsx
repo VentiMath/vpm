@@ -1,0 +1,2 @@
+import React from 'react';import {renderToString} from 'react-dom/server';import {AppBar,Toolbar} from '@buttons';
+export function prepare(kind){const node=<>{Array.from({length:8},(_,i)=>kind==='toolbar'?<Toolbar key={i} variant="dense"><button>Navigation</button><span>VentiMath</span></Toolbar>:<AppBar key={i} position="static" color={kind==='footer'?'default':'primary'} elevation={kind==='footer'?0:4}><Toolbar><button>Navigation</button><span>VentiMath</span></Toolbar></AppBar>)}</>;return()=>renderToString(node);}

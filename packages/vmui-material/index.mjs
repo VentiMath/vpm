@@ -111,3 +111,5 @@ import badges from './badges.cjs';export const {Badge,badgeClasses,getBadgeUtili
 export const {BadgeRoot,BadgeMark}=badges;
 
 import listButtons from "./lists.cjs";export const {ListItemButton,listItemButtonClasses,getListItemButtonUtilityClass}=listButtons;
+
+import bars from './bars.cjs';export const {AppBar,Toolbar,appBarClasses,toolbarClasses,getAppBarUtilityClass,getToolbarUtilityClass}=bars;

@@ -1607,6 +1607,46 @@
         "types": "./listItemButtonClasses.d.cts",
         "default": "./listItemButtonClasses.cjs"
       }
+    },
+    "./AppBar": {
+      "import": {
+        "types": "./AppBar.d.mts",
+        "default": "./AppBar.mjs"
+      },
+      "require": {
+        "types": "./AppBar.d.cts",
+        "default": "./AppBar.cjs"
+      }
+    },
+    "./appBarClasses": {
+      "import": {
+        "types": "./appBarClasses.d.mts",
+        "default": "./appBarClasses.mjs"
+      },
+      "require": {
+        "types": "./appBarClasses.d.cts",
+        "default": "./appBarClasses.cjs"
+      }
+    },
+    "./Toolbar": {
+      "import": {
+        "types": "./Toolbar.d.mts",
+        "default": "./Toolbar.mjs"
+      },
+      "require": {
+        "types": "./Toolbar.d.cts",
+        "default": "./Toolbar.cjs"
+      }
+    },
+    "./toolbarClasses": {
+      "import": {
+        "types": "./toolbarClasses.d.mts",
+        "default": "./toolbarClasses.mjs"
+      },
+      "require": {
+        "types": "./toolbarClasses.d.cts",
+        "default": "./toolbarClasses.cjs"
+      }
     }
   },
   "files": [

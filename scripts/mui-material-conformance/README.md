@@ -467,3 +467,28 @@ current 36px icon minimum and disabled synthetic-click suppression differ from
 app7's 56px and permissive synthetic click; each is checked explicitly. Synthetic
 Fuse-shaped navigation and theme overrides exercise the inspected caller props.
 Dense text descendants no longer receive the root-only dense class.
+
+## AppBar and Toolbar
+
+The `bars-*` fixture models shell headers/footers, the palette editor and
+messenger toolbars at VentiMath `d0a71aaf`. Current 9.5.0 and app 7.2.0 are
+separate controls. There are 376 SSR comparisons and four owned regression tests.
+Chrome checks 504 snapshots per React mode, comparing palette colors, dark mode, CSS variables, RTL, positioning,
+regular/dense sizing, gutters and the actual 48px/40px toolbar theme overrides
+at phone portrait, phone landscape and desktop widths. Print positioning,
+keyboard traversal, stable DOM/focus, native root semantics, refs and hydration
+are checked in production and development React. This is component acceptance,
+not app adoption or full Material theme creation.
+
+```sh
+node scripts/mui-material-conformance/bars-contract.cjs
+bun scripts/mui-material-conformance/bars-contract.cjs
+node scripts/mui-material-conformance/bars-browser.cjs
+VPM_REACT_MODE=development node scripts/mui-material-conformance/bars-browser.cjs
+VPM_MATERIAL_BROWSER_FILTER=bars-browser.cjs node scripts/mui-material-conformance/archives.cjs
+```
+
+With `color="inherit"`, VPM follows current Material 9 and inherits its parent
+text color. App Material 7 retains the Paper text color instead. The browser
+comparison asserts this specific version difference rather than ignoring color
+differences generally. The observed app shell passes explicit theme text colors.

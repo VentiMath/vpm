@@ -27,3 +27,5 @@ Object.assign(module.exports,require('./linear-progress.cjs'));
 Object.assign(module.exports,require('./alerts.cjs'));
 
 Object.assign(module.exports,require('./badges.cjs'));
+
+Object.assign(module.exports,require('./bars.cjs'));

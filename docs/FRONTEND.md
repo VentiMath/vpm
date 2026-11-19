@@ -29,10 +29,10 @@ inventory. The entire upstream Motion API is **not** complete.
 
 ## Material
 
-[vmui-material](../packages/vmui-material) now has 73 independently implemented
+[vmui-material](../packages/vmui-material) now has 75 independently implemented
 components. It covers button controls; text/icons; Box/Paper/Divider; the form,
 input, Select, checkbox/radio/switch foundation; menus; Chip, Avatar, loading
-spinners, LinearProgress and Alert/AlertTitle feedback and Badge counts and ListItemButton navigation, Skeleton placeholders, Container page layouts and Card/CardContent panels and their linked CardActionArea roots, plus AvatarGroup, Tooltip, Collapse, Slide, Drawer, SwipeableDrawer, the seven Table primitives, TableSortLabel, PaginationItem, Pagination, Autocomplete and Dialog with its title/content/action/description components. Its resolved-theme bridge is built,
+spinners, LinearProgress and Alert/AlertTitle feedback and Badge counts and ListItemButton navigation, AppBar/Toolbar shell layouts, Skeleton placeholders, Container page layouts and Card/CardContent panels and their linked CardActionArea roots, plus AvatarGroup, Tooltip, Collapse, Slide, Drawer, SwipeableDrawer, the seven Table primitives, TableSortLabel, PaginationItem, Pagination, Autocomplete and Dialog with its title/content/action/description components. Its resolved-theme bridge is built,
 but full Material theme creation
 and all app-used component families are not. It cannot replace the entire
 `@mui/material` dependency yet.
@@ -48,8 +48,11 @@ Dependencies such as Material React Table may also consume components that do
 not appear as direct app imports; they need unchanged-caller acceptance before
 a complete package override.
 
-**Next Material unit: AppBar and Toolbar**, used by the app shell headers and
-footers, palette settings and messenger toolbars. ListItemButton now covers Fuse
+**Next Material unit: AccordionSummary and AccordionDetails**, followed by
+Accordion. The app uses that family in WARML information, HMMT and public article
+policy notices. AppBar and Toolbar now cover shell headers/footers, palette
+settings and messenger toolbars, including app theme overrides and responsive
+layout. ListItemButton now covers Fuse
 navigation and sidebar links; Badge covers the reading-list toolbar count. Alert and
 AlertTitle now cover ARML/WARML notices, public article failures and the unchanged
 Material React Table selection/error banner. LinearProgress
@@ -115,3 +118,13 @@ styled-components usage is currently the **web** iframe `StyleSheetManager` demo
 it does not exercise native style conversion. The converter can replace the
 installed dependency without claiming that styled-components itself is rewritten
 or that the browser application has adopted this release.
+
+## API documentation helpers
+
+[vdecko](../packages/vdecko) now independently supplies the binding, memoization
+and delayed-call decorators beneath Redoc, alongside
+[veventemitter3](../packages/veventemitter3). Unchanged history and scrolling
+services pass in Chrome with each replacement; neither is adopted by the app yet.
+The next untouched leaf candidate is `url-template`: Redoc's OpenAPI utility uses
+it to serialize query, path and header parameters. The current package is 3.1.1;
+Redoc's 2.0.8 contract must be checked as an existing caller when building it.

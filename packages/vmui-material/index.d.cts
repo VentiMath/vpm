@@ -848,3 +848,16 @@ export type ListItemButtonProps<C extends React.ElementType='div'>=ListItemButto
 export const ListItemButton:<C extends React.ElementType='div'>(props:ListItemButtonProps<C>)=>React.ReactElement|null;
 export const listItemButtonClasses:Readonly<Record<ListItemButtonClassKey,string>>;
 export function getListItemButtonUtilityClass(slot:string):string;
+
+export type AppBarClassKey='root'|'positionFixed'|'positionAbsolute'|'positionSticky'|'positionStatic'|'positionRelative'|'colorDefault'|'colorPrimary'|'colorSecondary'|'colorInherit'|'colorTransparent'|'colorError'|'colorInfo'|'colorSuccess'|'colorWarning';
+export interface AppBarOwnProps extends Omit<PaperOwnProps,'classes'> {color?:'default'|'primary'|'secondary'|'inherit'|'transparent'|'error'|'info'|'success'|'warning'|(string & {});position?:'fixed'|'absolute'|'sticky'|'static'|'relative';enableColorOnDark?:boolean;classes?:Partial<Record<AppBarClassKey,string>>;}
+export type AppBarProps<C extends React.ElementType='header'>=AppBarOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof AppBarOwnProps>&{component?:C};
+export const AppBar:<C extends React.ElementType='header'>(props:AppBarProps<C>)=>React.ReactElement|null;
+export const appBarClasses:Readonly<Record<AppBarClassKey,string>>;
+export function getAppBarUtilityClass(slot:string):string;
+export type ToolbarClassKey='root'|'gutters'|'regular'|'dense';
+export interface ToolbarOwnProps {children?:React.ReactNode;className?:string;disableGutters?:boolean;variant?:'regular'|'dense'|(string & {});classes?:Partial<Record<ToolbarClassKey,string>>;sx?:SxProps<Theme>;}
+export type ToolbarProps<C extends React.ElementType='div'>=ToolbarOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof ToolbarOwnProps>&{component?:C};
+export const Toolbar:<C extends React.ElementType='div'>(props:ToolbarProps<C>)=>React.ReactElement|null;
+export const toolbarClasses:Readonly<Record<ToolbarClassKey,string>>;
+export function getToolbarUtilityClass(slot:string):string;

@@ -484,3 +484,16 @@ React.createElement(NavItem,navProps);
 // @ts-expect-error unsupported alignment
 const badNav:ListItemButtonProps={alignItems:'stretch'};
 void badNav;
+
+import {AppBar,Toolbar,type AppBarProps,type ToolbarProps} from 'vmui-material';
+import AppBarEntry from 'vmui-material/AppBar';
+import ToolbarEntry from 'vmui-material/Toolbar';
+const appBarProps:AppBarProps<'footer'>={component:'footer',position:'sticky',color:'default',elevation:0,enableColorOnDark:true,ref:React.createRef<HTMLElement>()};
+React.createElement(AppBarEntry,appBarProps,React.createElement(ToolbarEntry,{variant:'dense',disableGutters:true}));
+const toolbarProps:ToolbarProps<'nav'>={component:'nav','aria-label':'Menu',sx:{minHeight:48}};
+React.createElement(Toolbar,toolbarProps);
+// @ts-expect-error unsupported positioning
+const badBar:AppBarProps={position:'floating'};
+// @ts-expect-error gutter control is boolean
+const badToolbar:ToolbarProps={disableGutters:'yes'};
+void [AppBar,badBar,badToolbar];

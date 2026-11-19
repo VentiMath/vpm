@@ -1,6 +1,6 @@
 # vmui-material
 
-Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card, CardContent, CardActionArea, AvatarGroup, Tooltip, Collapse, DialogTitle, DialogContent, DialogActions, Dialog, Slide, DialogContentText, Drawer, SwipeableDrawer, Table, TableHead, TableBody, TableFooter, TableRow, TableCell, TableContainer, Autocomplete, TableSortLabel, PaginationItem, Pagination, LinearProgress, Alert, AlertTitle and Badge, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
+Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card, CardContent, CardActionArea, AvatarGroup, Tooltip, Collapse, DialogTitle, DialogContent, DialogActions, Dialog, Slide, DialogContentText, Drawer, SwipeableDrawer, Table, TableHead, TableBody, TableFooter, TableRow, TableCell, TableContainer, Autocomplete, TableSortLabel, PaginationItem, Pagination, LinearProgress, Alert, AlertTitle, Badge, ListItemButton, AppBar and Toolbar, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
 
 ```js
 import { Button, ToggleButton, ToggleButtonGroup } from 'vmui-material';
@@ -828,7 +828,7 @@ overrides, CSS variables, RTL and `sx`. Custom section/row roots receive table
 roles. Synthetic caller checks cover compact sticky score grids, keyboard
 sorting, retained row/input/focus identity, scrolling, hydration and accessibility.
 The current Material 9.5.0 and app 7.2.0 controls agree on the verified contracts.
-These seven are part of the 73 independent components; Material is still partial;
+These seven are part of the 75 independent components; Material is still partial;
 TablePagination and remaining families are still separate work. TableSortLabel and
 numbered Pagination are now implemented below.
 
@@ -854,7 +854,7 @@ The independent Autocomplete covers WARML school entry (multiple/free-solo),
 practice and profile student selectors, ARML's View as field and the Hook Form
 example. It composes the owned TextField input, Chip, Paper and IconButton
 foundations, with Floating UI placement in the input's owner document. It adds
-no upstream runtime dependency. Material now has 73 independent components.
+no upstream runtime dependency. Material now has 75 independent components.
 
 Value, input text and popup state can be controlled separately. Supported
 behavior includes string/object options, custom labels/equality/disabled options,
@@ -945,7 +945,7 @@ the component runtime is independently written.
 [LinearProgress SSR measurements](bench/linear/README.md) render eight loading,
 capacity or buffer bars per operation. Build `linear-build.cjs` in the Material
 conformance fixture before running the isolated Node/Bun harness. This does not
-measure browser animation speed. Material now has 73 independent components and
+measure browser animation speed. Material now has 75 independent components and
 remains partial; this is not a whole-package release or app cutover.
 
 The recorded SSR cases take 28–70% more time than Material 9.5.0 on Node and
@@ -985,7 +985,7 @@ application adoption and Safari/Firefox acceptance remain separate.
 
 [Alert SSR measurements](bench/alert/README.md) compare eight notices, titled
 notices or dismissible notices per operation. Build `alert-build.cjs` first.
-Material now has 73 independent components and remains partial.
+Material now has 75 independent components and remains partial.
 
 Most recorded timing directions are unestablished at this precision. The
 established regressions are titled notices versus Material 9 on Bun (8.1%) and
@@ -1019,7 +1019,7 @@ current contract. Screens, counts and menu contents are synthetic.
 
 [Badge SSR measurements](bench/badge/README.md) cover eight count/dot badges or
 reading-list-shaped icon buttons per operation. Build `badge-build.cjs` first.
-Material has 73 independent components and remains partial.
+Material has 75 independent components and remains partial.
 
 Against Material 9, count rendering takes 20% more Node time; dot and button
 directions are unestablished. Bun takes 11–16% more time in all three cases.
@@ -1047,10 +1047,32 @@ differ. The app's 6px/8px padding and 24px icon override are also checked.
 
 [ListItemButton SSR measurements](bench/list-button/README.md) cover eight
 navigation links, dense items or icon/text items per operation. This unit brings
-Material to 73 components; remaining families and full theme creation still
+Material to 75 components; remaining families and full theme creation still
 prevent a complete package override.
 
 Node link/icon SSR takes about 21–28% more time than Material 9; links take 22%
 more than app Material 7. The other Node comparisons and every Bun direction
 are unestablished at the recorded control spread. All raw process samples are
 retained. This measures server rendering, not navigation latency or browser paint.
+
+AppBar and Toolbar bring the independent component count to **75**. They cover
+shell headers/footers, palette settings and messenger toolbars at app `d0a71aaf`.
+AppBar composes owned Paper with square/elevation defaults, five position modes,
+fixed-position print behavior, semantic roots and palette colors. Toolbar owns
+responsive gutters, dense/regular sizing and the resolved theme's toolbar mixin.
+Dark/CSS-variable themes, RTL, app default props, 48px/40px theme overrides,
+caller classes and `sx`, refs, focus retention and hydration are checked against
+Material 9.5.0 and the app's 7.2.0 control. Theme creation remains outside this
+partial component package. [AppBar/Toolbar measurements](bench/bars/README.md).
+
+With `color="inherit"`, VPM follows current Material 9 and inherits its parent
+text color. App Material 7 retains the Paper text color instead. The browser
+comparison asserts this specific version difference rather than ignoring color
+differences generally. The observed app shell passes explicit theme text colors.
+
+The new eight-element AppBar/Toolbar SSR measurements take **18–32% more time
+on Node** and **21–43% more on Bun** than the two upstream controls. Every pair
+shows the increase beyond the identical-source control spread. This work adds
+owned component coverage; it does not establish a rendering speedup. The raw
+samples and source hashes are retained in the linked report. Browser interaction
+and application response times were not benchmarked.
