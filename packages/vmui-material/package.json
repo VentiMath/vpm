@@ -1687,6 +1687,26 @@
         "types": "./accordionDetailsClasses.d.cts",
         "default": "./accordionDetailsClasses.cjs"
       }
+    },
+    "./Accordion": {
+      "import": {
+        "types": "./Accordion.d.mts",
+        "default": "./Accordion.mjs"
+      },
+      "require": {
+        "types": "./Accordion.d.cts",
+        "default": "./Accordion.cjs"
+      }
+    },
+    "./accordionClasses": {
+      "import": {
+        "types": "./accordionClasses.d.mts",
+        "default": "./accordionClasses.mjs"
+      },
+      "require": {
+        "types": "./accordionClasses.d.cts",
+        "default": "./accordionClasses.cjs"
+      }
     }
   },
   "files": [

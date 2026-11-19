@@ -510,3 +510,12 @@ const badSummary:AccordionSummaryProps={slots:{missing:'div'}};
 // @ts-expect-error expansion belongs to the parent, not details
 const badDetails:AccordionDetailsProps={expanded:true};
 void [AccordionSummary,AccordionDetails,badSummary,badDetails];
+
+import AccordionRoot from 'vmui-material/Accordion';
+import type {AccordionProps} from 'vmui-material';
+const contestPanel: AccordionProps = {
+  children: 'Results', defaultExpanded: true, disableGutters: true,
+  onChange: (event, next) => { event.persist(); const open: boolean = next; void open },
+  slotProps: {heading: {component:'h2'}, transition: {unmountOnExit:true}}
+};
+React.createElement(AccordionRoot, contestPanel);

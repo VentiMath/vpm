@@ -496,8 +496,7 @@ differences generally. The observed app shell passes explicit theme text colors.
 ### Accordion summary and details
 
 The 9.5.0 current and 7.2.0 app controls each use their own private Accordion
-context; VPM uses its independently owned context. The parent Accordion is not
-implemented or claimed as adopted. Five owned tests cover button/region
+context; VPM uses its independently owned context. The parent has separate full-panel checks below. Five owned tests cover button/region
 semantics, expansion, disabled/gutter state, missing icons and custom content.
 138 SSR comparisons cover context combinations, semantic roots, slots, themes
 and classes. The removed app7 contentGutters class is asserted explicitly.
@@ -518,3 +517,16 @@ VPM_MATERIAL_BROWSER_FILTER=accordion-parts-browser.cjs node scripts/mui-materia
 ```
 
 [Isolated SSR measurements](../../packages/vmui-material/bench/accordion-parts/README.md).
+
+### Accordion parent
+
+The component assembles the owned Paper, Summary, Collapse and Details components.
+The fixture renders WARML information, HMMT result tables and the article policy
+banner with synthetic content. It compares 288 combinations of initial and
+controlled expansion, disabled state, corners, heading/region slots and unmount
+policy with Material 9.5.0 and the app's 7.2.0. The newer region slot accepts
+attributes that the older control ignores. Browser checks compare panel spacing
+and divider styles, accessible controls, native key events, controlled refusal,
+retained detail input, unmounting and hydration. Run the matching
+`accordion-contract.cjs` and `accordion-browser.cjs` files in this directory.
+[Panel benchmarks](../../packages/vmui-material/bench/accordion/README.md).

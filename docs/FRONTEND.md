@@ -29,10 +29,10 @@ inventory. The entire upstream Motion API is **not** complete.
 
 ## Material
 
-[vmui-material](../packages/vmui-material) now has 77 independently implemented
+[vmui-material](../packages/vmui-material) now has 78 independently implemented
 components. It covers button controls; text/icons; Box/Paper/Divider; the form,
 input, Select, checkbox/radio/switch foundation; menus; Chip, Avatar, loading
-spinners, LinearProgress and Alert/AlertTitle feedback and Badge counts and ListItemButton navigation, AppBar/Toolbar shell layouts, AccordionSummary/AccordionDetails, Skeleton placeholders, Container page layouts and Card/CardContent panels and their linked CardActionArea roots, plus AvatarGroup, Tooltip, Collapse, Slide, Drawer, SwipeableDrawer, the seven Table primitives, TableSortLabel, PaginationItem, Pagination, Autocomplete and Dialog with its title/content/action/description components. Its resolved-theme bridge is built,
+spinners, LinearProgress and Alert/AlertTitle feedback and Badge counts and ListItemButton navigation, AppBar/Toolbar shell layouts, Accordion with its Summary and Details, Skeleton placeholders, Container page layouts and Card/CardContent panels and their linked CardActionArea roots, plus AvatarGroup, Tooltip, Collapse, Slide, Drawer, SwipeableDrawer, the seven Table primitives, TableSortLabel, PaginationItem, Pagination, Autocomplete and Dialog with its title/content/action/description components. Its resolved-theme bridge is built,
 but full Material theme creation
 and all app-used component families are not. It cannot replace the entire
 `@mui/material` dependency yet.
@@ -48,8 +48,7 @@ Dependencies such as Material React Table may also consume components that do
 not appear as direct app imports; they need unchanged-caller acceptance before
 a complete package override.
 
-**Next Material unit: Accordion**, composing the completed summary/details and
-Collapse. The app uses that family in WARML information, HMMT and public article
+Accordion now composes Summary, Details and Collapse. The app uses that family in WARML information, HMMT and public article
 policy notices. AppBar and Toolbar now cover shell headers/footers, palette
 settings and messenger toolbars, including app theme overrides and responsive
 layout. ListItemButton now covers Fuse
@@ -131,8 +130,7 @@ current app need or adoption.
 
 The previously suggested `url-template` leaf served Redoc's OpenAPI parameter
 serialization. It is no longer next in line without another verified app caller.
-Accordion is the next Material unit for WARML, HMMT and public article notices;
-its summary/details components are built, while the parent remains pending.
+Tab and Tabs are the next Material unit. Both IMOView and the learner selector on FamilyGrowthPage import them.
 
 ## Build diagnostics
 
@@ -141,3 +139,5 @@ replacement for the app's PostCSS 8.5.8 diagnostic output. Its unchanged caller,
 terminal detection, nested colors, browser entry, archives and types are checked.
 This is a current build dependency at app main `211e2186`, not part of the removed
 Redoc or styled-components chains. It is built but not yet adopted.
+
+[vsource-map-js](../packages/vsource-map-js) supplies CSS source-map generation, lookup and composition for PostCSS and CSS Tree. Its comparison fixtures use the app pin 1.2.1 and current 1.2.4. App adoption is pending.

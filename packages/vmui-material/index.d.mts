@@ -880,3 +880,23 @@ export interface AccordionDetailsProps extends React.HTMLAttributes<HTMLDivEleme
 export const AccordionDetails:React.ForwardRefExoticComponent<AccordionDetailsProps&React.RefAttributes<HTMLDivElement>>;
 export const accordionDetailsClasses:Readonly<Record<AccordionDetailsClassKey,string>>;
 export function getAccordionDetailsUtilityClass(slot:string):string;
+
+export type AccordionClassKey = 'root'|'heading'|'region'|'rounded'|'expanded'|'disabled'|'gutters';
+export type AccordionOwnerState = {expanded:boolean;disabled:boolean;disableGutters:boolean;square:boolean};
+type AccordionSlotProps<T> = T | ((state:AccordionOwnerState)=>T);
+type AccordionDOMSlot = React.HTMLAttributes<HTMLElement> & {component?:React.ElementType;ref?:React.Ref<HTMLElement>};
+export interface AccordionOwnProps extends Omit<PaperOwnProps,'classes'|'children'> {
+  children: React.ReactNode;
+  defaultExpanded?: boolean;
+  expanded?: boolean;
+  disabled?: boolean;
+  disableGutters?: boolean;
+  onChange?: (event:React.SyntheticEvent, expanded:boolean)=>void;
+  classes?: Partial<Record<AccordionClassKey,string>>;
+  slots?: Partial<Record<'root'|'heading'|'region'|'transition',React.ElementType>>;
+  slotProps?: {root?:AccordionSlotProps<Partial<PaperProps>>;heading?:AccordionSlotProps<AccordionDOMSlot>;region?:AccordionSlotProps<AccordionDOMSlot>;transition?:AccordionSlotProps<Partial<CollapseProps>>};
+}
+export type AccordionProps<C extends React.ElementType='div'> = AccordionOwnProps & Omit<React.ComponentPropsWithRef<C>,keyof AccordionOwnProps> & {component?:C};
+export const Accordion:<C extends React.ElementType='div'>(props:AccordionProps<C>)=>React.ReactElement|null;
+export const accordionClasses:Readonly<Record<AccordionClassKey,string>>;
+export function getAccordionUtilityClass(slot:string):string;

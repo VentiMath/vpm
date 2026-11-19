@@ -115,3 +115,6 @@ import listButtons from "./lists.cjs";export const {ListItemButton,listItemButto
 import bars from './bars.cjs';export const {AppBar,Toolbar,appBarClasses,toolbarClasses,getAppBarUtilityClass,getToolbarUtilityClass}=bars;
 
 import accordionParts from './accordion-parts.cjs';export const {AccordionSummary,AccordionDetails,accordionSummaryClasses,accordionDetailsClasses,getAccordionSummaryUtilityClass,getAccordionDetailsUtilityClass}=accordionParts;
+
+import accordions from './accordions.cjs';
+export const {Accordion,accordionClasses,getAccordionUtilityClass} = accordions;

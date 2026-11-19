@@ -828,7 +828,7 @@ overrides, CSS variables, RTL and `sx`. Custom section/row roots receive table
 roles. Synthetic caller checks cover compact sticky score grids, keyboard
 sorting, retained row/input/focus identity, scrolling, hydration and accessibility.
 The current Material 9.5.0 and app 7.2.0 controls agree on the verified contracts.
-These seven are part of the 77 independent components; Material is still partial;
+These seven are part of the 78 independent components; Material is still partial;
 TablePagination and remaining families are still separate work. TableSortLabel and
 numbered Pagination are now implemented below.
 
@@ -854,7 +854,7 @@ The independent Autocomplete covers WARML school entry (multiple/free-solo),
 practice and profile student selectors, ARML's View as field and the Hook Form
 example. It composes the owned TextField input, Chip, Paper and IconButton
 foundations, with Floating UI placement in the input's owner document. It adds
-no upstream runtime dependency. Material now has 77 independent components.
+no upstream runtime dependency. Material now has 78 independent components.
 
 Value, input text and popup state can be controlled separately. Supported
 behavior includes string/object options, custom labels/equality/disabled options,
@@ -945,7 +945,7 @@ the component runtime is independently written.
 [LinearProgress SSR measurements](bench/linear/README.md) render eight loading,
 capacity or buffer bars per operation. Build `linear-build.cjs` in the Material
 conformance fixture before running the isolated Node/Bun harness. This does not
-measure browser animation speed. Material now has 77 independent components and
+measure browser animation speed. Material now has 78 independent components and
 remains partial; this is not a whole-package release or app cutover.
 
 The recorded SSR cases take 28–70% more time than Material 9.5.0 on Node and
@@ -985,7 +985,7 @@ application adoption and Safari/Firefox acceptance remain separate.
 
 [Alert SSR measurements](bench/alert/README.md) compare eight notices, titled
 notices or dismissible notices per operation. Build `alert-build.cjs` first.
-Material now has 77 independent components and remains partial.
+Material now has 78 independent components and remains partial.
 
 Most recorded timing directions are unestablished at this precision. The
 established regressions are titled notices versus Material 9 on Bun (8.1%) and
@@ -1019,7 +1019,7 @@ current contract. Screens, counts and menu contents are synthetic.
 
 [Badge SSR measurements](bench/badge/README.md) cover eight count/dot badges or
 reading-list-shaped icon buttons per operation. Build `badge-build.cjs` first.
-Material has 77 independent components and remains partial.
+Material has 78 independent components and remains partial.
 
 Against Material 9, count rendering takes 20% more Node time; dot and button
 directions are unestablished. Bun takes 11–16% more time in all three cases.
@@ -1046,16 +1046,14 @@ as rendered sRGB pixels, since equivalent relative-color and rgba spellings can
 differ. The app's 6px/8px padding and 24px icon override are also checked.
 
 [ListItemButton SSR measurements](bench/list-button/README.md) cover eight
-navigation links, dense items or icon/text items per operation. This unit brings
-Material to 77 components; remaining families and full theme creation still
-prevent a complete package override.
+navigation links, dense items or icon/text items per operation. Material remains partial while work on other families and the theme factory continues.
 
 Node link/icon SSR takes about 21–28% more time than Material 9; links take 22%
 more than app Material 7. The other Node comparisons and every Bun direction
 are unestablished at the recorded control spread. All raw process samples are
 retained. This measures server rendering, not navigation latency or browser paint.
 
-AppBar and Toolbar bring the independent component count to **77**. They cover
+AppBar and Toolbar cover
 shell headers/footers, palette settings and messenger toolbars at app `d0a71aaf`.
 AppBar composes owned Paper with square/elevation defaults, five position modes,
 fixed-position print behavior, semantic roots and palette colors. Toolbar owns
@@ -1079,18 +1077,13 @@ and application response times were not benchmarked.
 
 ### Accordion summary and details
 
-AccordionSummary and AccordionDetails bring the independent component count to
-77. They cover the button and content layout used by WARML information, HMMT
+AccordionSummary and AccordionDetails cover the button and content layout used by WARML information, HMMT
 results and public article policy notices. Summary composes owned ButtonBase;
 Details supplies themed spacing and the native content root. Expansion,
 disabled state and gutters come from the family's private context. Summary
 supports content/icon/root slots, callback slot props, forwarded/slot refs,
 keyboard focus/activation, classes, resolved themes and sx. Details forwards its
 DOM props and ref. Parent re-renders preserve the button, focus and input nodes.
-
-The parent **Accordion is still pending**. This pair alone is not an app override
-or a bridge to upstream Accordion's private React context. Tests provide each
-implementation with its own parent context contract. Material remains partial.
 
 The target is Material 9.5.0. Material 7.2.0 is a separate app comparison and
 emits the removed `MuiAccordionSummary-contentGutters` class; this implementation
@@ -1099,3 +1092,18 @@ order, theme/RTL/CSS-variable styles, app compact spacing, slots, refs and
 hydration are checked in production and development Chrome. See
 [checks](../../scripts/mui-material-conformance/README.md) and
 [measurements](bench/accordion-parts/README.md).
+
+### Accordion
+
+Accordion composes Paper, Collapse, AccordionSummary and AccordionDetails. WARML
+opens its information panel by default. HMMT uses compact panels around result
+tables. The club article policy banner customizes corners, elevation, divider
+visibility and spacing. The summary controls expansion and supports keyboard
+activation. A controlled panel reports the requested state through `onChange`
+and waits for the caller to update `expanded`. Supplied summary IDs and
+`aria-controls` link its heading to the region. Detail content stays mounted by
+default and can opt into `unmountOnExit`.
+
+Material now covers 78 independently built components. The full package override
+still requires the remaining app-used components and theme factory.
+[Accordion measurements](bench/accordion/README.md).

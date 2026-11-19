@@ -1,0 +1,1 @@
+"use strict";const a=require("./accordions.cjs");module.exports=a.Accordion;module.exports.default=a.Accordion;module.exports.accordionClasses=a.accordionClasses;module.exports.getAccordionUtilityClass=a.getAccordionUtilityClass;
