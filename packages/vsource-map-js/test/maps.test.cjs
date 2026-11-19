@@ -44,3 +44,15 @@ test('late insertions sort, generated-only segments end a trace, and empty lines
   for(const [line,column,source] of [[3,1,null],[4,2,'a'],[4,4,null],[5,2,null]])
     assert.equal(consumer.originalPositionFor({line,column}).source,source);
 });
+
+test('single-pass decode validates the tail before exposing a prefix and sorts backward segments',()=>{
+  for(const suffix of [',',',;',',AAA',',AAAAAA',',gggggggE',',AΩAA']){
+    const c=new SourceMapConsumer({version:3,sources:['a'],names:['x'],mappings:'AAAA;AAAA'+suffix});
+    for(let retry=0;retry<2;retry++) assert.throws(()=>c.originalPositionFor({line:1,column:0}));
+  }
+  const c=new SourceMapConsumer({version:3,sources:['a'],mappings:'IAAA,F;'});
+  const rows=[];c.eachMapping(m=>rows.push(m.generatedColumn));
+  assert.deepEqual(rows,[2,4]);
+  assert.equal(c.originalPositionFor({line:1,column:3}).source,null);
+  assert.equal(c.originalPositionFor({line:1,column:4}).source,'a');
+});

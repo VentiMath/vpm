@@ -16,25 +16,23 @@ function encode(value) {
   return text;
 }
 
-function decode(segment) {
-  const fields = [];
-  let value = 0, scale = 1;
-  for (let i = 0; i < segment.length; i++) {
-    const digit = digits[segment.charCodeAt(i)];
-    if (digit === undefined || digit < 0) throw new SyntaxError('Invalid base64 VLQ digit');
+// Decode directly from the mappings field. Most deltas fit in a single digit.
+function readDelta(cursor) {
+  let digit = digits[cursor.text.charCodeAt(cursor.index++)];
+  if (!(digit >= 0)) throw new SyntaxError('Invalid base64 VLQ digit');
+  if (digit < 32) return digit & 1 ? -(digit >> 1) : digit >> 1;
+
+  let value = digit & 31;
+  let scale = 32;
+  do {
+    digit = digits[cursor.text.charCodeAt(cursor.index++)];
+    if (!(digit >= 0)) throw new SyntaxError('Invalid base64 VLQ digit');
     value += (digit & 31) * scale;
     if (value > 0xffffffff || scale > 32 ** 6) throw new RangeError('VLQ overflow');
-    if (digit & 32) {
-      scale *= 32;
-    } else {
-      const magnitude = Math.floor(value / 2);
-      fields.push(value % 2 ? -magnitude : magnitude);
-      value = 0;
-      scale = 1;
-    }
-  }
-  if (scale !== 1 || ![1, 4, 5].includes(fields.length)) throw new SyntaxError('Invalid mapping segment');
-  return fields;
+    scale *= 32;
+  } while (digit & 32);
+  const magnitude = Math.floor(value / 2);
+  return value % 2 ? -magnitude : magnitude;
 }
 
-module.exports = { encode, decode };
+module.exports = { encode, readDelta };

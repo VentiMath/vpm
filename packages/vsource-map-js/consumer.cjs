@@ -1,6 +1,11 @@
 'use strict';
-const { decode } = require('./codec.cjs');
+const { readDelta } = require('./codec.cjs');
 const { resolveSource } = require('./paths.cjs');
+
+function hasField(text, index) {
+  const code = text.charCodeAt(index);
+  return index < text.length && code !== 44 && code !== 59;
+}
 
 class SourceMapConsumer {
   static GENERATED_ORDER = 1;
@@ -23,31 +28,46 @@ class SourceMapConsumer {
   readLines() {
     if (this.lines) return this.lines;
     let source = 0, originalLine = 1, originalColumn = 0, name = 0;
-    const lines = this.encoded.split(';').map((line, index) => {
-      let generatedColumn = 0;
-      if (!line) return [];
-      const rows = line.split(',').map(segment => {
-        const fields = decode(segment);
-        generatedColumn += fields[0];
-        if (generatedColumn < 0) throw new RangeError('Invalid generated column');
-        const row = { generatedLine: index + 1, generatedColumn, source: null, originalLine: null, originalColumn: null, name: null };
-        if (fields.length >= 4) {
-          source += fields[1];
-          originalLine += fields[2];
-          originalColumn += fields[3];
-          if (source < 0 || source >= this.sources.length || originalLine < 1 || originalColumn < 0)
-            throw new RangeError('Invalid original position');
-          Object.assign(row, { source: this.sources[source], originalLine, originalColumn });
-          if (fields.length === 5) {
-            name += fields[4];
-            if (name < 0 || name >= this.names.length) throw new RangeError('Invalid name index');
-            row.name = this.names[name];
+    const text = this.encoded;
+    const cursor = {text, index: 0};
+    const lines = [];
+    do {
+      const rows = [];
+      const generatedLine = lines.length + 1;
+      let generatedColumn = 0, ordered = true;
+      if (cursor.index < text.length && text.charCodeAt(cursor.index) !== 59) {
+        for (;;) {
+          const delta = readDelta(cursor);
+          if (delta < 0) ordered = false;
+          generatedColumn += delta;
+          if (generatedColumn < 0) throw new RangeError('Invalid generated column');
+          let mappedSource = null, mappedLine = null, mappedColumn = null, mappedName = null;
+          if (hasField(text, cursor.index)) {
+            source += readDelta(cursor);
+            originalLine += readDelta(cursor);
+            originalColumn += readDelta(cursor);
+            if (source < 0 || source >= this.sources.length || originalLine < 1 || originalColumn < 0)
+              throw new RangeError('Invalid original position');
+            mappedSource = this.sources[source];
+            mappedLine = originalLine;
+            mappedColumn = originalColumn;
+            if (hasField(text, cursor.index)) {
+              name += readDelta(cursor);
+              if (name < 0 || name >= this.names.length) throw new RangeError('Invalid name index');
+              mappedName = this.names[name];
+              if (hasField(text, cursor.index)) throw new SyntaxError('Excess mapping fields');
+            }
           }
+          rows.push({generatedLine, generatedColumn, source: mappedSource,
+            originalLine: mappedLine, originalColumn: mappedColumn, name: mappedName});
+          if (text.charCodeAt(cursor.index) !== 44) break;
+          cursor.index++;
         }
-        return row;
-      });
-      return rows.sort((a,b) => a.generatedColumn - b.generatedColumn);
-    });
+      }
+      if (!ordered) rows.sort((a,b) => a.generatedColumn - b.generatedColumn);
+      lines.push(rows);
+      // Consume the line separator. Commit the index only after the whole map validates.
+    } while (cursor.index++ < text.length);
     return this.lines = lines;
   }
 
