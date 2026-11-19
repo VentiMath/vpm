@@ -177,3 +177,12 @@ assert.match(badgeHtml,/>99\+<\/span>/);assert.match(badgeHtml,/aria-hidden="tru
 
 assert.equal(api.ListItemButton, (await import("vmui-material/ListItemButton")).default);
 assert.match(renderToString(React.createElement(api.ListItemButton,{href:"#contests",disableRipple:true},"Contests")), /href="#contests"/);
+
+for (const name of ['Tab','Tabs']) {
+  assert.equal((await import('vmui-material/'+name)).default, api[name]);
+  assert.equal(require('vmui-material/'+name).default, api[name]);
+}
+const learnerTabs = renderToString(React.createElement(api.Tabs, {value:'learner-a'},
+  React.createElement(api.Tab, {value:'learner-a', label:'Learner'})));
+assert.match(learnerTabs, /role="tablist"/);
+assert.match(learnerTabs, /aria-selected="true"/);

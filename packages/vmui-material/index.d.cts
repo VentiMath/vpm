@@ -900,3 +900,22 @@ export type AccordionProps<C extends React.ElementType='div'> = AccordionOwnProp
 export const Accordion:<C extends React.ElementType='div'>(props:AccordionProps<C>)=>React.ReactElement|null;
 export const accordionClasses:Readonly<Record<AccordionClassKey,string>>;
 export function getAccordionUtilityClass(slot:string):string;
+
+export type TabClassKey = 'root'|'labelIcon'|'textColorInherit'|'textColorPrimary'|'textColorSecondary'|'selected'|'disabled'|'fullWidth'|'wrapped'|'icon';
+export type TabsClassKey = 'root'|'vertical'|'list'|'centered'|'scroller'|'fixed'|'scrollableX'|'scrollableY'|'hideScrollbar'|'scrollButtons'|'scrollButtonsHideMobile'|'indicator';
+export type TabProps<C extends React.ElementType='button'> = Omit<ButtonBaseProps<C>,'children'|'classes'|'value'|'onChange'> & {
+  label?:React.ReactNode;icon?:React.ReactElement|string;iconPosition?:'top'|'bottom'|'start'|'end';
+  value?:unknown;wrapped?:boolean;classes?:Partial<Record<TabClassKey,string>>;
+};
+export const Tab:<C extends React.ElementType='button'>(props:TabProps<C>)=>React.ReactElement|null;
+export type TabsProps<C extends React.ElementType='div',V=any> = Omit<React.ComponentPropsWithRef<C>,'onChange'|'value'> & {
+  component?:C; children?:React.ReactNode; value:V; onChange?:(event:React.SyntheticEvent,value:V)=>void;
+  variant?:'standard'|'fullWidth';orientation?:'horizontal'|'vertical';selectionFollowsFocus?:boolean;
+  indicatorColor?:'primary'|'secondary';textColor?:'inherit'|'primary'|'secondary';centered?:boolean;
+  classes?:Partial<Record<TabsClassKey,string>>;sx?:SxProps<Theme>;
+};
+export const Tabs:<C extends React.ElementType='div',V=any>(props:TabsProps<C,V>)=>React.ReactElement|null;
+export const tabClasses:Readonly<Record<TabClassKey,string>>;
+export const tabsClasses:Readonly<Record<TabsClassKey,string>>;
+export function getTabUtilityClass(slot:string):string;
+export function getTabsUtilityClass(slot:string):string;

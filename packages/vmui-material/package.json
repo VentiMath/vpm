@@ -1707,6 +1707,46 @@
         "types": "./accordionClasses.d.cts",
         "default": "./accordionClasses.cjs"
       }
+    },
+    "./Tab": {
+      "import": {
+        "types": "./Tab.d.mts",
+        "default": "./Tab.mjs"
+      },
+      "require": {
+        "types": "./Tab.d.cts",
+        "default": "./Tab.cjs"
+      }
+    },
+    "./tabClasses": {
+      "import": {
+        "types": "./tabClasses.d.mts",
+        "default": "./tabClasses.mjs"
+      },
+      "require": {
+        "types": "./tabClasses.d.cts",
+        "default": "./tabClasses.cjs"
+      }
+    },
+    "./Tabs": {
+      "import": {
+        "types": "./Tabs.d.mts",
+        "default": "./Tabs.mjs"
+      },
+      "require": {
+        "types": "./Tabs.d.cts",
+        "default": "./Tabs.cjs"
+      }
+    },
+    "./tabsClasses": {
+      "import": {
+        "types": "./tabsClasses.d.mts",
+        "default": "./tabsClasses.mjs"
+      },
+      "require": {
+        "types": "./tabsClasses.d.cts",
+        "default": "./tabsClasses.cjs"
+      }
     }
   },
   "files": [

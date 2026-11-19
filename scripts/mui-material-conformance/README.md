@@ -530,3 +530,8 @@ and divider styles, accessible controls, native key events, controlled refusal,
 retained detail input, unmounting and hydration. Run the matching
 `accordion-contract.cjs` and `accordion-browser.cjs` files in this directory.
 [Panel benchmarks](../../packages/vmui-material/bench/accordion/README.md).
+
+
+### Tab and Tabs
+
+Run `tabs-contract.cjs` on Node or Bun for 192 SSR comparisons against Material 9.5.0 and VentiMath’s 7.2.0. The fixtures use the IMO results and family learner selectors. Chrome checks their geometry and theme overrides, arrow-key navigation, disabled tabs, repeated external-link activation, learner identity after reordering, and hydration. Run `tabs-browser.cjs` on Node in production and with `VPM_REACT_MODE=development`. Set `VPM_MATERIAL_BROWSER_FILTER=tabs-browser.cjs` to exercise the same browser cases from the packed closure using `archives.cjs`.

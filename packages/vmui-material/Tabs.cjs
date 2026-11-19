@@ -1,0 +1,1 @@
+"use strict";const a=require("./tab-navigation.cjs");module.exports=a.Tabs;module.exports.default=a.Tabs;module.exports.tabsClasses=a.tabsClasses;module.exports.getTabsUtilityClass=a.getTabsUtilityClass;

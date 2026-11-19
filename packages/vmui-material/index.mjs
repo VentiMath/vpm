@@ -118,3 +118,6 @@ import accordionParts from './accordion-parts.cjs';export const {AccordionSummar
 
 import accordions from './accordions.cjs';
 export const {Accordion,accordionClasses,getAccordionUtilityClass} = accordions;
+
+import tabs from './tab-navigation.cjs';
+export const {Tab,Tabs,tabClasses,tabsClasses,getTabUtilityClass,getTabsUtilityClass}=tabs;

@@ -519,3 +519,12 @@ const contestPanel: AccordionProps = {
   slotProps: {heading: {component:'h2'}, transition: {unmountOnExit:true}}
 };
 React.createElement(AccordionRoot, contestPanel);
+
+import TabEntry, {type TabProps} from 'vmui-material/Tab';
+import TabsEntry, {type TabsProps} from 'vmui-material/Tabs';
+const learnerTabs:TabsProps<'div',string>={value:'learner-a',onChange:(_,id)=>id.toUpperCase()};
+const countryTab:TabProps={label:'Countries',icon:React.createElement('svg')};
+React.createElement(TabsEntry<'div',string>,learnerTabs,React.createElement(TabEntry<'button'>,countryTab));
+// @ts-expect-error the fixed-layout implementation has no scroll-button variant
+const unsupportedTabs:TabsProps={value:0,variant:'scrollable'};
+void unsupportedTabs;
