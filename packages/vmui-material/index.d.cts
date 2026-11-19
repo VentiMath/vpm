@@ -861,3 +861,22 @@ export type ToolbarProps<C extends React.ElementType='div'>=ToolbarOwnProps&Omit
 export const Toolbar:<C extends React.ElementType='div'>(props:ToolbarProps<C>)=>React.ReactElement|null;
 export const toolbarClasses:Readonly<Record<ToolbarClassKey,string>>;
 export function getToolbarUtilityClass(slot:string):string;
+
+export type AccordionSummaryClassKey='root'|'expanded'|'focusVisible'|'disabled'|'gutters'|'content'|'expandIconWrapper';
+export interface AccordionSummaryOwnProps extends ButtonBaseOwnProps {
+ expandIcon?:React.ReactNode;classes?:Partial<Record<AccordionSummaryClassKey,string>>;
+ slots?:{root?:React.ElementType;content?:React.ElementType;expandIconWrapper?:React.ElementType};
+ slotProps?:{root?:AccordionSummarySlot<Partial<ButtonBaseProps>>;content?:AccordionSummarySlot<AccordionSummaryElementProps>;expandIconWrapper?:AccordionSummarySlot<AccordionSummaryElementProps>};
+}
+export type AccordionSummaryElementProps=React.HTMLAttributes<HTMLSpanElement>&{ref?:React.Ref<HTMLSpanElement>;sx?:SxProps<Theme>};
+export type AccordionSummaryOwnerState=AccordionSummaryOwnProps&{expanded?:boolean;disabled:boolean;disableGutters?:boolean};
+export type AccordionSummarySlot<T>=T|((state:AccordionSummaryOwnerState)=>T);
+export type AccordionSummaryProps<C extends React.ElementType='button'>=AccordionSummaryOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof AccordionSummaryOwnProps>&{component?:C};
+export const AccordionSummary:<C extends React.ElementType='button'>(props:AccordionSummaryProps<C>)=>React.ReactElement|null;
+export const accordionSummaryClasses:Readonly<Record<AccordionSummaryClassKey,string>>;
+export function getAccordionSummaryUtilityClass(slot:string):string;
+export type AccordionDetailsClassKey='root';
+export interface AccordionDetailsProps extends React.HTMLAttributes<HTMLDivElement>{classes?:Partial<Record<AccordionDetailsClassKey,string>>;sx?:SxProps<Theme>;}
+export const AccordionDetails:React.ForwardRefExoticComponent<AccordionDetailsProps&React.RefAttributes<HTMLDivElement>>;
+export const accordionDetailsClasses:Readonly<Record<AccordionDetailsClassKey,string>>;
+export function getAccordionDetailsUtilityClass(slot:string):string;

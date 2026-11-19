@@ -1647,6 +1647,46 @@
         "types": "./toolbarClasses.d.cts",
         "default": "./toolbarClasses.cjs"
       }
+    },
+    "./AccordionSummary": {
+      "import": {
+        "types": "./AccordionSummary.d.mts",
+        "default": "./AccordionSummary.mjs"
+      },
+      "require": {
+        "types": "./AccordionSummary.d.cts",
+        "default": "./AccordionSummary.cjs"
+      }
+    },
+    "./accordionSummaryClasses": {
+      "import": {
+        "types": "./accordionSummaryClasses.d.mts",
+        "default": "./accordionSummaryClasses.mjs"
+      },
+      "require": {
+        "types": "./accordionSummaryClasses.d.cts",
+        "default": "./accordionSummaryClasses.cjs"
+      }
+    },
+    "./AccordionDetails": {
+      "import": {
+        "types": "./AccordionDetails.d.mts",
+        "default": "./AccordionDetails.mjs"
+      },
+      "require": {
+        "types": "./AccordionDetails.d.cts",
+        "default": "./AccordionDetails.cjs"
+      }
+    },
+    "./accordionDetailsClasses": {
+      "import": {
+        "types": "./accordionDetailsClasses.d.mts",
+        "default": "./accordionDetailsClasses.mjs"
+      },
+      "require": {
+        "types": "./accordionDetailsClasses.d.cts",
+        "default": "./accordionDetailsClasses.cjs"
+      }
     }
   },
   "files": [

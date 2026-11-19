@@ -441,3 +441,16 @@ const badBar:AppBarProps={position:'floating'};
 // @ts-expect-error gutter control is boolean
 const badToolbar:ToolbarProps={disableGutters:'yes'};
 void [AppBar,badBar,badToolbar];
+
+import AccordionSummaryEntry from 'vmui-material/AccordionSummary';
+import AccordionDetailsEntry from 'vmui-material/AccordionDetails';
+import {AccordionSummary,AccordionDetails,type AccordionSummaryProps,type AccordionDetailsProps} from 'vmui-material';
+const summaryProps:AccordionSummaryProps={expandIcon:React.createElement('i'),ref:React.createRef<HTMLButtonElement>(),slotProps:{content:s=>({'aria-label':String(s.expanded),ref:React.createRef<HTMLSpanElement>()}),root:{onClick:e=>{e.currentTarget.focus()}}},sx:{minHeight:36}};
+React.createElement(AccordionSummaryEntry,summaryProps,'Contest');
+const detailsProps:AccordionDetailsProps={sx:{pt:0},'aria-label':'Details'};
+React.createElement(AccordionDetailsEntry,{...detailsProps,ref:React.createRef<HTMLDivElement>()});
+// @ts-expect-error slots use the documented names
+const badSummary:AccordionSummaryProps={slots:{missing:'div'}};
+// @ts-expect-error expansion belongs to the parent, not details
+const badDetails:AccordionDetailsProps={expanded:true};
+void [AccordionSummary,AccordionDetails,badSummary,badDetails];

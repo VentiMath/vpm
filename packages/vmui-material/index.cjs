@@ -29,3 +29,5 @@ Object.assign(module.exports,require('./alerts.cjs'));
 Object.assign(module.exports,require('./badges.cjs'));
 
 Object.assign(module.exports,require('./bars.cjs'));
+
+Object.assign(module.exports,require('./accordion-parts.cjs'));

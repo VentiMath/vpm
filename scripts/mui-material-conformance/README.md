@@ -492,3 +492,29 @@ With `color="inherit"`, VPM follows current Material 9 and inherits its parent
 text color. App Material 7 retains the Paper text color instead. The browser
 comparison asserts this specific version difference rather than ignoring color
 differences generally. The observed app shell passes explicit theme text colors.
+
+### Accordion summary and details
+
+The 9.5.0 current and 7.2.0 app controls each use their own private Accordion
+context; VPM uses its independently owned context. The parent Accordion is not
+implemented or claimed as adopted. Five owned tests cover button/region
+semantics, expansion, disabled/gutter state, missing icons and custom content.
+138 SSR comparisons cover context combinations, semantic roots, slots, themes
+and classes. The removed app7 contentGutters class is asserted explicitly.
+
+Chrome compares 204 computed-style snapshots for light/dark, CSS variables,
+RTL, themes, compact app spacing, expanded/disabled/gutter states and slots.
+Native Enter/Space, toggle/click ordering, slot handlers, disabled traversal,
+accessibility names, refs, retained DOM/focus and hydration are also checked in
+production and development. Strict TS7 consumers and fresh/frozen archives
+include both components and their utility-class exports.
+
+```sh
+node scripts/mui-material-conformance/accordion-parts-contract.cjs
+bun scripts/mui-material-conformance/accordion-parts-contract.cjs
+node scripts/mui-material-conformance/accordion-parts-browser.cjs
+VPM_REACT_MODE=development node scripts/mui-material-conformance/accordion-parts-browser.cjs
+VPM_MATERIAL_BROWSER_FILTER=accordion-parts-browser.cjs node scripts/mui-material-conformance/archives.cjs
+```
+
+[Isolated SSR measurements](../../packages/vmui-material/bench/accordion-parts/README.md).

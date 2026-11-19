@@ -111,6 +111,7 @@ jobs:
           node scripts/mui-material-conformance/badge-contract.cjs
           node scripts/mui-material-conformance/list-button-contract.cjs
           node scripts/mui-material-conformance/bars-contract.cjs
+          node scripts/mui-material-conformance/accordion-parts-contract.cjs
           node scripts/mui-material-conformance/autocomplete-contract.cjs
           node scripts/mui-material-conformance/lists-contract.cjs
           node scripts/mui-material-conformance/types.cjs
@@ -166,6 +167,7 @@ jobs:
           node scripts/mui-material-conformance/badge-browser.cjs
           node scripts/mui-material-conformance/list-button-browser.cjs
           node scripts/mui-material-conformance/bars-browser.cjs
+          node scripts/mui-material-conformance/accordion-parts-browser.cjs
           node scripts/mui-material-conformance/autocomplete-browser.cjs
           VPM_REACT_MODE=development node scripts/mui-material-conformance/skeleton-browser.cjs
           VPM_REACT_MODE=development node scripts/mui-material-conformance/container-browser.cjs
@@ -186,6 +188,7 @@ jobs:
           VPM_REACT_MODE=development node scripts/mui-material-conformance/badge-browser.cjs
           VPM_REACT_MODE=development node scripts/mui-material-conformance/list-button-browser.cjs
           VPM_REACT_MODE=development node scripts/mui-material-conformance/bars-browser.cjs
+          VPM_REACT_MODE=development node scripts/mui-material-conformance/accordion-parts-browser.cjs
           VPM_REACT_MODE=development node scripts/mui-material-conformance/autocomplete-browser.cjs
           VPM_REACT_MODE=development node scripts/mui-material-conformance/checkbox-browser.cjs
           node scripts/mui-material-conformance/archives.cjs
@@ -1152,6 +1155,7 @@ jobs:
           bun scripts/mui-material-conformance/badge-contract.cjs
           bun scripts/mui-material-conformance/list-button-contract.cjs
           bun scripts/mui-material-conformance/bars-contract.cjs
+          bun scripts/mui-material-conformance/accordion-parts-contract.cjs
           bun scripts/mui-material-conformance/lists-contract.cjs
           bun test packages/vmui-system/test/system.test.cjs
           bun scripts/mui-system-conformance/primitives.cjs
