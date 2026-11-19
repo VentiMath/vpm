@@ -1,0 +1,28 @@
+{
+  "upstream": {
+    "name": "eventemitter3",
+    "version": "5.0.4",
+    "repository": "https://github.com/primus/eventemitter3",
+    "integrity": "sha512-mlsTRyGaPBjPedk6Bvw+aqbsXDtoAyAzm5MO7JgU+yVRyMQ5O8bD4Kcci7BS85f93veegeCPkL8R4GLClnjLFw=="
+  },
+  "checked": "2026-11-18",
+  "license": "MIT",
+  "implementation": {
+    "kind": "independent",
+    "targetScope": "Synchronous event emitter library API, typed event maps, browser and Node consumers. No runtime dependencies."
+  },
+  "source": "Written from public contracts and behavioral tests with ordered listener arrays; no upstream runtime source copied. Modern built-ins replace historical compatibility branches.",
+  "changes": [
+    "An explicit empty-string event passed to removeAllListeners removes only that event, instead of clearing unrelated subscriptions.",
+    "Dispatch preserves the original listener array and length while mutations update subsequent dispatches; once listeners retire before recursion or exceptions."
+  ],
+  "caller": {
+    "revision": "d0a71aaf413afad1f5a95f6496e0654e145b59f0",
+    "path": "Public API documentation MockApiDoc -> Redoc 2.5.0 -> eventemitter3 5.0.4",
+    "verified": "Unchanged Redoc HistoryService and ScrollService in Chrome with only the emitter replaced; no app adoption claim."
+  },
+  "tests": {
+    "upstream": "40 unmodified tests from tag 5.0.4; fixture SHA256 60d98d4dbfc1ef10b99296418a8e723812183cd7b51d7e2190b13edf24f94d26",
+    "differential": "512 seeded operation traces, plus explicit empty-name correction"
+  }
+}

@@ -307,6 +307,13 @@ jobs:
           node scripts/idb-conformance/archives.cjs
       - run: npm --prefix scripts/camelize-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/cssesc-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/eventemitter3-conformance ci --ignore-scripts --legacy-peer-deps --no-audit --no-fund
+      - name: Independent emitter and unchanged API viewer services
+        run: |
+          node --test packages/veventemitter3/test/*.test.cjs
+          node scripts/eventemitter3-conformance/probe.cjs
+          node scripts/eventemitter3-conformance/types.cjs
+          node scripts/eventemitter3-conformance/archives.cjs
       - name: Independent CSS escaping and unchanged selector callers
         run: |
           node --test packages/vcssesc/test/*.test.cjs
@@ -1195,6 +1202,10 @@ jobs:
       - run: bun test packages/vidb/test
       - run: npm --prefix scripts/camelize-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/cssesc-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/eventemitter3-conformance ci --ignore-scripts --legacy-peer-deps --no-audit --no-fund
+      - run: bun test packages/veventemitter3/test
+      - run: bun scripts/eventemitter3-conformance/probe.cjs
+      - run: bun scripts/eventemitter3-conformance/node_modules/mocha/bin/mocha.js scripts/eventemitter3-conformance/upstream/test/test.cjs --reporter dot
       - run: bun test packages/vcssesc/test
       - run: bun scripts/cssesc-conformance/probe.cjs
       - run: bun scripts/camelize-conformance/probe.cjs

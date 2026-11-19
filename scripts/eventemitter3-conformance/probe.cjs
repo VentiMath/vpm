@@ -1,0 +1,6 @@
+'use strict';
+const assert=require('node:assert/strict'),O=require(process.env.VEVENTEMITTER3_ENTRY||'../../packages/veventemitter3'),U=require('eventemitter3');
+function trace(C,seed){let rand=seed;const next=()=>{rand=(Math.imul(rand,1664525)+1013904223)>>>0;return rand};const e=new C,keys=['alpha','constructor','__proto__','2',Symbol.for('evt')],contexts=[{id:1},{id:2}],log=[],fns=Array.from({length:4},(_,i)=>function(...args){log.push([i,this===e?0:this.id,...args])});let out=[];for(let i=0;i<120;i++){const key=keys[next()%keys.length],fn=fns[next()%4],ctx=contexts[next()%2];switch(next()%7){case 0:e.on(key,fn,ctx);break;case 1:e.once(key,fn,ctx);break;case 2:e.off(key,fn,ctx);break;case 3:e.off(key,fn,ctx,true);break;case 4:e.removeAllListeners(key);break;case 5:out.push(e.emit(key,i,seed));break;case 6:out.push(e.listenerCount(key));}out.push(e.eventNames().map(String),e.listeners(key).map(f=>fns.indexOf(f)));}return {out,log};}
+for(let seed=1;seed<=512;seed++)assert.deepEqual(trace(O,seed),trace(U,seed),'seed '+seed);
+const upstream=new U,owned=new O;for(const e of [upstream,owned])e.on('',()=>{}).on('keep',()=>{}).removeAllListeners('');assert.equal(upstream.listenerCount('keep'),0);assert.equal(owned.listenerCount('keep'),1);
+console.log('512 seeded traces (61,440 operations) match; empty-string removal correction checked explicitly');

@@ -264,6 +264,10 @@
       "name": "vetag",
       "version": "0.1.0",
     },
+    "packages/veventemitter3": {
+      "name": "veventemitter3",
+      "version": "5.0.4",
+    },
     "packages/vexpress": {
       "name": "vexpress",
       "version": "0.1.0",
@@ -1981,6 +1985,8 @@
     "vescape-html": ["vescape-html@workspace:packages/vescape-html"],
 
     "vetag": ["vetag@workspace:packages/vetag"],
+
+    "veventemitter3": ["veventemitter3@workspace:packages/veventemitter3"],
 
     "vexpress": ["vexpress@workspace:packages/vexpress"],
 
