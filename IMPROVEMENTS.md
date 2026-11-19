@@ -257,6 +257,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vclassnames](packages/vclassnames) | classnames 2.5.1 | Independent zero-dependency conditional classes, CSS-module binding and dedupe. Null-prototype dictionaries, own-property bindings and bounded deep arrays stay intact. Specialized collectors, a cached own-property intrinsic and less dedupe allocation reduce overhead. 4,332 black-box combinations, edge cases, unchanged Redoc SSR, Node/Bun types and exact installs pass. [Current measurements](packages/vclassnames/bench/optimized/README.md): Node Redoc-shaped calls take 14% less time; other Node directions are unestablished, with binding/dedupe medians still slightly higher. All four Bun cases take less time. Built, not published/adopted. The recorded Redoc viewer was removed in app main `211e2186`; caller checks are historical. |
 | [vidb](packages/vidb) | idb 8.0.4; app 7.1.1 | Independent zero-dependency IndexedDB promises, transaction completion, shortcuts, cursors and typed schemas. Preserves the actual abort cause and permits handled request errors to commit; settled requests do not hang. Native Chrome, unchanged Firebase heartbeat/installation persistence with synthetic data, Node/Bun controls, strict types and exact archives checked. [Measurements](packages/vidb/bench/results/README.md) use fake-indexeddb; no browser disk-latency claim. Built, not adopted. |
 | [vcamelize](packages/vcamelize) | camelize 1.0.1 | Independently written string and recursive key conversion with zero dependencies. Preserves literal string values, sparse arrays and Date/RegExp identity; detects cycles explicitly and defines data properties safely. 8,014 differential inputs and unchanged css-to-react-native 3.2.0 caller checks pass on Node/Bun, as do packed exports and strict types. Current styled-components still uses this converter. [Measurements](packages/vcamelize/bench/results/README.md): CSS-name fixtures take less time on both runtimes; the small Node recursive-object difference is unresolved at the recorded control precision. [Published camelize-1.0.1](https://github.com/VentiMath/vpm/releases/tag/camelize-1.0.1); public URLs, original-name overrides, source hashes and fresh/frozen installs verified. App main `211e2186` removes its former styled-components/converter chain and override. |
+| [vpicocolors](packages/vpicocolors) | picocolors 1.1.1 | Independent zero-dependency terminal colors, environment detection and inert browser entry. Restores early closing escapes; unchanged PostCSS diagnostics, 4,018 formatting cases, 1,728 environments, archives and types checked. [Measurements](packages/vpicocolors/bench/results/README.md). |
 | [vdecko](packages/vdecko) | decko 1.2.0 | Independent function wrappers and legacy decorators with zero runtime dependencies. Safe prototype-looking cache keys and reentrant/error-safe delayed callbacks. Unchanged Redoc history/scroll services verified; not yet adopted. | [Contracts](scripts/decko-conformance/README.md), [measurements](packages/vdecko/bench/results/README.md) The recorded Redoc viewer was removed in app main `211e2186`; caller checks are historical. |
 | [veventemitter3](packages/veventemitter3) | eventemitter3 5.0.4 | Independent synchronous events with zero runtime dependencies; ordered listeners, contexts, once and mutation-safe dispatch. Empty-name removal preserves unrelated events. Unchanged Redoc history/scroll services verified; not yet adopted. | [Contracts](scripts/eventemitter3-conformance/README.md), [measurements](packages/veventemitter3/bench/results/README.md) The recorded Redoc viewer was removed in app main `211e2186`; caller checks are historical. |
 | [vcssesc](packages/vcssesc) | cssesc 3.0.0 | Independent CSS string/identifier escaping with zero runtime dependencies; fixes leading-digit duplication under combined options and invalid lone-hyphen identifiers. Unchanged selector-parser callers and native Chrome checks; not yet adopted. | [Tests and contracts](scripts/cssesc-conformance/README.md), [measurements](packages/vcssesc/bench/results/README.md) |
@@ -463,9 +464,9 @@ version-scoped integration aliases remain limited to their tested baselines.
 ## Current verification
 
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
-recorded by the tests. All 145 Node runtime packages' public declarations compile
+recorded by the tests. All 146 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **238 packages**, including two declaration-only packages and
+compiler in NodeNext and bundler resolution modes. The catalog covers **239 packages**, including two declaration-only packages and
 browser packages `vcss-box-model`, `vuse-sync-external-store`, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,
@@ -5817,3 +5818,15 @@ layout tests pass. General SVG/CSS/font rendering is outside this scope.
 all 1,800 decoded drawings stay identical to the initial owned renderer.
 Node formula/page rendering uses about 80% less time; complete pictures remain
 about 2× native resvg. Public archives pass clean installs with no native addon.
+
+## Terminal color diagnostics
+
+[vpicocolors](packages/vpicocolors) independently replaces Picocolors 1.1.1 with
+zero dependencies. It preserves automatic color detection and inert browser
+imports, restores outer formatting even for early closing escapes, and uses flat
+replacement for long inputs. The unchanged PostCSS 8.5.8 caller passes source
+frame/error/warning checks on Node and Bun. There are 4,018 formatter comparisons
+and 1,728 environment combinations, plus fresh/frozen archive and type checks.
+Node formatting retains 12–93% overhead; Bun nested/escape-rich cases retain
+22–36% overhead. [Measurements](packages/vpicocolors/bench/results/README.md).
+App adoption is not claimed.

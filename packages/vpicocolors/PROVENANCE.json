@@ -1,0 +1,22 @@
+{
+  "upstream": {
+    "name": "picocolors",
+    "version": "1.1.1",
+    "repository": "https://github.com/alexeyraspopov/picocolors",
+    "checked": "2026-11-18",
+    "integrity": "sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA=="
+  },
+  "implementation": {
+    "kind": "independent",
+    "targetScope": "All terminal formatters, environment detection, createColors and inert browser entry. Zero runtime dependencies."
+  },
+  "source": "Independent protocol-data table and iterative string replacement; no upstream runtime copied.",
+  "changes": [
+    "Reopens a style after matching closing codes even at the beginning of the input, where upstream skips the first positions.",
+    "Uses flat replacement for closing codes, avoiding recursive processing of long escape sequences."
+  ],
+  "caller": {
+    "revision": "211e2186",
+    "scope": "PostCSS 8.5.8 diagnostic source frames in VentiMath frontend build tooling. Unchanged PostCSS caller checked; not application adoption."
+  }
+}

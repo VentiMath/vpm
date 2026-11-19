@@ -133,3 +133,11 @@ The previously suggested `url-template` leaf served Redoc's OpenAPI parameter
 serialization. It is no longer next in line without another verified app caller.
 AccordionSummary/AccordionDetails remain the next Material unit for WARML, HMMT
 and public article notices.
+
+## Build diagnostics
+
+[vpicocolors](../packages/vpicocolors) is an independent Picocolors 1.1.1
+replacement for the app's PostCSS 8.5.8 diagnostic output. Its unchanged caller,
+terminal detection, nested colors, browser entry, archives and types are checked.
+This is a current build dependency at app main `211e2186`, not part of the removed
+Redoc or styled-components chains. It is built but not yet adopted.

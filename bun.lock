@@ -942,6 +942,10 @@
       "name": "vperfect-scrollbar",
       "version": "1.5.6",
     },
+    "packages/vpicocolors": {
+      "name": "vpicocolors",
+      "version": "1.1.1",
+    },
     "packages/vpngjs": {
       "name": "vpngjs",
       "version": "7.0.0",
@@ -2181,6 +2185,8 @@
     "vpath-to-regexp": ["vpath-to-regexp@workspace:packages/vpath-to-regexp"],
 
     "vperfect-scrollbar": ["vperfect-scrollbar@workspace:packages/vperfect-scrollbar"],
+
+    "vpicocolors": ["vpicocolors@workspace:packages/vpicocolors"],
 
     "vpngjs": ["vpngjs@workspace:packages/vpngjs"],
 
