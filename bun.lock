@@ -1516,6 +1516,10 @@
       "name": "vshallow-equal",
       "version": "3.1.0",
     },
+    "packages/vsource-map-js": {
+      "name": "vsource-map-js",
+      "version": "1.2.4",
+    },
     "packages/vstatuses": {
       "name": "vstatuses",
       "version": "0.1.0",
@@ -2323,6 +2327,8 @@
     "vserve-static": ["vserve-static@workspace:packages/vserve-static"],
 
     "vshallow-equal": ["vshallow-equal@workspace:packages/vshallow-equal"],
+
+    "vsource-map-js": ["vsource-map-js@workspace:packages/vsource-map-js"],
 
     "vstatuses": ["vstatuses@workspace:packages/vstatuses"],
 

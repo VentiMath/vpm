@@ -319,6 +319,10 @@ jobs:
       - run: npm --prefix scripts/eventemitter3-conformance ci --ignore-scripts --legacy-peer-deps --no-audit --no-fund
       - name: Independent decorators and unchanged API viewer services
         run: |
+          npm --prefix scripts/source-map-conformance ci --ignore-scripts
+          node --test packages/vsource-map-js/test/*.test.cjs
+          node scripts/source-map-conformance/caller.cjs
+          node scripts/source-map-conformance/archives.cjs
           npm --prefix scripts/picocolors-conformance ci --ignore-scripts
           node --test packages/vpicocolors/test/*.test.cjs
           node scripts/picocolors-conformance/probe.cjs
@@ -1227,6 +1231,9 @@ jobs:
       - run: npm --prefix scripts/camelize-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/cssesc-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/eventemitter3-conformance ci --ignore-scripts --legacy-peer-deps --no-audit --no-fund
+      - run: npm --prefix scripts/source-map-conformance ci --ignore-scripts
+      - run: bun test packages/vsource-map-js/test
+      - run: bun scripts/source-map-conformance/caller.cjs
       - run: npm --prefix scripts/picocolors-conformance ci --ignore-scripts
       - run: bun test packages/vpicocolors/test
       - run: bun scripts/picocolors-conformance/probe.cjs
