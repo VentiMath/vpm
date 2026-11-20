@@ -1,0 +1,20 @@
+{
+  "upstream": {
+    "name": "varint",
+    "version": "6.0.0",
+    "repository": "https://github.com/chrisdickinson/varint",
+    "checked": "2026-11-19",
+    "integrity": "sha512-cXEIW6cfr15lFv563k4GuVuW/fiwjknytD37jIOLSdSWuOI6WnO/oKwmP2FQTU2l01LP8/M5TSAJpzUaGe3uWg=="
+  },
+  "implementation": {
+    "kind": "independent",
+    "targetScope": "Unsigned safe integers with byte arrays, offsets and byte counts for encode/decode."
+  },
+  "changes": [
+    "Checks value range, offset, byte validity and fixed buffer capacity. Failed reads and writes reset the corresponding byte count."
+  ],
+  "caller": {
+    "revision": "211e2186",
+    "scope": "sass-embedded 1.86.3 exchanges encoded compilation IDs while compiling the frontend editor stylesheets."
+  }
+}

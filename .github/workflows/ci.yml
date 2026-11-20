@@ -323,6 +323,12 @@ jobs:
       - run: npm --prefix scripts/camelize-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/cssesc-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/eventemitter3-conformance ci --ignore-scripts --legacy-peer-deps --no-audit --no-fund
+      - name: Unsigned varints and Sass compiler messages
+        run: |
+          npm --prefix scripts/varint-conformance ci --ignore-scripts --no-audit --no-fund
+          node --test packages/vvarint/test/*.test.cjs
+          node scripts/varint-conformance/caller.cjs
+          node scripts/varint-conformance/archives.cjs
       - name: Independent decorators and unchanged API viewer services
         run: |
           npm --prefix scripts/source-map-conformance ci --ignore-scripts
@@ -1239,6 +1245,9 @@ jobs:
       - run: npm --prefix scripts/camelize-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/cssesc-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/eventemitter3-conformance ci --ignore-scripts --legacy-peer-deps --no-audit --no-fund
+      - run: npm --prefix scripts/varint-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: bun test packages/vvarint/test
+      - run: bun scripts/varint-conformance/caller.cjs
       - run: npm --prefix scripts/source-map-conformance ci --ignore-scripts
       - run: bun test packages/vsource-map-js/test
       - run: bun scripts/source-map-conformance/caller.cjs

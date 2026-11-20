@@ -141,4 +141,6 @@ terminal detection, nested colors, browser entry, archives and types are checked
 This is a current build dependency at app main `211e2186`, not part of the removed
 Redoc or styled-components chains. It is built but not yet adopted.
 
+[vvarint](../packages/vvarint) encodes compilation IDs for the Sass compiler used to build the editor stylesheets. Its tests compile Sass with the unchanged app-pinned host.
+
 [vsource-map-js](../packages/vsource-map-js) supplies CSS source-map generation, lookup and composition for PostCSS and CSS Tree. Its comparison fixtures use the app pin 1.2.1 and current 1.2.4. App adoption is pending.

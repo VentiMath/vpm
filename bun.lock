@@ -1675,6 +1675,10 @@
         "vuuid": "bin/vuuid.cjs",
       },
     },
+    "packages/vvarint": {
+      "name": "vvarint",
+      "version": "6.0.0",
+    },
     "packages/vvary": {
       "name": "vvary",
       "version": "0.1.0",
@@ -2377,6 +2381,8 @@
     "vuse-sync-external-store": ["vuse-sync-external-store@workspace:packages/vuse-sync-external-store"],
 
     "vuuid": ["vuuid@workspace:packages/vuuid"],
+
+    "vvarint": ["vvarint@workspace:packages/vvarint"],
 
     "vvary": ["vvary@workspace:packages/vvary"],
 
