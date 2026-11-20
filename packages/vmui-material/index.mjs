@@ -121,3 +121,6 @@ export const {Accordion,accordionClasses,getAccordionUtilityClass} = accordions;
 
 import tabs from './tab-navigation.cjs';
 export const {Tab,Tabs,tabClasses,tabsClasses,getTabUtilityClass,getTabsUtilityClass}=tabs;
+
+import trail from './breadcrumb-trail.cjs';
+export const {Breadcrumbs,breadcrumbsClasses,getBreadcrumbsUtilityClass}=trail;

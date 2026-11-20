@@ -1,0 +1,1 @@
+"use strict";const a=require("./breadcrumb-trail.cjs");module.exports=a.Breadcrumbs;module.exports.default=a.Breadcrumbs;module.exports.breadcrumbsClasses=a.breadcrumbsClasses;module.exports.getBreadcrumbsUtilityClass=a.getBreadcrumbsUtilityClass;

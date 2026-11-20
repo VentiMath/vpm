@@ -919,3 +919,14 @@ export const tabClasses:Readonly<Record<TabClassKey,string>>;
 export const tabsClasses:Readonly<Record<TabsClassKey,string>>;
 export function getTabUtilityClass(slot:string):string;
 export function getTabsUtilityClass(slot:string):string;
+
+export type BreadcrumbsClassKey = 'root'|'ol'|'li'|'separator';
+export type BreadcrumbsProps<C extends React.ElementType='nav'> = Omit<TypographyProps<C>,'classes'> & {
+  classes?: Partial<Record<BreadcrumbsClassKey,string>>;
+  maxItems?:number; itemsBeforeCollapse?:number; itemsAfterCollapse?:number;
+  separator?:React.ReactNode; expandText?:string; slots?:{CollapsedIcon?:React.ElementType};
+  slotProps?:{collapsedIcon?:Partial<SvgIconProps> | ((state:BreadcrumbsProps & {expanded:boolean})=>Partial<SvgIconProps>)};
+};
+export const Breadcrumbs:<C extends React.ElementType='nav'>(props:BreadcrumbsProps<C>)=>React.ReactElement|null;
+export const breadcrumbsClasses:Readonly<Record<BreadcrumbsClassKey,string>>;
+export function getBreadcrumbsUtilityClass(slot:string):string;

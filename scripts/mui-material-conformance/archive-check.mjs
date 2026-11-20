@@ -186,3 +186,7 @@ const learnerTabs = renderToString(React.createElement(api.Tabs, {value:'learner
   React.createElement(api.Tab, {value:'learner-a', label:'Learner'})));
 assert.match(learnerTabs, /role="tablist"/);
 assert.match(learnerTabs, /aria-selected="true"/);
+
+assert.equal((await import('vmui-material/Breadcrumbs')).default,api.Breadcrumbs);
+assert.equal(require('vmui-material/Breadcrumbs').default,api.Breadcrumbs);
+assert.match(renderToString(React.createElement(api.Breadcrumbs,{'aria-label':'breadcrumb'},React.createElement('a',{href:'/archive'},'Archive'))),/aria-label="breadcrumb"/);

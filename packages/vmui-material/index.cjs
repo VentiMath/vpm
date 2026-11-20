@@ -35,3 +35,5 @@ Object.assign(module.exports,require('./accordion-parts.cjs'));
 Object.assign(module.exports,require('./accordions.cjs'));
 
 Object.assign(module.exports,require('./tab-navigation.cjs'));
+
+Object.assign(module.exports,require('./breadcrumb-trail.cjs'));

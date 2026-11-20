@@ -1747,6 +1747,26 @@
         "types": "./tabsClasses.d.cts",
         "default": "./tabsClasses.cjs"
       }
+    },
+    "./Breadcrumbs": {
+      "import": {
+        "types": "./Breadcrumbs.d.mts",
+        "default": "./Breadcrumbs.mjs"
+      },
+      "require": {
+        "types": "./Breadcrumbs.d.cts",
+        "default": "./Breadcrumbs.cjs"
+      }
+    },
+    "./breadcrumbsClasses": {
+      "import": {
+        "types": "./breadcrumbsClasses.d.mts",
+        "default": "./breadcrumbsClasses.mjs"
+      },
+      "require": {
+        "types": "./breadcrumbsClasses.d.cts",
+        "default": "./breadcrumbsClasses.cjs"
+      }
     }
   },
   "files": [

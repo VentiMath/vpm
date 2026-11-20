@@ -528,3 +528,7 @@ React.createElement(TabsEntry<'div',string>,learnerTabs,React.createElement(TabE
 // @ts-expect-error the fixed-layout implementation has no scroll-button variant
 const unsupportedTabs:TabsProps={value:0,variant:'scrollable'};
 void unsupportedTabs;
+
+import Trail, {type BreadcrumbsProps} from 'vmui-material/Breadcrumbs';
+const routeTrail:BreadcrumbsProps = {maxItems:4, color:'action.active', 'aria-label':'breadcrumb', classes:{ol:'list-none'}, separator:'›'};
+React.createElement(Trail<'nav'>,routeTrail,React.createElement('a',{href:'/archive'},'Archive'));
