@@ -1,0 +1,17 @@
+{
+  "upstream": {
+    "name": "buffer-builder",
+    "version": "0.2.0",
+    "repository": "https://github.com/PeterReid/node-buffer-builder",
+    "checked": "2026-11-20",
+    "integrity": "sha512-7VPMEPuYznPSoR21NE1zvd2Xna6c/CloiZCfcMXR1Jny6PjX0N4Nsa38zcBFo/FMK+BlA+FLKbJCQ0i2yxp+Xg=="
+  },
+  "implementation": {
+    "kind": "independent",
+    "targetScope": "Documented buffer, string, fill and numeric append operations, byte count, snapshots and ranged copies."
+  },
+  "caller": {
+    "revision": "aa110e55",
+    "scope": "App-pinned Sass Embedded 1.86.3 writes packet length headers with appendUInt8, length and copy."
+  }
+}

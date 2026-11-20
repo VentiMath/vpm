@@ -11,8 +11,10 @@ async function main() {
   fs.cpSync(path.join(__dirname,'node_modules/sass-embedded'), path.join(modules,'sass-embedded'), {recursive:true});
   const codec=process.env.VVARINT_PACKAGE || path.resolve(__dirname, '../../packages/vvarint');
   fs.symlinkSync(codec, path.join(modules,'varint'), 'dir');
+  if(process.env.VBUFFER_BUILDER_PACKAGE) fs.symlinkSync(path.resolve(process.env.VBUFFER_BUILDER_PACKAGE),path.join(modules,'buffer-builder'),'dir');
   const load=createRequire(path.join(modules,'sass-embedded/package.json'));
   assert.equal(fs.realpathSync(load.resolve('varint')), require.resolve(codec));
+  if(process.env.VBUFFER_BUILDER_PACKAGE)assert.equal(fs.realpathSync(load.resolve('buffer-builder')),require.resolve(path.resolve(process.env.VBUFFER_BUILDER_PACKAGE)));
   const control=require('sass-embedded'), own=load('sass-embedded');
   const expected=control.compileString(source).css;
   assert.match(expected, /gap: 8px/);

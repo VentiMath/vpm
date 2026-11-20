@@ -55,6 +55,10 @@
         "vtype-is": "workspace:*",
       },
     },
+    "packages/vbuffer-builder": {
+      "name": "vbuffer-builder",
+      "version": "0.2.0",
+    },
     "packages/vbytes": {
       "name": "vbytes",
       "version": "0.1.0",
@@ -1927,6 +1931,8 @@
     "vautosuggest-highlight": ["vautosuggest-highlight@workspace:packages/vautosuggest-highlight"],
 
     "vbody-parser": ["vbody-parser@workspace:packages/vbody-parser"],
+
+    "vbuffer-builder": ["vbuffer-builder@workspace:packages/vbuffer-builder"],
 
     "vbytes": ["vbytes@workspace:packages/vbytes"],
 
