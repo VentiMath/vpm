@@ -542,3 +542,7 @@ Run `tabs-contract.cjs` on Node or Bun for 192 SSR comparisons against Material 
 The SSR and Chrome fixtures exercise the PageBreadcrumb routes’ link, class, theme and accessibility contracts against Material 7.2.0 and 9.5.0. Run `breadcrumbs-contract.cjs` on Node or Bun. Run `breadcrumbs-browser.cjs` on Node in production and with `VPM_REACT_MODE=development`. The browser checks keyboard expansion and focus, hrefs, light/dark styling, RTL layout, the app’s separator and hydration. [Measurements](../../packages/vmui-material/bench/breadcrumbs/README.md).
 
 With a VentiMath checkout available, run `node scripts/mui-material-conformance/app-breadcrumbs.cjs <checkout> [ref]`. This renders its unchanged PageBreadcrumb with fixture navigation data and compares generated hrefs and labels against the app’s Material control.
+
+## Snackbar
+
+The clipboard fixture uses the club article share button’s controlled open state, two-second auto-hide and message. Run `node scripts/mui-material-conformance/snackbar-contract.cjs` for server output against the app’s Material 7 and current Material 9. Run `node scripts/mui-material-conformance/snackbar-browser.cjs` for dismissal, timer identity across rerenders, focus and blur, reopening during exit, responsive anchoring and hydration. The browser controls the auto-hide timer directly while React, DOM events and transitions run in Chrome.

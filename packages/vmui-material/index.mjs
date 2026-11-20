@@ -124,3 +124,5 @@ export const {Tab,Tabs,tabClasses,tabsClasses,getTabUtilityClass,getTabsUtilityC
 
 import trail from './breadcrumb-trail.cjs';
 export const {Breadcrumbs,breadcrumbsClasses,getBreadcrumbsUtilityClass}=trail;
+import notifications from './snackbars.cjs';
+export const {Snackbar,SnackbarContent,snackbarClasses,snackbarContentClasses,getSnackbarUtilityClass,getSnackbarContentUtilityClass}=notifications;

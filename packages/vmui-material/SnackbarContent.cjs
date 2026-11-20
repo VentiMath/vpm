@@ -1,0 +1,1 @@
+"use strict";const a=require("./snackbars.cjs");module.exports=a.SnackbarContent;module.exports.default=a.SnackbarContent;module.exports.snackbarContentClasses=a.snackbarContentClasses;module.exports.getSnackbarContentUtilityClass=a.getSnackbarContentUtilityClass;

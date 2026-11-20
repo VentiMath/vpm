@@ -1767,6 +1767,46 @@
         "types": "./breadcrumbsClasses.d.cts",
         "default": "./breadcrumbsClasses.cjs"
       }
+    },
+    "./Snackbar": {
+      "import": {
+        "types": "./Snackbar.d.mts",
+        "default": "./Snackbar.mjs"
+      },
+      "require": {
+        "types": "./Snackbar.d.cts",
+        "default": "./Snackbar.cjs"
+      }
+    },
+    "./snackbarClasses": {
+      "import": {
+        "types": "./snackbarClasses.d.mts",
+        "default": "./snackbarClasses.mjs"
+      },
+      "require": {
+        "types": "./snackbarClasses.d.cts",
+        "default": "./snackbarClasses.cjs"
+      }
+    },
+    "./SnackbarContent": {
+      "import": {
+        "types": "./SnackbarContent.d.mts",
+        "default": "./SnackbarContent.mjs"
+      },
+      "require": {
+        "types": "./SnackbarContent.d.cts",
+        "default": "./SnackbarContent.cjs"
+      }
+    },
+    "./snackbarContentClasses": {
+      "import": {
+        "types": "./snackbarContentClasses.d.mts",
+        "default": "./snackbarContentClasses.mjs"
+      },
+      "require": {
+        "types": "./snackbarContentClasses.d.cts",
+        "default": "./snackbarContentClasses.cjs"
+      }
     }
   },
   "files": [

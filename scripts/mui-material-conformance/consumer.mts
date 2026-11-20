@@ -532,3 +532,9 @@ void unsupportedTabs;
 import Trail, {type BreadcrumbsProps} from 'vmui-material/Breadcrumbs';
 const routeTrail:BreadcrumbsProps = {maxItems:4, color:'action.active', 'aria-label':'breadcrumb', classes:{ol:'list-none'}, separator:'›'};
 React.createElement(Trail<'nav'>,routeTrail,React.createElement('a',{href:'/archive'},'Archive'));
+
+import SnackbarFromEntry, {type SnackbarCloseReason} from "vmui-material/Snackbar";
+import SnackbarBody from "vmui-material/SnackbarContent";
+React.createElement(SnackbarFromEntry, {open:true,autoHideDuration:2000,message:"Link copied to clipboard",
+  onClose:(_event, reason:SnackbarCloseReason) => { void reason; }});
+React.createElement(SnackbarBody, {role:"status",message:"Copied"});

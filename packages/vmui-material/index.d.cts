@@ -930,3 +930,24 @@ export type BreadcrumbsProps<C extends React.ElementType='nav'> = Omit<Typograph
 export const Breadcrumbs:<C extends React.ElementType='nav'>(props:BreadcrumbsProps<C>)=>React.ReactElement|null;
 export const breadcrumbsClasses:Readonly<Record<BreadcrumbsClassKey,string>>;
 export function getBreadcrumbsUtilityClass(slot:string):string;
+
+export type SnackbarCloseReason = 'timeout' | 'clickaway' | 'escapeKeyDown';
+export type SnackbarOrigin = { vertical: 'top' | 'bottom'; horizontal: 'left' | 'center' | 'right' };
+export type SnackbarClassKey = 'root' | `anchorOrigin${Capitalize<SnackbarOrigin['vertical']>}${Capitalize<SnackbarOrigin['horizontal']>}`;
+export type SnackbarContentClassKey = 'root' | 'message' | 'action';
+export type SnackbarContentProps = Omit<PaperProps, 'classes'> & {
+  classes?: Partial<Record<SnackbarContentClassKey, string>>; message?: React.ReactNode; action?: React.ReactNode;
+};
+export type SnackbarProps = Omit<React.ComponentPropsWithRef<'div'>, 'children' | 'onClose'> & {
+  children?: React.ReactElement; message?: React.ReactNode; action?: React.ReactNode;
+  open?: boolean; anchorOrigin?: SnackbarOrigin; autoHideDuration?: number | null; resumeHideDuration?: number;
+  disableWindowBlurListener?: boolean; transitionDuration?: number | { enter?: number; exit?: number };
+  onClose?: (event: React.SyntheticEvent | Event | null, reason: SnackbarCloseReason) => void;
+  classes?: Partial<Record<SnackbarClassKey,string>>; sx?: SxProps<Theme>;
+};
+export const Snackbar: React.ForwardRefExoticComponent<SnackbarProps>;
+export const SnackbarContent: React.ForwardRefExoticComponent<SnackbarContentProps>;
+export const snackbarClasses: Readonly<Record<SnackbarClassKey,string>>;
+export const snackbarContentClasses: Readonly<Record<SnackbarContentClassKey,string>>;
+export function getSnackbarUtilityClass(slot: string): string;
+export function getSnackbarContentUtilityClass(slot: string): string;
