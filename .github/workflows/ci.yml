@@ -326,6 +326,11 @@ jobs:
       - run: npm --prefix scripts/camelize-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/cssesc-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/eventemitter3-conformance ci --ignore-scripts --legacy-peer-deps --no-audit --no-fund
+      - name: Base64 binary data and property lists
+        run: |
+          npm --prefix scripts/base64-js-conformance ci --ignore-scripts --no-audit --no-fund
+          node --test packages/vbase64-js/test/*.test.cjs
+          node scripts/base64-js-conformance/archives.cjs
       - name: Unsigned varints and Sass compiler messages
         run: |
           npm --prefix scripts/varint-conformance ci --ignore-scripts --no-audit --no-fund
@@ -1252,6 +1257,9 @@ jobs:
       - run: npm --prefix scripts/cssesc-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/eventemitter3-conformance ci --ignore-scripts --legacy-peer-deps --no-audit --no-fund
       - run: npm --prefix scripts/varint-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/base64-js-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: bun test packages/vbase64-js/test
+      - run: bun scripts/base64-js-conformance/caller.cjs
       - run: bun test packages/vvarint/test
       - run: bun test packages/vbuffer-builder/test
       - run: VBUFFER_BUILDER_PACKAGE=./packages/vbuffer-builder bun scripts/varint-conformance/caller.cjs

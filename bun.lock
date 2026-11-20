@@ -40,6 +40,10 @@
       "name": "vautosuggest-highlight",
       "version": "3.3.4",
     },
+    "packages/vbase64-js": {
+      "name": "vbase64-js",
+      "version": "1.5.1",
+    },
     "packages/vbody-parser": {
       "name": "vbody-parser",
       "version": "0.1.0",
@@ -1929,6 +1933,8 @@
     "vasync-retry": ["vasync-retry@workspace:packages/vasync-retry"],
 
     "vautosuggest-highlight": ["vautosuggest-highlight@workspace:packages/vautosuggest-highlight"],
+
+    "vbase64-js": ["vbase64-js@workspace:packages/vbase64-js"],
 
     "vbody-parser": ["vbody-parser@workspace:packages/vbody-parser"],
 
