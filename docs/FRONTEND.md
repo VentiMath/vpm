@@ -44,7 +44,7 @@ Remaining indirect consumers still matter for a complete package override.
 
 Grow handles the horizontal navigation group and nested menu transitions, including their automatic height-based timing. ClickAwayListener covers the toolbar search and style-2 sidebar. Document listeners follow the child into an iframe and exclude React portals by default.
 
-GlobalStyles covers all seven app imports on `aa110e55`, including shared navigation, sticky page layouts and the iframe preview. Babel’s generator, gen-mapping and remapping pass source-map composition checks using the VPM tracer, resolver and codec. Babel and remapping also pass with VPM generating the output map. These build packages are available in the workspace.
+GlobalStyles covers all seven app imports on `aa110e55`, including shared navigation, sticky page layouts and the iframe preview. Babel’s generator, gen-mapping and remapping pass source-map composition checks using the VPM tracer, resolver and codec. Babel core’s source-map merger now also passes with the complete VPM generation, tracing and [remapping](../packages/vremapping) stack. These build packages are available in the workspace.
 
 Theme/style imports occur in 90 files. The shared theme factory and remaining
 layout/overlay families are adoption requirements, not peripheral polish.

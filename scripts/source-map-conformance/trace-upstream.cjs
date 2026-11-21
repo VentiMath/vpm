@@ -6,21 +6,17 @@ const fs = require("node:fs"),
 const { execFileSync } = require("node:child_process"),
   { pathToFileURL } = require("node:url");
 const file = process.argv[2];
-if (!file)
-  throw Error(
-    "Pass the original gen-mapping.test.ts or trace-mapping.test.ts from its target release",
-  );
-const target =
-  path.basename(file) === "gen-mapping.test.ts"
-    ? "gen-mapping"
-    : "trace-mapping";
+const target = file && path.basename(file, ".test.ts");
+if (!["gen-mapping","trace-mapping","remapping"].includes(target))
+  throw Error("Pass the target release's gen-mapping, trace-mapping or remapping .test.ts file");
 const root = path.resolve(__dirname, "../../packages");
 const spec = fs
   .readFileSync(file, "utf8")
   .replace(
-    "'../src/" + target + "'",
+    (target === "remapping" ? "'../../src/" : "'../src/") + target + "'",
     JSON.stringify(pathToFileURL(root + "/v" + target + "/index.mjs").href),
   )
+  .replace("import { type EncodedSourceMap } from '../../src/types';", "")
   .replace(
     "'@jridgewell/sourcemap-codec'",
     JSON.stringify(pathToFileURL(root + "/vsourcemap-codec/index.mjs").href),

@@ -1,0 +1,1324 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-21T19:44:16.078Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/source-map-conformance/node_modules/@babel/generator/lib/printer.js.map": "a379d51233d86b8ed80c560f93d8a0bb471721a4dc3802a4763f7a24646c64e6",
+    "../../scripts/source-map-conformance/node_modules/@jridgewell/remapping/dist/remapping.umd.js": "12b13f8a108bde767c8305aa222393dbb81472f47dcc401cd3a9e886633251b0",
+    "../vgen-mapping/index.cjs": "4436471ccf43be671b66d63021954016d7a03db9d429aa1e595f8cb8859f60ba",
+    "../vtrace-mapping/index.cjs": "1e4eb987306889a269fc0267bd767fe6207df78e6839f40fbb354d984c27dc00",
+    "bench/compare.cjs": "ee5674156cc30447a8fe0715b9ff005028b04c58db99fdb010aaaa6bad5652be",
+    "index.cjs": "c75c9fac041d50df875baf37e419f0219d5d78aa55aef2ba1c99776fed8ae958",
+    "package.json": "fcfca52f5c76218b020c1decbd053a2514cf5635516d8984482e6784e01be94d"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 24079,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Small single map",
+            "iterations": 966,
+            "samples": [
+              8907.695652173896,
+              9642.383022774315,
+              10708.721532091105,
+              10202.165631470001,
+              9917.960662525904,
+              9685.644927536237,
+              9176.544513457586,
+              9809.351966873728,
+              10043.90890269154,
+              9725.80227743272,
+              9762.939958592115,
+              9340.148033126292
+            ]
+          },
+          {
+            "case": "Babel printer map",
+            "iterations": 16,
+            "samples": [
+              614619.8125000027,
+              609260.437500005,
+              582385.437500001,
+              671690.1249999978,
+              806263.0000000013,
+              717877.6249999999,
+              716578.124999998,
+              755838.5625000028,
+              853416.687500001,
+              632807.2500000062,
+              729369.8125000034,
+              575354.1875000038
+            ]
+          },
+          {
+            "case": "Loaded printer transform",
+            "iterations": 12,
+            "samples": [
+              749135.4166666706,
+              810052.0833333273,
+              710340.2500000015,
+              742822.9166666634,
+              777239.583333331,
+              724503.4166666736,
+              689288.2500000042,
+              828892.4166666713,
+              753576.4166666657,
+              780711.8333333279,
+              737819.416666658,
+              754166.6666666819
+            ]
+          }
+        ],
+        "checksum": 6048
+      },
+      "vpm": {
+        "pid": 24080,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Small single map",
+            "iterations": 966,
+            "samples": [
+              5679.865424430643,
+              6662.956521739139,
+              5820.954451345754,
+              5762.336438923397,
+              6541.149068322976,
+              5383.885093167691,
+              5694.616977225678,
+              6608.997929606613,
+              6162.051759834391,
+              6416.710144927511,
+              6503.967908902732,
+              6129.011387163592
+            ]
+          },
+          {
+            "case": "Babel printer map",
+            "iterations": 16,
+            "samples": [
+              536924.4375000015,
+              596940.1250000033,
+              561424.4375000013,
+              509190.1249999964,
+              536510.3749999988,
+              591614.5624999985,
+              524882.812499996,
+              522898.43749999674,
+              581833.3125000023,
+              530518.2500000001,
+              531932.3124999969,
+              529575.5
+            ]
+          },
+          {
+            "case": "Loaded printer transform",
+            "iterations": 12,
+            "samples": [
+              641135.4166666664,
+              789013.9166666662,
+              750409.666666665,
+              640618.0833333319,
+              697565.9999999948,
+              640027.8333333347,
+              657586.8333333308,
+              693691.0000000012,
+              686482.6666666582,
+              694829.8333333299,
+              663527.8333333379,
+              724121.4999999955
+            ]
+          }
+        ],
+        "checksum": 4672
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 24081,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Small single map",
+            "iterations": 1479,
+            "samples": [
+              6672.160243407703,
+              5958.7275185936505,
+              6257.465855307647,
+              6201.487491548341,
+              5984.730223123714,
+              6266.790398918173,
+              6018.171061528049,
+              5979.828938471959,
+              5980.1386071670095,
+              5995.858688302925,
+              6587.052062204162,
+              6007.6910074374655
+            ]
+          },
+          {
+            "case": "Babel printer map",
+            "iterations": 17,
+            "samples": [
+              506725.47058823454,
+              527171.5294117632,
+              607365.1764705868,
+              660210.7647058802,
+              671916.7058823479,
+              523995.11764705874,
+              512546.58823529555,
+              565245.117647063,
+              521475.4705882301,
+              532946.0588235272,
+              509056.3529411758,
+              506541.6470588255
+            ]
+          },
+          {
+            "case": "Loaded printer transform",
+            "iterations": 15,
+            "samples": [
+              653213.9333333286,
+              709486.1333333332,
+              638038.8666666704,
+              655477.8000000018,
+              656780.5333333353,
+              660672.199999999,
+              661955.5333333362,
+              695680.6000000067,
+              640413.9333333281,
+              666019.4666666711,
+              652872.1999999864,
+              671152.7999999968
+            ]
+          }
+        ],
+        "checksum": 10048
+      },
+      "upstream": {
+        "pid": 24084,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Small single map",
+            "iterations": 1479,
+            "samples": [
+              15284.454361054763,
+              29710.361730899247,
+              11318.486139283274,
+              9125.64773495604,
+              9655.087897227859,
+              10355.392156862752,
+              9204.8120351589,
+              9375.028397565906,
+              9288.17308992563,
+              9223.912778904647,
+              9226.137931034495,
+              9755.944557133185
+            ]
+          },
+          {
+            "case": "Babel printer map",
+            "iterations": 17,
+            "samples": [
+              575602.9411764716,
+              631975.4705882387,
+              686225.4705882365,
+              688973.0588235286,
+              570019.5882352947,
+              581504.9411764703,
+              669125.0000000015,
+              627870.1176470617,
+              606654.4117647,
+              598482.8235294063,
+              675740.2352941158,
+              592779.4117647021
+            ]
+          },
+          {
+            "case": "Loaded printer transform",
+            "iterations": 15,
+            "samples": [
+              772816.6666666766,
+              774525.0000000093,
+              732994.3999999916,
+              811649.9999999936,
+              773705.5333333198,
+              737841.6666666756,
+              756305.6000000112,
+              770105.5333333291,
+              748680.5333333298,
+              815575.000000005,
+              747211.1333333335,
+              752836.1333333275
+            ]
+          }
+        ],
+        "checksum": 3392
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 24130,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Small single map",
+            "iterations": 1181,
+            "samples": [
+              9197.643522438606,
+              9119.425063505498,
+              8814.917019475019,
+              9052.320914479247,
+              9162.221845893308,
+              9112.546147332754,
+              8530.059271803568,
+              9392.746824724794,
+              10793.254868755273,
+              9261.113463166786,
+              17723.362404741783,
+              23937.129551227812
+            ]
+          },
+          {
+            "case": "Babel printer map",
+            "iterations": 16,
+            "samples": [
+              606270.8749999999,
+              706721.3750000008,
+              625013.0625000026,
+              672346.3124999966,
+              599697.9374999966,
+              664976.5625000015,
+              658127.6249999987,
+              655976.5625000012,
+              639664.0625000031,
+              609734.3750000022,
+              648171.8749999956,
+              658492.1875000021
+            ]
+          },
+          {
+            "case": "Loaded printer transform",
+            "iterations": 13,
+            "samples": [
+              817858.9999999986,
+              759147.4615384624,
+              815163.461538462,
+              866272.4615384587,
+              771855.7692307618,
+              765451.9230769228,
+              841032.0769230741,
+              780006.4615384705,
+              843407.0769230856,
+              816464.6923076956,
+              764378.1538461623,
+              763374.9999999964
+            ]
+          }
+        ],
+        "checksum": 5920
+      },
+      "vpm": {
+        "pid": 24131,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Small single map",
+            "iterations": 1181,
+            "samples": [
+              5984.3353090601395,
+              6003.281117696873,
+              6346.528365791701,
+              5455.898391193891,
+              6551.0516511430815,
+              6455.405588484349,
+              6657.17612193056,
+              7019.722269263355,
+              7068.162574089776,
+              7945.455546147322,
+              6410.492802709554,
+              6575.924640135475
+            ]
+          },
+          {
+            "case": "Babel printer map",
+            "iterations": 16,
+            "samples": [
+              549437.4999999963,
+              535963.5624999938,
+              497505.2499999961,
+              539484.3750000007,
+              529533.8750000056,
+              569575.4999999991,
+              549427.0625000013,
+              519114.5625000004,
+              518437.49999999744,
+              554817.749999998,
+              581023.4375000007,
+              518510.437499998
+            ]
+          },
+          {
+            "case": "Loaded printer transform",
+            "iterations": 13,
+            "samples": [
+              671516.0769230736,
+              682317.30769231,
+              659294.8461538455,
+              677467.923076917,
+              736346.1538461532,
+              652625.0000000049,
+              679807.6923076906,
+              628679.461538459,
+              660355.769230775,
+              650516.0000000037,
+              632359.0000000037,
+              710554.5384615391
+            ]
+          }
+        ],
+        "checksum": 4448
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 24132,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Small single map",
+            "iterations": 1333,
+            "samples": [
+              9600.025506376609,
+              7268.786196549133,
+              6714.7719429857325,
+              5765.191297824457,
+              6205.864216054028,
+              6720.117779444869,
+              6838.615903976007,
+              8358.901725431335,
+              6632.376594148537,
+              6460.95948987247,
+              6007.8769692422875,
+              6433.483120780186
+            ]
+          },
+          {
+            "case": "Babel printer map",
+            "iterations": 18,
+            "samples": [
+              537550.9444444459,
+              548530.1111111135,
+              513780.1111111078,
+              592226.8888888942,
+              542259.2777777785,
+              529405.0555555525,
+              526432.8888888864,
+              558729.166666669,
+              620111.1111111068,
+              520474.55555555824,
+              602851.8333333307,
+              521923.6111111122
+            ]
+          },
+          {
+            "case": "Loaded printer transform",
+            "iterations": 16,
+            "samples": [
+              717481.7500000045,
+              662968.7499999974,
+              664950.562499996,
+              669341.1249999955,
+              676408.8749999999,
+              658934.8749999999,
+              698643.2499999964,
+              711096.3125000041,
+              654601.562499991,
+              635299.4374999952,
+              710229.1875000049,
+              685890.624999999
+            ]
+          }
+        ],
+        "checksum": 9472
+      },
+      "upstream": {
+        "pid": 24133,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Small single map",
+            "iterations": 1333,
+            "samples": [
+              9550.199549887466,
+              9237.153038259574,
+              10438.484621155292,
+              10070.267066766712,
+              9078.144786196573,
+              10048.35633908476,
+              10884.814703675915,
+              12421.918229557361,
+              11546.44936234062,
+              9965.678919729922,
+              9737.497374343568,
+              13454.926481620385
+            ]
+          },
+          {
+            "case": "Babel printer map",
+            "iterations": 18,
+            "samples": [
+              1193250.0000000028,
+              1176134.2777777803,
+              2474893.5000000014,
+              4219351.833333336,
+              978268.5555555555,
+              718662.0000000012,
+              689215.2777777798,
+              668738.3888888878,
+              641162.0555555575,
+              657497.6666666683,
+              730379.6666666674,
+              802541.6666666653
+            ]
+          },
+          {
+            "case": "Loaded printer transform",
+            "iterations": 16,
+            "samples": [
+              909132.8125000047,
+              944893.1875,
+              1021330.6874999972,
+              785570.3124999991,
+              822239.5625000019,
+              974143.1874999905,
+              886731.8125000026,
+              921203.124999991,
+              835018.1874999976,
+              874143.187499996,
+              850424.4999999884,
+              857510.3749999898
+            ]
+          }
+        ],
+        "checksum": 3488
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 24134,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Small single map",
+            "iterations": 1083,
+            "samples": [
+              8953.8707294552,
+              9283.740535549405,
+              9021.352723915032,
+              9363.804247460723,
+              9176.823638042451,
+              8362.22622345336,
+              9159.8947368421,
+              11981.301939058178,
+              8992.03601108035,
+              9292.204986149556,
+              9467.10526315791,
+              7971.9529085873055
+            ]
+          },
+          {
+            "case": "Babel printer map",
+            "iterations": 17,
+            "samples": [
+              633453.4117647095,
+              613046.5294117639,
+              628061.2352941195,
+              678781.8823529439,
+              706671.5882352943,
+              642455.8823529397,
+              584794.11764706,
+              662953.4117647073,
+              656303.8823529455,
+              604941.1764705878,
+              700681.4117647028,
+              574487.7647058836
+            ]
+          },
+          {
+            "case": "Loaded printer transform",
+            "iterations": 13,
+            "samples": [
+              839830.0769230743,
+              788410.3076923146,
+              768471.1538461478,
+              781333.307692316,
+              774192.3076923216,
+              776288.4615384651,
+              759519.2307692287,
+              779121.8461538497,
+              770378.2307692283,
+              787483.9230769165,
+              787698.7692307711,
+              769458.3076923104
+            ]
+          }
+        ],
+        "checksum": 5440
+      },
+      "vpm": {
+        "pid": 24135,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Small single map",
+            "iterations": 1083,
+            "samples": [
+              9339.604801477373,
+              8212.565096952902,
+              8743.421052631596,
+              8747.922437673147,
+              9033.20221606649,
+              9303.785780240094,
+              9074.40720221607,
+              8885.84949215144,
+              8719.875346260385,
+              8643.544783010191,
+              8494.498614958457,
+              9184.748845798726
+            ]
+          },
+          {
+            "case": "Babel printer map",
+            "iterations": 17,
+            "samples": [
+              636004.8823529362,
+              626882.3529411787,
+              623921.5294117657,
+              788161.7647058794,
+              1910455.8823529421,
+              1010156.882352944,
+              712779.4117647,
+              654818.6470588262,
+              618674.000000002,
+              609835.7647058826,
+              628303.9411764682,
+              588080.8823529432
+            ]
+          },
+          {
+            "case": "Loaded printer transform",
+            "iterations": 13,
+            "samples": [
+              805980.7692307704,
+              822006.4615384655,
+              753685.9230769306,
+              746689.1538461526,
+              805368.5384615374,
+              743298.0769230758,
+              805275.6923076896,
+              746121.769230775,
+              787137.8461538474,
+              818304.4615384636,
+              759262.7692307675,
+              780000.0000000077
+            ]
+          }
+        ],
+        "checksum": 3936
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 24136,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Small single map",
+            "iterations": 925,
+            "samples": [
+              9061.982702702688,
+              9235.54054054055,
+              10178.604324324328,
+              9798.108108108088,
+              9103.513513513511,
+              9170.17945945946,
+              9566.486486486474,
+              9134.684324324282,
+              10113.198918918933,
+              8566.802162162201,
+              9188.648648648661,
+              9368.783783783745
+            ]
+          },
+          {
+            "case": "Babel printer map",
+            "iterations": 17,
+            "samples": [
+              657644.5882352974,
+              592683.8235294153,
+              705651.9411764705,
+              638531.8235294134,
+              591882.3529411771,
+              637213.235294118,
+              656382.3529411767,
+              653683.8235294105,
+              710987.7647058859,
+              691534.2941176464,
+              815389.7058823531,
+              727666.6470588278
+            ]
+          },
+          {
+            "case": "Loaded printer transform",
+            "iterations": 13,
+            "samples": [
+              835368.615384613,
+              782586.5384615397,
+              754394.2307692252,
+              764182.6923076957,
+              797878.2307692339,
+              781705.1538461503,
+              758400.6153846041,
+              840589.7692307638,
+              794352.5384615406,
+              794474.3846153765,
+              779647.4615384585,
+              773567.3076922991
+            ]
+          }
+        ],
+        "checksum": 5632
+      },
+      "upstream": {
+        "pid": 24137,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Small single map",
+            "iterations": 925,
+            "samples": [
+              9056.395675675663,
+              8650.945945945952,
+              8898.69405405405,
+              12176.035675675676,
+              10014.143783783778,
+              9381.667027027033,
+              9583.918918918956,
+              9681.396756756742,
+              8696.981621621575,
+              9099.954594594607,
+              9239.45945945944,
+              9501.441081081031
+            ]
+          },
+          {
+            "case": "Babel printer map",
+            "iterations": 17,
+            "samples": [
+              601223.0000000045,
+              669340.7058823582,
+              598982.8823529438,
+              589117.6470588228,
+              637862.764705888,
+              716242.647058821,
+              590178.8823529427,
+              608924.0588235244,
+              583311.294117647,
+              649999.9999999973,
+              639889.705882357,
+              624107.8235294106
+            ]
+          },
+          {
+            "case": "Loaded printer transform",
+            "iterations": 13,
+            "samples": [
+              839993.6153846196,
+              777365.3846153803,
+              840567.3076923063,
+              788692.307692311,
+              772554.4615384655,
+              735551.3076923111,
+              761980.7692307701,
+              752349.3846153822,
+              796663.4615384621,
+              795192.307692306,
+              755387.769230765,
+              731596.1538461649
+            ]
+          }
+        ],
+        "checksum": 3936
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "Small single map",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 9744.371118012417,
+          "vpmNs": 6145.531573498992,
+          "changePct": -36.932496729942784
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 9515.058147396881,
+          "vpmNs": 6012.931034482757,
+          "changePct": -36.80615566045944
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 9179.932684165957,
+          "vpmNs": 6503.228619813715,
+          "changePct": -29.158210157348595
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 10059.311702925736,
+          "vpmNs": 6673.574268567135,
+          "changePct": -33.65774452911986
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 9168.359187442275,
+          "vpmNs": 8816.885964912293,
+          "changePct": -3.8335455160983134
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 9310.563243243236,
+          "vpmNs": 9212.094594594606,
+          "changePct": -1.0576014154684898
+        }
+      ]
+    },
+    {
+      "case": "Babel printer map",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 694134.1249999979,
+          "vpmNs": 534221.3437499979,
+          "changePct": -23.037735142325765
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 617262.2647058808,
+          "vpmNs": 525583.323529411,
+          "changePct": -14.85251025674701
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 652074.2187499984,
+          "vpmNs": 537723.9687499972,
+          "changePct": -17.536385692292246
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 766460.6666666664,
+          "vpmNs": 539905.1111111122,
+          "changePct": -29.55866692296726
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 637954.6470588245,
+          "vpmNs": 632154.4117647022,
+          "changePct": -0.9091924200040458
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 616515.9411764676,
+          "vpmNs": 657013.470588237,
+          "changePct": 6.568772469125461
+        }
+      ]
+    },
+    {
+      "case": "Loaded printer transform",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 751355.9166666681,
+          "vpmNs": 690086.8333333298,
+          "changePct": -8.154468737686116
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 763205.5666666701,
+          "vpmNs": 658726.3666666672,
+          "changePct": -13.689522792177723
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 797584.9615384662,
+          "vpmNs": 665935.9230769243,
+          "changePct": -16.50595796184563
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 880437.4999999993,
+          "vpmNs": 672874.9999999977,
+          "changePct": -23.574927237879095
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 777705.1538461575,
+          "vpmNs": 783568.9230769275,
+          "changePct": 0.7539835889952107
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 774959.9230769229,
+          "vpmNs": 782145.846153845,
+          "changePct": 0.927263831707692
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "Small single map",
+      "upstream_ns": 9630,
+      "vpm_ns": 6324,
+      "change_pct": -35.2,
+      "upstream_first_pct": -33,
+      "vpm_first_pct": -35.2,
+      "process_range_pct": "-36.9, -36.8, -29.2, -33.7",
+      "control_max_abs_pct": 3.8,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "Babel printer map",
+      "upstream_ns": 673104,
+      "vpm_ns": 535973,
+      "change_pct": -20.3,
+      "upstream_first_pct": -20.3,
+      "vpm_first_pct": -22.2,
+      "process_range_pct": "-23.0, -14.9, -17.5, -29.6",
+      "control_max_abs_pct": 6.6,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "Loaded printer transform",
+      "upstream_ns": 780395,
+      "vpm_ns": 669405,
+      "change_pct": -15.1,
+      "upstream_first_pct": -12.3,
+      "vpm_first_pct": -18.6,
+      "process_range_pct": "-8.2, -13.7, -16.5, -23.6",
+      "control_max_abs_pct": 0.9,
+      "evidence": "lower time in every pair, beyond control spread"
+    }
+  ]
+}

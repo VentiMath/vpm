@@ -262,6 +262,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vbase64-js](packages/vbase64-js) | base64-js 1.5.1 | Binary encoding for browser Buffer and Capacitor property lists. [Measurements](packages/vbase64-js/bench/results/README.md) |
 | [vvarint](packages/vvarint) | varint 6.0.0 | Unsigned compilation IDs for Sass. Range and buffer capacity checks preserve exact integers and prevent partial writes to short buffers. [Measurements](packages/vvarint/bench/results/README.md) |
 | [vgen-mapping](packages/vgen-mapping) | @jridgewell/gen-mapping 0.3.13 | Generates maps for Babel and remapping, preserving duplicate source indexes on import. [Measurements](packages/vgen-mapping/bench/results/README.md) |
+| [vremapping](packages/vremapping) | @jridgewell/remapping 2.3.5 | Composes build maps through VPM tracing and generation. Iterative traversal supports deeply chained transforms. [Measurements](packages/vremapping/bench/results/README.md) |
 | [vtrace-mapping](packages/vtrace-mapping) | @jridgewell/trace-mapping 0.3.31 | Traces flat source maps through Babel, gen-mapping and remapping using the VPM resolver and codec. [Measurements](packages/vtrace-mapping/bench/results/README.md) |
 | [vresolve-uri](packages/vresolve-uri) | @jridgewell/resolve-uri 3.1.3 | Resolves original source locations for trace-mapping. [Measurements](packages/vresolve-uri/bench/results/README.md) |
 | [vsourcemap-codec](packages/vsourcemap-codec) | @jridgewell/sourcemap-codec 1.6.0 | Encodes and decodes the mappings field used by the frontend build. [Measurements](packages/vsourcemap-codec/bench/results/README.md) |
@@ -473,9 +474,9 @@ version-scoped integration aliases remain limited to their tested baselines.
 ## Current verification
 
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
-recorded by the tests. All 155 Node runtime packages' public declarations compile
+recorded by the tests. All 156 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **248 packages**, including two declaration-only packages and
+compiler in NodeNext and bundler resolution modes. The catalog covers **249 packages**, including two declaration-only packages and
 browser packages `vcss-box-model`, `vuse-sync-external-store`, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,

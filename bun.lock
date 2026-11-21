@@ -1472,6 +1472,14 @@
       "name": "vredux",
       "version": "5.0.1",
     },
+    "packages/vremapping": {
+      "name": "vremapping",
+      "version": "2.3.5",
+      "dependencies": {
+        "vgen-mapping": "0.3.13",
+        "vtrace-mapping": "0.3.31",
+      },
+    },
     "packages/vreselect": {
       "name": "vreselect",
       "version": "5.3.0",
@@ -2355,6 +2363,8 @@
     "vread-package-up": ["vread-package-up@workspace:packages/vread-package-up"],
 
     "vredux": ["vredux@workspace:packages/vredux"],
+
+    "vremapping": ["vremapping@workspace:packages/vremapping"],
 
     "vreselect": ["vreselect@workspace:packages/vreselect"],
 

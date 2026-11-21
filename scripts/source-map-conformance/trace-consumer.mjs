@@ -68,6 +68,11 @@ assert.ok(positions.some(({ source }) => source === "/maps/contest.ts"));
 assert.deepEqual(output.map.sources, ["contest.ts"]);
 console.log(
   JSON.stringify({
+    babelMerged: require("./merge-map.cjs").default(
+      { ...sourceMap, sourceRoot: "/src" },
+      make({}).map,
+      "prepared.js",
+    ),
     code: output.code,
     composed: output.map,
     stack,

@@ -1,0 +1,12 @@
+{
+  "upstream": {
+    "name": "@jridgewell/remapping",
+    "version": "2.3.5",
+    "repository": "https://github.com/jridgewell/sourcemaps/tree/main/packages/remapping",
+    "integrity": "sha512-LI9u/+laYG4Ds1TDKSJW2YPrIlcVYOwi2fUC6xB43lueCjgxV4lffOCZCtYFiH6TNOX+tQKXx97T4IKHbhyHEQ=="
+  },
+  "implementation": {
+    "kind": "independent",
+    "targetScope": "Compose flat source maps, including loader-directed source trees and ordered transformation arrays, for frontend build tools."
+  }
+}

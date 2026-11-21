@@ -23,6 +23,7 @@ try {
     "vsourcemap-codec",
     "vtrace-mapping",
     "vgen-mapping",
+    "vremapping",
   ]) {
     const [packed] = JSON.parse(
       run("npm", [
@@ -43,6 +44,7 @@ try {
         private: true,
         dependencies,
         overrides: {
+          "vgen-mapping": dependencies["vgen-mapping"],
           "vtrace-mapping": dependencies["vtrace-mapping"],
           "vresolve-uri": dependencies["vresolve-uri"],
           "vsourcemap-codec": dependencies["vsourcemap-codec"],
