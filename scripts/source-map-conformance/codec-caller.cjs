@@ -16,6 +16,7 @@ try {
       recursive: true,
     });
   fs.symlinkSync(codec, path.join(scope, "sourcemap-codec"));
+  fs.symlinkSync(process.env.VPM_RESOLVE_URI || path.resolve(__dirname, "../../packages/vresolve-uri"), path.join(scope, "resolve-uri"));
   const script = `
     import assert from "node:assert/strict";
     import {GenMapping, addMapping, toEncodedMap, fromMap} from "@jridgewell/gen-mapping";
@@ -35,6 +36,11 @@ try {
     assert.deepEqual(decodedMappings(trace), decode(result.mappings));
     assert.equal(encodedMappings(new TraceMap({...result,mappings:decode(result.mappings)})),result.mappings);
     assert.deepEqual(toEncodedMap(fromMap(result)),result);
+    for (const api of [{TraceMap, originalPositionFor}, require("@jridgewell/trace-mapping")]) {
+      const mapped = new api.TraceMap({...result, sourceRoot:"../../src/"}, "https://[::1]:5173/dist/maps/app.map");
+      assert.deepEqual(mapped.resolvedSources, ["https://[::1]:5173/src/practice.tsx","https://[::1]:5173/src/signup.tsx"]);
+      assert.equal(api.originalPositionFor(mapped,{line:2,column:9}).source, mapped.resolvedSources[0]);
+    }
     console.log("Unchanged gen-mapping and trace-mapping passed generation, tracing and re-encoding.");
   `;
   fs.writeFileSync(path.join(cwd, "probe.mjs"), script);

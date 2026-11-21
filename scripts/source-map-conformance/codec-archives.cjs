@@ -4,7 +4,8 @@ const fs = require("node:fs"),
   os = require("node:os");
 const { execFileSync } = require("node:child_process");
 const folder = fs.mkdtempSync(path.join(os.tmpdir(), "vpm-mappings-"));
-const pkg = path.resolve(__dirname, "../../packages/vsourcemap-codec");
+const name = process.argv[2] || "vsourcemap-codec";
+const pkg = path.resolve(__dirname, "../../packages", name);
 const run = (bin, args, cwd, env = {}) =>
   execFileSync(bin, args, {
     cwd,
@@ -27,7 +28,7 @@ try {
       cwd + "/package.json",
       JSON.stringify({
         private: true,
-        dependencies: { "vsourcemap-codec": "file:../" + archive },
+        dependencies: { [name]: "file:../" + archive },
       }),
     );
     run(manager, ["install", "--ignore-scripts"], cwd);
@@ -40,14 +41,16 @@ try {
     );
     fs.writeFileSync(
       cwd + "/check.mjs",
-      `import assert from 'node:assert/strict';import {createRequire} from 'node:module';
+      name === "vresolve-uri" ? `import assert from "node:assert/strict";import resolve from "vresolve-uri";
+      import {createRequire} from "node:module";assert.equal(createRequire(import.meta.url)("vresolve-uri"),resolve);
+      assert.equal(resolve("../src.ts","/dist/index.map"),"/src.ts");` : `import assert from 'node:assert/strict';import {createRequire} from 'node:module';
       import {encode,decode} from 'vsourcemap-codec';
       const api=createRequire(import.meta.url)('vsourcemap-codec');assert.equal(api.decode,decode);assert.deepEqual(decode(encode([[[0]]])),[[[0]]]);`,
     );
     for (const bin of ["node", "bun"]) {
       run(bin, ["check.mjs"], cwd);
       run(bin, [__dirname + "/codec-caller.cjs"], cwd, {
-        VPM_SOURCEMAP_CODEC: cwd + "/node_modules/vsourcemap-codec",
+        [name === "vsourcemap-codec" ? "VPM_SOURCEMAP_CODEC" : "VPM_RESOLVE_URI"]: cwd + "/node_modules/" + name,
       });
     }
   }
