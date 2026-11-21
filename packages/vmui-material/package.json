@@ -1827,6 +1827,26 @@
         "types": "./stackClasses.d.cts",
         "default": "./stackClasses.cjs"
       }
+    },
+    "./Grid": {
+      "import": {
+        "types": "./Grid.d.mts",
+        "default": "./Grid.mjs"
+      },
+      "require": {
+        "types": "./Grid.d.cts",
+        "default": "./Grid.cjs"
+      }
+    },
+    "./gridClasses": {
+      "import": {
+        "types": "./gridClasses.d.mts",
+        "default": "./gridClasses.mjs"
+      },
+      "require": {
+        "types": "./gridClasses.d.cts",
+        "default": "./gridClasses.cjs"
+      }
     }
   },
   "files": [

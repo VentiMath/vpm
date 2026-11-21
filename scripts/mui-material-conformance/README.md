@@ -550,3 +550,7 @@ The clipboard fixture uses the club article share button’s controlled open sta
 ## Stack
 
 The layout fixtures use the ARML highlights, WARML team shortcuts, Math Is Cool buttons and editor examples. The Material 7 control receives the app’s direct alignment and wrapping props. The Material 9 control receives their CSS equivalents through `sx`. The comparisons cover accessible markup and dividers on the server, then computed margins, gap, focus across resizes and hydration in Chrome. Run `stack-contract.cjs` and `stack-browser.cjs` from this directory. With a VentiMath checkout available, `node app-stack.cjs /path/to/checkout <revision>` compares all three original contest components and their rendered links with fixture data.
+
+### IMO archive Grid
+
+`grid-contract.cjs` compares responsive markup against both Material controls. `grid-browser.cjs` checks column widths, spacing, nested containers, theme overrides, focus and hydration. Run `node scripts/mui-material-conformance/app-grid.cjs <ventimath-checkout> <git-ref>` for the unchanged IMO view with fixture data. The reference used for this check was `aa110e55`.

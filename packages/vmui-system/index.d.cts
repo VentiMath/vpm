@@ -414,10 +414,11 @@ export interface ContainerClasses {
 export interface StackClasses {
 	root: string;
 }
-export interface GridClasses {
-	root: string;
-	container: string;
-}
+type GridSpan = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+export type GridClassKey = "root" | "container" | `grid-${"xs" | "sm" | "md" | "lg" | "xl"}-${GridSpan | "auto" | "true"}`
+	| `spacing-xs-${0 | Exclude<GridSpan, 11 | 12>}` | `direction-xs-${"row" | "row-reverse" | "column" | "column-reverse"}`
+	| `wrap-xs-${"wrap" | "nowrap" | "wrap-reverse"}`;
+export type GridClasses = Readonly<Record<GridClassKey, string>>;
 export const containerClasses: ContainerClasses;
 export const stackClasses: StackClasses;
 export const gridClasses: GridClasses;

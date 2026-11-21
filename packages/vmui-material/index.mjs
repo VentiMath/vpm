@@ -128,3 +128,5 @@ import notifications from './snackbars.cjs';
 export const {Snackbar,SnackbarContent,snackbarClasses,snackbarContentClasses,getSnackbarUtilityClass,getSnackbarContentUtilityClass}=notifications;
 import stackLayout from './stack-layout.cjs';
 export const {Stack, stackClasses, getStackUtilityClass} = stackLayout;
+import gridLayout from './grid-layout.cjs';
+export const {Grid, gridClasses, getGridUtilityClass} = gridLayout;

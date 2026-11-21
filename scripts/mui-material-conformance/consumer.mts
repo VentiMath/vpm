@@ -549,3 +549,13 @@ MaterialStack(contestLinks);
 RootStack({component:"a", href:"#team", ref:React.createRef<HTMLAnchorElement>()});
 // @ts-expect-error Stack accepts CSS flex directions.
 MaterialStack({direction:"horizontal"});
+
+import GridEntry, {type GridProps as IMOGridProps} from "vmui-material/Grid";
+import {Grid as RootGrid, gridClasses as yearGridClasses} from "vmui-material";
+const items: IMOGridProps<"section">={component:"section",size:{xs:12,sm:6,md:4},offset:{sm:1},ref:React.createRef<HTMLElement>()};
+GridEntry(items);
+RootGrid({container:true,spacing:2});
+const sizeClass:string=yearGridClasses["grid-md-4"];
+void sizeClass;
+// @ts-expect-error Grid size accepts numeric spans, auto, grow, or false.
+GridEntry({size:"full-width"});

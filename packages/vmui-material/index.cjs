@@ -39,3 +39,4 @@ Object.assign(module.exports,require('./tab-navigation.cjs'));
 Object.assign(module.exports,require('./breadcrumb-trail.cjs'));
 Object.assign(module.exports,require('./snackbars.cjs'));
 Object.assign(module.exports,require('./stack-layout.cjs'));
+Object.assign(module.exports,require('./grid-layout.cjs'));

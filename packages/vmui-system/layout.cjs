@@ -178,25 +178,24 @@ function createStack({
 		);
 	});
 }
-const getGridUtilityClass = (slot) => "MuiGrid-" + slot,
-	gridClasses = Object.fromEntries(
-		[
-			"root",
-			"container",
-			"direction-xs-column",
-			"direction-xs-column-reverse",
-			"direction-xs-row-reverse",
-			"wrap-xs-nowrap",
-			"wrap-xs-wrap-reverse",
-		].map((k) => [k, getGridUtilityClass(k)]),
-	);
-const GridContext = React.createContext(null);
+const getGridUtilityClass = (slot) => "MuiGrid-" + slot;
+const defaultBreakpoints = ["xs", "sm", "md", "lg", "xl"];
+const gridSlots = [
+	"root", "container",
+	...Array.from({length:11}, (_, n) => "spacing-xs-" + n),
+	...["row", "row-reverse", "column", "column-reverse"].map(d => "direction-xs-" + d),
+	...["wrap", "nowrap", "wrap-reverse"].map(w => "wrap-xs-" + w),
+	...defaultBreakpoints.flatMap(key => ["auto", "true", ...Array.from({length:12}, (_, i) => i+1)]
+		.map(size => "grid-" + key + "-" + size)),
+];
+const gridClasses = Object.freeze(Object.fromEntries(gridSlots.map(k => [k,getGridUtilityClass(k)])));
 function generateSizeClassNames(size) {
 	return Object.entries(size || {})
 		.filter(([, v]) => v !== false && v != null)
 		.map(([key, v]) => `grid-${key}-${v}`);
 }
 function generateSpacingClassNames(value, smallest = "xs") {
+	if (value == null || Array.isArray(value)) return [];
 	return typeof value === "object"
 		? Object.entries(value)
 				.filter(([, v]) => Number(v) > 0)
@@ -212,24 +211,23 @@ function generateDirectionClasses(value) {
 			? [`direction-xs-${value}`]
 			: [];
 }
+function eachGridBreakpoint(breakpoints, value, visit) {
+	if (value == null) return;
+	if (typeof value !== "object") {
+		visit(0, value);
+		return;
+	}
+	const keys = breakpoints.keys, array = Array.isArray(value);
+	for (let i = 0; i < keys.length; i++) {
+		const entry = array ? value[i] : value[keys[i]];
+		if (entry != null) visit(i, entry);
+	}
+}
 function traverseBreakpoints(breakpoints, value, iterator) {
-	const values = Array.isArray(value)
-		? Object.fromEntries(value.map((v, i) => [breakpoints.keys[i], v]))
-		: value && typeof value === "object"
-			? value
-			: { [breakpoints.keys[0]]: value };
-	for (const key of breakpoints.keys)
-		if (values[key] != null)
-			iterator(
-				(target, style) =>
-					Object.assign(
-						target,
-						key === breakpoints.keys[0]
-							? style
-							: { [breakpoints.up(key)]: style },
-					),
-				values[key],
-			);
+	eachGridBreakpoint(breakpoints, value, (index, entry) => {
+		const query = index && breakpoints.up(breakpoints.keys[index]);
+		iterator((target, style) => Object.assign(target, query ? { [query]: style } : style), entry);
+	});
 }
 function gridStyle({ theme, ownerState: s }) {
 	let styles = { minWidth: 0, boxSizing: "border-box" };
@@ -240,25 +238,32 @@ function gridStyle({ theme, ownerState: s }) {
 			flexWrap: s.wrap,
 			gap: "var(--Grid-rowSpacing) var(--Grid-columnSpacing)",
 		};
+	// Multiple props can introduce different breakpoints. Emit the shared rules
+	// in increasing width order so later props cannot reverse the cascade.
+	const media = [];
 	const apply = (value, fn) =>
-		traverseBreakpoints(theme.breakpoints, value, (append, v) => {
-			const next = {};
-			append(next, fn(v));
-			styles = merge(styles, next);
+		eachGridBreakpoint(theme.breakpoints, value, (index, entry) => {
+			const block = index ? (media[index] ??= {}) : styles;
+			const rules = fn(entry);
+			for (const property of Object.keys(rules)) {
+				if (property === "> *") Object.assign(block[property] ??= {}, rules[property]);
+				else block[property] = rules[property];
+			}
 		});
 	if (s.container) {
-		apply(s.columns ?? "var(--Grid-parent-columns)", (v) => ({
+		styles["--Grid-columns"] = 12;
+		apply(s.columns, (v) => ({
 			"--Grid-columns": v,
 			"> *": { "--Grid-parent-columns": v },
 		}));
-		apply(s.rowSpacing ?? "var(--Grid-parent-rowSpacing)", (v) => ({
+		apply(s.rowSpacing, (v) => ({
 			"--Grid-rowSpacing": typeof v === "string" ? v : theme.spacing(v),
 			"> *": {
 				"--Grid-parent-rowSpacing":
 					typeof v === "string" ? v : theme.spacing(v),
 			},
 		}));
-		apply(s.columnSpacing ?? "var(--Grid-parent-columnSpacing)", (v) => ({
+		apply(s.columnSpacing, (v) => ({
 			"--Grid-columnSpacing": typeof v === "string" ? v : theme.spacing(v),
 			"> *": {
 				"--Grid-parent-columnSpacing":
@@ -294,6 +299,9 @@ function gridStyle({ theme, ownerState: s }) {
 					? "0px"
 					: `calc(100% * ${v} / var(--Grid-parent-columns) + var(--Grid-parent-columnSpacing) * ${v} / var(--Grid-parent-columns))`,
 	}));
+	for (let i = 1; i < media.length; i++) {
+		if (media[i]) styles[theme.breakpoints.up(theme.breakpoints.keys[i])] = media[i];
+	}
 	return styles;
 }
 function createGrid({
@@ -304,18 +312,18 @@ function createGrid({
 	componentName = "MuiGrid",
 } = {}) {
 	const Root = createStyledComponent(gridStyle);
-	return React.forwardRef(function Grid(input, ref) {
+	const Grid = React.forwardRef(function GridRoot(input, ref) {
 		const theme = themeHook(),
-			parent = React.useContext(GridContext),
 			{
 				component = "div",
 				container = false,
 				direction = "row",
 				wrap = "wrap",
-				columns = parent?.columns ?? 12,
+				unstable_level: level = 0,
+				columns = level === 0 ? 12 : undefined,
 				spacing,
-				rowSpacing = spacing ?? parent?.rowSpacing ?? 0,
-				columnSpacing = spacing ?? parent?.columnSpacing ?? 0,
+				rowSpacing = spacing ?? (level === 0 ? 0 : undefined),
+				columnSpacing = spacing ?? (level === 0 ? 0 : undefined),
 				size = {},
 				offset = {},
 				className,
@@ -352,13 +360,15 @@ function createGrid({
 					className,
 				),
 			},
-			React.createElement(
-				GridContext.Provider,
-				{ value: container ? { columns, rowSpacing, columnSpacing } : parent },
-				children,
-			),
+			container ? React.Children.map(children, child =>
+				React.isValidElement(child) && child.type?.muiName === "Grid" && child.props.container
+					? React.cloneElement(child, {unstable_level: level + 1})
+					: child
+			) : children,
 		);
 	});
+	Grid.muiName = "Grid";
+	return Grid;
 }
 module.exports = {
 	createContainer,

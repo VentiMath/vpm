@@ -953,3 +953,5 @@ export function getSnackbarUtilityClass(slot: string): string;
 export function getSnackbarContentUtilityClass(slot: string): string;
 
 export {Stack, stackClasses, getStackUtilityClass, type StackProps, type StackClasses, type StackClassKey} from 'vmui-system';
+
+export {Grid, gridClasses, getGridUtilityClass, type GridProps, type GridClasses, type GridClassKey, type GridSize} from 'vmui-system';
