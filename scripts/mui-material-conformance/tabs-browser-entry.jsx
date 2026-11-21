@@ -1,4 +1,5 @@
 import React from "react";
+import { flushSync } from "react-dom";
 import { createRoot, hydrateRoot } from "react-dom/client";
 import { TabsScene, HydrationScene } from "./tabs-scene.jsx";
 const existing = document.getElementById("hydration");
@@ -21,11 +22,11 @@ if (existing) {
   document.body.append(host);
   const root = createRoot(host);
   window.renderTabs = (props = {}) =>
-    root.render(
+    flushSync(() => root.render(
       <React.StrictMode>
         <TabsScene {...props} />
       </React.StrictMode>,
-    );
+    ));
   window.unmountTabs = () => root.unmount();
   window.renderTabs();
 }

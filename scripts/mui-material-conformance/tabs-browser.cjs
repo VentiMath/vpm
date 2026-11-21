@@ -141,6 +141,9 @@ const pending = new Map(),
                 orientation: vertical ? "vertical" : "horizontal",
                 centered: true,
               });
+              // The control schedules indicator measurement after React commits.
+              // For standard tabs wait for the selected geometry itself.
+              if (!app) await wait(`(()=>{const s=${snapshot};return Math.abs(s.position)<=1 && Math.abs(s.length-(${vertical}?s.tabHeight:s.tabWidth))<=1})()`);
               samples.push(await evaluate(snapshot));
             }
         if (implementation === "upstream") control = samples;

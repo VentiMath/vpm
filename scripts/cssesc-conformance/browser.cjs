@@ -4,7 +4,7 @@ const profile=fs.mkdtempSync(path.join(os.tmpdir(),'vcssesc-chrome-')),entry=pro
 const esbuild=require('../mui-system-conformance/node_modules/esbuild');let child,server,socket,seq=0;const pending=new Map();
 (async()=>{try{
  const code=esbuild.buildSync({stdin:{contents:`window.owned=require(${JSON.stringify(entry)});window.upstream=require('cssesc');`,resolveDir:__dirname},bundle:true,write:false,platform:'browser',format:'iife',logLevel:'silent'}).outputFiles[0].text;
- server=http.createServer((req,res)=>{res.setHeader('Content-Type',req.url==='/code.js'?'text/javascript':'text/html');res.end(req.url==='/code.js'?code:'<!doctype html><meta charset="utf-8"><script src="/code.js"></script>')});await new Promise(r=>server.listen(0,'127.0.0.1',r));
+ server=http.createServer((req,res)=>{res.setHeader('Content-Type',req.url==='/code.js'?'text/javascript':'text/html');res.end(req.url==='/code.js'?code:'<!doctype html><meta charset="utf-8"><body><script src="/code.js"></script></body>')});await new Promise(r=>server.listen(0,'127.0.0.1',r));
  const chrome=process.env.CHROME_BIN||['/Applications/Google Chrome.app/Contents/MacOS/Google Chrome','/usr/bin/google-chrome','/usr/bin/chromium'].find(fs.existsSync);let port;({child,port}=await require('../vlx-conformance/launch-chrome.cjs')(chrome,profile));
  const tabs=await(await fetch('http://127.0.0.1:'+port+'/json/list')).json();socket=new WebSocket(tabs.find(x=>x.type==='page').webSocketDebuggerUrl);await new Promise((r,j)=>{socket.onopen=r;socket.onerror=j});
  socket.onmessage=e=>{const x=JSON.parse(e.data),p=pending.get(x.id);if(p){pending.delete(x.id);clearTimeout(p.timer);x.error?p.reject(Error(JSON.stringify(x.error))):p.resolve(x.result)}};
