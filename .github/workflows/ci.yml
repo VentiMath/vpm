@@ -369,6 +369,8 @@ jobs:
           node scripts/source-map-conformance/codec-archives.cjs
           node --test packages/vresolve-uri/test/*.test.cjs
           node scripts/source-map-conformance/codec-archives.cjs vresolve-uri
+          node --test packages/vtrace-mapping/test/*.test.cjs
+          node scripts/source-map-conformance/trace-archives.cjs
           npm --prefix scripts/picocolors-conformance ci --ignore-scripts
           node --test packages/vpicocolors/test/*.test.cjs
           node scripts/picocolors-conformance/probe.cjs
@@ -1301,6 +1303,8 @@ jobs:
       - run: bun scripts/source-map-conformance/caller.cjs
       - run: bun test packages/vsourcemap-codec/test packages/vresolve-uri/test
       - run: bun scripts/source-map-conformance/codec-caller.cjs
+      - run: bun test packages/vtrace-mapping/test
+      - run: bun scripts/source-map-conformance/trace-caller.cjs
       - run: npm --prefix scripts/picocolors-conformance ci --ignore-scripts
       - run: bun test packages/vpicocolors/test
       - run: bun scripts/picocolors-conformance/probe.cjs

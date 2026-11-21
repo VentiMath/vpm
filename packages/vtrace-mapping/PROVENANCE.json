@@ -1,0 +1,20 @@
+{
+  "upstream": {
+    "name": "@jridgewell/trace-mapping",
+    "version": "0.3.31",
+    "repository": "https://github.com/jridgewell/sourcemaps/tree/main/packages/trace-mapping",
+    "integrity": "sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw=="
+  },
+  "implementation": {
+    "kind": "independent",
+    "targetScope": "Flat V3 source maps used by Babel's generator, gen-mapping and remapping. Indexed section flattening is outside this surface."
+  },
+  "caller": {
+    "revision": "aa110e55",
+    "versions": {
+      "@babel/generator": "7.29.1",
+      "@jridgewell/gen-mapping": "0.3.13",
+      "@jridgewell/remapping": "2.3.5"
+    }
+  }
+}
