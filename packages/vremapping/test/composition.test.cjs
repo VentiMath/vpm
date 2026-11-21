@@ -107,3 +107,12 @@ test("long loader chains keep the original position without recursive calls", ()
   assert.deepEqual(result.sources, ["next"]);
   assert.equal(result.mappings, "AAAA");
 });
+
+test("omit an absent, null or empty output filename from serialized build maps", () => {
+  for (const file of [undefined, null, "", "bundle.js"]) {
+    const input = { ...root, file };
+    const result = remap(input, () => null);
+    assert.equal(result.file, file || undefined);
+    assert.equal(result.toString(), control(input, () => null).toString());
+  }
+});

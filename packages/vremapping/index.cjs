@@ -63,7 +63,7 @@ class SourceMap {
       ? toDecodedMap(map)
       : toEncodedMap(map);
     this.version = 3;
-    this.file = result.file;
+    this.file = result.file || undefined;
     this.mappings = result.mappings;
     this.names = result.names;
     this.ignoreList = result.ignoreList;
