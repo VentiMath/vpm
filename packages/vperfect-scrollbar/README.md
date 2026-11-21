@@ -81,3 +81,5 @@ Built for the documented caller. No public release or application adoption is
 claimed by this implementation commit.
 
 Scroll positions and reach state commit before callbacks; reentrant updates do not redispatch the same movement, and nested scrolling supersedes stale notifications.
+
+The app selects native scrolling when touch, Capacitor or its mobile user-agent detector reports a match. The UA fallback still covers clients that expose neither capability. [Caller decision and measurements](../../scripts/perfect-scrollbar-conformance/README.md#mobile-fallback-in-fusescrollbars)

@@ -461,6 +461,7 @@ jobs:
         run: |
           node --test packages/vperfect-scrollbar/test/scrollbar.test.cjs
           node scripts/perfect-scrollbar-conformance/run.cjs
+          node scripts/perfect-scrollbar-conformance/mobile-check.cjs
           node scripts/perfect-scrollbar-conformance/types.cjs
           node scripts/perfect-scrollbar-conformance/browser.cjs
           node scripts/perfect-scrollbar-conformance/archives.cjs
@@ -1339,6 +1340,7 @@ jobs:
         run: |
           bun test packages/vperfect-scrollbar/test/scrollbar.test.cjs
           bun scripts/perfect-scrollbar-conformance/run.cjs
+          bun scripts/perfect-scrollbar-conformance/mobile-check.cjs
       - run: npm --prefix scripts/notistack-conformance ci --ignore-scripts --no-audit --no-fund
       - name: Notification queues and server imports
         run: |
