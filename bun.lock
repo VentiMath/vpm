@@ -643,6 +643,10 @@
       "name": "vidb",
       "version": "8.0.4",
     },
+    "packages/vieee754": {
+      "name": "vieee754",
+      "version": "1.2.1",
+    },
     "packages/vipaddr": {
       "name": "vipaddr",
       "version": "0.1.0",
@@ -2105,6 +2109,8 @@
     "viconv-lite": ["viconv-lite@workspace:packages/viconv-lite"],
 
     "vidb": ["vidb@workspace:packages/vidb"],
+
+    "vieee754": ["vieee754@workspace:packages/vieee754"],
 
     "vipaddr": ["vipaddr@workspace:packages/vipaddr"],
 

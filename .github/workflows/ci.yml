@@ -334,6 +334,8 @@ jobs:
           npm --prefix scripts/base64-js-conformance ci --ignore-scripts --no-audit --no-fund
           node --test packages/vbase64-js/test/*.test.cjs
           node scripts/base64-js-conformance/archives.cjs
+          node --test packages/vieee754/test/*.test.cjs
+          node scripts/base64-js-conformance/float-archives.cjs
       - name: Unsigned varints and Sass compiler messages
         run: |
           npm --prefix scripts/varint-conformance ci --ignore-scripts --no-audit --no-fund
@@ -1263,6 +1265,8 @@ jobs:
       - run: npm --prefix scripts/varint-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/base64-js-conformance ci --ignore-scripts --no-audit --no-fund
       - run: bun test packages/vbase64-js/test
+      - run: bun test packages/vieee754/test
+      - run: bun scripts/base64-js-conformance/float-caller.cjs
       - run: bun scripts/base64-js-conformance/caller.cjs
       - run: bun test packages/vvarint/test
       - run: bun test packages/vbuffer-builder/test

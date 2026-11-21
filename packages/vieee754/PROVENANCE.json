@@ -1,0 +1,17 @@
+{
+  "upstream": {
+    "name": "ieee754",
+    "version": "1.2.1",
+    "repository": "https://github.com/feross/ieee754",
+    "checked": "2026-11-20",
+    "integrity": "sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA=="
+  },
+  "implementation": {
+    "kind": "independent",
+    "targetScope": "Binary32 and binary64 read/write operations used by browser Buffer, and byte-aligned custom IEEE formats using up to 52 fraction bits and 11 exponent bits."
+  },
+  "caller": {
+    "revision": "aa110e55",
+    "scope": "buffer 4.9.2 uses both byte orders for readFloat, writeFloat, readDouble and writeDouble."
+  }
+}

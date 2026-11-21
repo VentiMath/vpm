@@ -143,6 +143,8 @@ terminal detection, nested colors, browser entry, archives and types are checked
 This is a current build dependency at app main `211e2186`, not part of the removed
 Redoc or styled-components chains. It is built but not yet adopted.
 
+[vieee754](../packages/vieee754) supplies the eight single- and double-precision accessors in browser Buffer.
+
 [vbase64-js](../packages/vbase64-js) encodes binary data for browser Buffer and the Capacitor property-list writer. The conformance tests exercise both upstream callers with the replacement installed.
 
 [vbuffer-builder](../packages/vbuffer-builder) writes the length headers on Sass packets. [vvarint](../packages/vvarint) encodes compilation IDs for the Sass compiler used to build the editor stylesheets. Its tests compile Sass with the unchanged app-pinned host.

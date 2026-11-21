@@ -258,6 +258,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vidb](packages/vidb) | idb 8.0.4; app 7.1.1 | Independent zero-dependency IndexedDB promises, transaction completion, shortcuts, cursors and typed schemas. Preserves the actual abort cause and permits handled request errors to commit; settled requests do not hang. Native Chrome, unchanged Firebase heartbeat/installation persistence with synthetic data, Node/Bun controls, strict types and exact archives checked. [Measurements](packages/vidb/bench/results/README.md) use fake-indexeddb; no browser disk-latency claim. Built, not adopted. |
 | [vcamelize](packages/vcamelize) | camelize 1.0.1 | Independently written string and recursive key conversion with zero dependencies. Preserves literal string values, sparse arrays and Date/RegExp identity; detects cycles explicitly and defines data properties safely. 8,014 differential inputs and unchanged css-to-react-native 3.2.0 caller checks pass on Node/Bun, as do packed exports and strict types. Current styled-components still uses this converter. [Measurements](packages/vcamelize/bench/results/README.md): CSS-name fixtures take less time on both runtimes; the small Node recursive-object difference is unresolved at the recorded control precision. [Published camelize-1.0.1](https://github.com/VentiMath/vpm/releases/tag/camelize-1.0.1); public URLs, original-name overrides, source hashes and fresh/frozen installs verified. App main `211e2186` removes its former styled-components/converter chain and override. |
 | [vbuffer-builder](packages/vbuffer-builder) | buffer-builder 0.2.0 | Independently written binary buffer for Sass packet headers, with checked writes and detached snapshots. [Measurements](packages/vbuffer-builder/bench/results/README.md) |
+| [vieee754](packages/vieee754) | ieee754 1.2.1 | Binary floating-point reads and writes for browser Buffer, including upstream midpoint rounding and NaN encoding. [Measurements](packages/vieee754/bench/results/README.md) |
 | [vbase64-js](packages/vbase64-js) | base64-js 1.5.1 | Binary encoding for browser Buffer and Capacitor property lists. [Measurements](packages/vbase64-js/bench/results/README.md) |
 | [vvarint](packages/vvarint) | varint 6.0.0 | Unsigned compilation IDs for Sass. Range and buffer capacity checks preserve exact integers and prevent partial writes to short buffers. [Measurements](packages/vvarint/bench/results/README.md) |
 | [vsource-map-js](packages/vsource-map-js) | source-map-js 1.2.4 (app 1.2.1) | Independent flat CSS source-map generation, lookup and composition. Both unchanged CSS callers pass on Node and Bun. Single-pass decoding cuts first lookup time by 66% on Node and 76% on Bun against 1.2.4. Warm lookups retain their advantage. [Measurements](packages/vsource-map-js/bench/results/README.md). |
@@ -468,9 +469,9 @@ version-scoped integration aliases remain limited to their tested baselines.
 ## Current verification
 
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
-recorded by the tests. All 150 Node runtime packages' public declarations compile
+recorded by the tests. All 151 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **243 packages**, including two declaration-only packages and
+compiler in NodeNext and bundler resolution modes. The catalog covers **244 packages**, including two declaration-only packages and
 browser packages `vcss-box-model`, `vuse-sync-external-store`, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,
