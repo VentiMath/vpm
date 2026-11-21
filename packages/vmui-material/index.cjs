@@ -41,3 +41,4 @@ Object.assign(module.exports,require('./snackbars.cjs'));
 Object.assign(module.exports,require('./stack-layout.cjs'));
 Object.assign(module.exports,require('./grid-layout.cjs'));
 Object.assign(module.exports,require('./rating-control.cjs'));
+Object.assign(module.exports, require("./click-away.cjs"));

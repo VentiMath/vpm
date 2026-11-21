@@ -1155,3 +1155,15 @@ apart from its extra `-webkit-print-color-scheme` declaration. The standard
 `color-scheme` and every generated theme variable are preserved.
 
 [Server-render measurements](bench/globals/README.md)
+
+### ClickAwayListener
+
+Toolbar search and the style-2 navigation panel use this component to dismiss
+on an outside click. It preserves the child's DOM node, ref and handlers.
+React portals count as inside by default. Set `disableReactTree` for DOM-only
+containment. Mouse, pointer and touch events can be configured independently.
+Subscriptions attach to the child's document and are removed on unmount.
+
+Chrome comparisons cover the opening click, portaled results, touch scrolling,
+scrollbar clicks, iframe isolation and React 19 callback-ref cleanup.
+[Event dispatch and server-render measurements](bench/click-away/README.md)

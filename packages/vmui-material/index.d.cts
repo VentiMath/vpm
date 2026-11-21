@@ -982,3 +982,12 @@ export interface RatingOwnProps {
 }
 export type RatingProps<C extends React.ElementType = "span"> = RatingOwnProps & {component?: C} & Omit<React.ComponentPropsWithRef<C>, keyof RatingOwnProps>;
 export function Rating<C extends React.ElementType = "span">(props: RatingProps<C>): React.ReactElement;
+
+export interface ClickAwayListenerProps {
+  children: React.ReactElement;
+  onClickAway: (event: MouseEvent | TouchEvent) => void;
+  mouseEvent?: 'onClick' | 'onMouseDown' | 'onMouseUp' | 'onPointerDown' | 'onPointerUp' | false;
+  touchEvent?: 'onTouchStart' | 'onTouchEnd' | false;
+  disableReactTree?: boolean;
+}
+export function ClickAwayListener(props: ClickAwayListenerProps): React.ReactElement;

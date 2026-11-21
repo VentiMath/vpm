@@ -278,6 +278,16 @@
         "default": "./GlobalStyles.cjs"
       }
     },
+    "./ClickAwayListener": {
+      "import": {
+        "types": "./ClickAwayListener.d.mts",
+        "default": "./ClickAwayListener.mjs"
+      },
+      "require": {
+        "types": "./ClickAwayListener.d.cts",
+        "default": "./ClickAwayListener.cjs"
+      }
+    },
     "./useMediaQuery": {
       "import": {
         "types": "./useMediaQuery.d.mts",

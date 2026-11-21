@@ -510,3 +510,10 @@ GridEntry({size:"full-width"});
 
 import WarmlRating = require('vmui-material/Rating');
 WarmlRating.default({size:'small',value:0,onChange:(_, v)=>{const next:number=v??0;void next;}});
+
+import ClickAway from "vmui-material/ClickAwayListener";
+import type {ClickAwayListenerProps} from "vmui-material/ClickAwayListener";
+const awayProps:ClickAwayListenerProps={children:React.createElement("aside"),mouseEvent:"onPointerUp",touchEvent:false,onClickAway:event=>void event.target};
+ClickAway(awayProps);
+// @ts-expect-error No document-level keyboard event in the click-away API.
+ClickAway({...awayProps,mouseEvent:"onKeyDown"});

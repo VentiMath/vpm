@@ -569,3 +569,10 @@ const preference: RatingProps = {size:'small',max:5,value:0,onChange:(_, v)=>{co
 WarmlRating(preference);
 // @ts-expect-error Only whole-star increments are implemented.
 WarmlRating({precision:0.5});
+
+import ClickAway from "vmui-material/ClickAwayListener";
+import type {ClickAwayListenerProps} from "vmui-material/ClickAwayListener";
+const awayProps:ClickAwayListenerProps={children:React.createElement("aside"),mouseEvent:"onPointerUp",touchEvent:false,onClickAway:event=>void event.target};
+ClickAway(awayProps);
+// @ts-expect-error No document-level keyboard event in the click-away API.
+ClickAway({...awayProps,mouseEvent:"onKeyDown"});
