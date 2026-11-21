@@ -6,8 +6,11 @@ const { execFileSync } = require("node:child_process");
 const fixture = path.join(__dirname, "node_modules");
 const dir = fs.mkdtempSync(path.join(fixture, ".trace-caller-"));
 try {
-  function run(own) {
-    const cwd = path.join(dir, own ? "vpm" : "control"),
+  function run(own, generate = false) {
+    const cwd = path.join(
+        dir,
+        generate ? "vpm-generator" : own ? "vpm-tracer" : "control",
+      ),
       modules = path.join(cwd, "node_modules");
     const jridge = path.join(modules, "@jridgewell");
     fs.mkdirSync(jridge, { recursive: true });
@@ -17,6 +20,7 @@ try {
       "@jridgewell/gen-mapping",
       "@jridgewell/remapping",
     ]) {
+      if (generate && name === "@jridgewell/gen-mapping") continue;
       fs.cpSync(path.join(fixture, name), path.join(modules, name), {
         recursive: true,
       });
@@ -36,6 +40,11 @@ try {
         path.join(jridge, up),
       );
     }
+    if (generate)
+      fs.symlinkSync(
+        path.join(candidate, "vgen-mapping"),
+        path.join(jridge, "gen-mapping"),
+      );
     fs.copyFileSync(
       path.join(__dirname, "trace-consumer.mjs"),
       path.join(cwd, "probe.mjs"),
@@ -46,8 +55,9 @@ try {
   }
   const control = run(false);
   assert.deepEqual(run(true), control);
+  assert.deepEqual(run(true, true), control);
   console.log(
-    "Unchanged Babel generator, gen-mapping and remapping produce identical composed maps, positions, names and source contents.",
+    "Babel and remapping match with the VPM tracer alone and with the VPM generator and tracer together.",
   );
 } finally {
   fs.rmSync(dir, { recursive: true, force: true });

@@ -8,14 +8,18 @@ const { execFileSync } = require("node:child_process"),
 const file = process.argv[2];
 if (!file)
   throw Error(
-    "Pass the unmodified trace-mapping.test.ts from the trace-mapping/0.3.31 tag",
+    "Pass the original gen-mapping.test.ts or trace-mapping.test.ts from its target release",
   );
+const target =
+  path.basename(file) === "gen-mapping.test.ts"
+    ? "gen-mapping"
+    : "trace-mapping";
 const root = path.resolve(__dirname, "../../packages");
 const spec = fs
   .readFileSync(file, "utf8")
   .replace(
-    "'../src/trace-mapping'",
-    JSON.stringify(pathToFileURL(root + "/vtrace-mapping/index.mjs").href),
+    "'../src/" + target + "'",
+    JSON.stringify(pathToFileURL(root + "/v" + target + "/index.mjs").href),
   )
   .replace(
     "'@jridgewell/sourcemap-codec'",
@@ -25,7 +29,7 @@ const suite = `let count=0;
 function describe(_name,fn){fn()}
 function it(name,fn){try{fn();count++}catch(error){throw Error(name,{cause:error})}}
 ${spec}
-console.log(count+" upstream flat-map tests passed.");`;
+console.log(count+" upstream ${target} tests passed.");`;
 const dir = fs.mkdtempSync(path.join(os.tmpdir(), "trace-contract-"));
 try {
   const out = path.join(dir, "public-tests.mts");

@@ -17,3 +17,10 @@ For the upstream flat-map suite, pass the path to
 `packages/trace-mapping/test/trace-mapping.test.ts` from the
 `trace-mapping/0.3.31` tag to `node trace-upstream.cjs` or
 `bun trace-upstream.cjs`.
+
+The generator check repeats the same Babel and remapping calls with
+`vgen-mapping` substituted as well. Encoded, decoded and raw mappings are
+compared with upstream controls. The archive check installs all four VPM
+packages offline. The public writer suite runs with
+`node trace-upstream.cjs /path/to/gen-mapping.test.ts` (or Bun) using the
+`gen-mapping/0.3.13` tag.

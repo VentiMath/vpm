@@ -10,6 +10,7 @@ import {
   addMapping,
   toEncodedMap,
   setSourceContent,
+  allMappings,
   setIgnore,
   fromMap,
 } from "@jridgewell/gen-mapping";
@@ -71,6 +72,8 @@ console.log(
     composed: output.map,
     stack,
     positions,
+    babelRaw: output.rawMappings,
+    raw: allMappings(first),
     fields: decodedMappings(new TraceMap(output.map)),
   }),
 );

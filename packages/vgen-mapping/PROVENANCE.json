@@ -1,0 +1,19 @@
+{
+  "upstream": {
+    "name": "@jridgewell/gen-mapping",
+    "version": "0.3.13",
+    "repository": "https://github.com/jridgewell/sourcemaps/tree/main/packages/gen-mapping",
+    "integrity": "sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA=="
+  },
+  "implementation": {
+    "kind": "independent",
+    "targetScope": "Flat version-3 map generation, sparse mapping emission and import for Babel and remapping."
+  },
+  "caller": {
+    "revision": "aa110e55",
+    "versions": {
+      "@babel/generator": "7.29.1",
+      "@jridgewell/remapping": "2.3.5"
+    }
+  }
+}

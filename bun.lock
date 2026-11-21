@@ -491,6 +491,14 @@
         "vjson-bigint": "workspace:*",
       },
     },
+    "packages/vgen-mapping": {
+      "name": "vgen-mapping",
+      "version": "0.3.13",
+      "dependencies": {
+        "vsourcemap-codec": "1.6.0",
+        "vtrace-mapping": "0.3.31",
+      },
+    },
     "packages/vget-nonce": {
       "name": "vget-nonce",
       "version": "1.0.1",
@@ -2081,6 +2089,8 @@
     "vgaxios": ["vgaxios@workspace:packages/vgaxios"],
 
     "vgcp-metadata": ["vgcp-metadata@workspace:packages/vgcp-metadata"],
+
+    "vgen-mapping": ["vgen-mapping@workspace:packages/vgen-mapping"],
 
     "vget-nonce": ["vget-nonce@workspace:packages/vget-nonce"],
 

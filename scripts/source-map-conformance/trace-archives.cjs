@@ -18,7 +18,12 @@ function run(bin, args, cwd = scratch, extra = {}) {
 }
 try {
   const dependencies = {};
-  for (const name of ["vresolve-uri", "vsourcemap-codec", "vtrace-mapping"]) {
+  for (const name of [
+    "vresolve-uri",
+    "vsourcemap-codec",
+    "vtrace-mapping",
+    "vgen-mapping",
+  ]) {
     const [packed] = JSON.parse(
       run("npm", [
         "pack",
@@ -38,6 +43,7 @@ try {
         private: true,
         dependencies,
         overrides: {
+          "vtrace-mapping": dependencies["vtrace-mapping"],
           "vresolve-uri": dependencies["vresolve-uri"],
           "vsourcemap-codec": dependencies["vsourcemap-codec"],
         },
@@ -57,7 +63,7 @@ try {
       });
   }
   console.log(
-    "Packed npm and Bun installations pass all three unchanged callers on Node and Bun.",
+    "Packed npm and Bun installations pass Babel and remapping through the generator and tracing stack on Node and Bun.",
   );
 } finally {
   fs.rmSync(scratch, { recursive: true, force: true });
