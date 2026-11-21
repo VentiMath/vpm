@@ -576,3 +576,10 @@ const awayProps:ClickAwayListenerProps={children:React.createElement("aside"),mo
 ClickAway(awayProps);
 // @ts-expect-error No document-level keyboard event in the click-away API.
 ClickAway({...awayProps,mouseEvent:"onKeyDown"});
+
+import Grow from "vmui-material/Grow";
+import type {GrowProps} from "vmui-material/Grow";
+const menuGrowth: GrowProps={in:true,id:"menu-fuse-list-grow",timeout:"auto",style:{transformOrigin:"0 0 0"},children:React.createElement("section"),onEntered(el){el.focus();}};
+React.createElement(Grow,menuGrowth);
+// @ts-expect-error Only "auto" is supported as a named duration.
+React.createElement(Grow,{...menuGrowth,timeout:"fast"});

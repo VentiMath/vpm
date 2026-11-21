@@ -3,7 +3,7 @@ const fs = require("node:fs"),
   path = require("node:path");
 const { fixture, packages, esbuild } = require("./paths.cjs");
 const base = path.join(fixture, "node_modules/.vpm-material");
-module.exports = function buildUnit(unit, component, specifier) {
+module.exports = function buildUnit(unit, component, specifier, related = {}) {
   for (const version of ["current", "app"])
     for (const own of [false, true]) {
       const dir = path.join(base, version + (own ? "-vpm" : "-upstream"));
@@ -19,9 +19,14 @@ module.exports = function buildUnit(unit, component, specifier) {
         );
         if (fs.existsSync(installed)) alias[key] = installed;
       }
-      alias[specifier] = own
-        ? packages + "/vmui-material/" + component + ".mjs"
-        : alias["@mui/material"] + "/" + component + "/index.js";
+      for (const [key, subpath] of Object.entries({
+        [specifier]: component,
+        ...related,
+      })) {
+        alias[key] = own
+          ? packages + "/vmui-material/" + subpath + ".mjs"
+          : alias["@mui/material"] + "/" + subpath + "/index.js";
+      }
       for (const browser of [true, false]) {
         const kind = browser ? "browser" : "ssr";
         esbuild.buildSync({

@@ -288,6 +288,16 @@
         "default": "./ClickAwayListener.cjs"
       }
     },
+    "./Grow": {
+      "import": {
+        "types": "./Grow.d.mts",
+        "default": "./Grow.mjs"
+      },
+      "require": {
+        "types": "./Grow.d.cts",
+        "default": "./Grow.cjs"
+      }
+    },
     "./useMediaQuery": {
       "import": {
         "types": "./useMediaQuery.d.mts",

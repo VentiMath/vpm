@@ -991,3 +991,8 @@ export interface ClickAwayListenerProps {
   disableReactTree?: boolean;
 }
 export function ClickAwayListener(props: ClickAwayListenerProps): React.ReactElement;
+
+export interface GrowProps extends Omit<SlideProps, "direction" | "container" | "timeout"> {
+  timeout?: CollapseOwnProps["timeout"];
+}
+export const Grow: React.ForwardRefExoticComponent<GrowProps> & { muiSupportAuto: boolean };

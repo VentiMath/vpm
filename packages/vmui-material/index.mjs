@@ -133,3 +133,4 @@ export const {Grid, gridClasses, getGridUtilityClass} = gridLayout;
 import rating from './rating-control.cjs';
 export const {Rating, ratingClasses, getRatingUtilityClass} = rating;
 export { default as ClickAwayListener } from "./ClickAwayListener.mjs";
+export { default as Grow } from "./Grow.mjs";

@@ -1167,3 +1167,17 @@ Subscriptions attach to the child's document and are removed on unmount.
 Chrome comparisons cover the opening click, portaled results, touch scrolling,
 scrollbar clicks, iframe isolation and React 19 callback-ref cleanup.
 [Event dispatch and server-render measurements](bench/click-away/README.md)
+
+### Grow
+
+The two horizontal navigation menus use Grow to open their Paper panels from
+the top-left. The component retains the child and its handlers while animating
+opacity and scale. Automatic duration comes from the measured panel height.
+Explicit timeouts, completion callbacks, reduced-motion themes and unmount-on-exit
+are supported. A direction change cancels the preceding completion timer.
+
+Chrome checks cover hydration, callbacks, theme timing and interrupted menus.
+On exit VPM follows Material 9 and clears the finished transition declaration.
+The app’s Material 7 control leaves that declaration on the hidden panel.
+
+[Mounted transitions and server rendering](bench/grow/README.md)
