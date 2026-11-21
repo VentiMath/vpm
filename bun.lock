@@ -815,6 +815,7 @@
       "dependencies": {
         "vfloating-ui-dom": "workspace:*",
         "vmui-system": "9.5.0",
+        "vmui-utils": "9.5.0",
         "vreact-transition-group": "4.4.5",
       },
       "peerDependencies": {

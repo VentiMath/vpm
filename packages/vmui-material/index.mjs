@@ -134,3 +134,4 @@ import rating from './rating-control.cjs';
 export const {Rating, ratingClasses, getRatingUtilityClass} = rating;
 export { default as ClickAwayListener } from "./ClickAwayListener.mjs";
 export { default as Grow } from "./Grow.mjs";
+export { default as Popper, getPopperUtilityClass, popperClasses } from "./Popper.mjs";

@@ -996,3 +996,21 @@ export interface GrowProps extends Omit<SlideProps, "direction" | "container" | 
   timeout?: CollapseOwnProps["timeout"];
 }
 export const Grow: React.ForwardRefExoticComponent<GrowProps> & { muiSupportAuto: boolean };
+
+export type PopperPlacementType = "top" | "bottom" | "left" | "right" | `${"top" | "bottom" | "left" | "right"}-${"start" | "end"}`;
+export interface PopperVirtualElement { getBoundingClientRect(): DOMRect; contextElement?: Element; }
+export interface PopperProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "children"> {
+  open: boolean;
+  anchorEl?: Element | PopperVirtualElement | null | (() => Element | PopperVirtualElement | null);
+  children?: React.ReactNode | ((options: {placement: PopperPlacementType}) => React.ReactNode);
+  placement?: PopperPlacementType;
+  disablePortal?: boolean;
+  keepMounted?: boolean;
+  container?: Element | DocumentFragment | null | (() => Element | DocumentFragment | null);
+  component?: React.ElementType;
+  classes?: {root?: string};
+  sx?: SxProps<Theme>;
+}
+export const Popper: React.ForwardRefExoticComponent<PopperProps & React.RefAttributes<HTMLDivElement>>;
+export const popperClasses: Readonly<{root: string}>;
+export function getPopperUtilityClass(slot: string): string;

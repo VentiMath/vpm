@@ -583,3 +583,8 @@ const menuGrowth: GrowProps={in:true,id:"menu-fuse-list-grow",timeout:"auto",sty
 React.createElement(Grow,menuGrowth);
 // @ts-expect-error Only "auto" is supported as a named duration.
 React.createElement(Grow,{...menuGrowth,timeout:"fast"});
+
+import Popper from "vmui-material/Popper";
+import type {PopperProps} from "vmui-material/Popper";
+const suggestionProps:PopperProps = { open:true, anchorEl:()=>document.querySelector("input"), className:"z-9999", children:React.createElement("section") };
+React.createElement(Popper,suggestionProps);

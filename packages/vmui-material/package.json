@@ -1887,6 +1887,16 @@
         "types": "./ratingClasses.d.cts",
         "default": "./ratingClasses.cjs"
       }
+    },
+    "./Popper": {
+      "import": {
+        "types": "./Popper.d.mts",
+        "default": "./Popper.mjs"
+      },
+      "require": {
+        "types": "./Popper.d.cts",
+        "default": "./Popper.cjs"
+      }
     }
   },
   "files": [
@@ -1918,7 +1928,8 @@
   "dependencies": {
     "vmui-system": "9.5.0",
     "vfloating-ui-dom": "workspace:*",
-    "vreact-transition-group": "4.4.5"
+    "vreact-transition-group": "4.4.5",
+    "vmui-utils": "9.5.0"
   },
   "peerDependencies": {
     "react": "^19.3.0",

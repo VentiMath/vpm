@@ -1,6 +1,6 @@
 # vmui-material
 
-Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, GlobalStyles, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card, CardContent, CardActionArea, AvatarGroup, Tooltip, Collapse, DialogTitle, DialogContent, DialogActions, Dialog, Slide, DialogContentText, Drawer, SwipeableDrawer, Table, TableHead, TableBody, TableFooter, TableRow, TableCell, TableContainer, Autocomplete, TableSortLabel, PaginationItem, Pagination, LinearProgress, Alert, AlertTitle, Badge, ListItemButton, AppBar, Toolbar, Accordion, AccordionSummary, AccordionDetails, Tab, Tabs, Breadcrumbs, Snackbar, SnackbarContent, Stack, Grid and Rating, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
+Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, GlobalStyles, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card, CardContent, CardActionArea, AvatarGroup, Tooltip, Collapse, DialogTitle, DialogContent, DialogActions, Dialog, Slide, DialogContentText, Drawer, SwipeableDrawer, Table, TableHead, TableBody, TableFooter, TableRow, TableCell, TableContainer, Autocomplete, TableSortLabel, PaginationItem, Pagination, LinearProgress, Alert, AlertTitle, Badge, ListItemButton, AppBar, Toolbar, Accordion, AccordionSummary, AccordionDetails, Tab, Tabs, Breadcrumbs, Snackbar, SnackbarContent, Stack, Grid, Rating, ClickAwayListener, Grow and Popper, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
 
 ```js
 import { Button, ToggleButton, ToggleButtonGroup } from 'vmui-material';
@@ -1181,3 +1181,11 @@ On exit VPM follows Material 9 and clears the finished transition declaration.
 The app’s Material 7 control leaves that declaration on the hidden panel.
 
 [Mounted transitions and server rendering](bench/grow/README.md)
+
+## Popper
+
+The toolbar’s basic and full search layouts use a portaled panel for both suggestions and the no-results message. Popper uses VPM Floating DOM to anchor the panel, flip it at a viewport edge, and follow scroll and size changes. The search field keeps focus and the panel retains its DOM node as suggestions change. Anchors inside an iframe use that document’s body by default.
+
+The supported interface includes explicit side placements, element or virtual anchors, custom portal containers, inline and retained mounting, root refs, theme defaults and `sx`. The app supplies the panel width and the listbox semantics. Custom Popper.js modifiers, its instance API and transition slots are outside the verified search contract.
+
+The browser suite exercises the app’s two JSX renderers against Material 7.2.0 and 9.5.0. Server rendering defers DOM anchor callbacks until mount. [Benchmark results](bench/popper/README.md)

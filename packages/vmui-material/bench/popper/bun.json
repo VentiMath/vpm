@@ -1,0 +1,1326 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-21T19:49:16.164Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/mui-material-conformance/popper-browser-entry.jsx": "6247d185872411f704961d3a64d84f2f35e4c347487ff8225c339a3469f35fcf",
+    "../../scripts/mui-material-conformance/popper-ssr-entry.jsx": "0c671a5a5b5bad3033dae7f8dbb27929d64419325f25166da38cf6ddce8c417b",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/app-upstream/popper-browser.js": "d2c0ca3f1bba686825013fbc5a06b482d0e1b22dcbf2cd76572df06f6ad911fa",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/app-upstream/popper-ssr.cjs": "3251afbf155906238b7872a58903b171ae704912ec3631086121c52bb25b4170",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/app-vpm/popper-browser.js": "136d76c9e79e31f21cb54436c58699b03ad5b4d72722699414288850b059588e",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/app-vpm/popper-ssr.cjs": "b5f7700d9fa25578b8bda650c57bdc81784a8d1af37981ce4391f80264664939",
+    "../../scripts/mui-system-conformance/package-lock.json": "a04f91b1f742d1bd580d9d4119c7957b2d4cf7ef0a5adfa1f263b7ebf293a8a1",
+    "bench/popper.cjs": "ac84c0ae1c0342b24f02077a5b0f328207b45b828b1fa824714318ac7023ee0f",
+    "search-popper.cjs": "7416fe536bde8f17d281a1703d959877f2baea2b03f9333d37d9b39599f3f75d"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 25118,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Mounted results to empty and back",
+            "iterations": 4,
+            "samples": [
+              2618395.7499999907,
+              2831999.9999999935,
+              3258760.499999994,
+              2985062.4999999697,
+              3170947.7499999823,
+              3220437.500000003,
+              2680864.500000041,
+              2381916.4999999884,
+              7628437.500000019,
+              2899541.749999969,
+              3524937.4999999646,
+              2431395.7499999786
+            ]
+          },
+          {
+            "case": "Closed portal SSR",
+            "iterations": 4112,
+            "samples": [
+              2758.278696498053,
+              2505.877188715955,
+              2788.515321011666,
+              2789.5994649805652,
+              2846.6682879377504,
+              2511.9163424124395,
+              2719.915126459151,
+              2702.3650291829053,
+              2673.850924124536,
+              2753.323686770412,
+              2423.76994163427,
+              2733.7264105058653
+            ]
+          },
+          {
+            "case": "Open portal SSR",
+            "iterations": 3456,
+            "samples": [
+              3078.353877314773,
+              2677.0228587963365,
+              3252.2667824073997,
+              3109.338831018473,
+              3008.1140046296528,
+              2857.4580439815036,
+              3193.323206018543,
+              3267.95196759259,
+              3682.327835648188,
+              2911.7960069444503,
+              3052.818865740792,
+              3293.4027777777296
+            ]
+          }
+        ],
+        "checksum": 6528
+      },
+      "vpm": {
+        "pid": 25119,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Mounted results to empty and back",
+            "iterations": 4,
+            "samples": [
+              34739.50000000059,
+              35166.75000000191,
+              34864.499999997635,
+              79791.74999999827,
+              36750.00000001205,
+              37958.250000002634,
+              38801.99999997558,
+              35989.499999999454,
+              39833.25000001514,
+              37958.249999974214,
+              34677.000000016276,
+              36989.50000000423
+            ]
+          },
+          {
+            "case": "Closed portal SSR",
+            "iterations": 4112,
+            "samples": [
+              810.3618677042891,
+              1015.2400291828793,
+              802.9345817120505,
+              807.0282101167246,
+              1023.1031128404653,
+              798.2429474708176,
+              1025.5958171206034,
+              783.0739299610684,
+              1043.3993190661342,
+              890.4528210116863,
+              840.6291342412545,
+              1072.8861867704222
+            ]
+          },
+          {
+            "case": "Open portal SSR",
+            "iterations": 3456,
+            "samples": [
+              1399.4864004629706,
+              1174.708333333305,
+              1134.7774884259215,
+              1438.573206018528,
+              1124.3246527777821,
+              1421.0552662036973,
+              1136.5017361111286,
+              1077.8839699074235,
+              1467.7612847222574,
+              1080.3553240740678,
+              1371.44328703699,
+              1074.8579282407652
+            ]
+          }
+        ],
+        "checksum": 127680
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 25120,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Mounted results to empty and back",
+            "iterations": 246,
+            "samples": [
+              35026.42276422754,
+              36568.76829268278,
+              36303.18292682909,
+              37150.065040650385,
+              46056.0650406504,
+              35650.406504064966,
+              37550.64634146319,
+              37237.804878048606,
+              43754.91056910596,
+              34799.455284552714,
+              33713.07317073162,
+              31866.361788617753
+            ]
+          },
+          {
+            "case": "Closed portal SSR",
+            "iterations": 11917,
+            "samples": [
+              927.3691365276516,
+              1082.4242678526518,
+              918.0897037845004,
+              1192.3267600906217,
+              1414.600318872201,
+              907.8451791558211,
+              901.2230427121001,
+              994.0106570445712,
+              913.0619283376751,
+              1245.2169170093139,
+              1042.4393723252456,
+              1119.227490140149
+            ]
+          },
+          {
+            "case": "Open portal SSR",
+            "iterations": 8855,
+            "samples": [
+              1274.7693958215857,
+              1181.5028797289574,
+              1239.7374364765456,
+              1170.0310559006243,
+              1262.5776397515629,
+              1211.7447769621704,
+              1257.7780914737516,
+              1222.7272727272525,
+              1231.2300395256962,
+              1202.103331451147,
+              1252.4514963297459,
+              1198.1178994918114
+            ]
+          }
+        ],
+        "checksum": 24750
+      },
+      "upstream": {
+        "pid": 25121,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Mounted results to empty and back",
+            "iterations": 246,
+            "samples": [
+              2672586.0447154446,
+              2697915.8170731715,
+              2727881.268292682,
+              2723600.1016260153,
+              2716234.926829268,
+              2838141.9390243907,
+              2725219.341463418,
+              2650168.0203251983,
+              2747181.910569105,
+              2674500.508130082,
+              2763752.5406504003,
+              2793334.691056911
+            ]
+          },
+          {
+            "case": "Closed portal SSR",
+            "iterations": 11917,
+            "samples": [
+              2872.4406310312397,
+              2882.8739615676086,
+              2908.1249475538743,
+              2959.3158513048393,
+              2857.0144331626925,
+              4886.978685910871,
+              5767.842158261325,
+              2989.7904673995777,
+              2939.5506419401895,
+              2947.956029201974,
+              2936.9107996978773,
+              2936.7989426868717
+            ]
+          },
+          {
+            "case": "Open portal SSR",
+            "iterations": 8855,
+            "samples": [
+              3352.6962168267173,
+              5303.472614342235,
+              3521.2215697345655,
+              3277.075098814244,
+              4302.05149632965,
+              3793.130095990953,
+              3247.421343873526,
+              3275.5976284585327,
+              3048.1461321287725,
+              3297.0308300394336,
+              3245.6098249577776,
+              3085.841332580599
+            ]
+          }
+        ],
+        "checksum": 6720
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 25186,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Mounted results to empty and back",
+            "iterations": 4,
+            "samples": [
+              3494260.2500000247,
+              3315823.0000000233,
+              3011447.999999973,
+              2399531.2499999953,
+              3072562.5000000037,
+              2491291.750000073,
+              2606885.499999976,
+              2367645.7499999516,
+              3314614.7500000326,
+              3707947.7500000168,
+              3314551.9999999353,
+              2769770.7500000205
+            ]
+          },
+          {
+            "case": "Closed portal SSR",
+            "iterations": 4060,
+            "samples": [
+              2874.80492610845,
+              2841.2768472905777,
+              2556.7426108374843,
+              2774.466502463045,
+              2764.4396551724344,
+              2827.175615763552,
+              2512.2640394088394,
+              2783.4463054187195,
+              2888.7110837437826,
+              2794.560591133058,
+              2461.1349753694876,
+              2673.3785714285495
+            ]
+          },
+          {
+            "case": "Open portal SSR",
+            "iterations": 2362,
+            "samples": [
+              2650.208298052428,
+              3423.6519898389906,
+              2635.6198137172746,
+              3417.0723962743177,
+              2637.0838272651736,
+              3383.9436917865846,
+              2627.4170194749763,
+              3337.5143945808973,
+              2730.1896697713364,
+              3493.5791701948115,
+              2690.2696867061863,
+              3458.509737510529
+            ]
+          }
+        ],
+        "checksum": 6720
+      },
+      "vpm": {
+        "pid": 25187,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Mounted results to empty and back",
+            "iterations": 4,
+            "samples": [
+              43948.00000000032,
+              38562.50000001182,
+              38031.25000001728,
+              35885.24999997844,
+              39114.50000001082,
+              35875.00000000432,
+              35437.50000000045,
+              34927.00000001037,
+              35229.24999998622,
+              38416.50000001096,
+              38416.49999998254,
+              36791.75000002033
+            ]
+          },
+          {
+            "case": "Closed portal SSR",
+            "iterations": 4060,
+            "samples": [
+              792.2310344827558,
+              766.4512315271027,
+              987.7770935960476,
+              765.5376847290834,
+              1041.3894088669856,
+              758.6721674876768,
+              980.7677339901362,
+              762.602709359615,
+              823.2347290640524,
+              1023.2039408867092,
+              755.2032019704573,
+              1089.3061576354758
+            ]
+          },
+          {
+            "case": "Open portal SSR",
+            "iterations": 2362,
+            "samples": [
+              1112.5461473327719,
+              1133.6613039796523,
+              1477.455546147315,
+              1075.5715495342724,
+              1037.662150719687,
+              1470.9462320067296,
+              1140.8941574936523,
+              1036.2510584250224,
+              1101.7502116850785,
+              1524.9961896698135,
+              1081.3399661304456,
+              1076.876799322565
+            ]
+          }
+        ],
+        "checksum": 132096
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 25216,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Mounted results to empty and back",
+            "iterations": 292,
+            "samples": [
+              36570.633561643874,
+              35099.31506849323,
+              34604.45205479462,
+              38881.27739725995,
+              38765.69863013686,
+              42464.61301369832,
+              34382.56506849282,
+              36621.434931506716,
+              53595.46232876696,
+              36563.07191780827,
+              159814.78082191793,
+              131356.30479452058
+            ]
+          },
+          {
+            "case": "Closed portal SSR",
+            "iterations": 2504,
+            "samples": [
+              1000.6154153354609,
+              1008.0203674121481,
+              862.95287539937,
+              1554.5295527155836,
+              824.747204472833,
+              880.4249201278227,
+              815.1293929712282,
+              1337.0938498402907,
+              832.6509584664198,
+              868.6601437699601,
+              1348.0595047922861,
+              841.819888178931
+            ]
+          },
+          {
+            "case": "Open portal SSR",
+            "iterations": 8138,
+            "samples": [
+              1181.8475055296035,
+              1242.7500614401768,
+              1243.9277463750384,
+              1536.2598918653055,
+              1325.3358318997125,
+              1254.0447284345064,
+              1196.0196608503445,
+              1233.1602359302115,
+              1227.0367412140608,
+              1184.2026296387262,
+              1160.1437699680612,
+              1171.4794789874666
+            ]
+          }
+        ],
+        "checksum": 24492
+      },
+      "upstream": {
+        "pid": 25241,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Mounted results to empty and back",
+            "iterations": 292,
+            "samples": [
+              2637037.6712328778,
+              2727304.082191781,
+              2704516.6952054813,
+              2757896.116438357,
+              2615583.3321917807,
+              2551071.20205479,
+              2715519.1198630123,
+              2617776.400684929,
+              2834981.8767123283,
+              2758222.45890411,
+              3153632.133561643,
+              2824417.0924657527
+            ]
+          },
+          {
+            "case": "Closed portal SSR",
+            "iterations": 2504,
+            "samples": [
+              2522.8134984023873,
+              2536.1421725241476,
+              3649.6773162938257,
+              2582.6178115016264,
+              3510.7827476035377,
+              2572.051517571804,
+              2473.625399360958,
+              3374.41773162951,
+              2917.681709265182,
+              3635.2835463258843,
+              2684.438099041376,
+              2608.9756389772233
+            ]
+          },
+          {
+            "case": "Open portal SSR",
+            "iterations": 8138,
+            "samples": [
+              3161.9920127793607,
+              3909.590808552452,
+              3107.0082329810407,
+              3532.594003440493,
+              3133.770582452813,
+              3424.7920865076826,
+              3147.6765790118816,
+              3510.316908331257,
+              3222.8127304005793,
+              3344.51032194634,
+              3203.269599410248,
+              3477.948021626851
+            ]
+          }
+        ],
+        "checksum": 6720
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 25273,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Mounted results to empty and back",
+            "iterations": 4,
+            "samples": [
+              2641333.2500000023,
+              2505478.99999998,
+              3177010.4999999944,
+              2591552.2500000065,
+              2870760.500000017,
+              3078833.2500000023,
+              2762020.7500000335,
+              2288416.5000000396,
+              2796666.7499999856,
+              2652072.750000002,
+              3444479.0000000014,
+              3273343.7500000377
+            ]
+          },
+          {
+            "case": "Closed portal SSR",
+            "iterations": 3990,
+            "samples": [
+              2441.426566416023,
+              2675.156641603998,
+              2804.271177944855,
+              2831.913032581494,
+              2488.3145363408426,
+              2865.5701754385695,
+              2817.898746867174,
+              2743.9849624060066,
+              2409.9518796992015,
+              2837.4789473684273,
+              2778.4879699247954,
+              2748.892982456135
+            ]
+          },
+          {
+            "case": "Open portal SSR",
+            "iterations": 3592,
+            "samples": [
+              3121.067650334072,
+              3173.139198218297,
+              2726.3711024498657,
+              3179.4033964365376,
+              3206.419543429821,
+              3256.6929287305406,
+              2828.3221046770136,
+              3086.824888641472,
+              3179.681514476589,
+              3181.17817371937,
+              3194.796492204914,
+              2732.681514476643
+            ]
+          }
+        ],
+        "checksum": 6528
+      },
+      "vpm": {
+        "pid": 25274,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Mounted results to empty and back",
+            "iterations": 4,
+            "samples": [
+              2645312.499999989,
+              3265760.499999999,
+              2743270.999999993,
+              2415406.2499999898,
+              2285395.9999999916,
+              3577020.750000003,
+              2470812.499999994,
+              2453916.7499999907,
+              3017656.2499999874,
+              2448166.7499999846,
+              2183896.000000004,
+              2905833.5
+            ]
+          },
+          {
+            "case": "Closed portal SSR",
+            "iterations": 3990,
+            "samples": [
+              2447.80701754386,
+              2929.751378446143,
+              2796.543358396005,
+              2823.1621553884947,
+              2489.776441102789,
+              2762.5731829573824,
+              2752.22431077696,
+              2847.451879699263,
+              2511.0799498746983,
+              2874.8954887217687,
+              2831.150877192981,
+              3064.296240601474
+            ]
+          },
+          {
+            "case": "Open portal SSR",
+            "iterations": 3592,
+            "samples": [
+              3188.60217149216,
+              3125.823496659227,
+              2724.979120267271,
+              3136.5186525612266,
+              3190.643374164803,
+              3176.3179287305597,
+              2788.0011135857458,
+              2960.351893095748,
+              3295.2046213808712,
+              3203.2060133629852,
+              3126.0439866369684,
+              2868.736080178163
+            ]
+          }
+        ],
+        "checksum": 5184
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 25275,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Mounted results to empty and back",
+            "iterations": 4,
+            "samples": [
+              2768239.499999993,
+              2712895.7500000014,
+              3432708.24999999,
+              2408072.7500000023,
+              2562687.50000001,
+              3344624.9999999795,
+              2655427.0000000033,
+              2223708.2500000154,
+              3452812.499999993,
+              2576916.7500000093,
+              3518656.249999992,
+              2984906.2499999944
+            ]
+          },
+          {
+            "case": "Closed portal SSR",
+            "iterations": 4008,
+            "samples": [
+              2844.768712574825,
+              2746.5693612774676,
+              2391.4775449101626,
+              2809.3500499001907,
+              2817.23003992014,
+              2760.2814371256995,
+              2375.0000000000014,
+              2692.542165668683,
+              2826.8046407185648,
+              2841.4733033932253,
+              2396.280189620784,
+              2710.4957584830536
+            ]
+          },
+          {
+            "case": "Open portal SSR",
+            "iterations": 2674,
+            "samples": [
+              3267.6544502618217,
+              2694.0602094241012,
+              3235.2595362751886,
+              2714.14547494389,
+              3295.5931189229564,
+              2765.7692595362764,
+              3311.767389678358,
+              3406.289080029887,
+              2682.856768885553,
+              3380.9678384442764,
+              2878.1940912490554,
+              3428.1039640987633
+            ]
+          }
+        ],
+        "checksum": 6336
+      },
+      "upstream": {
+        "pid": 25276,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Mounted results to empty and back",
+            "iterations": 4,
+            "samples": [
+              3328864.500000009,
+              2716562.4999999804,
+              3004531.249999985,
+              3146999.999999991,
+              2670802.000000009,
+              2679520.7500000233,
+              2709968.7500000014,
+              2877843.7499999823,
+              3001146.0000000056,
+              2524676.9999999967,
+              3029895.74999998,
+              3154906.2500000102
+            ]
+          },
+          {
+            "case": "Closed portal SSR",
+            "iterations": 4008,
+            "samples": [
+              2868.970309381207,
+              2624.7816866267485,
+              2982.7946606786268,
+              2988.793163672641,
+              2934.651447105807,
+              2478.2831836327305,
+              2875.5925648703014,
+              2963.978293413182,
+              3035.8657684630343,
+              2606.3705089820596,
+              6147.247255489038,
+              6708.832335329372
+            ]
+          },
+          {
+            "case": "Open portal SSR",
+            "iterations": 2674,
+            "samples": [
+              2755.2823485415443,
+              3152.1753926701404,
+              2785.745699326883,
+              3176.3433059088115,
+              3179.740089753209,
+              2723.962228870636,
+              3332.1024682124066,
+              2884.6140613313187,
+              3192.8758414360364,
+              2965.4543754674596,
+              3117.380329094984,
+              3349.6477187733676
+            ]
+          }
+        ],
+        "checksum": 5760
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "Mounted results to empty and back",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2942302.1249999693,
+          "vpmNs": 36869.750000008135,
+          "changePct": -98.74690808646959
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2724409.7215447165,
+          "vpmNs": 36435.97560975593,
+          "changePct": -98.66261027768257
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 3042005.2499999884,
+          "vpmNs": 37411.5000000188,
+          "changePct": -98.7701697753474
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2721411.6010273965,
+          "vpmNs": 37693.566780821784,
+          "changePct": -98.61492591688109
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2779343.7500000093,
+          "vpmNs": 2558062.4999999916,
+          "changePct": -7.961636627351942
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2939494.874999994,
+          "vpmNs": 2740567.624999997,
+          "changePct": -6.767395707740331
+        }
+      ]
+    },
+    {
+      "case": "Closed portal SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2726.8207684825084,
+          "vpmNs": 865.5409776264704,
+          "changePct": -68.2582372985171
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2938.230720819033,
+          "vpmNs": 1018.2250146849084,
+          "changePct": -65.3456412571618
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 2778.9564039408824,
+          "vpmNs": 807.7328817734042,
+          "changePct": -70.93394913903848
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2646.7068690092997,
+          "vpmNs": 874.5425319488913,
+          "changePct": -66.95733319813218
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2763.6904761904652,
+          "vpmNs": 2809.85275689225,
+          "changePct": 1.6703129782252635
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2949.3148702594945,
+          "vpmNs": 2753.425399201584,
+          "changePct": -6.64186360816319
+        }
+      ]
+    },
+    {
+      "case": "Open portal SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 3093.846354166623,
+          "vpmNs": 1155.6050347222167,
+          "changePct": -62.64827330012975
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 3287.052964426839,
+          "vpmNs": 1226.9786561264743,
+          "changePct": -62.67237950209233
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 3033.852032176117,
+          "vpmNs": 1107.1481795089253,
+          "changePct": -63.50684978150396
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 3283.6615261734596,
+          "vpmNs": 1230.0984885721361,
+          "changePct": -62.53881592949675
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 3176.2712973274174,
+          "vpmNs": 3131.2813195990975,
+          "changePct": -1.4164400177710035
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 3134.777860882562,
+          "vpmNs": 3251.4569932685054,
+          "changePct": 3.722086143389247
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "Mounted results to empty and back",
+      "upstream_ns": 2833356,
+      "vpm_ns": 37141,
+      "change_pct": -98.7,
+      "upstream_first_pct": -98.8,
+      "vpm_first_pct": -98.6,
+      "process_range_pct": "-98.7, -98.7, -98.8, -98.6",
+      "control_max_abs_pct": 8,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "Closed portal SSR",
+      "upstream_ns": 2753,
+      "vpm_ns": 870,
+      "change_pct": -67.6,
+      "upstream_first_pct": -69.6,
+      "vpm_first_pct": -66.2,
+      "process_range_pct": "-68.3, -65.3, -70.9, -67.0",
+      "control_max_abs_pct": 6.6,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "Open portal SSR",
+      "upstream_ns": 3189,
+      "vpm_ns": 1191,
+      "change_pct": -62.7,
+      "upstream_first_pct": -63.1,
+      "vpm_first_pct": -62.6,
+      "process_range_pct": "-62.6, -62.7, -63.5, -62.5",
+      "control_max_abs_pct": 3.7,
+      "evidence": "lower time in every pair, beyond control spread"
+    }
+  ]
+}
