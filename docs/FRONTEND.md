@@ -29,7 +29,7 @@ inventory. The entire upstream Motion API is **not** complete.
 
 ## Material
 
-[vmui-material](../packages/vmui-material) now has 86 independently implemented
+[vmui-material](../packages/vmui-material) now has 87 independently implemented
 components. It covers button controls; text/icons; Box/Paper/Divider; the form,
 input, Select, checkbox/radio/switch foundation; menus; Chip, Avatar, loading
 spinners, LinearProgress and Alert/AlertTitle feedback and Badge counts and ListItemButton navigation, AppBar/Toolbar shell layouts, Accordion with its Summary and Details, Skeleton placeholders, Container page layouts and Card/CardContent panels and their linked CardActionArea roots, plus AvatarGroup, Tooltip, Collapse, Slide, Drawer, SwipeableDrawer, the seven Table primitives, TableSortLabel, PaginationItem, Pagination, Autocomplete and Dialog with its title/content/action/description components. Its resolved-theme bridge is built,
@@ -41,6 +41,8 @@ Autocomplete now covers the five direct school/student selection callers.
 TableSortLabel and numbered Pagination now cover the adopted table’s sorting and
 paging controls; browser acceptance mounts its existing pagination caller.
 Remaining indirect consumers still matter for a complete package override.
+
+GlobalStyles covers all seven app imports on `aa110e55`, including shared navigation, sticky page layouts and the iframe preview. The build now has an independent URI resolver for the original source locations returned by trace-mapping.
 
 Theme/style imports occur in 90 files. The shared theme factory and remaining
 layout/overlay families are adoption requirements, not peripheral polish.

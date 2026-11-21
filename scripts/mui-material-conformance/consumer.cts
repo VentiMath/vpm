@@ -121,7 +121,11 @@ Box({component:'a',href:'/contest',ref:React.createRef<HTMLAnchorElement>(),sx:{
 Box({component:'svg',viewBox:'0 0 24 24',ref:React.createRef<SVGSVGElement>()});
 const StyledBox=styled(Box)({padding:4});
 MaterialThemeProvider({theme:{[THEME_ID]:theme},children:React.createElement(BoxEntry)});
-GlobalStyles({styles:{body:{margin:0}}});
+import type { GlobalStylesProps as MaterialGlobalStylesProps } from "vmui-material/GlobalStyles";
+const pageRules: MaterialGlobalStylesProps = {styles: theme => ({body:{margin:theme.spacing(1)}})};
+GlobalStyles(pageRules);
+// @ts-expect-error The Material wrapper supplies the theme namespace internally.
+GlobalStyles({styles:{}, themeId:"custom"});
 // @ts-expect-error anchor Box needs anchor ref
 Box({component:'a',ref:React.createRef<HTMLButtonElement>()});
 void [useTheme,StyledBox];

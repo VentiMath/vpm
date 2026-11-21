@@ -1,6 +1,6 @@
 # vmui-material
 
-Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card, CardContent, CardActionArea, AvatarGroup, Tooltip, Collapse, DialogTitle, DialogContent, DialogActions, Dialog, Slide, DialogContentText, Drawer, SwipeableDrawer, Table, TableHead, TableBody, TableFooter, TableRow, TableCell, TableContainer, Autocomplete, TableSortLabel, PaginationItem, Pagination, LinearProgress, Alert, AlertTitle, Badge, ListItemButton, AppBar, Toolbar, Accordion, AccordionSummary, AccordionDetails, Tab, Tabs, Breadcrumbs, Snackbar, SnackbarContent, Stack, Grid and Rating, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
+Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, GlobalStyles, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card, CardContent, CardActionArea, AvatarGroup, Tooltip, Collapse, DialogTitle, DialogContent, DialogActions, Dialog, Slide, DialogContentText, Drawer, SwipeableDrawer, Table, TableHead, TableBody, TableFooter, TableRow, TableCell, TableContainer, Autocomplete, TableSortLabel, PaginationItem, Pagination, LinearProgress, Alert, AlertTitle, Badge, ListItemButton, AppBar, Toolbar, Accordion, AccordionSummary, AccordionDetails, Tab, Tabs, Breadcrumbs, Snackbar, SnackbarContent, Stack, Grid and Rating, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
 
 ```js
 import { Button, ToggleButton, ToggleButtonGroup } from 'vmui-material';
@@ -1139,3 +1139,19 @@ The IMO archive uses `Grid` for nine loading placeholders and the year cards. Bo
 ### Rating
 
 WARML practice signup uses one five-star control for each practice time and relay position. The controls have independent radio groups, accessible labels, arrow-key navigation, pointer previews and click-to-clear. Both star icons use a VPM-drawn outline. Clearing calls `onChange(event, null)`, which the signup translates to zero. Whole-star steps, controlled values, defaults, disabled and read-only displays are supported. Fractional precision and custom component slots remain outside this implementation. [Server-rendering benchmarks](bench/rating/README.md)
+
+### GlobalStyles
+
+The default component and its `GlobalStylesProps` type are available at
+`vmui-material/GlobalStyles`. Theme callbacks receive the active Material theme.
+The seven VentiMath callers use nested navigation rules, sticky page toolbars,
+shell colors, responsive navbar widths, public layout overrides and CSS variables
+inside an iframe. An Emotion cache targeting the iframe head keeps its sheets
+in that document and removes them on unmount.
+
+The application comparison runs the original styles expressions in light and
+dark themes and both scrolling modes. Generated CSS matches the app control
+apart from its extra `-webkit-print-color-scheme` declaration. The standard
+`color-scheme` and every generated theme variable are preserved.
+
+[Server-render measurements](bench/globals/README.md)

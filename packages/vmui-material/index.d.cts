@@ -230,13 +230,14 @@ export function getTypographyUtilityClass(slot:string):string;
 export function getLinkUtilityClass(slot:string):string;
 export function getSvgIconUtilityClass(slot:string):string;
 
-export type {Theme,SxProps,BoxProps,GlobalStylesProps} from "vmui-system";
+export type {Theme,SxProps,BoxProps} from "vmui-system";
 export const Box: typeof import("vmui-system").Box;
 export const boxClasses: {readonly root:string};
 export const styled: typeof import("vmui-system").styled;
 export function useTheme<T = Theme>(): T;
 export function ThemeProvider<T extends object>(props: Omit<import("vmui-system").ThemeProviderProps<T>, "themeId"> & {defaultMode?:"light"|"dark"|"system"; storageManager?:null; disableStyleSheetGeneration?:boolean; disableNestedContext?:boolean}):React.JSX.Element;
-export const GlobalStyles: typeof import("vmui-system").GlobalStyles;
+export type GlobalStylesProps<T extends object = Theme> = Pick<import("vmui-system").GlobalStylesProps<T>, "styles">;
+export function GlobalStyles<T extends object = Theme>(props: GlobalStylesProps<T>): React.ReactElement;
 export const useThemeProps: typeof import("vmui-system").useThemeProps;
 export const useMediaQuery: typeof import("vmui-system").useMediaQuery;
 export function useColorScheme(): {mode?:string;systemMode?:string;colorScheme?:string;allColorSchemes:string[];setMode(mode:"light"|"dark"|"system"|null):void;setColorScheme(scheme:string|Record<string,string>):void};
