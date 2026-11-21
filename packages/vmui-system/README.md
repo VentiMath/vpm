@@ -7,7 +7,7 @@ import { Box, Stack, ThemeProvider, createTheme } from 'vmui-system';
 const theme = createTheme({ spacing: 8 });
 ```
 
-The verified surface includes theme creation, spacing and responsive breakpoints; `sx` tokens, callbacks, arrays and nested selectors; styled object and template interpolations, component overrides and variants; Box, Stack, Grid and Container; color transformations; CSS-variable preparation; nested themes and media-query subscriptions. CSS-variable light/dark changes, RTL, narrow/wide layouts and focused input preservation are exercised in Chrome. The test replaces the full VPM styling closure below Material, including Emotion.
+The verified surface includes theme creation, spacing and responsive breakpoints; `sx` tokens, callbacks, arrays and nested selectors; styled object and template interpolations, component overrides and variants; Box, Stack, Grid and Container; color transformations; CSS-variable preparation; nested themes and media-query subscriptions. CSS-variable light/dark changes, RTL, narrow/wide layouts and focused input preservation are exercised in Chrome. The test replaces the full VPM styling closure below Material, including Emotion. Stack preserves child margins when spacing is absent and applies responsive spacing starting at the requested breakpoint.
 
 Theme tokens use own-property lookup. Prototype-named style keys cannot alter output prototypes. Cyclic style and theme-variable inputs reject explicitly, as do nonfinite breakpoint widths. Shared acyclic input is supported. Runtime validation is retained in production.
 

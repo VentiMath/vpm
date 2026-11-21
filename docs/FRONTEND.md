@@ -29,7 +29,7 @@ inventory. The entire upstream Motion API is **not** complete.
 
 ## Material
 
-[vmui-material](../packages/vmui-material) now has 83 independently implemented
+[vmui-material](../packages/vmui-material) now has 84 independently implemented
 components. It covers button controls; text/icons; Box/Paper/Divider; the form,
 input, Select, checkbox/radio/switch foundation; menus; Chip, Avatar, loading
 spinners, LinearProgress and Alert/AlertTitle feedback and Badge counts and ListItemButton navigation, AppBar/Toolbar shell layouts, Accordion with its Summary and Details, Skeleton placeholders, Container page layouts and Card/CardContent panels and their linked CardActionArea roots, plus AvatarGroup, Tooltip, Collapse, Slide, Drawer, SwipeableDrawer, the seven Table primitives, TableSortLabel, PaginationItem, Pagination, Autocomplete and Dialog with its title/content/action/description components. Its resolved-theme bridge is built,
@@ -48,6 +48,7 @@ Dependencies such as Material React Table may also consume components that do
 not appear as direct app imports; they need unchanged-caller acceptance before
 a complete package override.
 
+Stack lays out ARML highlights, WARML team shortcuts and Math Is Cool links across screen widths.
 Snackbar and SnackbarContent cover the club article share confirmation.
 Breadcrumbs covers shared contest and academy navigation, including collapsed ancestor links and the stored name on person pages.
 Tab and Tabs cover the IMO results switcher and the family growth learner selector, including the shared selection indicator.

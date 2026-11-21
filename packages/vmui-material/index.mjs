@@ -126,3 +126,5 @@ import trail from './breadcrumb-trail.cjs';
 export const {Breadcrumbs,breadcrumbsClasses,getBreadcrumbsUtilityClass}=trail;
 import notifications from './snackbars.cjs';
 export const {Snackbar,SnackbarContent,snackbarClasses,snackbarContentClasses,getSnackbarUtilityClass,getSnackbarContentUtilityClass}=notifications;
+import stackLayout from './stack-layout.cjs';
+export const {Stack, stackClasses, getStackUtilityClass} = stackLayout;

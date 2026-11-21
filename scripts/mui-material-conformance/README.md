@@ -546,3 +546,7 @@ With a VentiMath checkout available, run `node scripts/mui-material-conformance/
 ## Snackbar
 
 The clipboard fixture uses the club article share button’s controlled open state, two-second auto-hide and message. Run `node scripts/mui-material-conformance/snackbar-contract.cjs` for server output against the app’s Material 7 and current Material 9. Run `node scripts/mui-material-conformance/snackbar-browser.cjs` for dismissal, timer identity across rerenders, focus and blur, reopening during exit, responsive anchoring and hydration. The browser controls the auto-hide timer directly while React, DOM events and transitions run in Chrome.
+
+## Stack
+
+The layout fixtures use the ARML highlights, WARML team shortcuts, Math Is Cool buttons and editor examples. The Material 7 control receives the app’s direct alignment and wrapping props. The Material 9 control receives their CSS equivalents through `sx`. The comparisons cover accessible markup and dividers on the server, then computed margins, gap, focus across resizes and hydration in Chrome. Run `stack-contract.cjs` and `stack-browser.cjs` from this directory. With a VentiMath checkout available, `node app-stack.cjs /path/to/checkout <revision>` compares all three original contest components and their rendered links with fixture data.

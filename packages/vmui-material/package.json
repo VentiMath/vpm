@@ -1807,6 +1807,26 @@
         "types": "./snackbarContentClasses.d.cts",
         "default": "./snackbarContentClasses.cjs"
       }
+    },
+    "./Stack": {
+      "import": {
+        "types": "./Stack.d.mts",
+        "default": "./Stack.mjs"
+      },
+      "require": {
+        "types": "./Stack.d.cts",
+        "default": "./Stack.cjs"
+      }
+    },
+    "./stackClasses": {
+      "import": {
+        "types": "./stackClasses.d.mts",
+        "default": "./stackClasses.mjs"
+      },
+      "require": {
+        "types": "./stackClasses.d.cts",
+        "default": "./stackClasses.cjs"
+      }
     }
   },
   "files": [

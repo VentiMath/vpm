@@ -951,3 +951,5 @@ export const snackbarClasses: Readonly<Record<SnackbarClassKey,string>>;
 export const snackbarContentClasses: Readonly<Record<SnackbarContentClassKey,string>>;
 export function getSnackbarUtilityClass(slot: string): string;
 export function getSnackbarContentUtilityClass(slot: string): string;
+
+export {Stack, stackClasses, getStackUtilityClass, type StackProps, type StackClasses, type StackClassKey} from 'vmui-system';

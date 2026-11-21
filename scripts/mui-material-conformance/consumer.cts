@@ -482,3 +482,14 @@ import SnackbarBody from "vmui-material/SnackbarContent";
 React.createElement(SnackbarFromEntry, {open:true,autoHideDuration:2000,message:"Link copied to clipboard",
   onClose:(_event, reason:SnackbarCloseReason) => { void reason; }});
 React.createElement(SnackbarBody, {role:"status",message:"Copied"});
+
+import MaterialStack, {type StackProps as MaterialStackProps} from "vmui-material/Stack";
+import {Stack as RootStack} from "vmui-material";
+const contestLinks: MaterialStackProps<"nav"> = {
+  component:"nav", direction:{xs:"column",sm:"row"}, spacing:1.5,
+  flexWrap:"wrap", alignItems:"center", useFlexGap:true, "aria-label":"Contest shortcuts",
+};
+MaterialStack(contestLinks);
+RootStack({component:"a", href:"#team", ref:React.createRef<HTMLAnchorElement>()});
+// @ts-expect-error Stack accepts CSS flex directions.
+MaterialStack({direction:"horizontal"});

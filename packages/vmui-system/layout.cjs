@@ -106,39 +106,38 @@ function responsiveValues(value, theme) {
 		? value
 		: { [theme.breakpoints.keys[0]]: value };
 }
+const stackSides = {
+	row: "Left", "row-reverse": "Right", column: "Top", "column-reverse": "Bottom",
+};
+function stackSpacing(theme, direction, spacing, useFlexGap) {
+	const gap = typeof spacing === "number" ? theme.spacing(spacing) : spacing;
+	if (useFlexGap) return { gap };
+	return {
+		"& > :not(style):not(style)": { margin: 0 },
+		...(gap != null && { "& > :not(style) ~ :not(style)": { ["margin" + stackSides[direction]]: gap } }),
+	};
+}
 function stackStyle({ theme, ownerState: s }) {
-	const directions = responsiveValues(s.direction, theme),
-		spaces = responsiveValues(s.spacing, theme);
-	let direction = "column",
-		spacing = 0,
-		styles = { display: "flex", flexDirection: "column" };
-	for (let i = 0; i < theme.breakpoints.keys.length; i++) {
-		const key = theme.breakpoints.keys[i];
+	const responsiveDirection = s.direction != null && typeof s.direction === "object";
+	const responsiveSpacing = s.spacing != null && typeof s.spacing === "object";
+	let direction = responsiveDirection ? "column" : s.direction;
+	const base = { display: "flex", flexDirection: direction };
+	if (!responsiveDirection && !responsiveSpacing) {
+		return s.spacing ? { ...base, ...stackSpacing(theme, direction, s.spacing, s.useFlexGap) } : base;
+	}
+	const directions = responsiveDirection ? responsiveValues(s.direction, theme) : {};
+	const spaces = responsiveSpacing ? responsiveValues(s.spacing, theme) : {};
+	let spacing = responsiveSpacing ? undefined : s.spacing;
+	for (const key of theme.breakpoints.keys) {
 		if (directions[key] == null && spaces[key] == null) continue;
 		direction = directions[key] ?? direction;
 		spacing = spaces[key] ?? spacing;
-		const gap = typeof spacing === "string" ? spacing : theme.spacing(spacing),
-			side = {
-				row: "Left",
-				"row-reverse": "Right",
-				column: "Top",
-				"column-reverse": "Bottom",
-			}[direction];
-		const item = {
-			flexDirection: direction,
-			...(s.useFlexGap
-				? { gap }
-				: {
-						"& > :not(style):not(style)": { margin: 0 },
-						"& > :not(style) ~ :not(style)": { ["margin" + side]: gap },
-					}),
+		base[theme.breakpoints.up(key)] = {
+			...(directions[key] != null && { flexDirection: direction }),
+			...(s.spacing && stackSpacing(theme, direction, spacing, s.useFlexGap)),
 		};
-		styles = merge(
-			styles,
-			i === 0 ? item : { [theme.breakpoints.up(key)]: item },
-		);
 	}
-	return styles;
+	return base;
 }
 function createStack({
 	createStyledComponent = styled("div", { name: "MuiStack", slot: "Root" }),
@@ -159,9 +158,8 @@ function createStack({
 				...props
 			} = unstable_extendSxProp(themeProps(input)),
 			ownerState = { direction, spacing, useFlexGap };
-		const nodes = React.Children.toArray(children).filter(Boolean);
 		const content = divider
-			? nodes.flatMap((child, i) =>
+			? React.Children.toArray(children).filter(Boolean).flatMap((child, i) =>
 					i
 						? [React.cloneElement(divider, { key: "separator-" + i }), child]
 						: [child],
