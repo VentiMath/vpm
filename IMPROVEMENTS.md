@@ -261,6 +261,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vieee754](packages/vieee754) | ieee754 1.2.1 | Binary floating-point reads and writes for browser Buffer, including upstream midpoint rounding and NaN encoding. [Measurements](packages/vieee754/bench/results/README.md) |
 | [vbase64-js](packages/vbase64-js) | base64-js 1.5.1 | Binary encoding for browser Buffer and Capacitor property lists. [Measurements](packages/vbase64-js/bench/results/README.md) |
 | [vvarint](packages/vvarint) | varint 6.0.0 | Unsigned compilation IDs for Sass. Range and buffer capacity checks preserve exact integers and prevent partial writes to short buffers. [Measurements](packages/vvarint/bench/results/README.md) |
+| [vsourcemap-codec](packages/vsourcemap-codec) | @jridgewell/sourcemap-codec 1.6.0, app 1.5.5 | Encodes and decodes the mappings field used by the frontend build. [Measurements](packages/vsourcemap-codec/bench/results/README.md) |
 | [vsource-map-js](packages/vsource-map-js) | source-map-js 1.2.4 (app 1.2.1) | Independent flat CSS source-map generation, lookup and composition. Both unchanged CSS callers pass on Node and Bun. Single-pass decoding cuts first lookup time by 66% on Node and 76% on Bun against 1.2.4. Warm lookups retain their advantage. [Measurements](packages/vsource-map-js/bench/results/README.md). |
 | [vpicocolors](packages/vpicocolors) | picocolors 1.1.1 | Independent zero-dependency terminal colors, environment detection and inert browser entry. Restores early closing escapes; unchanged PostCSS diagnostics, 4,018 formatting cases, 1,728 environments, archives and types checked. [Measurements](packages/vpicocolors/bench/results/README.md). |
 | [vdecko](packages/vdecko) | decko 1.2.0 | Independent function wrappers and legacy decorators with zero runtime dependencies. Safe prototype-looking cache keys and reentrant/error-safe delayed callbacks. Unchanged Redoc history/scroll services verified; not yet adopted. | [Contracts](scripts/decko-conformance/README.md), [measurements](packages/vdecko/bench/results/README.md) The recorded Redoc viewer was removed in app main `211e2186`; caller checks are historical. |
@@ -469,9 +470,9 @@ version-scoped integration aliases remain limited to their tested baselines.
 ## Current verification
 
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
-recorded by the tests. All 151 Node runtime packages' public declarations compile
+recorded by the tests. All 152 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **244 packages**, including two declaration-only packages and
+compiler in NodeNext and bundler resolution modes. The catalog covers **245 packages**, including two declaration-only packages and
 browser packages `vcss-box-model`, `vuse-sync-external-store`, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,

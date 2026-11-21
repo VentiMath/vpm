@@ -1532,6 +1532,10 @@
       "name": "vsource-map-js",
       "version": "1.2.4",
     },
+    "packages/vsourcemap-codec": {
+      "name": "vsourcemap-codec",
+      "version": "1.6.0",
+    },
     "packages/vstatuses": {
       "name": "vstatuses",
       "version": "0.1.0",
@@ -2351,6 +2355,8 @@
     "vshallow-equal": ["vshallow-equal@workspace:packages/vshallow-equal"],
 
     "vsource-map-js": ["vsource-map-js@workspace:packages/vsource-map-js"],
+
+    "vsourcemap-codec": ["vsourcemap-codec@workspace:packages/vsourcemap-codec"],
 
     "vstatuses": ["vstatuses@workspace:packages/vstatuses"],
 
