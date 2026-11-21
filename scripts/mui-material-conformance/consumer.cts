@@ -503,3 +503,6 @@ const sizeClass:string=yearGridClasses["grid-md-4"];
 void sizeClass;
 // @ts-expect-error Grid size accepts numeric spans, auto, grow, or false.
 GridEntry({size:"full-width"});
+
+import WarmlRating = require('vmui-material/Rating');
+WarmlRating.default({size:'small',value:0,onChange:(_, v)=>{const next:number=v??0;void next;}});

@@ -955,3 +955,29 @@ export function getSnackbarContentUtilityClass(slot: string): string;
 export {Stack, stackClasses, getStackUtilityClass, type StackProps, type StackClasses, type StackClassKey} from 'vmui-system';
 
 export {Grid, gridClasses, getGridUtilityClass, type GridProps, type GridClasses, type GridClassKey, type GridSize} from 'vmui-system';
+
+export type RatingClassKey = "root" | "sizeSmall" | "sizeMedium" | "sizeLarge" | "readOnly" | "disabled" | "focusVisible" | "visuallyHidden" | "pristine" | "label" | "labelEmptyValueActive" | "icon" | "iconEmpty" | "iconFilled" | "iconHover" | "iconFocus" | "iconActive" | "decimal";
+export type RatingClasses = Readonly<Record<RatingClassKey, string>>;
+export const ratingClasses: RatingClasses;
+export function getRatingUtilityClass(slot: string): string;
+export interface RatingOwnProps {
+  name?: string;
+  value?: number | null;
+  defaultValue?: number | null;
+  max?: number;
+  precision?: 1;
+  disabled?: boolean;
+  readOnly?: boolean;
+  size?: "small" | "medium" | "large";
+  getLabelText?: (value: number) => string;
+  emptyLabelText?: React.ReactNode;
+  icon?: React.ReactNode;
+  emptyIcon?: React.ReactNode;
+  highlightSelectedOnly?: boolean;
+  onChange?: (event: React.SyntheticEvent, value: number | null) => void;
+  onChangeActive?: (event: React.SyntheticEvent, value: number) => void;
+  classes?: Partial<RatingClasses>;
+  sx?: SxProps<Theme>;
+}
+export type RatingProps<C extends React.ElementType = "span"> = RatingOwnProps & {component?: C} & Omit<React.ComponentPropsWithRef<C>, keyof RatingOwnProps>;
+export function Rating<C extends React.ElementType = "span">(props: RatingProps<C>): React.ReactElement;

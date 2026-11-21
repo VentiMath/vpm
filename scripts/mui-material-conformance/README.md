@@ -554,3 +554,7 @@ The layout fixtures use the ARML highlights, WARML team shortcuts, Math Is Cool 
 ### IMO archive Grid
 
 `grid-contract.cjs` compares responsive markup against both Material controls. `grid-browser.cjs` checks column widths, spacing, nested containers, theme overrides, focus and hydration. Run `node scripts/mui-material-conformance/app-grid.cjs <ventimath-checkout> <git-ref>` for the unchanged IMO view with fixture data. The reference used for this check was `aa110e55`.
+
+### WARML signup Rating
+
+`rating-contract.cjs` compares accessible names, selections and icon states with the app and current Material versions. `rating-browser.cjs` compares actual pointer and keyboard events across separate radio groups. Run `node scripts/mui-material-conformance/app-rating.cjs <ventimath-checkout> <git-ref>` to verify the two unchanged poll functions and the app's conversion of a cleared rating to zero. The recorded caller revision is `aa110e55`.

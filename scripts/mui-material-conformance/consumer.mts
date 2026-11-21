@@ -559,3 +559,9 @@ const sizeClass:string=yearGridClasses["grid-md-4"];
 void sizeClass;
 // @ts-expect-error Grid size accepts numeric spans, auto, grow, or false.
 GridEntry({size:"full-width"});
+
+import WarmlRating, {type RatingProps} from 'vmui-material/Rating';
+const preference: RatingProps = {size:'small',max:5,value:0,onChange:(_, v)=>{const next:number=v??0;void next;}};
+WarmlRating(preference);
+// @ts-expect-error Only whole-star increments are implemented.
+WarmlRating({precision:0.5});

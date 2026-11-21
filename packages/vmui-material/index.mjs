@@ -130,3 +130,5 @@ import stackLayout from './stack-layout.cjs';
 export const {Stack, stackClasses, getStackUtilityClass} = stackLayout;
 import gridLayout from './grid-layout.cjs';
 export const {Grid, gridClasses, getGridUtilityClass} = gridLayout;
+import rating from './rating-control.cjs';
+export const {Rating, ratingClasses, getRatingUtilityClass} = rating;

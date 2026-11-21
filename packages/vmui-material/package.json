@@ -1847,6 +1847,26 @@
         "types": "./gridClasses.d.cts",
         "default": "./gridClasses.cjs"
       }
+    },
+    "./Rating": {
+      "import": {
+        "types": "./Rating.d.mts",
+        "default": "./Rating.mjs"
+      },
+      "require": {
+        "types": "./Rating.d.cts",
+        "default": "./Rating.cjs"
+      }
+    },
+    "./ratingClasses": {
+      "import": {
+        "types": "./ratingClasses.d.mts",
+        "default": "./ratingClasses.mjs"
+      },
+      "require": {
+        "types": "./ratingClasses.d.cts",
+        "default": "./ratingClasses.cjs"
+      }
     }
   },
   "files": [
