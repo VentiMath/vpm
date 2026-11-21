@@ -8,6 +8,6 @@ const mappings = encode([[[0, 0, 3, 2]], [], [[4]]]);
 decode(mappings); // [[[0, 0, 3, 2]], [], [[4]]]
 ```
 
-The codec preserves empty lines, duplicate columns, named segments and unmapped positions. Decoding sorts out-of-order segments stably by generated column. Invalid digits, truncated deltas and malformed segment lengths throw. The verified surface covers ordinary source-map mappings in 1.5.5 and 1.6.0. The upstream scope and range extension APIs remain outside this package.
+The codec preserves empty lines, duplicate columns, named segments and unmapped positions. Decoding sorts out-of-order segments stably by generated column. Invalid digits, truncated deltas and malformed segment lengths throw. VPM targets the `encode` and `decode` APIs of `@jridgewell/sourcemap-codec` 1.6.0. The upstream scope and range extension APIs remain outside this package.
 
 [Node and Bun benchmarks](bench/results/README.md)

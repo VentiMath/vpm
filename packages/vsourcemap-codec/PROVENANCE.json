@@ -12,7 +12,6 @@
   "caller": {
     "revision": "aa110e55",
     "versions": {
-      "codec": "1.5.5",
       "gen-mapping": "0.3.13",
       "trace-mapping": "0.3.31"
     }

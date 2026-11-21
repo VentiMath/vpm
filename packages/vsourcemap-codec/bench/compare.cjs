@@ -6,7 +6,7 @@ const root = path.resolve(__dirname, "..");
 const fixture = require("node:module").createRequire(
   require.resolve("../../../scripts/source-map-conformance/package.json"),
 );
-const upstream = fixture.resolve("codec-app");
+const upstream = fixture.resolve("@jridgewell/sourcemap-codec");
 const wire = JSON.parse(
   fs.readFileSync(
     path.join(
@@ -51,6 +51,7 @@ require("../../../scripts/bench-process.cjs")
       "package.json",
       "PROVENANCE.json",
       "bench/compare.cjs",
+      path.relative(root, upstream),
       "../../scripts/source-map-conformance/package-lock.json",
       "../../scripts/source-map-conformance/node_modules/@jridgewell/trace-mapping/dist/trace-mapping.mjs.map",
     ],
