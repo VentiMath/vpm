@@ -1897,6 +1897,26 @@
         "types": "./Popper.d.cts",
         "default": "./Popper.cjs"
       }
+    },
+    "./Slider": {
+      "import": {
+        "types": "./Slider.d.mts",
+        "default": "./Slider.mjs"
+      },
+      "require": {
+        "types": "./Slider.d.cts",
+        "default": "./Slider.cjs"
+      }
+    },
+    "./sliderClasses": {
+      "import": {
+        "types": "./sliderClasses.d.mts",
+        "default": "./sliderClasses.mjs"
+      },
+      "require": {
+        "types": "./sliderClasses.d.cts",
+        "default": "./sliderClasses.cjs"
+      }
     }
   },
   "files": [

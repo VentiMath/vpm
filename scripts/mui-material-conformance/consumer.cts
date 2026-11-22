@@ -529,3 +529,8 @@ import Popper from "vmui-material/Popper";
 import type {PopperProps} from "vmui-material/Popper";
 const suggestionProps:PopperProps = { open:true, anchorEl:()=>document.querySelector("input"), className:"z-9999", children:React.createElement("section") };
 React.createElement(Popper,suggestionProps);
+
+import FontSlider from "vmui-material/Slider";
+React.createElement(FontSlider,{value:16,marks:[{value:16,label:"100%"}],step:null,track:false,onChangeCommitted:(_,v)=>v.toFixed()});
+// @ts-expect-error The toolbar slider has one thumb.
+React.createElement(FontSlider,{value:[12,18]});

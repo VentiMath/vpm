@@ -135,3 +135,4 @@ export const {Rating, ratingClasses, getRatingUtilityClass} = rating;
 export { default as ClickAwayListener } from "./ClickAwayListener.mjs";
 export { default as Grow } from "./Grow.mjs";
 export { default as Popper, getPopperUtilityClass, popperClasses } from "./Popper.mjs";
+export { default as Slider, getSliderUtilityClass, sliderClasses } from "./Slider.mjs";

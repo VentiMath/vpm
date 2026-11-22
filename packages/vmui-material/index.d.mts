@@ -1014,3 +1014,18 @@ export interface PopperProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 
 export const Popper: React.ForwardRefExoticComponent<PopperProps & React.RefAttributes<HTMLDivElement>>;
 export const popperClasses: Readonly<{root: string}>;
 export function getPopperUtilityClass(slot: string): string;
+
+export type SliderClassKey = "root"|"active"|"colorPrimary"|"colorSecondary"|"colorError"|"colorInfo"|"colorSuccess"|"colorWarning"|"disabled"|"dragging"|"focusVisible"|"mark"|"markActive"|"marked"|"markLabel"|"markLabelActive"|"rail"|"sizeSmall"|"thumb"|"track"|"trackInverted"|"trackFalse"|"valueLabel"|"valueLabelOpen"|"valueLabelCircle"|"valueLabelLabel"|"vertical";
+export type SliderClasses = Readonly<Record<SliderClassKey,string>>;
+export const sliderClasses:SliderClasses;
+export function getSliderUtilityClass(slot: string): string;
+export interface SliderProps extends Omit<React.HTMLAttributes<HTMLSpanElement>,"onChange"|"defaultValue"|"color"> {
+ value?:number; defaultValue?:number; min?:number; max?:number; step?:number|null; shiftStep?:number;
+ marks?: readonly {value:number;label?:React.ReactNode}[]; disabled?:boolean; color?:ButtonColor; size?:"small"|"medium";
+ name?:string; component?:React.ElementType; track?:false|"normal"|"inverted"; orientation?:"horizontal"; valueLabelDisplay?:"off";
+ getAriaValueText?:(value:number,index:number)=>string;
+ onChange?:(event:Event,value:number,activeThumb:number)=>void;
+ onChangeCommitted?:(event:Event,value:number)=>void;
+ classes?:Partial<SliderClasses>; sx?:SxProps<Theme>;
+}
+export const Slider:React.ForwardRefExoticComponent<SliderProps & React.RefAttributes<HTMLSpanElement>>;
