@@ -629,3 +629,9 @@ const typeScale=createTypography(createPalette(),p=>({h1:{color:p.primary.main},
 const rem: string=typeScale.pxToRem(16);
 // @ts-expect-error Font size is numeric.
 createTypography(createPalette(),{fontSize:"13px"});
+
+import createTransitions from "vmui-material/styles/createTransitions";
+const transitions=createTransitions({duration:{short:180}});
+const animation:string=transitions.create(["margin","opacity"],{delay:"0.1s"});
+// @ts-expect-error Duration must be a string or number.
+transitions.create("margin",{duration:false});

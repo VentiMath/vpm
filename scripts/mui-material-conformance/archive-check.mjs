@@ -225,3 +225,7 @@ assert.equal(paletteModule.default({mode:"dark"}).background.paper, "#121212");
 const typographyModule = await import("vmui-material/styles/createTypography");
 assert.equal(typographyModule.default, require("vmui-material/styles/createTypography").default);
 assert.equal(typographyModule.default(paletteModule.default(),{}).pxToRem(16),"1rem");
+
+const transitionsModule=await import("vmui-material/styles/createTransitions");
+assert.equal(transitionsModule.default,require("vmui-material/styles/createTransitions").default);
+assert.equal(transitionsModule.default().create("margin"),"margin 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms");

@@ -1241,3 +1241,18 @@ This is the palette stage of the theme factory. The complete Material `createThe
 The actual VentiMath settings at `aa110e55` match Material 7.2.0 and 9.5.0, including the Geist-first font stack, 13px base and explicit body sizes. All 14 variants render equivalently through the app’s Typography consumer. Both module formats and packed installs are checked. The complete Material theme factory remains pending.
 
 [Measurements](bench/typography/README.md) include the app setup and synthetic responsive overrides. The app scale is faster on Bun and slower on Node. Isolating nested responsive settings adds overhead in both runtimes.
+
+## Transition creation
+
+`vmui-material/styles/createTransitions` creates easing and duration settings,
+CSS transition lists and automatic height timings. Scalar or array properties,
+numeric or CSS-string times and caller overrides match Material 7.2.0 and 9.5.0.
+The factory supplies the default theme used by the owned components; complete
+Material theme assembly remains pending. As in Material 9, automatic height
+timing caps at 3 seconds and the legacy `reducedMotion` input is not retained.
+
+The contract evaluates VentiMath’s unchanged page-margin, side-panel and toolbar
+expressions, tests timing over 20,000 heights, and checks settings isolation.
+Packed installs exercise the existing Collapse, Slide and Grow browser checks.
+[Measurements](bench/transitions/README.md) show faster formatting and a small
+settings-creation cost; they do not measure whole-page performance.

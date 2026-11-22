@@ -1,0 +1,1321 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-22T06:25:15.722Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/mui-system-conformance/node_modules/mui-material-app/styles/createTransitions.js": "910461b3fafb6766a8cea43716c410f75f3caa370731ef5428afab0f7947ff42",
+    "bench/transitions/compare.cjs": "78b7a2d1663a4cf53cece270ada94a7c9b4690150cc8a34474c3ee1333c00211",
+    "styles/createTransitions.cjs": "7b3da4c6f60b4d454fa33df59b117a089ccab7c2bcd0c465d49723d8c04a27aa",
+    "transition-settings.cjs": "5f2ebbcab736d3b38d9684cd112dc4ae52758cdf2f89092fca17491b7bb7d3b5"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 47418,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Create transition settings",
+            "iterations": 129422,
+            "samples": [
+              67.11636352397596,
+              65.37882276583574,
+              66.53653938279443,
+              66.10159014696116,
+              67.2184172706341,
+              73.09421891177682,
+              69.96459643646367,
+              66.57646304337719,
+              67.28216222898722,
+              67.12891934910586,
+              64.12485512509474,
+              67.58607501043086
+            ]
+          },
+          {
+            "case": "Page margin transition",
+            "iterations": 115379,
+            "samples": [
+              106.07216217855975,
+              103.58398842076974,
+              95.90818953189047,
+              98.60654885204394,
+              96.37657632671531,
+              96.52067533953371,
+              106.19133464495275,
+              102.0658005356261,
+              98.22013537992176,
+              96.38669081895401,
+              95.57956820565262,
+              96.36068955355773
+            ]
+          },
+          {
+            "case": "Side-panel transitions",
+            "iterations": 46279,
+            "samples": [
+              236.81097257935613,
+              240.86788824304676,
+              237.03154778625418,
+              237.65189394757866,
+              221.98334017589096,
+              230.13046954342187,
+              231.3972644179871,
+              249.37427342855315,
+              237.576265692862,
+              240.0683895503344,
+              235.97365975928545,
+              220.62922707923732
+            ]
+          }
+        ],
+        "checksum": 1875072
+      },
+      "vpm": {
+        "pid": 47420,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Create transition settings",
+            "iterations": 129422,
+            "samples": [
+              99.32044011064585,
+              114.43572190199495,
+              97.81567276042698,
+              97.39070637140497,
+              102.05600284341126,
+              99.83716060638855,
+              101.7546630402867,
+              114.90608242802615,
+              116.05993571417542,
+              92.45047209902489,
+              90.5384401415525,
+              95.50314475127877
+            ]
+          },
+          {
+            "case": "Page margin transition",
+            "iterations": 115379,
+            "samples": [
+              25.363515024397984,
+              26.701496806177676,
+              24.387739536657843,
+              28.81915253209051,
+              27.61153242791145,
+              24.560725955328987,
+              27.97339203841327,
+              26.493850700733937,
+              24.928349179660245,
+              28.55192019344879,
+              28.335598332451838,
+              23.94824881477518
+            ]
+          },
+          {
+            "case": "Side-panel transitions",
+            "iterations": 46279,
+            "samples": [
+              106.51250027010161,
+              103.57829685170367,
+              104.30668337691046,
+              101.51202489250129,
+              106.94466172562099,
+              107.0436915231539,
+              121.30141100715171,
+              121.77138659003187,
+              106.58000388945285,
+              108.24384710127671,
+              109.8491540439508,
+              110.90883554095782
+            ]
+          }
+        ],
+        "checksum": 613504
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 47434,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Create transition settings",
+            "iterations": 122037,
+            "samples": [
+              86.63492219572774,
+              95.29999098633992,
+              85.71853618164965,
+              86.5806353810733,
+              86.4266574891223,
+              86.29554971033374,
+              86.52021108352349,
+              92.04210198546315,
+              90.7655055434008,
+              88.6968050673153,
+              95.99922974179972,
+              93.26099461638708
+            ]
+          },
+          {
+            "case": "Page margin transition",
+            "iterations": 516596,
+            "samples": [
+              27.574415984638065,
+              27.164925783397397,
+              27.727824063678337,
+              26.871820532872956,
+              27.38987526035817,
+              25.280635157841008,
+              27.90768801926441,
+              27.325190284090468,
+              26.93013496039465,
+              26.44789158259062,
+              30.964637744001163,
+              29.963776335860054
+            ]
+          },
+          {
+            "case": "Side-panel transitions",
+            "iterations": 107153,
+            "samples": [
+              112.12199378458783,
+              116.07545285712911,
+              112.00262241841162,
+              113.83916455908755,
+              102.71799203008754,
+              118.60260562000116,
+              117.76345972581234,
+              114.36800649538377,
+              104.72136104448717,
+              116.79794312805195,
+              117.03631256241086,
+              111.198865174096
+            ]
+          }
+        ],
+        "checksum": 6490752
+      },
+      "upstream": {
+        "pid": 47439,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Create transition settings",
+            "iterations": 122037,
+            "samples": [
+              66.22206380032273,
+              78.4379573408066,
+              64.330219523587,
+              68.9036275883544,
+              64.06219425256255,
+              62.01602792595716,
+              68.9900112261035,
+              68.48708998090737,
+              72.36295549710341,
+              68.05756450912433,
+              66.20293845309205,
+              60.541065414587145
+            ]
+          },
+          {
+            "case": "Page margin transition",
+            "iterations": 516596,
+            "samples": [
+              89.43005365895206,
+              92.20906278794276,
+              94.28071839503197,
+              90.817420189084,
+              94.18909360506073,
+              91.81529860858369,
+              93.61369232436951,
+              94.77723791899281,
+              94.70263029524038,
+              96.19186753284936,
+              94.47429325817458,
+              89.50925868570418
+            ]
+          },
+          {
+            "case": "Side-panel transitions",
+            "iterations": 107153,
+            "samples": [
+              221.44659505566673,
+              216.02015809169941,
+              217.72682986010713,
+              210.37052625684765,
+              214.23494442526106,
+              220.6809422041388,
+              221.80627700577872,
+              210.0516737748834,
+              227.19110990826076,
+              214.7505529476543,
+              225.05163644508215,
+              233.5080119082058
+            ]
+          }
+        ],
+        "checksum": 272000
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 47443,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Create transition settings",
+            "iterations": 128842,
+            "samples": [
+              66.4408733177069,
+              62.11871905124085,
+              66.4955294081123,
+              67.40232222411963,
+              69.3093711677869,
+              66.24748141134107,
+              66.23067012309663,
+              67.04077086664304,
+              64.89376135111219,
+              61.66887350398156,
+              78.02644324055832,
+              63.418760963039944
+            ]
+          },
+          {
+            "case": "Page margin transition",
+            "iterations": 73296,
+            "samples": [
+              95.72145819690128,
+              114.2109801353404,
+              99.48871698319066,
+              119.99347849814406,
+              101.46756985374279,
+              100.51593538528617,
+              86.1859173761191,
+              92.66648930364615,
+              91.06567889107205,
+              91.24873117223189,
+              96.7657443789563,
+              87.87314450993361
+            ]
+          },
+          {
+            "case": "Side-panel transitions",
+            "iterations": 44636,
+            "samples": [
+              213.193946590196,
+              211.6677121605874,
+              207.30930190877368,
+              202.78940765301468,
+              216.32202706335718,
+              222.54552379245428,
+              207.6995026436071,
+              216.71408728380797,
+              213.4394434985202,
+              228.73167398512595,
+              219.13179944439423,
+              207.07500672103353
+            ]
+          }
+        ],
+        "checksum": 1797632
+      },
+      "vpm": {
+        "pid": 47449,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Create transition settings",
+            "iterations": 128842,
+            "samples": [
+              85.87520373791159,
+              83.27447571444122,
+              95.08124679840411,
+              86.11096536843593,
+              87.88089287654678,
+              96.1772325794387,
+              92.10893963148669,
+              97.86405054252525,
+              135.62832771922203,
+              93.33007870104467,
+              102.77834091367717,
+              115.24710110057262
+            ]
+          },
+          {
+            "case": "Page margin transition",
+            "iterations": 73296,
+            "samples": [
+              25.108805391837322,
+              25.27650895001087,
+              28.348518336608482,
+              22.35001910063396,
+              26.432765771665366,
+              27.057520192097666,
+              24.02530833879162,
+              32.14704758786353,
+              34.32258240558854,
+              25.07356472385991,
+              26.632312813796194,
+              26.51690406024871
+            ]
+          },
+          {
+            "case": "Side-panel transitions",
+            "iterations": 44636,
+            "samples": [
+              104.34776861726097,
+              112.19549242763757,
+              104.96666367954126,
+              107.68868178152104,
+              107.98646832153565,
+              102.68243122143649,
+              109.4548122591631,
+              102.18395465543627,
+              106.09523702840836,
+              99.74666188726461,
+              102.49386145711793,
+              112.42792812976037
+            ]
+          }
+        ],
+        "checksum": 690944
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 47451,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Create transition settings",
+            "iterations": 105096,
+            "samples": [
+              88.31687219304271,
+              96.92804673822047,
+              90.93154829869867,
+              89.16728514881584,
+              89.5237116541069,
+              86.18866560097442,
+              91.38549516632393,
+              87.36417180482603,
+              89.74017089137546,
+              91.97266308898519,
+              91.08655895562156,
+              100.12829222805857
+            ]
+          },
+          {
+            "case": "Page margin transition",
+            "iterations": 515614,
+            "samples": [
+              25.41048148421101,
+              24.678426109454055,
+              25.48345273790088,
+              25.60903117448329,
+              32.90938764269387,
+              27.3208252685148,
+              26.37365354703319,
+              27.987830043404387,
+              25.84160243903388,
+              26.592970710647975,
+              27.07330483656383,
+              28.998033412591724
+            ]
+          },
+          {
+            "case": "Side-panel transitions",
+            "iterations": 69836,
+            "samples": [
+              109.59188670599688,
+              112.25048685491677,
+              105.71195372014343,
+              103.26396128071494,
+              105.7077724955609,
+              111.02200870611144,
+              120.44110487427645,
+              113.59351910189551,
+              105.71136663039015,
+              105.33726158428408,
+              98.33455524371251,
+              107.98931783034608
+            ]
+          }
+        ],
+        "checksum": 5193792
+      },
+      "upstream": {
+        "pid": 47465,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Create transition settings",
+            "iterations": 105096,
+            "samples": [
+              64.2610946182537,
+              59.38142269924632,
+              59.1621850498593,
+              59.83181091573417,
+              61.98975222653564,
+              64.85103143792317,
+              61.60161185963317,
+              60.22350993377485,
+              68.38430577757474,
+              60.08435145010256,
+              63.08002207505519,
+              61.24400548070358
+            ]
+          },
+          {
+            "case": "Page margin transition",
+            "iterations": 515614,
+            "samples": [
+              92.78500971657083,
+              92.34548518853259,
+              103.48778349695695,
+              93.02170228116385,
+              94.41914688119394,
+              92.04729700900306,
+              94.07732140709923,
+              94.16419065424887,
+              94.30682060611203,
+              95.28389066239505,
+              95.77343710605193,
+              91.34974806735302
+            ]
+          },
+          {
+            "case": "Side-panel transitions",
+            "iterations": 69836,
+            "samples": [
+              216.91236611489572,
+              220.78452374133576,
+              229.33491322527289,
+              214.47391030414207,
+              226.59098459247377,
+              219.89612807148364,
+              226.2688011913621,
+              221.28271951428846,
+              220.51066785039083,
+              220.17893350134366,
+              243.4012114095877,
+              228.09152872444136
+            ]
+          }
+        ],
+        "checksum": 299520
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 47469,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Create transition settings",
+            "iterations": 147882,
+            "samples": [
+              67.87928889249542,
+              62.968846783246114,
+              65.69962537698972,
+              61.96466101351071,
+              64.40073166443513,
+              64.27929024492525,
+              64.05698462287529,
+              61.03007803519041,
+              65.58692065295328,
+              64.69009074802896,
+              67.63838736289743,
+              65.19894240002165
+            ]
+          },
+          {
+            "case": "Page margin transition",
+            "iterations": 129067,
+            "samples": [
+              91.03314557555368,
+              96.0147287842749,
+              92.08879884091212,
+              90.90886128909801,
+              92.164341001185,
+              92.94236326869031,
+              92.07879628410113,
+              102.25115637614614,
+              93.92440360432919,
+              92.90265521008492,
+              99.11615672480218,
+              91.72077293188802
+            ]
+          },
+          {
+            "case": "Side-panel transitions",
+            "iterations": 48785,
+            "samples": [
+              211.22271189914852,
+              205.74545454545412,
+              213.747401865326,
+              212.50640565747642,
+              213.4194322025229,
+              225.649953879266,
+              215.16433329916808,
+              225.57821051552656,
+              236.96492774418388,
+              228.86475351030023,
+              232.7986881213485,
+              242.25427897919332
+            ]
+          }
+        ],
+        "checksum": 1812992
+      },
+      "vpm": {
+        "pid": 47498,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Create transition settings",
+            "iterations": 147882,
+            "samples": [
+              67.12361883123036,
+              60.9585074586495,
+              66.69760349467812,
+              63.13817773630319,
+              61.124470861903596,
+              62.15231062603979,
+              62.02213927320444,
+              60.87342611000679,
+              66.24538483385427,
+              69.96174652763705,
+              63.96710214901037,
+              61.359448749678826
+            ]
+          },
+          {
+            "case": "Page margin transition",
+            "iterations": 129067,
+            "samples": [
+              92.93493301928434,
+              88.17158530065782,
+              88.22000201445694,
+              89.65401690594798,
+              95.37617671441996,
+              86.00798035129095,
+              105.65152207768053,
+              94.83446582007802,
+              100.15534567317727,
+              92.80612395112611,
+              92.56303315332323,
+              91.2907637118701
+            ]
+          },
+          {
+            "case": "Side-panel transitions",
+            "iterations": 48785,
+            "samples": [
+              214.29486522496725,
+              222.272891257558,
+              215.62211745413381,
+              217.0296402582769,
+              212.16478425745618,
+              226.38788562058116,
+              213.720918315056,
+              215.59565440196766,
+              210.9528338628678,
+              228.91085374602858,
+              227.68012708824529,
+              213.13500051245458
+            ]
+          }
+        ],
+        "checksum": 361344
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 47505,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Create transition settings",
+            "iterations": 154304,
+            "samples": [
+              59.39087774782254,
+              62.3749740771464,
+              65.80543602239737,
+              61.152011613438276,
+              62.54590289299028,
+              63.00036291995017,
+              63.28956475528854,
+              65.5437772189964,
+              64.14286084612218,
+              62.24131584404811,
+              62.051748496474204,
+              60.09754121733739
+            ]
+          },
+          {
+            "case": "Page margin transition",
+            "iterations": 133379,
+            "samples": [
+              99.88828826127036,
+              100.97854234924571,
+              95.68129165760665,
+              101.01665179675919,
+              105.84906169636945,
+              96.95617001177095,
+              103.95439312035602,
+              103.39677160572539,
+              99.26444192863919,
+              99.05263197354914,
+              99.49873668268593,
+              99.08637791556403
+            ]
+          },
+          {
+            "case": "Side-panel transitions",
+            "iterations": 48145,
+            "samples": [
+              216.1127842974332,
+              220.72645134489647,
+              217.02496624779312,
+              215.61688648873084,
+              217.8618340429956,
+              237.0599231488202,
+              235.27971751999158,
+              220.15870806937468,
+              244.90082043825947,
+              225.4993664970405,
+              213.61512098868195,
+              227.791047876207
+            ]
+          }
+        ],
+        "checksum": 1738816
+      },
+      "upstream": {
+        "pid": 47519,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Create transition settings",
+            "iterations": 154304,
+            "samples": [
+              60.188277685607495,
+              62.79487245956041,
+              63.11485768353367,
+              64.66969099958523,
+              62.83861727498939,
+              62.50027218996276,
+              67.95216585441737,
+              96.63418317088352,
+              65.68904889050177,
+              63.31089926379079,
+              66.58420390916622,
+              66.95441466196615
+            ]
+          },
+          {
+            "case": "Page margin transition",
+            "iterations": 133379,
+            "samples": [
+              88.26008592057262,
+              94.19242159560388,
+              88.05734036092642,
+              90.99445939765634,
+              97.56220994309436,
+              96.30108187945578,
+              89.49372839802312,
+              88.99451937711336,
+              92.55017656452657,
+              114.41550019118455,
+              88.99670862729563,
+              96.16956192504065
+            ]
+          },
+          {
+            "case": "Side-panel transitions",
+            "iterations": 48145,
+            "samples": [
+              220.72385502129018,
+              216.37848166995587,
+              216.91589988576087,
+              213.5623221518313,
+              239.75316232215164,
+              223.03026274794917,
+              225.79273029390495,
+              210.82320074774108,
+              215.55629868106598,
+              209.63148821269118,
+              220.99387267628666,
+              242.00851594143046
+            ]
+          }
+        ],
+        "checksum": 361280
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "Create transition settings",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 67.1226414365409,
+          "vpmNs": 99.5788003585172,
+          "changePct": 48.35351861511739
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 67.13981415472352,
+          "vpmNs": 87.66586363152152,
+          "changePct": 30.572097547806386
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 66.34417736452399,
+          "vpmNs": 94.20566274972438,
+          "changePct": 41.995373960426384
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 61.42280867016837,
+          "vpmNs": 90.33585959503706,
+          "changePct": 47.07217327056406
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 64.54541120623205,
+          "vpmNs": 62.64524418117149,
+          "changePct": -2.943922719756553
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 63.99029513168801,
+          "vpmNs": 62.46043848506834,
+          "changePct": -2.3907635423017215
+        }
+      ]
+    },
+    {
+      "case": "Page margin transition",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 97.37040535972773,
+          "vpmNs": 26.59767375345581,
+          "changePct": -72.68402688148142
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 93.90139296471511,
+          "vpmNs": 27.357532772224317,
+          "changePct": -70.86567950860503
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 96.24360128792878,
+          "vpmNs": 26.47483491595704,
+          "changePct": -72.49184926408442
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 94.12075603067404,
+          "vpmNs": 26.48331212884058,
+          "changePct": -71.86241032720812
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 92.53349810563495,
+          "vpmNs": 92.68457855222468,
+          "changePct": 0.1632710852639052
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 91.77231798109145,
+          "vpmNs": 99.69351247197815,
+          "changePct": 8.631354928311573
+        }
+      ]
+    },
+    {
+      "case": "Side-panel transitions",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 236.92126018280516,
+          "vpmNs": 106.99417662438745,
+          "changePct": -54.83977396463609
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 219.20388603212297,
+          "vpmNs": 114.10358552723565,
+          "changePct": -47.9463673784896
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 213.31669504435808,
+          "vpmNs": 105.53095035397482,
+          "changePct": -50.52850864203094
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 221.03362162781212,
+          "vpmNs": 106.85063577524475,
+          "changePct": -51.65865039520304
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 220.3712719073473,
+          "vpmNs": 215.60888592805074,
+          "changePct": -2.16107387232346
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 218.81987745352552,
+          "vpmNs": 220.44257970713556,
+          "changePct": 0.7415698575896856
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "Create transition settings",
+      "upstream_ns": 67,
+      "vpm_ns": 92,
+      "change_pct": 44.5,
+      "upstream_first_pct": 45.2,
+      "vpm_first_pct": 38.8,
+      "process_range_pct": "48.4, 30.6, 42.0, 47.1",
+      "control_max_abs_pct": 2.9,
+      "evidence": "higher time in every pair, beyond control spread"
+    },
+    {
+      "case": "Page margin transition",
+      "upstream_ns": 95,
+      "vpm_ns": 27,
+      "change_pct": -72.2,
+      "upstream_first_pct": -72.6,
+      "vpm_first_pct": -71.4,
+      "process_range_pct": "-72.7, -70.9, -72.5, -71.9",
+      "control_max_abs_pct": 8.6,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "Side-panel transitions",
+      "upstream_ns": 220,
+      "vpm_ns": 107,
+      "change_pct": -51.1,
+      "upstream_first_pct": -52.7,
+      "vpm_first_pct": -49.8,
+      "process_range_pct": "-54.8, -47.9, -50.5, -51.7",
+      "control_max_abs_pct": 2.2,
+      "evidence": "lower time in every pair, beyond control spread"
+    }
+  ]
+}

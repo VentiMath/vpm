@@ -2,3 +2,4 @@ export { ThemeProvider,useTheme,styled,useThemeProps,useColorScheme,THEME_ID,typ
 export { alpha, darken, decomposeColor, emphasize, getContrastRatio, getLuminance, hexToRgb, hslToRgb, lighten, recomposeColor, rgbToHex } from "vmui-system";
 export type { Palette, PaletteOptions, PaletteMode, PaletteColor, PaletteColorOptions } from "./createPalette.cjs";
 export type { TypographyVariant, TypographyStyle, TypographyVariants, TypographyVariantsOptions } from "./createTypography.cjs";
+export type { Transitions, TransitionsOptions, Duration, Easing } from "./createTransitions.cjs";

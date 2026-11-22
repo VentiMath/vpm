@@ -2047,6 +2047,16 @@
         "types": "./styles/createTypography.d.cts",
         "default": "./styles/createTypography.cjs"
       }
+    },
+    "./styles/createTransitions": {
+      "import": {
+        "types": "./styles/createTransitions.d.mts",
+        "default": "./styles/createTransitions.mjs"
+      },
+      "require": {
+        "types": "./styles/createTransitions.d.cts",
+        "default": "./styles/createTransitions.cjs"
+      }
     }
   },
   "files": [

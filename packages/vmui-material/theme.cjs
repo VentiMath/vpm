@@ -6,6 +6,7 @@ const THEME_ID = "$$material";
 // Defaults needed by standalone Box/sx consumers. This is not a public Material
 // theme factory: callers may supply their complete existing Material theme.
 const defaultTheme = system.createTheme({
+  transitions:require("./transition-settings.cjs").createTransitions(),
   palette: {
     mode: "light",
     primary: {main:"#1976d2",light:"#42a5f5",dark:"#1565c0",contrastText:"#fff"},
