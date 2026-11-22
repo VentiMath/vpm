@@ -24,6 +24,7 @@ try {
     "vtrace-mapping",
     "vgen-mapping",
     "vremapping",
+    "vconvert-source-map",
   ]) {
     const [packed] = JSON.parse(
       run("npm", [
@@ -60,9 +61,10 @@ try {
       dir,
     );
     for (const runtime of ["node", "bun"])
-      run(runtime, [path.join(__dirname, "trace-caller.cjs")], dir, {
-        VPM_TRACE_INSTALL: path.join(dir, "node_modules"),
-      });
+      for (const caller of ["trace-caller.cjs", "convert-caller.cjs"])
+        run(runtime, [path.join(__dirname, caller)], dir, {
+          VPM_TRACE_INSTALL: path.join(dir, "node_modules"),
+        });
   }
   console.log(
     "Packed npm and Bun installations pass Babel and remapping through the generator and tracing stack on Node and Bun.",

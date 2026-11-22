@@ -87,6 +87,10 @@
       "name": "vcontent-type",
       "version": "0.1.0",
     },
+    "packages/vconvert-source-map": {
+      "name": "vconvert-source-map",
+      "version": "2.0.0",
+    },
     "packages/vcookie": {
       "name": "vcookie",
       "version": "0.1.0",
@@ -1988,6 +1992,8 @@
     "vcontent-disposition": ["vcontent-disposition@workspace:packages/vcontent-disposition"],
 
     "vcontent-type": ["vcontent-type@workspace:packages/vcontent-type"],
+
+    "vconvert-source-map": ["vconvert-source-map@workspace:packages/vconvert-source-map"],
 
     "vcookie": ["vcookie@workspace:packages/vcookie"],
 

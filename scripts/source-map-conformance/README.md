@@ -27,3 +27,5 @@ packages offline. The public writer suite runs with
 
 The complete-stack comparison also runs Babel core 7.29.0’s unchanged merge-map module with all five VPM packages installed from archives. It checks the merged source root and emitted map against the pinned upstream stack.
 The upstream public composition tests run with `node trace-upstream.cjs /path/to/remapping.test.ts` or Bun, using the `remapping/2.3.5` tag with its sibling `samples` directory. Four concatenation, Rollup and minification fixture maps are compared byte for byte.
+
+The converter fixture copies Babel core into an isolated module tree and switches only the converter between runs. Run `node convert-caller.cjs` or `bun convert-caller.cjs`; `trace-archives.cjs` repeats both calls from fresh and frozen installs.

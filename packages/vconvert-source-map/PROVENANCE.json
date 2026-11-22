@@ -1,0 +1,12 @@
+{
+  "upstream": {
+    "name": "convert-source-map",
+    "version": "2.0.0",
+    "repository": "https://github.com/thlorenz/convert-source-map",
+    "integrity": "sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg=="
+  },
+  "implementation": {
+    "kind": "independent",
+    "targetScope": "Inline and external source-map annotations, object and text conversion for Babel core."
+  }
+}
