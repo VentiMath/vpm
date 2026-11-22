@@ -26,18 +26,23 @@ equivalence, all possible TeX or a completed application deployment. See the
 Install the public release with no dependency overrides:
 
 ```sh
-bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.3.1/vlx-0.3.1.tgz
+bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.3.2/vlx-0.3.2.tgz
 ```
 
-**0.3.1** restores native selection over the outline-rendered glyphs. With
-the React components or `observeMath`, partial copying returns the selected
-visible characters (for example, selecting only the base and exponent of
-`n^6-1` copies `n6`); selecting a whole expression preserves its original TeX.
-Partial text is not a reconstructed TeX subtree. Mixed prose/math retains the
-surrounding prose. SVG/PNG exports and the MathML representation are unchanged.
-Desktop Chrome mouse and keyboard behavior is tested against KaTeX 0.19.1;
-physical Android/iOS selection handles remain unverified. See
-[selection verification](../../scripts/vlx-conformance/README.md#selection-and-copy).
+**0.3.2** copies partial selections as TeX. With the React components or
+`observeMath`, selecting the base and exponent of `n^6-1` copies `$n^6$`,
+without the unselected `-1`; selecting only the exponent copies `$6$`.
+Fractions, subscripts, roots and other structural notation are retained around
+the selected content. Whole expressions retain their exact original source.
+Inline copies use `$…$`, display copies use `\[ … \]`, and mixed selections
+retain surrounding prose. Answer fields in storage still require bare TeX;
+clipboard delimiters are not part of that storage format.
+
+The web output carries selection structure; exported SVG/PNG geometry and
+MathML remain unchanged. Desktop Chrome mouse and keyboard selection is tested.
+Physical Android/iOS selection handles remain unverified. See
+[selection verification](../../scripts/vlx-conformance/README.md#selection-and-copy)
+and [measured rendering cost](bench/results/selection-tex/README.md).
 
 The release pins its VPM dependency to a sibling archive. See the
 [installation and verification recipe](../../docs/INSTALLATION.md#vlx-math-rendering).

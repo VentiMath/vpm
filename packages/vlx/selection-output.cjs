@@ -3,7 +3,8 @@
 // text to the web view. Identical children share their output until a glyph
 // needs a text counterpart; SVG/PNG exports retain their original paths.
 module.exports=function selectionOutput(base){
- const glyphs=new Map();
+ const glyphs=new Map(),descriptors=Object.create(null);
+ const fields={text:['font','operator'],font:['font'],style:['style'],decoration:['style'],fenced:['left','right'],table:['name'],color:['color'],class:['class'],stack:['under'],cell:['row','col','count'],space:['width']};
  const wrap=value=>({ink:value,web:value});
  const pick=(value,key)=>Array.isArray(value)?value.map(v=>pick(v,key)):value&&typeof value==='object'&&Object.hasOwn(value,'ink')?value[key]:value;
  const same=value=>Array.isArray(value)?value.every(same):!value||typeof value!=='object'||!Object.hasOwn(value,'ink')||value.ink===value.web;
@@ -30,6 +31,22 @@ module.exports=function selectionOutput(base){
    if(previous&&previous.width===width&&previous.height===height&&previous.depth===depth)return previous.output;
    const text=base.element('text',{className:'vlx-select',x:0,y:-height,fontSize:(height+depth)*.8,fontFamily:'serif',dominantBaseline:'text-before-edge',textLength:width,lengthAdjust:'spacingAndGlyphs',fill:'transparent',style:{userSelect:'text',cursor:'text'}},base.text(char));
    const output={ink,web:[ink,text]};font.set(ink,{width,height,depth,output});return output;
+  },
+  semantic(ast,out){
+   // Only web output carries the selection tree. It contains structural flags,
+   // never a second copy of the source or a change to exported outline geometry.
+   let props;
+   if(ast.kind==='scripts'){
+    const key='scripts'+!!ast.sup+!!ast.sub;
+    props=descriptors[key]||(descriptors[key]={'data-vlx-tex':JSON.stringify({kind:'scripts',sup:!!ast.sup,sub:!!ast.sub})});
+   }else if(fields[ast.kind]){
+    const meta={kind:ast.kind};for(const key of fields[ast.kind])if(ast[key]!==undefined)meta[key]=ast[key];
+    props={'data-vlx-tex':JSON.stringify(meta)};
+   }else {
+    const kind=(ast.kind==='row'||ast.kind==='textrow')&&ast.children.some(a=>a.kind==='linebreak')?'lines':ast.kind;
+    props=descriptors[kind]||(descriptors[kind]={'data-vlx-tex':kind});
+   }
+   return {ink:pick(out,'ink'),web:base.element('g',props,pick(out,'web'))};
   },
   pick
  };

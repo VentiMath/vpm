@@ -2,6 +2,7 @@
 // Optional browser lifecycle. Mark only overflowing formulas as keyboard scroll
 // targets; static MathML remains accessible without this helper or JavaScript.
 const selector='[data-vlx="math"]';
+const {selectedTex}=require('./selection-tex.cjs');
 function installMathStyles(document) {
  if(!document?.createElement||!document.querySelector)throw new TypeError('installMathStyles needs a document');
  if(document.querySelector('style[data-vlx-styles]'))return;
@@ -65,9 +66,9 @@ function observeMath(root,options={}) {
    if(!range.intersectsNode(node))return '';
    if(node.nodeType===3)return selectedText(node);
    if(node.nodeType!==1&&node.nodeType!==11)return '';
-   if(node.matches?.(selector)&&covers(node)){
-    const tex=node.querySelector('annotation[encoding="application/x-tex"]')?.textContent;
-    if(tex!==undefined){handled=true;return node.getAttribute('data-vlx-display')==='true'?'\\['+tex+'\\]':'$'+tex+'$';}
+   if(node.matches?.(selector)){
+    const tex=covers(node)?node.querySelector('annotation[encoding="application/x-tex"]')?.textContent:selectedTex(node.querySelector('svg'),range,selectedText);
+    if(tex){handled=true;return node.getAttribute('data-vlx-display')==='true'?'\\['+tex+'\\]':'$'+tex+'$';}
    }
    if(node.localName==='math'||['SCRIPT','STYLE'].includes(node.nodeName))return '';
    if(node.nodeName==='BR')return '\n';

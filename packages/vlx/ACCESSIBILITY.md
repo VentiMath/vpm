@@ -108,15 +108,27 @@ an initial loading fallback. `MathProvider` sets shared `scrollLabel` and
 `loadingFallback`; nested defaults and explicit component overrides are supported.
 Fitting or hidden formulas avoid computed-style reads.
 
-## Selection and copy (0.3.1)
+## Selection and copy (0.3.2)
 
 The browser view pairs each existing outline with transparent native SVG text.
 Selection highlights are visible and follow the glyph positions, including
 scripts. The text stays inside the existing SVG bounds and remains decorative
 to accessibility APIs; the unchanged MathML tree supplies semantics. Exported
-SVG and PNG do not contain the selection layer. Partial copying produces the
-visible Unicode characters, as ordinary KaTeX selection does. Whole-expression
-copying retains source TeX when the browser lifecycle is installed.
+SVG and PNG do not contain the selection layer. Partial copying reconstructs
+TeX from the selected content and its mathematical structure. For example,
+selecting `n⁶` within `n^6-1` copies `$n^6$`, not the flattened `n6` or the
+whole formula. Selecting only the superscript copies `$6$`. Selecting both
+parts of a fraction retains `\frac`; selecting only one part copies that
+part. Roots, accents, fonts and balanced scalable delimiters retain the
+notation needed to interpret the selected content. A selection spanning matrix
+cells keeps cell/row separators and empty positions inside the selected bounds.
+
+Partial TeX is a canonical reconstruction, not a byte-for-byte source slice:
+macro spellings and spacing can change. Whole-expression copying retains the
+exact source. Inline copies have `$…$` delimiters, display copies `\[…\]`.
+The React components install this behavior automatically; static HTML requires
+`observeMath`. Clipboard output does not change the bare-TeX storage contract
+for answer fields.
 
 Automated Chrome checks exercise native mouse drags and Shift+Arrow selection
 for inline/display powers, subscripts, fractions and sums. Existing tests retain

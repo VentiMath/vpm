@@ -2,7 +2,7 @@
 const {paths,variants:glyphs}=require('./font/glyphs.json');
 const {typography}=require('./typography.cjs');
 const {VlxError}=require('./source.cjs');
-function createLayout({element:E,text:T,group:G,start:S,append:A,glyph:selectable}){
+function createLayout({element:E,text:T,group:G,start:S,append:A,glyph:selectable,semantic}){
 // Outlines come from a fixed, finite font pool, independent of user input. Reuse
 // their leaf output while each occurrence retains its own placement/metrics.
 const outlines=new Map();
@@ -41,6 +41,11 @@ function fence(char,body){
 }
 function joinTag(b){const l=text('('),r=text(')');return box(l.w+b.w+r.w,Math.max(l.h,b.h,r.h),Math.max(l.d,b.d,r.d),[l.svg,move(b,l.w),move(r,l.w+b.w)],E('mrow',null,E('mo',null,T('(')),b.mml,E('mo',null,T(')'))));}
 function layout(ast,options={}){
+ const b=layoutInner(ast,options);
+ if(semantic)b.svg=semantic(ast,b.svg);
+ return b;
+}
+function layoutInner(ast,options={}){
  const display=!!options.display,font=options.font,bold=!!options.bold;
  const weight=style=>bold?(style==='italic'?'bold-italic':style==='normal'?'bold':style):style;
  const child=(a,extra={})=>layout(a,{display,font,bold,...extra});
@@ -184,7 +189,7 @@ function layout(ast,options={}){
    return box(b.w,under?b.h:b.h+(arc?.3:.16),under?b.d+.16:b.d,[b.svg,E('g',{fill:'none',stroke:'currentColor',strokeWidth:'.045'},mark)],E(under?'munder':'mover',{[under?'accentunder':'accent']:'true'},b.mml,E('mo',null,T(arc?'⌢':'¯'))));
   }
   case 'table':{
-   const tags=ast.rowTags?.map(tag=>{if(!tag)return null;const b=child(tag.body);return tag.star?b:joinTag(b);});
+   const tags=ast.rowTags?.map(tag=>{if(!tag)return null;const b=child(tag.body),label=tag.star?b:joinTag(b);if(semantic)label.svg=semantic({kind:'tabletag'},label.svg);return label;});
    const tagWidth=tags?.some(Boolean)?1+Math.max(...tags.map(b=>b?.w||0)):0;
    const cols=ast.align.length,widths=Array(cols).fill(0),heights=[],depths=[],rows=[];
    for(const [r,row] of ast.rows.entries()){
@@ -192,6 +197,7 @@ function layout(ast,options={}){
     for(const entry of row){
      const span=entry.kind==='row'&&entry.children.length===1&&entry.children[0].kind==='multicolumn'?entry.children[0]:null;
      const b=child(span?span.body:entry,{display:false}),count=span?span.span:1;
+     if(semantic)b.svg=semantic({kind:'cell',row:r,col,count},b.svg);
      if(col+count>cols)throw new VlxError('TEX','Too many array cells');
      rows[r].push({b,col,count,spec:span?.spec,align:span?span.spec.match(/[lcr]/)[0]:ast.align[col]});
      if(count===1)widths[col]=Math.max(widths[col],b.w);heights[r]=Math.max(heights[r],b.h);depths[r]=Math.max(depths[r],b.d);col+=count;

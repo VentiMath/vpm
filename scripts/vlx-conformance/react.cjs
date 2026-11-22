@@ -24,7 +24,7 @@ document.addEventListener=(type,...args)=>{if(type==='copy')copies++;return add(
  for(const c of require('./output-reference.json').cases){
   const result=selected('vlx').renderMath(c.tex,{display:c.display});
   for(const field of ['width','height','baseline'])assert.equal(result[field],c[field],c.name+' '+field);
-  for(const field of ['svg','mathml','html']){htmlDescriptor.set.call(control,result[field]);control.querySelectorAll('.vlx-select').forEach(e=>e.remove());assert.equal(digest(canonical(control.firstElementChild)),c[field],c.name+' serialized '+field);}
+  for(const field of ['svg','mathml','html']){htmlDescriptor.set.call(control,result[field]);control.querySelectorAll('.vlx-select').forEach(e=>e.remove());control.querySelectorAll('[data-vlx-tex]').forEach(e=>e.replaceWith(...e.childNodes));assert.equal(digest(canonical(control.firstElementChild)),c[field],c.name+' serialized '+field);}
   act(()=>root.render(h(c.display?api.DisplayMath:api.InlineMath,{tex:c.tex})));
   htmlDescriptor.set.call(control,result.html);
   const selectedHTML=digest(canonical(control.firstElementChild));

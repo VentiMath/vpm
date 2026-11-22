@@ -23,7 +23,7 @@ const output=process.env.VLX_BROWSER_OUTPUT; if(output)fs.mkdirSync(output,{recu
 
 
 
- const cases=[['power','n^6-1','n6'],['subscript','x_2+1','x2'],['fraction','\\frac{1}{2}+1','12'],['sum','\\sum_{i=1}^{n}i^2+1',null]];
+ const cases=[['power','n^6-1','n^6'],['subscript','x_2+1','x_2'],['fraction','\\frac{1}{2}+1','\\frac{1}{2}'],['sum','\\sum_{i=1}^{n}i^2+1','\\sum^n']];
  const katex=require('katex'),dist=path.dirname(require.resolve('katex/package.json'));
  const css=fs.readFileSync(path.join(dist,'dist/katex.min.css'),'utf8').replace(/url\((fonts\/[^)]+)\)/g,(_,file)=>'url(data:font/woff2;base64,'+fs.readFileSync(path.join(dist,'dist',file)).toString('base64')+')');
  await evaluate('(()=>{const s=document.createElement("style");s.textContent='+JSON.stringify(css)+';document.head.append(s);return true})()');
@@ -41,8 +41,8 @@ const output=process.env.VLX_BROWSER_OUTPUT; if(output)fs.mkdirSync(output,{recu
   await send('Input.dispatchMouseEvent',{type:'mousePressed',x:ax,y:ay,button:'left',clickCount:1});
   for(let i=1;i<=16;i++)await send('Input.dispatchMouseEvent',{type:'mouseMoved',x:ax+(bx-ax)*i/16,y:ay+(by-ay)*i/16,button:'left',buttons:1});
   await send('Input.dispatchMouseEvent',{type:'mouseReleased',x:bx,y:by,button:'left',clickCount:1});
-  const partial=await copy();assert(partial.handled,name+' copy');assert.equal(partial.text,expected||a.c+b.c,name+' native drag');
-  assert(!partial.text.includes('$')&&!partial.text.includes('\\['),'Partial copies stay partial');
+  const partial=await copy();assert(partial.handled,name+' copy');assert.equal(partial.text,display?'\\['+expected+'\\]':'$'+expected+'$',name+' native drag');
+  assert.notEqual(partial.text,display?'\\['+tex+'\\]':'$'+tex+'$','Unselected terms stay out of the clipboard');
   const before=await evaluate('getSelection().focusNode.textContent+":"+getSelection().focusOffset');
   for(let i=0;i<3;i++){
    await send('Input.dispatchKeyEvent',{type:'keyDown',key:'ArrowRight',code:'ArrowRight',windowsVirtualKeyCode:39,modifiers:8});

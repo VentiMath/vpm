@@ -323,9 +323,12 @@ React and React DOM verification now pin 19.3.1, including exact archive consume
 
 `node --test scripts/vlx-conformance/selection.test.cjs` checks partial, whole
 and mixed selections, negation/fullwidth characters, cleanup, and all 114
-historical outline/MathML/geometry controls. Only the new selectable text is
-removed when comparing the old HTML control; React and string output are
-compared including that text in the archive tests.
+historical outline/MathML/geometry controls. Structural partial-copy cases cover
+powers, subscripts, fractions, roots, sums, styled text, negation and matrices;
+partial selections from the full rendering corpus must render independently.
+Only selectable text and web-only semantic group wrappers are removed when
+comparing the old HTML control. React and string output are compared including
+both in the archive tests.
 
 `node scripts/vlx-conformance/selection-browser.cjs` uses real Chrome mouse
 and Shift+Arrow input for powers, subscripts, fractions and sums in both modes,
@@ -336,3 +339,8 @@ fixture uses synthetic math only. Physical touch selection is still unverified.
 
 `bench-selection.cjs /path/to/extracted/vlx-0.3.0` measures cached and uncached
 string output with isolated AB/BA processes and identical-source controls.
+
+`bench-selection-tex.cjs /path/to/extracted/vlx-0.3.1` measures the additional
+web semantic structure used by 0.3.2 partial-TeX copying, with the same isolated
+process and identical-source controls. Whole-formula source copying is exact;
+partial reconstruction is canonical TeX and excludes unselected sibling terms.
