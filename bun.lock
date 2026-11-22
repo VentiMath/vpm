@@ -1555,6 +1555,10 @@
       "name": "vsection-iterator",
       "version": "2.0.0",
     },
+    "packages/vsemver": {
+      "name": "vsemver",
+      "version": "7.8.6",
+    },
     "packages/vsend": {
       "name": "vsend",
       "version": "0.1.0",
@@ -2435,6 +2439,8 @@
     "vscheduler": ["vscheduler@workspace:packages/vscheduler"],
 
     "vsection-iterator": ["vsection-iterator@workspace:packages/vsection-iterator"],
+
+    "vsemver": ["vsemver@workspace:packages/vsemver"],
 
     "vsend": ["vsend@workspace:packages/vsend"],
 

@@ -261,6 +261,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vieee754](packages/vieee754) | ieee754 1.2.1 | Binary floating-point reads and writes for browser Buffer, including upstream midpoint rounding and NaN encoding. [Measurements](packages/vieee754/bench/results/README.md) |
 | [vbase64-js](packages/vbase64-js) | base64-js 1.5.1 | Binary encoding for browser Buffer and Capacitor property lists. [Measurements](packages/vbase64-js/bench/results/README.md) |
 | [vvarint](packages/vvarint) | varint 6.0.0 | Unsigned compilation IDs for Sass. Range and buffer capacity checks preserve exact integers and prevent partial writes to short buffers. [Measurements](packages/vvarint/bench/results/README.md) |
+| [vsemver](packages/vsemver) | semver 7.8.6; app 7.5.4; Babel 6.3.2 | Independent app-used version parsing, comparisons, coercion and ranges, with isolated bounded caching. Unchanged Babel callers and app Capacitor/runtime checks pass. [Scope](packages/vsemver/README.md) and [measurements](packages/vsemver/bench/README.md). |
 | [vbabel-helper-validator-option](packages/vbabel-helper-validator-option) | @babel/helper-validator-option 7.29.7 | Independent option validation and spelling suggestions verified through Babel Core and both compilation-targets callers. [Measurements](packages/vbabel-helper-validator-option/bench/results/README.md). |
 | [vbabel-code-frame](packages/vbabel-code-frame) | @babel/code-frame 7.29.7; app 7.29.0 | Independent Babel source excerpts and highlighting with VPM tokenizer, identifiers and colors. Corrects tab alignment and multiline marker widths. [Measurements](packages/vbabel-code-frame/bench/results/README.md). |
 | [vjs-tokens](packages/vjs-tokens) | js-tokens 4.0.0 | Tokenizes JavaScript for Babel build diagnostics, with parity checks for highlighted text and source locations through both installed code-frame versions. [Measurements](packages/vjs-tokens/bench/results/README.md). |
@@ -482,9 +483,9 @@ version-scoped integration aliases remain limited to their tested baselines.
 ## Current verification
 
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
-recorded by the tests. All 164 Node runtime packages' public declarations compile
+recorded by the tests. All 165 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **257 packages**, including two declaration-only packages and
+compiler in NodeNext and bundler resolution modes. The catalog covers **258 packages**, including two declaration-only packages and
 browser packages `vcss-box-model`, `vuse-sync-external-store`, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,

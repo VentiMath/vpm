@@ -157,3 +157,16 @@ Redoc or styled-components chains. It is built but not yet adopted.
 [vbuffer-builder](../packages/vbuffer-builder) writes the length headers on Sass packets. [vvarint](../packages/vvarint) encodes compilation IDs for the Sass compiler used to build the editor stylesheets. Its tests compile Sass with the unchanged app-pinned host.
 
 [vsource-map-js](../packages/vsource-map-js) supplies CSS source-map generation, lookup and composition for PostCSS and CSS Tree. Its comparison fixtures use the app pin 1.2.1 and current 1.2.4. App adoption is pending.
+
+[vsemver](../packages/vsemver) now independently supplies version and range checks
+for Babel’s compilation targets and plugin/helper gates. Installed Capacitor
+version warnings and jsonwebtoken runtime gates also match the app control.
+The target is semver 7.8.6, with caller checks against the app’s 7.5.4 and Babel’s
+6.3.2. Release incrementing, the CLI and range-analysis APIs outside these callers
+remain outside its documented scope. App adoption is separate.
+
+Next theme work is Material theme assembly: connect the verified palette,
+typography and transition factories to the app’s createTheme path and its custom
+mixins. The next independent build leaf is the LRU cache used by Babel’s target
+resolver; use a current API design while verifying Babel’s older caller, without
+retaining its linked-list dependency.

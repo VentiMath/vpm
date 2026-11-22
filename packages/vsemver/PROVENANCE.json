@@ -1,0 +1,29 @@
+{
+  "upstream": {
+    "name": "semver",
+    "version": "7.8.6",
+    "repository": "https://github.com/npm/node-semver",
+    "integrity": "sha512-9lpSSU4Mly3mrtruwLs1eLK6+gzbzqeBFwRNjIjE+9LuDpWdYctrQlQ3ej1Ilgi7gknpsTRnPoLP8DpCHqHIJw=="
+  },
+  "implementation": {
+    "kind": "independent",
+    "targetScope": "Version parsing, comparison, coercion and ranges used by Babel, Capacitor and the app build tools. Includes the SemVer, Comparator and Range data models and the documented root functions; release incrementing, minVersion, outside/subset/simplifyRange, regex internals, CLI and upstream internal module paths are outside this scope."
+  },
+  "testFixtures": {
+    "source": "npm/node-semver tag v7.8.6",
+    "files": [
+      "test/fixtures/range-parse.js",
+      "test/fixtures/range-include.js",
+      "test/fixtures/range-exclude.js",
+      "test/fixtures/range-intersection.js",
+      "test/fixtures/comparator-intersection.js",
+      "test/fixtures/valid-versions.js",
+      "test/fixtures/invalid-versions.js",
+      "test/fixtures/comparisons.js",
+      "test/fixtures/equality.js",
+      "test/functions/coerce.js",
+      "test/functions/diff.js"
+    ],
+    "format": "Serialized test inputs; upstream implementation is not distributed. ISC license retained in test/UPSTREAM-LICENSE."
+  }
+}

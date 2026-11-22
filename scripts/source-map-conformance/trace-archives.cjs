@@ -33,6 +33,7 @@ try {
     "vpicocolors",
     "vbabel-code-frame",
     "vbabel-helper-validator-option",
+    "vsemver",
   ]) {
     const [packed] = JSON.parse(
       run("npm", [
@@ -73,6 +74,9 @@ try {
     );
     // Resolve the actual exports map in a fresh installation on both runtimes.
     const imports = [
+      'import semver, { Range, satisfies } from "vsemver";',
+      'const semverCjs=createRequire(import.meta.url)("vsemver"); assert.equal(semver,semverCjs); assert.equal(Range,semverCjs.Range); assert.equal(satisfies,semverCjs.satisfies);',
+      'assert.equal(satisfies("24.22.1",">=24"),true);',
       'import tokens, { matchToToken } from "vjs-tokens";',
       'import { createRequire } from "node:module";',
       'import assert from "node:assert/strict";',
@@ -88,10 +92,18 @@ try {
       'assert.equal(OptionValidator,validatorCjs.OptionValidator); assert.equal(findSuggestion,validatorCjs.findSuggestion);',
       'assert.equal(findSuggestion("chorme",["chrome","node"]),"chrome");',
     ].join("\n");
+    const types=require("../platform-types.cjs");
+    const typeFiles=[];
+    for(const [source,ext] of [["types.ts","cts"],["types.mts","mts"]]){
+      const file=path.join(dir,"semver-types."+ext);
+      fs.writeFileSync(file,fs.readFileSync(path.join(__dirname,"../../packages/vsemver/test",source),"utf8").replace(/\.\.\/index\.[cm]js/g,"vsemver"));
+      typeFiles.push(file);
+    }
+    types.clean(types.compile({files:typeFiles,compilerOptions:{strict:true,noEmit:true,target:"ES2022",lib:["ES2022"],types:[],module:"NodeNext",moduleResolution:"NodeNext"}}));
     for (const runtime of ["node", "bun"])
       run(runtime, ["--input-type=module", "-e", imports], dir);
     for (const runtime of ["node", "bun"])
-      for (const caller of ["trace-caller.cjs", "convert-caller.cjs","jsesc-caller.cjs", "identifier-caller.cjs", "string-parser-caller.cjs", "gensync-caller.cjs", "tokens-caller.cjs", "code-frame-caller.cjs", "option-caller.cjs"])
+      for (const caller of ["trace-caller.cjs", "convert-caller.cjs","jsesc-caller.cjs", "identifier-caller.cjs", "string-parser-caller.cjs", "gensync-caller.cjs", "tokens-caller.cjs", "code-frame-caller.cjs", "option-caller.cjs", "semver-caller.cjs"])
         run(runtime, [path.join(__dirname, caller)], dir, {
           VPM_TRACE_INSTALL: path.join(dir, "node_modules"),
         });

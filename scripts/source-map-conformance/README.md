@@ -45,3 +45,20 @@ Run `node scripts/source-map-conformance/tokens-caller.cjs` or its Bun equivalen
 Run `node scripts/source-map-conformance/code-frame-caller.cjs` on Node or Bun to exercise Babel with the complete VPM formatter and its dependency closure. `code-frame-upstream.cjs` accepts the original Babel v7.29.7 test/index.js file. The package tests additionally cover colored tab alignment and differing middle-line widths in source ranges.
 
 Run `node scripts/source-map-conformance/option-caller.cjs` or its Bun equivalent for Babel’s target validation and build diagnostics with the VPM validator. Both compilation-targets 7.28.6 and 7.29.13 run unchanged. `option-upstream.cjs` accepts Babel v7.29.7’s validator.spec.js and find-suggestion.spec.js files.
+
+## Semantic versions
+
+`node semver-caller.cjs` and `bun semver-caller.cjs` stage unchanged Babel Core
+and current/app compilation-targets with semver 6.3.2, 7.5.4, 7.8.6 or vsemver.
+They compare target resolution, transforms, plugin version gates and helper
+availability. The archive gate repeats these checks from fresh npm and Bun
+installs and compiles CommonJS/ESM consumers.
+
+For the installed app’s additional callers:
+
+```sh
+VPM_APP_CHECKOUT=/path/to/ventimath-private node scripts/source-map-conformance/semver-app.cjs
+```
+
+This executes the unchanged Capacitor version-warning function with stubbed
+version lookups and the three jsonwebtoken runtime gates. It changes no app data.
