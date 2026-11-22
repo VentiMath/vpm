@@ -511,6 +511,10 @@
         "vtrace-mapping": "0.3.31",
       },
     },
+    "packages/vgensync": {
+      "name": "vgensync",
+      "version": "1.0.0-beta.2",
+    },
     "packages/vget-nonce": {
       "name": "vget-nonce",
       "version": "1.0.1",
@@ -2122,6 +2126,8 @@
     "vgcp-metadata": ["vgcp-metadata@workspace:packages/vgcp-metadata"],
 
     "vgen-mapping": ["vgen-mapping@workspace:packages/vgen-mapping"],
+
+    "vgensync": ["vgensync@workspace:packages/vgensync"],
 
     "vget-nonce": ["vget-nonce@workspace:packages/vget-nonce"],
 

@@ -1,0 +1,1592 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-22T04:22:50.216Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/source-map-conformance/gensync-fixture.cjs": "d99580cd431ccbae609b3f63dce50c8f89dbf1cd374922ac2e33add4fe42e41d",
+    "../../scripts/source-map-conformance/node_modules/gensync/index.js": "09e82a13eb50d14b42acdfd1db8fbde8f17e99527aa1bd5a489094e9a48a855a",
+    "../../scripts/source-map-conformance/package-lock.json": "52c4592280fde04cfcbe51d1199e4567dc84380977a8b19ac89688a4d58fd708",
+    "bench/compare.cjs": "bd36ee848fe17b1649171c6d6513efb99948c73255dc940fb86517d74f4dda67",
+    "index.cjs": "c1c65ac98fe686e66893da9de78fa70570ef6fb845001da8f009f60c4a0ed2c3"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 84514,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Delegated sync generator",
+            "iterations": 43853,
+            "samples": [
+              251.81002439969933,
+              269.64992132807356,
+              263.0245593231939,
+              262.59227418876685,
+              263.1043942261645,
+              270.227624107814,
+              275.2700157343853,
+              290.0276605933465,
+              279.38606252707893,
+              292.10184023897943,
+              267.7011834994177,
+              274.44815634050093
+            ]
+          },
+          {
+            "case": "Delegated async generator",
+            "iterations": 14778,
+            "samples": [
+              639.8447015834385,
+              633.9208959263817,
+              609.5913520097467,
+              667.326431181488,
+              625.3580322100408,
+              611.7877926647756,
+              665.8235891189643,
+              703.6529300311294,
+              735.14122344025,
+              610.874272567332,
+              657.8077547706065,
+              674.6373663553923
+            ]
+          },
+          {
+            "case": "Babel JSX file sync build",
+            "iterations": 105,
+            "samples": [
+              110412.69523809552,
+              103354.76190476323,
+              106090.87619047733,
+              104252.78095238008,
+              105086.90476190385,
+              86717.45714285689,
+              125128.97142857063,
+              91019.83809523733,
+              97039.28571428671,
+              99873.40952380863,
+              106116.66666666766,
+              83344.04761904763
+            ]
+          },
+          {
+            "case": "Babel JSX file async build",
+            "iterations": 90,
+            "samples": [
+              135381.94444444493,
+              147795.3666666685,
+              140714.82222222284,
+              133675.92222222255,
+              135543.52222222154,
+              133238.88888888987,
+              151825.46666666592,
+              135300.46666666697,
+              145256.94444444322,
+              131885.1888888907,
+              129612.95555555556,
+              153293.9777777781
+            ]
+          }
+        ],
+        "checksum": 86304
+      },
+      "vpm": {
+        "pid": 84540,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Delegated sync generator",
+            "iterations": 43853,
+            "samples": [
+              287.9772421499101,
+              277.9342348299998,
+              276.60784894990104,
+              277.86771714591964,
+              297.45207853510635,
+              283.318701115089,
+              282.60324265158664,
+              280.4929651335141,
+              282.30583996533977,
+              285.59238820605117,
+              273.2177274074755,
+              283.3861537409079
+            ]
+          },
+          {
+            "case": "Delegated async generator",
+            "iterations": 14778,
+            "samples": [
+              607.9137907700627,
+              622.9587224252211,
+              613.6515089998633,
+              613.2905670591441,
+              617.8046420354643,
+              647.121870347808,
+              604.4091216673439,
+              607.5585329543876,
+              621.4022871836521,
+              626.0855325483835,
+              606.9410610366771,
+              607.6967113276502
+            ]
+          },
+          {
+            "case": "Babel JSX file sync build",
+            "iterations": 105,
+            "samples": [
+              84942.06666666741,
+              106387.29523809617,
+              93757.9333333328,
+              102091.26666666722,
+              91316.26666666784,
+              102442.4666666662,
+              90443.25714285583,
+              126638.49523809447,
+              86407.93333333282,
+              98880.95238095179,
+              74991.66666666714,
+              87999.20952381051
+            ]
+          },
+          {
+            "case": "Babel JSX file async build",
+            "iterations": 90,
+            "samples": [
+              130554.16666666638,
+              116055.08888888937,
+              133205.5555555573,
+              138571.2999999997,
+              150252.77777777624,
+              126553.2444444438,
+              132492.58888888813,
+              121032.41111110998,
+              114539.82222222345,
+              127773.61111111278,
+              113771.30000000005,
+              131763.88888888748
+            ]
+          }
+        ],
+        "checksum": 7360
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 84541,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Delegated sync generator",
+            "iterations": 38514,
+            "samples": [
+              289.2519603261154,
+              276.87334475775043,
+              294.67206730020223,
+              276.1430908241154,
+              285.3291270706759,
+              280.669574700109,
+              290.08607259697743,
+              284.1390922781325,
+              279.4189645323769,
+              280.420756088696,
+              279.19392948018947,
+              315.9035156047159
+            ]
+          },
+          {
+            "case": "Delegated async generator",
+            "iterations": 14463,
+            "samples": [
+              613.2602502938478,
+              599.2388854317905,
+              609.281684297865,
+              624.7522643988118,
+              651.9509783585706,
+              610.8575675862548,
+              608.7487381594365,
+              641.2483578787225,
+              708.725091613078,
+              633.7205282444826,
+              667.1189241512841,
+              630.3095485030781
+            ]
+          },
+          {
+            "case": "Babel JSX file sync build",
+            "iterations": 98,
+            "samples": [
+              104926.44897959271,
+              155639.03061224456,
+              108407.31632653066,
+              88184.94897959147,
+              103255.10204081661,
+              89503.82653061261,
+              105900.93877550891,
+              81105.44897959346,
+              96852.46938775491,
+              97279.76530612346,
+              89691.7448979584,
+              95414.1122448994
+            ]
+          },
+          {
+            "case": "Babel JSX file async build",
+            "iterations": 70,
+            "samples": [
+              402025.6000000018,
+              179450.00000000035,
+              176330.95714285705,
+              144533.92857142913,
+              121073.21428571336,
+              115735.11428571562,
+              140664.285714284,
+              126447.0285714294,
+              123826.18571428534,
+              133920.2428571428,
+              153573.21428571467,
+              119169.04285714217
+            ]
+          }
+        ],
+        "checksum": 41365
+      },
+      "upstream": {
+        "pid": 84542,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Delegated sync generator",
+            "iterations": 38514,
+            "samples": [
+              258.00251856467725,
+              268.7117931141921,
+              255.19940800747742,
+              261.87664225995803,
+              260.32632289557034,
+              274.49867580620065,
+              257.4842914264937,
+              253.2315002336807,
+              251.99278184556357,
+              276.5682608921429,
+              276.70566547229697,
+              255.42444305966706
+            ]
+          },
+          {
+            "case": "Delegated async generator",
+            "iterations": 14463,
+            "samples": [
+              606.7205973864328,
+              602.2753923805618,
+              652.1814284726546,
+              576.2808545944814,
+              644.1436769688227,
+              639.2144091820505,
+              627.1779713752334,
+              654.4746594758998,
+              590.480882251261,
+              657.205697296552,
+              615.9942612182823,
+              622.9372191108276
+            ]
+          },
+          {
+            "case": "Babel JSX file sync build",
+            "iterations": 98,
+            "samples": [
+              102890.73469387784,
+              90368.6224489798,
+              109113.09183673472,
+              95235.11224489775,
+              112888.18367346935,
+              94755.1020408146,
+              124129.25510204092,
+              96566.74489795999,
+              119897.95918367348,
+              147875.84693877364,
+              118185.8061224505,
+              117688.34693877664
+            ]
+          },
+          {
+            "case": "Babel JSX file async build",
+            "iterations": 70,
+            "samples": [
+              138329.17142857306,
+              120846.42857142692,
+              128639.2857142833,
+              132354.75714285648,
+              144336.31428571517,
+              211332.74285714378,
+              130319.64285714172,
+              112101.7857142858,
+              163122.61428571286,
+              113536.3142857159,
+              124773.8142857153,
+              129506.55714285598
+            ]
+          }
+        ],
+        "checksum": 7744
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 84543,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Delegated sync generator",
+            "iterations": 44028,
+            "samples": [
+              251.61640319796447,
+              265.16176069773786,
+              258.37062778232024,
+              251.91923321522594,
+              254.5794721540834,
+              262.316026165167,
+              261.8910920323424,
+              269.3361724357218,
+              277.29322249477593,
+              273.2863177977645,
+              258.6034114654307,
+              263.6352548378314
+            ]
+          },
+          {
+            "case": "Delegated async generator",
+            "iterations": 18331,
+            "samples": [
+              623.386176422452,
+              628.6595384867161,
+              629.5165021002679,
+              636.9151710217672,
+              625.1954612405225,
+              652.2989471387234,
+              645.3184768970607,
+              641.9180622988347,
+              609.7775898750731,
+              609.9299001691104,
+              594.6302438492178,
+              604.263269870708
+            ]
+          },
+          {
+            "case": "Babel JSX file sync build",
+            "iterations": 111,
+            "samples": [
+              83689.18918918897,
+              106716.96396396222,
+              82270.64864864825,
+              97421.54954954884,
+              86325.4504504496,
+              102393.76576576613,
+              77634.00900900936,
+              134644.1441441445,
+              82102.47747747663,
+              94452.70270270247,
+              78586.71171171154,
+              95714.34234234206
+            ]
+          },
+          {
+            "case": "Babel JSX file async build",
+            "iterations": 52,
+            "samples": [
+              199103.3653846181,
+              117060.8846153851,
+              101885.42307692107,
+              124396.63461538413,
+              98125.78846153796,
+              97594.53846153904,
+              118740.38461538615,
+              126486.38461538352,
+              120130.61538461373,
+              105876.61538461536,
+              112395.019230768,
+              125224.36538461517
+            ]
+          }
+        ],
+        "checksum": 44768
+      },
+      "vpm": {
+        "pid": 84544,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Delegated sync generator",
+            "iterations": 44028,
+            "samples": [
+              326.438107567911,
+              272.5216453166166,
+              285.59003361497173,
+              288.7622649223217,
+              350.7408240210783,
+              320.3993140728626,
+              291.6174479876445,
+              287.4288407377126,
+              278.2547469791945,
+              273.9052421186521,
+              276.95820841282824,
+              276.4017670573274
+            ]
+          },
+          {
+            "case": "Delegated async generator",
+            "iterations": 18331,
+            "samples": [
+              626.1160329496506,
+              618.019584310733,
+              619.4742785445371,
+              619.0333315149184,
+              611.8551633844303,
+              600.1627298019739,
+              620.5289400469143,
+              610.0890295128464,
+              615.68976051498,
+              615.8965686541966,
+              615.703398614371,
+              611.7892095357577
+            ]
+          },
+          {
+            "case": "Babel JSX file sync build",
+            "iterations": 111,
+            "samples": [
+              127781.15315315337,
+              372157.65765765833,
+              158481.22522522506,
+              88185.05405405311,
+              98454.5765765774,
+              88300.29729729833,
+              88728.97297297428,
+              86553.30630630576,
+              95097.59459459569,
+              87824.70270270309,
+              119665.90990990889,
+              122516.51351351455
+            ]
+          },
+          {
+            "case": "Babel JSX file async build",
+            "iterations": 52,
+            "samples": [
+              146438.28846153786,
+              148728.3653846178,
+              158060.90384615326,
+              118295.67307692146,
+              122477.5576923076,
+              156244.40384615705,
+              146112.19230769516,
+              125579.3269230769,
+              116496.7884615355,
+              140156.2500000007,
+              123552.88461538714,
+              116654.63461538541
+            ]
+          }
+        ],
+        "checksum": 7352
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 84566,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Delegated sync generator",
+            "iterations": 44562,
+            "samples": [
+              322.82644405547285,
+              308.7832682554647,
+              316.1615726403665,
+              299.1066603832861,
+              291.9331493200481,
+              282.1882994479606,
+              291.64703110273325,
+              288.712916834972,
+              278.70627440420117,
+              291.1009829002286,
+              306.68226291459,
+              330.71150307436835
+            ]
+          },
+          {
+            "case": "Delegated async generator",
+            "iterations": 17444,
+            "samples": [
+              644.844473744558,
+              664.7772873194202,
+              636.7423182756271,
+              619.0523962393904,
+              625.666418252695,
+              639.8140334785625,
+              652.7650194909373,
+              638.2137124512749,
+              661.8249828021122,
+              617.2943705572143,
+              670.1659596422849,
+              651.1002063746856
+            ]
+          },
+          {
+            "case": "Babel JSX file sync build",
+            "iterations": 113,
+            "samples": [
+              105878.69026548573,
+              89430.30973451254,
+              97628.31858407013,
+              90421.08849557413,
+              107243.00000000026,
+              89939.89380530921,
+              99758.1061946889,
+              97718.29203539879,
+              90179.93805309743,
+              81868.36283185842,
+              95203.16814159419,
+              104622.42477876067
+            ]
+          },
+          {
+            "case": "Babel JSX file async build",
+            "iterations": 88,
+            "samples": [
+              109826.70454545355,
+              130113.15909090823,
+              117168.07954545577,
+              108790.72727272708,
+              138026.51136363795,
+              112648.68181818211,
+              120910.97727272882,
+              138800.1931818172,
+              130503.79545454535,
+              111072.92045454384,
+              205798.29545454492,
+              138351.79545454355
+            ]
+          }
+        ],
+        "checksum": 48999
+      },
+      "upstream": {
+        "pid": 84595,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Delegated sync generator",
+            "iterations": 44562,
+            "samples": [
+              257.8645258291819,
+              250.75270409766202,
+              258.0982675822449,
+              250.17299492841454,
+              252.22911898029778,
+              259.5316637493827,
+              250.28050805619182,
+              255.3315156411293,
+              253.73264216148246,
+              261.6074233651995,
+              261.85707553520973,
+              249.2856469637801
+            ]
+          },
+          {
+            "case": "Delegated async generator",
+            "iterations": 17444,
+            "samples": [
+              607.0926966292168,
+              583.290357716123,
+              606.4334441641819,
+              599.4181380417375,
+              597.2994725980303,
+              604.5416762210486,
+              597.2755675303805,
+              612.4192845677596,
+              611.470992891541,
+              611.5665558358197,
+              612.366716349457,
+              605.7336046778263
+            ]
+          },
+          {
+            "case": "Babel JSX file sync build",
+            "iterations": 113,
+            "samples": [
+              96386.42477876095,
+              109820.05309734427,
+              110848.823008849,
+              119449.84955752327,
+              108012.53097345144,
+              113533.92920353997,
+              100505.90265486829,
+              93658.92035398286,
+              107932.52212389371,
+              75804.20353982307,
+              99599.92920353939,
+              109043.87610619464
+            ]
+          },
+          {
+            "case": "Babel JSX file async build",
+            "iterations": 88,
+            "samples": [
+              111266.0909090912,
+              122130.20454545514,
+              99753.78409090881,
+              106607.011363637,
+              118000.47727272623,
+              113580.4886363613,
+              133368.85227272692,
+              110582.38636363688,
+              112379.72727272708,
+              145913.82954545328,
+              124237.68181818156,
+              121099.89772727141
+            ]
+          }
+        ],
+        "checksum": 7424
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 84596,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Delegated sync generator",
+            "iterations": 27858,
+            "samples": [
+              251.30274965898448,
+              255.70751669179435,
+              243.18267643046903,
+              262.6534568167136,
+              251.24140282863036,
+              257.26003302462516,
+              250.54591140785473,
+              260.9573551583024,
+              252.16426161246287,
+              244.88175748438465,
+              263.55086510158606,
+              267.49946155502903
+            ]
+          },
+          {
+            "case": "Delegated async generator",
+            "iterations": 19074,
+            "samples": [
+              601.5780643808343,
+              604.9312152668549,
+              599.5552060396362,
+              604.0028310789538,
+              600.8047604068357,
+              617.9768795218672,
+              593.0564118695609,
+              630.124777183601,
+              589.7731466918308,
+              587.7655971479512,
+              619.6436510433098,
+              593.0477089231457
+            ]
+          },
+          {
+            "case": "Babel JSX file sync build",
+            "iterations": 88,
+            "samples": [
+              75983.43181818217,
+              96110.79545454454,
+              84855.11363636404,
+              99751.88636363571,
+              84792.61363636293,
+              89841.38636363587,
+              130251.42045454563,
+              79220.17045454636,
+              102393.94318181834,
+              76848.01136363587,
+              87579.54545454538,
+              103022.25000000157
+            ]
+          },
+          {
+            "case": "Babel JSX file async build",
+            "iterations": 87,
+            "samples": [
+              110001.43678161138,
+              151845.31034482794,
+              111237.06896551765,
+              132090.0344827591,
+              105829.50574712674,
+              113224.62068965408,
+              124087.6436781606,
+              105080.93103448088,
+              126870.20689655247,
+              110370.2183908061,
+              105573.27586207066,
+              124209.2873563215
+            ]
+          }
+        ],
+        "checksum": 46688
+      },
+      "vpm": {
+        "pid": 84597,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Delegated sync generator",
+            "iterations": 27858,
+            "samples": [
+              305.11730921099837,
+              269.5410654031164,
+              272.1704716777942,
+              271.35081484672276,
+              271.8084930720085,
+              265.0525522291625,
+              262.7088089597246,
+              269.7145523727478,
+              286.11468877880696,
+              275.00628185799303,
+              279.2390695670904,
+              281.1310934022543
+            ]
+          },
+          {
+            "case": "Delegated async generator",
+            "iterations": 19074,
+            "samples": [
+              640.7806438083242,
+              674.515518506867,
+              624.012635000525,
+              687.6900492817488,
+              643.1464296948734,
+              678.4366152878287,
+              626.6864317919652,
+              682.4298521547647,
+              642.8362168396802,
+              658.4421201635731,
+              646.8206983328075,
+              647.6136625773294
+            ]
+          },
+          {
+            "case": "Babel JSX file sync build",
+            "iterations": 88,
+            "samples": [
+              95461.17045454397,
+              129828.60227272785,
+              103158.61363636196,
+              88053.5000000009,
+              111583.32954545357,
+              143079.54545454425,
+              88896.30681818,
+              94592.32954545562,
+              91469.22727272639,
+              109788.81818181984,
+              155650.5681818201,
+              83829.07954545646
+            ]
+          },
+          {
+            "case": "Babel JSX file async build",
+            "iterations": 87,
+            "samples": [
+              167163.31034482818,
+              176784.95402298783,
+              176431.99999999796,
+              179443.49425287347,
+              198071.36781609207,
+              221955.4597701146,
+              203714.0804597699,
+              195269.63218390848,
+              132081.89655172426,
+              124162.82758620623,
+              178217.43678160894,
+              154280.1724137943
+            ]
+          }
+        ],
+        "checksum": 7552
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 84617,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Delegated sync generator",
+            "iterations": 43254,
+            "samples": [
+              300.89510796689314,
+              328.7692005363667,
+              281.18305821426935,
+              318.26536274101846,
+              277.6891385767791,
+              278.55900032366935,
+              285.2231238729366,
+              276.00337541036623,
+              286.75285522726233,
+              285.61231331206403,
+              282.0105192583344,
+              272.8302584732045
+            ]
+          },
+          {
+            "case": "Delegated async generator",
+            "iterations": 14156,
+            "samples": [
+              677.8574456061082,
+              679.1996326645916,
+              673.5394885560897,
+              667.4672223791954,
+              677.9928652161628,
+              771.6869172082573,
+              705.1455919751329,
+              658.8725628708673,
+              608.7936564001179,
+              625.7858858434558,
+              660.3530658378116,
+              630.6749081661538
+            ]
+          },
+          {
+            "case": "Babel JSX file sync build",
+            "iterations": 110,
+            "samples": [
+              93079.92727272614,
+              145599.24545454702,
+              84064.01818181785,
+              118834.09090909151,
+              87372.3545454554,
+              121978.79090909036,
+              81200.75454545589,
+              104573.86363636322,
+              96208.70909090876,
+              115750.37272727348,
+              81852.65454545432,
+              103362.8818181817
+            ]
+          },
+          {
+            "case": "Babel JSX file async build",
+            "iterations": 64,
+            "samples": [
+              194826.1718750004,
+              117213.54687499996,
+              126457.03124999841,
+              123107.42187500167,
+              125214.18749999924,
+              141203.7812499989,
+              135029.95312499878,
+              106199.87499999795,
+              112570.96874999917,
+              212332.68750000178,
+              106660.7968750013,
+              118993.49999999841
+            ]
+          }
+        ],
+        "checksum": 46124
+      },
+      "upstream": {
+        "pid": 84619,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Delegated sync generator",
+            "iterations": 43254,
+            "samples": [
+              258.99049798862507,
+              263.6885374763029,
+              307.32995792296737,
+              265.1305775188411,
+              254.92826097008444,
+              254.4051879594957,
+              260.1551301613735,
+              265.4301798677587,
+              251.4440051787123,
+              269.6340222869552,
+              229.86024413926967,
+              292.29666620428105
+            ]
+          },
+          {
+            "case": "Delegated async generator",
+            "iterations": 14156,
+            "samples": [
+              598.1562588301761,
+              592.6667844023698,
+              626.8219836111891,
+              595.9487143260789,
+              614.0417490816594,
+              597.8678298954543,
+              612.558279174909,
+              608.749576151459,
+              607.8488273523566,
+              647.3226900254309,
+              616.6819723085594,
+              617.7033060186463
+            ]
+          },
+          {
+            "case": "Babel JSX file sync build",
+            "iterations": 110,
+            "samples": [
+              99468.55454545481,
+              93367.80909090975,
+              101864.01818181862,
+              93371.20909090944,
+              92995.45454545379,
+              84036.36363636493,
+              102163.26363636406,
+              82046.97272727283,
+              88278.79090909143,
+              81154.54545454461,
+              100401.89090909115,
+              92807.95454545486
+            ]
+          },
+          {
+            "case": "Babel JSX file async build",
+            "iterations": 64,
+            "samples": [
+              174885.42187500044,
+              195852.21874999802,
+              125787.76562499882,
+              131186.85937499919,
+              128548.1718749999,
+              123042.31249999731,
+              126756.5000000026,
+              102293.6250000015,
+              123169.9218750002,
+              123506.51562499948,
+              117985.03125000081,
+              103216.79687499952
+            ]
+          }
+        ],
+        "checksum": 7680
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "Delegated sync generator",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 269.9387727179438,
+          "vpmNs": 282.4545413084632,
+          "changePct": 4.636521261655524
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 259.16442073012377,
+          "vpmNs": 282.40433348912075,
+          "changePct": 8.967246620321179
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 262.10355909875466,
+          "vpmNs": 286.5094371763422,
+          "changePct": 9.311540126165152
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 254.53207890130588,
+          "vpmNs": 295.5199048516671,
+          "changePct": 16.10320637276299
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 253.9358891521286,
+          "vpmNs": 271.98948237490134,
+          "changePct": 7.10950834206705
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 261.9218338188382,
+          "vpmNs": 283.6168215656355,
+          "changePct": 8.283000859639266
+        }
+      ]
+    },
+    {
+      "case": "Delegated async generator",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 648.8262281770225,
+          "vpmNs": 613.4710380295037,
+          "changePct": -5.449100022798814
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 625.0575952430305,
+          "vpmNs": 627.5309064509449,
+          "changePct": 0.3956933291807685
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 626.9274998636192,
+          "vpmNs": 615.7999836342838,
+          "changePct": -1.7749287169180006
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 606.0835244210041,
+          "vpmNs": 642.3292536115603,
+          "changePct": 5.980319168910264
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 601.191412393835,
+          "vpmNs": 647.2171804550685,
+          "changePct": 7.65575939915164
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 610.653927663184,
+          "vpmNs": 670.5033554676426,
+          "changePct": 9.800874946221484
+        }
+      ]
+    },
+    {
+      "case": "Babel JSX file sync build",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 103803.77142857166,
+          "vpmNs": 92537.10000000033,
+          "changePct": -10.853817037200852
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 111000.63775510204,
+          "vpmNs": 97066.1173469392,
+          "changePct": -12.553549862394696
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 90389.07657657604,
+          "vpmNs": 96776.08558558655,
+          "changePct": 7.0661292834422795
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 107972.52654867258,
+          "vpmNs": 96415.74336283216,
+          "changePct": -10.703447955930512
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 88710.46590909062,
+          "vpmNs": 99309.89204545296,
+          "changePct": 11.9483378063018
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 93181.63181818178,
+          "vpmNs": 99785.79545454524,
+          "changePct": 7.087409296769631
+        }
+      ]
+    },
+    {
+      "case": "Babel JSX file async build",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 135462.73333333322,
+          "vpmNs": 129163.88888888957,
+          "changePct": -4.649872543870847
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 129913.09999999884,
+          "vpmNs": 137292.26428571338,
+          "changePct": 5.68007713287928
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 117900.63461538563,
+          "vpmNs": 132867.7884615388,
+          "changePct": 12.69471864589946
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 115790.48295454377,
+          "vpmNs": 125512.06818181853,
+          "changePct": 8.395841332738186
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 112230.84482758587,
+          "vpmNs": 177501.19540229838,
+          "changePct": 58.15723001549511
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 124647.14062499916,
+          "vpmNs": 124160.80468750047,
+          "changePct": -0.3901701515655609
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "Delegated sync generator",
+      "upstream_ns": 261,
+      "vpm_ns": 284,
+      "change_pct": 9.1,
+      "upstream_first_pct": 7,
+      "vpm_first_pct": 12.5,
+      "process_range_pct": "4.6, 9.0, 9.3, 16.1",
+      "control_max_abs_pct": 8.3,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "Delegated async generator",
+      "upstream_ns": 626,
+      "vpm_ns": 622,
+      "change_pct": -0.7,
+      "upstream_first_pct": -3.6,
+      "vpm_first_pct": 3.2,
+      "process_range_pct": "-5.4, 0.4, -1.8, 6.0",
+      "control_max_abs_pct": 9.8,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "Babel JSX file sync build",
+      "upstream_ns": 105888,
+      "vpm_ns": 96596,
+      "change_pct": -10.8,
+      "upstream_first_pct": -1.9,
+      "vpm_first_pct": -11.6,
+      "process_range_pct": "-10.9, -12.6, 7.1, -10.7",
+      "control_max_abs_pct": 11.9,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "Babel JSX file async build",
+      "upstream_ns": 123907,
+      "vpm_ns": 131016,
+      "change_pct": 7,
+      "upstream_first_pct": 4,
+      "vpm_first_pct": 7,
+      "process_range_pct": "-4.6, 5.7, 12.7, 8.4",
+      "control_max_abs_pct": 58.2,
+      "evidence": "unestablished at this precision"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "upstream": {
+    "name": "gensync",
+    "version": "1.0.0-beta.2",
+    "repository": "https://github.com/loganfsmyth/gensync",
+    "integrity": "sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg=="
+  },
+  "implementation": {
+    "kind": "independent",
+    "targetScope": "Babel Core configuration, transformation and file APIs, the shared gensync v1 generator protocol and all/race combinators."
+  }
+}

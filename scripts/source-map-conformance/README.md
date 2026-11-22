@@ -37,3 +37,5 @@ The jsesc fixture runs Babel generator 7.29.1 in isolated processes against both
 Run `node identifier-caller.cjs` or `bun identifier-caller.cjs` to exercise Babel Types against the app and current controls and the VPM candidate. The archive checks repeat this with clean consumer installs. To regenerate the identifier tables, download the [Unicode 17.0.0 core properties](https://www.unicode.org/Public/17.0.0/ucd/DerivedCoreProperties.txt) and pass the local filename to `node build-identifier-tables.cjs`. The generator verifies the SHA-256 digest.
 
 The string-parser fixture runs unchanged Babel Types 7.29.0, 7.29.7 and 7.29.15 template builders with their respective control and the VPM helper. The archive checks repeat these comparisons after npm and Bun installs.
+
+The gensync fixture runs Babel Core 7.29.0 against each runner in a fresh process. It compares config discovery, sync/async/callback JSX and source-map output, async plugin handling and file errors. The published gensync test suite runs with `bun test scripts/source-map-conformance/gensync-upstream.test.cjs`.
