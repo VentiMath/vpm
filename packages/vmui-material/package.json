@@ -2017,6 +2017,16 @@
         "types": "./listItemClasses.d.cts",
         "default": "./listItemClasses.cjs"
       }
+    },
+    "./CssBaseline": {
+      "import": {
+        "types": "./CssBaseline.d.mts",
+        "default": "./CssBaseline.mjs"
+      },
+      "require": {
+        "types": "./CssBaseline.d.cts",
+        "default": "./CssBaseline.cjs"
+      }
     }
   },
   "files": [

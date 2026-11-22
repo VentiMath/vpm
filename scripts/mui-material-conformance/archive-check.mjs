@@ -207,3 +207,6 @@ assert.equal(require("vmui-material/stepContentClasses").getStepContentUtilityCl
 
 assert.equal(api.ListItem,(await import("vmui-material/ListItem")).default);
 assert.equal(require("vmui-material/listItemClasses").default.root,api.listItemClasses.root);
+
+assert.equal(api.CssBaseline, (await import("vmui-material/CssBaseline")).default);
+assert.equal(api.CssBaseline, require("vmui-material/CssBaseline").default);

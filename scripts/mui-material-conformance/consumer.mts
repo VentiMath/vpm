@@ -610,3 +610,6 @@ React.createElement(CourseContent,{transitionDuration:"immediate"});
 
 import QuickRow from "vmui-material/ListItem";
 React.createElement(QuickRow, { dense:true, secondaryAction:"switch", alignItems:"flex-start" });
+
+import CssBaseline from "vmui-material/CssBaseline";
+React.createElement(CssBaseline, {enableColorScheme:true}, "Document");

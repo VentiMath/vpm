@@ -1077,3 +1077,6 @@ export type ListItemProps<C extends React.ElementType='li'>=ListItemOwnProps&Omi
 export const ListItem:<C extends React.ElementType='li'>(props:ListItemProps<C>)=>React.ReactElement|null;
 export const listItemClasses:Readonly<Record<ListItemClassKey,string>>;
 export function getListItemUtilityClass(slot:string):string;
+
+export interface CssBaselineProps { children?: React.ReactNode; enableColorScheme?: boolean; classes?: Partial<Record<never,string>> }
+export function CssBaseline(props: CssBaselineProps): React.ReactElement;
