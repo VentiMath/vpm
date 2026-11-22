@@ -2037,6 +2037,16 @@
         "types": "./styles/createPalette.d.cts",
         "default": "./styles/createPalette.cjs"
       }
+    },
+    "./styles/createTypography": {
+      "import": {
+        "types": "./styles/createTypography.d.mts",
+        "default": "./styles/createTypography.mjs"
+      },
+      "require": {
+        "types": "./styles/createTypography.d.cts",
+        "default": "./styles/createTypography.cjs"
+      }
     }
   },
   "files": [

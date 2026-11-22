@@ -221,3 +221,7 @@ for (const name of ["alpha", "darken", "decomposeColor", "emphasize", "getContra
 const paletteModule = await import("vmui-material/styles/createPalette");
 assert.equal(paletteModule.default, require("vmui-material/styles/createPalette").default);
 assert.equal(paletteModule.default({mode:"dark"}).background.paper, "#121212");
+
+const typographyModule = await import("vmui-material/styles/createTypography");
+assert.equal(typographyModule.default, require("vmui-material/styles/createTypography").default);
+assert.equal(typographyModule.default(paletteModule.default(),{}).pxToRem(16),"1rem");

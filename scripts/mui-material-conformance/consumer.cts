@@ -564,3 +564,9 @@ const paletteOptions: PaletteOptions = {mode:"dark",primary:{main:"#59a"},tonalO
 const readable: string = createPalette(paletteOptions).getContrastText("#eee");
 // @ts-expect-error Main colors must be strings.
 createPalette({primary:{main:123}});
+
+import createTypography from "vmui-material/styles/createTypography";
+const typeScale=createTypography(createPalette(),p=>({h1:{color:p.primary.main},fontSize:13,body1:{"@media (min-width:600px)":{fontSize:"1rem"}}}));
+const rem: string=typeScale.pxToRem(16);
+// @ts-expect-error Font size is numeric.
+createTypography(createPalette(),{fontSize:"13px"});

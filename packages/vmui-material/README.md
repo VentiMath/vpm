@@ -1233,3 +1233,11 @@ At app commit `aa110e55`, the unchanged palette contrast function produced the s
 All 37 VentiMath presets at `aa110e55` match the app’s Material palette before and after the unchanged readability pass. Synthetic cases compare Material 7.2.0 and 9.5.0. Current native color mixing is also supported through `colorSpace`. Explicit zero light/dark offsets retain the original shade. Invalid modes and missing main colors throw descriptive errors.
 
 This is the palette stage of the theme factory. The complete Material `createTheme` entry remains pending. The app integration check supplies VPM-created palettes to the existing contrast logic. [Measurements](bench/palette/README.md).
+
+## Typography creation
+
+`vmui-material/styles/createTypography` resolves the type scale from palette and typography options. It supports font weights/family, base and HTML font sizes, `pxToRem`, palette callbacks, all-variant settings, named variants and nested responsive overrides. Nested input objects and variant overrides remain independently mutable.
+
+The actual VentiMath settings at `aa110e55` match Material 7.2.0 and 9.5.0, including the Geist-first font stack, 13px base and explicit body sizes. All 14 variants render equivalently through the app’s Typography consumer. Both module formats and packed installs are checked. The complete Material theme factory remains pending.
+
+[Measurements](bench/typography/README.md) include the app setup and synthetic responsive overrides. The app scale is faster on Bun and slower on Node. Isolating nested responsive settings adds overhead in both runtimes.
