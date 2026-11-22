@@ -30,6 +30,8 @@ try {
     "vbabel-helper-string-parser",
     "vgensync",
     "vjs-tokens",
+    "vpicocolors",
+    "vbabel-code-frame",
   ]) {
     const [packed] = JSON.parse(
       run("npm", [
@@ -54,6 +56,9 @@ try {
           "vtrace-mapping": dependencies["vtrace-mapping"],
           "vresolve-uri": dependencies["vresolve-uri"],
           "vsourcemap-codec": dependencies["vsourcemap-codec"],
+          "vjs-tokens": dependencies["vjs-tokens"],
+          "vpicocolors": dependencies["vpicocolors"],
+          "vbabel-helper-validator-identifier": dependencies["vbabel-helper-validator-identifier"],
         },
       }),
     );
@@ -73,11 +78,15 @@ try {
       'const cjs = createRequire(import.meta.url)("vjs-tokens");',
       'assert.equal(tokens, cjs.default); assert.equal(matchToToken, cjs.matchToToken);',
       'assert.equal(matchToToken(tokens.exec("const")).type, "name");',
+      'import frame, { codeFrameColumns } from "vbabel-code-frame";',
+      'const cjsFrame = createRequire(import.meta.url)("vbabel-code-frame");',
+      'assert.equal(frame, cjsFrame.default); assert.equal(codeFrameColumns, cjsFrame.codeFrameColumns);',
+      'assert.ok(codeFrameColumns("x", {start:{line:1,column:1}}).includes("^"));',
     ].join("\n");
     for (const runtime of ["node", "bun"])
       run(runtime, ["--input-type=module", "-e", imports], dir);
     for (const runtime of ["node", "bun"])
-      for (const caller of ["trace-caller.cjs", "convert-caller.cjs","jsesc-caller.cjs", "identifier-caller.cjs", "string-parser-caller.cjs", "gensync-caller.cjs", "tokens-caller.cjs"])
+      for (const caller of ["trace-caller.cjs", "convert-caller.cjs","jsesc-caller.cjs", "identifier-caller.cjs", "string-parser-caller.cjs", "gensync-caller.cjs", "tokens-caller.cjs", "code-frame-caller.cjs"])
         run(runtime, [path.join(__dirname, caller)], dir, {
           VPM_TRACE_INSTALL: path.join(dir, "node_modules"),
         });

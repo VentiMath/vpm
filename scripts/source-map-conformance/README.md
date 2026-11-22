@@ -41,3 +41,5 @@ The string-parser fixture runs unchanged Babel Types 7.29.0, 7.29.7 and 7.29.15 
 The gensync fixture runs Babel Core 7.29.0 against each runner in a fresh process. It compares config discovery, sync/async/callback JSX and source-map output, async plugin handling and file errors. The published gensync test suite runs with `bun test scripts/source-map-conformance/gensync-upstream.test.cjs`.
 
 Run `node scripts/source-map-conformance/tokens-caller.cjs` or its Bun equivalent for highlighted Babel errors in JSX and TypeScript. The fixture loads each unchanged code-frame with its tokenizer resolved to the selected implementation. To run the original 694 tokenizer cases, pass a checkout of js-tokens v4.0.0 to `node scripts/source-map-conformance/tokens-upstream.cjs`.
+
+Run `node scripts/source-map-conformance/code-frame-caller.cjs` on Node or Bun to exercise Babel with the complete VPM formatter and its dependency closure. `code-frame-upstream.cjs` accepts the original Babel v7.29.7 test/index.js file. The package tests additionally cover colored tab alignment and differing middle-line widths in source ranges.

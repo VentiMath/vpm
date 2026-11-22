@@ -1,0 +1,12 @@
+{
+  "upstream": {
+    "name": "@babel/code-frame",
+    "version": "7.29.7",
+    "repository": "https://github.com/babel/babel",
+    "integrity": "sha512-Aup7aUOfpbAUg2ROOJN6Iw5f9DMBlzu0mIkm/malLQFN/YQgO48wCj0Kxa3sEHJvPVFg7siR+qRInwXd2qhQKw=="
+  },
+  "implementation": {
+    "kind": "independent",
+    "targetScope": "Babel 7 build diagnostics, codeFrameColumns, highlight and the legacy frame entry."
+  }
+}

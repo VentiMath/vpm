@@ -40,6 +40,15 @@
       "name": "vautosuggest-highlight",
       "version": "3.3.4",
     },
+    "packages/vbabel-code-frame": {
+      "name": "vbabel-code-frame",
+      "version": "7.29.7",
+      "dependencies": {
+        "vbabel-helper-validator-identifier": "7.29.7",
+        "vjs-tokens": "4.0.0",
+        "vpicocolors": "1.1.1",
+      },
+    },
     "packages/vbabel-helper-string-parser": {
       "name": "vbabel-helper-string-parser",
       "version": "7.29.15",
@@ -1994,6 +2003,8 @@
     "vasync-retry": ["vasync-retry@workspace:packages/vasync-retry"],
 
     "vautosuggest-highlight": ["vautosuggest-highlight@workspace:packages/vautosuggest-highlight"],
+
+    "vbabel-code-frame": ["vbabel-code-frame@workspace:packages/vbabel-code-frame"],
 
     "vbabel-helper-string-parser": ["vbabel-helper-string-parser@workspace:packages/vbabel-helper-string-parser"],
 

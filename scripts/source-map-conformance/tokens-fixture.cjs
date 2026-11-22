@@ -14,12 +14,27 @@ module.exports = function stageDiagnostics(
   try {
     fs.mkdirSync(scope, { recursive: true });
     const frame = path.join(scope, "code-frame");
-    fs.cpSync(path.join(modules, version), frame, { recursive: true });
+    const source = path.isAbsolute(version)
+      ? version
+      : path.join(modules, version);
+    fs.cpSync(source, frame, { recursive: true });
+    if (path.isAbsolute(version)) {
+      for (const name of Object.keys(
+        require(path.join(source, "package.json")).dependencies,
+      ))
+        fs.symlinkSync(
+          require
+            .resolve(name + "/package.json", { paths: [source] })
+            .replace(/\/package\.json$/, ""),
+          path.join(dir, "node_modules", name),
+        );
+    }
     fs.symlinkSync(tokens, path.join(dir, "node_modules/js-tokens"));
-    assert.equal(
-      createRequire(path.join(frame, "package.json")).resolve("js-tokens"),
-      require.resolve(tokens),
-    );
+    if (!path.isAbsolute(version))
+      assert.equal(
+        createRequire(path.join(frame, "package.json")).resolve("js-tokens"),
+        require.resolve(tokens),
+      );
     const api = {
       frame: require(frame),
       close: () => fs.rmSync(dir, { recursive: true, force: true }),
