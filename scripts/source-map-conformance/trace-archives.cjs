@@ -25,6 +25,7 @@ try {
     "vgen-mapping",
     "vremapping",
     "vconvert-source-map",
+    "vjsesc",
   ]) {
     const [packed] = JSON.parse(
       run("npm", [
@@ -61,7 +62,7 @@ try {
       dir,
     );
     for (const runtime of ["node", "bun"])
-      for (const caller of ["trace-caller.cjs", "convert-caller.cjs"])
+      for (const caller of ["trace-caller.cjs", "convert-caller.cjs","jsesc-caller.cjs"])
         run(runtime, [path.join(__dirname, caller)], dir, {
           VPM_TRACE_INSTALL: path.join(dir, "node_modules"),
         });

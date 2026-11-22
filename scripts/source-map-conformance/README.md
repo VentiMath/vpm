@@ -29,3 +29,5 @@ The complete-stack comparison also runs Babel core 7.29.0’s unchanged merge-ma
 The upstream public composition tests run with `node trace-upstream.cjs /path/to/remapping.test.ts` or Bun, using the `remapping/2.3.5` tag with its sibling `samples` directory. Four concatenation, Rollup and minification fixture maps are compared byte for byte.
 
 The converter fixture copies Babel core into an isolated module tree and switches only the converter between runs. Run `node convert-caller.cjs` or `bun convert-caller.cjs`; `trace-archives.cjs` repeats both calls from fresh and frozen installs.
+
+The jsesc fixture runs Babel generator 7.29.1 in isolated processes against both literal printers, reparses the generated JavaScript, and compares generated code and maps. Run `node jsesc-caller.cjs` or `bun jsesc-caller.cjs`. The archive check repeats the comparison with the packed package.
