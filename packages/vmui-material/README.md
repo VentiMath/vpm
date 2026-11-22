@@ -1219,3 +1219,9 @@ ListItem provides the semantic list rows for events and notes and positions each
 ## App theme baseline
 
 CssBaseline styles the document through GlobalStyles in the active Emotion cache. It follows the Material theme for typography, background, bold text, print and fullscreen. The optional color scheme follows either the palette mode or the theme’s CSS-variable selectors. The app mounts it above the page contents in the `mui` cascade layer. [Baseline measurements](bench/css-baseline/README.md).
+
+## Theme color helpers
+
+Import `alpha`, `darken`, `decomposeColor`, `emphasize`, `getContrastRatio`, `getLuminance`, `hexToRgb`, `hslToRgb`, `lighten`, `recomposeColor` and `rgbToHex` from `vmui-material/styles`. They share the implementation and declarations in VPM System.
+
+At app commit `aa110e55`, the unchanged palette contrast function produced the same six roles and secondary text as Material 7.2.0 for all 37 presets and a custom translucent-text case. The checks cover both page backgrounds, button fills in normal and dark states, preservation of light shades, and the app’s 4.5 threshold. Theme construction in this comparison uses the app’s Material control. [Measurements](bench/colors/README.md).

@@ -42,7 +42,7 @@ TableSortLabel and numbered Pagination now cover the adopted table’s sorting a
 paging controls; browser acceptance mounts its existing pagination caller.
 Remaining indirect consumers still matter for a complete package override.
 
-CssBaseline applies the document defaults through the root theme’s LTR or RTL cache. ListItem renders event, note and settings rows in the toolbar quick panel. StepContent displays all Academy course subtitles and preserves them when the learner selects a new step. Stepper, Step and StepLabel track the current page of WARML registration across its three- and six-step layouts. Slider applies the toolbar’s seven font sizes on keyboard selection and pointer release. Popper anchors the suggestions and empty-results panel for both toolbar search layouts. Grow handles the horizontal navigation group and nested menu transitions, including their automatic height-based timing. ClickAwayListener covers the toolbar search and style-2 sidebar. Document listeners follow the child into an iframe and exclude React portals by default.
+Material styles exposes the color helpers used by the theme picker. Its six palette roles and secondary text match the app control across all 37 presets. CssBaseline applies the document defaults through the root theme’s LTR or RTL cache. ListItem renders event, note and settings rows in the toolbar quick panel. StepContent displays all Academy course subtitles and preserves them when the learner selects a new step. Stepper, Step and StepLabel track the current page of WARML registration across its three- and six-step layouts. Slider applies the toolbar’s seven font sizes on keyboard selection and pointer release. Popper anchors the suggestions and empty-results panel for both toolbar search layouts. Grow handles the horizontal navigation group and nested menu transitions, including their automatic height-based timing. ClickAwayListener covers the toolbar search and style-2 sidebar. Document listeners follow the child into an iframe and exclude React portals by default.
 
 GlobalStyles covers all seven app imports on `aa110e55`, including shared navigation, sticky page layouts and the iframe preview. Babel’s generator, gen-mapping and remapping pass source-map composition checks using the VPM tracer, resolver and codec. Babel core’s source-map merger now also passes with the complete VPM generation, tracing and [remapping](../packages/vremapping) stack. These build packages are available in the workspace.
 
@@ -140,7 +140,7 @@ current app need or adoption.
 
 The previously suggested `url-template` leaf served Redoc's OpenAPI parameter
 serialization. It is no longer next in line without another verified app caller.
-Tab and Tabs are the next Material unit. Both IMOView and the learner selector on FamilyGrowthPage import them.
+Tab and Tabs support IMOView and the learner selector on FamilyGrowthPage.
 
 ## Build diagnostics
 

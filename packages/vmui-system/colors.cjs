@@ -64,20 +64,15 @@ function hslToRgb(color) {
 		[h, s0, l0, a] = values,
 		s = s0 / 100,
 		l = l0 / 100;
-	const c = (1 - Math.abs(2 * l - 1)) * s,
-		x = c * (1 - Math.abs(((h / 60) % 2) - 1)),
-		m = l - c / 2;
-	const sectors = [
-		[c, x, 0],
-		[x, c, 0],
-		[0, c, x],
-		[0, x, c],
-		[x, 0, c],
-		[c, 0, x],
-	];
-	const rgb = sectors[((Math.floor(h / 60) % 6) + 6) % 6].map((v) =>
-		Math.round((v + m) * 255),
-	);
+	// CSS Color's hue waveform preserves half-channel ties before integer rounding.
+	const amplitude = s * Math.min(l, 1 - l);
+	const hue = h < 0 ? (h % 360 + 360) % 360 : h;
+	const channel = (phase) => {
+		const position = (hue / 30 + phase) % 12;
+		const triangle = Math.max(-1, Math.min(1, position - 3, 9 - position));
+		return Math.round(255 * (l - amplitude * triangle));
+	};
+	const rgb = [channel(0), channel(8), channel(4)];
 	if (a !== undefined) rgb.push(a);
 	return recomposeColor({
 		type: type === "hsla" ? "rgba" : "rgb",

@@ -554,3 +554,7 @@ React.createElement(QuickRow, { dense:true, secondaryAction:"switch", alignItems
 
 import CssBaseline from "vmui-material/CssBaseline";
 React.createElement(CssBaseline, {enableColorScheme:true}, "Document");
+
+import { decomposeColor, getContrastRatio, hslToRgb, lighten } from "vmui-material/styles";
+const channels: number[] = decomposeColor(hslToRgb("hsl(40,100%,75%)")).values;
+const contrast: number = getContrastRatio(lighten("#123", 0.2), "#fff");

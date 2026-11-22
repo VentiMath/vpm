@@ -210,3 +210,10 @@ assert.equal(require("vmui-material/listItemClasses").default.root,api.listItemC
 
 assert.equal(api.CssBaseline, (await import("vmui-material/CssBaseline")).default);
 assert.equal(api.CssBaseline, require("vmui-material/CssBaseline").default);
+
+const esmColors = await import("vmui-material/styles");
+const cjsColors = require("vmui-material/styles");
+for (const name of ["alpha", "darken", "decomposeColor", "emphasize", "getContrastRatio", "getLuminance", "hexToRgb", "hslToRgb", "lighten", "recomposeColor", "rgbToHex"]) {
+  assert.equal(esmColors[name], require("vmui-system/colorManipulator")[name]);
+  assert.equal(cjsColors[name], esmColors[name]);
+}

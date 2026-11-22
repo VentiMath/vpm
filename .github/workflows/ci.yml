@@ -128,6 +128,7 @@ jobs:
           node scripts/mui-material-conformance/step-content-contract.cjs
           node scripts/mui-material-conformance/list-item-contract.cjs
           node scripts/mui-material-conformance/css-baseline-contract.cjs
+          node scripts/mui-material-conformance/colors-contract.cjs
           node scripts/mui-material-conformance/autocomplete-contract.cjs
           node scripts/mui-material-conformance/lists-contract.cjs
           node scripts/mui-material-conformance/types.cjs
@@ -1246,6 +1247,7 @@ jobs:
           bun scripts/mui-material-conformance/step-content-contract.cjs
           bun scripts/mui-material-conformance/list-item-contract.cjs
           bun scripts/mui-material-conformance/css-baseline-contract.cjs
+          bun scripts/mui-material-conformance/colors-contract.cjs
           bun scripts/mui-material-conformance/lists-contract.cjs
           bun test packages/vmui-system/test/system.test.cjs
           bun scripts/mui-system-conformance/primitives.cjs
