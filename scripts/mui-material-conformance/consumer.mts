@@ -617,3 +617,9 @@ React.createElement(CssBaseline, {enableColorScheme:true}, "Document");
 import { decomposeColor, getContrastRatio, hslToRgb, lighten } from "vmui-material/styles";
 const channels: number[] = decomposeColor(hslToRgb("hsl(40,100%,75%)")).values;
 const contrast: number = getContrastRatio(lighten("#123", 0.2), "#fff");
+
+import createPalette, { type PaletteOptions } from "vmui-material/styles/createPalette";
+const paletteOptions: PaletteOptions = {mode:"dark",primary:{main:"#59a"},tonalOffset:{light:0.1,dark:0.3}};
+const readable: string = createPalette(paletteOptions).getContrastText("#eee");
+// @ts-expect-error Main colors must be strings.
+createPalette({primary:{main:123}});

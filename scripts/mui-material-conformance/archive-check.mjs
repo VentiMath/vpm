@@ -217,3 +217,7 @@ for (const name of ["alpha", "darken", "decomposeColor", "emphasize", "getContra
   assert.equal(esmColors[name], require("vmui-system/colorManipulator")[name]);
   assert.equal(cjsColors[name], esmColors[name]);
 }
+
+const paletteModule = await import("vmui-material/styles/createPalette");
+assert.equal(paletteModule.default, require("vmui-material/styles/createPalette").default);
+assert.equal(paletteModule.default({mode:"dark"}).background.paper, "#121212");

@@ -1225,3 +1225,11 @@ CssBaseline styles the document through GlobalStyles in the active Emotion cache
 Import `alpha`, `darken`, `decomposeColor`, `emphasize`, `getContrastRatio`, `getLuminance`, `hexToRgb`, `hslToRgb`, `lighten`, `recomposeColor` and `rgbToHex` from `vmui-material/styles`. They share the implementation and declarations in VPM System.
 
 At app commit `aa110e55`, the unchanged palette contrast function produced the same six roles and secondary text as Material 7.2.0 for all 37 presets and a custom translucent-text case. The checks cover both page backgrounds, button fills in normal and dark states, preservation of light shades, and the app’s 4.5 threshold. Theme construction in this comparison uses the app’s Material control. [Measurements](bench/colors/README.md).
+
+## Palette creation
+
+`vmui-material/styles/createPalette` resolves palette options into the six standard color roles, light/dark surface defaults, text and action colors, grey shades, contrast text and augmentation callbacks. It preserves custom fields and nested overrides. Inputs and separate palettes retain independent mutable state.
+
+All 37 VentiMath presets at `aa110e55` match the app’s Material palette before and after the unchanged readability pass. Synthetic cases compare Material 7.2.0 and 9.5.0. Current native color mixing is also supported through `colorSpace`. Explicit zero light/dark offsets retain the original shade. Invalid modes and missing main colors throw descriptive errors.
+
+This is the palette stage of the theme factory. The complete Material `createTheme` entry remains pending. The app integration check supplies VPM-created palettes to the existing contrast logic. [Measurements](bench/palette/README.md).

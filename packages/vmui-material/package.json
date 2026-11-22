@@ -2027,6 +2027,16 @@
         "types": "./CssBaseline.d.cts",
         "default": "./CssBaseline.cjs"
       }
+    },
+    "./styles/createPalette": {
+      "import": {
+        "types": "./styles/createPalette.d.mts",
+        "default": "./styles/createPalette.mjs"
+      },
+      "require": {
+        "types": "./styles/createPalette.d.cts",
+        "default": "./styles/createPalette.cjs"
+      }
     }
   },
   "files": [

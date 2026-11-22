@@ -3,8 +3,8 @@ const assert = require("node:assert/strict");
 const path = require("node:path");
 const { execFileSync } = require("node:child_process");
 const { fixture, packages, peer, esbuild } = require("./paths.cjs");
-function materialStyles() {
-  const entry = path.join(packages, "vmui-material/styles/index.cjs");
+function materialStyles(subpath = "styles/index.cjs") {
+  const entry = path.join(packages, "vmui-material", subpath);
   if (process.env.VPM_MATERIAL_INSTALL) return require(entry);
   const bundled = esbuild.buildSync({
     entryPoints: [entry],
@@ -113,7 +113,9 @@ if (process.env.VPM_APP_CHECKOUT) {
   });
   for (const input of palettes) {
     const palette = control.createTheme({ palette: input }).palette;
-    const output = candidate.readablePalette(palette);
+    const ownedPalette = materialStyles("palette.cjs").createPalette(input);
+    assert.deepEqual(JSON.parse(JSON.stringify(ownedPalette)), JSON.parse(JSON.stringify(palette)));
+    const output = candidate.readablePalette(ownedPalette);
     assert.deepEqual(output, baseline.readablePalette(palette));
     for (const role of [
       "primary",
