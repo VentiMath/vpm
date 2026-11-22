@@ -168,3 +168,10 @@ The next theme integration unit is the public Material color exports and the
 app's CSS-variable type augmentation. FuseUtils imports the named color ramps,
 and global.d.ts imports themeCssVarsAugmentation. The next untouched build leaf
 is balanced-match, used by brace-expansion beneath minimatch.
+
+The independent `vlru-cache` now covers bounded synchronous caches beneath
+Babel compilation targets, CSS parsing, DOM selectors and path-scurry. Actual
+callers pass with instrumented VPM get/set operations. The current target is
+11.5.3; Babel's default-constructor max/get/set caller remains supported without
+retaining yallist. Async fetch/memo and legacy v5 APIs outside that caller are
+excluded. This has not changed the application's dependency pins.

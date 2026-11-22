@@ -62,3 +62,13 @@ VPM_APP_CHECKOUT=/path/to/ventimath-private node scripts/source-map-conformance/
 
 This executes the unchanged Capacitor version-warning function with stubbed
 version lookups and the three jsonwebtoken runtime gates. It changes no app data.
+
+## Bounded LRU caches
+
+`node lru-callers.cjs` and the Bun equivalent execute unchanged Babel target
+resolution, CSS declarations, DOM selector queries and path resolution with only
+the LRU import substituted. The fixture asserts that get/set actually run.
+Current count/size/TTL behavior is compared in 64,000 generated operations and
+controlled-clock tests. `lru-archives.cjs` repeats caller checks from clean npm
+and Bun installs and compiles both module formats without Node/DOM ambient types.
+The runtime has no upstream dependency.

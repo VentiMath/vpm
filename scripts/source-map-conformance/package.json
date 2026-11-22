@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@asamuzakjp/dom-selector": "6.8.1",
     "@babel/code-frame": "7.29.7",
     "@babel/core": "7.29.0",
     "@babel/generator": "7.29.1",
@@ -14,9 +15,14 @@
     "@jridgewell/trace-mapping": "0.3.31",
     "code-frame-app": "npm:@babel/code-frame@7.29.0",
     "css-tree": "3.2.1",
+    "cssstyle": "5.3.7",
     "gensync": "1.0.0-beta.2",
     "identifier-app": "npm:@babel/helper-validator-identifier@7.28.5",
     "js-tokens": "4.0.0",
+    "jsdom": "27.4.0",
+    "lru-app": "npm:lru-cache@5.1.1",
+    "lru-current": "npm:lru-cache@11.5.3",
+    "path-scurry": "2.0.2",
     "postcss": "8.5.8",
     "semver-app": "npm:semver@7.5.4",
     "semver-current": "npm:semver@7.8.6",

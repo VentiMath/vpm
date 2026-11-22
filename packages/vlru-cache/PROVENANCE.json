@@ -1,0 +1,18 @@
+{
+  "upstream": {
+    "name": "lru-cache",
+    "version": "11.5.3",
+    "repository": "https://github.com/isaacs/node-lru-cache",
+    "integrity": "sha512-U4N8FgzmWxc8k1VH8Kr6lQg18U7Fjvby6wXHVRX/ZZ7IwWbRMgrRbP0Wrb5q5NVinryp4SQampHKdvtecItxUg=="
+  },
+  "implementation": {
+    "kind": "independent",
+    "targetScope": "Bounded synchronous count/size LRU caches used by Babel compilation targets, CSS parsing, DOM selector caching and path-scurry. Includes lazy TTL, stale-read controls, disposal, recency iteration and default-constructor compatibility for Babel max/get/set. Async fetch/memo, TTL autopurge, unbounded TTL-only caches, dump/load, status instrumentation, internal storage APIs and legacy v5 APIs beyond the actual Babel caller are outside scope."
+  },
+  "consumerControls": [
+    "@babel/helper-compilation-targets 7.29.13 and 7.28.6 with lru-cache 5.1.1",
+    "cssstyle 5.3.7",
+    "@asamuzakjp/dom-selector 6.8.1",
+    "path-scurry 2.0.2"
+  ]
+}
