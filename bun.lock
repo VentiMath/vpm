@@ -40,6 +40,10 @@
       "name": "vautosuggest-highlight",
       "version": "3.3.4",
     },
+    "packages/vbabel-helper-string-parser": {
+      "name": "vbabel-helper-string-parser",
+      "version": "7.29.15",
+    },
     "packages/vbabel-helper-validator-identifier": {
       "name": "vbabel-helper-validator-identifier",
       "version": "7.29.7",
@@ -1982,6 +1986,8 @@
     "vasync-retry": ["vasync-retry@workspace:packages/vasync-retry"],
 
     "vautosuggest-highlight": ["vautosuggest-highlight@workspace:packages/vautosuggest-highlight"],
+
+    "vbabel-helper-string-parser": ["vbabel-helper-string-parser@workspace:packages/vbabel-helper-string-parser"],
 
     "vbabel-helper-validator-identifier": ["vbabel-helper-validator-identifier@workspace:packages/vbabel-helper-validator-identifier"],
 

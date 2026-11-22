@@ -387,7 +387,7 @@ jobs:
           node scripts/source-map-conformance/codec-archives.cjs
           node --test packages/vresolve-uri/test/*.test.cjs
           node scripts/source-map-conformance/codec-archives.cjs vresolve-uri
-          node --test packages/vtrace-mapping/test/*.test.cjs packages/vgen-mapping/test/*.test.cjs packages/vremapping/test/*.test.cjs packages/vconvert-source-map/test/*.test.cjs packages/vjsesc/test/*.test.cjs packages/vbabel-helper-validator-identifier/test/*.test.cjs
+          node --test packages/vtrace-mapping/test/*.test.cjs packages/vgen-mapping/test/*.test.cjs packages/vremapping/test/*.test.cjs packages/vconvert-source-map/test/*.test.cjs packages/vjsesc/test/*.test.cjs packages/vbabel-helper-validator-identifier/test/*.test.cjs packages/vbabel-helper-string-parser/test/*.test.cjs
           node scripts/source-map-conformance/trace-archives.cjs
           npm --prefix scripts/picocolors-conformance ci --ignore-scripts
           node --test packages/vpicocolors/test/*.test.cjs
@@ -1327,7 +1327,8 @@ jobs:
       - run: bun scripts/source-map-conformance/caller.cjs
       - run: bun test packages/vsourcemap-codec/test packages/vresolve-uri/test
       - run: bun scripts/source-map-conformance/codec-caller.cjs
-      - run: bun test packages/vtrace-mapping/test packages/vgen-mapping/test packages/vremapping/test packages/vconvert-source-map/test packages/vjsesc/test packages/vbabel-helper-validator-identifier/test
+      - run: bun test packages/vtrace-mapping/test packages/vgen-mapping/test packages/vremapping/test packages/vconvert-source-map/test packages/vjsesc/test packages/vbabel-helper-validator-identifier/test packages/vbabel-helper-string-parser/test
+      - run: bun scripts/source-map-conformance/string-parser-caller.cjs
       - run: bun scripts/source-map-conformance/identifier-caller.cjs
       - run: bun scripts/source-map-conformance/jsesc-caller.cjs
       - run: bun scripts/source-map-conformance/convert-caller.cjs

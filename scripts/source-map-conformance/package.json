@@ -2,6 +2,7 @@
   "dependencies": {
     "@babel/core": "7.29.0",
     "@babel/generator": "7.29.1",
+    "@babel/helper-string-parser": "7.29.15",
     "@babel/helper-validator-identifier": "7.29.7",
     "@jridgewell/gen-mapping": "0.3.13",
     "@jridgewell/remapping": "2.3.5",
@@ -12,7 +13,11 @@
     "identifier-app": "npm:@babel/helper-validator-identifier@7.28.5",
     "postcss": "8.5.8",
     "source-map-app": "npm:source-map-js@1.2.1",
-    "source-map-js": "1.2.4"
+    "source-map-js": "1.2.4",
+    "string-parser-app": "npm:@babel/helper-string-parser@7.27.1",
+    "string-parser-nested": "npm:@babel/helper-string-parser@7.29.7",
+    "types-app": "npm:@babel/types@7.29.0",
+    "types-nested": "npm:@babel/types@7.29.7"
   },
   "name": "vpm-source-map-controls",
   "private": true

@@ -1,0 +1,12 @@
+{
+  "upstream": {
+    "name": "@babel/helper-string-parser",
+    "version": "7.29.15",
+    "repository": "https://github.com/babel/babel",
+    "integrity": "sha512-C2FuapQ2Kh1OnVHAoLi5rD3GBJ8COb9Q609T6HEpLqaBAo560PDP5OxBE5dCI/h951MBO/+bCUYU5SZ+8ZlV+w=="
+  },
+  "implementation": {
+    "kind": "independent",
+    "targetScope": "Template and quoted strings, numeric and Unicode escapes, diagnostics and UTF-16 positions. Verified through Babel Types template elements."
+  }
+}
