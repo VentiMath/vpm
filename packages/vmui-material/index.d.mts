@@ -1,5 +1,6 @@
 import type * as React from "react";
-import type { SxProps, Theme } from "vmui-system";
+import type { SxProps } from "vmui-system";
+import type { Theme } from "./styles/createTheme.mjs";
 export interface ButtonBaseActions {
   focusVisible(): void;
 }
@@ -230,7 +231,8 @@ export function getTypographyUtilityClass(slot:string):string;
 export function getLinkUtilityClass(slot:string):string;
 export function getSvgIconUtilityClass(slot:string):string;
 
-export type {Theme,SxProps,BoxProps} from "vmui-system";
+export type {SxProps,BoxProps} from "vmui-system";
+export type {Theme,ThemeOptions} from "./styles/createTheme.mjs";
 export const Box: typeof import("vmui-system").Box;
 export const boxClasses: {readonly root:string};
 export const styled: typeof import("vmui-system").styled;
@@ -1080,3 +1082,5 @@ export function getListItemUtilityClass(slot:string):string;
 
 export interface CssBaselineProps { children?: React.ReactNode; enableColorScheme?: boolean; classes?: Partial<Record<never,string>> }
 export function CssBaseline(props: CssBaselineProps): React.ReactElement;
+
+export {default as createTheme} from "./styles/createTheme.mjs";

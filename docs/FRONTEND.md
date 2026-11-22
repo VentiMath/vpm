@@ -32,9 +32,8 @@ inventory. The entire upstream Motion API is **not** complete.
 [vmui-material](../packages/vmui-material) now has 97 independently implemented
 components. It covers button controls; text/icons; Box/Paper/Divider; the form,
 input, Select, checkbox/radio/switch foundation; menus; Chip, Avatar, loading
-spinners, LinearProgress and Alert/AlertTitle feedback and Badge counts and ListItemButton navigation, AppBar/Toolbar shell layouts, Accordion with its Summary and Details, Skeleton placeholders, Container page layouts and Card/CardContent panels and their linked CardActionArea roots, plus AvatarGroup, Tooltip, Collapse, Slide, Drawer, SwipeableDrawer, the seven Table primitives, TableSortLabel, PaginationItem, Pagination, Autocomplete and Dialog with its title/content/action/description components. Its resolved-theme bridge is built,
-but full Material theme creation
-and all app-used component families are not. It cannot replace the entire
+spinners, LinearProgress and Alert/AlertTitle feedback and Badge counts and ListItemButton navigation, AppBar/Toolbar shell layouts, Accordion with its Summary and Details, Skeleton placeholders, Container page layouts and Card/CardContent panels and their linked CardActionArea roots, plus AvatarGroup, Tooltip, Collapse, Slide, Drawer, SwipeableDrawer, the seven Table primitives, TableSortLabel, PaginationItem, Pagination, Autocomplete and Dialog with its title/content/action/description components. Its app-used theme factory and resolved-theme bridge are built;
+remaining component families and full dependency-override acceptance are not. It cannot replace the entire
 `@mui/material` dependency yet.
 
 Autocomplete now covers the five direct school/student selection callers.
@@ -42,12 +41,12 @@ TableSortLabel and numbered Pagination now cover the adopted table’s sorting a
 paging controls; browser acceptance mounts its existing pagination caller.
 Remaining indirect consumers still matter for a complete package override.
 
-Transition creation now supplies page/side-panel CSS strings and automatic height timing through the default component theme. Typography creation now resolves the app’s Geist/13px scale, all 14 variants, pxToRem and nested responsive overrides. Material palette creation now resolves the app’s 37 presets and role augmentation before the verified contrast pass. The complete Material theme factory is still pending. Material styles exposes the color helpers used by the theme picker. Its six palette roles and secondary text match the app control across all 37 presets. CssBaseline applies the document defaults through the root theme’s LTR or RTL cache. ListItem renders event, note and settings rows in the toolbar quick panel. StepContent displays all Academy course subtitles and preserves them when the learner selects a new step. Stepper, Step and StepLabel track the current page of WARML registration across its three- and six-step layouts. Slider applies the toolbar’s seven font sizes on keyboard selection and pointer release. Popper anchors the suggestions and empty-results panel for both toolbar search layouts. Grow handles the horizontal navigation group and nested menu transitions, including their automatic height-based timing. ClickAwayListener covers the toolbar search and style-2 sidebar. Document listeners follow the child into an iframe and exclude React portals by default.
+Transition creation now supplies page/side-panel CSS strings and automatic height timing through the default component theme. Typography creation now resolves the app’s Geist/13px scale, all 14 variants, pxToRem and nested responsive overrides. Material palette creation now resolves the app’s 37 presets and role augmentation before the verified contrast pass. Theme assembly now composes those stages and CSS-variable schemes; 222 unchanged app builds across all 37 presets pass. Material styles exposes the color helpers used by the theme picker. Its six palette roles and secondary text match the app control across all 37 presets. CssBaseline applies the document defaults through the root theme’s LTR or RTL cache. ListItem renders event, note and settings rows in the toolbar quick panel. StepContent displays all Academy course subtitles and preserves them when the learner selects a new step. Stepper, Step and StepLabel track the current page of WARML registration across its three- and six-step layouts. Slider applies the toolbar’s seven font sizes on keyboard selection and pointer release. Popper anchors the suggestions and empty-results panel for both toolbar search layouts. Grow handles the horizontal navigation group and nested menu transitions, including their automatic height-based timing. ClickAwayListener covers the toolbar search and style-2 sidebar. Document listeners follow the child into an iframe and exclude React portals by default.
 
 GlobalStyles covers all seven app imports on `aa110e55`, including shared navigation, sticky page layouts and the iframe preview. Babel’s option validation and spelling suggestions now run through VPM with current/app compilation-targets and Babel Core conformance. Babel’s independent code-frame now formats build diagnostics with the VPM tokenizer, identifier checks and terminal colors. Both code-frame controls and Babel Core verify the complete formatter. Babel’s generator, gen-mapping and remapping pass source-map composition checks using the VPM tracer, resolver and codec. Babel core’s source-map merger now also passes with the complete VPM generation, tracing and [remapping](../packages/vremapping) stack. These build packages are available in the workspace.
 
-Theme/style imports occur in 90 files. The shared theme factory and remaining
-layout/overlay families are adoption requirements, not peripheral polish.
+Theme/style imports occur in 90 files. The assembled theme and remaining
+layout/overlay families still need whole-app adoption acceptance.
 Dependencies such as Material React Table may also consume components that do
 not appear as direct app imports; they need unchanged-caller acceptance before
 a complete package override.
@@ -165,8 +164,7 @@ The target is semver 7.8.6, with caller checks against the app’s 7.5.4 and Bab
 6.3.2. Release incrementing, the CLI and range-analysis APIs outside these callers
 remain outside its documented scope. App adoption is separate.
 
-Next theme work is Material theme assembly: connect the verified palette,
-typography and transition factories to the app’s createTheme path and its custom
-mixins. The next independent build leaf is the LRU cache used by Babel’s target
-resolver; use a current API design while verifying Babel’s older caller, without
-retaining its linked-list dependency.
+The next theme integration unit is the public Material color exports and the
+app's CSS-variable type augmentation. FuseUtils imports the named color ramps,
+and global.d.ts imports themeCssVarsAugmentation. The next untouched build leaf
+is balanced-match, used by brace-expansion beneath minimatch.

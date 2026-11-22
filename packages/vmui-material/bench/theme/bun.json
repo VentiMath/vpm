@@ -1,0 +1,1325 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-22T07:26:12.204Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/mui-system-conformance/node_modules/mui-material-app/styles/createTheme.js": "06039aa70b46af42c0284e7ff06fda73f2f1d4158145cc97466bad3291a4a308",
+    "bench/theme/compare.cjs": "ad7f8b8818c1c8aa79d5745e212e0875f96d1e85110833f791f945677b1df656",
+    "create-theme.cjs": "c22d1224a2eb2db4366d674f9c254645bccbfd0659fa7d4acc07941143fa4e91",
+    "palette.cjs": "511ca44f4c1eb1f523396a1d0a7e022d9dbf9e57ece5658eb091017ceb363c5d",
+    "theme-colors.cjs": "a028c1d03fa2eb50cb131a1a8c933f17a6e216fd448319e21756bd02f2cb837a",
+    "theme-tokens.json": "a38094e4c7168be8072fa2a6e1a464d50948a621f94ba03d8937f1a4cea08a62",
+    "transition-settings.cjs": "5f2ebbcab736d3b38d9684cd112dc4ae52758cdf2f89092fca17491b7bb7d3b5",
+    "type-scale.cjs": "f6d8a5938e25587d0d0041498d479bb2c0f9b34d1a2c0dde15f471ffe31c71df"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 83209,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Default theme",
+            "iterations": 275,
+            "samples": [
+              40142.27272727277,
+              39539.24363636361,
+              43439.3927272727,
+              43882.578181818106,
+              47482.42545454539,
+              40035.0000000001,
+              39880.6036363635,
+              36818.330909090946,
+              37679.85090909096,
+              42942.727272727345,
+              39527.27272727274,
+              44100.3054545455
+            ]
+          },
+          {
+            "case": "App-shaped CSS-variable theme",
+            "iterations": 22,
+            "samples": [
+              543160.9999999978,
+              413265.18181817955,
+              381458.31818181626,
+              317378.77272727457,
+              400806.8181818203,
+              423058.72727273067,
+              588028.4090909113,
+              423255.68181818404,
+              292456.4545454535,
+              366138.2727272708,
+              417399.6363636341,
+              360975.36363636417
+            ]
+          },
+          {
+            "case": "Light/dark CSS schemes",
+            "iterations": 16,
+            "samples": [
+              669635.4374999913,
+              491989.5624999953,
+              728007.812499996,
+              679226.5625000056,
+              645867.1874999879,
+              646007.8125000024,
+              819799.4999999878,
+              700812.4999999978,
+              693955.7499999865,
+              693088.5625000087,
+              589940.1249999983,
+              690559.937499998
+            ]
+          }
+        ],
+        "checksum": 7032
+      },
+      "vpm": {
+        "pid": 83211,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Default theme",
+            "iterations": 275,
+            "samples": [
+              21547.11999999997,
+              22353.483636363555,
+              22313.18181818179,
+              23361.36363636363,
+              24766.81818181822,
+              24081.214545454422,
+              21804.847272727246,
+              23808.78909090908,
+              20567.57818181826,
+              24775.756363636363,
+              23119.545454545376,
+              24265.607272727306
+            ]
+          },
+          {
+            "case": "App-shaped CSS-variable theme",
+            "iterations": 22,
+            "samples": [
+              398142.0454545472,
+              338596.59090909,
+              421768.95454545354,
+              372797.36363636446,
+              417893.9545454548,
+              357988.636363633,
+              442748.0909090904,
+              376308.7272727303,
+              440350.36363636557,
+              321251.90909090923,
+              462615.5454545462,
+              372715.9090909088
+            ]
+          },
+          {
+            "case": "Light/dark CSS schemes",
+            "iterations": 16,
+            "samples": [
+              3025065.1249999977,
+              1246333.374999999,
+              1711328.1249999944,
+              5621505.187499999,
+              2645499.9999999986,
+              1056468.7499999935,
+              583859.3750000029,
+              957190.1249999967,
+              831335.9375000005,
+              807169.312499994,
+              666752.6250000009,
+              968044.3125000125
+            ]
+          }
+        ],
+        "checksum": 4448
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 83218,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Default theme",
+            "iterations": 419,
+            "samples": [
+              25574.284009546645,
+              32615.65155131262,
+              31727.527446300726,
+              31526.252983293532,
+              24161.494033412924,
+              34578.95704057281,
+              28547.732696897376,
+              30146.479713603796,
+              22440.732696897394,
+              27053.50119331744,
+              29589.30071599047,
+              27032.51789976142
+            ]
+          },
+          {
+            "case": "App-shaped CSS-variable theme",
+            "iterations": 22,
+            "samples": [
+              970280.3181818199,
+              362295.4545454553,
+              366678.045454545,
+              341706.40909090627,
+              396678.0454545435,
+              359833.3181818186,
+              331303.04545454175,
+              328554.95454545936,
+              548412.8636363618,
+              530594.6818181827,
+              482581.4545454508,
+              420348.50000000425
+            ]
+          },
+          {
+            "case": "Light/dark CSS schemes",
+            "iterations": 17,
+            "samples": [
+              519036.76470588194,
+              581642.1764705891,
+              560027.0000000043,
+              542144.6470588228,
+              639732.8235294106,
+              648144.5882352947,
+              500737.76470587874,
+              618904.411764708,
+              572870.0588235289,
+              624595.5882352919,
+              529563.7058823506,
+              584237.764705877
+            ]
+          }
+        ],
+        "checksum": 5856
+      },
+      "upstream": {
+        "pid": 83228,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Default theme",
+            "iterations": 419,
+            "samples": [
+              56009.24821002385,
+              48018.59665871126,
+              42832.43914081149,
+              41070.60381861583,
+              40622.81384248211,
+              42442.32219570412,
+              43882.45823389023,
+              36983.09307875887,
+              39022.77326968978,
+              42032.914081145405,
+              41569.31026252991,
+              39690.43198090705
+            ]
+          },
+          {
+            "case": "App-shaped CSS-variable theme",
+            "iterations": 22,
+            "samples": [
+              375967.77272727364,
+              401259.45454545075,
+              350823.863636363,
+              391647.727272729,
+              413073.8636363637,
+              409814.36363636644,
+              406827.6363636404,
+              478037.8636363646,
+              565897.7272727271,
+              302888.272727273,
+              496683.7272727285,
+              502221.5909090888
+            ]
+          },
+          {
+            "case": "Light/dark CSS schemes",
+            "iterations": 17,
+            "samples": [
+              642102.941176464,
+              507688.70588236116,
+              464561.2352941204,
+              648313.7058823478,
+              632414.2352941233,
+              601117.6470588265,
+              569598.0588235243,
+              719671.5294117653,
+              533652.0000000078,
+              607796.5882352868,
+              752828.4117647004,
+              705245.1176470694
+            ]
+          }
+        ],
+        "checksum": 3456
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 83230,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Default theme",
+            "iterations": 202,
+            "samples": [
+              54743.193069307024,
+              93173.678217822,
+              50682.549504950366,
+              39620.049504950395,
+              45837.668316831674,
+              45216.17326732674,
+              46028.25742574257,
+              41235.7673267325,
+              42659.44554455448,
+              43162.12871287129,
+              39193.68811881188,
+              37352.10396039596
+            ]
+          },
+          {
+            "case": "App-shaped CSS-variable theme",
+            "iterations": 27,
+            "samples": [
+              343148.1481481477,
+              343180.55555555323,
+              377631.1851851822,
+              532969.1111111119,
+              879936.7407407401,
+              425731.48148148396,
+              499544.7407407407,
+              358030.8888888887,
+              418986.11111111206,
+              377134.2592592604,
+              347547.8518518508,
+              363913.5925925909
+            ]
+          },
+          {
+            "case": "Light/dark CSS schemes",
+            "iterations": 17,
+            "samples": [
+              716326.0000000077,
+              751651.9411764661,
+              647289.2352941177,
+              677490.1764705887,
+              520036.76470588497,
+              689906.8235294074,
+              671009.823529416,
+              722019.5882352848,
+              646134.8235294174,
+              766779.4117647003,
+              442843.11764705734,
+              593436.2941176434
+            ]
+          }
+        ],
+        "checksum": 5472
+      },
+      "vpm": {
+        "pid": 83233,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Default theme",
+            "iterations": 202,
+            "samples": [
+              25376.65346534649,
+              30210.603960396176,
+              18352.306930693216,
+              20594.059405940436,
+              21704.20792079212,
+              21938.118811881326,
+              20648.51485148511,
+              23073.43069306915,
+              24880.980198019817,
+              29433.16831683159,
+              21086.84158415847,
+              23211.425742574353
+            ]
+          },
+          {
+            "case": "App-shaped CSS-variable theme",
+            "iterations": 27,
+            "samples": [
+              379302.48148148216,
+              360220.66666666634,
+              386520.03703703877,
+              364663.55555555515,
+              387166.6666666653,
+              361239.18518518604,
+              362501.55555555667,
+              385637.33333333203,
+              351220.66666666867,
+              349783.9629629627,
+              319095.6666666672,
+              379231.48148148035
+            ]
+          },
+          {
+            "case": "Light/dark CSS schemes",
+            "iterations": 17,
+            "samples": [
+              642671.5882352898,
+              601426.4705882343,
+              591328.4117647074,
+              618749.9999999973,
+              586901.9999999957,
+              548803.941176469,
+              543811.2941176448,
+              631463.235294117,
+              588546.5882352906,
+              656850.5294117666,
+              641301.4705882326,
+              523308.82352941233
+            ]
+          }
+        ],
+        "checksum": 4960
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 83235,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Default theme",
+            "iterations": 349,
+            "samples": [
+              21150.30945558742,
+              24575.21489971348,
+              22449.856733524295,
+              25543.936962750675,
+              22378.819484240656,
+              23047.994269340943,
+              25658.42979942693,
+              23279.848137535944,
+              24156.160458452705,
+              22900.670487106097,
+              24753.822349570277,
+              24688.515759312282
+            ]
+          },
+          {
+            "case": "App-shaped CSS-variable theme",
+            "iterations": 24,
+            "samples": [
+              381199.6666666649,
+              343269.1249999967,
+              395506.9583333331,
+              359302.08333333273,
+              394760.416666666,
+              381760.4166666655,
+              415017.3750000003,
+              370383.7083333354,
+              404001.7500000014,
+              336411.4583333304,
+              390611.12499999715,
+              409166.666666664
+            ]
+          },
+          {
+            "case": "Light/dark CSS schemes",
+            "iterations": 19,
+            "samples": [
+              517372.78947368136,
+              632831.1578947346,
+              597374.9999999966,
+              583407.8947368413,
+              645587.736842105,
+              609633.789473683,
+              623239.0000000003,
+              654076.7368421054,
+              607521.9473684204,
+              593543.842105263,
+              570506.578947372,
+              611938.5789473702
+            ]
+          }
+        ],
+        "checksum": 5664
+      },
+      "upstream": {
+        "pid": 83242,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Default theme",
+            "iterations": 349,
+            "samples": [
+              44066.26074498564,
+              33169.53008595989,
+              40866.52435530094,
+              41627.62750716324,
+              38694.842406876814,
+              45336.20057306594,
+              50340.85673352438,
+              35747.85100286533,
+              37106.73352435525,
+              41969.07736389679,
+              39976.71919770782,
+              41551.10028653291
+            ]
+          },
+          {
+            "case": "App-shaped CSS-variable theme",
+            "iterations": 24,
+            "samples": [
+              330548.6250000011,
+              434331.5833333321,
+              336743.04166666506,
+              417347.2500000012,
+              396982.6666666686,
+              372060.7499999981,
+              402602.4583333339,
+              574564.2499999993,
+              567901.041666668,
+              399880.20833333355,
+              884899.2916666656,
+              547765.6250000015
+            ]
+          },
+          {
+            "case": "Light/dark CSS schemes",
+            "iterations": 19,
+            "samples": [
+              557719.315789475,
+              611113.9999999953,
+              613296.052631576,
+              593306.9999999995,
+              644445.1578947314,
+              669497.7894736846,
+              630627.2105263193,
+              701221.5263157965,
+              676997.7894736928,
+              564168.8947368469,
+              578730.2631578983,
+              620693.0000000021
+            ]
+          }
+        ],
+        "checksum": 3584
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 83246,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Default theme",
+            "iterations": 97,
+            "samples": [
+              58581.618556700894,
+              59399.91752577334,
+              48411.51546391761,
+              53162.79381443297,
+              49149.48453608231,
+              60432.134020618614,
+              64499.56701030937,
+              59436.422680412354,
+              128645.61855670066,
+              57499.999999999854,
+              63694.58762886556,
+              38503.86597938132
+            ]
+          },
+          {
+            "case": "App-shaped CSS-variable theme",
+            "iterations": 11,
+            "samples": [
+              466984.8181818204,
+              325193.181818184,
+              509996.27272727306,
+              285272.72727272,
+              281007.63636362815,
+              365170.45454545703,
+              332549.18181818415,
+              440371.18181817775,
+              281939.45454546047,
+              283537.90909091005,
+              411992.36363636586,
+              345174.2727272734
+            ]
+          },
+          {
+            "case": "Light/dark CSS schemes",
+            "iterations": 10,
+            "samples": [
+              685858.4000000064,
+              752445.7999999982,
+              787395.9000000013,
+              1008979.1999999989,
+              708062.4999999942,
+              737983.2999999963,
+              576733.2999999893,
+              761479.1999999966,
+              472637.49999999616,
+              816200.0000000035,
+              556987.5000000024,
+              537358.3000000053
+            ]
+          }
+        ],
+        "checksum": 4448
+      },
+      "vpm": {
+        "pid": 83253,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Default theme",
+            "iterations": 97,
+            "samples": [
+              39121.13402061878,
+              42304.12371134017,
+              47830.75257731917,
+              38341.917525772915,
+              51374.56701030944,
+              39594.49484536081,
+              32257.298969072286,
+              47608.24742268037,
+              33136.59793814425,
+              42216.917525772995,
+              40605.67010309306,
+              42235.40206185568
+            ]
+          },
+          {
+            "case": "App-shaped CSS-variable theme",
+            "iterations": 11,
+            "samples": [
+              510428.0000000058,
+              505382.5454545466,
+              436859.81818182213,
+              426719.63636363135,
+              429696.99999999156,
+              289071.99999999156,
+              310231.000000003,
+              527124.9999999967,
+              378007.54545454844,
+              541140.1818181813,
+              399537.9090909161,
+              469439.3636363698
+            ]
+          },
+          {
+            "case": "Light/dark CSS schemes",
+            "iterations": 10,
+            "samples": [
+              672487.4999999998,
+              528212.4999999951,
+              639245.900000003,
+              656054.1000000058,
+              752533.2999999932,
+              598470.7999999955,
+              586495.8000000002,
+              426324.9999999971,
+              582658.3000000028,
+              443079.1999999996,
+              529533.4000000025,
+              459020.7999999962
+            ]
+          }
+        ],
+        "checksum": 5728
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 83255,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Default theme",
+            "iterations": 270,
+            "samples": [
+              52176.3888888889,
+              57563.73703703688,
+              46287.34814814821,
+              50853.85925925931,
+              44659.10740740735,
+              50112.49999999997,
+              61530.24444444436,
+              40904.937037037016,
+              45855.55555555545,
+              49132.10000000003,
+              55183.3333333335,
+              46013.88888888904
+            ]
+          },
+          {
+            "case": "App-shaped CSS-variable theme",
+            "iterations": 25,
+            "samples": [
+              393559.9999999977,
+              364145.00000000314,
+              431936.6799999989,
+              483891.679999997,
+              374899.99999999785,
+              479216.6799999995,
+              441284.9999999981,
+              277435.0000000004,
+              441131.63999999873,
+              491050.0000000002,
+              431163.31999999605,
+              445131.67999999947
+            ]
+          },
+          {
+            "case": "Light/dark CSS schemes",
+            "iterations": 11,
+            "samples": [
+              1048753.7272727175,
+              633939.454545436,
+              852496.2727272768,
+              677249.9999999995,
+              858071.9999999929,
+              708280.2727272792,
+              912791.6363636359,
+              482147.7272727283,
+              698128.8181818235,
+              759912.8181818328,
+              532606.090909088,
+              698859.9090909081
+            ]
+          }
+        ],
+        "checksum": 5760
+      },
+      "upstream": {
+        "pid": 83267,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Default theme",
+            "iterations": 270,
+            "samples": [
+              50337.6555555555,
+              44706.01851851855,
+              37413.27037037039,
+              38328.859259259276,
+              37340.58888888883,
+              41069.75555555563,
+              48473.91851851857,
+              46586.42222222216,
+              41158.02592592609,
+              50472.22222222221,
+              44299.537037036986,
+              45279.78518518504
+            ]
+          },
+          {
+            "case": "App-shaped CSS-variable theme",
+            "iterations": 25,
+            "samples": [
+              357911.6799999975,
+              418311.6799999971,
+              429023.3200000011,
+              353673.3200000026,
+              376694.9999999997,
+              350011.6399999979,
+              408135.00000000204,
+              489473.3600000018,
+              449088.32000000076,
+              530423.3199999998,
+              418154.99999999703,
+              544746.640000003
+            ]
+          },
+          {
+            "case": "Light/dark CSS schemes",
+            "iterations": 11,
+            "samples": [
+              7436219.727272725,
+              826147.7272727378,
+              7721571.999999985,
+              3992147.72727274,
+              4200147.72727272,
+              867757.5454545274,
+              1080371.181818195,
+              884340.9090909105,
+              1302257.545454557,
+              847579.5454545402,
+              681473.545454537,
+              1705625.0000000133
+            ]
+          }
+        ],
+        "checksum": 3456
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "Default theme",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 40088.63636363644,
+          "vpmNs": 23240.4545454545,
+          "changePct": -42.0273258121211
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 41801.11217183765,
+          "vpmNs": 29068.516706443923,
+          "changePct": -30.45994425471762
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 44189.15099009901,
+          "vpmNs": 22505.774752475238,
+          "changePct": -49.06945653353271
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 41208.81232091693,
+          "vpmNs": 23718.004297994325,
+          "changePct": -42.44433905716946
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 58990.76804123711,
+          "vpmNs": 41411.293814433026,
+          "changePct": -29.800382009800696
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 44502.77777777777,
+          "vpmNs": 49622.3,
+          "changePct": 11.503826228075686
+        }
+      ]
+    },
+    {
+      "case": "App-shaped CSS-variable theme",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 407035.9999999999,
+          "vpmNs": 387225.3863636388,
+          "changePct": -4.86704213788488
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 408321.00000000343,
+          "vpmNs": 381678.04545454425,
+          "changePct": -6.525002276507685
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 377382.7222222213,
+          "vpmNs": 363582.5555555559,
+          "changePct": -3.6568093487171383
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 409974.85416666756,
+          "vpmNs": 386185.77083333133,
+          "changePct": -5.802571326402672
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 338861.7272727288,
+          "vpmNs": 433278.40909090685,
+          "changePct": 27.862893392557098
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 418233.33999999706,
+          "vpmNs": 436534.1599999988,
+          "changePct": 4.375743932801224
+        }
+      ]
+    },
+    {
+      "case": "Light/dark CSS schemes",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 684893.2500000019,
+          "vpmNs": 1012256.531250003,
+          "changePct": 47.79770880352525
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 620105.4117647051,
+          "vpmNs": 577256.117647059,
+          "changePct": -6.9100016391898444
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 674250.0000000023,
+          "vpmNs": 596377.4411764708,
+          "changePct": -11.54950816811735
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 616994.526315789,
+          "vpmNs": 608577.8684210517,
+          "changePct": -1.3641381788255136
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 723022.8999999953,
+          "vpmNs": 584577.0500000014,
+          "changePct": -19.148197104129714
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1191314.3636363759,
+          "vpmNs": 703570.0909090936,
+          "changePct": -40.941693277204216
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "Default theme",
+      "upstream_ns": 41505,
+      "vpm_ns": 23479,
+      "change_pct": -42.2,
+      "upstream_first_pct": -45.5,
+      "vpm_first_pct": -36.5,
+      "process_range_pct": "-42.0, -30.5, -49.1, -42.4",
+      "control_max_abs_pct": 29.8,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "App-shaped CSS-variable theme",
+      "upstream_ns": 407679,
+      "vpm_ns": 383932,
+      "change_pct": -5.3,
+      "upstream_first_pct": -4.3,
+      "vpm_first_pct": -6.2,
+      "process_range_pct": "-4.9, -6.5, -3.7, -5.8",
+      "control_max_abs_pct": 27.9,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "Light/dark CSS schemes",
+      "upstream_ns": 647178,
+      "vpm_ns": 602478,
+      "change_pct": -4.1,
+      "upstream_first_pct": 18.1,
+      "vpm_first_pct": -4.1,
+      "process_range_pct": "47.8, -6.9, -11.5, -1.4",
+      "control_max_abs_pct": 40.9,
+      "evidence": "unestablished at this precision"
+    }
+  ]
+}

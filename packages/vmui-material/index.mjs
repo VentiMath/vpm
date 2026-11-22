@@ -144,3 +144,5 @@ export {default as StepContent, stepContentClasses, getStepContentUtilityClass} 
 export const {ListItem,listItemClasses,getListItemUtilityClass}=listButtons;
 
 export {default as CssBaseline} from "./CssBaseline.mjs";
+
+export {default as createTheme} from "./styles/createTheme.mjs";

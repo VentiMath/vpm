@@ -49,3 +49,5 @@ Object.assign(module.exports, require("./registration-steps.cjs"));
 Object.assign(module.exports,require("./course-step-content.cjs"));
 
 module.exports.CssBaseline = require("./CssBaseline.cjs");
+
+module.exports.createTheme = require("./create-theme.cjs").createTheme;

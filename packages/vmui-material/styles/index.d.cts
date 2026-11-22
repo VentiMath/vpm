@@ -3,3 +3,5 @@ export { alpha, darken, decomposeColor, emphasize, getContrastRatio, getLuminanc
 export type { Palette, PaletteOptions, PaletteMode, PaletteColor, PaletteColorOptions } from "./createPalette.cjs";
 export type { TypographyVariant, TypographyStyle, TypographyVariants, TypographyVariantsOptions } from "./createTypography.cjs";
 export type { Transitions, TransitionsOptions, Duration, Easing } from "./createTransitions.cjs";
+
+export {default as createTheme,type ThemeOptions,type CssVariablesOptions,type Mixins,type ZIndex} from "./createTheme.cjs";

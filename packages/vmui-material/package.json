@@ -2057,6 +2057,16 @@
         "types": "./styles/createTransitions.d.cts",
         "default": "./styles/createTransitions.cjs"
       }
+    },
+    "./styles/createTheme": {
+      "import": {
+        "types": "./styles/createTheme.d.mts",
+        "default": "./styles/createTheme.mjs"
+      },
+      "require": {
+        "types": "./styles/createTheme.d.cts",
+        "default": "./styles/createTheme.cjs"
+      }
     }
   },
   "files": [
@@ -2070,7 +2080,8 @@
     "LICENSE",
     "styles",
     "FormControl",
-    "RadioGroup"
+    "RadioGroup",
+    "theme-tokens.json"
   ],
   "sideEffects": false,
   "engines": {

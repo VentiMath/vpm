@@ -1,5 +1,5 @@
 "use strict";
-const { default: deepmerge } = require("vmui-utils/deepmerge");
+const { deepmerge } = require("vmui-utils");
 const family = '"Roboto", "Helvetica", "Arial", sans-serif';
 // Material type-scale measurements: variant, size, line height, tracking, weight.
 const scale = [

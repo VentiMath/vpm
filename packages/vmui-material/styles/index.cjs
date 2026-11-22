@@ -14,3 +14,5 @@ module.exports={ThemeProvider:a.ThemeProvider,useTheme:a.useTheme,styled:a.style
   recomposeColor: colors.recomposeColor,
   rgbToHex: colors.rgbToHex,
 };
+
+module.exports.createTheme = require("../create-theme.cjs").createTheme;

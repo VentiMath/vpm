@@ -117,7 +117,7 @@ function applyStyles(mode, styles) {
 		return {
 			[selector.startsWith("@")
 				? selector
-				: `*:where(${selector.replace(/&/g, "")}) &`]: styles,
+				: `*:where(${selector.replace(/&/g, "").trim()}) &`]: styles,
 		};
 	}
 	return this.palette?.mode === mode ? styles : {};

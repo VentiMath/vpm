@@ -1232,13 +1232,13 @@ At app commit `aa110e55`, the unchanged palette contrast function produced the s
 
 All 37 VentiMath presets at `aa110e55` match the app’s Material palette before and after the unchanged readability pass. Synthetic cases compare Material 7.2.0 and 9.5.0. Current native color mixing is also supported through `colorSpace`. Explicit zero light/dark offsets retain the original shade. Invalid modes and missing main colors throw descriptive errors.
 
-This is the palette stage of the theme factory. The complete Material `createTheme` entry remains pending. The app integration check supplies VPM-created palettes to the existing contrast logic. [Measurements](bench/palette/README.md).
+This is the palette stage of the theme factory. The Material `createTheme` entry now assembles this stage with the app-used theme settings. The app integration check supplies VPM-created palettes to the existing contrast logic. [Measurements](bench/palette/README.md).
 
 ## Typography creation
 
 `vmui-material/styles/createTypography` resolves the type scale from palette and typography options. It supports font weights/family, base and HTML font sizes, `pxToRem`, palette callbacks, all-variant settings, named variants and nested responsive overrides. Nested input objects and variant overrides remain independently mutable.
 
-The actual VentiMath settings at `aa110e55` match Material 7.2.0 and 9.5.0, including the Geist-first font stack, 13px base and explicit body sizes. All 14 variants render equivalently through the app’s Typography consumer. Both module formats and packed installs are checked. The complete Material theme factory remains pending.
+The actual VentiMath settings at `aa110e55` match Material 7.2.0 and 9.5.0, including the Geist-first font stack, 13px base and explicit body sizes. All 14 variants render equivalently through the app’s Typography consumer. Both module formats and packed installs are checked. The Material theme factory now uses this type scale.
 
 [Measurements](bench/typography/README.md) include the app setup and synthetic responsive overrides. The app scale is faster on Bun and slower on Node. Isolating nested responsive settings adds overhead in both runtimes.
 
@@ -1247,8 +1247,8 @@ The actual VentiMath settings at `aa110e55` match Material 7.2.0 and 9.5.0, incl
 `vmui-material/styles/createTransitions` creates easing and duration settings,
 CSS transition lists and automatic height timings. Scalar or array properties,
 numeric or CSS-string times and caller overrides match Material 7.2.0 and 9.5.0.
-The factory supplies the default theme used by the owned components; complete
-Material theme assembly remains pending. As in Material 9, automatic height
+The factory supplies the default theme used by the owned components; the assembled
+Material theme uses these settings. As in Material 9, automatic height
 timing caps at 3 seconds and the legacy `reducedMotion` input is not retained.
 
 The contract evaluates VentiMath’s unchanged page-margin, side-panel and toolbar
@@ -1256,3 +1256,26 @@ expressions, tests timing over 20,000 heights, and checks settings isolation.
 Packed installs exercise the existing Collapse, Slide and Grow browser checks.
 [Measurements](bench/transitions/README.md) show faster formatting and a small
 settings-creation cost; they do not measure whole-page performance.
+
+
+## Theme assembly
+
+`createTheme` is available at the root, `styles`, and `styles/createTheme`.
+It assembles the owned palette, typography, transitions, System breakpoints and
+spacing, shadows, z-index, toolbar mixin, component defaults and nested overrides.
+CSS-variable themes include channel/semantic palette tokens, per-scheme opacity
+and dark overlays, font variables, custom prefixes, selectors and generated
+stylesheets. Plain themes retain numeric spacing; CSS themes use their spacing
+variables. The default theme used by the owned components now uses this factory.
+
+VentiMath main `697e53db` supplies 37 presets through its existing contrast and
+border-mixin passes. All 222 combinations of preset, direction and prefix match
+the unchanged application flow on Node and Bun. Twenty-two synthetic contracts
+also compare Material 9.5.0 and the app's 7.2.0 behavior, including variable
+generation and input isolation. The shadows and z-index defaults are observable
+design-token data; implementation code is independently written.
+
+This covers VentiMath's current theme-building pipeline. Native CSS color-space
+theme generation (`cssVariables.nativeColor`) and upstream's full theme-management
+surface are outside this scope. Remaining Material component families are still
+in progress. [Theme measurements](bench/theme/README.md).

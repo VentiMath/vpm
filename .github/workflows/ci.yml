@@ -1255,6 +1255,7 @@ jobs:
           bun scripts/mui-material-conformance/palette-contract.cjs
           bun scripts/mui-material-conformance/typography-contract.cjs
           bun scripts/mui-material-conformance/transitions-contract.cjs
+          bun scripts/mui-material-conformance/theme-contract.cjs
           bun scripts/mui-material-conformance/lists-contract.cjs
           bun test packages/vmui-system/test/system.test.cjs
           bun scripts/mui-system-conformance/primitives.cjs

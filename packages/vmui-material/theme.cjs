@@ -3,21 +3,7 @@ const React = require("react");
 const system = require("vmui-system");
 const h = React.createElement;
 const THEME_ID = "$$material";
-// Defaults needed by standalone Box/sx consumers. This is not a public Material
-// theme factory: callers may supply their complete existing Material theme.
-const defaultTheme = system.createTheme({
-  transitions:require("./transition-settings.cjs").createTransitions(),
-  palette: {
-    mode: "light",
-    primary: {main:"#1976d2",light:"#42a5f5",dark:"#1565c0",contrastText:"#fff"},
-    secondary: {main:"#9c27b0",light:"#ba68c8",dark:"#7b1fa2",contrastText:"#fff"},
-    error:{main:"#d32f2f"},warning:{main:"#ed6c02"},info:{main:"#0288d1"},success:{main:"#2e7d32"},
-    text:{primary:"rgba(0, 0, 0, 0.87)",secondary:"rgba(0, 0, 0, 0.6)",disabled:"rgba(0, 0, 0, 0.38)"},
-    background:{paper:"#fff",default:"#fff"},divider:"rgba(0, 0, 0, 0.12)",
-    action:{active:"rgba(0, 0, 0, 0.54)",disabled:"rgba(0, 0, 0, 0.26)"},
-  },
-  typography:{fontFamily:'"Roboto", "Helvetica", "Arial", sans-serif',fontSize:14,fontWeightLight:300,fontWeightRegular:400,fontWeightMedium:500,fontWeightBold:700},
-});
+const defaultTheme = require("./create-theme.cjs").createTheme();
 function useTheme() {
   const theme = system.useTheme(defaultTheme);
   return theme[THEME_ID] || theme;

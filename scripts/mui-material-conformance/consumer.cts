@@ -576,3 +576,14 @@ const transitions=createTransitions({duration:{short:180}});
 const animation:string=transitions.create(["margin","opacity"],{delay:"0.1s"});
 // @ts-expect-error Duration must be a string or number.
 transitions.create("margin",{duration:false});
+
+import {createTheme as materialTheme, type ThemeOptions as MaterialThemeOptions} from "vmui-material/styles";
+import createMaterialTheme from "vmui-material/styles/createTheme";
+const assembledOptions:MaterialThemeOptions={palette:{mode:"dark",primary:{main:"#123456"}},typography:p=>({h1:{color:p.primary.main}}),cssVariables:{cssVarPrefix:"navbar",colorSchemeSelector:"class"},colorSchemes:{light:true,dark:true}};
+const assembled=materialTheme(assembledOptions);
+const mainColor:string=assembled.palette.primary.main;
+const themeTransition:string=assembled.transitions.create("margin");
+const weight:React.CSSProperties["fontWeight"]=assembled.typography.fontWeightBold;
+createMaterialTheme({mixins:{toolbar:{minHeight:42}}});
+// @ts-expect-error Invalid mode.
+materialTheme({palette:{mode:"blue"}});

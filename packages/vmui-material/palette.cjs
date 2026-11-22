@@ -1,5 +1,5 @@
 "use strict";
-const { default: deepmerge } = require("vmui-utils/deepmerge");
+const { deepmerge } = require("vmui-utils");
 const { darken, lighten, getContrastRatio } = require("vmui-system");
 const roles = ["primary", "secondary", "error", "warning", "info", "success"];
 const ramps = {
