@@ -40,6 +40,10 @@
       "name": "vautosuggest-highlight",
       "version": "3.3.4",
     },
+    "packages/vbabel-helper-validator-identifier": {
+      "name": "vbabel-helper-validator-identifier",
+      "version": "7.29.7",
+    },
     "packages/vbase64-js": {
       "name": "vbase64-js",
       "version": "1.5.1",
@@ -1978,6 +1982,8 @@
     "vasync-retry": ["vasync-retry@workspace:packages/vasync-retry"],
 
     "vautosuggest-highlight": ["vautosuggest-highlight@workspace:packages/vautosuggest-highlight"],
+
+    "vbabel-helper-validator-identifier": ["vbabel-helper-validator-identifier@workspace:packages/vbabel-helper-validator-identifier"],
 
     "vbase64-js": ["vbase64-js@workspace:packages/vbase64-js"],
 

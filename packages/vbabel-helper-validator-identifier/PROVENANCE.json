@@ -1,0 +1,16 @@
+{
+  "upstream": {
+    "name": "@babel/helper-validator-identifier",
+    "version": "7.29.7",
+    "repository": "https://github.com/babel/babel",
+    "integrity": "sha512-qehxGkRj55h/ff8EMaJ+cYhyaKlHIxqYDn682wQD7RNp9UujOQsHog2uS0r2vzr4pW+sXf90NeeayjcNaX3fFg=="
+  },
+  "implementation": {
+    "kind": "independent",
+    "targetScope": "Eight identifier and keyword predicates checked against 7.29.7 and the app version 7.28.5."
+  },
+  "data": {
+    "source": "https://www.unicode.org/Public/17.0.0/ucd/DerivedCoreProperties.txt",
+    "license": "Unicode-3.0"
+  }
+}
