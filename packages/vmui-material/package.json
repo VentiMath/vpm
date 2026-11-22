@@ -1917,6 +1917,66 @@
         "types": "./sliderClasses.d.cts",
         "default": "./sliderClasses.cjs"
       }
+    },
+    "./Stepper": {
+      "import": {
+        "types": "./Stepper.d.mts",
+        "default": "./Stepper.mjs"
+      },
+      "require": {
+        "types": "./Stepper.d.cts",
+        "default": "./Stepper.cjs"
+      }
+    },
+    "./stepperClasses": {
+      "import": {
+        "types": "./stepperClasses.d.mts",
+        "default": "./stepperClasses.mjs"
+      },
+      "require": {
+        "types": "./stepperClasses.d.cts",
+        "default": "./stepperClasses.cjs"
+      }
+    },
+    "./Step": {
+      "import": {
+        "types": "./Step.d.mts",
+        "default": "./Step.mjs"
+      },
+      "require": {
+        "types": "./Step.d.cts",
+        "default": "./Step.cjs"
+      }
+    },
+    "./stepClasses": {
+      "import": {
+        "types": "./stepClasses.d.mts",
+        "default": "./stepClasses.mjs"
+      },
+      "require": {
+        "types": "./stepClasses.d.cts",
+        "default": "./stepClasses.cjs"
+      }
+    },
+    "./StepLabel": {
+      "import": {
+        "types": "./StepLabel.d.mts",
+        "default": "./StepLabel.mjs"
+      },
+      "require": {
+        "types": "./StepLabel.d.cts",
+        "default": "./StepLabel.cjs"
+      }
+    },
+    "./stepLabelClasses": {
+      "import": {
+        "types": "./stepLabelClasses.d.mts",
+        "default": "./stepLabelClasses.mjs"
+      },
+      "require": {
+        "types": "./stepLabelClasses.d.cts",
+        "default": "./stepLabelClasses.cjs"
+      }
     }
   },
   "files": [

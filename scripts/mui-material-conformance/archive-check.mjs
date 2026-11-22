@@ -195,3 +195,9 @@ assert.equal((await import("vmui-material/Slider")).default, api.Slider);
 assert.equal(require("vmui-material/Slider").default, api.Slider);
 assert.equal((await import("vmui-material/sliderClasses")).default, api.sliderClasses);
 assert.equal(require("vmui-material/sliderClasses").getSliderUtilityClass("thumb"), api.sliderClasses.thumb);
+
+for (const name of ["Stepper", "Step", "StepLabel"]) {
+  assert.equal((await import("vmui-material/" + name)).default, api[name]);
+  assert.equal(require("vmui-material/" + name).default, api[name]);
+}
+assert.equal(api.getStepLabelUtilityClass("disabled"), "Mui-disabled");

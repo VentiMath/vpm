@@ -45,3 +45,4 @@ Object.assign(module.exports, require("./click-away.cjs"));
 Object.assign(module.exports, require("./grow-transition.cjs"));
 Object.assign(module.exports, require("./search-popper.cjs"));
 Object.assign(module.exports, require("./font-slider.cjs"));
+Object.assign(module.exports, require("./registration-steps.cjs"));

@@ -1029,3 +1029,27 @@ export interface SliderProps extends Omit<React.HTMLAttributes<HTMLSpanElement>,
  classes?:Partial<SliderClasses>; sx?:SxProps<Theme>;
 }
 export const Slider:React.ForwardRefExoticComponent<SliderProps & React.RefAttributes<HTMLSpanElement>>;
+
+export type StepperClassKey="root"|"horizontal"|"vertical"|"alternativeLabel"|"nonLinear";
+export type StepperClasses=Readonly<Record<StepperClassKey,string>>;
+export const stepperClasses:StepperClasses;
+export function getStepperUtilityClass(slot:string):string;
+interface StepperOwnProps { activeStep?:number; alternativeLabel?:boolean; nonLinear?:boolean; orientation?:"horizontal"|"vertical"; connector?:React.ReactElement|null; classes?:Partial<StepperClasses>; sx?:SxProps<Theme>; }
+export type StepperProps<C extends React.ElementType = "ol"> = StepperOwnProps & {component?: C} & Omit<React.ComponentPropsWithRef<C>,keyof StepperOwnProps | "component">;
+export function Stepper<C extends React.ElementType = "ol">(props:StepperProps<C>):React.ReactElement|null;
+
+export type StepClassKey="root"|"horizontal"|"vertical"|"alternativeLabel"|"completed";
+export type StepClasses=Readonly<Record<StepClassKey,string>>;
+export const stepClasses:StepClasses;
+export function getStepUtilityClass(slot:string):string;
+interface StepOwnProps { active?:boolean; completed?:boolean; disabled?:boolean; expanded?:boolean; index?:number; last?:boolean; classes?:Partial<StepClasses>; sx?:SxProps<Theme>; }
+export type StepProps<C extends React.ElementType = "li"> = StepOwnProps & {component?: C} & Omit<React.ComponentPropsWithRef<C>,keyof StepOwnProps | "component">;
+export function Step<C extends React.ElementType = "li">(props:StepProps<C>):React.ReactElement|null;
+
+export type StepLabelClassKey="root"|"horizontal"|"vertical"|"label"|"active"|"completed"|"error"|"disabled"|"iconContainer"|"alternativeLabel"|"labelContainer";
+export type StepLabelClasses=Readonly<Record<StepLabelClassKey,string>>;
+export const stepLabelClasses:StepLabelClasses;
+export function getStepLabelUtilityClass(slot:string):string;
+interface StepLabelOwnProps { error?:boolean; icon?:React.ReactNode; optional?:React.ReactNode; classes?:Partial<StepLabelClasses>; sx?:SxProps<Theme>; }
+export type StepLabelProps = React.ComponentPropsWithRef<"span"> & StepLabelOwnProps;
+export const StepLabel: React.ForwardRefExoticComponent<StepLabelProps>;

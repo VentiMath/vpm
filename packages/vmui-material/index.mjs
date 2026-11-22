@@ -136,3 +136,6 @@ export { default as ClickAwayListener } from "./ClickAwayListener.mjs";
 export { default as Grow } from "./Grow.mjs";
 export { default as Popper, getPopperUtilityClass, popperClasses } from "./Popper.mjs";
 export { default as Slider, getSliderUtilityClass, sliderClasses } from "./Slider.mjs";
+export { default as Stepper, getStepperUtilityClass, stepperClasses } from "./Stepper.mjs";
+export { default as Step, getStepUtilityClass, stepClasses } from "./Step.mjs";
+export { default as StepLabel, getStepLabelUtilityClass, stepLabelClasses } from "./StepLabel.mjs";

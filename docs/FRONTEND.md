@@ -29,7 +29,7 @@ inventory. The entire upstream Motion API is **not** complete.
 
 ## Material
 
-[vmui-material](../packages/vmui-material) now has 91 independently implemented
+[vmui-material](../packages/vmui-material) now has 94 independently implemented
 components. It covers button controls; text/icons; Box/Paper/Divider; the form,
 input, Select, checkbox/radio/switch foundation; menus; Chip, Avatar, loading
 spinners, LinearProgress and Alert/AlertTitle feedback and Badge counts and ListItemButton navigation, AppBar/Toolbar shell layouts, Accordion with its Summary and Details, Skeleton placeholders, Container page layouts and Card/CardContent panels and their linked CardActionArea roots, plus AvatarGroup, Tooltip, Collapse, Slide, Drawer, SwipeableDrawer, the seven Table primitives, TableSortLabel, PaginationItem, Pagination, Autocomplete and Dialog with its title/content/action/description components. Its resolved-theme bridge is built,
@@ -42,7 +42,7 @@ TableSortLabel and numbered Pagination now cover the adopted table’s sorting a
 paging controls; browser acceptance mounts its existing pagination caller.
 Remaining indirect consumers still matter for a complete package override.
 
-Slider applies the toolbar’s seven font sizes on keyboard selection and pointer release. Popper anchors the suggestions and empty-results panel for both toolbar search layouts. Grow handles the horizontal navigation group and nested menu transitions, including their automatic height-based timing. ClickAwayListener covers the toolbar search and style-2 sidebar. Document listeners follow the child into an iframe and exclude React portals by default.
+Stepper, Step and StepLabel track the current page of WARML registration across its three- and six-step layouts. Slider applies the toolbar’s seven font sizes on keyboard selection and pointer release. Popper anchors the suggestions and empty-results panel for both toolbar search layouts. Grow handles the horizontal navigation group and nested menu transitions, including their automatic height-based timing. ClickAwayListener covers the toolbar search and style-2 sidebar. Document listeners follow the child into an iframe and exclude React portals by default.
 
 GlobalStyles covers all seven app imports on `aa110e55`, including shared navigation, sticky page layouts and the iframe preview. Babel’s generator, gen-mapping and remapping pass source-map composition checks using the VPM tracer, resolver and codec. Babel core’s source-map merger now also passes with the complete VPM generation, tracing and [remapping](../packages/vremapping) stack. These build packages are available in the workspace.
 

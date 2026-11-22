@@ -1,0 +1,1327 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-22T02:38:07.566Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/mui-material-conformance/steps-browser-entry.jsx": "f09c5ffdfb91d7027728c496e7a8bba3ff0d1525ff8eb2116a8b0dad700f3e26",
+    "../../scripts/mui-material-conformance/steps-scene.jsx": "f154d7236e6c291986101ccf049dd76a2914534644d736b0f7aac19cfd4cc15e",
+    "../../scripts/mui-material-conformance/steps-ssr-entry.jsx": "0ac744b66188ee897d35c10b8876fcc9dff15abb7c0d9e29ce91b77dddf54c6b",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/app-upstream/steps-browser.js": "24b3995bc06908dc7b249637fe1d7bd0b003d20a186598cec4617f6f23322b16",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/app-upstream/steps-ssr.cjs": "8ad77ebcf3fb5ea3ea5f5e48adba1ffcc06494bf3c2f78ba0e0c6ac704cebec0",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/app-vpm/steps-browser.js": "799fcac9dc581e449be05f090f018c27ad48476ba125a7b82b74077e143db079",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/app-vpm/steps-ssr.cjs": "df3cfb4b1843142dee7799ae49a991daebaee3be230da2894412a1dc2f9578f3",
+    "../../scripts/mui-system-conformance/package-lock.json": "a04f91b1f742d1bd580d9d4119c7957b2d4cf7ef0a5adfa1f263b7ebf293a8a1",
+    "bench/steps.cjs": "d679cfb26684a8fe357945612cc339a42381ad0ad963daa08374449d21b68b95",
+    "registration-steps.cjs": "a706dd4ce351a683dd04f0718520efb442418a7c674c6e4b8b2fdecf6812e6ed"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 37455,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "student registration SSR",
+            "iterations": 61,
+            "samples": [
+              170637.29508196667,
+              176105.868852459,
+              167890.03278688504,
+              154957.6393442618,
+              187015.03278688522,
+              165298.49180327798,
+              161560.11475409922,
+              159486.34426229465,
+              179398.22950819743,
+              166183.73770491782,
+              173788.2622950822,
+              170169.40983606566
+            ]
+          },
+          {
+            "case": "volunteer registration SSR",
+            "iterations": 110,
+            "samples": [
+              87777.2727272734,
+              86831.0545454547,
+              93706.81818181765,
+              88673.10909090933,
+              104370.07272727319,
+              83387.12727272649,
+              80561.36363636391,
+              83932.95454545441,
+              85517.04545454557,
+              87897.35454545487,
+              79942.04545454461,
+              87428.79090909087
+            ]
+          },
+          {
+            "case": "Mounted next and back, six steps",
+            "iterations": 20,
+            "samples": [
+              432364.5999999939,
+              432283.3500000002,
+              431602.09999999776,
+              567408.3500000051,
+              483831.2500000029,
+              417539.5999999978,
+              523672.9500000024,
+              434672.8999999982,
+              407695.8499999932,
+              391614.6000000026,
+              530997.8999999998,
+              416133.3500000069
+            ]
+          }
+        ],
+        "checksum": 32589200
+      },
+      "vpm": {
+        "pid": 37460,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "student registration SSR",
+            "iterations": 61,
+            "samples": [
+              121739.06557377058,
+              136562.16393442647,
+              146704.9180327866,
+              154229.50819672155,
+              130239.75409836022,
+              124456.27868852473,
+              138667.36065573766,
+              133705.59016393468,
+              150374.31147541027,
+              132870.90163934405,
+              140274.5901639348,
+              130417.34426229543
+            ]
+          },
+          {
+            "case": "volunteer registration SSR",
+            "iterations": 110,
+            "samples": [
+              75625.0000000002,
+              78087.11818181771,
+              69007.19090909061,
+              71735.22727272775,
+              75469.70000000061,
+              72614.77272727255,
+              70317.80000000005,
+              67611.736363636,
+              68052.27272727218,
+              66596.21818181864,
+              76005.68181818207,
+              80664.77272727236
+            ]
+          },
+          {
+            "case": "Mounted next and back, six steps",
+            "iterations": 20,
+            "samples": [
+              361858.35,
+              408654.1499999953,
+              522285.4500000039,
+              421375.00000000047,
+              384818.7500000108,
+              353502.1000000029,
+              469145.8000000011,
+              333675.0000000052,
+              353841.69999999815,
+              352966.64999999624,
+              423779.1499999957,
+              355227.10000000184
+            ]
+          }
+        ],
+        "checksum": 29091515
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 37462,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "student registration SSR",
+            "iterations": 91,
+            "samples": [
+              147815.010989011,
+              139225.2747252744,
+              125787.08791208772,
+              122176.73626373641,
+              147279.30769230786,
+              138993.13186813236,
+              135651.09890109938,
+              123583.79120879127,
+              120795.78021978012,
+              127202.84615384579,
+              116895.60439560427,
+              135383.24175824202
+            ]
+          },
+          {
+            "case": "volunteer registration SSR",
+            "iterations": 153,
+            "samples": [
+              74257.35294117617,
+              73881.53594771282,
+              77975.49019607843,
+              70509.8039215687,
+              67992.64705882424,
+              76890.52287581739,
+              74946.35294117682,
+              70929.4640522877,
+              69913.9411764704,
+              76822.98692810458,
+              71289.49019607832,
+              81650.86928104628
+            ]
+          },
+          {
+            "case": "Mounted next and back, six steps",
+            "iterations": 23,
+            "samples": [
+              422349.6521739158,
+              417876.8260869575,
+              358249.9999999982,
+              360351.4782608707,
+              440030.78260869224,
+              355155.78260869125,
+              343802.52173912636,
+              373173.9130434819,
+              374869.5652173845,
+              371884.0869565196,
+              408472.8260869645,
+              334086.9565217378
+            ]
+          }
+        ],
+        "checksum": 32673984
+      },
+      "upstream": {
+        "pid": 37463,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "student registration SSR",
+            "iterations": 91,
+            "samples": [
+              177915.28571428574,
+              157052.19780219757,
+              159468.86813186802,
+              167793.04395604375,
+              165449.175824176,
+              150233.05494505534,
+              170436.35164835217,
+              164640.10989011012,
+              178391.0219780221,
+              168793.95604395613,
+              158856.23076923078,
+              178210.16483516432
+            ]
+          },
+          {
+            "case": "volunteer registration SSR",
+            "iterations": 153,
+            "samples": [
+              86071.35294117624,
+              90331.96732026133,
+              84694.44444444458,
+              87330.06535947698,
+              88843.95424836593,
+              85409.58823529356,
+              98078.43137254957,
+              92690.09150326825,
+              94643.51633986927,
+              86219.77124183036,
+              95701.52287581704,
+              85869.28104575185
+            ]
+          },
+          {
+            "case": "Mounted next and back, six steps",
+            "iterations": 23,
+            "samples": [
+              498624.9999999967,
+              441777.1739130449,
+              523614.13043478894,
+              450385.8695652129,
+              456795.3043478274,
+              462942.04347825894,
+              414358.69565217494,
+              407311.5652173902,
+              453291.69565217814,
+              427050.6956521805,
+              408797.13043477753,
+              515818.8260869615
+            ]
+          }
+        ],
+        "checksum": 26580128
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 37465,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "student registration SSR",
+            "iterations": 55,
+            "samples": [
+              181968.1818181824,
+              182117.41818181818,
+              171396.9636363634,
+              185075,
+              169836.36363636376,
+              179216.6727272729,
+              184076.50909090927,
+              154931.81818181835,
+              164519.69090909103,
+              168959.09090909114,
+              182466.67272727253,
+              169915.9090909089
+            ]
+          },
+          {
+            "case": "volunteer registration SSR",
+            "iterations": 112,
+            "samples": [
+              81449.03571428584,
+              90973.21428571397,
+              95579.24107142871,
+              90301.7053571428,
+              91680.4285714282,
+              94434.90178571372,
+              87680.06249999974,
+              89678.20535714261,
+              97498.51785714319,
+              97986.60714285645,
+              84956.47321428581,
+              92826.63392857213
+            ]
+          },
+          {
+            "case": "Mounted next and back, six steps",
+            "iterations": 18,
+            "samples": [
+              523835.61111110385,
+              589601.8333333282,
+              449655.1111111052,
+              456953.7222222127,
+              616590.2777777824,
+              473361.1111111158,
+              439057.88888889673,
+              417425.9444444538,
+              552259.2777777694,
+              483178.2222222122,
+              407881.9444444359,
+              508780.11111111235
+            ]
+          }
+        ],
+        "checksum": 29203248
+      },
+      "vpm": {
+        "pid": 37496,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "student registration SSR",
+            "iterations": 55,
+            "samples": [
+              138120.45454545435,
+              136050.0000000007,
+              137121.2181818185,
+              129187.12727272659,
+              187785.61818181744,
+              131696.96363636377,
+              138249.99999999983,
+              146885.6000000001,
+              132802.2727272727,
+              135100.7636363637,
+              138931.81818181844,
+              121862.12727272669
+            ]
+          },
+          {
+            "case": "volunteer registration SSR",
+            "iterations": 112,
+            "samples": [
+              70072.54464285697,
+              66963.16964285691,
+              69417.77678571474,
+              73708.7053571435,
+              71404.01785714293,
+              65392.49107142808,
+              74825.89285714373,
+              72269.71428571412,
+              70092.63392857129,
+              71443.45535714283,
+              71786.08928571403,
+              72448.66071428545
+            ]
+          },
+          {
+            "case": "Mounted next and back, six steps",
+            "iterations": 18,
+            "samples": [
+              607240.777777785,
+              439962.9444444473,
+              426365.7222222213,
+              404217.55555554584,
+              602835.611111118,
+              671196.7777777849,
+              368435.22222222365,
+              393495.38888888626,
+              401766.1666666628,
+              511037.00000000023,
+              456046.2777777856,
+              364481.49999999814
+            ]
+          }
+        ],
+        "checksum": 27983520
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 37521,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "student registration SSR",
+            "iterations": 64,
+            "samples": [
+              187160.15625000003,
+              142628.24999999956,
+              164649.73437499974,
+              139975.26562499994,
+              134505.2187500002,
+              142902.34375000032,
+              157785.15625000012,
+              140834.64062500006,
+              148916.0156249998,
+              132727.85937500052,
+              146741.53125,
+              131378.90625000015
+            ]
+          },
+          {
+            "case": "volunteer registration SSR",
+            "iterations": 142,
+            "samples": [
+              76718.90140845085,
+              84941.90140845043,
+              78859.7464788732,
+              72286.38028169038,
+              75794.89436619723,
+              74359.74647887313,
+              64725.35211267628,
+              74393.19014084458,
+              88711.5633802816,
+              67846.54225352072,
+              81893.48591549291,
+              71027.87323943665
+            ]
+          },
+          {
+            "case": "Mounted next and back, six steps",
+            "iterations": 24,
+            "samples": [
+              380423.58333333937,
+              342420.1249999991,
+              459888.9166666709,
+              393529.54166666145,
+              355618.0833333258,
+              435140.6250000025,
+              370689.2499999981,
+              357147.58333332953,
+              380633.70833333465,
+              361043.3749999989,
+              422572.91666666674,
+              327529.49999999715
+            ]
+          }
+        ],
+        "checksum": 31408416
+      },
+      "upstream": {
+        "pid": 37523,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "student registration SSR",
+            "iterations": 64,
+            "samples": [
+              165561.85937499988,
+              182224.60937500084,
+              180563.81249999997,
+              165583.984375,
+              174712.89062499994,
+              155455.07812500058,
+              155235.67187500032,
+              171958.32812500012,
+              167859.3749999999,
+              179918.625,
+              156250.64062500015,
+              167544.9218749998
+            ]
+          },
+          {
+            "case": "volunteer registration SSR",
+            "iterations": 142,
+            "samples": [
+              80087.73943661926,
+              78595.35915492933,
+              94899.94366197231,
+              84995.88732394319,
+              82411.0915492955,
+              90634.68309859176,
+              88362.3873239437,
+              78703.64084507061,
+              93486.7957746479,
+              85374.9999999999,
+              86227.40140845053,
+              92790.19718309841
+            ]
+          },
+          {
+            "case": "Mounted next and back, six steps",
+            "iterations": 24,
+            "samples": [
+              492230.8749999995,
+              557114.5833333351,
+              477892.3750000009,
+              602881.9583333321,
+              507906.2500000002,
+              611477.4166666734,
+              447241.3333333331,
+              406687.5000000039,
+              412371.5416666679,
+              494482.66666666995,
+              446576.4166666588,
+              407184.04166667216
+            ]
+          }
+        ],
+        "checksum": 28365856
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 37538,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "student registration SSR",
+            "iterations": 63,
+            "samples": [
+              198454.36507936544,
+              194924.60317460357,
+              210628.3174603176,
+              195663.34920634943,
+              170333.33333333326,
+              163424.60317460314,
+              154132.9365079365,
+              172172.61904761923,
+              162360.46031746003,
+              161500.66666666718,
+              179728.1746031748,
+              166428.57142857162
+            ]
+          },
+          {
+            "case": "volunteer registration SSR",
+            "iterations": 126,
+            "samples": [
+              77537.0396825399,
+              107351.52380952392,
+              83109.12698412643,
+              86873.34126984156,
+              85713.95238095195,
+              85596.88888888898,
+              84811.84126984111,
+              84399.46825396892,
+              77506.28571428599,
+              82099.86507936464,
+              78004.62698412774,
+              93968.9126984131
+            ]
+          },
+          {
+            "case": "Mounted next and back, six steps",
+            "iterations": 13,
+            "samples": [
+              820304.4615384687,
+              627259.615384621,
+              504121.7692307607,
+              441009.6153846133,
+              495041.6923077053,
+              650849.384615395,
+              513048.07692307665,
+              498121.76923076273,
+              534842.9230769293,
+              479387.8461538532,
+              435249.99999999633,
+              450951.9230769351
+            ]
+          }
+        ],
+        "checksum": 34179696
+      },
+      "vpm": {
+        "pid": 37539,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "student registration SSR",
+            "iterations": 63,
+            "samples": [
+              158817.46031746097,
+              158874.33333333294,
+              173986.1111111108,
+              166490.0793650795,
+              188671.95238095205,
+              175729.5079365082,
+              164031.7460317461,
+              167364.4126984123,
+              171578.03174603172,
+              177021.1587301587,
+              155308.85714285763,
+              162363.74603174557
+            ]
+          },
+          {
+            "case": "volunteer registration SSR",
+            "iterations": 126,
+            "samples": [
+              92483.79365079376,
+              81886.90476190513,
+              83150.46825396798,
+              85995.36507936424,
+              85954.03174603151,
+              95417.9920634917,
+              81435.18253968292,
+              83855.48412698405,
+              82562.49999999996,
+              81329.69841269894,
+              96402.11111111187,
+              89394.84126984184
+            ]
+          },
+          {
+            "case": "Mounted next and back, six steps",
+            "iterations": 13,
+            "samples": [
+              649567.3076923105,
+              1031291.692307692,
+              1710746.846153842,
+              449131.3846153844,
+              568121.769230769,
+              662640.999999999,
+              613669.8461538379,
+              1191407.000000009,
+              893230.7692307754,
+              750791.6153846195,
+              671749.999999992,
+              846378.1538461472
+            ]
+          }
+        ],
+        "checksum": 28905364
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 37540,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "student registration SSR",
+            "iterations": 10,
+            "samples": [
+              491095.79999999935,
+              204450.00000000276,
+              470154.1999999961,
+              1252141.6999999986,
+              411112.49999999587,
+              362933.30000000313,
+              667941.7000000001,
+              514150.00000000076,
+              711549.9999999998,
+              555591.5999999968,
+              219679.20000000164,
+              347641.6999999969
+            ]
+          },
+          {
+            "case": "volunteer registration SSR",
+            "iterations": 18,
+            "samples": [
+              86187.50000000041,
+              103363.44444444498,
+              596354.1666666666,
+              82222.22222222324,
+              81108.8333333348,
+              86013.8888888855,
+              179840.27777777732,
+              159967.6111111105,
+              88856.50000000093,
+              101520.83333333116,
+              147194.44444444386,
+              87050.88888888845
+            ]
+          },
+          {
+            "case": "Mounted next and back, six steps",
+            "iterations": 6,
+            "samples": [
+              534187.4999999921,
+              622458.3333333461,
+              589902.8333333263,
+              453395.8333333127,
+              460701.4999999895,
+              456888.8333333234,
+              716819.3333333192,
+              751430.5000000073,
+              801333.3333333321,
+              629270.8333333317,
+              919770.8333333594,
+              458236.0000000184
+            ]
+          }
+        ],
+        "checksum": 17499136
+      },
+      "upstream": {
+        "pid": 37564,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "student registration SSR",
+            "iterations": 10,
+            "samples": [
+              303575.00000000076,
+              181295.90000000066,
+              169695.79999999952,
+              220008.2999999978,
+              256283.3999999981,
+              171179.20000000024,
+              462237.5000000006,
+              156995.79999999856,
+              161187.49999999977,
+              184833.30000000252,
+              266999.9999999959,
+              157716.60000000338
+            ]
+          },
+          {
+            "case": "volunteer registration SSR",
+            "iterations": 18,
+            "samples": [
+              81458.33333333346,
+              129872.6666666678,
+              82780.11111110888,
+              93701.38888888847,
+              82254.6111111093,
+              96974.55555555558,
+              113402.77777777727,
+              85467.61111111323,
+              75499.99999999891,
+              71106.44444444524,
+              75379.61111111082,
+              115280.1111111109
+            ]
+          },
+          {
+            "case": "Mounted next and back, six steps",
+            "iterations": 6,
+            "samples": [
+              513979.1666666724,
+              530604.1666666488,
+              437326.50000000227,
+              460736.16666664445,
+              581111.1666666496,
+              491791.66666666185,
+              519680.4999999737,
+              521735.9999999947,
+              747291.6666666454,
+              474847.3333333626,
+              542659.6666666607,
+              605902.8333333269
+            ]
+          }
+        ],
+        "checksum": 36956928
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "student registration SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 169029.72131147535,
+          "vpmNs": 135133.87704918056,
+          "changePct": -20.053185912691685
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 166621.10989010986,
+          "vpmNs": 131293.0439560439,
+          "changePct": -21.20263510269831
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 175306.81818181815,
+          "vpmNs": 136585.6090909096,
+          "changePct": -22.087680041485402
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 167702.14843749985,
+          "vpmNs": 142765.29687499994,
+          "changePct": -14.869726950333916
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 171252.97619047624,
+          "vpmNs": 166927.24603174592,
+          "changePct": -2.525929916639247
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 183064.6000000016,
+          "vpmNs": 480624.99999999773,
+          "changePct": 162.5439325789877
+        }
+      ]
+    },
+    {
+      "case": "volunteer registration SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 87129.92272727279,
+          "vpmNs": 72175.00000000015,
+          "changePct": -17.163934339851718
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 88087.00980392145,
+          "vpmNs": 74069.4444444445,
+          "changePct": -15.913317287849315
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 91326.82142857109,
+          "vpmNs": 71423.73660714287,
+          "changePct": -21.793252529865935
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 85801.20070422522,
+          "vpmNs": 75094.0422535209,
+          "changePct": -12.479031019174357
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 84605.65476190503,
+          "vpmNs": 84904.75793650778,
+          "changePct": 0.3535262216745272
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 84123.86111111107,
+          "vpmNs": 95188.66666666605,
+          "changePct": 13.15299299082402
+        }
+      ]
+    },
+    {
+      "case": "Mounted next and back, six steps",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 432323.97499999707,
+          "vpmNs": 373338.5500000054,
+          "changePct": -13.64380150325738
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 451838.78260869556,
+          "vpmNs": 372529.0000000007,
+          "changePct": -17.55267269241455
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 478269.66666666395,
+          "vpmNs": 433164.3333333343,
+          "changePct": -9.430941679344762
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 485061.6250000002,
+          "vpmNs": 375556.4166666687,
+          "changePct": -22.57552498269295
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 501121.7692307617,
+          "vpmNs": 711270.8076923057,
+          "changePct": 41.93572328420887
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 520708.24999998417,
+          "vpmNs": 606180.5833333362,
+          "changePct": 16.414630137577912
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "student registration SSR",
+      "upstream_ns": 168366,
+      "vpm_ns": 135860,
+      "change_pct": -20.6,
+      "upstream_first_pct": -21.1,
+      "vpm_first_pct": -18,
+      "process_range_pct": "-20.1, -21.2, -22.1, -14.9",
+      "control_max_abs_pct": 162.5,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "volunteer registration SSR",
+      "upstream_ns": 87608,
+      "vpm_ns": 73122,
+      "change_pct": -16.5,
+      "upstream_first_pct": -19.5,
+      "vpm_first_pct": -14.2,
+      "process_range_pct": "-17.2, -15.9, -21.8, -12.5",
+      "control_max_abs_pct": 13.2,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "Mounted next and back, six steps",
+      "upstream_ns": 465054,
+      "vpm_ns": 374447,
+      "change_pct": -15.6,
+      "upstream_first_pct": -11.5,
+      "vpm_first_pct": -20.1,
+      "process_range_pct": "-13.6, -17.6, -9.4, -22.6",
+      "control_max_abs_pct": 41.9,
+      "evidence": "unestablished at this precision"
+    }
+  ]
+}

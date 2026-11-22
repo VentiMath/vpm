@@ -558,3 +558,7 @@ The layout fixtures use the ARML highlights, WARML team shortcuts, Math Is Cool 
 ### WARML signup Rating
 
 `rating-contract.cjs` compares accessible names, selections and icon states with the app and current Material versions. `rating-browser.cjs` compares actual pointer and keyboard events across separate radio groups. Run `node scripts/mui-material-conformance/app-rating.cjs <ventimath-checkout> <git-ref>` to verify the two unchanged poll functions and the app's conversion of a cleared rating to zero. The recorded caller revision is `aa110e55`.
+
+### WARML registration steps
+
+Run `node steps-contract.cjs` or `bun steps-contract.cjs` to compare state and markup with app Material 7.2.0 and current Material 9.5.0. `node steps-browser.cjs` checks the visible labels, icon and connector geometry, focus and retained nodes in Chrome. Set `VPM_APP_CHECKOUT` to a VentiMath checkout and optionally `VPM_APP_REF` to a revision to use the form’s actual Stepper JSX, role-to-label function, English translations and theme overrides. The default fixture runs in public CI. [Measurements](../../packages/vmui-material/bench/steps/README.md).

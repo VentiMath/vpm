@@ -593,3 +593,12 @@ import FontSlider from "vmui-material/Slider";
 React.createElement(FontSlider,{value:16,marks:[{value:16,label:"100%"}],step:null,track:false,onChangeCommitted:(_,v)=>v.toFixed()});
 // @ts-expect-error The toolbar slider has one thumb.
 React.createElement(FontSlider,{value:[12,18]});
+
+import RegistrationStepper from "vmui-material/Stepper";
+import RegistrationStep from "vmui-material/Step";
+import RegistrationLabel from "vmui-material/StepLabel";
+const registrationLabel = React.createElement(RegistrationLabel,{optional:"Optional"},"About You");
+const registrationStep = React.createElement(RegistrationStep,{completed:true},registrationLabel);
+React.createElement(RegistrationStepper,{activeStep:1,alternativeLabel:true,sx:{mb:3}},registrationStep);
+// @ts-expect-error The active step is a numeric index.
+React.createElement(RegistrationStepper,{activeStep:"confirm"});
