@@ -32,6 +32,7 @@ try {
     "vjs-tokens",
     "vpicocolors",
     "vbabel-code-frame",
+    "vbabel-helper-validator-option",
   ]) {
     const [packed] = JSON.parse(
       run("npm", [
@@ -82,11 +83,15 @@ try {
       'const cjsFrame = createRequire(import.meta.url)("vbabel-code-frame");',
       'assert.equal(frame, cjsFrame.default); assert.equal(codeFrameColumns, cjsFrame.codeFrameColumns);',
       'assert.ok(codeFrameColumns("x", {start:{line:1,column:1}}).includes("^"));',
+      'import { OptionValidator, findSuggestion } from "vbabel-helper-validator-option";',
+      'const validatorCjs=createRequire(import.meta.url)("vbabel-helper-validator-option");',
+      'assert.equal(OptionValidator,validatorCjs.OptionValidator); assert.equal(findSuggestion,validatorCjs.findSuggestion);',
+      'assert.equal(findSuggestion("chorme",["chrome","node"]),"chrome");',
     ].join("\n");
     for (const runtime of ["node", "bun"])
       run(runtime, ["--input-type=module", "-e", imports], dir);
     for (const runtime of ["node", "bun"])
-      for (const caller of ["trace-caller.cjs", "convert-caller.cjs","jsesc-caller.cjs", "identifier-caller.cjs", "string-parser-caller.cjs", "gensync-caller.cjs", "tokens-caller.cjs", "code-frame-caller.cjs"])
+      for (const caller of ["trace-caller.cjs", "convert-caller.cjs","jsesc-caller.cjs", "identifier-caller.cjs", "string-parser-caller.cjs", "gensync-caller.cjs", "tokens-caller.cjs", "code-frame-caller.cjs", "option-caller.cjs"])
         run(runtime, [path.join(__dirname, caller)], dir, {
           VPM_TRACE_INSTALL: path.join(dir, "node_modules"),
         });

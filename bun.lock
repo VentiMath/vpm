@@ -57,6 +57,10 @@
       "name": "vbabel-helper-validator-identifier",
       "version": "7.29.7",
     },
+    "packages/vbabel-helper-validator-option": {
+      "name": "vbabel-helper-validator-option",
+      "version": "7.29.7",
+    },
     "packages/vbase64-js": {
       "name": "vbase64-js",
       "version": "1.5.1",
@@ -2009,6 +2013,8 @@
     "vbabel-helper-string-parser": ["vbabel-helper-string-parser@workspace:packages/vbabel-helper-string-parser"],
 
     "vbabel-helper-validator-identifier": ["vbabel-helper-validator-identifier@workspace:packages/vbabel-helper-validator-identifier"],
+
+    "vbabel-helper-validator-option": ["vbabel-helper-validator-option@workspace:packages/vbabel-helper-validator-option"],
 
     "vbase64-js": ["vbase64-js@workspace:packages/vbase64-js"],
 

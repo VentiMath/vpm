@@ -43,3 +43,5 @@ The gensync fixture runs Babel Core 7.29.0 against each runner in a fresh proces
 Run `node scripts/source-map-conformance/tokens-caller.cjs` or its Bun equivalent for highlighted Babel errors in JSX and TypeScript. The fixture loads each unchanged code-frame with its tokenizer resolved to the selected implementation. To run the original 694 tokenizer cases, pass a checkout of js-tokens v4.0.0 to `node scripts/source-map-conformance/tokens-upstream.cjs`.
 
 Run `node scripts/source-map-conformance/code-frame-caller.cjs` on Node or Bun to exercise Babel with the complete VPM formatter and its dependency closure. `code-frame-upstream.cjs` accepts the original Babel v7.29.7 test/index.js file. The package tests additionally cover colored tab alignment and differing middle-line widths in source ranges.
+
+Run `node scripts/source-map-conformance/option-caller.cjs` or its Bun equivalent for Babel’s target validation and build diagnostics with the VPM validator. Both compilation-targets 7.28.6 and 7.29.13 run unchanged. `option-upstream.cjs` accepts Babel v7.29.7’s validator.spec.js and find-suggestion.spec.js files.
