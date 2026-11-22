@@ -318,3 +318,21 @@ compare ordinary formula/prose paths to immutable 0.2.2 source
 is not a valid performance control for newly formatted lists.
 
 React and React DOM verification now pin 19.3.1, including exact archive consumers. DOM lifecycle regressions verify whole-formula TeX copying and preserve native behavior when a selection only includes part of a formula. These checks do not claim real screen-reader or WebKit/Firefox acceptance.
+
+## Selection and copy
+
+`node --test scripts/vlx-conformance/selection.test.cjs` checks partial, whole
+and mixed selections, negation/fullwidth characters, cleanup, and all 114
+historical outline/MathML/geometry controls. Only the new selectable text is
+removed when comparing the old HTML control; React and string output are
+compared including that text in the archive tests.
+
+`node scripts/vlx-conformance/selection-browser.cjs` uses real Chrome mouse
+and Shift+Arrow input for powers, subscripts, fractions and sums in both modes,
+then checks clipboard conversion. KaTeX 0.19.1 ordinary partial selection is the
+visible-character baseline; its optional copy-tex extension expands partial
+selection to a whole expression and is not a partial-TeX implementation. The
+fixture uses synthetic math only. Physical touch selection is still unverified.
+
+`bench-selection.cjs /path/to/extracted/vlx-0.3.0` measures cached and uncached
+string output with isolated AB/BA processes and identical-source controls.

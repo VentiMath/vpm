@@ -107,3 +107,19 @@ After `await preloadMath()`, React components render on their first pass without
 an initial loading fallback. `MathProvider` sets shared `scrollLabel` and
 `loadingFallback`; nested defaults and explicit component overrides are supported.
 Fitting or hidden formulas avoid computed-style reads.
+
+## Selection and copy (0.3.1)
+
+The browser view pairs each existing outline with transparent native SVG text.
+Selection highlights are visible and follow the glyph positions, including
+scripts. The text stays inside the existing SVG bounds and remains decorative
+to accessibility APIs; the unchanged MathML tree supplies semantics. Exported
+SVG and PNG do not contain the selection layer. Partial copying produces the
+visible Unicode characters, as ordinary KaTeX selection does. Whole-expression
+copying retains source TeX when the browser lifecycle is installed.
+
+Automated Chrome checks exercise native mouse drags and Shift+Arrow selection
+for inline/display powers, subscripts, fractions and sums. Existing tests retain
+React DOM identity, focus, horizontal scroll, forced colors and MathML structure.
+Desktop touch emulation does not expose mobile selection handles; physical
+Android/iOS selection, Safari and Firefox remain unverified.

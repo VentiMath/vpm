@@ -2,7 +2,7 @@
 const {paths,variants:glyphs}=require('./font/glyphs.json');
 const {typography}=require('./typography.cjs');
 const {VlxError}=require('./source.cjs');
-function createLayout({element:E,text:T,group:G,start:S,append:A}){
+function createLayout({element:E,text:T,group:G,start:S,append:A,glyph:selectable}){
 // Outlines come from a fixed, finite font pool, independent of user input. Reuse
 // their leaf output while each occurrence retains its own placement/metrics.
 const outlines=new Map();
@@ -10,7 +10,7 @@ const n=x=>Number(x.toFixed(5));
 const transform=(x,y,scale)=>`translate(${n(x)} ${n(y)}) scale(${n(scale)})`;
 const move=(b,x=0,y=0,scale=1)=>G(transform(x,y,scale),b.svg);
 const box=(w,h,d,svg,mml)=>({w,h:Math.max(0,h),d:Math.max(0,d),svg,mml});
-function glyph(char,font='normal'){
+function glyph(char,font='normal',selectionChar=char){
  const metric=glyphs[font]?.[char]||(font==='bold-italic'?glyphs.bold[char]:undefined)||glyphs.normal[char];
  if(!metric){
   // U+00AD is discretionary: without a chosen hyphenation break it has no ink
@@ -18,13 +18,13 @@ function glyph(char,font='normal'){
   if(char==='\u00ad')return box(0,0,0,null,null);
   // Preserve fullwidth punctuation as a one-em cell, using the corresponding
   // outline. Keep the original Unicode character in semantic/text output.
-  if(char==='，'||char==='：'){const b=glyph(char==='，'?',':':',font);return box(1,b.h,b.d,move(b,(1-b.w)/2),null);}
+  if(char==='，'||char==='：'){const b=glyph(char==='，'?',':':',font,selectionChar);return box(1,b.h,b.d,move(b,(1-b.w)/2),null);}
   throw new VlxError('UNSUPPORTED_GLYPH','No outline for '+char);
  }
  const [h,d,w,ic,id]=metric,path=paths[id];
  let outline=null;
  if(path){outline=outlines.get(id);if(outline===undefined){outline=E('path',{d:path,transform:'scale(.001 -.001)',fill:'currentColor'});outlines.set(id,outline);}}
- return box(w+ic,h,d,outline,null);
+ return box(w+ic,h,d,selectable?selectable(outline,selectionChar,w+ic,h,d):outline,null);
 }
 function text(value,font='normal'){
  let w=0,h=0,d=0,svg=S();
@@ -47,12 +47,12 @@ function layout(ast,options={}){
  switch(ast.kind){
   case 'symbol':{
    const style=font||((/^[a-zA-Zα-ωϕϵϑς]$/u.test(ast.text))?'italic':'normal');
-   const b=glyph(ast.text,ast.large&&display&&!bold?'-largeop':weight(style));
+   const b=glyph(ast.text,ast.large&&display&&!bold?'-largeop':weight(style),options.selectionText||ast.text);
    const identifier=ast.class==='ord'&&/^[\p{L}]$/u.test(ast.text);
    b.mml=E(identifier?'mi':'mo',bold?{mathvariant:weight(style)}:null,T(ast.text));return b;
   }
   case 'negation':{
-   const b=child(ast.body),h=Math.max(b.h,.7),d=Math.max(b.d,.15),x0=b.w*.18,x1=b.w*.82;
+   const b=child(ast.body,{selectionText:ast.body.text+'\u0338'}),h=Math.max(b.h,.7),d=Math.max(b.d,.15),x0=b.w*.18,x1=b.w*.82;
    const tag=ast.body.class==='ord'&&/^[\p{L}]$/u.test(ast.body.text)?'mi':'mo';
    return box(b.w,h+.025,d+.025,[b.svg,E('path',{d:`M ${n(x0)} ${n(d)} L ${n(x1)} ${n(-h)}`,fill:'none',stroke:'currentColor',strokeWidth:'.05'})],E(tag,null,T(ast.body.text+'\u0338')));
   }
@@ -241,3 +241,12 @@ exports.layout=(...args)=>finish(strings.layout(...args));
 exports.text=(...args)=>finish(strings.text(...args));
 exports.move=strings.move;
 exports.box=strings.box;
+
+const selectable=require('./selection-output.cjs');
+for(const [name,base] of [['Nodes',require('./nodes.cjs')],['Strings',markup]]){
+ const emitter=selectable(base),engine=createLayout(emitter);
+ exports['layoutSelectable'+name]=(...args)=>{
+  const b=engine.layout(...args),pick=emitter.pick;
+  return {...b,svg:pick(b.svg,'ink'),web:pick(b.svg,'web'),mml:pick(b.mml,'ink')};
+ };
+}

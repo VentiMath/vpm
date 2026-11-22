@@ -2,7 +2,7 @@
   "implementation": {
     "kind": "independent parser, layout and bounded PNG rasterizer implementation",
     "replacementStatus": "complete for documented application scope",
-    "targetScope": "Independent TeX parsing/layout for web math and complete problem PNG/SVG composition: prose, paragraphs, ordered figures, arrays, choice grids and bounded PNG validation. Document-scoped equation numbering, forward/back references and native React/HTML reference navigation. PNG output now owns outline flattening, transforms, fill/stroke coverage, embedded figure compositing and PNG encoding for VLX-generated drawings."
+    "targetScope": "Independent TeX parsing/layout for web math and complete problem PNG/SVG composition: prose, paragraphs, ordered figures, arrays, choice grids and bounded PNG validation. Document-scoped equation numbering, forward/back references and native React/HTML reference navigation. PNG output now owns outline flattening, transforms, fill/stroke coverage, embedded figure compositing and PNG encoding for VLX-generated drawings. Browser-native glyph selection with visible-character partial copying and whole-expression source TeX; desktop Chrome verified, physical mobile selection pending."
   },
   "fontData": {
     "package": "@mathjax/mathjax-newcm-font",

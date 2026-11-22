@@ -1,3 +1,6 @@
 .vlx-math .vlx-slanted{font-style:oblique}
 @media (forced-colors:active){.vlx-math [color]{color:CanvasText}}
 .vlx-equation-target{position:absolute;inset:0;pointer-events:none}.vlx-equation-target:focus{outline:2px solid currentColor;outline-offset:2px}.vlx-math a:focus{outline:2px solid currentColor}
+
+.vlx-select::selection{fill:transparent;color:transparent;background-color:rgba(51,139,253,.35)}
+@media (forced-colors:active){.vlx-select::selection{fill:HighlightText;color:HighlightText;background-color:Highlight}}

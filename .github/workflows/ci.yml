@@ -761,10 +761,11 @@ jobs:
       - run: node scripts/dnd-conformance/archives.cjs
       - run: node scripts/vlx-conformance/check-lock.cjs
       - run: npm --prefix scripts/vlx-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: node --test scripts/vlx-conformance/dom.test.cjs scripts/vlx-conformance/launch-chrome.test.cjs
+      - run: node --test scripts/vlx-conformance/dom.test.cjs scripts/vlx-conformance/selection.test.cjs scripts/vlx-conformance/launch-chrome.test.cjs
       - run: node scripts/vlx-conformance/build-font.cjs --check
       - run: node scripts/vlx-conformance/raster.cjs
       - run: node scripts/vlx-conformance/archives.cjs
+      - run: node scripts/vlx-conformance/selection-browser.cjs
       - run: node scripts/vlx-conformance/browser.cjs
       - name: Check VLX release archives
         run: |
@@ -1607,7 +1608,7 @@ jobs:
       - run: node scripts/dnd-conformance/archives.cjs
       - run: node scripts/vlx-conformance/check-lock.cjs
       - run: npm --prefix scripts/vlx-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: node --test scripts/vlx-conformance/dom.test.cjs scripts/vlx-conformance/launch-chrome.test.cjs
+      - run: node --test scripts/vlx-conformance/dom.test.cjs scripts/vlx-conformance/selection.test.cjs scripts/vlx-conformance/launch-chrome.test.cjs
       - run: node scripts/vlx-conformance/build-font.cjs --check
       - run: bun scripts/vlx-conformance/raster.cjs
       - run: node scripts/vlx-conformance/archives.cjs

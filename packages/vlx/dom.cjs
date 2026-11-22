@@ -41,30 +41,48 @@ function observeMath(root,options={}) {
   if(event.defaultPrevented||!event.clipboardData)return;
   const selection=root.ownerDocument.getSelection();if(!selection||selection.isCollapsed||selection.rangeCount!==1)return;
   const range=selection.getRangeAt(0);try{if(!range.intersectsNode(root))return;}catch{return;}
-  // Cloning a range retains partial ancestor wrappers. An annotation inside
-  // such a wrapper still contains the entire source, so do not substitute it.
-  const boundary=root.ownerDocument.createRange();
-  for(const element of records.keys())if(range.intersectsNode(element)){
-   boundary.selectNode(element);
-   if(range.compareBoundaryPoints(view.Range.START_TO_START,boundary)>0||range.compareBoundaryPoints(view.Range.END_TO_END,boundary)<0)return;
+  const document=root.ownerDocument,boundary=document.createRange();
+  let handled=false;
+  function selectedText(node){
+   boundary.selectNodeContents(node);
+   let start=0,end=node.length;
+   if(range.compareBoundaryPoints(view.Range.START_TO_START,boundary)>0){
+    if(range.startContainer!==node)return '';start=range.startOffset;
+   }
+   if(range.compareBoundaryPoints(view.Range.END_TO_END,boundary)<0){
+    if(range.endContainer!==node)return '';end=range.endOffset;
+   }
+   return node.nodeValue.slice(start,end);
   }
-  const fragment=range.cloneContents(),formulas=[...fragment.querySelectorAll(selector)];
-  // Whole mathematical widgets in a mixed prose selection become their authored
-  // source. Other selections, including partial MathML selections, keep native
-  // behavior. No system clipboard access occurs outside an actual copy event.
-  if(!formulas.length)return;
-  let changed=false;
-  for(const element of formulas){const tex=element.querySelector('annotation[encoding="application/x-tex"]')?.textContent;if(tex===undefined)continue;const display=element.getAttribute('data-vlx-display')==='true';element.replaceWith(root.ownerDocument.createTextNode(display?'\\['+tex+'\\]':'$'+tex+'$'));changed=true;}
-  if(!changed)return;
+  function covers(element){
+   const text=[...element.querySelectorAll('.vlx-select')].flatMap(e=>[...e.childNodes]).filter(n=>n.nodeType===3);
+   if(text.length){
+    boundary.setStart(text[0],0);boundary.setEnd(text.at(-1),text.at(-1).length);
+   }else boundary.selectNode(element);
+   return range.compareBoundaryPoints(view.Range.START_TO_START,boundary)<=0&&range.compareBoundaryPoints(view.Range.END_TO_END,boundary)>=0;
+  }
   function plain(node){
-   if(node.nodeType===3)return node.nodeValue;
+   if(!range.intersectsNode(node))return '';
+   if(node.nodeType===3)return selectedText(node);
    if(node.nodeType!==1&&node.nodeType!==11)return '';
-   if(node.nodeName==='BR')return '\n';if(node.nodeName==='IMG')return node.getAttribute('alt')||'';
-   if(['SCRIPT','STYLE'].includes(node.nodeName))return '';
-   const content=[...node.childNodes].map(plain).join('');return /^(P|DIV|SECTION|LI|H[1-6])$/.test(node.nodeName)?content+'\n':content;
+   if(node.matches?.(selector)&&covers(node)){
+    const tex=node.querySelector('annotation[encoding="application/x-tex"]')?.textContent;
+    if(tex!==undefined){handled=true;return node.getAttribute('data-vlx-display')==='true'?'\\['+tex+'\\]':'$'+tex+'$';}
+   }
+   if(node.localName==='math'||['SCRIPT','STYLE'].includes(node.nodeName))return '';
+   if(node.nodeName==='BR')return '\n';
+   if(node.nodeName==='IMG')return node.getAttribute('alt')||'';
+   if(node.matches?.('.vlx-select')){const value=[...node.childNodes].map(plain).join('');if(value)handled=true;return value;}
+   const content=[...node.childNodes].map(plain).join('');
+   return /^(P|DIV|SECTION|LI|H[1-6])$/.test(node.nodeName)?content+'\n':content;
   }
-  event.clipboardData.setData('text/plain',plain(fragment).replace(/\n+$/,''));event.preventDefault();
+  let ancestor=range.commonAncestorContainer;
+  const parent=ancestor.nodeType===1?ancestor:ancestor.parentElement;
+  ancestor=parent?.closest(selector)||ancestor;
+  const value=plain(ancestor).replace(/\n+$/,'');
+  if(handled){event.clipboardData.setData('text/plain',value);event.preventDefault();}
  }
+
  root.ownerDocument.addEventListener('copy',copy);
  const mutation=typeof view.MutationObserver==='function'?new view.MutationObserver(scan):null;
  mutation?.observe(root,{subtree:true,childList:true,attributes:true,attributeFilter:['class','style']});

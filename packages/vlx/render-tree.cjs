@@ -18,11 +18,11 @@ function output(layout,{element:E,text:T,group:G}){return function render(tex,op
  const attrs={xmlns:'http://www.w3.org/2000/svg',viewBox:`0 0 ${round(w)} ${round(h)}`};
  const svg=E('svg',{...attrs,width,height},E('title',null,T(tex)),E('g',{color:'black'},inner));
  const mathml=E('math',{xmlns:'http://www.w3.org/1998/Math/MathML',display:display?'block':'inline'},E('semantics',null,b.mml,E('annotation',{encoding:'application/x-tex'},T(tex))));
- const webSvg=E('svg',{...attrs,width:round(w)+'em',height:round(h)+'em',style:webStyles[Number(display)],...(ast?.hasReferences?{role:'presentation'}:{'aria-hidden':'true',focusable:'false'})},inner);
+ const webSvg=E('svg',{...attrs,width:round(w)+'em',height:round(h)+'em',style:webStyles[Number(display)],...(ast?.hasReferences?{role:'presentation'}:{'aria-hidden':'true',focusable:'false'})},G(`translate(${pad} ${round(b.h+pad)})`,b.web));
  const html=E('span',{className:'vlx-math','data-vlx':'math','data-vlx-display':String(display),style:{position:'relative',maxWidth:'100%',minWidth:0,display:display?'block':'inline-block',overflowX:'auto',...(!display?{verticalAlign:round(-(b.d+pad))+'em'}:{}),fontSize:`calc(var(--vlx-scale,1) * ${checked.fontSize===undefined?'1em':fontSize+'px'})`}},webSvg,E('span',{style:hidden},mathml));
  return {tex,display,svg,html,mathml,width,height,baseline};
 }
 }
 exports.normalized=normalized;
-exports.renderNodes=output(layouts.layoutNodes,require('./nodes.cjs'));
-exports.renderStrings=output(layouts.layout,require('./markup.cjs'));
+exports.renderNodes=output(layouts.layoutSelectableNodes,require('./nodes.cjs'));
+exports.renderStrings=output(layouts.layoutSelectableStrings,require('./markup.cjs'));

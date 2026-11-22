@@ -24,11 +24,13 @@ document.addEventListener=(type,...args)=>{if(type==='copy')copies++;return add(
  for(const c of require('./output-reference.json').cases){
   const result=selected('vlx').renderMath(c.tex,{display:c.display});
   for(const field of ['width','height','baseline'])assert.equal(result[field],c[field],c.name+' '+field);
-  for(const field of ['svg','mathml','html']){htmlDescriptor.set.call(control,result[field]);assert.equal(digest(canonical(control.firstElementChild)),c[field],c.name+' serialized '+field);}
+  for(const field of ['svg','mathml','html']){htmlDescriptor.set.call(control,result[field]);control.querySelectorAll('.vlx-select').forEach(e=>e.remove());assert.equal(digest(canonical(control.firstElementChild)),c[field],c.name+' serialized '+field);}
   act(()=>root.render(h(c.display?api.DisplayMath:api.InlineMath,{tex:c.tex})));
-  assert.equal(digest(canonical(container.querySelector('[data-vlx="math"]'))),c.html,c.name+' direct React DOM');
+  htmlDescriptor.set.call(control,result.html);
+  const selectedHTML=digest(canonical(control.firstElementChild));
+  assert.equal(digest(canonical(container.querySelector('[data-vlx="math"]'))),selectedHTML,c.name+' direct React DOM');
   htmlDescriptor.set.call(control,selected('react-dom/server').renderToString(h(c.display?api.DisplayMath:api.InlineMath,{tex:c.tex})));
-  assert.equal(digest(canonical(control.querySelector('[data-vlx="math"]'))),c.html,c.name+' React SSR');
+  assert.equal(digest(canonical(control.querySelector('[data-vlx="math"]'))),selectedHTML,c.name+' React SSR');
  }
  // Check corrected indexed roots and newly supported Unicode through both
  // emitters without rewriting the historical r6 controls.
@@ -71,5 +73,5 @@ document.addEventListener=(type,...args)=>{if(type==='copy')copies++;return add(
  await act(async()=>hydrated.render(h(api.MathText,{source:'Hydrate $x^2$.',className:'timer-tick'})));
  assert.equal(hydratedHost.querySelector('[data-vlx="math"]'),serverFormula,'Updates after hydration preserve server math');
  await act(async()=>hydrated.unmount());assert.equal(copies,0);hydratedHost.remove();
- console.log('React: 114 unchanged r6 controls and 18 indexed-root/Unicode cases match string, direct DOM and SSR output; innerHTML writes prohibited; stable formula DOM, changed TeX/fallbacks, lazy loading, hydration, shared styles, StrictMode and cleanup pass.');
+ console.log('React: 114 r6 outline/MathML controls plus selectable text and 18 indexed-root/Unicode cases match string, direct DOM and SSR output; innerHTML writes prohibited; stable formula DOM, changed TeX/fallbacks, lazy loading, hydration, shared styles, StrictMode and cleanup pass.');
 }finally{Object.defineProperty(Element.prototype,'innerHTML',htmlDescriptor);dom.window.close();}})().catch(error=>{console.error(error);process.exitCode=1});
