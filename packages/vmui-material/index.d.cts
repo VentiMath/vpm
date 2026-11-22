@@ -1053,3 +1053,15 @@ export function getStepLabelUtilityClass(slot:string):string;
 interface StepLabelOwnProps { error?:boolean; icon?:React.ReactNode; optional?:React.ReactNode; classes?:Partial<StepLabelClasses>; sx?:SxProps<Theme>; }
 export type StepLabelProps = React.ComponentPropsWithRef<"span"> & StepLabelOwnProps;
 export const StepLabel: React.ForwardRefExoticComponent<StepLabelProps>;
+
+export type StepContentClassKey = "root" | "last" | "transition";
+export type StepContentClasses = Readonly<Record<StepContentClassKey,string>>;
+export const stepContentClasses:StepContentClasses;
+export function getStepContentUtilityClass(slot:string):string;
+export interface StepContentProps extends React.HTMLAttributes<HTMLDivElement> {
+ classes?:Partial<StepContentClasses>; sx?:SxProps<Theme>;
+ transitionDuration?:CollapseOwnProps["timeout"];
+ slots?:{transition?:React.ElementType};
+ slotProps?:{transition?:Partial<CollapseProps> | ((state:StepContentProps & {last:boolean;alternativeLabel:boolean})=>Partial<CollapseProps>)};
+}
+export const StepContent:React.ForwardRefExoticComponent<StepContentProps & React.RefAttributes<HTMLDivElement>>;

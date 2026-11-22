@@ -602,3 +602,8 @@ const registrationStep = React.createElement(RegistrationStep,{completed:true},r
 React.createElement(RegistrationStepper,{activeStep:1,alternativeLabel:true,sx:{mb:3}},registrationStep);
 // @ts-expect-error The active step is a numeric index.
 React.createElement(RegistrationStepper,{activeStep:"confirm"});
+
+import CourseContent from "vmui-material/StepContent";
+React.createElement(CourseContent,{transitionDuration:"auto",ref:React.createRef<HTMLDivElement>(),slotProps:{transition:s=>({unmountOnExit:s.last})}},"Lesson subtitle");
+// @ts-expect-error Duration accepts milliseconds, enter/exit timing, or auto.
+React.createElement(CourseContent,{transitionDuration:"immediate"});

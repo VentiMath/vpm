@@ -139,3 +139,4 @@ export { default as Slider, getSliderUtilityClass, sliderClasses } from "./Slide
 export { default as Stepper, getStepperUtilityClass, stepperClasses } from "./Stepper.mjs";
 export { default as Step, getStepUtilityClass, stepClasses } from "./Step.mjs";
 export { default as StepLabel, getStepLabelUtilityClass, stepLabelClasses } from "./StepLabel.mjs";
+export {default as StepContent, stepContentClasses, getStepContentUtilityClass} from "./StepContent.mjs";

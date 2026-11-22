@@ -562,3 +562,7 @@ The layout fixtures use the ARML highlights, WARML team shortcuts, Math Is Cool 
 ### WARML registration steps
 
 Run `node steps-contract.cjs` or `bun steps-contract.cjs` to compare state and markup with app Material 7.2.0 and current Material 9.5.0. `node steps-browser.cjs` checks the visible labels, icon and connector geometry, focus and retained nodes in Chrome. Set `VPM_APP_CHECKOUT` to a VentiMath checkout and optionally `VPM_APP_REF` to a revision to use the form’s actual Stepper JSX, role-to-label function, English translations and theme overrides. The default fixture runs in public CI. [Measurements](../../packages/vmui-material/bench/steps/README.md).
+
+### Academy course subtitles
+
+Run `node step-content-contract.cjs` or `bun step-content-contract.cjs` for comparisons with Material 7 and 9. The browser check `node step-content-browser.cjs` exercises all-expanded lesson navigation, retained DOM, geometry and transition cleanup. With `VPM_APP_CHECKOUT` set, it extracts CourseView’s actual Stepper JSX and navigation handlers and the app’s theme override. The public fixture uses synthetic lessons. [Measurements](../../packages/vmui-material/bench/step-content/README.md).

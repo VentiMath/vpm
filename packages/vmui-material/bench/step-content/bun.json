@@ -1,0 +1,1330 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-22T03:30:10.223Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/mui-material-conformance/step-content-browser-entry.jsx": "81cc4cdf858224b089066644fc81fb1006ea8b0426c13e2e015da1d8a341ffe4",
+    "../../scripts/mui-material-conformance/step-content-scene.jsx": "cfc876938e0476ef9cddab36536eb06baa338aaa5c4883dbe68e7bb301fc7862",
+    "../../scripts/mui-material-conformance/step-content-ssr-entry.jsx": "720e31423618c2584d4268aee58af0ee5826d4eb4253bec417df74c903197b8a",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/app-upstream/step-content-browser.js": "2c058d9799bbc3852587bf51ecdefcb3348720b0e279c6c79077a91d51b9abc5",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/app-upstream/step-content-ssr.cjs": "23e958f8fa209b9da2ffad75dee7555a1fa788e5cdae88395b3fd1df61aaf331",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/app-vpm/step-content-browser.js": "37cf1250306b5338e09f7b25b13d7c5c907800cca11512ffe58e68eb94c5e9c5",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/app-vpm/step-content-ssr.cjs": "a603dc984344233b561f0815edefc5461c7b27f464a3f648370dba32bbc64f2f",
+    "../../scripts/mui-system-conformance/package-lock.json": "a04f91b1f742d1bd580d9d4119c7957b2d4cf7ef0a5adfa1f263b7ebf293a8a1",
+    "bench/step-content.cjs": "247014d2c11c1f41711f25fa9509dead81d3ef8283d2d1116a5887114d9d30ad",
+    "collapses.cjs": "2b368de9cafb84c3f785d189233cf4e20a3871e58106de3b3e9cc1fbebd326dd",
+    "course-step-content.cjs": "7f17bd44171e30719ae3ad287566e3a83c763ab6f4a17dd1914eb8f687e36671",
+    "registration-steps.cjs": "5d1a89c9f12f582bb20c4f75368c964d047bff41c176088809bd831b50f9791b",
+    "step-position.cjs": "c04e4ed1f05cbcb9a9e2d459fd569d01c0fb5a60f138f99ffd2755e8c4c973c6"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 58147,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "All six Academy subtitles SSR",
+            "iterations": 20,
+            "samples": [
+              394987.4999999992,
+              420708.350000001,
+              254172.90000000037,
+              329670.8499999994,
+              307737.50000000175,
+              262072.90000000116,
+              355083.350000001,
+              315964.5999999981,
+              256577.1000000012,
+              458856.2500000023,
+              262220.80000000005,
+              297897.949999998
+            ]
+          },
+          {
+            "case": "One active subtitle SSR",
+            "iterations": 42,
+            "samples": [
+              305912.6904761883,
+              253847.23809523956,
+              248110.11904761838,
+              239769.83333333346,
+              239705.35714285763,
+              238205.35714285524,
+              249261.90476190325,
+              267033.71428571164,
+              243520.83333333427,
+              233988.09523809492,
+              235621.02380952323,
+              254368.047619047
+            ]
+          },
+          {
+            "case": "Mounted navigation with six expanded subtitles",
+            "iterations": 10,
+            "samples": [
+              892724.9999999959,
+              767195.9000000015,
+              951579.0999999808,
+              910770.8000000002,
+              738095.7999999964,
+              814716.7000000081,
+              781329.0999999936,
+              952858.3000000026,
+              710816.6999999867,
+              858958.3999999833,
+              976166.5999999878,
+              853445.7999999858
+            ]
+          }
+        ],
+        "checksum": 28515988
+      },
+      "vpm": {
+        "pid": 58168,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "All six Academy subtitles SSR",
+            "iterations": 20,
+            "samples": [
+              281145.79999999877,
+              277668.7499999994,
+              246437.5000000004,
+              253179.15000000113,
+              254408.30000000005,
+              246439.6000000022,
+              388510.40000000125,
+              280247.9000000005,
+              271566.6499999998,
+              278479.1499999983,
+              254045.84999999995,
+              220147.9500000005
+            ]
+          },
+          {
+            "case": "One active subtitle SSR",
+            "iterations": 42,
+            "samples": [
+              250067.45238095126,
+              205615.07142857258,
+              223288.69047618943,
+              210406.76190476198,
+              189111.11904761972,
+              195132.92857142718,
+              235139.8809523798,
+              176719.23809523974,
+              229671.6428571428,
+              196619.04761904854,
+              200917.64285714255,
+              194945.4285714296
+            ]
+          },
+          {
+            "case": "Mounted navigation with six expanded subtitles",
+            "iterations": 10,
+            "samples": [
+              966783.4000000084,
+              1223175.0000000147,
+              911779.2000000009,
+              1166379.2000000058,
+              1117766.7000000156,
+              899033.4000000075,
+              1078858.3999999901,
+              595266.7000000019,
+              1080070.7999999984,
+              1172424.9999999984,
+              751479.1999999944,
+              619716.7000000036
+            ]
+          }
+        ],
+        "checksum": 24923360
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 58169,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "All six Academy subtitles SSR",
+            "iterations": 40,
+            "samples": [
+              278017.7000000009,
+              225302.10000000038,
+              251129.14999999985,
+              278849.9999999999,
+              272243.7499999998,
+              249417.70000000074,
+              235116.67500000042,
+              226876.02499999997,
+              257005.19999999896,
+              248016.6499999996,
+              254746.87500000076,
+              241086.45000000024
+            ]
+          },
+          {
+            "case": "One active subtitle SSR",
+            "iterations": 47,
+            "samples": [
+              173375.89361702226,
+              218682.6170212774,
+              175140.06382978725,
+              187811.17021276648,
+              186613.48936170046,
+              168151.59574468184,
+              194451.23404255434,
+              182295.212765959,
+              189823.5957446825,
+              188198.5957446804,
+              192504.4468085118,
+              191473.4042553183
+            ]
+          },
+          {
+            "case": "Mounted navigation with six expanded subtitles",
+            "iterations": 11,
+            "samples": [
+              640295.4545454701,
+              676215.9090909046,
+              719909.0909090997,
+              800231.0000000017,
+              656071.9999999946,
+              547003.8181818133,
+              627515.0909090866,
+              803765.1818181903,
+              642829.5454545398,
+              597541.6363636338,
+              648572.000000017,
+              685204.5454545326
+            ]
+          }
+        ],
+        "checksum": 30357466
+      },
+      "upstream": {
+        "pid": 58201,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "All six Academy subtitles SSR",
+            "iterations": 40,
+            "samples": [
+              385654.1750000005,
+              310813.5250000004,
+              297450.0000000006,
+              372264.57499999984,
+              320892.7000000003,
+              317340.62499999994,
+              319930.2250000002,
+              292541.6749999997,
+              291385.425,
+              266014.59999999974,
+              286123.9499999996,
+              273095.82500000007
+            ]
+          },
+          {
+            "case": "One active subtitle SSR",
+            "iterations": 47,
+            "samples": [
+              242660.44680851029,
+              271320.9361702145,
+              273675.5319148937,
+              247835.97872340365,
+              240685.29787234153,
+              245615.2340425525,
+              245685.27659574614,
+              254730.51063829887,
+              276081.5744680867,
+              246209.21276595924,
+              253976.06382978937,
+              252418.42553191417
+            ]
+          },
+          {
+            "case": "Mounted navigation with six expanded subtitles",
+            "iterations": 11,
+            "samples": [
+              1090193.1818181807,
+              864003.8181818206,
+              1289666.7272727264,
+              830371.181818195,
+              829450.8181818194,
+              1079704.545454557,
+              1051166.636363653,
+              821674.2727272711,
+              647905.3636363584,
+              961064.3636363585,
+              810284.0909090943,
+              970041.6363636412
+            ]
+          }
+        ],
+        "checksum": 25486764
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 58218,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "All six Academy subtitles SSR",
+            "iterations": 32,
+            "samples": [
+              302535.1562500003,
+              362988.2812500007,
+              277861.968749999,
+              280921.87500000064,
+              279532.5312500001,
+              262977.8749999989,
+              298561.21875000064,
+              300372.37500000023,
+              286570.31249999854,
+              311688.78125,
+              286039.06250000047,
+              268714.84375000064
+            ]
+          },
+          {
+            "case": "One active subtitle SSR",
+            "iterations": 40,
+            "samples": [
+              284709.3749999999,
+              226280.19999999934,
+              240285.42499999903,
+              238952.07500000027,
+              256748.94999999934,
+              248073.94999999987,
+              265819.77499999997,
+              258876.0250000007,
+              249527.07500000033,
+              251764.60000000134,
+              252649.99999999985,
+              233542.72499999808
+            ]
+          },
+          {
+            "case": "Mounted navigation with six expanded subtitles",
+            "iterations": 10,
+            "samples": [
+              676358.3000000154,
+              877654.2000000064,
+              802033.2999999936,
+              732537.4999999895,
+              684762.5000000107,
+              948995.8000000116,
+              1115499.9999999972,
+              780366.7000000132,
+              738787.5000000122,
+              745508.2999999832,
+              1081616.6000000066,
+              748800.0000000057
+            ]
+          }
+        ],
+        "checksum": 31527436
+      },
+      "vpm": {
+        "pid": 58219,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "All six Academy subtitles SSR",
+            "iterations": 32,
+            "samples": [
+              284214.84375000006,
+              233825.50000000003,
+              255305.99999999916,
+              238760.43749999985,
+              261470.03124999913,
+              242270.84375000096,
+              253891.9375000006,
+              248067.71875000067,
+              234708.34375000038,
+              263131.50000000006,
+              262105.4687500006,
+              255071.62499999936
+            ]
+          },
+          {
+            "case": "One active subtitle SSR",
+            "iterations": 40,
+            "samples": [
+              207298.9750000005,
+              199515.6250000008,
+              184472.92500000002,
+              194627.07499999966,
+              250090.6250000014,
+              226414.57500000118,
+              226632.27500000005,
+              230737.50000000076,
+              206458.32499999984,
+              188709.37499999913,
+              183521.87499999956,
+              184059.37499999822
+            ]
+          },
+          {
+            "case": "Mounted navigation with six expanded subtitles",
+            "iterations": 10,
+            "samples": [
+              653999.9999999964,
+              716404.2000000109,
+              858170.7999999935,
+              744854.1999999861,
+              603037.5000000049,
+              540141.699999981,
+              639020.9000000141,
+              756470.8999999993,
+              606079.0999999881,
+              755808.3000000124,
+              682620.7999999952,
+              725295.9000000146
+            ]
+          }
+        ],
+        "checksum": 22739160
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 58250,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "All six Academy subtitles SSR",
+            "iterations": 40,
+            "samples": [
+              241928.1249999997,
+              249786.45000000056,
+              241808.32500000094,
+              274606.2500000008,
+              214322.90000000052,
+              243515.62500000055,
+              272409.3750000009,
+              240011.4500000001,
+              234020.82500000033,
+              226012.50000000023,
+              248371.87500000084,
+              259332.2999999998
+            ]
+          },
+          {
+            "case": "One active subtitle SSR",
+            "iterations": 52,
+            "samples": [
+              190685.90384615355,
+              197448.71153846168,
+              181337.34615384776,
+              219066.5000000011,
+              191857.38461538465,
+              177371.0000000003,
+              180435.0961538476,
+              185021.6346153847,
+              171375.0000000009,
+              181874.99999999965,
+              184714.7307692318,
+              204026.4423076923
+            ]
+          },
+          {
+            "case": "Mounted navigation with six expanded subtitles",
+            "iterations": 12,
+            "samples": [
+              649666.6666666518,
+              597090.2499999889,
+              633777.7499999978,
+              805173.5833333282,
+              596562.4999999856,
+              631704.8333333445,
+              649152.8333333273,
+              789368.0000000056,
+              632489.5833333434,
+              615736.166666655,
+              620840.2500000148,
+              606104.1666666635
+            ]
+          }
+        ],
+        "checksum": 32386661
+      },
+      "upstream": {
+        "pid": 58251,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "All six Academy subtitles SSR",
+            "iterations": 40,
+            "samples": [
+              289184.37500000064,
+              279089.574999999,
+              282451.0500000002,
+              300645.8250000008,
+              306640.625,
+              313691.6499999998,
+              316321.8749999999,
+              308365.6250000004,
+              279966.675,
+              352389.5749999994,
+              301448.97499999957,
+              279332.27500000014
+            ]
+          },
+          {
+            "case": "One active subtitle SSR",
+            "iterations": 52,
+            "samples": [
+              241409.46153846043,
+              283085.7307692309,
+              243585.73076923142,
+              246074.51923076969,
+              274265.23076923104,
+              229330.9423076922,
+              218499.2115384607,
+              233689.09615384636,
+              260237.19230769217,
+              256516.8269230775,
+              221484.7692307689,
+              226554.48076922915
+            ]
+          },
+          {
+            "case": "Mounted navigation with six expanded subtitles",
+            "iterations": 12,
+            "samples": [
+              898517.4166666638,
+              837868.0000000144,
+              942180.4999999874,
+              771923.5833333377,
+              728743.0833333322,
+              775965.2500000129,
+              1700572.9166666772,
+              959864.5833333232,
+              899812.4999999959,
+              1012656.2500000015,
+              829621.4999999922,
+              761618.0833333222
+            ]
+          }
+        ],
+        "checksum": 26368832
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 58252,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "All six Academy subtitles SSR",
+            "iterations": 36,
+            "samples": [
+              333665.5277777775,
+              365388.88888888876,
+              280693.2777777781,
+              278949.0833333335,
+              304793.9722222218,
+              310266.19444444415,
+              284423.6111111103,
+              272917.83333333326,
+              280410.8611111123,
+              269075.2222222225,
+              311621.5277777773,
+              271456.0000000006
+            ]
+          },
+          {
+            "case": "One active subtitle SSR",
+            "iterations": 40,
+            "samples": [
+              242635.42500000028,
+              268320.82499999786,
+              222377.075,
+              273253.1250000022,
+              267184.37499999936,
+              254885.40000000055,
+              260971.87499999846,
+              265886.4749999992,
+              243354.14999999898,
+              252364.57500000144,
+              258129.15000000206,
+              289243.75
+            ]
+          },
+          {
+            "case": "Mounted navigation with six expanded subtitles",
+            "iterations": 12,
+            "samples": [
+              956187.4999999986,
+              713888.916666671,
+              773107.583333342,
+              728628.4999999945,
+              1047447.9166666698,
+              713232.666666651,
+              827302.0833333172,
+              754413.1666666657,
+              940632.0000000126,
+              739656.2499999959,
+              732458.3333333408,
+              743052.083333339
+            ]
+          }
+        ],
+        "checksum": 32098912
+      },
+      "vpm": {
+        "pid": 58254,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "All six Academy subtitles SSR",
+            "iterations": 36,
+            "samples": [
+              312049.77777777915,
+              290329.8611111103,
+              278503.4722222232,
+              307687.5000000001,
+              245912.05555555483,
+              277384.25000000035,
+              295489.5833333337,
+              314123.8333333342,
+              278520.83333333314,
+              267203.7222222217,
+              330956.0277777782,
+              288152.7777777772
+            ]
+          },
+          {
+            "case": "One active subtitle SSR",
+            "iterations": 40,
+            "samples": [
+              249632.30000000182,
+              263624.99999999895,
+              248758.325,
+              241180.19999999943,
+              258042.70000000144,
+              272744.800000001,
+              214008.35000000027,
+              265008.3499999994,
+              246742.72500000143,
+              258807.30000000083,
+              262495.8499999991,
+              269263.5249999995
+            ]
+          },
+          {
+            "case": "Mounted navigation with six expanded subtitles",
+            "iterations": 12,
+            "samples": [
+              1277305.583333335,
+              779166.6666666591,
+              796274.2500000104,
+              993878.4166666702,
+              747256.9166666669,
+              783263.9166666694,
+              827795.1666666657,
+              1097742.9999999988,
+              822555.583333326,
+              806541.6666666655,
+              820357.6666666664,
+              993579.8333333423
+            ]
+          }
+        ],
+        "checksum": 23529152
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 58255,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "All six Academy subtitles SSR",
+            "iterations": 33,
+            "samples": [
+              275862.39393939526,
+              344209.57575757644,
+              300916.6666666667,
+              287665.3939393936,
+              294287.8787878788,
+              266402.78787878784,
+              292515.15151515213,
+              256755.0606060605,
+              299103.5151515145,
+              280864.9090909098,
+              292419.1818181819,
+              269268.93939393933
+            ]
+          },
+          {
+            "case": "One active subtitle SSR",
+            "iterations": 44,
+            "samples": [
+              222638.24999999895,
+              240245.27272727236,
+              253274.61363636414,
+              282082.38636363804,
+              251204.5454545454,
+              272813.454545454,
+              233433.704545454,
+              255156.25000000143,
+              245107.95454545526,
+              246925.20454545596,
+              254928.0454545443,
+              260535.04545454457
+            ]
+          },
+          {
+            "case": "Mounted navigation with six expanded subtitles",
+            "iterations": 11,
+            "samples": [
+              847238.6363636237,
+              766132.5454545353,
+              739473.4545454495,
+              747321.909090901,
+              686727.2727272807,
+              886276.4545454369,
+              858022.7272727411,
+              849734.9090909086,
+              695822.0000000107,
+              1125962.181818171,
+              863772.7272727344,
+              755492.3636363666
+            ]
+          }
+        ],
+        "checksum": 31518784
+      },
+      "upstream": {
+        "pid": 58267,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "All six Academy subtitles SSR",
+            "iterations": 33,
+            "samples": [
+              309824.4848484841,
+              263003.7878787879,
+              320121.21212121274,
+              322800.4848484853,
+              298891.4242424233,
+              303535.33333333296,
+              314295.4545454534,
+              320006.3030303027,
+              359007.57575757673,
+              314703.27272727375,
+              305102.2727272728,
+              349321.9696969697
+            ]
+          },
+          {
+            "case": "One active subtitle SSR",
+            "iterations": 44,
+            "samples": [
+              288724.43181818014,
+              301458.3409090919,
+              280391.09090909164,
+              483977.2727272718,
+              311788.8409090907,
+              307708.3181818161,
+              313266.090909092,
+              424223.5000000004,
+              475069.1136363643,
+              317848.47727272916,
+              288875.0000000005,
+              264790.7272727278
+            ]
+          },
+          {
+            "case": "Mounted navigation with six expanded subtitles",
+            "iterations": 11,
+            "samples": [
+              1199727.2727272832,
+              1372056.8181818181,
+              867106.0000000042,
+              898140.1818181935,
+              769939.3636363641,
+              828590.9090909213,
+              976045.4545454732,
+              774193.1818181911,
+              1020223.454545451,
+              908348.5454545594,
+              1190109.818181823,
+              908640.090909082
+            ]
+          }
+        ],
+        "checksum": 22057844
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "All six Academy subtitles SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 311851.04999999993,
+          "vpmNs": 262987.4749999999,
+          "changePct": -15.668882628421487
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 304131.7625000005,
+          "vpmNs": 250273.42500000028,
+          "changePct": -17.708882839884275
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 286304.68749999953,
+          "vpmNs": 254481.78125,
+          "changePct": -11.115048980816844
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 301047.4000000002,
+          "vpmNs": 242721.87500000012,
+          "changePct": -19.374199876830044
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 282558.4444444442,
+          "vpmNs": 289241.3194444438,
+          "changePct": 2.3651301638283106
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 314499.3636363636,
+          "vpmNs": 290042.2878787877,
+          "changePct": -7.776510411593096
+        }
+      ]
+    },
+    {
+      "case": "One active subtitle SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 245815.47619047633,
+          "vpmNs": 203266.35714285757,
+          "changePct": -17.3093735622441
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 250127.2021276589,
+          "vpmNs": 188004.88297872344,
+          "changePct": -24.836290743471288
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 250645.83750000084,
+          "vpmNs": 202986.97500000033,
+          "changePct": -19.01442408753361
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 242497.59615384592,
+          "vpmNs": 184868.18269230827,
+          "changePct": -23.764942158427115
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 259550.51250000024,
+          "vpmNs": 258425.00000000114,
+          "changePct": -0.43363909751443774
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 309748.5795454534,
+          "vpmNs": 252239.57954545476,
+          "changePct": -18.566348257154676
+        }
+      ]
+    },
+    {
+      "case": "Mounted navigation with six expanded subtitles",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 856202.0999999845,
+          "vpmNs": 1022820.8999999992,
+          "changePct": 19.460218562885757
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 912534.0909090895,
+          "vpmNs": 652322.0000000058,
+          "changePct": -28.51532819446273
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 764583.3500000094,
+          "vpmNs": 699512.500000003,
+          "changePct": -8.510628697316724
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 868192.7083333391,
+          "vpmNs": 632097.208333344,
+          "changePct": -27.193904963015104
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 748732.6250000023,
+          "vpmNs": 821456.6249999963,
+          "changePct": 9.712946594252347
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 908494.3181818207,
+          "vpmNs": 806685.5909090794,
+          "changePct": -11.20631414365828
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "All six Academy subtitles SSR",
+      "upstream_ns": 302590,
+      "vpm_ns": 252378,
+      "change_pct": -16.7,
+      "upstream_first_pct": -13.4,
+      "vpm_first_pct": -18.5,
+      "process_range_pct": "-15.7, -17.7, -11.1, -19.4",
+      "control_max_abs_pct": 7.8,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "One active subtitle SSR",
+      "upstream_ns": 247971,
+      "vpm_ns": 195496,
+      "change_pct": -21.4,
+      "upstream_first_pct": -18.2,
+      "vpm_first_pct": -24.3,
+      "process_range_pct": "-17.3, -24.8, -19.0, -23.8",
+      "control_max_abs_pct": 18.6,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "Mounted navigation with six expanded subtitles",
+      "upstream_ns": 862197,
+      "vpm_ns": 675917,
+      "change_pct": -17.9,
+      "upstream_first_pct": 5.5,
+      "vpm_first_pct": -27.9,
+      "process_range_pct": "19.5, -28.5, -8.5, -27.2",
+      "control_max_abs_pct": 11.2,
+      "evidence": "unestablished at this precision"
+    }
+  ]
+}

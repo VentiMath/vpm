@@ -46,3 +46,4 @@ Object.assign(module.exports, require("./grow-transition.cjs"));
 Object.assign(module.exports, require("./search-popper.cjs"));
 Object.assign(module.exports, require("./font-slider.cjs"));
 Object.assign(module.exports, require("./registration-steps.cjs"));
+Object.assign(module.exports,require("./course-step-content.cjs"));

@@ -44,7 +44,7 @@ function names(classes, custom, ...keys) {
     .join(" ");
 }
 const Flow = React.createContext({ orientation: "horizontal", activeStep: 0 });
-const Position = React.createContext({});
+const Position = require("./step-position.cjs");
 const StepperRoot = styled("ol", {
   name: "MuiStepper",
   slot: "Root",

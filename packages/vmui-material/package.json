@@ -1977,6 +1977,26 @@
         "types": "./stepLabelClasses.d.cts",
         "default": "./stepLabelClasses.cjs"
       }
+    },
+    "./StepContent": {
+      "import": {
+        "types": "./StepContent.d.mts",
+        "default": "./StepContent.mjs"
+      },
+      "require": {
+        "types": "./StepContent.d.cts",
+        "default": "./StepContent.cjs"
+      }
+    },
+    "./stepContentClasses": {
+      "import": {
+        "types": "./stepContentClasses.d.mts",
+        "default": "./stepContentClasses.mjs"
+      },
+      "require": {
+        "types": "./stepContentClasses.d.cts",
+        "default": "./stepContentClasses.cjs"
+      }
     }
   },
   "files": [
