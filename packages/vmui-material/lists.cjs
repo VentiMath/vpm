@@ -81,8 +81,52 @@ const MenuList=React.forwardRef(function MenuList(input,forwarded){
  }
  return h(List,{role:'menu',tabIndex:-1,...rest,ref,onKeyDown:keydown},children);
 });
-const api={List,MenuItem,MenuList,ListItemIcon,ListItemText,ListSubheader,ListItemButton};
-const slots={List:['root','padding','dense','subheader'],ListItemButton:['root','focusVisible','dense','alignItemsFlexStart','disabled','divider','gutters','selected'],MenuItem:['root','dense','disabled','gutters','divider','selected','focusVisible'],ListItemIcon:['root','alignItemsFlexStart'],ListItemText:['root','multiline','dense','inset','primary','secondary'],ListSubheader:['root','colorPrimary','colorInherit','gutters','inset','sticky']};
+const RowRoot = styled('li', {
+  name: 'MuiListItem', slot: 'Root',
+  overridesResolver: ({ ownerState: s }, o) => [o.root, s.dense && o.dense, !s.disableGutters && o.gutters,
+    !s.disablePadding && o.padding, s.alignItems === 'flex-start' && o.alignItemsFlexStart, s.divider && o.divider],
+})(({ ownerState: s, theme }) => ({
+  display: 'flex', justifyContent: 'flex-start', alignItems: s.alignItems, position: 'relative',
+  textDecoration: 'none', width: '100%', boxSizing: 'border-box', textAlign: 'left',
+  ...(!s.disablePadding && { paddingTop: s.dense ? 4 : 8, paddingBottom: s.dense ? 4 : 8,
+    ...(!s.disableGutters && { paddingLeft: 16, paddingRight: 16 }),
+    ...(s.secondaryAction && { paddingRight: 48 }),
+  }),
+  ...(s.secondaryAction && { '& > .MuiListItemButton-root': { paddingRight: 48 } }),
+  ...(s.divider && { borderBottom: '1px solid ' + palette(theme).divider, backgroundClip: 'padding-box' }),
+}));
+const RowAction = styled('div', { name: 'MuiListItemSecondaryAction', slot: 'Root',
+  overridesResolver: ({ownerState}, o) => [o.root, ownerState.disableGutters && o.disableGutters],
+})(({ ownerState }) => ({
+  position: 'absolute', right: ownerState.disableGutters ? 0 : 16, top: '50%', transform: 'translateY(-50%)',
+}));
+const ListItem = React.forwardRef(function ListItem(input, forwarded) {
+  const props = useThemeProps({ props: input, name: 'MuiListItem' });
+  const { children, component = 'li', alignItems = 'center', dense = false, disableGutters = false,
+    disablePadding = false, divider = false, secondaryAction, slots = empty, slotProps = empty,
+    classes: custom, className, ...other } = props;
+  const parent = React.useContext(Context);
+  const compact = dense || !!parent.dense;
+  const value = React.useMemo(() => ({dense: compact, alignItems, disableGutters}), [compact, alignItems, disableGutters]);
+  const state = {...props, dense: compact, alignItems, disableGutters, disablePadding, divider};
+  const root = resolve(slotProps.root, state), action = resolve(slotProps.secondaryAction, state);
+  const ref = useRefs(forwarded, root.ref);
+  const Root = slots.root || RowRoot, Action = slots.secondaryAction || RowAction;
+  const names = ['root', compact && 'dense', !disableGutters && 'gutters', !disablePadding && 'padding',
+    divider && 'divider', alignItems === 'flex-start' && 'alignItemsFlexStart'];
+  return h(Context.Provider, {value}, h(Root, {
+    ...other, ...root, as: component, ref, ...(typeof Root !== 'string' && {ownerState: state}),
+    className: join(classes('ListItem', names, custom), className, root.className),
+  }, children, secondaryAction && h(Action, {
+    ...action, ...(typeof Action !== 'string' && {ownerState: state}),
+    className: join(!slots.secondaryAction && 'MuiListItemSecondaryAction-root',
+      !slots.secondaryAction && disableGutters && 'MuiListItemSecondaryAction-disableGutters',
+      classes('ListItem', ['secondaryAction'], custom), action.className),
+  }, secondaryAction)));
+});
+
+const api={ListItem,List,MenuItem,MenuList,ListItemIcon,ListItemText,ListSubheader,ListItemButton};
+const slots={ListItem:['root','dense','alignItemsFlexStart','divider','gutters','padding','secondaryAction'],List:['root','padding','dense','subheader'],ListItemButton:['root','focusVisible','dense','alignItemsFlexStart','disabled','divider','gutters','selected'],MenuItem:['root','dense','disabled','gutters','divider','selected','focusVisible'],ListItemIcon:['root','alignItemsFlexStart'],ListItemText:['root','multiline','dense','inset','primary','secondary'],ListSubheader:['root','colorPrimary','colorInherit','gutters','inset','sticky']};
 for(const [name,keys]of Object.entries(slots)){api[name].displayName=name;api['get'+name+'UtilityClass']=slot=>utility(name,slot);api[name[0].toLowerCase()+name.slice(1)+'Classes']=Object.freeze(Object.fromEntries(keys.map(slot=>[slot,utility(name,slot)])));}
 MenuList.displayName='MenuList';
 module.exports=api;

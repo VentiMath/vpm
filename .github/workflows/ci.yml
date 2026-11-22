@@ -126,6 +126,7 @@ jobs:
           node scripts/mui-material-conformance/slider-contract.cjs
           node scripts/mui-material-conformance/steps-contract.cjs
           node scripts/mui-material-conformance/step-content-contract.cjs
+          node scripts/mui-material-conformance/list-item-contract.cjs
           node scripts/mui-material-conformance/autocomplete-contract.cjs
           node scripts/mui-material-conformance/lists-contract.cjs
           node scripts/mui-material-conformance/types.cjs
@@ -196,6 +197,7 @@ jobs:
           node scripts/mui-material-conformance/slider-browser.cjs
           node scripts/mui-material-conformance/steps-browser.cjs
           node scripts/mui-material-conformance/step-content-browser.cjs
+          node scripts/mui-material-conformance/list-item-browser.cjs
           node scripts/mui-material-conformance/autocomplete-browser.cjs
           VPM_REACT_MODE=development node scripts/mui-material-conformance/skeleton-browser.cjs
           VPM_REACT_MODE=development node scripts/mui-material-conformance/container-browser.cjs
@@ -231,6 +233,7 @@ jobs:
           VPM_REACT_MODE=development node scripts/mui-material-conformance/slider-browser.cjs
           VPM_REACT_MODE=development node scripts/mui-material-conformance/steps-browser.cjs
           VPM_REACT_MODE=development node scripts/mui-material-conformance/step-content-browser.cjs
+          VPM_REACT_MODE=development node scripts/mui-material-conformance/list-item-browser.cjs
           VPM_REACT_MODE=development node scripts/mui-material-conformance/autocomplete-browser.cjs
           VPM_REACT_MODE=development node scripts/mui-material-conformance/checkbox-browser.cjs
           node scripts/mui-material-conformance/archives.cjs
@@ -1238,6 +1241,7 @@ jobs:
           bun scripts/mui-material-conformance/slider-contract.cjs
           bun scripts/mui-material-conformance/steps-contract.cjs
           bun scripts/mui-material-conformance/step-content-contract.cjs
+          bun scripts/mui-material-conformance/list-item-contract.cjs
           bun scripts/mui-material-conformance/lists-contract.cjs
           bun test packages/vmui-system/test/system.test.cjs
           bun scripts/mui-system-conformance/primitives.cjs

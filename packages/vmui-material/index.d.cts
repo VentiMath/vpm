@@ -1065,3 +1065,15 @@ export interface StepContentProps extends React.HTMLAttributes<HTMLDivElement> {
  slotProps?:{transition?:Partial<CollapseProps> | ((state:StepContentProps & {last:boolean;alternativeLabel:boolean})=>Partial<CollapseProps>)};
 }
 export const StepContent:React.ForwardRefExoticComponent<StepContentProps & React.RefAttributes<HTMLDivElement>>;
+
+export type ListItemClassKey = 'root'|'dense'|'alignItemsFlexStart'|'divider'|'gutters'|'padding'|'secondaryAction';
+export interface ListItemOwnProps {
+  alignItems?: 'center'|'flex-start'; children?: React.ReactNode; dense?: boolean; disableGutters?: boolean; disablePadding?: boolean;
+  divider?: boolean; secondaryAction?: React.ReactNode; classes?: Partial<Record<ListItemClassKey,string>>; sx?: SxProps<Theme>;
+  slots?: {root?: React.ElementType; secondaryAction?: React.ElementType};
+  slotProps?: Partial<Record<'root'|'secondaryAction', React.HTMLAttributes<HTMLElement> & React.RefAttributes<HTMLElement> | ((state: ListItemOwnProps) => React.HTMLAttributes<HTMLElement> & React.RefAttributes<HTMLElement>)>>;
+}
+export type ListItemProps<C extends React.ElementType='li'>=ListItemOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof ListItemOwnProps>&{component?:C};
+export const ListItem:<C extends React.ElementType='li'>(props:ListItemProps<C>)=>React.ReactElement|null;
+export const listItemClasses:Readonly<Record<ListItemClassKey,string>>;
+export function getListItemUtilityClass(slot:string):string;

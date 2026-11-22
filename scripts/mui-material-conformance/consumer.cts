@@ -548,3 +548,6 @@ import CourseContent from "vmui-material/StepContent";
 React.createElement(CourseContent,{transitionDuration:"auto",ref:React.createRef<HTMLDivElement>(),slotProps:{transition:s=>({unmountOnExit:s.last})}},"Lesson subtitle");
 // @ts-expect-error Duration accepts milliseconds, enter/exit timing, or auto.
 React.createElement(CourseContent,{transitionDuration:"immediate"});
+
+import QuickRow from "vmui-material/ListItem";
+React.createElement(QuickRow, { dense:true, secondaryAction:"switch", alignItems:"flex-start" });

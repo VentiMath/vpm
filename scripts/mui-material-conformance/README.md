@@ -566,3 +566,5 @@ Run `node steps-contract.cjs` or `bun steps-contract.cjs` to compare state and m
 ### Academy course subtitles
 
 Run `node step-content-contract.cjs` or `bun step-content-contract.cjs` for comparisons with Material 7 and 9. The browser check `node step-content-browser.cjs` exercises all-expanded lesson navigation, retained DOM, geometry and transition cleanup. With `VPM_APP_CHECKOUT` set, it extracts CourseView’s actual Stepper JSX and navigation handlers and the app’s theme override. The public fixture uses synthetic lessons. [Measurements](../../packages/vmui-material/bench/step-content/README.md).
+
+The ListItem contract checks QuickPanel-style event, note and quick-setting rows against both Material controls. The Chrome check exercises a focused switch during a keyed reorder. Run `node scripts/mui-material-conformance/list-item-browser.cjs`.

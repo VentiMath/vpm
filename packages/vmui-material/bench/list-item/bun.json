@@ -1,0 +1,1328 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-22T03:42:24.105Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/mui-material-conformance/list-item-browser-entry.jsx": "4f202fa2472b03d5bccd24d1acd0cff9562fb9e1ee90f5c02dc882858cfa06ad",
+    "../../scripts/mui-material-conformance/list-item-scene.jsx": "51cd7e71ef9dade6eabb768c13082be849269da539e8fb3708d5478c3683be95",
+    "../../scripts/mui-material-conformance/list-item-ssr-entry.jsx": "1c911e9050fc51679dd379d515a61f2bead2abe42db1dfb45ce49f6d555c3904",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/app-upstream/list-item-browser.js": "b5f92ec1edfc8c4c473f2e3bbfa77174240497493baa083ab3066e836aa66348",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/app-upstream/list-item-ssr.cjs": "2040c295b2081ffb880bfbfcdc6b03e75613a980802157a694887f227d58f926",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/app-vpm/list-item-browser.js": "dd6df998b3aa894d725f343425591dc056bc501db6fc8ef4e0ed0db87a36ecd8",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/app-vpm/list-item-ssr.cjs": "b99ea0631354728a7d9f5a54f77d7a609c36afeec05e58cd12800f28782799e8",
+    "../../scripts/mui-system-conformance/package-lock.json": "a04f91b1f742d1bd580d9d4119c7957b2d4cf7ef0a5adfa1f263b7ebf293a8a1",
+    "bench/list-item.cjs": "02db90dc53e78aeab22c196256aca9c0e1f2e5b3442de41d9f5b387bfba70a3a",
+    "lists.cjs": "381ac2042781519981c2227215fde4ba70cae57b15e69a9ab688d127fe8976f8",
+    "theme.cjs": "c8f10a217705c2e142da705773511879c7a3b3cc617cab08616813cdb57286d7"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 66217,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Event and note rows SSR",
+            "iterations": 100,
+            "samples": [
+              89330.42,
+              89882.92000000001,
+              98606.24999999971,
+              82232.50000000007,
+              87803.74999999993,
+              91882.91999999991,
+              94772.08999999959,
+              96751.2499999998,
+              88383.32999999978,
+              102752.50000000028,
+              78386.25000000036,
+              82090.84000000019
+            ]
+          },
+          {
+            "case": "Settings rows with switches SSR",
+            "iterations": 134,
+            "samples": [
+              61553.17164179159,
+              61355.41044776133,
+              67774.25373134285,
+              62248.134328357795,
+              58851.36567164168,
+              74198.6940298509,
+              59796.022388059435,
+              59683.455223881174,
+              60905.1641791045,
+              66066.54477611891,
+              60534.514925373165,
+              62141.1716417909
+            ]
+          },
+          {
+            "case": "Mounted event and note reorder",
+            "iterations": 40,
+            "samples": [
+              238409.37499999767,
+              233301.05000000005,
+              379065.62499999837,
+              230067.72499999785,
+              244252.07500000283,
+              231921.87500000047,
+              329792.72500000434,
+              229045.84999999995,
+              214634.37499999712,
+              263893.7499999997,
+              202797.9249999987,
+              221115.62499999878
+            ]
+          }
+        ],
+        "checksum": 27180992
+      },
+      "vpm": {
+        "pid": 66218,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Event and note rows SSR",
+            "iterations": 100,
+            "samples": [
+              81781.25000000022,
+              79745.41000000044,
+              84101.24999999994,
+              79299.16999999988,
+              75799.57999999977,
+              77215.84000000007,
+              94461.67000000001,
+              81615.83000000007,
+              85121.67000000033,
+              84758.33000000022,
+              101508.74999999985,
+              79867.09000000019
+            ]
+          },
+          {
+            "case": "Settings rows with switches SSR",
+            "iterations": 134,
+            "samples": [
+              73601.67910447746,
+              70639.61194029813,
+              60560.634328358465,
+              68296.32835820969,
+              63242.85074626813,
+              70369.08955223845,
+              61987.87313432838,
+              62976.67910447715,
+              67405.78358208957,
+              64259.32835820934,
+              77428.79104477598,
+              66205.22388059678
+            ]
+          },
+          {
+            "case": "Mounted event and note reorder",
+            "iterations": 40,
+            "samples": [
+              292829.1750000028,
+              216776.04999999856,
+              261106.2500000003,
+              222251.02499999705,
+              227955.1999999967,
+              253127.09999999468,
+              292487.4999999986,
+              240108.3249999999,
+              261433.32500000153,
+              224164.60000000027,
+              745455.2250000007,
+              349983.34999999654
+            ]
+          }
+        ],
+        "checksum": 18135136
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 66219,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Event and note rows SSR",
+            "iterations": 105,
+            "samples": [
+              82495.23809523843,
+              81211.90476190459,
+              86315.87619047638,
+              84584.9142857143,
+              83118.24761904767,
+              88385.71428571446,
+              80595.63809523848,
+              85539.28571428526,
+              95572.22857142841,
+              80709.12380952406,
+              80951.99047619039,
+              74312.30476190487
+            ]
+          },
+          {
+            "case": "Settings rows with switches SSR",
+            "iterations": 188,
+            "samples": [
+              79438.82978723382,
+              68419.76595744642,
+              76713.4308510641,
+              61752.88297872358,
+              73490.25000000033,
+              67117.02127659542,
+              56536.345744681385,
+              62324.24468085155,
+              69254.43085106416,
+              59786.35106382965,
+              61183.95744680827,
+              67467.86170212745
+            ]
+          },
+          {
+            "case": "Mounted event and note reorder",
+            "iterations": 46,
+            "samples": [
+              307307.9782608671,
+              223404.00000000402,
+              275283.50000000047,
+              219848.73913043368,
+              214845.10869565245,
+              283724.65217391297,
+              210714.67391304258,
+              218340.5869565248,
+              318749.08695651713,
+              205358.69565217424,
+              213505.4347826079,
+              255702.89130434563
+            ]
+          }
+        ],
+        "checksum": 22308800
+      },
+      "upstream": {
+        "pid": 66248,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Event and note rows SSR",
+            "iterations": 105,
+            "samples": [
+              87318.65714285726,
+              89653.57142857165,
+              88832.54285714311,
+              85920.62857142839,
+              80601.99047619053,
+              82732.5428571428,
+              80518.657142857,
+              89938.48571428553,
+              85825.39999999989,
+              85869.04761904721,
+              84749.6,
+              91941.27619047635
+            ]
+          },
+          {
+            "case": "Settings rows with switches SSR",
+            "iterations": 188,
+            "samples": [
+              62101.50531914939,
+              64840.20212765922,
+              64389.404255319474,
+              71989.36170212761,
+              63087.3191489361,
+              65598.40425531905,
+              71157.57978723386,
+              65452.79255319136,
+              63289.67021276599,
+              61511.52659574467,
+              69619.45744680882,
+              65106.159574468096
+            ]
+          },
+          {
+            "case": "Mounted event and note reorder",
+            "iterations": 46,
+            "samples": [
+              344145.82608696056,
+              241824.28260869824,
+              219836.0434782622,
+              263824.282608697,
+              213751.80434782855,
+              228196.56521739054,
+              250632.26086956545,
+              220682.0652173944,
+              200802.54347826468,
+              245163.0434782591,
+              205362.32608695512,
+              198090.56521739383
+            ]
+          }
+        ],
+        "checksum": 16526362
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 66249,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Event and note rows SSR",
+            "iterations": 128,
+            "samples": [
+              81567.71093750015,
+              77901.36718750017,
+              83246.74218750028,
+              89106.77343749996,
+              92463.21875000029,
+              99958.98437500017,
+              81379.88281250009,
+              89151.03906249967,
+              87418.94531249983,
+              80383.7890625001,
+              81978.51562500036,
+              80874.35156250012
+            ]
+          },
+          {
+            "case": "Settings rows with switches SSR",
+            "iterations": 141,
+            "samples": [
+              74815.8936170212,
+              64369.97872340383,
+              64977.24822695029,
+              57087.7659574472,
+              59740.83687943251,
+              61383.56737588646,
+              65964.82978723443,
+              67604.02127659626,
+              59519.2127659573,
+              64068.85815602788,
+              59978.13475177288,
+              62980.79432624152
+            ]
+          },
+          {
+            "case": "Mounted event and note reorder",
+            "iterations": 43,
+            "samples": [
+              220137.60465116258,
+              236886.62790697554,
+              311901.1627906973,
+              219366.2790697661,
+              208529.06976744294,
+              214872.09302325893,
+              375294.581395348,
+              250700.5813953488,
+              199516.48837209286,
+              240495.13953488268,
+              198164.72093023465,
+              212901.16279069585
+            ]
+          }
+        ],
+        "checksum": 25701004
+      },
+      "vpm": {
+        "pid": 66250,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Event and note rows SSR",
+            "iterations": 128,
+            "samples": [
+              82429.35937500029,
+              87635.42187499996,
+              79612.63281250019,
+              78622.39062500009,
+              87828.1249999997,
+              80071.94531249962,
+              88970.37499999971,
+              84996.42187500012,
+              76751.95312500004,
+              80844.7265625003,
+              74691.40624999993,
+              82295.57812499965
+            ]
+          },
+          {
+            "case": "Settings rows with switches SSR",
+            "iterations": 141,
+            "samples": [
+              67757.68794326278,
+              66250.88652482249,
+              63925.24113475105,
+              60155.439716311725,
+              62565.00709219813,
+              61705.97163120596,
+              62525.41134751807,
+              63682.62411347503,
+              65130.028368793945,
+              58481.08510638261,
+              67205.07801418428,
+              63318.85815602828
+            ]
+          },
+          {
+            "case": "Mounted event and note reorder",
+            "iterations": 43,
+            "samples": [
+              356696.69767441496,
+              205161.81395348825,
+              208291.6744186023,
+              230657.93023256233,
+              387952.53488372103,
+              233576.55813953344,
+              272049.4186046486,
+              234937.02325580944,
+              208167.62790697563,
+              226804.25581395254,
+              194700.5813953511,
+              235731.58139534763
+            ]
+          }
+        ],
+        "checksum": 16573833
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 66251,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Event and note rows SSR",
+            "iterations": 154,
+            "samples": [
+              82405.03246753258,
+              88742.69480519491,
+              84011.0974025973,
+              87909.90259740247,
+              85732.41558441552,
+              79495.94155844144,
+              86626.08441558442,
+              71059.5259740257,
+              84616.61038961037,
+              83122.83766233783,
+              82705.62337662347,
+              84133.11688311692
+            ]
+          },
+          {
+            "case": "Settings rows with switches SSR",
+            "iterations": 167,
+            "samples": [
+              66159.93413173602,
+              70634.97604790387,
+              62542.66467065852,
+              65243.766467065936,
+              55427.89221556857,
+              61592.81437125783,
+              64635.22754491018,
+              72246.50898203577,
+              68362.02395209533,
+              65349.30538922201,
+              74402.19161676709,
+              57477.79640718565
+            ]
+          },
+          {
+            "case": "Mounted event and note reorder",
+            "iterations": 34,
+            "samples": [
+              242148.26470588776,
+              232594.38235294615,
+              356574.76470588363,
+              190643.38235293957,
+              213351.70588235327,
+              353678.9411764737,
+              245910.52941176418,
+              223628.67647059239,
+              214389.70588235406,
+              401322.32352941093,
+              215469.35294118023,
+              233612.73529411954
+            ]
+          }
+        ],
+        "checksum": 22577267
+      },
+      "upstream": {
+        "pid": 66252,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Event and note rows SSR",
+            "iterations": 154,
+            "samples": [
+              84102.27272727275,
+              83570.34415584398,
+              88505.14285714291,
+              80701.83766233776,
+              91020.83116883106,
+              86323.32467532465,
+              80314.66233766255,
+              90524.07792207811,
+              77805.19480519499,
+              94134.20129870131,
+              89844.694805195,
+              89047.88961038951
+            ]
+          },
+          {
+            "case": "Settings rows with switches SSR",
+            "iterations": 167,
+            "samples": [
+              63865.017964072205,
+              63111.77844311383,
+              65402.69461077822,
+              71957.58682634751,
+              61931.13772455073,
+              67322.60479041931,
+              192889.72455089816,
+              126001.25149700572,
+              81841.82035928164,
+              67085.32934131753,
+              61188.12574850326,
+              62261.22754491055
+            ]
+          },
+          {
+            "case": "Mounted event and note reorder",
+            "iterations": 34,
+            "samples": [
+              241848.0294117658,
+              333602.9411764698,
+              292868.8823529375,
+              227797.7941176446,
+              200398.29411764993,
+              356700.9705882356,
+              244420.3529411799,
+              224631.1176470566,
+              320196.0882352938,
+              212775.73529411765,
+              219264.7058823508,
+              204703.44117647447
+            ]
+          }
+        ],
+        "checksum": 15942746
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 66253,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Event and note rows SSR",
+            "iterations": 131,
+            "samples": [
+              87387.72519083985,
+              83040.39694656478,
+              89175.57251908365,
+              83201.64885496206,
+              88784.99236641216,
+              89119.59541984733,
+              81713.41984732858,
+              85914.44274809168,
+              87368.00763358762,
+              82106.23664122102,
+              85017.48854961836,
+              89048.35114503797
+            ]
+          },
+          {
+            "case": "Settings rows with switches SSR",
+            "iterations": 152,
+            "samples": [
+              72347.30921052651,
+              61605.53289473712,
+              70677.90789473723,
+              64452.30263157952,
+              63538.10526315771,
+              66802.63157894734,
+              66232.45394736818,
+              64877.19078947333,
+              63877.467105263306,
+              66525.49342105299,
+              63972.585526315874,
+              62442.703947368725
+            ]
+          },
+          {
+            "case": "Mounted event and note reorder",
+            "iterations": 39,
+            "samples": [
+              250425.2307692299,
+              299258.56410256575,
+              230297,
+              219458.3333333319,
+              229165.58974358664,
+              294401.71794871835,
+              206200.84615384607,
+              220064.1025641021,
+              282607.89743589715,
+              211592.94871794817,
+              195529.92307692362,
+              238127.15384615446
+            ]
+          }
+        ],
+        "checksum": 24980848
+      },
+      "vpm": {
+        "pid": 66254,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Event and note rows SSR",
+            "iterations": 131,
+            "samples": [
+              83741.09923664111,
+              90483.4656488551,
+              80473.91603053428,
+              74638.67175572527,
+              92687.34351145041,
+              85050.2519083967,
+              87107.8244274807,
+              84316.47328244316,
+              91035.9389312976,
+              86836.19847328242,
+              82630.41221374056,
+              87588.10687022898
+            ]
+          },
+          {
+            "case": "Settings rows with switches SSR",
+            "iterations": 152,
+            "samples": [
+              61296.874999999476,
+              71661.73026315829,
+              63198.73684210551,
+              64071.26973684211,
+              64582.23684210538,
+              71899.9473684206,
+              65126.368421052925,
+              62984.9210526309,
+              65923.24342105296,
+              63122.256578947,
+              61479.9868421054,
+              70000.27631578944
+            ]
+          },
+          {
+            "case": "Mounted event and note reorder",
+            "iterations": 39,
+            "samples": [
+              205438.02564102176,
+              230405.97435897327,
+              300026.7179487216,
+              214881.410256415,
+              221731.8205128217,
+              313246.79487179546,
+              216176.28205128244,
+              210662.38461538398,
+              212081.205128202,
+              234619.66666666695,
+              218826.92307692126,
+              199440.17948717793
+            ]
+          }
+        ],
+        "checksum": 16518571
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 66255,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Event and note rows SSR",
+            "iterations": 132,
+            "samples": [
+              84450.12878787893,
+              82821.96969696973,
+              83959.28030302993,
+              76724.11363636333,
+              87812.50000000001,
+              82433.08333333337,
+              79447.60606060592,
+              89349.1212121212,
+              81727.90909090929,
+              89445.39393939375,
+              83948.86363636372,
+              84593.43181818188
+            ]
+          },
+          {
+            "case": "Settings rows with switches SSR",
+            "iterations": 192,
+            "samples": [
+              62672.95833333305,
+              72939.89062499999,
+              66939.23437500023,
+              65187.93229166657,
+              66574.21874999987,
+              69646.48437499991,
+              62136.28645833384,
+              69343.53645833369,
+              60789.713541667,
+              61411.45833333361,
+              65572.69791666679,
+              65059.67708333316
+            ]
+          },
+          {
+            "case": "Mounted event and note reorder",
+            "iterations": 35,
+            "samples": [
+              262080.9428571452,
+              225413.0857142822,
+              348797.6285714272,
+              258563.085714286,
+              204125.00000000233,
+              275053.5714285693,
+              237501.20000000345,
+              244220.22857143023,
+              211354.77142857522,
+              214990.4857142831,
+              243419.0571428579,
+              218839.2857142844
+            ]
+          }
+        ],
+        "checksum": 25924416
+      },
+      "upstream": {
+        "pid": 66256,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Event and note rows SSR",
+            "iterations": 132,
+            "samples": [
+              89836.4848484851,
+              82000.31060606078,
+              75708.02272727253,
+              89969.06060606032,
+              81050.18939393933,
+              86368.05303030334,
+              84637.31060606056,
+              81475.3787878788,
+              85121.53030303029,
+              84098.1666666666,
+              77162.24999999978,
+              83922.34848484835
+            ]
+          },
+          {
+            "case": "Settings rows with switches SSR",
+            "iterations": 192,
+            "samples": [
+              61758.24999999986,
+              62544.92187500027,
+              65501.95312499992,
+              60524.958333333016,
+              62375.43750000008,
+              60108.29166666672,
+              59163.19270833329,
+              56857.85937499983,
+              67014.32291666679,
+              61434.02604166681,
+              61326.60416666624,
+              61575.520833333285
+            ]
+          },
+          {
+            "case": "Mounted event and note reorder",
+            "iterations": 35,
+            "samples": [
+              244973.82857143096,
+              317367.8571428549,
+              233045.2285714273,
+              191633.34285714364,
+              301188.0857142907,
+              222063.08571428832,
+              225134.54285714423,
+              214303.57142856857,
+              214190.485714289,
+              392721.4285714334,
+              194763.0857142875,
+              187003.5714285742
+            ]
+          }
+        ],
+        "checksum": 16061053
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "Event and note rows SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 89606.67000000001,
+          "vpmNs": 81698.54000000015,
+          "changePct": -8.82538096773361
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 85894.83809523779,
+          "vpmNs": 82806.74285714305,
+          "changePct": -3.595204678854802
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 82612.62890625032,
+          "vpmNs": 81570.15234374997,
+          "changePct": -1.261885230263482
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 87414.23376623378,
+          "vpmNs": 84072.1071428571,
+          "changePct": -3.8233208476256997
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 86641.22519083964,
+          "vpmNs": 85943.22519083956,
+          "changePct": -0.8056211098846355
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 84010.25757575748,
+          "vpmNs": 83954.07196969682,
+          "changePct": -0.06687945934459316
+        }
+      ]
+    },
+    {
+      "case": "Settings rows with switches SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 61454.29104477646,
+          "vpmNs": 66805.50373134317,
+          "changePct": 8.707630656202259
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 64973.18085106366,
+          "vpmNs": 67292.44148936143,
+          "changePct": 3.5695661008411372
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 63524.8262411347,
+          "vpmNs": 63500.74113475165,
+          "changePct": -0.03791447817838023
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 66244.01197604787,
+          "vpmNs": 65296.535928143974,
+          "changePct": -1.430281801540767
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 64664.74671052642,
+          "vpmNs": 64326.753289473745,
+          "changePct": -0.5226857573040755
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 61504.773437500044,
+          "vpmNs": 65380.31510416668,
+          "changePct": 6.3012046871530725
+        }
+      ]
+    },
+    {
+      "case": "Mounted event and note reorder",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 232611.46250000026,
+          "vpmNs": 257116.67499999749,
+          "changePct": 10.534825857946363
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 224439.31521739246,
+          "vpmNs": 221626.36956521886,
+          "changePct": -1.25332125944555
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 219751.94186046434,
+          "vpmNs": 232117.24418604787,
+          "changePct": 5.626936545313943
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 234822.9117647052,
+          "vpmNs": 233103.55882353283,
+          "changePct": -0.7321913046096529
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 229731.2948717933,
+          "vpmNs": 217501.60256410186,
+          "changePct": -5.323476853476361
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 223598.81428571627,
+          "vpmNs": 240460.1285714307,
+          "changePct": 7.540878219581648
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "Event and note rows SSR",
+      "upstream_ns": 86655,
+      "vpm_ns": 82253,
+      "change_pct": -3.7,
+      "upstream_first_pct": -5,
+      "vpm_first_pct": -3.7,
+      "process_range_pct": "-8.8, -3.6, -1.3, -3.8",
+      "control_max_abs_pct": 0.8,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "Settings rows with switches SSR",
+      "upstream_ns": 64249,
+      "vpm_ns": 66051,
+      "change_pct": 1.8,
+      "upstream_first_pct": 4.3,
+      "vpm_first_pct": 1.1,
+      "process_range_pct": "8.7, 3.6, -0.0, -1.4",
+      "control_max_abs_pct": 6.3,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "Mounted event and note reorder",
+      "upstream_ns": 228525,
+      "vpm_ns": 232610,
+      "change_pct": 2.4,
+      "upstream_first_pct": 8.1,
+      "vpm_first_pct": -1,
+      "process_range_pct": "10.5, -1.3, 5.6, -0.7",
+      "control_max_abs_pct": 7.5,
+      "evidence": "unestablished at this precision"
+    }
+  ]
+}

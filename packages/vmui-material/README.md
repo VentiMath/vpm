@@ -1,6 +1,6 @@
 # vmui-material
 
-Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, GlobalStyles, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card, CardContent, CardActionArea, AvatarGroup, Tooltip, Collapse, DialogTitle, DialogContent, DialogActions, Dialog, Slide, DialogContentText, Drawer, SwipeableDrawer, Table, TableHead, TableBody, TableFooter, TableRow, TableCell, TableContainer, Autocomplete, TableSortLabel, PaginationItem, Pagination, LinearProgress, Alert, AlertTitle, Badge, ListItemButton, AppBar, Toolbar, Accordion, AccordionSummary, AccordionDetails, Tab, Tabs, Breadcrumbs, Snackbar, SnackbarContent, Stack, Grid, Rating, ClickAwayListener, Grow, Popper, Slider, Stepper, Step, StepLabel and StepContent, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
+Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, GlobalStyles, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, ListItem, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card, CardContent, CardActionArea, AvatarGroup, Tooltip, Collapse, DialogTitle, DialogContent, DialogActions, Dialog, Slide, DialogContentText, Drawer, SwipeableDrawer, Table, TableHead, TableBody, TableFooter, TableRow, TableCell, TableContainer, Autocomplete, TableSortLabel, PaginationItem, Pagination, LinearProgress, Alert, AlertTitle, Badge, ListItemButton, AppBar, Toolbar, Accordion, AccordionSummary, AccordionDetails, Tab, Tabs, Breadcrumbs, Snackbar, SnackbarContent, Stack, Grid, Rating, ClickAwayListener, Grow, Popper, Slider, Stepper, Step, StepLabel and StepContent, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
 
 ```js
 import { Button, ToggleButton, ToggleButtonGroup } from 'vmui-material';
@@ -238,7 +238,7 @@ unestablished at this precision. These measurements do not establish browser
 interaction or application throughput improvements.
 
 
-The menu foundation adds List, MenuItem, MenuList, ListItemIcon, ListItemText,
+The menu foundation adds List, ListItem, MenuItem, MenuList, ListItemIcon, ListItemText,
 ListSubheader, Menu, Popover and Select. VentiMath callers include FuseSearch's standalone
 highlighted suggestion rows, navigation shortcuts, theme/share menus, table row
 actions and the items beneath reminder/WARML dropdowns. Select now composes this foundation by default in TextField dropdowns.
@@ -1211,3 +1211,7 @@ The Academy sidebar sets `expanded` on every course step. Each subtitle stays vi
 StepContent follows the parent’s active, expanded and last flags. It uses VPM Collapse for automatic height and unmounts inactive content after exit by default. It supports root refs, theme styles, classes, `sx`, transition timing and the current transition slot. Chrome checks cover the app’s subtitle clicks, theme spacing, borders, keyed reordering and interrupted transitions.
 
 [SSR and mounted navigation measurements](bench/step-content/README.md).
+
+## Toolbar list rows
+
+ListItem provides the semantic list rows for events and notes and positions each quick-setting switch next to its label. Rows inherit list density and support padding, dividers, alignment, refs, theme defaults and style overrides. The current secondary-action slot adds its own utility class alongside the Material 7 class. [Benchmarks](bench/list-item/README.md).

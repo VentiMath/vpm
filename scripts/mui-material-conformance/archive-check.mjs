@@ -204,3 +204,6 @@ assert.equal(api.getStepLabelUtilityClass("disabled"), "Mui-disabled");
 
 assert.equal((await import("vmui-material/stepContentClasses")).default,api.stepContentClasses);
 assert.equal(require("vmui-material/stepContentClasses").getStepContentUtilityClass("last"),api.stepContentClasses.last);
+
+assert.equal(api.ListItem,(await import("vmui-material/ListItem")).default);
+assert.equal(require("vmui-material/listItemClasses").default.root,api.listItemClasses.root);
