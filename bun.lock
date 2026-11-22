@@ -754,9 +754,13 @@
       "name": "vlong",
       "version": "5.3.2",
     },
+    "packages/vlru-cache": {
+      "name": "vlru-cache",
+      "version": "11.5.3",
+    },
     "packages/vlx": {
       "name": "vlx",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "dependencies": {
         "vpngjs": "7.0.0",
       },
@@ -2229,6 +2233,8 @@
     "vlodash.camelcase": ["vlodash.camelcase@workspace:packages/vlodash.camelcase"],
 
     "vlong": ["vlong@workspace:packages/vlong"],
+
+    "vlru-cache": ["vlru-cache@workspace:packages/vlru-cache"],
 
     "vlx": ["vlx@workspace:packages/vlx"],
 
