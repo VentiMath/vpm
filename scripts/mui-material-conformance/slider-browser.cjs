@@ -21,7 +21,7 @@ require("./compare-scenes.cjs")(
         type,
         x,
         y,
-        button: type === "mouseMoved" ? "none" : "left",
+        button: type === "mouseMoved" && !buttons ? "none" : "left",
         buttons,
         clickCount: type === "mouseMoved" ? 0 : 1,
       });
@@ -67,13 +67,16 @@ require("./compare-scenes.cjs")(
         const [x, y, w] = await evaluate(
           "(()=>{const b=track.getBoundingClientRect();return [b.x,b.y+b.height/2,b.width]})()",
         );
+        await mouse("mouseMoved", x + w * 0.5, y);
         await mouse("mousePressed", x + w * 0.5, y, 1);
+        await wait("Number(input.value)===16");
         await mouse("mouseMoved", x + w * 0.83, y, 1);
         await wait("Number(input.value)===19.2");
         await mouse("mouseReleased", x + w * 0.83, y);
-        if (lib === "vpm") await wait(
-          "Number(input.value)===19.2 && document.documentElement.style.fontSize==='19.2px'",
-        );
+        if (lib === "vpm")
+          await wait(
+            "Number(input.value)===19.2 && document.documentElement.style.fontSize==='19.2px'",
+          );
         assert.ok(
           await evaluate(
             "input===document.activeElement && Number(input.getAttribute('aria-valuenow'))===19.2",
@@ -98,36 +101,45 @@ require("./compare-scenes.cjs")(
           await evaluate("window.draw({},false,true);input.focus()");
           await key("ArrowLeft");
           await wait("Number(input.value)===12.8");
-          await send("Emulation.setTouchEmulationEnabled", {
-            enabled: true,
-            maxTouchPoints: 1,
-          });
-          await evaluate("window.events.length=0");
-          const [tx, ty] = await evaluate(
-            "(()=>{const b=track.getBoundingClientRect();return [b.x+b.width/2,b.y+b.height/2]})()",
-          );
-          await send("Input.dispatchTouchEvent", {
-            type: "touchStart",
-            touchPoints: [{ x: tx, y: ty }],
-          });
-          await wait("track.classList.contains('MuiSlider-dragging')");
-          await send("Input.dispatchTouchEvent", {
-            type: "touchCancel",
-            touchPoints: [],
-          });
-          await wait("!track.classList.contains('MuiSlider-dragging')");
-          assert.ok(
-            await evaluate(
-              "events.some(e=>e[0]==='change') && !events.some(e=>e[0]==='commit')",
-            ),
-          );
-          await send("Emulation.setTouchEmulationEnabled", { enabled: false });
           await evaluate("window.draw({disabled:true});window.events.length=0");
           await mouse("mousePressed", x + w / 2, y, 1);
           await mouse("mouseReleased", x + w / 2, y);
           assert.deepEqual(await evaluate("window.events"), []);
         }
       }
+    // Keep emulated touch gestures out of the mouse phase across navigation.
+    for (const version of ["app", "current"]) {
+      const variant = version + "-vpm";
+      await send("Page.navigate", { url: baseUrl + variant });
+      await wait("location.pathname==='/" + variant + "' && window.draw");
+      await evaluate(
+        "window.draw({});window.track=document.querySelector('.MuiSlider-root');true",
+      );
+      await send("Emulation.setTouchEmulationEnabled", {
+        enabled: true,
+        maxTouchPoints: 1,
+      });
+      await evaluate("window.events.length=0");
+      const [tx, ty] = await evaluate(
+        "(()=>{const b=track.getBoundingClientRect();return [b.x+b.width*.83,b.y+b.height/2]})()",
+      );
+      await send("Input.dispatchTouchEvent", {
+        type: "touchStart",
+        touchPoints: [{ x: tx, y: ty }],
+      });
+      await wait("track.classList.contains('MuiSlider-dragging')");
+      await send("Input.dispatchTouchEvent", {
+        type: "touchCancel",
+        touchPoints: [],
+      });
+      await wait("!track.classList.contains('MuiSlider-dragging')");
+      assert.ok(
+        await evaluate(
+          "events.some(e=>e[0]==='change') && !events.some(e=>e[0]==='commit')",
+        ),
+      );
+      await send("Emulation.setTouchEmulationEnabled", { enabled: false });
+    }
     console.log(
       "Both toolbar controls passed keyboard and drag comparisons; VPM also applies the current keyboard value to the document.",
     );
