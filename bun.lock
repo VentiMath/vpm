@@ -687,6 +687,10 @@
       "name": "vjs-cookie",
       "version": "3.0.8",
     },
+    "packages/vjs-tokens": {
+      "name": "vjs-tokens",
+      "version": "4.0.0",
+    },
     "packages/vjsesc": {
       "name": "vjsesc",
       "version": "3.1.0",
@@ -2182,6 +2186,8 @@
     "vis-unsafe": ["vis-unsafe@workspace:packages/vis-unsafe"],
 
     "vjs-cookie": ["vjs-cookie@workspace:packages/vjs-cookie"],
+
+    "vjs-tokens": ["vjs-tokens@workspace:packages/vjs-tokens"],
 
     "vjsesc": ["vjsesc@workspace:packages/vjsesc"],
 

@@ -1,0 +1,1053 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-22T04:42:06.282Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/source-map-conformance/node_modules/js-tokens/index.js": "b6f81c0531fc09be2f8a26059a5cb9f47150e550471da0ace5705a26d3c6268e",
+    "../../scripts/source-map-conformance/package-lock.json": "c6edee8c5143108f73b1b71514f1e2d2952f5c18670bb5eebb897e2fe5d1d67d",
+    "../../scripts/source-map-conformance/tokens-fixture.cjs": "a63eb51a73737f2b3ca7d2460c43c2b262bb6c289893e8fd4801da50bab72f02",
+    "bench/compare.cjs": "fc6f3501db412bab699ce8f73d9c75509c2500ed4b0690f541cff1dc832c7537",
+    "index.cjs": "31e396745736cd06458694ef772251dbd32a0a06bb50588bb5898317e4a74ddf",
+    "scanner.cjs": "bc91ebc1da44d570d4ef8d0d11f0bca3579fec3e89492d72f5b430e2f89d8525"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 95469,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Tokenize a JSX error excerpt",
+            "iterations": 3029,
+            "samples": [
+              3381.0937603169355,
+              3450.946517002306,
+              3533.1379993397168,
+              3438.428524265432,
+              3535.3390557939897,
+              3442.9953780125447,
+              3566.042258171008,
+              3557.3208979861347,
+              3409.541102674146,
+              3495.5018157807845,
+              3828.68372400132,
+              3665.841201716741
+            ]
+          },
+          {
+            "case": "Babel colored build diagnostic",
+            "iterations": 998,
+            "samples": [
+              11120.949899799587,
+              11367.359719438942,
+              10329.03306613222,
+              10579.366733466855,
+              10805.276553106252,
+              10588.927855711356,
+              10504.341683366636,
+              10779.642284569194,
+              10662.867735470902,
+              11131.555110220423,
+              10708.249498997975,
+              11093.64529058117
+            ]
+          }
+        ],
+        "checksum": 2562336
+      },
+      "vpm": {
+        "pid": 95470,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Tokenize a JSX error excerpt",
+            "iterations": 3029,
+            "samples": [
+              2865.811158798284,
+              2969.861010234403,
+              2969.9570815450675,
+              2830.9395840211296,
+              2974.345328491247,
+              2905.799603829659,
+              2908.206668867619,
+              2924.4387586662174,
+              2832.1502145922686,
+              2954.2476064707666,
+              2944.150874876188,
+              2873.0052822713797
+            ]
+          },
+          {
+            "case": "Babel colored build diagnostic",
+            "iterations": 998,
+            "samples": [
+              9908.399799599181,
+              9860.763527054123,
+              9929.442885771537,
+              10314.170340681365,
+              9672.804609218436,
+              10005.30260521038,
+              9840.847695390843,
+              9999.456913827564,
+              10634.727454909744,
+              9791.54208416826,
+              9782.3146292585,
+              9959.460921843649
+            ]
+          }
+        ],
+        "checksum": 1110944
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 95471,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Tokenize a JSX error excerpt",
+            "iterations": 3306,
+            "samples": [
+              2887.4143980641275,
+              2877.860859044161,
+              2940.4364791288544,
+              2837.1016333938296,
+              2845.5837870538408,
+              2771.6778584391977,
+              2835.526315789479,
+              2891.119782214156,
+              2931.32425892316,
+              2880.3058076225034,
+              2847.9782214156057,
+              2869.5051421657568
+            ]
+          },
+          {
+            "case": "Babel colored build diagnostic",
+            "iterations": 1162,
+            "samples": [
+              9919.177280550748,
+              9856.820137693621,
+              10085.19793459547,
+              9741.895869191108,
+              9710.699655765984,
+              10665.80636833041,
+              9721.277969018996,
+              9843.337349397574,
+              10025.961273666102,
+              9855.493115318432,
+              10513.948364888149,
+              9882.422547332208
+            ]
+          }
+        ],
+        "checksum": 2274528
+      },
+      "upstream": {
+        "pid": 95472,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Tokenize a JSX error excerpt",
+            "iterations": 3306,
+            "samples": [
+              3278.8868723532983,
+              3261.594978826371,
+              3307.408045977012,
+              3142.165759225652,
+              3309.8532970357005,
+              3373.2985480943603,
+              3286.524500907442,
+              3312.9664246824013,
+              3209.392014519042,
+              3267.039624924383,
+              3287.318511796741,
+              3359.5105868118544
+            ]
+          },
+          {
+            "case": "Babel colored build diagnostic",
+            "iterations": 1162,
+            "samples": [
+              10407.02065404471,
+              10176.921686746935,
+              10645.797762478465,
+              10503.801204819287,
+              9905.15662650598,
+              10478.234079173826,
+              10514.772805507742,
+              10896.012048192753,
+              10116.035283993084,
+              10317.304647160046,
+              10144.398450946617,
+              10543.925989672944
+            ]
+          }
+        ],
+        "checksum": 1040352
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 95473,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Tokenize a JSX error excerpt",
+            "iterations": 3024,
+            "samples": [
+              3330.9219576719597,
+              3322.572420634922,
+              3201.912367724866,
+              3349.357804232802,
+              3325.8654100529056,
+              3346.1335978836064,
+              3336.2820767195703,
+              3327.477182539669,
+              3396.218915343921,
+              3316.5370370370315,
+              3217.3584656084613,
+              3423.74900793652
+            ]
+          },
+          {
+            "case": "Babel colored build diagnostic",
+            "iterations": 960,
+            "samples": [
+              10207.72499999995,
+              10443.923958333438,
+              9788.19374999998,
+              10092.404166666569,
+              10425.216666666634,
+              9906.38020833335,
+              10551.128124999921,
+              10076.25833333338,
+              9980.121875,
+              10314.01875000005,
+              10325.86770833331,
+              10161.675000000041
+            ]
+          }
+        ],
+        "checksum": 2274464
+      },
+      "vpm": {
+        "pid": 95474,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Tokenize a JSX error excerpt",
+            "iterations": 3024,
+            "samples": [
+              2914.3654100529093,
+              2885.8991402116385,
+              2856.260912698407,
+              2941.2063492063467,
+              2908.9232804232793,
+              2797.963293650792,
+              2947.4894179894077,
+              2962.522156084653,
+              2897.21097883598,
+              2946.9246031745993,
+              2963.4315476190604,
+              2965.319113756617
+            ]
+          },
+          {
+            "case": "Babel colored build diagnostic",
+            "iterations": 960,
+            "samples": [
+              10270.094791666652,
+              10796.48437500005,
+              10712.153125000039,
+              10021.87499999998,
+              10314.45312500002,
+              11035.068749999984,
+              10538.802083333347,
+              10473.82812499992,
+              9690.452083333292,
+              10621.832291666658,
+              10576.51875,
+              10832.726041666638
+            ]
+          }
+        ],
+        "checksum": 1110944
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 95475,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Tokenize a JSX error excerpt",
+            "iterations": 3467,
+            "samples": [
+              2840.9169310643197,
+              2930.4992789154912,
+              2885.756273435248,
+              2859.10008653014,
+              2930.066628208822,
+              2865.2892991058607,
+              2939.032304586108,
+              2907.6290741274943,
+              2871.887510816272,
+              2888.292183443901,
+              3038.3856359965416,
+              3076.2428612633325
+            ]
+          },
+          {
+            "case": "Babel colored build diagnostic",
+            "iterations": 1140,
+            "samples": [
+              10285.89122807016,
+              9994.699999999999,
+              9958.77192982452,
+              10418.750000000025,
+              10166.447368421037,
+              10628.179824561414,
+              9849.122807017502,
+              10094.773684210568,
+              10336.87807017544,
+              10765.094736842086,
+              9700.65789473687,
+              10151.899999999914
+            ]
+          }
+        ],
+        "checksum": 2661152
+      },
+      "upstream": {
+        "pid": 95476,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Tokenize a JSX error excerpt",
+            "iterations": 3467,
+            "samples": [
+              3433.335736948374,
+              3333.93423709258,
+              3382.6795500432695,
+              3360.9988462647802,
+              3284.4799538505918,
+              3306.136429189504,
+              3317.7819440438398,
+              3316.6521488318403,
+              3594.341794058269,
+              3232.730025959043,
+              3254.7952119988495,
+              3341.109027978074
+            ]
+          },
+          {
+            "case": "Babel colored build diagnostic",
+            "iterations": 1140,
+            "samples": [
+              10187.535964912275,
+              9893.055263157927,
+              10083.297368421048,
+              10354.714912280746,
+              10508.14999999999,
+              10723.282456140389,
+              10622.441228070213,
+              10360.928947368433,
+              10438.413157894782,
+              10190.24122807022,
+              10230.372807017488,
+              10953.691228070184
+            ]
+          }
+        ],
+        "checksum": 1040288
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 95477,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Tokenize a JSX error excerpt",
+            "iterations": 2998,
+            "samples": [
+              3324.5496997998616,
+              3180.1754503001994,
+              3348.8435623749215,
+              3222.9402935290186,
+              3385.2291527685065,
+              3298.963308872578,
+              3429.6474316210806,
+              3520.8332221480946,
+              3514.4679786524416,
+              3735.101400933956,
+              3650.8088725817274,
+              3322.7428285523742
+            ]
+          },
+          {
+            "case": "Babel colored build diagnostic",
+            "iterations": 918,
+            "samples": [
+              10771.196078431401,
+              10218.046840958512,
+              10026.77995642709,
+              10529.820261437926,
+              10043.98148148147,
+              10761.528322440128,
+              10599.355119825652,
+              10632.534858387813,
+              10616.966230936881,
+              10026.688453159099,
+              10645.062091503234,
+              10288.897603485817
+            ]
+          }
+        ],
+        "checksum": 2344800
+      },
+      "vpm": {
+        "pid": 95478,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Tokenize a JSX error excerpt",
+            "iterations": 2998,
+            "samples": [
+              3228.2494996664436,
+              3280.9232821881255,
+              3230.1254169446233,
+              3246.7895263509045,
+              3302.1874583055364,
+              3158.00833889259,
+              3334.9869913275497,
+              3234.94829886591,
+              3266.900266844568,
+              3368.328885923952,
+              3248.1237491661213,
+              3245.5943962641636
+            ]
+          },
+          {
+            "case": "Babel colored build diagnostic",
+            "iterations": 918,
+            "samples": [
+              10672.839869281097,
+              10307.915032679753,
+              10751.180827886745,
+              10611.383442265836,
+              9785.901960784358,
+              10618.554466230953,
+              9963.824618736391,
+              9985.838779956335,
+              10740.967320261378,
+              9930.464052287603,
+              10994.779956427019,
+              9959.467320261425
+            ]
+          }
+        ],
+        "checksum": 1146016
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 95479,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Tokenize a JSX error excerpt",
+            "iterations": 2997,
+            "samples": [
+              3256.3396730063328,
+              3462.3233233233273,
+              3327.021688355019,
+              3216.424758091423,
+              3345.373039706373,
+              3298.326326326319,
+              3359.7070403736966,
+              3393.7270603937245,
+              3319.958958958949,
+              3444.6529863196506,
+              3228.436770103426,
+              3338.8108108108113
+            ]
+          },
+          {
+            "case": "Babel colored build diagnostic",
+            "iterations": 1098,
+            "samples": [
+              10648.034608378894,
+              10103.635701275052,
+              10525.4626593807,
+              10744.953551912562,
+              10569.710382513675,
+              10396.212204007263,
+              10794.816939890714,
+              11950.36429872503,
+              10969.528233151164,
+              11211.293260473643,
+              11016.431693989081,
+              10578.741347905272
+            ]
+          }
+        ],
+        "checksum": 2450656
+      },
+      "upstream": {
+        "pid": 95480,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Tokenize a JSX error excerpt",
+            "iterations": 2997,
+            "samples": [
+              3557.891224557886,
+              3403.0697364030643,
+              3524.121121121121,
+              3436.4918251584963,
+              3605.5638972305687,
+              3577.6192859526304,
+              3425.5505505505635,
+              3594.552886219553,
+              3470.3316649983253,
+              3540.026026026013,
+              4232.204537871207,
+              3853.937270603939
+            ]
+          },
+          {
+            "case": "Babel colored build diagnostic",
+            "iterations": 1098,
+            "samples": [
+              11926.875227686754,
+              10992.335154827028,
+              11536.619307832385,
+              10866.120218579166,
+              11093.80692167581,
+              11148.489981785056,
+              11206.397996357104,
+              11008.461748633925,
+              11164.048269581113,
+              10526.070127504581,
+              11403.95355191253,
+              10968.162112932618
+            ]
+          }
+        ],
+        "checksum": 1005152
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "Tokenize a JSX error excerpt",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 3514.3199075602506,
+          "vpmNs": 2916.3227137669182,
+          "changePct": -17.016014748881535
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 3286.9215063520915,
+          "vpmNs": 2873.6830006049586,
+          "changePct": -12.572204871595961
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 3329.199570105814,
+          "vpmNs": 2927.7858796296277,
+          "changePct": -12.05736339991862
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 3325.85809056821,
+          "vpmNs": 2897.9606287856977,
+          "changePct": -12.865776293822806
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 3367.036357571714,
+          "vpmNs": 3247.456637758513,
+          "changePct": -3.5514828803167697
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 3548.9586252919494,
+          "vpmNs": 3332.916249582915,
+          "changePct": -6.087486457841196
+        }
+      ]
+    },
+    {
+      "case": "Babel colored build diagnostic",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 10743.945891783584,
+          "vpmNs": 9918.92134268536,
+          "changePct": -7.6789715567086025
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 10442.627366609267,
+          "vpmNs": 9869.621342512914,
+          "changePct": -5.487182525813039
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 10184.699999999995,
+          "vpmNs": 10557.660416666673,
+          "changePct": 3.6619676246396837
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 10357.82192982459,
+          "vpmNs": 10159.173684210476,
+          "changePct": -1.9178573155628431
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 10564.58769063179,
+          "vpmNs": 10459.649237472795,
+          "changePct": -0.9933038205745537
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 11121.148451730434,
+          "vpmNs": 10696.494080145727,
+          "changePct": -3.8184399158760596
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "Tokenize a JSX error excerpt",
+      "upstream_ns": 3328,
+      "vpm_ns": 2907,
+      "change_pct": -12.7,
+      "upstream_first_pct": -14.5,
+      "vpm_first_pct": -12.7,
+      "process_range_pct": "-17.0, -12.6, -12.1, -12.9",
+      "control_max_abs_pct": 6.1,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "Babel colored build diagnostic",
+      "upstream_ns": 10400,
+      "vpm_ns": 10039,
+      "change_pct": -3.7,
+      "upstream_first_pct": -2,
+      "vpm_first_pct": -3.7,
+      "process_range_pct": "-7.7, -5.5, 3.7, -1.9",
+      "control_max_abs_pct": 3.8,
+      "evidence": "unestablished at this precision"
+    }
+  ]
+}

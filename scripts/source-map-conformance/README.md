@@ -39,3 +39,5 @@ Run `node identifier-caller.cjs` or `bun identifier-caller.cjs` to exercise Babe
 The string-parser fixture runs unchanged Babel Types 7.29.0, 7.29.7 and 7.29.15 template builders with their respective control and the VPM helper. The archive checks repeat these comparisons after npm and Bun installs.
 
 The gensync fixture runs Babel Core 7.29.0 against each runner in a fresh process. It compares config discovery, sync/async/callback JSX and source-map output, async plugin handling and file errors. The published gensync test suite runs with `bun test scripts/source-map-conformance/gensync-upstream.test.cjs`.
+
+Run `node scripts/source-map-conformance/tokens-caller.cjs` or its Bun equivalent for highlighted Babel errors in JSX and TypeScript. The fixture loads each unchanged code-frame with its tokenizer resolved to the selected implementation. To run the original 694 tokenizer cases, pass a checkout of js-tokens v4.0.0 to `node scripts/source-map-conformance/tokens-upstream.cjs`.

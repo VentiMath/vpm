@@ -1,0 +1,12 @@
+{
+  "upstream": {
+    "name": "js-tokens",
+    "version": "4.0.0",
+    "repository": "https://github.com/lydell/js-tokens",
+    "integrity": "sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ=="
+  },
+  "implementation": {
+    "kind": "independent",
+    "targetScope": "Native global token matching and classification used by Babel 7 code frames, including incomplete JavaScript and JSX."
+  }
+}

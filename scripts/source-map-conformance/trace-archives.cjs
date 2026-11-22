@@ -29,6 +29,7 @@ try {
     "vbabel-helper-validator-identifier",
     "vbabel-helper-string-parser",
     "vgensync",
+    "vjs-tokens",
   ]) {
     const [packed] = JSON.parse(
       run("npm", [
@@ -64,8 +65,19 @@ try {
         : ["ci", "--offline", "--ignore-scripts"],
       dir,
     );
+    // Resolve the actual exports map in a fresh installation on both runtimes.
+    const imports = [
+      'import tokens, { matchToToken } from "vjs-tokens";',
+      'import { createRequire } from "node:module";',
+      'import assert from "node:assert/strict";',
+      'const cjs = createRequire(import.meta.url)("vjs-tokens");',
+      'assert.equal(tokens, cjs.default); assert.equal(matchToToken, cjs.matchToToken);',
+      'assert.equal(matchToToken(tokens.exec("const")).type, "name");',
+    ].join("\n");
     for (const runtime of ["node", "bun"])
-      for (const caller of ["trace-caller.cjs", "convert-caller.cjs","jsesc-caller.cjs", "identifier-caller.cjs", "string-parser-caller.cjs", "gensync-caller.cjs"])
+      run(runtime, ["--input-type=module", "-e", imports], dir);
+    for (const runtime of ["node", "bun"])
+      for (const caller of ["trace-caller.cjs", "convert-caller.cjs","jsesc-caller.cjs", "identifier-caller.cjs", "string-parser-caller.cjs", "gensync-caller.cjs", "tokens-caller.cjs"])
         run(runtime, [path.join(__dirname, caller)], dir, {
           VPM_TRACE_INSTALL: path.join(dir, "node_modules"),
         });
