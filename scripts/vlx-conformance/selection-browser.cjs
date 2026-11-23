@@ -54,6 +54,15 @@ const output=process.env.VLX_BROWSER_OUTPUT; if(output)fs.mkdirSync(output,{recu
   assert.equal((await copy()).text,display?'\\['+tex+'\\]':'$'+tex+'$');
   report.push({name,display,partial:partial.text,keyboardAdvanced:true});
  }
+ // Prove that bounds distinguish invisible font metrics from genuine clipping.
+ const boundsProbe=await evaluate(`(()=>{
+  const svg=document.querySelector('#demo svg'),ink=${require('./ink-bounds.cjs').toString()},before=ink(svg),pick=svg.querySelector('.vlx-select'),path=svg.querySelector('path'),original=path.getAttribute('transform');
+  const old=pick.getAttribute('font-size');pick.setAttribute('font-size','100');
+  const textBox=svg.querySelector('g').getBBox(),same=JSON.stringify(before)===JSON.stringify(ink(svg));pick.setAttribute('font-size',old);
+  path.setAttribute('transform','translate(10000 0)');const shifted=ink(svg);if(original===null)path.removeAttribute('transform');else path.setAttribute('transform',original);
+  return {same,textExceeds:textBox.width>svg.viewBox.baseVal.width||textBox.height>svg.viewBox.baseVal.height,detectsInk:shifted.x+shifted.width>svg.viewBox.baseVal.width};
+ })()`);
+ assert.deepEqual(boundsProbe,{same:true,textExceeds:true,detectsInk:true});
  // Desktop CDP emulation cannot verify Android/iOS native selection handles.
  await send('Emulation.setTouchEmulationEnabled',{enabled:true,maxTouchPoints:1});
  await evaluate('document.querySelector("#demo").innerHTML=vlx.renderMath("n^6-1").html;getSelection().removeAllRanges();true');

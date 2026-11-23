@@ -344,3 +344,9 @@ string output with isolated AB/BA processes and identical-source controls.
 web semantic structure used by 0.3.2 partial-TeX copying, with the same isolated
 process and identical-source controls. Whole-formula source copying is exact;
 partial reconstruction is canonical TeX and excludes unselected sibling terms.
+
+Visible SVG bounds are measured with the transparent selection text removed from
+a detached clone, since native font metrics differ across operating systems.
+The live formula stays untouched. The selection browser gate separately checks
+real mouse/keyboard copying, and proves the bounds gate still catches displaced
+visible paths while ignoring oversized invisible text.
