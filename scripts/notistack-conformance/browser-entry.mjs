@@ -7,6 +7,11 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms)),
   assert = (x, m) => {
     if (!x) throw Error(m);
   };
+async function waitFor(predicate, message) {
+  const deadline = performance.now() + 3000;
+  while (!predicate() && performance.now() < deadline) await wait(20);
+  assert(predicate(), message);
+}
 const text = (host) =>
   Array.from(host.querySelectorAll("[role=alert]")).map((x) => x.textContent);
 function mount(props = {}, strict = false, notifyOnMount = false) {
@@ -134,8 +139,7 @@ window.runNotifications = async () => {
   rows.push(text(p.host));
   assert(text(p.host).join() === "B,C", "FIFO eviction");
   p.close();
-  await wait(550);
-  assert(text(p.host).length === 0, "close all");
+  await waitFor(() => text(p.host).length === 0, "close all");
   p.dispose();
   p = mount({ maxSnack: 3, preventDuplicate: true });
   p.add("same");
