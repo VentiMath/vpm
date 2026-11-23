@@ -407,6 +407,12 @@ jobs:
           node scripts/decko-conformance/probe.cjs
           node scripts/decko-conformance/types.cjs
           node scripts/decko-conformance/archives.cjs
+      - name: Independent balanced delimiters and glob callers
+        run: |
+          npm --prefix scripts/balanced-match-conformance ci --ignore-scripts
+          node --test packages/vbalanced-match/test/*.test.cjs
+          node scripts/balanced-match-conformance/callers.cjs
+          node scripts/balanced-match-conformance/archives.cjs
       - name: Independent emitter and unchanged API viewer services
         run: |
           node --test packages/veventemitter3/test/*.test.cjs
@@ -1349,6 +1355,9 @@ jobs:
       - run: bun scripts/source-map-conformance/option-caller.cjs
       - run: bun scripts/source-map-conformance/semver-caller.cjs
       - run: bun scripts/source-map-conformance/lru-callers.cjs
+      - run: npm --prefix scripts/balanced-match-conformance ci --ignore-scripts
+      - run: bun test packages/vbalanced-match/test
+      - run: bun scripts/balanced-match-conformance/callers.cjs
       - run: bun scripts/source-map-conformance/string-parser-caller.cjs
       - run: bun scripts/source-map-conformance/identifier-caller.cjs
       - run: bun scripts/source-map-conformance/jsesc-caller.cjs

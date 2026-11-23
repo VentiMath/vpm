@@ -1,0 +1,16 @@
+{
+  "upstream": {
+    "name": "balanced-match",
+    "version": "5.0.0",
+    "repository": "https://github.com/juliangruber/balanced-match",
+    "integrity": "sha512-6Gu87QhScJ8cFLMS0Vm8GMeQpG1oOBkh6xlJ2wxUP1FQD1mjV9YLWQFEYy6F3aQwiJQNE/en7KGVea6f8hTMGA=="
+  },
+  "implementation": {
+    "kind": "independent",
+    "targetScope": "Named balanced/range API plus legacy callable CommonJS compatibility for brace-expansion and minimatch callers. Nonempty string/RegExp delimiters, nesting, overlaps and incomplete groups."
+  },
+  "differences": [
+    "Empty or zero-width delimiters return undefined rather than producing ambiguous zero-width pairs.",
+    "Non-string inputs and unsupported delimiter types throw TypeError. Cross-realm RegExp delimiters are supported."
+  ]
+}

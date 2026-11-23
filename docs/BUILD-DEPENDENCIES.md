@@ -90,3 +90,16 @@ dependency is [vtsconfck](../packages/vtsconfck). Native `path.matchesGlob` repl
 `vglobrex` for this caller. Current stable 6.1.1 and app 5.1.4 controls agree across
 alias comparisons and real Vite builds; the app's alias map is compared read-only.
 Publication/adoption and other callers of shared dependencies remain separate.
+
+## Balanced delimiters in file patterns
+
+[vbalanced-match](../packages/vbalanced-match) owns the delimiter scan beneath
+brace-expansion and minimatch. Its current named API targets balanced-match
+5.0.0; the callable CommonJS entry also supports the older brace-expansion 2
+caller. Unchanged brace-expansion 2/5 and minimatch 10 callers pass alongside
+49,200 generated comparisons against three upstream versions. Empty delimiters
+return no match; real brace callers use nonempty delimiters.
+
+This completes the leaf implementation. Brace expansion, a consumer release
+and application adoption remain separate. See the
+[conformance commands](../scripts/balanced-match-conformance/README.md).

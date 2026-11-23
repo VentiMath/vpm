@@ -263,6 +263,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vvarint](packages/vvarint) | varint 6.0.0 | Unsigned compilation IDs for Sass. Range and buffer capacity checks preserve exact integers and prevent partial writes to short buffers. [Measurements](packages/vvarint/bench/results/README.md) |
 | [vsemver](packages/vsemver) | semver 7.8.6; app 7.5.4; Babel 6.3.2 | Independent app-used version parsing, comparisons, coercion and ranges, with isolated bounded caching. Unchanged Babel callers and app Capacitor/runtime checks pass. [Scope](packages/vsemver/README.md) and [measurements](packages/vsemver/bench/README.md). |
 | [vlru-cache](packages/vlru-cache) | lru-cache 11.5.3; Babel caller 5.1.1 | Independent bounded synchronous count/size LRU, lazy TTL and disposal; no runtime dependencies. Babel, CSS, DOM-selector and path-scurry callers pass unchanged. [Scope](packages/vlru-cache/README.md) and [measurements](packages/vlru-cache/bench/README.md). |
+| [vbalanced-match](packages/vbalanced-match) | balanced-match 5.0.0; caller controls 1.0.2 and 4.0.4 | Independent iterative delimiter matching without runtime dependencies. Preserves nesting, overlapping tokens and incomplete groups for unchanged brace-expansion/minimatch callers; explicit empty-delimiter behavior and cross-realm RegExp support. [Scope](packages/vbalanced-match/README.md) and [measurements](packages/vbalanced-match/bench/results/README.md). |
 | [vbabel-helper-validator-option](packages/vbabel-helper-validator-option) | @babel/helper-validator-option 7.29.7 | Independent option validation and spelling suggestions verified through Babel Core and both compilation-targets callers. [Measurements](packages/vbabel-helper-validator-option/bench/results/README.md). |
 | [vbabel-code-frame](packages/vbabel-code-frame) | @babel/code-frame 7.29.7; app 7.29.0 | Independent Babel source excerpts and highlighting with VPM tokenizer, identifiers and colors. Corrects tab alignment and multiline marker widths. [Measurements](packages/vbabel-code-frame/bench/results/README.md). |
 | [vjs-tokens](packages/vjs-tokens) | js-tokens 4.0.0 | Tokenizes JavaScript for Babel build diagnostics, with parity checks for highlighted text and source locations through both installed code-frame versions. [Measurements](packages/vjs-tokens/bench/results/README.md). |
@@ -484,9 +485,9 @@ version-scoped integration aliases remain limited to their tested baselines.
 ## Current verification
 
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
-recorded by the tests. All 166 Node runtime packages' public declarations compile
+recorded by the tests. All 167 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **259 packages**, including two declaration-only packages and
+compiler in NodeNext and bundler resolution modes. The catalog covers **260 packages**, including two declaration-only packages and
 browser packages `vcss-box-model`, `vuse-sync-external-store`, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,
