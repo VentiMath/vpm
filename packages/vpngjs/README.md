@@ -88,23 +88,24 @@ inconclusive on both runtimes; no measured case establishes a regression. [Prove
 ## Direct application use
 
 `vpngjs` is a public standalone Node 24/Bun server/tooling package with no
-runtime dependencies. The standalone `pngjs-7.0.0` release supports the existing
-application import name:
+runtime dependencies. Install it under its package name:
 
 ```json
 {
   "dependencies": {
-    "pngjs": "https://github.com/VentiMath/vpm/releases/download/pngjs-7.0.0/vpngjs-7.0.0.tgz"
+    "vpngjs": "https://github.com/VentiMath/vpm/releases/download/pngjs-7.0.0/vpngjs-7.0.0.tgz"
   }
 }
 ```
 
-The same URL can be installed under `vpngjs` if callers already import that name.
-The release's `consumer-package.json` also provides a `pngjs` override for a graph
-whose consumers are all within the documented synchronous contract. Existing
-reader imports and the constructor/write fixture no longer require npm pngjs or
-its `@types/pngjs` declarations. The older VLX/resvg sibling archives remain
-reader-only and are not overwritten by this release.
+Use `import {PNG} from 'vpngjs'` for readers and the constructor/write fixture.
+These callers no longer require npm pngjs or its `@types/pngjs` declarations.
+The release tag is `pngjs-7.0.0`; the archive's package name is `vpngjs`.
+The published `consumer-package.json` supplies an optional `pngjs` install alias
+and override for callers that must retain upstream imports. Direct application
+use under `vpngjs` needs neither. Only override a dependency graph whose callers
+fit the documented synchronous contract. The older VLX/resvg sibling archives
+remain reader-only and are not overwritten by this release.
 
 Preserve each caller's accepted bounds when migrating. VentiMath's historical
 importer permits 32,000,000 pixels and 16 MiB, so its read should use
