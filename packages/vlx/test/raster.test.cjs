@@ -28,7 +28,7 @@ test('only owned drawing vocabulary and bounded dimensions are accepted',()=>{
  const p=renderSvgPng(svg('<ellipse cx="10" cy="10" rx="4" ry="6" fill="purple"/>'),{width:40,background:'white'});assert.equal(p.width,40);assert.equal(p.height,40);assert.deepEqual(pixel(PNG.sync.read(p.data),20,20),[128,0,128,255]);
 });
 test('public math and page PNG APIs run without loading a native rasterizer',async()=>{
- const Module=require('node:module'),load=Module._load;Module._load=function(name,...rest){if(name.includes('resvg'))throw Error('native rasterizer loaded');return load.call(this,name,...rest)};
+ const Module=require('node:module'),load=Module._load;Module._load=function(name,...rest){if(name.startsWith('@resvg/'))throw Error('native rasterizer loaded');return load.call(this,name,...rest)};
  try {const {createRenderer}=require('..'),{renderPng}=require('../png.cjs'),{renderProblemPng}=require('../problem.cjs');const p=await renderPng(createRenderer(),String.raw`10\sqrt[3]{10}`);assert.ok(p.width>0);assert.equal(PNG.sync.read(renderProblemPng({statement:'Find $x$.'})).width,960);}finally{Module._load=load;}
 });
 

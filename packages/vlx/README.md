@@ -165,9 +165,10 @@ const page = renderProblemSvg(problem); // {svg, width, height}
 const bytes = renderProblemPng(problem); // Buffer, typed as Uint8Array
 ```
 
-The source PNG methods now use VLX's independently written rasterizer. They
+The source PNG methods use VPM's independently written rasterizer, shared through
+`vresvg` starting in source 0.3.3. They
 flatten the same glyph paths, draw rules and curves, composite embedded PNG
-figures and encode RGBA PNGs with the runtime's built-in zlib. No resvg package,
+figures and encode RGBA PNGs with the runtime's built-in zlib. No upstream resvg package,
 native addon, system font or external image lookup is required.
 `renderPng(renderer, tex, {scale: 2, background: 'white'})` remains available from
 `vlx/png`; page methods retain the API shown above.
@@ -181,8 +182,9 @@ colors, transparency and embedded figures rather than byte-identical PNGs.
 
 **Release 0.3.0:** includes the owned PNG renderer and pins its VPM figure
 decoder; 0.3.2 retains it. VentiMath PR #455 moves problem pictures off the
-native-backed 0.2.3 release. The application still needs resvg separately for
-handwritten writeup pictures in `functions/src/writeupPicture.ts`.
+native-backed 0.2.3 release. The application retains resvg separately for
+handwritten writeup pictures in `functions/src/writeupPicture.ts`. The new
+`vresvg` package covers that caller; its application repin remains separate.
 See the [optimized measurements](bench/raster-optimized/README.md).
 
 ## Automatic equation references (0.2.0)
@@ -427,3 +429,8 @@ curved page textures while retaining source TeX and a selectable MathML reading
 view. It is checked against Three.js 0.184.0 and 0.187.0 and adds no Three.js
 runtime dependency to VLX. The example documents texture budgets and zoom
 limits. Live-scene integration and physical-device acceptance remain separate.
+
+Source 0.3.3 moves the shared owned raster engine into `vresvg`, used by both
+VLX and the handwritten-page caller. PNG APIs retain their `VlxError` contract.
+The published 0.3.2 archives remain unchanged; this source change is not a new
+VLX release or an application repin.

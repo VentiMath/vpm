@@ -810,6 +810,12 @@ jobs:
       - run: node --test scripts/vlx-conformance/dom.test.cjs scripts/vlx-conformance/selection.test.cjs scripts/vlx-conformance/launch-chrome.test.cjs
       - run: node scripts/vlx-conformance/build-font.cjs --check
       - run: node scripts/vlx-conformance/raster.cjs
+      - run: node --test packages/vresvg/test/*.test.cjs
+      - run: node scripts/resvg-conformance/compare.cjs
+      - name: Verify handwriting rasterizer archives
+        run: |
+          node scripts/pack-resvg-release.cjs --ref HEAD --tag resvg-2.6.2-ci --out "$RUNNER_TEMP/resvg-release"
+          node scripts/check-resvg-release.cjs "$RUNNER_TEMP/resvg-release"
       - run: node scripts/vlx-conformance/archives.cjs
       - run: node scripts/vlx-conformance/selection-browser.cjs
       - run: node scripts/vlx-conformance/browser.cjs
@@ -1688,6 +1694,8 @@ jobs:
       - run: node --test scripts/vlx-conformance/dom.test.cjs scripts/vlx-conformance/selection.test.cjs scripts/vlx-conformance/launch-chrome.test.cjs
       - run: node scripts/vlx-conformance/build-font.cjs --check
       - run: bun scripts/vlx-conformance/raster.cjs
+      - run: bun test packages/vresvg/test/*.test.cjs
+      - run: bun scripts/resvg-conformance/compare.cjs
       - run: node scripts/vlx-conformance/archives.cjs
       - run: npm --prefix scripts/png-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/png-conformance/archives.cjs

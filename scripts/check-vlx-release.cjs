@@ -11,7 +11,7 @@ function run(cmd,args,cwd=temp,extra={}){
  assert.ifError(r.error);assert.equal(r.status,0,(r.stdout+r.stderr).slice(-12000));return r.stdout;
 }
 try{
- assert.deepEqual(manifest.packages.map(p=>p.name).sort(),['vlx','vpngjs']);
+ assert.deepEqual(manifest.packages.map(p=>p.name).sort(),['vlx','vpngjs','vresvg']);
  const top=manifest.packages.find(p=>p.name==='vlx'),png=manifest.packages.find(p=>p.name==='vpngjs');
  assert.equal(top.dependencies.vpngjs,png.url);
  for(const line of fs.readFileSync(path.join(directory,'SHA256SUMS'),'utf8').trim().split('\n')){
@@ -21,7 +21,7 @@ try{
   const cwd=path.join(temp,manager);fs.mkdirSync(cwd);
   const dependencies=published?{vlx:top.url}:manager==='npm'?{vlx:'file:'+path.join(directory,top.asset)}:{};
   Object.assign(dependencies,{react:'19.3.1','react-dom':'19.3.1','@types/react':'19.2.14'});
-  fs.writeFileSync(path.join(cwd,'package.json'),JSON.stringify({private:true,type:'module',dependencies,...(!published&&manager==='npm'?{overrides:{vpngjs:'file:'+path.join(directory,png.asset)}}:{})}));
+  fs.writeFileSync(path.join(cwd,'package.json'),JSON.stringify({private:true,type:'module',dependencies,...(!published&&manager==='npm'?{overrides:Object.fromEntries(manifest.packages.filter(p=>p.name!=='vlx').map(p=>[p.name,'file:'+path.join(directory,p.asset)]))}:{})}));
   run(manager,['install','--ignore-scripts',...(manager==='npm'?['--no-audit','--no-fund']:[])],cwd);
   // Bun cannot redirect a release URL before publication. Its local check uses
   // unmodified extracted archives; the published check performs real installs.
