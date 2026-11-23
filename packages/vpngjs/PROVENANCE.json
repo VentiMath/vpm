@@ -16,14 +16,15 @@
   "implementation": {
     "kind": "independent implementation",
     "replacementStatus": "complete for documented application scope",
-    "targetScope": "PNG.sync.read for application figure validation and RGBA pixel inspection. Static/default PNG image decoding: five color types, legal sample depths, transparency, all filters and Adam7. No writer, stream parser, constructor or gamma adjustment API."
+    "targetScope": "PNG.sync.read for application figure validation and RGBA pixel inspection, plus new PNG({width,height}) and PNG.sync.write for the historical-importer fixture. Static/default image decoding remains complete across legal color/depth formats, transparency, filters and Adam7. Writing is normalized non-interlaced RGBA8 with optional gamma. No async stream API or alternate writer modes."
   },
   "specification": "https://www.w3.org/TR/png-3/",
   "changes": [
     "Independent bounded chunk parser, scanline reconstruction and sample conversion, using supported-runtime zlib inflate and CRC32.",
     "Input and pixel bounds before bitmap allocation; exact inflated lengths including Adam7 passes and strict chunk ordering/CRC checks.",
-    "No PNG stream/writer implementation, compatibility shims or third-party runtime dependencies; the supported application contract is synchronous reading.",
-    "Follow PNG decoder compatibility rules for final IDAT padding, transparency-key high bits and empty palette transparency."
+    "No streaming implementation, compatibility shims or third-party runtime dependencies; the supported application contract is synchronous reading and RGBA8 fixture construction/writing.",
+    "Follow PNG decoder compatibility rules for final IDAT padding, transparency-key high bits and empty palette transparency.",
+    "Independent bounded RGBA8 writer and zero-filled constructor; native zlib/CRC32, fixed first-row Sub/later-row Up filters, exact input length, finite allocation/output limits and preserved pixels/gamma."
   ],
   "verification": {
     "corpus": "162 exact valid PNG comparisons; 14 invalid files rejected. Missing-IDAT upstream outcome is runtime/state-dependent and not an equality control. Corpus revision and hashes live in scripts/png-conformance/images.json.",
@@ -35,7 +36,7 @@
         "problemImage.test.ts": "f17ab8bb8ebaf0918c5c7e65c2046c1bee6a80953ca6032ef0dc00739d38698d"
       }
     },
-    "limitations": "No writer, async parser, PNG constructor, bitblt, gamma adjustment, 16-bit skipRescale output or animation-frame API. Reader defaults are 16 million pixels and 10 MiB; callers with larger accepted bounds must pass explicit finite limits.",
+    "limitations": "No async parser, stream constructor, pack, bitblt, gamma adjustment, skipRescale output or animation-frame API. Writer is RGBA8/non-interlaced only; no custom filter/deflate options. Defaults: 16 million pixels and 10 MiB; callers with larger accepted bounds must pass explicit limits.",
     "directConsumption": {
       "checked": "2026-11-23",
       "release": "vlx-0.3.6",
@@ -47,6 +48,31 @@
         "Node 24 and Bun 1.4.4 CJS/ESM reads with a separately named upstream fixture writer"
       ],
       "scope": "Public standalone synchronous reader; no dependency on vresvg or VLX. No application files changed and no claim of direct application adoption."
+    },
+    "fixtureWriter": {
+      "date": "2026-11-23",
+      "cases": "192 upstream pixel/metadata comparisons; all 162 valid decoder corpus images re-encoded with exact pixels/gamma; ownership, cross-realm/sliced input, malformed options and allocation/output boundaries.",
+      "app": {
+        "appCommit": "fa274faf1445bec2a678df0dbf7600d3920e563d",
+        "sourceSHA256": {
+          "tools/historical-contest-import/model.test.ts": "174909d828abe95095193663c136f811df2e87c42bc31a7c8cd5a81dbfb77105",
+          "tools/historical-contest-import/model.ts": "6d197e25ef3c0abd8424997cf8d1589ee27c14f8813dc1849961fb92cd58adda",
+          "tools/historical-contest-import/import.ts": "a428a85646f164a863ce5591fbf7edbf35796546d1012f74bda38358df0fad46",
+          "tools/historical-contest-import/archiveAudit.ts": "948c13911a68661b24237dae1de7339b69c754b00eca907922857f5211591bbc",
+          "tools/historical-contest-import/search.ts": "fab18891471fe3e409068aa61614d5ba8dd8f38ac120f663a0b0162a7fc99f5d",
+          "functions/src/problemSearchCitations.ts": "6969c0f707500351134948707b5a3e25254108ed0e447367aa98eaa0434e8fcc",
+          "functions/src/privateFields.ts": "757b41baa0149a5bacaeaf06d3b1ebe955d71da2b15b7e0890bfc33170bce71c",
+          "src/components/problems/types.ts": "491b1ce13f626f394c6f311dbe542142566719aa9f331a182d7a94ed94c75d76"
+        },
+        "test": "decodes the complete PNG, verifies CRC, hashes and natural dimensions",
+        "variants": [
+          "upstream",
+          "vpm"
+        ],
+        "privateSourceCommitted": false
+      },
+      "release": "pngjs-7.0.0",
+      "performance": "packages/vpngjs/bench/write/README.md"
     }
   }
 }

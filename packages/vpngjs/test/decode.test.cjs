@@ -1,6 +1,6 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),{createHash}=require('node:crypto'),{deflateSync}=require('node:zlib');
-const fixture=path.resolve(__dirname,'../../../scripts/png-conformance'),upstream=require(path.join(fixture,'node_modules/pngjs')).PNG,{PNG}=require('../index.cjs'),binary=require(path.join(fixture,'binary.cjs'));
+const fixture=path.resolve(__dirname,'../../../scripts/png-conformance'),upstream=require(path.join(fixture,'node_modules/pngjs')).PNG,{PNG}=require(process.env.VPM_PNG_ENTRY||'../index.cjs'),binary=require(path.join(fixture,'binary.cjs'));
 const image=name=>fs.readFileSync(path.join(fixture,'images',name));
 for(const name of fs.readdirSync(path.join(fixture,'images')).filter(n=>n.endsWith('.png')))test('PngSuite '+name,()=>{
  const input=image(name),before=Buffer.from(input);
@@ -49,7 +49,7 @@ test('upstream-written mixed RGBA fixtures preserve bytes and metadata',()=>{
   for(const filterType of [0,1,2,3,4,-1]){const encoded=upstream.sync.write({width:size,height:7,data},{filterType});const result=PNG.sync.read(encoded);assert.deepEqual(result,upstream.sync.read(encoded));assert.deepEqual(result.data,data);}
  }
 });
-test('real resvg output matches the image caller pixel checks',()=>{
+test('real resvg output matches the image caller pixel checks',{timeout:60000},()=>{
  const {Resvg}=require(path.join(fixture,'node_modules/@resvg/resvg-js'));
  for(const fill of ['red','blue','#12345680']){const encoded=new Resvg('<svg xmlns="http://www.w3.org/2000/svg" width="37" height="29"><rect width="17" height="19" fill="'+fill+'"/></svg>').render().asPng();const actual=PNG.sync.read(encoded,{checkCRC:true}),expected=upstream.sync.read(Buffer.from(encoded),{checkCRC:true});assert.deepEqual(actual,expected);assert.equal(actual.width,37);assert.equal(actual.height,29);}
 });

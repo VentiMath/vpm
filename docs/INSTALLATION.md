@@ -1,5 +1,27 @@
 # Installing VPM packages
 
+## PNG reader and fixture writer
+
+Use [pngjs-7.0.0](https://github.com/VentiMath/vpm/releases/tag/pngjs-7.0.0) for
+`PNG.sync.read`, `new PNG({width,height})` and `PNG.sync.write` with RGBA8 data:
+
+```json
+{
+  "dependencies": {
+    "pngjs": "https://github.com/VentiMath/vpm/releases/download/pngjs-7.0.0/vpngjs-7.0.0.tgz"
+  }
+}
+```
+
+This preserves existing imports and removes the npm fixture-writer requirement.
+The package includes its own declarations. It has no runtime dependencies; older
+VLX/resvg sibling archives remain immutable reader-only builds. Read and write
+bounds and excluded streaming/alternate encoding APIs are in the
+[package contract](../packages/vpngjs/README.md). The historical importer must
+explicitly retain its 32-million-pixel / 16-MiB read limits. Release checks cover
+fresh/frozen npm/Bun installs under the original name and exact published bytes.
+
+
 ## Material React Table
 
 [Material React Table 3.2.1 r3](https://github.com/VentiMath/vpm/releases/tag/material-react-table-3.2.1-r3)

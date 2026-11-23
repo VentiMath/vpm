@@ -2,6 +2,7 @@
 // Reuse the committed-snapshot packer; these leaves have no dependency closure.
 const assert=require('node:assert/strict');
 const configs={
+ pngjs:{packageName:'vpngjs',tagPrefix:'pngjs',installName:'pngjs',direct:true},
  'js-cookie':{packageName:'vjs-cookie',tagPrefix:'js-cookie',installName:'js-cookie'},
  camelize:{packageName:'vcamelize',tagPrefix:'camelize',installName:'camelize'},
 };

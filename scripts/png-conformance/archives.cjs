@@ -1,22 +1,21 @@
 'use strict';
 const fs=require('node:fs'),path=require('node:path'),os=require('node:os'),assert=require('node:assert/strict'),{spawnSync}=require('node:child_process');
+const installName=process.env.VPM_PNG_INSTALL_NAME||'vpngjs';assert(['vpngjs','pngjs'].includes(installName));
 const root=path.resolve(__dirname,'../..'),temp=fs.mkdtempSync(path.join(os.tmpdir(),'vpm-png-archive-'));
-function run(cmd,args,cwd=temp){const result=spawnSync(cmd,args,{cwd,encoding:'utf8',timeout:120000,env:{...process.env,npm_config_cache:path.join(temp,'npm-cache'),BUN_INSTALL_CACHE_DIR:path.join(temp,'bun-cache')}});assert.equal(result.status,0,result.stdout+result.stderr);return result.stdout;}
+function run(cmd,args,cwd=temp,extra={}){const result=spawnSync(cmd,args,{cwd,encoding:'utf8',timeout:120000,env:{...process.env,npm_config_cache:path.join(temp,'npm-cache'),BUN_INSTALL_CACHE_DIR:path.join(temp,'bun-cache'),...extra}});assert.equal(result.status,0,result.stdout+result.stderr);return result.stdout;}
 try{
- const pkg=path.join(root,'packages/vpngjs');run('bun',['pm','pack','--ignore-scripts','--destination',temp,'--quiet'],pkg);const archive=path.join(temp,'vpngjs-7.0.0.tgz');assert.doesNotMatch(run('tar',['-tzf',archive]),/\/(?:test|bench|node_modules)\//);
+ const pkg=path.join(root,'packages/vpngjs');if(!process.env.VPM_PNG_ARCHIVE)run('bun',['pm','pack','--ignore-scripts','--destination',temp,'--quiet'],pkg);const archive=process.env.VPM_PNG_ARCHIVE||path.join(temp,'vpngjs-7.0.0.tgz');assert.doesNotMatch(run('tar',['-tzf',archive]),/\/(?:test|bench|node_modules)\//);
  for(const manager of ['npm','bun']){
-  const cwd=path.join(temp,manager);fs.mkdirSync(cwd);fs.writeFileSync(path.join(cwd,'package.json'),JSON.stringify({private:true,type:'module',dependencies:{vpngjs:'file:'+archive}}));run(manager,['install','--ignore-scripts',...(manager==='npm'?['--no-audit','--no-fund']:[])],cwd);
+  const cwd=path.join(temp,manager);fs.mkdirSync(cwd);fs.writeFileSync(path.join(cwd,'package.json'),JSON.stringify({private:true,type:'module',dependencies:{[installName]:process.env.VPM_PNG_URL||'file:'+archive}}));run(manager,['install','--ignore-scripts',...(manager==='npm'?['--no-audit','--no-fund']:[])],cwd);
+  const lock=path.join(cwd,manager==='npm'?'package-lock.json':'bun.lock'),before=fs.readFileSync(lock);run(manager,manager==='npm'?['ci','--ignore-scripts','--no-audit','--no-fund']:['install','--ignore-scripts','--frozen-lockfile'],cwd);assert.deepEqual(fs.readFileSync(lock),before);
+  if(process.env.VPM_PNG_MANIFEST){const item=JSON.parse(fs.readFileSync(process.env.VPM_PNG_MANIFEST)).packages[0];const entry=path.join(cwd,'node_modules',installName);assert.equal(JSON.parse(fs.readFileSync(path.join(entry,'package.json'))).name,'vpngjs');for(const [name,sha]of Object.entries(item.sourceFiles))assert.equal(require('node:crypto').createHash('sha256').update(fs.readFileSync(path.join(entry,name))).digest('hex'),sha,name);}
   fs.copyFileSync(path.join(__dirname,'images/basi6a08.png'),path.join(cwd,'image.png'));
-  fs.writeFileSync(path.join(cwd,'consumer.mjs'),`import assert from 'node:assert/strict';import {readFileSync} from 'node:fs';import {createRequire} from 'node:module';import api,{PNG} from 'vpngjs';assert.equal(PNG,createRequire(import.meta.url)('vpngjs').PNG);assert.equal(api.PNG,PNG);const image=PNG.sync.read(readFileSync('image.png'),{checkCRC:true});assert.equal(image.width,32);assert.equal(image.height,32);assert.equal(image.data.length,4096);assert(Buffer.isBuffer(image.data));assert.equal(image.interlace,true);assert.throws(()=>PNG.sync.read(readFileSync('image.png'),{maxPixels:10}));`);
+  fs.writeFileSync(path.join(cwd,'consumer.mjs'),`import assert from 'node:assert/strict';import {readFileSync} from 'node:fs';import {createRequire} from 'node:module';import api,{PNG} from 'vpngjs';assert.equal(PNG,createRequire(import.meta.url)('vpngjs').PNG);assert.equal(api.PNG,PNG);const image=PNG.sync.read(readFileSync('image.png'),{checkCRC:true});assert.equal(image.width,32);assert.equal(image.height,32);assert.equal(image.data.length,4096);assert(Buffer.isBuffer(image.data));assert.equal(image.interlace,true);const fixture=new PNG({width:4,height:3});fixture.data.fill(255);const encoded=PNG.sync.write(fixture);assert(Buffer.isBuffer(encoded));assert.deepEqual(PNG.sync.read(encoded).data,fixture.data);assert.equal(fixture.pack,undefined);assert.throws(()=>PNG.sync.read(readFileSync('image.png'),{maxPixels:10}));`.replaceAll('vpngjs',installName));
   for(const runtime of ['node','bun'])run(runtime,['consumer.mjs'],cwd);
-  fs.writeFileSync(path.join(cwd,'consumer.ts'),`import {PNG,type ReadOptions} from 'vpngjs';const opts:ReadOptions={checkCRC:true,maxPixels:16000000};const png:PNG=PNG.sync.read(new Uint8Array(),opts);const width:number=png.width;const pixels:Uint8Array=png.data;
-// @ts-expect-error input is bytes
-PNG.sync.read('file.png');
-// @ts-expect-error writer is outside application scope
-PNG.sync.write(png);
-// @ts-expect-error no streaming constructor
-new PNG();`);
-  for(const resolution of ['NodeNext','Bundler']){fs.writeFileSync(path.join(cwd,'tsconfig.json'),JSON.stringify({compilerOptions:{strict:true,noEmit:true,target:'ES2022',module:resolution==='Bundler'?'ESNext':resolution,moduleResolution:resolution,lib:['ES2022'],types:[]},files:['consumer.ts']}));run('node',[require('../platform-types.cjs').compiler().path,'-p','tsconfig.json'],cwd);}
+  fs.writeFileSync(path.join(cwd,'consumer.ts'),fs.readFileSync(path.join(pkg,'test/types.ts'),'utf8').replaceAll('vpngjs',installName));
+  fs.writeFileSync(path.join(cwd,'consumer.cts'),fs.readFileSync(path.join(cwd,'consumer.ts'),'utf8')+`\nimport common=require('${installName}');common.PNG.sync.write(new common.PNG({width:1,height:1}));`);
+  for(const runtime of ['node','bun'])run(runtime,[runtime==='node'?'--test':'test',path.join(pkg,'test/write.test.cjs')],cwd,{VPM_PNG_ENTRY:path.join(cwd,'node_modules',installName)});
+  for(const resolution of ['NodeNext','Bundler']){fs.writeFileSync(path.join(cwd,'tsconfig.json'),JSON.stringify({compilerOptions:{strict:true,noEmit:true,target:'ES2022',module:resolution==='Bundler'?'Preserve':resolution,moduleResolution:resolution,lib:['ES2022'],types:[]},files:['consumer.ts','consumer.cts']}));run('node',[require('../platform-types.cjs').compiler().path,'-p','tsconfig.json'],cwd);}
  }
- console.log('Clean npm/Bun archives: Node/Bun CJS/ESM decode and TS7 NodeNext/Bundler without Node/DOM declaration dependencies pass.');
+ console.log('Fresh/frozen npm/Bun archives: Node/Bun CJS/ESM read/write, fixture round trips and TS7 NodeNext/Bundler without Node/DOM declaration dependencies pass.');
 }finally{fs.rmSync(temp,{recursive:true,force:true});}

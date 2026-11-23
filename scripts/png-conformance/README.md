@@ -1,4 +1,4 @@
-# PNG reader controls
+# PNG reader and fixture-writer controls
 
 `pngjs` 7.0.0 is the current comparison target. Resvg 2.6.2 and MathJax 3.2.2
 match the app's existing image caller; they are fixture dependencies, not VPM
@@ -7,8 +7,8 @@ runtime dependencies or new implementation targets.
 The 176 small PNG images in `images/` come from pngjs commit
 `c565210c602527eb459f857eeb78183997482d5b`, primarily Willem van Schaik's PngSuite.
 Its redistribution permission and README are retained. `images.json` pins every
-file hash. The 15 MiB `large.png` image is excluded; application inputs are capped
-at 10 MiB. Runtime code was independently written; no upstream decoder was copied.
+file hash. The 15 MiB `large.png` image is excluded; the original figure-validation caller was capped
+at 10 MiB. Current importers with larger bounds must pass them explicitly. Runtime code was independently written; no upstream decoder was copied.
 
 162 valid images compare exact metadata and RGBA bytes on both runtimes. Thirteen
 invalid files are rejected by both. The fourteenth has no IDAT: VPM must reject
@@ -28,3 +28,24 @@ corpus controls and a real resvg caller run on Node 24/Bun there.
 TypeScript 7 consumers without Node or DOM declarations. The isolated benchmark
 uses corpus images and deterministic resvg output; generation and assertions
 are outside timing, and each operation returns a fully decoded image.
+
+## Fixture construction and synchronous writing
+
+The independent RGBA8 writer adds no runtime dependencies. Tests compare 192 mixed
+images and every valid reader-corpus image with upstream decoding, preserve gamma
+and transparent RGB, inspect chunk CRCs, and cover sliced/cross-realm byte arrays,
+zero-filled ownership, exact data length and finite pixel/output limits. The
+native resvg control has an explicit 60-second test timeout because native startup
+can exceed Bun's five-second default on a busy host; its assertions are unchanged.
+
+`fixture-app.cjs /path/to/app [ref]` runs only the real historical importer's
+"decodes the complete PNG" fixture test, unchanged, under upstream and VPM. It
+exports the required private source files temporarily, uses separate Bun processes
+and records the source hashes. It invokes no importer entry point or live service.
+
+`archives.cjs` also exercises construction/writing and frozen locks. The release
+check supports the original `pngjs` install name, checks all installed bytes and
+runs the writer tests on both runtimes. Public consumer declarations retain the
+reader's metadata fields and work without Node/DOM type dependencies. The writer
+benchmark measures the full construct/fill/write fixture path and three encoding
+inputs with isolated balanced processes; sizes are retained separately from time.

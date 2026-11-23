@@ -1,7 +1,7 @@
 {
   "name": "vpngjs",
   "version": "7.0.0",
-  "description": "Bounded synchronous PNG decoding for application image validation",
+  "description": "Bounded synchronous PNG decoding and RGBA fixture encoding",
   "main": "./index.cjs",
   "module": "./index.mjs",
   "types": "./index.d.ts",
@@ -15,6 +15,7 @@
   },
   "files": [
     "index.cjs",
+    "write.cjs",
     "index.mjs",
     "index.d.ts",
     "README.md",

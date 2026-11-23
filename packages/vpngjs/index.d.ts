@@ -1,4 +1,10 @@
-export interface PNG {
+export interface ReadOptions {checkCRC?: boolean; maxPixels?: number; maxBytes?: number;}
+export interface CreateOptions {width: number; height: number; maxPixels?: number;}
+export interface WriteOptions {maxPixels?: number; maxBytes?: number;}
+export interface PixelImage {width: number; height: number; data: Uint8Array; gamma?: number;}
+/** Synchronous RGBA8 fixture image; not a Node stream. */
+export declare class PNG {
+  constructor(options: CreateOptions);
   width: number;
   height: number;
   data: Uint8Array;
@@ -11,8 +17,10 @@ export interface PNG {
   colorType: number;
   gamma: number;
   transColor?: number[];
+  static sync: {
+    read(input: Uint8Array, options?: ReadOptions): PNG;
+    write(image: PixelImage, options?: WriteOptions): Uint8Array;
+  };
 }
-export interface ReadOptions {checkCRC?: boolean; maxPixels?: number; maxBytes?: number;}
-export declare const PNG: {sync: {read(input: Uint8Array, options?: ReadOptions): PNG}};
 declare const api: {PNG: typeof PNG};
 export default api;

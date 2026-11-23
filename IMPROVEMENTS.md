@@ -233,7 +233,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vradix-react-use-callback-ref](packages/vradix-react-use-callback-ref) | @radix-ui/react-use-callback-ref 1.1.5 | Stable callbacks publish targets only on commit; React 19 insertion effects remove the fallback dependency. |
 | [vradix-react-direction](packages/vradix-react-direction) | @radix-ui/react-direction 1.2.0 | Independent React 19 direction provider/hook; unchanged public behavior, shared CJS/ESM context and actual RovingFocus keyboard controls. No runtime dependencies beyond React. |
 | [vstripe](packages/vstripe) | stripe 23.1.0 (app controls: 17.7.0) | Independent Checkout/webhook APIs; native Fetch/crypto, bounded responses and exact-byte signatures; no runtime dependencies. |
-| [vpngjs](packages/vpngjs) | pngjs 7.0.0 | Independent app-used synchronous PNG reader: complete static formats/Adam7, bounded inflation, strict chunk structure and CRC checks. Matches 162 valid corpus images and actual app pixel tests. No writer/stream API; built, not adopted. |
+| [vpngjs](packages/vpngjs) | pngjs 7.0.0 | Independent app-used synchronous PNG reader: complete static formats/Adam7, bounded inflation, strict chunk structure and CRC checks. Matches 162 valid corpus images and actual app pixel tests. Bounded RGBA8 fixture construction/writing now covers the importer test too; no stream API. Standalone release supports direct adoption. |
 | [vradix-react-use-controllable-state](packages/vradix-react-use-controllable-state) | @radix-ui/react-use-controllable-state 1.3.0 | Pure controlled reducers; commit-only notifications; stable setters; React 19.2 support. |
 | [vorderedmap](packages/vorderedmap) | orderedmap 2.1.1 | Independent persistent schema map: linear bulk edits, lazy large-map lookup index, private storage, own-key import, safe prototype-named output and empty-key renaming. Current/app ProseMirror callers, differential edits and exact archives verified. [Measurements](packages/vorderedmap/bench/results/README.md). |
 | [vprosemirror-model](packages/vprosemirror-model) | prosemirror-model 1.25.12 | Independent schema/document/DOM model with persistent boundary-based replacement, strict positions/slice depths and own-key attributes. All 311 upstream contracts, 2,000 differential edits, real Tiptap app/current controls and packed browser/type consumers verified. [Measurements](packages/vprosemirror-model/bench/results/README.md). |
@@ -5778,19 +5778,18 @@ unreleased and unadopted.
 The independently written synchronous reader targets pngjs 7.0.0 and the app's
 figure validation/pixel inspection. It supports static PNG color/depth formats,
 all filters and Adam7 using native zlib/CRC32, with no runtime dependencies.
-The writer, streaming constructor and unused transformation APIs are omitted.
+An independent bounded RGBA8 fixture constructor/writer now covers the historical importer test. Streaming and unused transformation APIs remain omitted.
 
 The parser checks bounds before bitmap allocation, bounds inflation to exact
 scanline sizes, checks ignored ancillary chunk CRCs, and rejects duplicate
 headers, missing image data and truncated zlib checksums. It also preserves the
 PNG specification's permitted IDAT padding and masks unused transparency bits.
-The default 16-million-pixel/10-MiB limits match the application.
+The default limits remain 16 million pixels / 10 MiB; importers with larger accepted bounds must pass explicit limits.
 
 189 test groups pass on Node 24/Bun, including 162 exact valid corpus comparisons,
 14 invalid-image rejections, 192 upstream-encoded fixtures, malformed-input
 controls and real resvg output. The unchanged app's 28 image tests pass against
-either decoder on Bun. Packed consumers and TypeScript 7 pass. Built, unreleased
-and unadopted; MathJax and resvg remain separate backend work.
+either decoder on Bun. Packed consumers and TypeScript 7 pass. The reader is consumed transitively by VLX/vresvg. The standalone reader/writer release adds 192 pixel comparisons, all 162 valid-corpus rewrite round trips and the unchanged historical-importer fixture. [Writer benchmarks](packages/vpngjs/bench/write/README.md) retain timing and encoded-size evidence; direct app adoption is separate.
 
 [Final isolated measurements](packages/vpngjs/bench/results/README.md) establish
 less time for small RGBA (−23.5% Node / −9.5% Bun), interlaced 16-bit RGB

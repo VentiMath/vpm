@@ -140,4 +140,9 @@ function read(input, options = {}) {
   if (transColor) decoded.transColor = transColor;
   return decoded;
 }
-exports.PNG = {sync: {read}};
+const {createImage, write} = require('./write.cjs');
+class PNG {
+  constructor(options) { Object.assign(this, createImage(options)); }
+}
+PNG.sync = {read, write};
+exports.PNG = PNG;

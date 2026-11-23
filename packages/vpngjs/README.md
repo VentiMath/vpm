@@ -1,6 +1,6 @@
 # vpngjs
 
-Independent implementation of the **pngjs 7.0.0 synchronous reader** used by
+Independent implementation of the **pngjs 7.0.0 synchronous reader and RGBA8 fixture writer** used by
 VentiMath to validate PNG figures and inspect rendered pixels. There are no
 third-party runtime dependencies. Node 24 and Bun provide zlib inflation and CRC32.
 
@@ -17,11 +17,27 @@ black for transparency-key matches. The runtime pixel buffer is a Node Buffer;
 public types expose the Uint8Array operations used by the application. APNG's
 default image can be read; animation frames are not decoded.
 
-This is the application's reader contract, not the entire pngjs API. There is no
-streaming constructor, writer, bitblt, gamma-adjustment API or `skipRescale` option.
-Unknown options fail explicitly. The reader callers use the supported API; the
-historical-contest importer test also constructs and writes fixture PNGs, which
-requires a separate writer.
+`new PNG({width, height})` creates an owned, zero-filled RGBA8 Buffer. The
+historical-contest fixture can now use the same constructor and synchronous
+writer as its upstream caller:
+
+```js
+const fixture = new PNG({width: 4, height: 3});
+fixture.data.fill(255);
+const bytes = PNG.sync.write(fixture);
+```
+
+The writer accepts `{width, height, data, gamma?}` or a constructed/read image.
+It produces non-interlaced RGBA8 with optional gamma metadata and correct chunk
+CRCs, preserving every pixel, including RGB bytes under transparent alpha.
+Decoded grayscale, palette, 16-bit and interlaced images can be written using
+the reader's normalized RGBA8 buffer. It does not mutate or retain input data.
+Compressed bytes and file sizes can differ from pngjs; decoded pixels agree.
+
+This is the application contract, not the entire pngjs API. The constructor is
+not a stream. There is no async parser, `pack`, `bitblt`, gamma-adjustment API or
+`skipRescale` option. Writing other color types/depths, custom filters or deflate
+settings is outside scope; unknown constructor/writer options fail explicitly.
 
 ## Validation and limits
 
@@ -37,6 +53,13 @@ requires a separate writer.
   figure-validation limits. `maxPixels` and `maxBytes` can explicitly override them. Dimensions
   are checked before bitmap allocation; inflate is bounded to the exact expected
   bytes for all passes, including Adam7. Buffers also have an internal size bound.
+
+Construction accepts `maxPixels`, defaulting to 16,000,000. Writing accepts
+`maxPixels` and `maxBytes` with the same defaults as reading. Dimensions and
+exact RGBA8 byte length are checked before scanline allocation; compressed output
+is bounded during deflate and again after chunk assembly. Positive integer
+width/height are required. A caller raising construction limits must also pass
+its intended limits when writing.
 
 `checkCRC: false` disables PNG chunk CRC checks only; structure, zlib integrity
 and resource bounds still apply. Decoding never mutates input or shares writable
@@ -64,38 +87,37 @@ inconclusive on both runtimes; no measured case establishes a regression. [Prove
 
 ## Direct application use
 
-`vpngjs` is a public standalone server/tooling package, not an internal-only
-`vresvg` module. A sibling release archive can be installed directly; it does not
-require VLX or vresvg. The reader is published in
-[VLX 0.3.6](https://github.com/VentiMath/vpm/releases/tag/vlx-0.3.6):
+`vpngjs` is a public standalone Node 24/Bun server/tooling package with no
+runtime dependencies. The standalone `pngjs-7.0.0` release supports the existing
+application import name:
 
 ```json
 {
   "dependencies": {
-    "vpngjs": "https://github.com/VentiMath/vpm/releases/download/vlx-0.3.6/vpngjs-7.0.0.tgz"
-  },
-  "devDependencies": {
-    "pngjs-fixtures": "npm:pngjs@7.0.0"
+    "pngjs": "https://github.com/VentiMath/vpm/releases/download/pngjs-7.0.0/vpngjs-7.0.0.tgz"
   }
 }
 ```
 
-Reader callers import `{PNG}` from `vpngjs`. A test that needs `new PNG` or
-`PNG.sync.write` can import `{PNG as FixturePNG}` from the separately named
-`pngjs-fixtures` dev dependency. Keeping upstream `pngjs` under its existing name
-for that test also works. Do not globally override `pngjs` while a caller still
-needs its constructor or writer. The reader's public types expose decoded pixels
-as `Uint8Array`; code requiring Buffer-specific methods should convert explicitly.
+The same URL can be installed under `vpngjs` if callers already import that name.
+The release's `consumer-package.json` also provides a `pngjs` override for a graph
+whose consumers are all within the documented synchronous contract. Existing
+reader imports and the constructor/write fixture no longer require npm pngjs or
+its `@types/pngjs` declarations. The older VLX/resvg sibling archives remain
+reader-only and are not overwritten by this release.
 
-Preserve each caller's accepted bounds when migrating. For example, VentiMath's
-historical-contest importer admits 32,000,000 pixels and 16 MiB, so its read should
-use `{checkCRC: true, maxPixels: 32_000_000, maxBytes: 16 * 1024 * 1024}` rather
-than silently narrowing those limits to this package's defaults. Its Math Is Cool
-importer's 8,000,000-pixel limit and bounded data URL fit the reader defaults.
-Structural and CRC validation remain stricter than upstream as described above.
+Preserve each caller's accepted bounds when migrating. VentiMath's historical
+importer permits 32,000,000 pixels and 16 MiB, so its read should use
+`{checkCRC: true, maxPixels: 32_000_000, maxBytes: 16 * 1024 * 1024}`. The Math Is
+Cool importer's 8,000,000-pixel bound and bounded data URL fit the defaults.
+Public types expose bytes as `Uint8Array`; runtime pixel and encoded outputs are
+Buffers. Convert explicitly when a typed caller needs Buffer-specific methods.
 
-The VLX 0.3.6 archive was checked against its published SHA256SUMS and source
-runtime bytes. A direct URL install and frozen reinstall, CJS/ESM reading, and
-coexistence with the separately named upstream fixture writer pass on Node 24
-and Bun 1.4.4. This package is consumed transitively by VLX/vresvg; direct adoption
-by additional app callers is separate. No streaming or writer support is implied.
+Fresh/frozen npm and Bun installs verify both names, CJS/ESM, TypeScript 7,
+constructor/writer controls and exact archive contents. The unchanged historical
+importer fixture at app `fa274faf` passes with both upstream and VPM; the private
+sources are exported temporarily, never committed. Writer controls cover 192
+mixed images and round trips through all 162 valid reader corpus images. See
+[writer measurements](bench/write/README.md) and
+[conformance](../../scripts/png-conformance/README.md). Publication and application
+adoption remain separate.
