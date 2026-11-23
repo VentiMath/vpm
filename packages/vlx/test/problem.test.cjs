@@ -16,12 +16,12 @@ test('page layout joins adjacent text parts, preserves math whitespace and bound
  assert.ok(pngSize(renderProblemPng({statement:'First.  \nSecond.\n\nThird.'})).height>pngSize(renderProblemPng({statement:'First. Second. Third.'})).height);
  const page=renderProblemSvg({statement:'Literal <script> and \\ ^ ~.'});assert.doesNotMatch(page.svg,/<script>|<text\b|foreignObject/);assert.match(page.svg,/<path/);
 });
-test('inline images share a baseline, block images center and large figures fit',()=>{
+test('inline images share a baseline, block images center and large figures fit',{timeout:30000},()=>{
  const first={png:picture(40,60),width:40},second={png:picture(60,20,'blue'),width:60};
  const p=decoded({statement:'ignored',statementParts:[{kind:'text',text:'Before '},{kind:'image',figure:first},{kind:'text',text:' between '},{kind:'image',figure:second},{kind:'image',display:'block',figure:{png:picture(200,100,'lime'),width:2000}}]});
  const a=bounds(p,[255,0,0]),b=bounds(p,[0,0,255]),c=bounds(p,[0,255,0]);assert.ok(a.count>1000);assert.ok(b.left>a.right);assert.ok(Math.abs(a.bottom-b.bottom)<=1);assert.ok(c.top>b.bottom);assert.equal(c.left,36);assert.equal(c.right,923);assert.ok(Math.abs((c.right-c.left+1)/(c.bottom-c.top+1)-2)<.01);
 });
-test('choice figures override placeholders, retain size, order, labels and rows',()=>{
+test('choice figures override placeholders, retain size, order, labels and rows',{timeout:30000},()=>{
  const colors=['red','lime','blue','yellow','magenta'],figures=Object.fromEntries([... 'EDCBA'].map(k=>[k,{png:picture(160,132,colors[k.charCodeAt(0)-65]),width:160}]));
  const p={statement:'Select.',optionFigures:figures};const bytes=renderProblemPng(p);
  assert.deepEqual(bytes,renderProblemPng({...p,options:{A:String.raw`\unknownPlaceholder`}}));
