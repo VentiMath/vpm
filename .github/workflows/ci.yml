@@ -252,6 +252,8 @@ jobs:
           node scripts/motion-react-conformance/browser.cjs
           VPM_REACT_MODE=development node scripts/motion-react-conformance/browser.cjs
           node scripts/motion-react-conformance/archives.cjs
+          node scripts/pack-motion-release.cjs --ref "$GITHUB_SHA" --tag motion-14.7.0-ci --out "$RUNNER_TEMP/motion-release"
+          node scripts/check-motion-release.cjs "$RUNNER_TEMP/motion-release"
       - name: MUI System themes, layouts and unchanged Material callers
         run: |
           node --test packages/vmui-system/test/system.test.cjs

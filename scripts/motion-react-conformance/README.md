@@ -50,3 +50,19 @@ Custom root replacement, null/restore and callback-ref changes are now checked a
 The initial-render optimization also checks canonical transform ordering, ordinary CSS, array endpoints and the existing null-leading initial-array difference: VPM chooses the first non-null value while the controls omit that initial style.
 
 Sparse keyframe arrays retain their first/last present, non-null endpoints without allocating a filtered array.
+
+The three-package consumer release has a separate check, using the application's
+Material 7.2.0 peer fixture and its existing published React Transition Group pin.
+Only `motion` needs a dependency URL; both internal dependencies are pinned in
+the archive. The checker verifies all public asset bytes and repeats fresh/frozen
+npm/Bun installation, SSR, TS7 and browser checks:
+
+```sh
+node scripts/pack-motion-release.cjs --ref COMMIT_SHA --tag motion-14.7.0 --out /absolute/empty/directory
+node scripts/check-motion-release.cjs /absolute/directory
+node scripts/check-motion-release.cjs /absolute/directory --published
+```
+
+The November 22 application inventory at `2721de95` has 43 non-test import files;
+new public error views and powered-by buttons fit the already tested surface.
+This evidence establishes release readiness, not app adoption.

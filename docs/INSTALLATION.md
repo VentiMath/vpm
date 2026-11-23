@@ -733,3 +733,28 @@ Unclosed functions and trailing shorthand tokens remain rejected. The 33 unchang
 styled-components/native caller cases and expanded compatibility comparisons pass
 against the published bytes on Node and Bun. Update only the URL pin and lockfile;
 there are no consumer setting changes. The original release remains available.
+
+## Motion
+
+Keep existing `motion/react` imports and replace the direct `motion` dependency:
+
+```json
+{
+  "dependencies": {
+    "motion": "https://github.com/VentiMath/vpm/releases/download/motion-14.7.0/vmotion-14.7.0.tgz"
+  }
+}
+```
+
+`vmotion-dom` and `vmotion-utils` are pinned to this release's public URLs inside
+the archive. No overrides for those packages are needed. React 19.3 is a peer.
+Update the lockfile; no animation settings need changing for the verified app
+callers. Existing unrelated dependencies and overrides remain as they are.
+
+The release covers VentiMath's entrances, variants/staggering, Material
+polymorphic roots and notification-bell controls. Dragging, gestures,
+AnimatePresence and layout projection are outside this application subset.
+[Scope and differences](../packages/vmotion/README.md) include the explicit
+null-leading initial-keyframe and restored custom-root differences. Fresh npm/Bun
+installs verify the entire published closure, SSR, declarations and browser
+scenarios. App-side acceptance and production deployment are separate.

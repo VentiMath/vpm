@@ -7,25 +7,26 @@ separate; these requirements concern remaining Material and Motion consumers.
 
 ## Motion
 
-Motion was refreshed against main `d0a71aaf` on November 18, 2026: 40 source
-files import `motion` from `motion/react`; one also imports `useAnimation`.
-There are 99 direct JSX roots and eight polymorphic `component={motion.*}` uses.
-Real callers include AMC10/12 and Putnam entrances, calendar
-headers/sidebar, directory transitions and the notification bell. They need:
+Motion was refreshed against main `2721de95` on November 22, 2026: 43 non-test
+files import `motion` or `useAnimation` from `motion/react`. Real callers include
+AMC10/12 and Putnam entrances, calendar headers/sidebar, directory transitions,
+public error views, link buttons and the notification bell. They need:
 
 - DOM/custom component roots, initial poses, animate targets and `initial=false`.
 - Hidden/show variants, propagation through wrappers and staggered children.
 - Imperative start/set/stop for the repeated bell, including CSS-variable colors.
 - Material polymorphic roots, stable refs and DOM, hydration and reduced motion.
 
-[vmotion](../packages/vmotion) implements and tests this application subset over
-[vmotion-dom](../packages/vmotion-dom). Release and actual app integration remain.
-The notification bell now has a focused acceptance check for its one-second
-interruption and default-transition reset, alongside the existing entrance,
-variant and lifecycle coverage. The next Motion step is a consumer
-release/integration pass for these callers. Broad gestures, dragging, layout projection, AnimatePresence, sequence
-editing, arbitrary 3D and other unobserved APIs are not a prerequisite for this
-inventory. The entire upstream Motion API is **not** complete. The next Motion unit is packaging and verifying a consumer release of this app-used subset, including its pinned VPM dependency closure; actual adoption is a separate check.
+[vmotion](../packages/vmotion) implements this application subset over
+[vmotion-dom](../packages/vmotion-dom). The `motion-14.7.0` consumer release
+contains all three runtime packages with pinned internal URLs. Fresh npm/Bun
+installs, Node/Bun SSR, strict TS7 consumers and 46 Chrome scenarios cover both
+the VPM Material fixture and the app’s Material 7.2.0 on React 19.3.1.
+The next step is app-side adoption and acceptance; it is not marked in use yet.
+[Install instructions](INSTALLATION.md#motion) preserve `motion/react` imports.
+
+Broad gestures, dragging, layout projection, AnimatePresence, sequence editing,
+arbitrary 3D and other unobserved APIs remain outside the verified subset.
 
 ## Material
 

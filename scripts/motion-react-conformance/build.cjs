@@ -4,9 +4,17 @@ const fixture=path.resolve(__dirname,'../mui-system-conformance'),out=fixture+'/
 const {createRequire}=require('node:module'),peer=createRequire(fixture+'/package.json'),esbuild=peer('esbuild');
 const root=path.resolve(__dirname,'../..');
 for(const variant of ['current','app','vpm']){
- const alias=require('../mui-system-conformance/aliases.cjs')(true);
+ const appMaterial=process.env.VPM_MOTION_MATERIAL==='app';
+ const alias=require('../mui-system-conformance/aliases.cjs')(!appMaterial,appMaterial?'app':'current');
+ if(appMaterial){
+  const installed=process.env.VPM_MOTION_RELEASE_INSTALL;
+  if(!installed)throw new Error('App Material release checks require a fresh consumer installation');
+  for(const name of ['material','system','utils','private-theming','styled-engine']){const base=installed+'/node_modules/@mui/'+name;alias['@mui/'+name]=base+(fs.existsSync(base+'/esm')?'/esm':'');}
+  alias['vmui-material']=alias['@mui/material'];
+ }
+ if(process.env.VPM_MOTION_RELEASE_INSTALL){for(const name of ['vmotion-dom','vmotion-utils'])alias[name]=process.env.VPM_MOTION_RELEASE_INSTALL+'/node_modules/'+name;alias.vmotion=process.env.VPM_MOTION_RELEASE_INSTALL+'/node_modules/motion';}
  if(process.env.VPM_MOTION_INSTALL)for(const key of Object.keys(alias))alias[key]=alias[key].replace(root+'/packages',process.env.VPM_MOTION_INSTALL+'/node_modules');
- alias['@motion']=variant==='vpm'?(process.env.VPM_MOTION_INSTALL?process.env.VPM_MOTION_INSTALL+'/node_modules':root+'/packages')+'/vmotion/react.cjs':path.resolve(__dirname,'../motion-utils-conformance/node_modules',variant==='current'?'framer-motion':'framer-motion-app');
+ alias['@motion']=variant==='vpm'&&process.env.VPM_MOTION_RELEASE_INSTALL?process.env.VPM_MOTION_RELEASE_INSTALL+'/node_modules/motion/react.cjs':variant==='vpm'?(process.env.VPM_MOTION_INSTALL?process.env.VPM_MOTION_INSTALL+'/node_modules':root+'/packages')+'/vmotion/react.cjs':path.resolve(__dirname,'../motion-utils-conformance/node_modules',variant==='current'?'framer-motion':'framer-motion-app');
  alias.react=fixture+'/node_modules/react';alias['react-dom']=fixture+'/node_modules/react-dom';fs.mkdirSync(out,{recursive:true});
  for(const browser of [false,true]){
  const options=browser?{entryPoints:[__dirname+'/entry.jsx']}:{stdin:{contents:'const React=require("react");const {renderToString}=require("react-dom/server");const {SSRScene}=require("./scene.jsx");module.exports={React,renderToString,api:require("@motion"),prepare:(kind,count=12)=>{const tree=React.createElement(SSRScene,{kind,count});return()=>renderToString(tree)}};',resolveDir:__dirname}};

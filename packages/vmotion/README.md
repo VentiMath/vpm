@@ -36,9 +36,8 @@ For an initial keyframe array beginning with null, VPM retains its existing firs
 non-null value; both controls omit that initial style. This is an explicit
 regression check, not a parity claim for that additional case.
 
-The November 18 source inventory at VentiMath `d0a71aaf` found 40 non-test files,
-99 direct Motion JSX roots (94 divs and five spans), and eight polymorphic
-`component={motion.*}` uses. Imports remain limited to `motion` and `useAnimation`
+The November 22 source refresh at VentiMath `2721de95` found 43 non-test import
+files, including public error views and the powered-by link buttons. Imports remain limited to `motion` and `useAnimation`
 from `motion/react`. These static counts include auxiliary screens; they do not
 establish route reachability or app adoption. Controls are Framer Motion 14.7.0 and the app's 12.36.0, on React
 19.3.1. Checks use synthetic contest/navigation examples and the app's animation
@@ -48,7 +47,10 @@ Drag, gestures, layout projection, exit/AnimatePresence, timelines, useAnimate,
 SVG-specific animation geometry and other unobserved exports remain outside
 this subset. Unsupported layout/gesture/exit props reject instead of appearing
 to work. This package does not supply the missing Material component families.
-Full production integration and a consumer release still need separate checks.
+The `motion-14.7.0` consumer release pins both VPM dependencies to public archive
+URLs. Fresh npm/Bun installs, strict declarations and the 46 browser scenarios
+also pass against the app’s Material 7.2.0 and React 19.3.1. Actual VentiMath
+adoption and production deployment remain separate. See [installation](../../docs/INSTALLATION.md#motion).
 
 [Conformance](../../scripts/motion-react-conformance/README.md),
 [benchmarks](bench/results/README.md) and [provenance](PROVENANCE.json) document
@@ -98,3 +100,5 @@ Both pinned controls and VPM return to zero rotation, unit scale and the active
 theme color, retain the same node, and stay stopped across a parent rerender.
 This adds consumer acceptance coverage without changing the runtime or making
 a new performance claim.
+
+[Release SSR measurements](bench/release.md) rerun the balanced isolated-process harness on Node 24 and Bun 1.4.4. They do not measure animation frame rate.
