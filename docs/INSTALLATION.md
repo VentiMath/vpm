@@ -773,25 +773,35 @@ Only the URL and lockfile change; no animation settings need adjustment.
 
 ## Handwritten writeup pictures
 
-[resvg-2.6.2](https://github.com/VentiMath/vpm/releases/tag/resvg-2.6.2) supplies
-`vresvg` under the existing handwritten-page import name:
+`vresvg` is VPM's independently written JavaScript rasterizer. It replaces
+upstream `@resvg/resvg-js`; it contains no native resvg addon or platform binaries.
+The version 2.6.2 identifies the API baseline, not reused upstream implementation.
+
+For the Functions problem-picture and handwritten-page cutover together, use
+these two packages from [VLX 0.3.3](https://github.com/VentiMath/vpm/releases/tag/vlx-0.3.3):
 
 ```json
 {
   "dependencies": {
-    "@resvg/resvg-js": "https://github.com/VentiMath/vpm/releases/download/resvg-2.6.2/vresvg-2.6.2.tgz"
+    "vlx": "https://github.com/VentiMath/vpm/releases/download/vlx-0.3.3/vlx-0.3.3.tgz",
+    "vresvg": "https://github.com/VentiMath/vpm/releases/download/vlx-0.3.3/vresvg-2.6.2.tgz"
   }
 }
 ```
 
-Its `vpngjs` dependency is pinned inside the archive; no registry lookup or
-consumer override is required. This covers the generated SVG from
-`functions/src/writeupPicture.ts`, not arbitrary SVG/CSS/fonts. Adopt alongside
-or after VLX 0.3.3, which corrects 0.3.2’s long-page work-limit regression.
-The older VLX 0.2.3 still needs native resvg for problem
-pictures. Changing the writeup dependency alone is not sufficient while those
-older problem-picture calls remain.
+Change the handwritten caller's import to `import { Resvg } from 'vresvg'`, then
+remove its upstream `@resvg/resvg-js` dependency and overrides when refreshing the
+lockfile. No rendering-option change is needed. The result is VLX → vresvg →
+vpngjs, all VPM packages. Their internal release URLs are pinned; no registry
+lookup or override is required.
 
-Published checksums, fresh npm/Bun installs, original-name CJS/ESM imports,
-Node/Bun PNG rendering and TS7 consumers pass. See the
-[scope and performance](../packages/vresvg/README.md); native resvg is faster.
+Make the Functions upgrade atomic: VLX 0.2.3 still needs the upstream native
+renderer, and 0.3.2 rejects a valid long page. Version 0.3.3 corrects that rejection
+without raising the work limit. The separate earlier `resvg-2.6.2` release remains
+immutable and usable as a compatibility alias, but retaining upstream resvg code
+is not part of the intended cutover.
+
+Public installs verify both unchanged application picture callers with synthetic
+inputs and external services stubbed. The handwritten API covers
+`functions/src/writeupPicture.ts`, not arbitrary SVG/CSS/fonts. See its
+[scope and performance](../packages/vresvg/README.md); native resvg remains faster.

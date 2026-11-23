@@ -17,8 +17,9 @@ VLX 0.3.3 uses the shared vresvg engine's active-edge accounting. The reported
 160- and 300-repetition pages pass through the unchanged `problemPost` caller
 at `b7d73475` on Node and Bun with a synthetic store and no network. The work
 ceiling stays at 300 million; a dense active-edge regression still fails closed.
-Fresh archive/public-URL checks are required for release and application repinning
-is separate. This corrects acceptance, not the reported timing gap below.
+VLX 0.3.3 is published: fresh public-URL npm/Bun installs, exact hashes, React,
+browser, types and large-page checks pass. Application repinning remains separate.
+This corrects acceptance, not the reported timing gap below.
 
 The earlier application-side report for PR #455 at `b7d73475` verifies the 0.3.2 release
 assets against SHA256SUMS. GitHub confirms the PR is open and changes only the
@@ -184,8 +185,9 @@ Node-targeted transpilation. No private handwriting or app source is published.
 
 Application adoption is pending. Use this alongside or after the corrected VLX
 0.3.3 upgrade; 0.3.2 has a reproduced long-page work-limit failure and the app
-has held its Functions cutover. VLX 0.2.3 still depends on native resvg's broader API. No
-writeup source change or special option is needed. The atlas marks the package
+has held its Functions cutover. VLX 0.2.3 still depends on native resvg's broader API. No rendering-option change is needed. Prefer a direct `vresvg` dependency and
+import when removing upstream `@resvg/resvg-js`; the old import-name alias is
+only a compatibility option. The atlas marks the package
 built and the native artifacts avoidable, without claiming installed adoption.
 
 Curved synthetic pages take 91.6 ms versus native 12.1 ms on Node and 177.5 ms
