@@ -276,6 +276,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [venv-paths](packages/venv-paths) | env-paths 4.0.0; app 2.2.1 | Independent platform data/config/cache/log/temp directories with current name validation and zero package dependencies. CommonJS compatibility, live environment overrides, OS contract comparisons and unchanged Capacitor config/IPC callers. [Scope](packages/venv-paths/README.md), [measurements](packages/venv-paths/bench/README.md). |
 | [vis-docker](packages/vis-docker) | is-docker 4.0.0; app 2.2.1 | Independent cached Docker filesystem detection, including mountinfo evidence on cgroup v2. Zero package dependencies; CJS/ESM and original-name CLI; unchanged open/is-wsl caller comparisons. [Scope](packages/vis-docker/README.md), [measurements](packages/vis-docker/bench/README.md). |
 | [vis-inside-container](packages/vis-inside-container) | is-inside-container 1.0.0 | Independent cached Podman marker detection above vis-docker. Current WSL caller, CJS/ESM, silent CLI and complete packed VPM closure verified. [Scope](packages/vis-inside-container/README.md), [measurements](packages/vis-inside-container/bench/README.md). |
+| [vdefine-lazy-prop](packages/vdefine-lazy-prop) | define-lazy-prop 3.0.0 | Independent lazy accessors with assignment-before-read and retry behavior; dual module entries and symbol/numeric key declarations. Current/app opener callers, generated descriptor operations and exact archives pass. [Measurements](packages/vdefine-lazy-prop/bench/README.md). |
 | [vis-wsl](packages/vis-wsl) | is-wsl 3.1.1; app 2.2.0 | Independent import-time WSL detection with custom-kernel markers and container exclusion. Entire runtime closure is VPM; 384 contracts and unchanged open caller checks. [Scope](packages/vis-wsl/README.md), [measurements](packages/vis-wsl/bench/README.md). |
 | [vbabel-helper-validator-option](packages/vbabel-helper-validator-option) | @babel/helper-validator-option 7.29.7 | Independent option validation and spelling suggestions verified through Babel Core and both compilation-targets callers. [Measurements](packages/vbabel-helper-validator-option/bench/results/README.md). |
 | [vbabel-code-frame](packages/vbabel-code-frame) | @babel/code-frame 7.29.7; app 7.29.0 | Independent Babel source excerpts and highlighting with VPM tokenizer, identifiers and colors. Corrects tab alignment and multiline marker widths. [Measurements](packages/vbabel-code-frame/bench/results/README.md). |
@@ -498,9 +499,9 @@ version-scoped integration aliases remain limited to their tested baselines.
 ## Current verification
 
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
-recorded by the tests. All 180 Node runtime packages' public declarations compile
+recorded by the tests. All 181 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **273 packages**, including two declaration-only packages and
+compiler in NodeNext and bundler resolution modes. The catalog covers **274 packages**, including two declaration-only packages and
 browser packages `vcss-box-model`, `vuse-sync-external-store`, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,

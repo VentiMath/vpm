@@ -185,6 +185,10 @@
       "name": "vdecko",
       "version": "1.2.0",
     },
+    "packages/vdefine-lazy-prop": {
+      "name": "vdefine-lazy-prop",
+      "version": "3.0.0",
+    },
     "packages/vdepd": {
       "name": "vdepd",
       "version": "0.1.0",
@@ -2169,6 +2173,8 @@
     "vdebug": ["vdebug@workspace:packages/vdebug"],
 
     "vdecko": ["vdecko@workspace:packages/vdecko"],
+
+    "vdefine-lazy-prop": ["vdefine-lazy-prop@workspace:packages/vdefine-lazy-prop"],
 
     "vdepd": ["vdepd@workspace:packages/vdepd"],
 

@@ -182,3 +182,12 @@ callers pass with instrumented VPM get/set operations. The current target is
 11.5.3; Babel's default-constructor max/get/set caller remains supported without
 retaining yallist. Async fetch/memo and legacy v5 APIs outside that caller are
 excluded. This has not changed the application's dependency pins.
+
+## Opener lazy properties
+
+[vdefine-lazy-prop](../packages/vdefine-lazy-prop) now independently supplies lazy
+browser-name properties beneath the installed `open` 8.4.2 (Capacitor tooling)
+and current `open` 11.0.4. It has no runtime dependencies. Both unchanged callers,
+32 simulated platform cases, descriptor/lifecycle operations and packed types
+pass on Node/Bun. No command is launched. The opener itself, publication and
+application adoption remain separate work.

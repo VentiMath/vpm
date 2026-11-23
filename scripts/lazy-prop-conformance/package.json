@@ -1,0 +1,11 @@
+{
+  "name": "vpm-lazy-prop-controls",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "define-lazy-prop": "3.0.0",
+    "define-lazy-prop-app": "npm:define-lazy-prop@2.0.0",
+    "open": "11.0.4",
+    "open-app": "npm:open@8.4.2"
+  }
+}

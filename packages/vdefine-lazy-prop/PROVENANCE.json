@@ -1,0 +1,31 @@
+{
+  "upstream": {
+    "name": "define-lazy-prop",
+    "version": "3.0.0",
+    "repository": "https://github.com/sindresorhus/define-lazy-prop",
+    "commit": "038c2e8088b23e81100e34e7f38d1690c631157c",
+    "integrity": "sha512-N+MeXYoqr3pOgn8xfyRPREN7gHakLYjhsHhWGT3fWAiL4IkAt0iDw14QiiEm2bE30c5XX5q0FtAA3CK5f9/BUg=="
+  },
+  "implementation": {
+    "kind": "independent",
+    "targetScope": "Lazy initialization and assignment of ordinary object properties. Shared value installation avoids an additional per-property closure; subsequent reads use normal data properties."
+  },
+  "differences": [
+    "Dual CJS/ESM entry points support the installed CommonJS opener and current ESM opener.",
+    "Declarations also cover symbol and numeric property keys already accepted at runtime.",
+    "Inherited accessors intentionally update the defining object, matching upstream; initializer failures retry on the next read.",
+    "No opener rewrite, command launching, public release or application adoption is claimed."
+  ],
+  "verification": {
+    "controls": [
+      "define-lazy-prop 3.0.0",
+      "define-lazy-prop 2.0.0"
+    ],
+    "unchangedCallers": [
+      "open 8.4.2",
+      "open 11.0.4"
+    ],
+    "generatedTransitions": 20480,
+    "platformScenarios": 32
+  }
+}
