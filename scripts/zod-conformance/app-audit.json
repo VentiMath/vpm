@@ -1,9 +1,244 @@
 {
-  "revision": "664673678be2699602121ff2ceee0189c12a7e12",
+  "revision": "f9482ea60271f36969bd3585de0f9de0d589bfae",
   "files": 21,
   "schemas": 34,
   "comparisons": 4318,
   "legacyAcceptanceOrOutputDifferences": 15,
+  "differences": [
+    {
+      "file": "src/app/(control-panel)/apps/notes/components/forms/note-form/NoteForm.tsx",
+      "schema": 1,
+      "sample": 0,
+      "current": {
+        "data": {
+          "tasks": [],
+          "labels": []
+        }
+      },
+      "legacy": {
+        "data": {}
+      }
+    },
+    {
+      "file": "src/app/(control-panel)/apps/notes/components/forms/note-form/NoteForm.tsx",
+      "schema": 1,
+      "sample": 41,
+      "current": {
+        "data": {
+          "id": "id",
+          "title": "Title",
+          "content": "Content",
+          "tasks": [],
+          "labels": [],
+          "archived": false
+        }
+      },
+      "legacy": {
+        "data": {
+          "id": "id",
+          "title": "Title",
+          "content": "Content",
+          "labels": [],
+          "archived": false
+        }
+      }
+    },
+    {
+      "file": "src/app/(control-panel)/apps/notes/components/forms/note-form/NoteForm.tsx",
+      "schema": 1,
+      "sample": 43,
+      "current": {
+        "data": {
+          "id": "id",
+          "title": "Title",
+          "content": "Content",
+          "tasks": [],
+          "labels": [],
+          "archived": false
+        }
+      },
+      "legacy": {
+        "data": {
+          "id": "id",
+          "title": "Title",
+          "content": "Content",
+          "tasks": [],
+          "archived": false
+        }
+      }
+    },
+    {
+      "file": "src/app/(control-panel)/apps/notes/components/forms/note-form/NoteForm.tsx",
+      "schema": 1,
+      "sample": 113,
+      "current": {
+        "data": {
+          "tasks": [],
+          "labels": []
+        }
+      },
+      "legacy": {
+        "data": {}
+      }
+    },
+    {
+      "file": "src/app/(control-panel)/apps/notes/components/forms/note-form/NoteForm.tsx",
+      "schema": 1,
+      "sample": 114,
+      "current": {
+        "data": {
+          "tasks": [],
+          "labels": []
+        }
+      },
+      "legacy": {
+        "data": {}
+      }
+    },
+    {
+      "file": "src/app/(control-panel)/apps/notes/components/forms/note-form/NoteForm.tsx",
+      "schema": 1,
+      "sample": 115,
+      "current": {
+        "data": {
+          "content": "x^2",
+          "tasks": [],
+          "labels": []
+        }
+      },
+      "legacy": {
+        "data": {
+          "content": "x^2"
+        }
+      }
+    },
+    {
+      "file": "src/app/(control-panel)/apps/notes/components/forms/note-form/NoteForm.tsx",
+      "schema": 1,
+      "sample": 117,
+      "current": {
+        "data": {
+          "tasks": [],
+          "labels": []
+        }
+      },
+      "legacy": {
+        "data": {}
+      }
+    },
+    {
+      "file": "src/app/(control-panel)/apps/notes/components/forms/note-form/NoteForm.tsx",
+      "schema": 1,
+      "sample": 118,
+      "current": {
+        "data": {
+          "tasks": [],
+          "labels": []
+        }
+      },
+      "legacy": {
+        "data": {}
+      }
+    },
+    {
+      "file": "src/app/(control-panel)/apps/notes/components/forms/note-form/NoteForm.tsx",
+      "schema": 1,
+      "sample": 119,
+      "current": {
+        "data": {
+          "tasks": [],
+          "labels": []
+        }
+      },
+      "legacy": {
+        "data": {}
+      }
+    },
+    {
+      "file": "src/app/(control-panel)/apps/notes/components/forms/note-form/NoteForm.tsx",
+      "schema": 1,
+      "sample": 120,
+      "current": {
+        "data": {
+          "tasks": [],
+          "labels": []
+        }
+      },
+      "legacy": {
+        "data": {}
+      }
+    },
+    {
+      "file": "src/app/(control-panel)/apps/notes/components/forms/note-form/NoteForm.tsx",
+      "schema": 1,
+      "sample": 121,
+      "current": {
+        "data": {
+          "tasks": [],
+          "labels": []
+        }
+      },
+      "legacy": {
+        "data": {}
+      }
+    },
+    {
+      "file": "src/app/(control-panel)/apps/notes/components/forms/note-form/NoteForm.tsx",
+      "schema": 1,
+      "sample": 122,
+      "current": {
+        "data": {
+          "tasks": [],
+          "labels": []
+        }
+      },
+      "legacy": {
+        "data": {}
+      }
+    },
+    {
+      "file": "src/app/(control-panel)/apps/notes/components/forms/note-form/NoteForm.tsx",
+      "schema": 1,
+      "sample": 123,
+      "current": {
+        "data": {
+          "tasks": [],
+          "labels": []
+        }
+      },
+      "legacy": {
+        "data": {}
+      }
+    },
+    {
+      "file": "src/app/(control-panel)/apps/notes/components/forms/note-form/NoteForm.tsx",
+      "schema": 1,
+      "sample": 125,
+      "current": {
+        "data": {
+          "tasks": [],
+          "labels": []
+        }
+      },
+      "legacy": {
+        "data": {}
+      }
+    },
+    {
+      "file": "src/app/(control-panel)/apps/notes/components/forms/note-form/NoteForm.tsx",
+      "schema": 1,
+      "sample": 126,
+      "current": {
+        "data": {
+          "tasks": [],
+          "labels": []
+        }
+      },
+      "legacy": {
+        "data": {}
+      }
+    }
+  ],
   "records": [
     {
       "path": "src/app/(control-panel)/apps/ai-image-generator/components/forms/generator-form/AiImageGenForm.tsx",

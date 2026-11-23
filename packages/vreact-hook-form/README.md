@@ -2,8 +2,7 @@
 
 Independent form state and React bindings for VentiMath's forms, targeting React
 Hook Form 7.92.0 and compared with the app's pinned 7.56.0. React 19.3 is the only
-peer; there are no runtime dependencies. Built and tested; not yet released or
-adopted by VentiMath.
+peer; there are no runtime dependencies. Consumer packaging and app adoption are tracked separately.
 
 ```tsx
 import { Controller, useForm } from "vreact-hook-form";
@@ -66,3 +65,29 @@ validation; [mounted updates](bench/updates/README.md) exercise actual React DOM
 The independent [Zod adapter](../vhookform-resolvers/README.md) is also available
 in the source workspace. It is tested with both full Zod 3 and Zod 4 schemas;
 package release and application adoption remain separate.
+
+## Consumer release
+
+The `vreact-hook-form-7.92.0` release packages the verified form stack together:
+
+```json
+{
+  "dependencies": {
+    "vreact-hook-form": "https://github.com/VentiMath/vpm/releases/download/vreact-hook-form-7.92.0/vreact-hook-form-7.92.0.tgz",
+    "vhookform-resolvers": "https://github.com/VentiMath/vpm/releases/download/vreact-hook-form-7.92.0/vhookform-resolvers-7.0.6.tgz",
+    "vzod": "https://github.com/VentiMath/vpm/releases/download/vreact-hook-form-7.92.0/vzod-4.6.7.tgz"
+  }
+}
+```
+
+Use the VPM names in application imports, including `vhookform-resolvers/zod`.
+React 19.3 remains a peer. No original-name aliases or VPM dependency overrides
+are required. Public installation checks exercise transformed input/output types
+and the complete stack in Chrome. Application adoption remains separate.
+
+This adopts Zod 4 semantics: error shape/wording and default application can
+differ from the app's Zod 3 baseline. The read-only app audit at `f9482ea6`
+checks 34 unchanged schemas across 4,318 samples; the 15 legacy output differences
+are documented note-field defaults. Dynamic field arrays and unlisted schema
+plugins remain outside scope. Third-party Hook Form devtools that inspect
+private internals are not certified by these public API checks.
