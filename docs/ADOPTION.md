@@ -255,3 +255,20 @@ with external requests/writes blocked. Signed-in routes and non-Chrome browsers
 remain for app acceptance. This release does not change the application checkout
 or deploy it. [Pins and resolver guidance](INSTALLATION.md#material) preserve VPM
 package names and keep the styling/theme dependency instances shared.
+
+### Material adoption corrections
+
+`vmui-material-9.5.0-r2` repairs VPM's missing `OverridableComponent` and
+`transitions` type exports, development icon IDs, and the TypeScript/Bun resolver
+maps. Paths contain declarations first and executable fallbacks second; both
+resolvers are tested with npm Material deliberately available as a fallback.
+`vmaterial-react-table-3.2.1-r4` uses VPM Material/Emotion for runtime imports,
+public types and peers, including matching ESM theme types for toolbar sx.
+
+On an isolated export of VentiMath adoption commit `71606503`, the candidate
+passes the complete typecheck, production build, 39/39 WAMO tests (four failed
+on the original release), and all 466 site test files. These are local consumer
+checks; the application branch was not edited, merged or deployed.
+The table browser gate checks 37 paired caller snapshots plus actual control
+actions against npm MRT, with VPM Material furnishing the candidate's provider
+and controls. Current scope and remaining browser acceptance are unchanged.

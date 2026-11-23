@@ -66,23 +66,25 @@ fresh/frozen npm/Bun installs under `vpngjs` and exact published bytes.
 
 ## Material React Table
 
-[Material React Table 3.2.1 r3](https://github.com/VentiMath/vpm/releases/tag/material-react-table-3.2.1-r3)
-contains the independent `vmaterial-react-table` widget and its five VPM helpers.
-Keep existing `material-react-table` imports and replace the direct dependency:
+[vmaterial-react-table 3.2.1 r4](https://github.com/VentiMath/vpm/releases/tag/vmaterial-react-table-3.2.1-r4)
+contains the independent widget and its five VPM data helpers. Import and install
+it as `vmaterial-react-table`:
 
 ```json
 {
   "dependencies": {
-    "material-react-table": "https://github.com/VentiMath/vpm/releases/download/material-react-table-3.2.1-r3/vmaterial-react-table-3.2.1.tgz"
+    "vmaterial-react-table": "https://github.com/VentiMath/vpm/releases/download/vmaterial-react-table-3.2.1-r4/vmaterial-react-table-3.2.1.tgz"
   }
 }
 ```
 
-No overrides, import renames or registry authentication are needed. The widget
-archive pins React Table 9.3.1, match-sorter-utils 9.2.6 and highlight-words 2.0.0;
-Table in turn pins Table core 9.3.1 and Store 0.11.2, all to this release’s URLs.
-React, ReactDOM, MUI and Emotion stay application peers. The release has no runtime
-imports of upstream MRT, Table, React Virtual, MUI icons or date pickers.
+Merge the release's full `consumer-package.json`: it pins the six table packages
+and all 22 shared [Material packages](#material) from `vmui-material-9.5.0-r2`.
+Runtime imports, public types and peers all use VPM names. React and React DOM
+remain application peers; npm Material and Emotion are not required by this
+widget. Original-name resolver mappings are only for unchanged third-party
+callers, not installation aliases. Internal Table/ranking/highlight dependencies
+are pinned to this release's public URLs without registry authentication.
 
 This is the [flat DataTable contract](../packages/vmaterial-react-table/README.md),
 including VentiMath’s custom toolbar, filters, sorting, grouping, selection/actions,
@@ -98,12 +100,12 @@ widget, which imports `vtanstack-react-table` directly. Only remove an existing
 Table dependency or override after checking for other application callers.
 
 The release includes `consumer-package.json`, `release-manifest.json` and
-`SHA256SUMS`. Published checks install the single root URL with fresh npm/Bun
+`SHA256SUMS`. Published checks install the consumer manifest with fresh npm/Bun
 caches and frozen locks, compare all six packages to their archives, and run
 React 19.3.1, Node/Bun SSR, CJS/ESM, strict TypeScript 7 and Chrome controls.
 
 ```sh
-node scripts/pack-material-table-release.cjs --ref COMMIT_SHA --tag material-react-table-3.2.1-r3 --out /absolute/path/to/empty-output
+node scripts/pack-material-table-release.cjs --ref COMMIT_SHA --tag vmaterial-react-table-3.2.1-r4 --out /absolute/path/to/empty-output
 node scripts/check-material-table-release.cjs /absolute/path/to/output
 node scripts/check-material-table-release.cjs /absolute/path/to/output --published
 ```
@@ -870,7 +872,7 @@ inputs and external services stubbed. The handwritten API covers
 
 ## Material
 
-`vmui-material-9.5.0` packages the 100 documented controls, app-used theme
+`vmui-material-9.5.0-r2` packages the 100 documented controls, app-used theme
 factories and all 22 runtime dependencies. Use the release's
 `consumer-package.json` to pin the **VPM names**, including existing VPM Emotion,
 Floating UI and transition dependencies, to one coherent release closure:
@@ -878,7 +880,7 @@ Floating UI and transition dependencies, to one coherent release closure:
 ```json
 {
   "dependencies": {
-    "vmui-material": "https://github.com/VentiMath/vpm/releases/download/vmui-material-9.5.0/vmui-material-9.5.0.tgz"
+    "vmui-material": "https://github.com/VentiMath/vpm/releases/download/vmui-material-9.5.0-r2/vmui-material-9.5.0.tgz"
   }
 }
 ```
@@ -893,7 +895,10 @@ Migrate owned imports to `vmui-material` (and its component/styles subpaths).
 Third-party MUI X, icons and adapter code may still import original names. The
 release includes `vite-aliases.json` and `tsconfig-paths.json` for these callers;
 merge them with existing resolver configuration. They are explicit import/type
-mappings, not original-name dependency keys. Type paths assume a root tsconfig;
+mappings, not original-name dependency keys. Keep both targets in each path:
+declarations first for TypeScript, executable fallbacks second for Bun. Mapping
+only to declarations lets Bun fall back to npm; mapping only to JavaScript can
+lose inherited add-on types. Type paths assume a root tsconfig;
 adjust the relative base if needed. A Node-only consumer of such third-party
 code needs its own resolver; Vite aliases do not affect Node resolution.
 

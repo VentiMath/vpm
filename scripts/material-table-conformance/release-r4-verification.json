@@ -1,0 +1,23 @@
+{
+  "date": "2026-11-23",
+  "tag": "vmaterial-react-table-3.2.1-r4",
+  "sourceCommit": "58d25cd75278fd9a38662dedc3d21901714f92d4",
+  "packages": 6,
+  "materialPeers": "vmui-material-9.5.0-r2",
+  "consumerVpmPins": 28,
+  "publishedBytes": "All nine release assets match local SHA256 records.",
+  "managers": [
+    "fresh npm install and npm ci",
+    "fresh Bun install and frozen lockfile install"
+  ],
+  "identifiers": "Only VPM dependency identifiers; no npm Material/Emotion installed.",
+  "checks": [
+    "ESM/CJS identity",
+    "Node24/Bun SSR",
+    "256 grouped-selection snapshots on each runtime",
+    "strict TS7 NodeNext/Bundler including toolbar Box and sx types",
+    "Chrome 37 paired caller snapshots plus actual control actions"
+  ],
+  "appAudit": "../mui-material-conformance/adoption-r2-report.json",
+  "appAdopted": false
+}

@@ -1,0 +1,53 @@
+{
+  "date": "2026-11-23",
+  "appCommit": "716065039f0aa43faacfdb49769528fe5b92b5e1",
+  "sourceFix": "1aafdba4",
+  "tablePeerFix": "58d25cd7",
+  "findings": [
+    "Missing VPM public type subpaths consumed by MUI add-ons.",
+    "Missing development createSvgIcon test IDs.",
+    "Declaration-only mappings fall through to npm in Bun; JavaScript-only mappings lose inherited types in TypeScript.",
+    "Table runtime/declarations/peers still referenced npm Material and Emotion."
+  ],
+  "candidate": {
+    "typecheck": "pass",
+    "productionBuild": "pass",
+    "wamo": {
+      "pass": 39,
+      "fail": 0
+    },
+    "siteSuite": {
+      "passFiles": 466,
+      "totalFiles": 466,
+      "seconds": 62.8,
+      "workers": 8
+    }
+  },
+  "baselineWamo": {
+    "pass": 35,
+    "fail": 4
+  },
+  "fixtureCorrection": "The initial archive-only site run passed 448 files and failed 18 Git-dependent tooling files; adding the snapshot Git index allowed the complete 466-file run to pass. No app source changes or check suppressions.",
+  "releaseGate": {
+    "materialTag": "vmui-material-9.5.0-r2",
+    "runtimeEntries": 365,
+    "typeModes": [
+      "NodeNext",
+      "Bundler"
+    ],
+    "iconModes": [
+      "development",
+      "production"
+    ],
+    "installManagers": [
+      "npm",
+      "Bun"
+    ],
+    "publicBytesVerified": true,
+    "fallbackRegression": "Bun maps original imports to VPM despite a deliberately throwing npm Material fallback; the same map retains strict TypeScript inherited types."
+  },
+  "limits": [
+    "Isolated application snapshot, not deployment or signed-in browser acceptance.",
+    "Previous complete component browser matrix not rerun for this narrow type/icon/mapping revision."
+  ]
+}
