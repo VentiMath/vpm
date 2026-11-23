@@ -202,3 +202,10 @@ checking their installed 1.0.5 behavior. This remains planned, not implemented.
 7.0.6 tooling dependency. Windows casing and duplicate ordering, unchanged
 resolver calls, and Node/Bun packed installs are covered. It is built but not
 published or adopted; native Windows process launch is outside the local checks.
+
+`vshebang-regex` independently recognizes the first-line interpreter marker used
+by shebang-command beneath cross-spawn. Current 4.0.0 and app 3.0.0 agree across
+8,192 generated scripts, all JavaScript line terminators, empty/long bodies and
+unchanged command/file readers. Node/Bun archives and strict types pass. Balanced
+benchmarks establish no speed difference. Built; publication and adoption remain
+separate from the app's Material release.

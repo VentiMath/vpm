@@ -1,8 +1,8 @@
 # Release readiness
 
-Snapshot: November 23, 2026. The workspace has **276 package folders**. GitHub has
+Snapshot: November 23, 2026. The workspace has **277 package folders**. GitHub has
 **23 release families**, with 54 published revisions and archives for **90 distinct
-package folders**. Thus 186 folders have no published archive. A release family
+package folders**. Thus 187 folders have no published archive. A release family
 can contain many dependencies; neither folder count nor release count is an app
 adoption count. The removed CSS-to-React-Native chain is one example of a published
 family that the app no longer needs. The notification, translation, form and

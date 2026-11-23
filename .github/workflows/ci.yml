@@ -510,6 +510,12 @@ jobs:
           node --test packages/vpath-key/test/*.test.cjs
           node scripts/path-key-conformance/callers.cjs
           node scripts/path-key-conformance/archives.cjs
+      - name: Independent shebang matcher and unchanged cross-spawn file reader
+        run: |
+          npm --prefix scripts/shebang-regex-conformance ci --ignore-scripts --no-audit --no-fund
+          node --test packages/vshebang-regex/test/*.test.cjs
+          node scripts/shebang-regex-conformance/callers.cjs
+          node scripts/shebang-regex-conformance/archives.cjs
       - name: Independent lazy properties and unchanged opener app names
         run: |
           npm --prefix scripts/lazy-prop-conformance ci --ignore-scripts --no-audit --no-fund
@@ -1536,6 +1542,9 @@ jobs:
       - run: npm --prefix scripts/path-key-conformance ci --ignore-scripts --no-audit --no-fund
       - run: bun test packages/vpath-key/test
       - run: bun scripts/path-key-conformance/callers.cjs
+      - run: npm --prefix scripts/shebang-regex-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: bun test packages/vshebang-regex/test
+      - run: bun scripts/shebang-regex-conformance/callers.cjs
       - run: bun test packages/vdefine-lazy-prop/test
       - run: bun scripts/lazy-prop-conformance/contract.cjs
       - run: bun scripts/lazy-prop-conformance/callers.cjs

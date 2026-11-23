@@ -1,0 +1,31 @@
+{
+  "upstream": {
+    "name": "shebang-regex",
+    "version": "4.0.0",
+    "repository": "https://github.com/sindresorhus/shebang-regex",
+    "commit": "a2e85dfd79f7c6d45b2d63ba4989d245e5f8b64a",
+    "integrity": "sha512-YSKeSljCliLkWidW84GWL1HCguI0iEqhnBOLhrVXw/fN9he9ngekCy8zqJ1jXTPYmJ3Xkf3gLuNDVHQWdRqinw==",
+    "checked": "2026-11-23"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "A shared regular expression matching an initial shebang line and capturing its body, for shebang-command and cross-spawn. Explicit line-terminator class; no runtime dependencies."
+  },
+  "differences": [
+    "ESM default and CommonJS RegExp entries share identity.",
+    "RegExp.source text differs; matching behavior is the compatibility contract.",
+    "This matches a line; it neither validates nor executes an interpreter command."
+  ],
+  "verification": {
+    "controls": [
+      "shebang-regex 4.0.0",
+      "shebang-regex 3.0.0"
+    ],
+    "callers": [
+      "shebang-command 2.0.0",
+      "cross-spawn 7.0.6"
+    ],
+    "generatedScripts": 8192
+  }
+}

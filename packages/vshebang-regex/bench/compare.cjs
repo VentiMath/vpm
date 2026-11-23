@@ -1,0 +1,5 @@
+"use strict";
+const path=require('node:path'),assert=require('node:assert/strict'),{pathToFileURL}=require('node:url');
+const root=path.resolve(__dirname,'..'),vpm=root+'/index.cjs',upstream=require.resolve('shebang-regex',{paths:[path.resolve(__dirname,'../../../scripts/shebang-regex-conformance')]});
+const cases=[['Short script','#!/usr/bin/env node\nconsole.log(1)'],['No marker','console.log(1)\n#!/bin/sh'],['150-byte caller buffer','#!/bin/sh\n'+'x'.repeat(140)],['Long first line','#!'+'x'.repeat(4096)+'\nnext']].map(([name,input])=>({name,async make(file){const regex=(await import(pathToFileURL(file))).default;return()=>regex.exec(input)?.[1]??null},validate(value){assert.equal(value,name==='No marker'?null:name==='Long first line'?'x'.repeat(4096):name==='Short script'?'/usr/bin/env node':'/bin/sh')}}));
+require('../../../scripts/bench-process.cjs').run({root,upstream,vpm,cases,files:['index.cjs','index.mjs','package.json','bench/compare.cjs','../../scripts/shebang-regex-conformance/package-lock.json']}).catch(e=>{console.error(e);process.exitCode=1});
