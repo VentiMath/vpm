@@ -21,7 +21,9 @@ function paint(polygons,ink,surface,budget,matrix){
  // Horizontal edges are omitted below. The JS reference handles unusually
  // large all-horizontal input without reserving unnecessary Wasm scratch.
  if(vertices>2000000)return false;
- const needed=state.scratch+vertices*96+80+surface.width*4;
+ // Per vertex: 48-byte edge, 4-byte order, 8-byte upper boundary and
+ // 16-byte hit; padding and the clipped coverage row follow.
+ const needed=state.scratch+vertices*76+80+surface.width*4;
  if(needed>state.memory.buffer.byteLength){
   state.memory.grow(Math.ceil((needed-state.memory.buffer.byteLength)/65536));
   surface.data=Buffer.from(state.memory.buffer,state.start,state.bytes);

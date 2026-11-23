@@ -13,10 +13,11 @@ The application reports deployment in progress; production completion is not
 verified here. The previous geometry-limit blocker is resolved, including the
 26,000-character statement and exact 8,192-layout-item boundary.
 
-VLX 0.3.5 accelerates the shared owned rasterizer with a portable kernel compiled
+VLX 0.3.6 accelerates the shared owned rasterizer with a portable kernel compiled
 from VPM's C source, coherent edge sorting, lower-allocation path parsing and
 lossless PNG filtering/compression. Reference pixels and resource limits remain
-unchanged; compressed PNG bytes may differ. See [cold-call and memory measurements](../packages/vresvg/bench/README.md).
+unchanged. The 0.3.6 follow-up merges vertex boundaries once per path and avoids
+retaining unique pen paths in font caches; it preserves 0.3.5 PNG encoding. See [cold-call and memory measurements](../packages/vresvg/bench/README.md).
 Repinning this newer release and verifying deployment remain application work.
 
 The earlier application-side report for PR #455 at `b7d73475` verifies the 0.3.2 release
@@ -182,7 +183,7 @@ at app `f79f2ffe` passes its two tests and 18 synthetic page cases on Bun and
 Node-targeted transpilation. No private handwriting or app source is published.
 
 The app's committed main `9e68efc4` uses both archives from `vlx-0.3.4` and
-no longer installs native resvg. Version 0.3.5 supplies the performance update;
+no longer installs native resvg. Version 0.3.6 supplies the performance update;
 repin both sibling URLs with no rendering-option change. Deployment completion
 has not been independently verified.
 

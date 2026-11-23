@@ -129,7 +129,9 @@ function rasterize(svg,{width:requestedWidth,height:requestedHeight,zoom,backgro
    // ceiling incorrectly rejects long pages of small glyphs. Keep the same
    // per-path allocation limit, and charge every instance (including cached
    // and invisible paths) to the request's cumulative work budget instead.
-   budget.points=0;contours=path.flatten(attrs.d||'',tolerance,budget);
+   // Handwriting coordinates are unique to each page; reusable font outlines
+   // use the cache, while pen paths can be collected immediately after drawing.
+   budget.points=0;contours=path.flatten(attrs.d||'',tolerance,budget,!strict);
    budget.work+=budget.points;if(budget.work>300000000)throw new VlxError('LIMIT','Raster sampling budget exceeded');
   }
   else if(tag==='rect'){const x=number(attrs.x),y=number(attrs.y),w=attrs.width==='100%'?viewBox[2]:number(attrs.width),h=attrs.height==='100%'?viewBox[3]:number(attrs.height);if(w<=0||h<=0)continue;contours=[{closed:true,points:[[x,y],[x+w,y],[x+w,y+h],[x,y+h]]}];}

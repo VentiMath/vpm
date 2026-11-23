@@ -70,9 +70,10 @@ artifacts are removed. Those artifacts were builds of one renderer, not twelve
 independent JavaScript rewrite projects.
 
 The 0.3.4 geometry correction admits the 26,000-character page and the exact
-8,192-item boundary without changing pixels. Version 0.3.5 accelerates the same
+8,192-item boundary without changing pixels. Version 0.3.6 accelerates the same
 bounded rendering vocabulary using VPM's own portable scanner, streaming path
-parsing and lossless PNG filtering. No fonts, remote assets, native addon or
+parsing and lossless PNG filtering. Unique pen paths no longer enter font caches,
+and vertex boundaries are merged without repeated row sorting. No fonts, remote assets, native addon or
 upstream renderer code are loaded. Browser math remains independent of raster
 code. [Speed and peak-memory measurements](../packages/vresvg/bench/README.md)
 report both improvements and the remaining handwriting gap against native resvg.

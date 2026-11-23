@@ -2,14 +2,20 @@
 const {RasterError:VlxError}=require('./error.cjs');
 const fail=message=>{throw new VlxError('RASTER',message)};
 const cache=new Map();let cachedBytes=0;
-function commands(source){
- let result=cache.get(source);if(result)return result;
+// Cached path keys must not keep a sliced, multi-megabyte SVG source alive.
+const ownedString=source=>Buffer.from(source,'utf16le').toString('utf16le');
+const counts={M:2,L:2,C:6,Q:4,H:1,V:1,Z:0};
+function separators(source,start,end){
+ for(let i=start;i<end;i++){const c=source.charCodeAt(i);if(c!==32&&c!==44&&(c<9||c>13)&&!(c>127&&/\s/.test(source[i])))return false;}
+ return true;
+}
+function commands(source,cacheable=true){
+ let result=cacheable&&cache.get(source);if(result)return result;
  if(source.length>1000000)fail('Drawing path is too long');
  const scan=/[MLCQHVZ]|[-+]?(?:\d*\.\d+|\d+\.?\d*)(?:[eE][+-]?\d+)?/g;
- const counts={M:2,L:2,C:6,Q:4,H:1,V:1,Z:0};
  let end=0,kind,row,count=0,m,expect=false;result=[];
  while((m=scan.exec(source))){
-  if(!/^[\s,]*$/.test(source.slice(end,m.index)))fail('Unsupported drawing path command');
+  if(!separators(source,end,m.index))fail('Unsupported drawing path command');
   end=scan.lastIndex;
   const token=m[0],code=token.charCodeAt(0);
   if(code>=65&&code<=90){
@@ -24,13 +30,13 @@ function commands(source){
   expect=false;if(!row)row=[kind];row.push(value);
   if(row.length===count+1){result.push(row);row=null;if(kind==='M'){kind='L';count=2;}}
  }
- if(!/^[\s,]*$/.test(source.slice(end)))fail('Invalid drawing path');
+ if(!separators(source,end,source.length))fail('Invalid drawing path');
  if(row||expect)fail('Invalid drawing path coordinate');
- if(source.length<=32768){
+ if(cacheable&&source.length<=32768){
   // Bound retained arrays as well as string bytes. Pen paths often never recur.
   const bytes=source.length*2+result.reduce((n,row)=>n+40+row.length*8,0);
   if(cache.size>=2048||cachedBytes+bytes>2000000){cache.clear();cachedBytes=0;}
-  cache.set(source,result);cachedBytes+=bytes;
+  cache.set(ownedString(source),result);cachedBytes+=bytes;
  }
  return result;
 }
@@ -38,8 +44,8 @@ const apply=(m,p)=>[m[0]*p[0]+m[2]*p[1]+m[4],m[1]*p[0]+m[3]*p[1]+m[5]];
 const multiply=(a,b)=>[a[0]*b[0]+a[2]*b[1],a[1]*b[0]+a[3]*b[1],a[0]*b[2]+a[2]*b[3],a[1]*b[2]+a[3]*b[3],a[0]*b[4]+a[2]*b[5]+a[4],a[1]*b[4]+a[3]*b[5]+a[5]];
 function transform(value){let result=[1,0,0,1,0,0],end=0;for(const match of value.matchAll(/(translate|scale|skewX)\(([^)]*)\)/g)){if(value.slice(end,match.index).trim())fail('Unsupported drawing transform');const nums=match[2].trim().split(/[\s,]+/).map(Number);if(nums.some(n=>!Number.isFinite(n))||!nums.length||nums.length>2)fail('Invalid transform');let m;switch(match[1]){case 'translate':m=[1,0,0,1,nums[0],nums[1]??0];break;case 'scale':m=[nums[0],0,0,nums[1]??nums[0],0,0];break;default:m=[1,0,Math.tan(nums[0]*Math.PI/180),1,0,0];}result=multiply(result,m);end=match.index+match[0].length;}if(value.slice(end).trim())fail('Unsupported transform');return result;}
 const geometryCache=new Map();let geometryPoints=0;
-function flatten(source,tolerance,budget){
- const key=source+'\0'+tolerance,cached=geometryCache.get(key);
+function flatten(source,tolerance,budget,cacheable=true){
+ const key=cacheable?source+'\0'+tolerance:null,cached=cacheable&&geometryCache.get(key);
  if(cached){budget.points+=cached.count;if(budget.points>2000000)throw new VlxError('LIMIT','Raster geometry budget exceeded');return cached.contours;}
  const startingPoints=budget.points;
  const contours=[];let points,x=0,y=0,start;
@@ -56,22 +62,29 @@ function flatten(source,tolerance,budget){
   const mx=(abcx+bcdx)/2,my=(abcy+bcdy)/2;
   cubic(ax,ay,abx,aby,abcx,abcy,mx,my,depth+1);cubic(mx,my,bcdx,bcdy,cdx,cdy,dx,dy,depth+1);
  }
- for(const [kind,...v]of commands(source)){
-  if(kind==='M'){points=[];contours.push({points,closed:false});put(v[0],v[1]);start=[x,y];continue;}
+ for(const row of commands(source,cacheable)){
+  const kind=row[0];
+  if(kind==='M'){points=[];contours.push({points,closed:false});put(row[1],row[2]);start=[x,y];continue;}
   if(!points)fail('Path must begin with moveto');
-  if(kind==='L')put(v[0],v[1]);else if(kind==='H')put(v[0],y);else if(kind==='V')put(x,v[0]);
-  else if(kind==='C')cubic(x,y,v[0],v[1],v[2],v[3],v[4],v[5]);
-  else if(kind==='Q')cubic(x,y,x+(v[0]-x)*2/3,y+(v[1]-y)*2/3,v[2]+(v[0]-v[2])*2/3,v[3]+(v[1]-v[3])*2/3,v[2],v[3]);
+  if(kind==='L')put(row[1],row[2]);else if(kind==='H')put(row[1],y);else if(kind==='V')put(x,row[1]);
+  else if(kind==='C')cubic(x,y,row[1],row[2],row[3],row[4],row[5],row[6]);
+  else if(kind==='Q')cubic(x,y,x+(row[1]-x)*2/3,y+(row[2]-y)*2/3,row[3]+(row[1]-row[3])*2/3,row[4]+(row[2]-row[4])*2/3,row[3],row[4]);
   else if(kind==='Z'){contours.at(-1).closed=true;[x,y]=start;}
  }
  const count=budget.points-startingPoints;
- if(source.length<=32768&&count<=10000){
+ if(cacheable&&source.length<=32768&&count<=10000){
   while(geometryCache.size>=512||geometryPoints+count>100000){const first=geometryCache.keys().next().value;geometryPoints-=geometryCache.get(first).count;geometryCache.delete(first);}
-  geometryCache.set(key,{contours,count});geometryPoints+=count;
+  geometryCache.set(ownedString(key),{contours,count});geometryPoints+=count;
  }
  return contours;
 }
-function circle(cx,cy,r,tolerance){const n=Math.max(12,Math.min(2048,Math.ceil(Math.PI/Math.acos(Math.max(-1,1-tolerance/Math.max(r,tolerance))))));return Array.from({length:n},(_,i)=>[cx+r*Math.cos(i*2*Math.PI/n),cy+r*Math.sin(i*2*Math.PI/n)]);}
+const circleUnits=new Map();
+function circle(cx,cy,r,tolerance){
+ const n=Math.max(12,Math.min(2048,Math.ceil(Math.PI/Math.acos(Math.max(-1,1-tolerance/Math.max(r,tolerance))))));
+ let unit=circleUnits.get(n);
+ if(!unit){unit=new Float64Array(n*2);for(let i=0;i<n;i++){unit[i*2]=Math.cos(i*2*Math.PI/n);unit[i*2+1]=Math.sin(i*2*Math.PI/n);}if(circleUnits.size>=32)circleUnits.clear();circleUnits.set(n,unit);}
+ const points=new Array(n);for(let i=0;i<n;i++)points[i]=[cx+r*unit[i*2],cy+r*unit[i*2+1]];return points;
+}
 // Stroke strips and joins form one nonzero-winding union per draw, so shared
 // edges/joins do not accumulate opacity. Generated dashed rules use butt ends.
 function strokes(contours,width,join,dash,offset,tolerance,cap="butt",compactJoins=false){

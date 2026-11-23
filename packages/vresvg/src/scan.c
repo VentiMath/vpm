@@ -3,7 +3,7 @@
  * operations and Float32 coverage stores are intentional compatibility rules. */
 typedef unsigned char byte;
 typedef struct { double x, low, high, slope, winding, order; } Edge;
-typedef struct { double x, winding, order; } Hit;
+typedef struct { double x; int winding, order; } Hit;
 #define MAX_WORK 300000000.0
 #define floor __builtin_floor
 #define ceil __builtin_ceil
@@ -13,7 +13,11 @@ static double max(double a,double b){return a>b?a:b;}
 /* Index tie breaks preserve JavaScript's stable sort, including coincident
  * boundaries whose span splits affect Float32 accumulation. Introsort bounds
  * adversarial work while exploiting the mostly ordered scanline input. */
-static int edge_less(Edge a,Edge b){return a.low<b.low||(a.low==b.low&&a.order<b.order);}
+// Sorting compact indices leaves the 48-byte edge records stationary.
+// The module has no callbacks/imported functions, so this pointer cannot change
+// during a scan; each surface has its own instance.
+static Edge *sorting_edges;
+static int edge_less(int a,int b){double x=sorting_edges[a].low,y=sorting_edges[b].low;return x<y||(x==y&&a<b);}
 static int hit_less(Hit a,Hit b){return a.x<b.x||(a.x==b.x&&a.order<b.order);}
 static int value_less(double a,double b){return a<b;}
 #define SORT(NAME,TYPE,LESS) \
@@ -29,7 +33,7 @@ static void NAME##_part(TYPE *v,int n,int depth){ \
  for(int i=1;i<n;i++){TYPE item=v[i];int j=i;while(j>0&&LESS(item,v[j-1])){v[j]=v[j-1];j--;}v[j]=item;} \
 } \
 static void NAME(TYPE *v,int n){int depth=0;for(int size=n;size>1;size>>=1)depth+=2;NAME##_part(v,n,depth);}
-SORT(sort_edges,Edge,edge_less)
+SORT(sort_edges,int,edge_less)
 SORT(sort_hits_general,Hit,hit_less)
 static void sort_hits(Hit *v,int n){
  int moved=0;
@@ -40,7 +44,11 @@ static void sort_hits(Hit *v,int n){
   if(moved>n*4){sort_hits_general(v,n);return;}
  }
 }
-SORT(sort_cuts,double,value_less)
+SORT(sort_values_general,double,value_less)
+static void sort_values(double *v,int n){
+ int moved=0;
+ for(int i=1;i<n;i++){double item=v[i];int j=i;while(j>0&&v[j-1]>item){v[j]=v[j-1];j--;moved++;}v[j]=item;if(moved>n*4){sort_values_general(v,n);return;}}
+}
 
 // Reference Float32Array writes outside the clipped span are ignored. Preserve
 // that rule even when extreme-coordinate interpolation rounds past an endpoint.
@@ -69,43 +77,48 @@ double paint(Edge *edges,int n,int width,int height,byte *pixels,
  work+=n;if(work>MAX_WORK)return -1;
  int offset=(int)min(width,max(0,floor(minx))),limit=(int)max(0,min(width,ceil(maxx)));
  if(offset>=limit)return work;
- int *active=(int*)scratch;
- int *sampleActive=active+n;
- double *cuts=(double*)(scratch+n*8);
- Hit *hits=(Hit*)(cuts+2*n+9);
+ int *order=(int*)scratch;
+ double *highs=(double*)(scratch+((n*4+7)&~7));
+ Hit *hits=(Hit*)(highs+n);
  float *coverage=(float*)(hits+n);
- sort_edges(edges,n);
- int next=0,na=0,sampleNext=0,ns=0;
+ for(int i=0;i<n;i++)order[i]=i;sorting_edges=edges;sort_edges(order,n);
+ for(int i=0;i<n;i++)highs[i]=edges[order[i]].high;sort_values(highs,n);
+ // Merge lower/upper vertex boundaries with the eight fixed subrows.
+ // Duplicate boundaries still contribute to nc and the reference work charge;
+ // only zero-height samples are skipped, exactly as in the JS converter.
+ int lowFirst=0,lowEnd=0,highFirst=0,highEnd=0,sampleNext=0,ns=0;
  int r=rgba&255,g=(rgba>>8)&255,b=(rgba>>16)&255,a=(rgba>>24)&255;
  for(int y=first;y<last;y++){
   for(int i=0;i<limit-offset;i++)coverage[i]=0;
-  int minX=width,maxX=0,kept=0;
-  for(int i=0;i<na;i++)if(edges[active[i]].high>y)active[kept++]=active[i];na=kept;
-  while(next<n&&edges[next].low<y+1){if(edges[next].high>y)active[na++]=next;next++;}
-  int nc=0;cuts[nc++]=y;cuts[nc++]=y+1;for(int i=1;i<8;i++)cuts[nc++]=y+i/8.0;
-  for(int i=0;i<na;i++){Edge *e=&edges[active[i]];if(e->low>y&&e->low<y+1)cuts[nc++]=e->low;if(e->high>y&&e->high<y+1)cuts[nc++]=e->high;}
-  sort_cuts(cuts,nc);
+  int minX=width,maxX=0;
+  while(lowFirst<n&&edges[order[lowFirst]].low<=y)lowFirst++;
+  while(lowEnd<n&&edges[order[lowEnd]].low<y+1)lowEnd++;
+  while(highFirst<n&&highs[highFirst]<=y)highFirst++;
+  while(highEnd<n&&highs[highEnd]<y+1)highEnd++;
+  int na=lowEnd-highFirst,nc=9+lowEnd-lowFirst+highEnd-highFirst;
   work+=(double)(nc-1)*(na+1);if(work>MAX_WORK)return -1;
+  int li=lowFirst,hi=highFirst,grid=1;double previous=y;
   for(int sample=1;sample<nc;sample++){
-   double weight=cuts[sample]-cuts[sample-1];if(!weight)continue;
-   double at=(cuts[sample]+cuts[sample-1])/2;int count=0;
+   double cut=grid<=8?y+grid/8.0:__builtin_inf();int source=0;
+   if(li<lowEnd&&edges[order[li]].low<cut){cut=edges[order[li]].low;source=1;}
+   if(hi<highEnd&&highs[hi]<cut){cut=highs[hi];source=2;}
+   if(source==0)grid++;else if(source==1)li++;else hi++;
+   double weight=cut-previous,at=(cut+previous)/2;previous=cut;if(!weight)continue;
+   int count=0;
    /* Cuts include every vertex. Keep the subrow edge set as well as the
     * row set, so short curve/join edges aren't inspected at every sample.
     * Resource accounting above deliberately still charges the reference work. */
-   int retained=0;
    for(int i=0;i<ns;i++){
-    Edge *e=&edges[sampleActive[i]];if(e->high<=at)continue;
-    sampleActive[retained++]=sampleActive[i];
-    hits[count++]=(Hit){e->x+(at-e->low)*e->slope,e->winding,(double)sampleActive[i]};
+    Hit hit=hits[i];Edge *e=&edges[order[hit.order]];if(e->high<=at)continue;
+    hits[count++]=(Hit){e->x+(at-e->low)*e->slope,hit.winding,hit.order};
    }
-   ns=retained;
-   while(sampleNext<n&&edges[sampleNext].low<=at){
-    Edge *e=&edges[sampleNext];
-    if(e->high>at){sampleActive[ns++]=sampleNext;hits[count++]=(Hit){e->x+(at-e->low)*e->slope,e->winding,(double)sampleNext};}
+   while(sampleNext<n&&edges[order[sampleNext]].low<=at){
+    Edge *e=&edges[order[sampleNext]];
+    if(e->high>at)hits[count++]=(Hit){e->x+(at-e->low)*e->slope,(int)e->winding,sampleNext};
     sampleNext++;
    }
+   ns=count;
    sort_hits(hits,count);
-   for(int i=0;i<count;i++)sampleActive[i]=(int)hits[i].order;
    int winding=0;double from=0;
    for(int i=0;i<count;i++){
     double x=hits[i].x;int previous=winding;winding+=(int)hits[i].winding;

@@ -55,3 +55,26 @@ test('streaming token parser preserves compact syntax and rejects incomplete coo
  same(wrap('<path d="M.5.5 10-2 20 5H30V20Q20 30 5 20C0 15 0 5 .5.5Z"/>'));
  for(const d of ['M','M0','M0 0L','M0 0LZ','M0 0L1Z','M0 0Q1 2 3','M0 0C1 2 3 4 5','M0 0 Z 1','M0 0 NaN','M0 0L1e999 2','M0 0L1000000001 0'])assert.throws(()=>render(wrap(`<path d="${d}"/>`)),{code:'RASTER'});
 });
+test('merged row boundaries retain exact cumulative limit charges',()=>{
+ const scan=require(root+'/raster-wasm.cjs');
+ const fixtures=[
+  {polygons:[[[1,.1],[30,.3],[1,.7]],[[1,.1],[30,.3],[1,.7]]],work:247},
+  {polygons:[[[1,-5],[38,30],[2,30],[39,-5]]],work:4842},
+  {polygons:[[[4,4],[30,4],[30,30],[4,30]],[[10,8],[10,25],[25,25],[25,8]]],work:4268},
+ ];
+ for(const {polygons,work} of fixtures){
+  const exact={work:300000000-work};scan.paint(polygons,[20,40,80,255],scan.createSurface(48,35),exact);assert.equal(exact.work,300000000);
+  assert.throws(()=>scan.paint(polygons,[20,40,80,255],scan.createSurface(48,35),{work:300000001-work}),{code:'LIMIT'});
+ }
+});
+test('unique handwriting geometry matches the reference without retaining path caches',()=>{
+ let seed=4193;const coordinate=()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return(seed%5600)/100-4;};
+ const previous=process.env.VPM_RASTER_JS;
+ try{
+  for(let i=0;i<80;i++){
+   const d=`M${coordinate()} ${coordinate()}Q${coordinate()} ${coordinate()} ${coordinate()} ${coordinate()}C${coordinate()} ${coordinate()} ${coordinate()} ${coordinate()} ${coordinate()} ${coordinate()}`;
+   const svg=wrap(`<path d="${d}" fill="none" stroke="#325" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>`);
+   delete process.env.VPM_RASTER_JS;const current=rasterize(svg,{strict:true});process.env.VPM_RASTER_JS='1';const reference=rasterize(svg,{strict:true});assert.deepEqual(current.data,reference.data);
+  }
+ }finally{if(previous===undefined)delete process.env.VPM_RASTER_JS;else process.env.VPM_RASTER_JS=previous;}
+});

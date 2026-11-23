@@ -821,7 +821,7 @@
     },
     "packages/vlx": {
       "name": "vlx",
-      "version": "0.3.5",
+      "version": "0.3.6",
       "dependencies": {
         "vpngjs": "7.0.0",
         "vresvg": "2.6.2",

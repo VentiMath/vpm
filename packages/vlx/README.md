@@ -199,6 +199,14 @@ not load a native addon or upstream renderer. Compressed PNG bytes can differ;
 decoded RGBA and browser/SVG output do not. [Measurements](../vresvg/bench/README.md)
 include cold application calls, native controls, and peak process memory.
 
+**0.3.6 reduces handwriting scan work and retained memory.** Vertex boundaries
+are sorted once per path and merged with the existing subrows. Compact hit
+records retain stable ties and exactly the same work charges. Unique pen paths
+bypass the font-outline caches; retained font keys own their string storage, so
+a short cached path cannot hold a whole SVG page alive. Antialiasing, PNG encoding,
+browser output and all input/work limits stay unchanged. Repeated-request memory
+checks and the remaining native-speed gap are included in the measurements.
+
 VentiMath main `9e68efc4` has adopted 0.3.4 and `vresvg`, removing native resvg.
 Update both [release pins](../../docs/INSTALLATION.md#handwritten-writeup-pictures)
 for the performance update. Deployment and application verification of the new

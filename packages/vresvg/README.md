@@ -36,6 +36,11 @@ No resvg native addon, platform binary or font discovery is used.
 The `internal-*` exports serve
 VLX and are not a public SVG contract. VLX retains its own error type.
 
+Vertex boundaries are ordered once per path and merged with the fixed sample
+rows. Stable intersection ties, Float32 accumulation and original work charges
+are preserved. Unique handwriting paths bypass the reusable font caches, and
+cached font-path keys own their storage instead of retaining complete SVG inputs.
+
 Limits bound source length (32 Mi characters), pixel area (16,777,216), dimensions
 (16,384), nesting, two million flattened points per live path, stroke geometry
 and 300 million cumulative work units. Every path instance consumes work, even
@@ -53,10 +58,10 @@ No private source or student handwriting is included in this package.
 
 ## VentiMath installation
 
-Use the updated `vresvg` archive accompanying [VLX 0.3.5](https://github.com/VentiMath/vpm/releases/tag/vlx-0.3.5):
+Use the updated `vresvg` archive accompanying [VLX 0.3.6](https://github.com/VentiMath/vpm/releases/tag/vlx-0.3.6):
 
 ```text
-https://github.com/VentiMath/vpm/releases/download/vlx-0.3.5/vresvg-2.6.2.tgz
+https://github.com/VentiMath/vpm/releases/download/vlx-0.3.6/vresvg-2.6.2.tgz
 ```
 
 Its package version identifies the upstream API baseline; the release URL
@@ -65,6 +70,6 @@ pins together. Remove upstream `@resvg/resvg-js` and use `import { Resvg } from
 'vresvg'` for handwriting. No rendering-option change is needed. VLX 0.2.3 still
 needs the broader native renderer, so make the Functions cutover atomic.
 Application main `9e68efc4` already uses both 0.3.4 release pins and removes native
-resvg. The 0.3.5 update preserves its decoded pixels and limits; faster lossless
-compression can produce larger PNG files. Application repinning and production
+resvg. The 0.3.6 update preserves its decoded pixels and limits. It also preserves
+0.3.5 PNG encoding, whose faster compression can produce larger files than 0.3.4. Application repinning and production
 verification remain separate.

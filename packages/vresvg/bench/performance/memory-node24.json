@@ -1,0 +1,879 @@
+{
+  "runtime": {
+    "node": "24.22.1",
+    "acorn": "8.18.0",
+    "ada": "4.0.0",
+    "amaro": "1.1.11",
+    "ares": "1.34.9",
+    "brotli": "1.2.0",
+    "cldr": "48.0",
+    "icu": "78.3",
+    "llhttp": "9.4.3",
+    "merve": "1.2.2",
+    "modules": "137",
+    "napi": "10",
+    "nbytes": "0.1.4",
+    "ncrypto": "0.0.1",
+    "nghttp2": "1.70.0",
+    "nghttp3": "",
+    "ngtcp2": "",
+    "openssl": "3.5.9",
+    "simdjson": "4.6.11",
+    "simdutf": "6.4.0",
+    "sqlite": "3.53.4",
+    "tz": "2026e",
+    "undici": "7.30.1",
+    "unicode": "17.0",
+    "uv": "1.52.1",
+    "uvwasi": "0.0.23",
+    "v8": "13.6.233.17-node.58",
+    "zlib": "1.3.2.1-motley-285e94b",
+    "zstd": "1.5.7"
+  },
+  "execArgv": [],
+  "appCommit": "9e68efc4f8310670a217e0658c2ce5b0a1cdfc1b",
+  "appHashes": {
+    "writeupPicture.ts": "d907c1c64879670fa86f283e08bea3dac2adc6881de5cfb46eca937dac35c10f",
+    "longhandLayout.ts": "eed1b314558b3755d5043ac37697c17f2a732c4979283146253e92b00716e6ea"
+  },
+  "baselineCommit": "6e2dff60498420e475d5472c96c1ee43c460d400",
+  "method": "Four isolated workers in ABBA order. Each renders 12 alternating 8500-glyph/26000-character pages, retaining the preceding PNG as an attachment. Handwriting offsets vary per request. No forced GC. Source and app SDK bootstrap are not production memory measurements.",
+  "samples": [
+    {
+      "variant": "previous",
+      "rows": [
+        {
+          "i": 0,
+          "name": "handwriting8500",
+          "width": 578,
+          "height": 4800,
+          "rgbaSHA256": "f91230873c0a10cdf299ee5076de3cc9f6390d4dc28847673c5fc49f90b934f0",
+          "pngBytes": 1480608,
+          "retainedBytes": 0,
+          "memory": {
+            "rss": 308412416,
+            "heapTotal": 228327424,
+            "heapUsed": 105704928,
+            "external": 20598563,
+            "arrayBuffers": 6160135
+          },
+          "peakRssMiB": 294.125
+        },
+        {
+          "i": 1,
+          "name": "problem400",
+          "width": 960,
+          "height": 15628,
+          "rgbaSHA256": "4b79f2b8ec06e9cd491dffd7374e93d7acfba068a5d8c0ac62b259027c8b2121",
+          "pngBytes": 5090376,
+          "retainedBytes": 1480608,
+          "memory": {
+            "rss": 358367232,
+            "heapTotal": 182255616,
+            "heapUsed": 44261680,
+            "external": 82110216,
+            "arrayBuffers": 18781892
+          },
+          "peakRssMiB": 364.40625
+        },
+        {
+          "i": 2,
+          "name": "handwriting8500",
+          "width": 578,
+          "height": 4800,
+          "rgbaSHA256": "ce5f1dcf545e39112a83dbe3d6c295a6980b07b2f22ca8e731e643614c3d113f",
+          "pngBytes": 1480822,
+          "retainedBytes": 5090376,
+          "memory": {
+            "rss": 381321216,
+            "heapTotal": 218103808,
+            "heapUsed": 91232208,
+            "external": 86900249,
+            "arrayBuffers": 11316693
+          },
+          "peakRssMiB": 383.578125
+        },
+        {
+          "i": 3,
+          "name": "problem400",
+          "width": 960,
+          "height": 15628,
+          "rgbaSHA256": "4b79f2b8ec06e9cd491dffd7374e93d7acfba068a5d8c0ac62b259027c8b2121",
+          "pngBytes": 5090376,
+          "retainedBytes": 1480822,
+          "memory": {
+            "rss": 387792896,
+            "heapTotal": 181731328,
+            "heapUsed": 43416328,
+            "external": 82109140,
+            "arrayBuffers": 18782106
+          },
+          "peakRssMiB": 433.390625
+        },
+        {
+          "i": 4,
+          "name": "handwriting8500",
+          "width": 578,
+          "height": 4800,
+          "rgbaSHA256": "bb17396cddd820e57f6bca53d767c82a13948360473229dcd9b320d25da09a9f",
+          "pngBytes": 1480575,
+          "retainedBytes": 5090376,
+          "memory": {
+            "rss": 427917312,
+            "heapTotal": 218054656,
+            "heapUsed": 146805488,
+            "external": 86898218,
+            "arrayBuffers": 11315952
+          },
+          "peakRssMiB": 433.390625
+        },
+        {
+          "i": 5,
+          "name": "problem400",
+          "width": 960,
+          "height": 15628,
+          "rgbaSHA256": "4b79f2b8ec06e9cd491dffd7374e93d7acfba068a5d8c0ac62b259027c8b2121",
+          "pngBytes": 5090376,
+          "retainedBytes": 1480575,
+          "memory": {
+            "rss": 413761536,
+            "heapTotal": 167837696,
+            "heapUsed": 30423408,
+            "external": 82108893,
+            "arrayBuffers": 18781859
+          },
+          "peakRssMiB": 487.375
+        },
+        {
+          "i": 6,
+          "name": "handwriting8500",
+          "width": 578,
+          "height": 4800,
+          "rgbaSHA256": "e4cad5fd62e405c815b8501ce6dcc743adc3a88cd8db0a07a3a6696afb0b0255",
+          "pngBytes": 1480588,
+          "retainedBytes": 5090376,
+          "memory": {
+            "rss": 345341952,
+            "heapTotal": 207355904,
+            "heapUsed": 101095232,
+            "external": 25753165,
+            "arrayBuffers": 11315987
+          },
+          "peakRssMiB": 487.375
+        },
+        {
+          "i": 7,
+          "name": "problem400",
+          "width": 960,
+          "height": 15628,
+          "rgbaSHA256": "4b79f2b8ec06e9cd491dffd7374e93d7acfba068a5d8c0ac62b259027c8b2121",
+          "pngBytes": 5090376,
+          "retainedBytes": 1480588,
+          "memory": {
+            "rss": 403161088,
+            "heapTotal": 172032000,
+            "heapUsed": 29980760,
+            "external": 82108906,
+            "arrayBuffers": 18781872
+          },
+          "peakRssMiB": 487.375
+        },
+        {
+          "i": 8,
+          "name": "handwriting8500",
+          "width": 578,
+          "height": 4800,
+          "rgbaSHA256": "ddce2aa9d5ae0508079b354e048dcdbf5b5d2e88f47788ce2f950ff57965e9d7",
+          "pngBytes": 1480784,
+          "retainedBytes": 5090376,
+          "memory": {
+            "rss": 344260608,
+            "heapTotal": 207093760,
+            "heapUsed": 101950680,
+            "external": 25753753,
+            "arrayBuffers": 11316575
+          },
+          "peakRssMiB": 487.375
+        },
+        {
+          "i": 9,
+          "name": "problem400",
+          "width": 960,
+          "height": 15628,
+          "rgbaSHA256": "4b79f2b8ec06e9cd491dffd7374e93d7acfba068a5d8c0ac62b259027c8b2121",
+          "pngBytes": 5090376,
+          "retainedBytes": 1480784,
+          "memory": {
+            "rss": 389005312,
+            "heapTotal": 172032000,
+            "heapUsed": 29557624,
+            "external": 82109102,
+            "arrayBuffers": 18782068
+          },
+          "peakRssMiB": 487.375
+        },
+        {
+          "i": 10,
+          "name": "handwriting8500",
+          "width": 578,
+          "height": 4800,
+          "rgbaSHA256": "910b47bed4cd5dce8396357dac1d684b63709df062015b2b63221ca277d3a8e5",
+          "pngBytes": 1480661,
+          "retainedBytes": 5090376,
+          "memory": {
+            "rss": 339640320,
+            "heapTotal": 185335808,
+            "heapUsed": 103463872,
+            "external": 25753384,
+            "arrayBuffers": 11316206
+          },
+          "peakRssMiB": 487.375
+        },
+        {
+          "i": 11,
+          "name": "problem400",
+          "width": 960,
+          "height": 15628,
+          "rgbaSHA256": "4b79f2b8ec06e9cd491dffd7374e93d7acfba068a5d8c0ac62b259027c8b2121",
+          "pngBytes": 5090376,
+          "retainedBytes": 1480661,
+          "memory": {
+            "rss": 377683968,
+            "heapTotal": 166526976,
+            "heapUsed": 29178024,
+            "external": 82108979,
+            "arrayBuffers": 18781945
+          },
+          "peakRssMiB": 487.375
+        }
+      ]
+    },
+    {
+      "variant": "current",
+      "rows": [
+        {
+          "i": 0,
+          "name": "handwriting8500",
+          "width": 578,
+          "height": 4800,
+          "rgbaSHA256": "f91230873c0a10cdf299ee5076de3cc9f6390d4dc28847673c5fc49f90b934f0",
+          "pngBytes": 1480608,
+          "retainedBytes": 0,
+          "memory": {
+            "rss": 197918720,
+            "heapTotal": 114442240,
+            "heapUsed": 65348680,
+            "external": 20598759,
+            "arrayBuffers": 6160331
+          },
+          "peakRssMiB": 188.765625
+        },
+        {
+          "i": 1,
+          "name": "problem400",
+          "width": 960,
+          "height": 15628,
+          "rgbaSHA256": "4b79f2b8ec06e9cd491dffd7374e93d7acfba068a5d8c0ac62b259027c8b2121",
+          "pngBytes": 5090376,
+          "retainedBytes": 1480608,
+          "memory": {
+            "rss": 329105408,
+            "heapTotal": 191692800,
+            "heapUsed": 39380992,
+            "external": 82044884,
+            "arrayBuffers": 18716560
+          },
+          "peakRssMiB": 325.140625
+        },
+        {
+          "i": 2,
+          "name": "handwriting8500",
+          "width": 578,
+          "height": 4800,
+          "rgbaSHA256": "ce5f1dcf545e39112a83dbe3d6c295a6980b07b2f22ca8e731e643614c3d113f",
+          "pngBytes": 1480822,
+          "retainedBytes": 5090376,
+          "memory": {
+            "rss": 344096768,
+            "heapTotal": 197541888,
+            "heapUsed": 93793192,
+            "external": 86900449,
+            "arrayBuffers": 11316893
+          },
+          "peakRssMiB": 328.15625
+        },
+        {
+          "i": 3,
+          "name": "problem400",
+          "width": 960,
+          "height": 15628,
+          "rgbaSHA256": "4b79f2b8ec06e9cd491dffd7374e93d7acfba068a5d8c0ac62b259027c8b2121",
+          "pngBytes": 5090376,
+          "retainedBytes": 1480822,
+          "memory": {
+            "rss": 348225536,
+            "heapTotal": 186712064,
+            "heapUsed": 38855952,
+            "external": 82045090,
+            "arrayBuffers": 18716766
+          },
+          "peakRssMiB": 409.28125
+        },
+        {
+          "i": 4,
+          "name": "handwriting8500",
+          "width": 578,
+          "height": 4800,
+          "rgbaSHA256": "bb17396cddd820e57f6bca53d767c82a13948360473229dcd9b320d25da09a9f",
+          "pngBytes": 1480575,
+          "retainedBytes": 5090376,
+          "memory": {
+            "rss": 374915072,
+            "heapTotal": 217546752,
+            "heapUsed": 135911344,
+            "external": 86898418,
+            "arrayBuffers": 11316152
+          },
+          "peakRssMiB": 409.28125
+        },
+        {
+          "i": 5,
+          "name": "problem400",
+          "width": 960,
+          "height": 15628,
+          "rgbaSHA256": "4b79f2b8ec06e9cd491dffd7374e93d7acfba068a5d8c0ac62b259027c8b2121",
+          "pngBytes": 5090376,
+          "retainedBytes": 1480575,
+          "memory": {
+            "rss": 336658432,
+            "heapTotal": 156942336,
+            "heapUsed": 19957808,
+            "external": 82043561,
+            "arrayBuffers": 18716527
+          },
+          "peakRssMiB": 409.28125
+        },
+        {
+          "i": 6,
+          "name": "handwriting8500",
+          "width": 578,
+          "height": 4800,
+          "rgbaSHA256": "e4cad5fd62e405c815b8501ce6dcc743adc3a88cd8db0a07a3a6696afb0b0255",
+          "pngBytes": 1480588,
+          "retainedBytes": 5090376,
+          "memory": {
+            "rss": 295632896,
+            "heapTotal": 185860096,
+            "heapUsed": 88196192,
+            "external": 25753361,
+            "arrayBuffers": 11316183
+          },
+          "peakRssMiB": 409.28125
+        },
+        {
+          "i": 7,
+          "name": "problem400",
+          "width": 960,
+          "height": 15628,
+          "rgbaSHA256": "4b79f2b8ec06e9cd491dffd7374e93d7acfba068a5d8c0ac62b259027c8b2121",
+          "pngBytes": 5090376,
+          "retainedBytes": 1480588,
+          "memory": {
+            "rss": 352731136,
+            "heapTotal": 156680192,
+            "heapUsed": 20044480,
+            "external": 82043574,
+            "arrayBuffers": 18716540
+          },
+          "peakRssMiB": 409.28125
+        },
+        {
+          "i": 8,
+          "name": "handwriting8500",
+          "width": 578,
+          "height": 4800,
+          "rgbaSHA256": "ddce2aa9d5ae0508079b354e048dcdbf5b5d2e88f47788ce2f950ff57965e9d7",
+          "pngBytes": 1480784,
+          "retainedBytes": 5090376,
+          "memory": {
+            "rss": 274612224,
+            "heapTotal": 186122240,
+            "heapUsed": 91951440,
+            "external": 25753949,
+            "arrayBuffers": 11316771
+          },
+          "peakRssMiB": 409.28125
+        },
+        {
+          "i": 9,
+          "name": "problem400",
+          "width": 960,
+          "height": 15628,
+          "rgbaSHA256": "4b79f2b8ec06e9cd491dffd7374e93d7acfba068a5d8c0ac62b259027c8b2121",
+          "pngBytes": 5090376,
+          "retainedBytes": 1480784,
+          "memory": {
+            "rss": 342425600,
+            "heapTotal": 157204480,
+            "heapUsed": 20074384,
+            "external": 82043762,
+            "arrayBuffers": 18716728
+          },
+          "peakRssMiB": 409.28125
+        },
+        {
+          "i": 10,
+          "name": "handwriting8500",
+          "width": 578,
+          "height": 4800,
+          "rgbaSHA256": "910b47bed4cd5dce8396357dac1d684b63709df062015b2b63221ca277d3a8e5",
+          "pngBytes": 1480661,
+          "retainedBytes": 5090376,
+          "memory": {
+            "rss": 284033024,
+            "heapTotal": 185597952,
+            "heapUsed": 88434408,
+            "external": 25753580,
+            "arrayBuffers": 11316402
+          },
+          "peakRssMiB": 409.28125
+        },
+        {
+          "i": 11,
+          "name": "problem400",
+          "width": 960,
+          "height": 15628,
+          "rgbaSHA256": "4b79f2b8ec06e9cd491dffd7374e93d7acfba068a5d8c0ac62b259027c8b2121",
+          "pngBytes": 5090376,
+          "retainedBytes": 1480661,
+          "memory": {
+            "rss": 338657280,
+            "heapTotal": 156680192,
+            "heapUsed": 20084208,
+            "external": 82043647,
+            "arrayBuffers": 18716613
+          },
+          "peakRssMiB": 409.28125
+        }
+      ]
+    },
+    {
+      "variant": "current",
+      "rows": [
+        {
+          "i": 0,
+          "name": "handwriting8500",
+          "width": 578,
+          "height": 4800,
+          "rgbaSHA256": "f91230873c0a10cdf299ee5076de3cc9f6390d4dc28847673c5fc49f90b934f0",
+          "pngBytes": 1480608,
+          "retainedBytes": 0,
+          "memory": {
+            "rss": 198148096,
+            "heapTotal": 114442240,
+            "heapUsed": 65340128,
+            "external": 20598759,
+            "arrayBuffers": 6160331
+          },
+          "peakRssMiB": 188.96875
+        },
+        {
+          "i": 1,
+          "name": "problem400",
+          "width": 960,
+          "height": 15628,
+          "rgbaSHA256": "4b79f2b8ec06e9cd491dffd7374e93d7acfba068a5d8c0ac62b259027c8b2121",
+          "pngBytes": 5090376,
+          "retainedBytes": 1480608,
+          "memory": {
+            "rss": 343130112,
+            "heapTotal": 176750592,
+            "heapUsed": 39368528,
+            "external": 82044876,
+            "arrayBuffers": 18716552
+          },
+          "peakRssMiB": 334.5625
+        },
+        {
+          "i": 2,
+          "name": "handwriting8500",
+          "width": 578,
+          "height": 4800,
+          "rgbaSHA256": "ce5f1dcf545e39112a83dbe3d6c295a6980b07b2f22ca8e731e643614c3d113f",
+          "pngBytes": 1480822,
+          "retainedBytes": 5090376,
+          "memory": {
+            "rss": 368279552,
+            "heapTotal": 217808896,
+            "heapUsed": 83562200,
+            "external": 86900449,
+            "arrayBuffers": 11316893
+          },
+          "peakRssMiB": 351.21875
+        },
+        {
+          "i": 3,
+          "name": "problem400",
+          "width": 960,
+          "height": 15628,
+          "rgbaSHA256": "4b79f2b8ec06e9cd491dffd7374e93d7acfba068a5d8c0ac62b259027c8b2121",
+          "pngBytes": 5090376,
+          "retainedBytes": 1480822,
+          "memory": {
+            "rss": 362414080,
+            "heapTotal": 188022784,
+            "heapUsed": 39083608,
+            "external": 82045090,
+            "arrayBuffers": 18716766
+          },
+          "peakRssMiB": 433.53125
+        },
+        {
+          "i": 4,
+          "name": "handwriting8500",
+          "width": 578,
+          "height": 4800,
+          "rgbaSHA256": "bb17396cddd820e57f6bca53d767c82a13948360473229dcd9b320d25da09a9f",
+          "pngBytes": 1480575,
+          "retainedBytes": 5090376,
+          "memory": {
+            "rss": 379355136,
+            "heapTotal": 217268224,
+            "heapUsed": 137514032,
+            "external": 86898418,
+            "arrayBuffers": 11316152
+          },
+          "peakRssMiB": 433.53125
+        },
+        {
+          "i": 5,
+          "name": "problem400",
+          "width": 960,
+          "height": 15628,
+          "rgbaSHA256": "4b79f2b8ec06e9cd491dffd7374e93d7acfba068a5d8c0ac62b259027c8b2121",
+          "pngBytes": 5090376,
+          "retainedBytes": 1480575,
+          "memory": {
+            "rss": 356220928,
+            "heapTotal": 156680192,
+            "heapUsed": 19950568,
+            "external": 82043561,
+            "arrayBuffers": 18716527
+          },
+          "peakRssMiB": 433.53125
+        },
+        {
+          "i": 6,
+          "name": "handwriting8500",
+          "width": 578,
+          "height": 4800,
+          "rgbaSHA256": "e4cad5fd62e405c815b8501ce6dcc743adc3a88cd8db0a07a3a6696afb0b0255",
+          "pngBytes": 1480588,
+          "retainedBytes": 5090376,
+          "memory": {
+            "rss": 374128640,
+            "heapTotal": 198246400,
+            "heapUsed": 104509472,
+            "external": 96019745,
+            "arrayBuffers": 20437479
+          },
+          "peakRssMiB": 433.53125
+        },
+        {
+          "i": 7,
+          "name": "problem400",
+          "width": 960,
+          "height": 15628,
+          "rgbaSHA256": "4b79f2b8ec06e9cd491dffd7374e93d7acfba068a5d8c0ac62b259027c8b2121",
+          "pngBytes": 5090376,
+          "retainedBytes": 1480588,
+          "memory": {
+            "rss": 356204544,
+            "heapTotal": 156942336,
+            "heapUsed": 20042616,
+            "external": 82043574,
+            "arrayBuffers": 18716540
+          },
+          "peakRssMiB": 433.53125
+        },
+        {
+          "i": 8,
+          "name": "handwriting8500",
+          "width": 578,
+          "height": 4800,
+          "rgbaSHA256": "ddce2aa9d5ae0508079b354e048dcdbf5b5d2e88f47788ce2f950ff57965e9d7",
+          "pngBytes": 1480784,
+          "retainedBytes": 5090376,
+          "memory": {
+            "rss": 300974080,
+            "heapTotal": 196345856,
+            "heapUsed": 119469264,
+            "external": 25753949,
+            "arrayBuffers": 11316771
+          },
+          "peakRssMiB": 433.53125
+        },
+        {
+          "i": 9,
+          "name": "problem400",
+          "width": 960,
+          "height": 15628,
+          "rgbaSHA256": "4b79f2b8ec06e9cd491dffd7374e93d7acfba068a5d8c0ac62b259027c8b2121",
+          "pngBytes": 5090376,
+          "retainedBytes": 1480784,
+          "memory": {
+            "rss": 356073472,
+            "heapTotal": 157204480,
+            "heapUsed": 20084960,
+            "external": 82043762,
+            "arrayBuffers": 18716728
+          },
+          "peakRssMiB": 433.53125
+        },
+        {
+          "i": 10,
+          "name": "handwriting8500",
+          "width": 578,
+          "height": 4800,
+          "rgbaSHA256": "910b47bed4cd5dce8396357dac1d684b63709df062015b2b63221ca277d3a8e5",
+          "pngBytes": 1480661,
+          "retainedBytes": 5090376,
+          "memory": {
+            "rss": 301023232,
+            "heapTotal": 186122240,
+            "heapUsed": 91233232,
+            "external": 25753580,
+            "arrayBuffers": 11316402
+          },
+          "peakRssMiB": 433.53125
+        },
+        {
+          "i": 11,
+          "name": "problem400",
+          "width": 960,
+          "height": 15628,
+          "rgbaSHA256": "4b79f2b8ec06e9cd491dffd7374e93d7acfba068a5d8c0ac62b259027c8b2121",
+          "pngBytes": 5090376,
+          "retainedBytes": 1480661,
+          "memory": {
+            "rss": 344784896,
+            "heapTotal": 156418048,
+            "heapUsed": 20140696,
+            "external": 82043647,
+            "arrayBuffers": 18716613
+          },
+          "peakRssMiB": 433.53125
+        }
+      ]
+    },
+    {
+      "variant": "previous",
+      "rows": [
+        {
+          "i": 0,
+          "name": "handwriting8500",
+          "width": 578,
+          "height": 4800,
+          "rgbaSHA256": "f91230873c0a10cdf299ee5076de3cc9f6390d4dc28847673c5fc49f90b934f0",
+          "pngBytes": 1480608,
+          "retainedBytes": 0,
+          "memory": {
+            "rss": 302465024,
+            "heapTotal": 215744512,
+            "heapUsed": 97957680,
+            "external": 20598563,
+            "arrayBuffers": 6160135
+          },
+          "peakRssMiB": 288.453125
+        },
+        {
+          "i": 1,
+          "name": "problem400",
+          "width": 960,
+          "height": 15628,
+          "rgbaSHA256": "4b79f2b8ec06e9cd491dffd7374e93d7acfba068a5d8c0ac62b259027c8b2121",
+          "pngBytes": 5090376,
+          "retainedBytes": 1480608,
+          "memory": {
+            "rss": 365428736,
+            "heapTotal": 182255616,
+            "heapUsed": 44236192,
+            "external": 82110216,
+            "arrayBuffers": 18781892
+          },
+          "peakRssMiB": 359.046875
+        },
+        {
+          "i": 2,
+          "name": "handwriting8500",
+          "width": 578,
+          "height": 4800,
+          "rgbaSHA256": "ce5f1dcf545e39112a83dbe3d6c295a6980b07b2f22ca8e731e643614c3d113f",
+          "pngBytes": 1480822,
+          "retainedBytes": 5090376,
+          "memory": {
+            "rss": 373768192,
+            "heapTotal": 219676672,
+            "heapUsed": 135102976,
+            "external": 86900249,
+            "arrayBuffers": 11316693
+          },
+          "peakRssMiB": 382.15625
+        },
+        {
+          "i": 3,
+          "name": "problem400",
+          "width": 960,
+          "height": 15628,
+          "rgbaSHA256": "4b79f2b8ec06e9cd491dffd7374e93d7acfba068a5d8c0ac62b259027c8b2121",
+          "pngBytes": 5090376,
+          "retainedBytes": 1480822,
+          "memory": {
+            "rss": 386646016,
+            "heapTotal": 180682752,
+            "heapUsed": 43430912,
+            "external": 82109140,
+            "arrayBuffers": 18782106
+          },
+          "peakRssMiB": 439.5
+        },
+        {
+          "i": 4,
+          "name": "handwriting8500",
+          "width": 578,
+          "height": 4800,
+          "rgbaSHA256": "bb17396cddd820e57f6bca53d767c82a13948360473229dcd9b320d25da09a9f",
+          "pngBytes": 1480575,
+          "retainedBytes": 5090376,
+          "memory": {
+            "rss": 402046976,
+            "heapTotal": 240861184,
+            "heapUsed": 113005496,
+            "external": 86898218,
+            "arrayBuffers": 11315952
+          },
+          "peakRssMiB": 439.5
+        },
+        {
+          "i": 5,
+          "name": "problem400",
+          "width": 960,
+          "height": 15628,
+          "rgbaSHA256": "4b79f2b8ec06e9cd491dffd7374e93d7acfba068a5d8c0ac62b259027c8b2121",
+          "pngBytes": 5090376,
+          "retainedBytes": 1480575,
+          "memory": {
+            "rss": 385302528,
+            "heapTotal": 167051264,
+            "heapUsed": 30462960,
+            "external": 82108893,
+            "arrayBuffers": 18781859
+          },
+          "peakRssMiB": 463.75
+        },
+        {
+          "i": 6,
+          "name": "handwriting8500",
+          "width": 578,
+          "height": 4800,
+          "rgbaSHA256": "e4cad5fd62e405c815b8501ce6dcc743adc3a88cd8db0a07a3a6696afb0b0255",
+          "pngBytes": 1480588,
+          "retainedBytes": 5090376,
+          "memory": {
+            "rss": 337575936,
+            "heapTotal": 193200128,
+            "heapUsed": 108563840,
+            "external": 25753165,
+            "arrayBuffers": 11315987
+          },
+          "peakRssMiB": 463.75
+        },
+        {
+          "i": 7,
+          "name": "problem400",
+          "width": 960,
+          "height": 15628,
+          "rgbaSHA256": "4b79f2b8ec06e9cd491dffd7374e93d7acfba068a5d8c0ac62b259027c8b2121",
+          "pngBytes": 5090376,
+          "retainedBytes": 1480588,
+          "memory": {
+            "rss": 396132352,
+            "heapTotal": 172818432,
+            "heapUsed": 29917728,
+            "external": 82108906,
+            "arrayBuffers": 18781872
+          },
+          "peakRssMiB": 463.75
+        },
+        {
+          "i": 8,
+          "name": "handwriting8500",
+          "width": 578,
+          "height": 4800,
+          "rgbaSHA256": "ddce2aa9d5ae0508079b354e048dcdbf5b5d2e88f47788ce2f950ff57965e9d7",
+          "pngBytes": 1480784,
+          "retainedBytes": 5090376,
+          "memory": {
+            "rss": 345669632,
+            "heapTotal": 186122240,
+            "heapUsed": 103382728,
+            "external": 25753753,
+            "arrayBuffers": 11316575
+          },
+          "peakRssMiB": 463.75
+        },
+        {
+          "i": 9,
+          "name": "problem400",
+          "width": 960,
+          "height": 15628,
+          "rgbaSHA256": "4b79f2b8ec06e9cd491dffd7374e93d7acfba068a5d8c0ac62b259027c8b2121",
+          "pngBytes": 5090376,
+          "retainedBytes": 1480784,
+          "memory": {
+            "rss": 352845824,
+            "heapTotal": 166789120,
+            "heapUsed": 29542720,
+            "external": 82109110,
+            "arrayBuffers": 18782076
+          },
+          "peakRssMiB": 463.75
+        },
+        {
+          "i": 10,
+          "name": "handwriting8500",
+          "width": 578,
+          "height": 4800,
+          "rgbaSHA256": "910b47bed4cd5dce8396357dac1d684b63709df062015b2b63221ca277d3a8e5",
+          "pngBytes": 1480661,
+          "retainedBytes": 5090376,
+          "memory": {
+            "rss": 254984192,
+            "heapTotal": 206831616,
+            "heapUsed": 103488848,
+            "external": 25753384,
+            "arrayBuffers": 11316206
+          },
+          "peakRssMiB": 463.75
+        },
+        {
+          "i": 11,
+          "name": "problem400",
+          "width": 960,
+          "height": 15628,
+          "rgbaSHA256": "4b79f2b8ec06e9cd491dffd7374e93d7acfba068a5d8c0ac62b259027c8b2121",
+          "pngBytes": 5090376,
+          "retainedBytes": 1480661,
+          "memory": {
+            "rss": 331694080,
+            "heapTotal": 173342720,
+            "heapUsed": 29198856,
+            "external": 82108979,
+            "arrayBuffers": 18781945
+          },
+          "peakRssMiB": 463.75
+        }
+      ]
+    }
+  ]
+}

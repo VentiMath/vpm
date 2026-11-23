@@ -24,6 +24,7 @@ async function worker(request){
  const {rasterize}=native?{}:require(location+'/vresvg/raster.cjs');
  const {encodePng}=native?{}:require(location+'/vresvg/raster-png.cjs');
  const {renderProblemSvg}=require(location+'/vlx/problem.cjs');
+ if(request.memory)return memoryWorker({variant,temp,location,longhandSvg,rasterize,encodePng,renderProblemSvg});
  const input=name.startsWith('handwriting')?paper(Number(name.match(/\d+/)[0]),!name.endsWith('-raw')):{statement:'Eight distinct synthetic numbers are arranged in a circular row. '.repeat(Number(name.slice(7)))};
  const start=performance.now();let svg,fitTo;
  if(name.startsWith('handwriting')){const d=longhandSvg(input);svg=d.svg;fitTo=d.height/d.width*1200>4800?{mode:'height',value:4800}:{mode:'width',value:1200};}
@@ -34,17 +35,42 @@ async function worker(request){
  const memory=process.memoryUsage(),peakRssKiB=process.resourceUsage().maxRSS;
  console.log(JSON.stringify({variant,name,layoutMs:laid-start,rasterMs:rendered-laid,pngMs:end-rendered,totalMs:end-start,peakRssKiB,memory,pngBytes:png.length,width:image.width,height:image.height,svgBytes:Buffer.byteLength(svg),svgSHA256:hash(svg)}));
 }
+async function memoryWorker({variant,longhandSvg,rasterize,encodePng,renderProblemSvg}){
+ const rows=[];let retainedPng;
+ for(let i=0;i<12;i++){
+  const handwriting=i%2===0,name=handwriting?'handwriting8500':'problem400';
+  let svg,fitTo;
+  if(handwriting){const input=paper(8500);for(const item of input.items)if(item.t==='g')item.dx=i/100;const d=longhandSvg(input);svg=d.svg;fitTo=d.height/d.width*1200>4800?{height:4800}:{width:1200};}
+  else svg=renderProblemSvg({statement:'Eight distinct synthetic numbers are arranged in a circular row. '.repeat(400)}).svg;
+  const surface=rasterize(svg,fitTo?{strict:true,...fitTo}:{}),png=encodePng(surface);
+  rows.push({i,name,width:surface.width,height:surface.height,rgbaSHA256:hash(surface.data),pngBytes:png.length,retainedBytes:retainedPng?.length||0,memory:process.memoryUsage(),peakRssMiB:process.resourceUsage().maxRSS/1024});
+  // Match sequential attachment composition: the preceding PNG remains live
+  // while the next page renders. No explicit GC or hidden heap tuning.
+  if(retainedPng)assert(retainedPng[0]===137);retainedPng=png;
+  await new Promise(resolve=>setTimeout(resolve,0));
+ }
+ console.log(JSON.stringify({variant,rows}));
+}
 async function main(){
  if(process.env.VRESVG_COLD_WORKER)return worker(JSON.parse(process.env.VRESVG_COLD_WORKER));
  const [app,ref='origin/main']=process.argv.slice(2);assert(app,'Pass app checkout and revision');
  const temp=fs.mkdtempSync(path.join(os.tmpdir(),'vresvg-cold-'));
  const command=(cmd,args,cwd=root)=>execFileSync(cmd,args,{cwd,encoding:'utf8',maxBuffer:40*1024*1024});
  try{
-  const appCommit=command('git',['rev-parse',ref],app).trim(),baselineCommit=command('git',['rev-parse','vlx-0.3.4^{commit}']).trim(),appHashes={};
+  const appCommit=command('git',['rev-parse',ref],app).trim(),baselineCommit=command('git',['rev-parse','vlx-0.3.5^{commit}']).trim(),appHashes={};
   for(const name of ['writeupPicture.ts','longhandLayout.ts']){const source=command('git',['show',appCommit+':functions/src/'+name],app);fs.writeFileSync(temp+'/'+name,source);appHashes[name]=hash(source);}
   command('bun',['build',temp+'/writeupPicture.ts','--target=node','--format=esm','--packages=external','--outfile='+temp+'/caller.mjs']);
   fs.mkdirSync(temp+'/baseline');fs.writeFileSync(temp+'/base.tar',execFileSync('git',['archive',baselineCommit,'packages/vlx','packages/vresvg','packages/vpngjs'],{cwd:root,maxBuffer:40*1024*1024}));command('tar',['-xf',temp+'/base.tar','-C',temp+'/baseline']);fs.mkdirSync(temp+'/baseline/node_modules');
   for(const n of ['vresvg','vpngjs'])fs.symlinkSync('../packages/'+n,temp+'/baseline/node_modules/'+n);
+  if(process.argv.includes('--memory')){
+   const samples=[];
+   for(const variant of ['previous','current','current','previous']){
+    const r=spawnSync(process.execPath,[...process.execArgv,__filename],{env:{...process.env,VRESVG_COLD_WORKER:JSON.stringify({variant,name:'memory',temp,memory:true})},encoding:'utf8',timeout:120000,maxBuffer:4e6});assert.ifError(r.error);assert.equal(r.status,0,r.stderr);samples.push(JSON.parse(r.stdout));
+   }
+   for(let i=0;i<12;i++)assert.equal(new Set(samples.map(s=>s.rows[i].rgbaSHA256)).size,1,'Memory stress must preserve previous pixels');
+   const result={runtime:process.versions,execArgv:process.execArgv,appCommit,appHashes,baselineCommit,method:'Four isolated workers in ABBA order. Each renders 12 alternating 8500-glyph/26000-character pages, retaining the preceding PNG as an attachment. Handwriting offsets vary per request. No forced GC. Source and app SDK bootstrap are not production memory measurements.',samples};
+   if(process.env.OUTPUT)fs.writeFileSync(process.env.OUTPUT,JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify(samples.map(s=>({variant:s.variant,peakRssMiB:Math.max(...s.rows.map(r=>r.peakRssMiB)),rssMiB:s.rows.map(r=>Math.round(r.memory.rss/1048576))})),null,2));return;
+  }
   const rows=[],orders=[['native','previous','current'],['current','previous','native'],['previous','current','native'],['native','current','previous'],['current','native','previous'],['previous','native','current']];
   const take=(variant,name)=>{
    const r=spawnSync(process.execPath,[__filename],{env:{...process.env,VRESVG_COLD_WORKER:JSON.stringify({variant,name,temp})},encoding:'utf8',timeout:120000,maxBuffer:2e6});assert.ifError(r.error);assert.equal(r.status,0,r.stderr);return JSON.parse(r.stdout);
