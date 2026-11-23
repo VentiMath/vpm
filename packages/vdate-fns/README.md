@@ -31,3 +31,26 @@ Timezone correctness depends on the host's current data. See [timezone guidance]
 [Conformance fixtures](../../scripts/date-fns-conformance/README.md) compare both upstream versions across six time zones and exercise the unchanged MUI adapter, actual Chrome picker interactions, strict TypeScript declarations and packed installs. [Benchmark results](bench/results/README.md) use isolated balanced runs and identical-source controls. Results distinguish established improvements from timing noise.
 
 Implementation provenance is recorded in [PROVENANCE.json](PROVENANCE.json). The runtime was independently written; upstream is installed only in comparison fixtures.
+
+## Consumer release
+
+```json
+{
+  "dependencies": {
+    "vdate-fns": "https://github.com/VentiMath/vpm/releases/download/vdate-fns-4.4.0/vdate-fns-4.4.0.tgz"
+  }
+}
+```
+
+Use `vdate-fns` and its matching function/locale subpaths in direct app imports.
+The package retains all exported subpaths in ESM and CommonJS. Its installed
+archive is tested through MUI's unchanged AdapterDateFns and actual picker UI.
+That third-party adapter still imports `date-fns`: its resolver must also map
+`date-fns` and every `date-fns/*` subpath to `vdate-fns`. The conformance fixture
+uses an explicit bundler alias; adopting direct imports alone does not replace
+that indirect caller. Keep the VPM package name and account for that mapping in
+both runtime bundling and type resolution when migrating the adapter.
+
+Only plain Date/en-US is supported. Current runtime timezone data is required;
+calendar-day and elapsed-hour arithmetic deliberately remain distinct. A public
+release does not assert app adoption or a complete date-fns implementation.
