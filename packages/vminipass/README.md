@@ -21,6 +21,10 @@ consumers and release their listeners. Reentrant endings complete once;
 unpipe during a write does not skip another destination. Returning a pending
 async iterator resolves its outstanding wait and removes its listeners.
 
+Flowing writes forward their single payload directly to EventEmitter, avoiding
+a rest-array/spread wrapper on every chunk. Public event dispatch and subclass
+overrides remain intact.
+
 The buffer uses a head cursor with periodic compaction. It does not repeatedly
 shift every remaining object during a directory walk. `bufferLength` counts
 objects, bytes, or string code units according to the selected mode.

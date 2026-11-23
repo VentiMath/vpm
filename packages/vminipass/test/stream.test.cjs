@@ -3,6 +3,33 @@ const test = require("node:test"),
   assert = require("node:assert/strict"),
   { EventEmitter } = require("node:events");
 const { Minipass, isStream, isReadable, isWritable } = require("../index.cjs");
+test("flowing dispatch preserves subclass overrides, payload arity and listener mutation", () => {
+  const trace = [];
+  class Observed extends Minipass {
+    emit(...args) {
+      if (args[0] === "data") trace.push(["override", args.slice(1)]);
+      return super.emit(...args);
+    }
+  }
+  const s = new Observed({ objectMode: true });
+  function second(x) { trace.push(["second", x]); }
+  s.once("data", function (x) { assert.equal(this, s); trace.push(["once", x]); s.off("data", second); });
+  s.on("data", second);
+  s.write(1);
+  s.on("data", (...args) => trace.push(["args", args]));
+  s.emit("data", undefined, 2, 3);
+  s.end(4);
+  assert.deepEqual(trace, [["override", [1]], ["once", 1], ["second", 1], ["override", [undefined, 2, 3]], ["args", [undefined, 2, 3]], ["override", [4]], ["args", [4]]]);
+});
+test("a destination can destroy the source before data dispatch", () => {
+  const s = new Minipass({ objectMode: true }), dest = new EventEmitter();
+  dest.write = () => { s.destroy(); return true; };
+  dest.end = () => {};
+  s.on("data", () => assert.fail("destroyed source must not emit data"));
+  s.pipe(dest);s.write(1);
+  assert.equal(s.destroyed, true);
+  assert.equal(dest.listenerCount("drain"), 0);
+});
 test("object queue preserves values and scales to long traversals", () => {
   const s = new Minipass({ objectMode: true });
   const values = [

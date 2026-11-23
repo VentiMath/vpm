@@ -134,7 +134,7 @@ class Minipass extends EventEmitter {
       this._flow = false;
     return this;
   }
-  emit(event, ...args) {
+  emit(event, value) {
     if (
       this._destroyed &&
       event !== "error" &&
@@ -142,13 +142,17 @@ class Minipass extends EventEmitter {
       event !== destroyedEvent
     )
       return false;
+    // The flowing path carries one chunk. Keep Node's listener semantics and
+    // dynamic emit overrides, without materializing and spreading an args array.
+    if (event === "data" && arguments.length === 2)
+      return super.emit(event, value);
     if (event === "end") {
       if (this._ended) return false;
       this._ended = true;
       this.readable = false;
       this._detachAbort();
       try {
-        return super.emit(event, ...args);
+        return super.emit(...arguments);
       } finally {
         super.removeAllListeners("end");
         super.removeAllListeners("data");
@@ -156,7 +160,7 @@ class Minipass extends EventEmitter {
     }
     if (event === "error") {
       this._hasError = true;
-      this._error = args[0];
+      this._error = value;
       if (this._signal && !this.listenerCount("error")) return false;
     }
     if (event === "close") {
@@ -167,7 +171,8 @@ class Minipass extends EventEmitter {
       }
       this._closed = true;
     }
-    const result = super.emit(event, ...args);
+    const result = arguments.length === 1 ? super.emit(event) :
+      arguments.length === 2 ? super.emit(event, value) : super.emit(...arguments);
     if (event === "error") this._finish();
     return result;
   }

@@ -1,5 +1,8 @@
 # Minipass measurements
 
+The [flowing-write follow-up](flow/README.md) supersedes the initial Bun flowing
+result below. These original samples remain available for comparison.
+
 Recorded on Node 24.22.1 and Bun 1.4.4 against Minipass 7.1.3. Each implementation
 runs in its own fresh process, with four balanced AB/BA pairs and identical-source
 controls. Validation is outside the timed blocks. The samples include stream
