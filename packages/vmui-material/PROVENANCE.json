@@ -108,7 +108,7 @@
       "ListItem",
       "CssBaseline"
     ],
-    "remainingWork": "remaining form controls; default FilledInput if needed; remaining display/navigation/overlay APIs; full Material theme creation; whole-app integration and consumer release.",
+    "remainingWork": "Named color-ramp exports and themeCssVarsAugmentation declarations for the app; full consumer verification, integration and release. The app-used palette, typography, transitions, theme assembly and CSS-variable schemes are implemented. Unobserved component families and broader Material APIs remain outside the verified scope; default FilledInput is needed only if a caller adopts it.",
     "colorHelpers": [
       "alpha",
       "darken",

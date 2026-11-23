@@ -25,7 +25,7 @@ interruption and default-transition reset, alongside the existing entrance,
 variant and lifecycle coverage. The next Motion step is a consumer
 release/integration pass for these callers. Broad gestures, dragging, layout projection, AnimatePresence, sequence
 editing, arbitrary 3D and other unobserved APIs are not a prerequisite for this
-inventory. The entire upstream Motion API is **not** complete.
+inventory. The entire upstream Motion API is **not** complete. The next Motion unit is packaging and verifying a consumer release of this app-used subset, including its pinned VPM dependency closure; actual adoption is a separate check.
 
 ## Material
 

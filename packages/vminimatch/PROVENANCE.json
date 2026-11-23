@@ -8,7 +8,7 @@
   },
   "implementation": {
     "kind": "independent",
-    "targetScope": "Current glob matching semantics for VentiMath build paths and URL/header patterns; unchanged glob 13 raw and Redocly callers, with callable CommonJS and RegExp-shaped adapters for older consumers."
+    "targetScope": "Current glob matching semantics for VentiMath build paths and URL/header patterns; unchanged glob 13 raw and historical Redocly callers, with callable CommonJS and RegExp-shaped adapters for older consumers."
   },
   "differences": [
     "Own bounded position-set interpreter and explicit extglob/path stacks; no upstream runtime matcher dependency.",

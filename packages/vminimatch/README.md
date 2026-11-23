@@ -19,7 +19,7 @@ Matching uses an independently written position-set interpreter with explicit st
 
 ## Caller compatibility
 
-The application has no direct minimatch import in the audited source. Build tools use several historical versions. Tests exercise **unchanged glob 13.0.6 raw sources** and **Redocly OpenAPI Core 1.34.10** URL/header selection with the replacement instrumented to prove it ran. Glob's default entry bundles its matcher: an ordinary dependency override cannot replace that bundled code. A future `vglob` must consume the VPM matcher directly.
+VentiMath main `2721de95` retains glob 13.0.6/minimatch 10.2.4 through rimraf, plus an older glob 10/minimatch 9 closure under Firestore/GAX. Redocly is no longer installed on that main revision; its 1.34.10 URL/header caller is retained only as a historical compatibility fixture. Tests exercise **unchanged glob 13.0.6 raw sources** and that **historical Redocly fixture**, with the replacement instrumented to prove it ran. Glob's default entry bundles its matcher: an ordinary dependency override cannot replace that bundled code. A future `vglob` must consume the VPM matcher directly.
 
 For older callers, CommonJS remains callable and segment matchers satisfy `instanceof RegExp`. Their `test`/`exec` methods use our interpreter. The legacy `makeRe` helper offers the same adapter. Its native `.source` is a dummy, **not a serializable regex**; reconstruction, string replacement and other inherited regex operations are outside this compatibility contract. Current minimatch 11 no longer exposes `makeRe` or its old `AST` API.
 

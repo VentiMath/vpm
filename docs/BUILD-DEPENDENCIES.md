@@ -125,7 +125,7 @@ adoption remain separate.
 `vminimatch` independently targets minimatch 11.0.9 and preserves the callable
 and segment-test interfaces used by older build consumers. Its runtime closure
 is `vbrace-expansion` → `vbalanced-match`. Current and historical matching
-controls, unchanged glob 13 raw file discovery, and Redocly URL/header selection
+controls, unchanged glob 13 raw file discovery, and historical Redocly URL/header selection
 are verified; [scope and evidence](../packages/vminimatch/README.md) distinguish
 matching support from unimplemented upstream introspection APIs.
 

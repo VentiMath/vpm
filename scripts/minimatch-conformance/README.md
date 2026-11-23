@@ -1,6 +1,6 @@
 # Minimatch conformance
 
-Current control: minimatch 11.0.9 (git v11.0.9, e89926755f3f79cf79f1087bd5730ed4d7eba60e). Historical controls: 5.1.9, 9.0.9 and 10.2.4. Caller controls: glob 13.0.6 and Redocly OpenAPI Core 1.34.10. All are exact dev-only dependencies with an npm lockfile.
+Current control: minimatch 11.0.9 (git v11.0.9, e89926755f3f79cf79f1087bd5730ed4d7eba60e). Historical controls: 5.1.9, 9.0.9 and 10.2.4. Caller controls: glob 13.0.6 and historical Redocly OpenAPI Core 1.34.10. Main 2721de95 retains glob through rimraf and has removed Redocly; that control remains regression evidence, not a current application caller. All are exact dev-only dependencies with an npm lockfile.
 
 `patterns.mjs` and `upstream/` are unmodified tests from that upstream tag, except the patterns file's extension. `windows-cases.json` extracts the case data from `test/unc.ts`. Their Blue Oak license is retained in `UPSTREAM-LICENSE`. None ships in the runtime archive.
 
