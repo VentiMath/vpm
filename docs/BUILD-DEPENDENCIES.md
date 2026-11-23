@@ -118,3 +118,18 @@ Unchanged minimatch 5.1.9/9.0.9/10.2.4 and glob 13.0.6 source pass matching and 
 file-enumeration comparisons with the replacement. This closes the brace
 expansion layer, not all of minimatch/glob. Consumer publication and application
 adoption remain separate.
+
+
+### File-pattern matching
+
+`vminimatch` independently targets minimatch 11.0.9 and preserves the callable
+and segment-test interfaces used by older build consumers. Its runtime closure
+is `vbrace-expansion` → `vbalanced-match`. Current and historical matching
+controls, unchanged glob 13 raw file discovery, and Redocly URL/header selection
+are verified; [scope and evidence](../packages/vminimatch/README.md) distinguish
+matching support from unimplemented upstream introspection APIs.
+
+Glob 13 embeds dependencies in its default entry. An npm override alone does not
+replace that embedded matcher; the verified fixture deliberately uses its
+published `glob/raw` source entry and instruments replacement calls. Completing
+`vminipass` and `vpath-scurry` would prepare an independent `vglob` caller.

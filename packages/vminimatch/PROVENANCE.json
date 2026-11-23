@@ -1,0 +1,21 @@
+{
+  "upstream": {
+    "name": "minimatch",
+    "version": "11.0.9",
+    "repository": "https://github.com/isaacs/minimatch",
+    "commit": "e89926755f3f79cf79f1087bd5730ed4d7eba60e",
+    "integrity": "sha512-KCFkfyjqerNlSstjlhIGNXIKZGA/6O4V4RlhZ+Dsr621SPPw0mzlypE9D9ZOoPiVefHID+j7/XuMMlqfD/F60Q=="
+  },
+  "implementation": {
+    "kind": "independent",
+    "targetScope": "Current glob matching semantics for VentiMath build paths and URL/header patterns; unchanged glob 13 raw and Redocly callers, with callable CommonJS and RegExp-shaped adapters for older consumers."
+  },
+  "differences": [
+    "Own bounded position-set interpreter and explicit extglob/path stacks; no upstream runtime matcher dependency.",
+    "Legacy RegExp-shaped segment and makeRe adapters support test/exec, not native source/flags serialization, replacement or RegExp reconstruction.",
+    "AST and upstream internal optimizer/cache classes are not provided; no whole-toolchain override or deployment is claimed.",
+    "Constructor options are copied. Work exhaustion throws RangeError rather than returning a guessed match. maxGlobstarRecursion is retained for source compatibility; the interpreter does not recurse.",
+    "Brace expansion inherits VPM's explicit output/work bounds and literal fallback for unsafe numeric ranges.",
+    "Compact ranges can return actual directory-entry casing through older glob callers where their expanded literal patterns return pattern casing."
+  ]
+}

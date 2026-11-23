@@ -1,0 +1,18 @@
+import api = require('./index.cjs');
+export default api;
+export const minimatch: typeof api;
+export const Minimatch: typeof api.Minimatch;
+export type Minimatch = api.Minimatch;
+export const GLOBSTAR: typeof api.GLOBSTAR;
+export const sep: typeof api.sep;
+export const filter: typeof api.filter;
+export const match: typeof api.match;
+export const defaults: typeof api.defaults;
+export const braceExpand: typeof api.braceExpand;
+export const escape: typeof api.escape;
+export const unescape: typeof api.unescape;
+export const makeRe: typeof api.makeRe;
+export type MinimatchOptions = api.MinimatchOptions;
+export type SegmentMatcher = api.SegmentMatcher;
+export type ParseReturn = api.ParseReturn;
+export type ParseReturnFiltered = api.ParseReturnFiltered;
