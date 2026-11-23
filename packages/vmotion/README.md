@@ -50,7 +50,11 @@ to work. This package does not supply the missing Material component families.
 The `motion-14.7.0-r2` consumer release pins both VPM dependencies to public archive
 URLs. Fresh npm/Bun installs, strict declarations and the 46 browser scenarios
 also pass against the app’s Material 7.2.0 and React 19.3.1. Actual VentiMath
-adoption and production deployment remain separate. See [installation](../../docs/INSTALLATION.md#motion).
+main-branch adoption and production deployment remain separate. The application
+reports a passing full site suite on PR #454 with r2, plus public-404 Chrome
+final-state parity; signed-in Chrome comparisons remain unverified. See
+[application evidence](../../docs/ADOPTION.md#motion-r2-application-verification)
+and [installation](../../docs/INSTALLATION.md#motion).
 
 [Conformance](../../scripts/motion-react-conformance/README.md),
 [benchmarks](bench/results/README.md) and [provenance](PROVENANCE.json) document

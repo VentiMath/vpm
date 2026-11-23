@@ -5,6 +5,23 @@ Adoption here means a VPM artifact is reachable from VentiMath's committed
 production dependencies. It does not prove that every installed module reaches
 the production bundle or that the corresponding commit has been deployed.
 
+## Motion r2 application verification
+
+The application-side report for PR #454 at `48d8d5d7` confirms installation of
+`motion-14.7.0-r2`, with CalendarAppView passing 8/8 tests, PoweredByLinks passing
+13/13 and the full site suite passing 457/457 files. Lint, typechecks and
+preflight also pass. These are reported application results, separate from the
+isolated checks run in VPM.
+
+On the public 404 page in Chrome, animated elements reach the same final state
+as upstream Motion 12.20.5, with no page errors. Signed-in pages have not been
+compared in Chrome; final-state equality does not establish identical animation
+timing or intermediate frames.
+
+GitHub confirms PR #454 is open and unmerged at that head. This establishes a
+verified adoption branch, not adoption on application main or a deployment.
+The atlas keeps its merged dependency status separate from this branch evidence.
+
 ## Dependency removal on November 18, 2026
 
 Application main `211e2186` removes styled-components, the unused Redoc API-docs
