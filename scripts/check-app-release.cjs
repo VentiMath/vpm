@@ -14,6 +14,7 @@ async function main(){
  const consumer=JSON.parse(fs.readFileSync(path.join(directory,'consumer-package.json')));
  assert.deepEqual(consumer,{dependencies:Object.fromEntries(config.direct.map(n=>[n,manifest.packages.find(p=>p.name===n).url]))});
  const files=[...manifest.packages.map(p=>p.asset),'consumer-package.json','release-manifest.json'];
+ if(family==='vmui-material')files.push('vite-aliases.json','tsconfig-paths.json');
  const sums=new Map(fs.readFileSync(path.join(directory,'SHA256SUMS'),'utf8').trim().split('\n').map(line=>{const [sum,name]=line.split('  ');return[name,sum]}));
  assert.deepEqual([...sums.keys()].sort(),files.toSorted());
  for(const name of files)assert.equal(sha(fs.readFileSync(path.join(directory,name))),sums.get(name),name);
@@ -49,6 +50,24 @@ async function main(){
    let text=fs.readFileSync(fixture+'/consumer.'+ext,'utf8');
    if(family==='vdate-fns')text=text.replace(/^import \{ AdapterDateFns \}.*\n/m,'').replace(/^new AdapterDateFns.*\n/m,'');
    fs.writeFileSync(dir+'/consumer.'+ext,text);
+  }
+  if(family==='vmui-material'){
+   const env={VPM_MATERIAL_INSTALL:dir,VPM_SYSTEM_INSTALL:dir,VPM_RELEASE_MANIFEST:path.join(directory,'release-manifest.json')};
+   fs.copyFileSync(fixture+'/archive-check.mjs',dir+'/material-check.mjs');
+   for(const runtime of ['node','bun'])process.stdout.write(run(runtime,['material-check.mjs'],dir,env));
+   process.stdout.write(run('node',[fixture+'/types.cjs',dir],dir,env));
+   // Runtime and type mappings are explicit third-party resolver configuration;
+   // package identities and direct dependencies remain VPM names.
+   const aliases=JSON.parse(fs.readFileSync(directory+'/vite-aliases.json'));
+   const paths=JSON.parse(fs.readFileSync(directory+'/tsconfig-paths.json'));
+   assert.deepEqual(Object.values(aliases).sort(),config.names.toSorted());
+   for(const targets of Object.values(paths))for(const target of targets)assert.ok(fs.existsSync(path.resolve(dir,target)),target);
+   const identity=`import {createRequire} from 'node:module';import assert from 'node:assert/strict';const r=createRequire(import.meta.url);for(const name of ${JSON.stringify(config.names)}){const inner=createRequire(r.resolve(name+'/package.json'));for(const dependency of Object.keys(inner(name+'/package.json').dependencies||{}))assert.equal(inner.resolve(dependency),r.resolve(dependency),name+' shares '+dependency);}console.log('All 22 packages share root dependency instances');`;
+   fs.writeFileSync(dir+'/identity.mjs',identity);
+   for(const runtime of ['node','bun'])process.stdout.write(run(runtime,['identity.mjs'],dir));
+   if(!published&&manager==='npm')process.stdout.write(run('node',[fixture+'/release-checks.cjs'],dir,env));
+   console.log(manager+': Material archive bytes, entries, dependency identity, strict types and SSR pass.');
+   continue;
   }
   const {compile,clean}=require('./platform-types.cjs');
   for(const bundler of [false,true])clean(compile({compilerOptions:{strict:true,noEmit:true,skipLibCheck:false,target:'ES2022',lib:['ES2022','DOM','DOM.Iterable','ES2022.Intl'],module:bundler?'ESNext':'NodeNext',moduleResolution:bundler?'Bundler':'NodeNext',types:[],typeRoots:[modules+'/@types']},files:[dir+'/consumer.mts',...(!bundler?[dir+'/consumer.cts']:[])]}));

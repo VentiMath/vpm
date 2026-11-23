@@ -1,6 +1,14 @@
 # vmui-material
 
-Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, GlobalStyles, CssBaseline, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, ListItem, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card, CardContent, CardActionArea, AvatarGroup, Tooltip, Collapse, DialogTitle, DialogContent, DialogActions, Dialog, Slide, DialogContentText, Drawer, SwipeableDrawer, Table, TableHead, TableBody, TableFooter, TableRow, TableCell, TableContainer, Autocomplete, TableSortLabel, PaginationItem, Pagination, LinearProgress, Alert, AlertTitle, Badge, ListItemButton, AppBar, Toolbar, Accordion, AccordionSummary, AccordionDetails, Tab, Tabs, Breadcrumbs, Snackbar, SnackbarContent, Stack, Grid, Rating, ClickAwayListener, Grow, Popper, Slider, Stepper, Step, StepLabel, StepContent, Fade, Unstable_TrapFocus and TablePagination, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
+Independent Material UI **9.5.0** implementation for VentiMath: **100 components**,
+public color ramps and the app-used palette, typography, transition and theme
+factories. The consumer release includes the complete 22-package VPM runtime
+closure. React and React DOM 19.3 are peers.
+
+This is an application-scoped implementation. The documented controls and theme
+APIs are supported; unused families such as default FilledInput and unobserved
+upstream options are outside its contract. See the detailed scope below and the
+[installation instructions](../../docs/INSTALLATION.md#material).
 
 ```js
 import { Button, ToggleButton, ToggleButtonGroup } from 'vmui-material';

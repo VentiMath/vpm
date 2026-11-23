@@ -867,3 +867,41 @@ Public installs verify both unchanged application picture callers with synthetic
 inputs and external services stubbed. The handwritten API covers
 `functions/src/writeupPicture.ts`, not arbitrary SVG/CSS/fonts. See its
 [scope and performance](../packages/vresvg/README.md); native resvg remains faster.
+
+## Material
+
+`vmui-material-9.5.0` packages the 100 documented controls, app-used theme
+factories and all 22 runtime dependencies. Use the release's
+`consumer-package.json` to pin the **VPM names**, including existing VPM Emotion,
+Floating UI and transition dependencies, to one coherent release closure:
+
+```json
+{
+  "dependencies": {
+    "vmui-material": "https://github.com/VentiMath/vpm/releases/download/vmui-material-9.5.0/vmui-material-9.5.0.tgz"
+  }
+}
+```
+
+The excerpt shows the main package only. Merge the complete consumer manifest
+when the app already directly installs VPM styling packages; this keeps theme
+and styling contexts shared. Internal dependencies are immutable release URLs,
+not unresolved npm package names. React and React DOM remain application peers
+on 19.3. No install-time code or upstream Material runtime is included.
+
+Migrate owned imports to `vmui-material` (and its component/styles subpaths).
+Third-party MUI X, icons and adapter code may still import original names. The
+release includes `vite-aliases.json` and `tsconfig-paths.json` for these callers;
+merge them with existing resolver configuration. They are explicit import/type
+mappings, not original-name dependency keys. Type paths assume a root tsconfig;
+adjust the relative base if needed. A Node-only consumer of such third-party
+code needs its own resolver; Vite aliases do not affect Node resolution.
+
+The current app snapshot passes typecheck and production build with the packed
+closure. App-side route review, repinning and deployment remain separate. This
+is the documented application subset, not every Material API: default
+FilledInput, custom TouchRipple props and System pre-hydration color scripts are
+outside scope. Custom nonbutton roots should set `nativeButton={false}` where
+ARIA button semantics are required; the default follows Material 9, while the
+app's old Material 7 differs. Browser evidence is Chrome, not Safari/Firefox
+certification. See [package scope](../packages/vmui-material/README.md).

@@ -589,3 +589,17 @@ unknown counts, focus containment/restoration, disabled autofocus, Fade visibili
 keyboard/filter/clear selection and scrollable learner Tabs. Exact archive checks
 include both fixtures. Strict type consumers preserve React content in System
 style intersections and typed styled variants, with negative inference checks.
+
+## Consumer release gate
+
+`pack-app-release.cjs --family vmui-material` packs a committed snapshot and
+pins the complete VPM closure. `check-app-release.cjs <directory>` verifies
+archive bytes, CJS/ESM exports, strict types, dependency identity and every
+component contract on Node/Bun, then serially runs the production Chrome suite
+and representative development checks. `--published` additionally downloads
+all public assets, compares their checksums and repeats ordinary fresh/frozen
+npm and Bun installs, entries, types, identity and SSR. Before publication, Bun
+uses frozen peer installation and exact archive extraction because its resolver
+does not honor unpublished URL overrides; public URL resolution is verified
+after publication. The separate private-app snapshot audit remains opt-in and
+does not modify the application repository or deploy it.

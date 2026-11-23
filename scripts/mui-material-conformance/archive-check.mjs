@@ -63,13 +63,17 @@ const text = renderToString(React.createElement(React.Fragment, null,
   React.createElement(api.createSvgIcon(React.createElement("path", {d:"M1 1h20v20H1z"}),"Contest"), {titleAccess: "Contest icon"})));
 assert.match(text, /<h2/);assert.match(text, /href="\/contest"/);assert.match(text, /<title>Contest icon<\/title>/);
 const seen = new Set();
+const release = process.env.VPM_RELEASE_MANIFEST
+  ? JSON.parse(fs.readFileSync(process.env.VPM_RELEASE_MANIFEST)) : null;
 function check(name) {
   if (seen.has(name)) return;
   seen.add(name);
   for (const [dep, version] of Object.entries(
     require(name + "/package.json").dependencies || {},
   )) {
-    assert.ok(version.startsWith("file:"), dep);
+    if (release) {
+      assert.equal(version, release.packages.find(p => p.name === dep)?.url, dep);
+    } else assert.ok(version.startsWith("file:"), dep);
     check(dep);
   }
 }
