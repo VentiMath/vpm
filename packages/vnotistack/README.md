@@ -72,12 +72,28 @@ packages. Node identity survives parent re-renders; unmount cancels pending time
 
 [Benchmarks](bench/results/README.md) record isolated SSR work with balanced order
 and identical-source controls. They do not measure browser animation or establish
-an application speedup. The implementation is built and tested; no public release
-or VentiMath adoption is claimed. A consumer release must pin all internal VPM
-dependencies to its published artifacts.
+an application speedup. Consumer archives pin all internal VPM dependencies to immutable release URLs.
+Publication is separate from VentiMath adoption.
 
 Empty providers skip anchor grouping until the first notification. Constructor
 validation and the context API remain active; the final empty-provider SSR
 measurements show no established difference from upstream on Node or Bun.
 
 Undefined optional values now inherit provider settings/defaults, while explicit null, zero and false retain their documented meaning.
+
+## Consumer release
+
+The `vnotistack-3.0.2` release contains `vnotistack` and its complete VPM runtime
+closure. React and React DOM 19.3 remain application peers.
+
+```json
+{
+  "dependencies": {
+    "vnotistack": "https://github.com/VentiMath/vpm/releases/download/vnotistack-3.0.2/vnotistack-3.0.2.tgz"
+  }
+}
+```
+
+Use `vnotistack` imports for the provider and hooks. No upstream-name alias or
+VPM dependency overrides are needed. Verify the app's notification styling and
+actions during adoption; the documented custom-transition exclusions still apply.
