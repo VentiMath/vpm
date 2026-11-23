@@ -5,6 +5,39 @@ Adoption here means a VPM artifact is reachable from VentiMath's committed
 production dependencies. It does not prove that every installed module reaches
 the production bundle or that the corresponding commit has been deployed.
 
+## VLX 0.3.2 application verification
+
+The application-side report for PR #455 at `b7d73475` verifies the 0.3.2 release
+assets against SHA256SUMS. GitHub confirms the PR is open and changes only the
+frontend and Functions manifests and lockfiles. Its actual manifest changes are
+frontend 0.3.1 → 0.3.2 and Functions 0.2.3 → 0.3.2; the reported rendering
+comparison uses 0.2.3 as its control.
+
+For 1,260 real problem statements, including 156 with choices, the report finds
+byte-identical `renderDocument` HTML and identical problem PNG dimensions.
+PNG differences are reported as antialiasing: a median 6.1% of pixels differ,
+at most 10.5%, with no channel differing by more than 96/255. One statement
+errors in both versions. This does not claim byte-identical PNGs or error-free
+rendering of every source statement.
+
+The combined Node HTML-plus-PNG workload takes **24.6 seconds versus 12.8
+seconds**, about **1.92× the time**. This is an application-reported regression,
+not a separated measurement of HTML rendering, rasterization or PNG encoding.
+Profiling those stages on the same corpus remains a follow-up; earlier synthetic
+raster benchmarks do not supersede this result.
+
+A deploy-style npm installation of Functions succeeds and renders. Chrome on
+a real problem page shows 44 math elements without page errors; copying the
+statement produces TeX with delimiters. Lint, both typechecks and preflight pass,
+as do Functions' 193/193 and the site's 457/457 test files. These are reported
+branch checks, not a confirmed merge or production deployment.
+
+**resvg remains an application dependency.** VLX 0.3.2 owns its problem-picture
+rasterization, but `functions/src/writeupPicture.ts` still calls
+`@resvg/resvg-js` for handwritten writeup SVGs. That import was independently
+confirmed in application source. Repinning VLX does not eliminate this caller or
+its native platform binaries; the atlas must keep them outstanding.
+
 ## Motion r2 application verification
 
 The application-side report for PR #454 at `48d8d5d7` confirms installation of

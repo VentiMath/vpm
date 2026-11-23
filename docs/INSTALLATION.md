@@ -308,9 +308,11 @@ complete visual acceptance. **0.2.3** typesets bounded `itemize`/`enumerate`
 lists in problem pictures and preserves apostrophes/closing quotes across inline
 math boundaries. These are presentation fixes; source records are unchanged.
 
-VentiMath's verified main pins 0.2.3 for frontend math and Discord pictures.
-Upgrading both URL pins and the lockfile remains application-side work. After
-repinning Functions, its direct resvg dependency can be removed if no other caller needs it.
+VentiMath PR #455 at `b7d73475` pins 0.3.2 in the site and Functions; it remains
+open. Its [application verification](ADOPTION.md#vlx-032-application-verification)
+includes a passing deploy-style install and rendering comparison, with a reported
+Node HTML-plus-PNG slowdown. Keep Functions' direct `@resvg/resvg-js` dependency:
+`functions/src/writeupPicture.ts` still needs it for handwritten writeup pictures.
 
 An npm registry mirror is planned for the same implementation and versioned API,
 including its licenses and provenance. GitHub Release archives remain the current

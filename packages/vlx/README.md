@@ -9,6 +9,11 @@ selector or KaTeX/MathJax fallback.
 **Adopted in VentiMath frontend source.** Application main `e14f4023` pins 0.2.3
 and imports the shared `vlx/react` components. Deployed-version verification is
 separate; see the [adoption record](../../docs/ADOPTION.md).
+Application PR #455 verifies 0.3.2 on the frontend and in Functions, with passing
+site/Functions suites and a 1,260-statement comparison. The combined Node
+HTML-plus-PNG workload is 1.92× slower than 0.2.3 in that report; its cause has
+not been isolated. The PR remains open. See
+[current branch evidence](../../docs/ADOPTION.md#vlx-032-application-verification).
 
 In the supplied November 3 production
 snapshot, all **99,184 formulas accepted by the app's KaTeX 0.16.38 baseline**
@@ -175,7 +180,9 @@ resvg along edges; the tests check dimensions, ink placement, thin rules, holes,
 colors, transparency and embedded figures rather than byte-identical PNGs.
 
 **Release 0.3.0:** includes the owned PNG renderer and pins its VPM figure
-decoder. VentiMath's existing 0.2.3 pin still requires resvg until adoption.
+decoder; 0.3.2 retains it. VentiMath PR #455 moves problem pictures off the
+native-backed 0.2.3 release. The application still needs resvg separately for
+handwritten writeup pictures in `functions/src/writeupPicture.ts`.
 See the [optimized measurements](bench/raster-optimized/README.md).
 
 ## Automatic equation references (0.2.0)

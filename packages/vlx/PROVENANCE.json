@@ -50,7 +50,7 @@
   ],
   "acceptance": {
     "status": "pending",
-    "remainingWork": "Actual VoiceOver/Safari and NVDA/Chrome speech/navigation checks and WebKit/Firefox visual acceptance. VentiMath frontend and Discord problem pictures consume VLX0.2.3 on audited main; source follow-ups still require a separate release and repin. Adopt VLX 0.3.2 for owned PNG rasterization and structural selection copying; private source benchmark results do not establish production latency.",
+    "remainingWork": "Actual VoiceOver/Safari and NVDA/Chrome speech/navigation checks and WebKit/Firefox visual acceptance. Open VentiMath PR455 at b7d73475 verifies VLX 0.3.2 with reported site 457/457 and Functions 193/193 files passing, byte-identical HTML and unchanged PNG dimensions on 1,260 statement comparisons; one source errors in both versions. Combined Node HTML-plus-PNG time is 24.6 s versus 12.8 s on 0.2.3: isolate and address this reported regression. Merge/deployment remain separate. The app retains resvg for writeupPicture.ts; VLX only replaces its own generated problem-picture rasterization.",
     "scopeLimits": "Arbitrary TeX packages and advanced macro programming are outside the verified application scope. Equation references are document-scoped; cross-document references and arbitrary TeX counters are not implemented."
   },
   "rasterizer": {
