@@ -121,7 +121,14 @@ function rasterize(svg,{width:requestedWidth,height:requestedHeight,zoom,backgro
   if(tag==='g'||tag==='a'){if(!self)stack.push(state);continue;}
   if(tag==='image'){image(attrs,state.matrix,surface,budget);continue;}
   const m=state.matrix,scale=Math.max(Math.hypot(m[0],m[1]),Math.hypot(m[2],m[3]));if(!scale)continue;const tolerance=.025/scale;let contours;
-  if(tag==='path')contours=path.flatten(attrs.d||'',tolerance,budget);
+  if(tag==='path'){
+   // Only this path's geometry is retained for drawing. A cumulative point
+   // ceiling incorrectly rejects long pages of small glyphs. Keep the same
+   // per-path allocation limit, and charge every instance (including cached
+   // and invisible paths) to the request's cumulative work budget instead.
+   budget.points=0;contours=path.flatten(attrs.d||'',tolerance,budget);
+   budget.work+=budget.points;if(budget.work>300000000)throw new VlxError('LIMIT','Raster sampling budget exceeded');
+  }
   else if(tag==='rect'){const x=number(attrs.x),y=number(attrs.y),w=attrs.width==='100%'?viewBox[2]:number(attrs.width),h=attrs.height==='100%'?viewBox[3]:number(attrs.height);if(w<=0||h<=0)continue;contours=[{closed:true,points:[[x,y],[x+w,y],[x+w,y+h],[x,y+h]]}];}
   else {const cx=number(attrs.cx),cy=number(attrs.cy),rx=number(attrs.rx),ry=number(attrs.ry);if(rx<=0||ry<=0)continue;contours=[{closed:true,points:path.circle(0,0,Math.max(rx,ry),tolerance).map(([x,y])=>[cx+x*rx/Math.max(rx,ry),cy+y*ry/Math.max(rx,ry)])}];}
   const fill=color(state.fill,state.color),stroke=color(state.stroke,state.color);

@@ -264,11 +264,11 @@ node scripts/check-dnd-release.cjs /absolute/path/to/output --published
 ## VLX math rendering
 
 **VentiLaTeX (VLX)**, pronounced **“Vee Ell Ex,”** is VentiMath's independent math
-renderer. The [VLX release](https://github.com/VentiMath/vpm/releases/tag/vlx-0.3.3)
+renderer. The [VLX release](https://github.com/VentiMath/vpm/releases/tag/vlx-0.3.4)
 provides its `vlx` package for frontend math and backend pictures:
 
 ```sh
-bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.3.3/vlx-0.3.3.tgz
+bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.3.4/vlx-0.3.4.tgz
 ```
 
 Import browser rendering from `vlx` and its optional DOM lifecycle from `vlx/dom`.
@@ -309,22 +309,20 @@ complete visual acceptance. **0.2.3** typesets bounded `itemize`/`enumerate`
 lists in problem pictures and preserves apostrophes/closing quotes across inline
 math boundaries. These are presentation fixes; source records are unchanged.
 
-VentiMath PR #455 now upgrades only the site to 0.3.2. Functions remains on 0.2.3
-because 0.3.2 rejects an ordinary 9,750-character problem page. **Use 0.3.3 for
-the Functions cutover.** It fixes raster work accounting without increasing the
-300-million guard: the reported 960 × 5,898 page and a larger 960 × 11,736 page
-pass through the unchanged app caller on Node/Bun. Its layout and pixels are
-unchanged. The [earlier application verification](ADOPTION.md#vlx-032-application-verification)
-and its reported Node rendering slowdown remain relevant; this release makes
-no performance-parity claim. After adopting corrected VLX, the app can separately
-replace the handwritten-page `@resvg/resvg-js` pin with the released `vresvg`
-archive described below.
+VentiMath reports PR #455 at `6e9e0721` uses 0.3.3 for both site and Functions,
+but the backend review found a geometry-limit failure at 26,000 characters.
+**Use 0.3.4 for the Functions cutover.** It bounds geometry per live path and
+charges each instance to the same 300-million total work ceiling. The reported
+960 × 15,628 page and an exact 8,192-item page pass with unchanged pixels.
+The [earlier application verification](ADOPTION.md#vlx-032-application-verification)
+and reported Node slowdown remain relevant; no performance-parity claim is made.
+Update the handwritten-page `vresvg` pin to the sibling archive below as well.
 
 An npm registry mirror is planned for the same implementation and versioned API,
 including its licenses and provenance. GitHub Release archives remain the current
 installation source; the npm mirror has not been published.
 
-VLX is an original API, so **0.3.3 is its own version**, not a claim of KaTeX or
+VLX is an original API, so **0.3.4 is its own version**, not a claim of KaTeX or
 MathJax version compatibility. The app must adapt its rendering calls rather than
 aliasing those packages to VLX. Keep existing legacy source normalization, list
 handling, figure descriptions and text-on-error behavior. See the
@@ -335,13 +333,13 @@ Commit the app's package.json and bun.lock together and use
 it does not change or deploy the application. Actual reader/browser acceptance
 remains recorded separately from the automated Chrome checks.
 
-The release includes `vlx-0.3.3.tgz`, `vresvg-2.6.2.tgz`, `vpngjs-7.0.0.tgz`,
+The release includes `vlx-0.3.4.tgz`, `vresvg-2.6.2.tgz`, `vpngjs-7.0.0.tgz`,
 `consumer-package.json`, `release-manifest.json` and `SHA256SUMS`. The manifest
 records the committed source and exact archive/source hashes. Assets are
 immutable; revisions get new tags and URLs.
 
 ```sh
-node scripts/pack-vlx-release.cjs --ref COMMIT_SHA --tag vlx-0.3.3 --out /absolute/path/to/empty-output
+node scripts/pack-vlx-release.cjs --ref COMMIT_SHA --tag vlx-0.3.4 --out /absolute/path/to/empty-output
 node scripts/check-vlx-release.cjs /absolute/path/to/output
 # After publication:
 node scripts/check-vlx-release.cjs /absolute/path/to/output --published
@@ -349,7 +347,7 @@ node scripts/check-vlx-release.cjs /absolute/path/to/output --published
 
 The local checker uses npm's dependency override and Bun's exact extracted
 archives before public URLs exist. The published checker installs the VLX
-URL plus explicit React test peers with fresh npm/Bun caches and no overrides, verifies both packages against
+URL plus explicit React test peers with fresh npm/Bun caches and no overrides, verifies all three packages against
 the manifest, checks frozen installs, CJS/ESM, TypeScript 7 browser consumers,
 and a browser build without Node/native/image engines. It runs the Chrome visual,
 keyboard and accessibility-tree suite against the installed archive itself.
@@ -778,13 +776,13 @@ upstream `@resvg/resvg-js`; it contains no native resvg addon or platform binari
 The version 2.6.2 identifies the API baseline, not reused upstream implementation.
 
 For the Functions problem-picture and handwritten-page cutover together, use
-these two packages from [VLX 0.3.3](https://github.com/VentiMath/vpm/releases/tag/vlx-0.3.3):
+these two packages from [VLX 0.3.4](https://github.com/VentiMath/vpm/releases/tag/vlx-0.3.4):
 
 ```json
 {
   "dependencies": {
-    "vlx": "https://github.com/VentiMath/vpm/releases/download/vlx-0.3.3/vlx-0.3.3.tgz",
-    "vresvg": "https://github.com/VentiMath/vpm/releases/download/vlx-0.3.3/vresvg-2.6.2.tgz"
+    "vlx": "https://github.com/VentiMath/vpm/releases/download/vlx-0.3.4/vlx-0.3.4.tgz",
+    "vresvg": "https://github.com/VentiMath/vpm/releases/download/vlx-0.3.4/vresvg-2.6.2.tgz"
   }
 }
 ```
@@ -796,8 +794,9 @@ vpngjs, all VPM packages. Their internal release URLs are pinned; no registry
 lookup or override is required.
 
 Make the Functions upgrade atomic: VLX 0.2.3 still needs the upstream native
-renderer, and 0.3.2 rejects a valid long page. Version 0.3.3 corrects that rejection
-without raising the work limit. The separate earlier `resvg-2.6.2` release remains
+renderer. Versions 0.3.2 and 0.3.3 reject valid long pages at different raster
+limits. Version 0.3.4 corrects the geometry accounting while retaining a bounded
+path allocation and cumulative work limit. The separate earlier `resvg-2.6.2` release remains
 immutable and usable as a compatibility alias, but retaining upstream resvg code
 is not part of the intended cutover.
 

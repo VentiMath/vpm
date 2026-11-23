@@ -19,3 +19,16 @@ test('a larger ordinary page and equivalent ordered text parts retain their full
  // An empty or truncated lower half must not count as a successful page.
  assert(png.data.subarray((png.height-100)*png.width*4).some((v,i)=>i%4!==3&&v<128));
 });
+test('26000 characters and the full 8192-item boundary preserve all page pixels',()=>{
+ for(const [statement,height,svgLength,digest] of [
+  [phrase.repeat(400),15628,12121096,'4b79f2b8ec06e9cd491dffd7374e93d7acfba068a5d8c0ac62b259027c8b2121'],
+  [phrase.repeat(409)+'x '.repeat(6),15978,12399185,'a0ef232fcb86eac64b7a00e48ba5316e0bb601673750a68a7d8e6861bc763fdc'],
+ ]){
+  const page=renderProblemSvg({statement});assert.equal(page.width,960);assert.equal(page.height,height);assert.equal(page.svg.length,svgLength);
+  const png=PNG.sync.read(renderProblemPng({statement}));assert.equal(png.width,960);assert.equal(png.height,height);
+  // Derived from 0.3.3 with only its cumulative geometry counter reset per
+  // path in an isolated reference. No limit is disabled by shipping tests.
+  assert.equal(createHash('sha256').update(png.data).digest('hex'),digest);
+ }
+ assert.throws(()=>renderProblemSvg({statement:phrase.repeat(409)+'x '.repeat(7)}),{code:'LIMIT',message:'Problem has too many layout items'});
+});

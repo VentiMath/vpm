@@ -7,19 +7,19 @@ the production bundle or that the corresponding commit has been deployed.
 
 ## VLX 0.3.2 application verification
 
-**Updated November 23:** the app-side review reproduced a 0.3.2 work-budget
-failure for a synthetic 9,750-character statement. PR #455 now upgrades only
-the site; Functions remains on 0.2.3. The older branch results below are retained
-as evidence, not a claim that the Functions cutover is ready.
+**Updated November 23:** the app reports PR #455 at `6e9e0721` uses VLX 0.3.3
+for site and Functions, with `vresvg` replacing native resvg. Its site-side review
+is approved; backend acceptance is blocked by a second large-page regression:
+26,000 characters / 8,000 layout items exceed the cumulative geometry counter,
+while fitting the app's text, layout, pixel and SVG limits.
 
-VLX 0.3.3 uses the shared vresvg engine's active-edge accounting. The reported
-960 × 5,898 page passes with the same decoded glyph pixels, and 140-, 150-,
-160- and 300-repetition pages pass through the unchanged `problemPost` caller
-at `b7d73475` on Node and Bun with a synthetic store and no network. The work
-ceiling stays at 300 million; a dense active-edge regression still fails closed.
-VLX 0.3.3 is published: fresh public-URL npm/Bun installs, exact hashes, React,
-browser, types and large-page checks pass. Application repinning remains separate.
-This corrects acceptance, not the reported timing gap below.
+VLX 0.3.4 bounds live-path geometry separately and charges each path instance
+to the cumulative 300-million work limit. The reported page and an exact
+8,192-layout-item boundary pass with reference-identical RGBA pixels. The
+unchanged `problemPost` at `6e9e0721` passes six synthetic pages on Node/Bun;
+external services are stubbed. Cached/invisible paths still consume work and
+oversized individual paths still reject. App repinning, review, merge and
+deployment remain separate. This does not resolve the performance gap below.
 
 The earlier application-side report for PR #455 at `b7d73475` verifies the 0.3.2 release
 assets against SHA256SUMS. GitHub confirms the PR is open and changes only the
@@ -183,14 +183,18 @@ alias, CJS/ESM, Node/Bun PNGs and TS7 checks passed. The unchanged writeup calle
 at app `f79f2ffe` passes its two tests and 18 synthetic page cases on Bun and
 Node-targeted transpilation. No private handwriting or app source is published.
 
-Application adoption is pending. Use this alongside or after the corrected VLX
-0.3.3 upgrade; 0.3.2 has a reproduced long-page work-limit failure and the app
-has held its Functions cutover. VLX 0.2.3 still depends on native resvg's broader API. No rendering-option change is needed. Prefer a direct `vresvg` dependency and
-import when removing upstream `@resvg/resvg-js`; the old import-name alias is
-only a compatibility option. The atlas marks the package
-built and the native artifacts avoidable, without claiming installed adoption.
+The app reports both image callers use VPM in PR #455 at `6e9e0721`, with no
+native resvg dependency, but backend approval is blocked by VLX 0.3.3's geometry
+accounting. Use both 0.3.4 release pins for the fix. No rendering-option change
+is needed. Merge and deployment have not been verified.
 
-Curved synthetic pages take 91.6 ms versus native 12.1 ms on Node and 177.5 ms
-versus 12.1 ms on Bun. Native font discovery was disabled for a fair rendering
+App-side single-call measurements on synthetic 1,200 / 4,300 / 8,500-glyph
+handwritten pages were 0.52 / 1.59 / 2.35 seconds on Node 24 versus native
+0.09 / 0.29 / 0.42 seconds with font discovery disabled. Peak memory was
+GC-sensitive; deployed function memory/load were not verified. These are
+reported observations, not balanced-process benchmarks or a proven OOM.
+
+Fresh isolated-process curved-page measurements take 87.8 ms versus native
+11.6 ms on Node and 83.1 ms versus 11.6 ms on Bun. Native font discovery was disabled for a fair rendering
 comparison. This release removes the native dependency; it is not a speedup.
 [Full measurements](../packages/vresvg/bench/README.md).

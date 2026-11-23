@@ -1,7 +1,7 @@
 'use strict';
 const assert=require('node:assert/strict'),fs=require('node:fs');
 const {Resvg:Control}=require('../vlx-conformance/node_modules/@resvg/resvg-js');
-const {Resvg}=require('../../packages/vresvg');
+const {Resvg}=require(process.env.VPM_RESVG_PACKAGE_DIR||'../../packages/vresvg');
 const {paper}=require('./fixtures.cjs');
 const {PNG}=require('../../packages/vpngjs');
 const results=[];

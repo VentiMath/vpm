@@ -1,7 +1,11 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict');
-const {Resvg,RasterError}=require('..');
-const {PNG}=require('../../vpngjs');
+const {createRequire}=require('node:module'),path=require('node:path');
+const consumer=process.env.VPM_VLX_CONSUMER&&createRequire(path.join(process.env.VPM_VLX_CONSUMER,'package.json'));
+const {Resvg,RasterError}=consumer?consumer('vresvg'):require('..');
+const {PNG}=consumer?consumer('vpngjs'):require('../../vpngjs');
+const raster=()=>consumer?consumer('vresvg/internal-raster'):require('../raster.cjs');
+const paths=()=>consumer?consumer('vresvg/internal-paths'):require('../raster-paths.cjs');
 const svg=body=>`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 20">${body}</svg>`;
 const dot=(image,x,y)=>PNG.sync.read(image.asPng()).data[(y*image.width+x)*4+3];
 test('viewBox-only paper, UTF-8 input, width/height/zoom and PNG roundtrip',()=>{
@@ -39,7 +43,18 @@ test('extreme round joins stop before subdivision can grow without a bound',()=>
 });
 
 test('simultaneously active dense geometry still trips the unchanged work guard',()=>{
- const {rasterize}=require('../raster.cjs');
+ const {rasterize}=raster();
  const paths=Array.from({length:20000},(_,i)=>{const y=.1+i/50000;return `M0 ${y}L1 ${y+.25}L2 ${y}Z`;}).join(' ');
  assert.throws(()=>rasterize(`<svg width="3" height="1"><path d="${paths}"/></svg>`),{code:'LIMIT',message:'Raster sampling budget exceeded'});
+});
+
+test('streamed paths have bounded live geometry and cumulative work, even without paint',()=>{
+ const {rasterize}=raster(),{flatten}=paths();
+ const d='M0 0C0 20 20 20 20 0Z',svg=body=>`<svg width="25" height="25" viewBox="0 0 .001 .001">${body}</svg>`;
+ const element=`<path d="${d}" fill="none"/>`,budget={points:0};flatten(d,.000001,budget);assert.equal(budget.points,8193);
+ // A page may stream more than 2m points; the cache must not bypass accounting.
+ assert.equal(rasterize(svg(element.repeat(300))).data.some(Boolean),false);
+ assert.throws(()=>rasterize(svg(`<path d="${d.repeat(300)}" fill="none"/>`)),{code:'LIMIT',message:'Raster geometry budget exceeded'});
+ assert.throws(()=>rasterize(svg(element.repeat(Math.floor(300000000/budget.points)+1))),{code:'LIMIT',message:'Raster sampling budget exceeded'});
+ assert.equal(rasterize(svg(element)).width,25,'a failed request does not poison the next budget');
 });

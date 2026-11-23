@@ -28,7 +28,10 @@ addon, platform binary or font discovery is used. The `internal-*` exports serve
 VLX and are not a public SVG contract. VLX retains its own error type.
 
 Limits bound source length (32 Mi characters), pixel area (16,777,216), dimensions
-(16,384), nesting, flattened points, stroke geometry and sampling work. Raster
+(16,384), nesting, two million flattened points per live path, stroke geometry
+and 300 million cumulative work units. Every path instance consumes work, even
+when its geometry is cached or it has no visible paint. The per-path allocation
+limit does not accumulate across independently drawn glyphs. Raster
 edges are antialiased; PNG bytes need not match native resvg. Tests compare
 output dimensions and ink, not just whether rendering succeeds.
 
@@ -41,16 +44,15 @@ No private source or student handwriting is included in this package.
 
 ## VentiMath installation
 
-[Release resvg-2.6.2](https://github.com/VentiMath/vpm/releases/tag/resvg-2.6.2)
-ships immutable archives with its VPM dependency pinned. Functions can retain
-its `@resvg/resvg-js` imports and set that dependency to:
+Use the updated `vresvg` archive accompanying [VLX 0.3.4](https://github.com/VentiMath/vpm/releases/tag/vlx-0.3.4):
 
 ```text
-https://github.com/VentiMath/vpm/releases/download/resvg-2.6.2/vresvg-2.6.2.tgz
+https://github.com/VentiMath/vpm/releases/download/vlx-0.3.4/vresvg-2.6.2.tgz
 ```
 
-Adopt alongside or after VLX 0.3.2. VLX 0.2.3 still needs the broader native
-renderer for problem pictures and must not be redirected to this handwriting
-subset. The app's direct writeup call needs no new settings. Fresh npm/Bun
-public-URL installs, source hashes, Node/Bun rendering and TS7 checks pass.
-Application adoption and production deployment remain separate.
+Its package version identifies the upstream API baseline; the release URL
+identifies this implementation revision. Update the VLX and direct `vresvg`
+pins together. Remove upstream `@resvg/resvg-js` and use `import { Resvg } from
+'vresvg'` for handwriting. No rendering-option change is needed. VLX 0.2.3 still
+needs the broader native renderer, so make the Functions cutover atomic.
+Application review, merge and production deployment remain separate.

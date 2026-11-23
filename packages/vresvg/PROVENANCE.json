@@ -21,6 +21,7 @@
   "verification": {
     "pixelControls": "66 synthetic paper/pen cases on Node/Bun; 18 additional synthetic pages through unchanged private app layout/caller, with no student data exported.",
     "existingVlxDrawings": 1800,
-    "specification": "https://www.w3.org/TR/SVG2/painting.html#LineCaps"
+    "specification": "https://www.w3.org/TR/SVG2/painting.html#LineCaps",
+    "geometryBounds": "Two-million flattened points per live path; every path instance, cached or invisible, is charged to the cumulative 300-million work budget. Exact pixels checked on 26000-character and 8192-item VLX pages; huge paths and excessive total work still reject."
   }
 }

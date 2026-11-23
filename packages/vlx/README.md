@@ -172,16 +172,16 @@ native addon, system font or external image lookup is required.
 `renderPng(renderer, tex, {scale: 2, background: 'white'})` remains available from
 `vlx/png`; page methods retain the API shown above.
 
-**0.3.3 corrects the 0.3.2 work-budget rejection of ordinary long Discord pages.**
-The shared scan converter charges active edges on each row and the spans it
-actually fills, rather than charging every edge across the entire glyph height.
-The 300-million work ceiling and pixel, SVG, image and geometry limits remain.
-A 9,750-character synthetic page now renders at 960 × 5,898, with identical
-pixels to the prior scan conversion; a 19,500-character page also passes.
-Dense simultaneous geometry still rejects before unbounded sampling work.
-The page layout and browser output are unchanged. This is an acceptance fix,
-not a claim to close the reported speed gap with native resvg.
-
+**0.3.4 corrects the geometry-budget rejection of long Discord pages.**
+Geometry is bounded per live path (two million flattened points), while each
+path instance also consumes the cumulative 300-million work budget. Reused and
+invisible paths are charged too. The 26,000-character synthetic statement now
+renders at 960 × 15,628, and an exact 8,192-layout-item page renders at
+960 × 15,978. Both retain the reference RGBA pixels; oversized individual
+paths and excessive total work still reject. Text, layout-item, SVG, pixel and
+image limits are unchanged. This builds on 0.3.3's active-edge work accounting.
+Browser output is unchanged. This is an acceptance fix, not a claim to close
+the speed gap with native resvg.
 
 This rasterizer accepts only VLX's own generated drawing vocabulary. It is not
 an implementation of resvg's general SVG, CSS or font API. Fixed font outlines
@@ -190,12 +190,11 @@ explicitly. Vector and browser output are unchanged. Antialiasing differs from
 resvg along edges; the tests check dimensions, ink placement, thin rules, holes,
 colors, transparency and embedded figures rather than byte-identical PNGs.
 
-**Release 0.3.0:** includes the owned PNG renderer and pins its VPM figure
-decoder; 0.3.2 retains it. VentiMath PR #455 moves problem pictures off the
-native-backed 0.2.3 release. The application retains resvg separately for
-handwritten writeup pictures in `functions/src/writeupPicture.ts`. The new
-`vresvg` package covers that caller; its application repin remains separate.
-See the [optimized measurements](bench/raster-optimized/README.md).
+VentiMath reports PR #455 at `6e9e0721` has switched both image callers to VLX
+and `vresvg`, but its backend review is blocked by the 0.3.3 geometry limit.
+Repinning both packages to the 0.3.4 release carries the fix. Merge and deployment
+remain app-side steps. See the [installation pins](../../docs/INSTALLATION.md#handwritten-writeup-pictures)
+and [measurements](bench/raster-optimized/README.md).
 
 ## Automatic equation references (0.2.0)
 
@@ -440,7 +439,6 @@ view. It is checked against Three.js 0.184.0 and 0.187.0 and adds no Three.js
 runtime dependency to VLX. The example documents texture budgets and zoom
 limits. Live-scene integration and physical-device acceptance remain separate.
 
-Source 0.3.3 moves the shared owned raster engine into `vresvg`, used by both
-VLX and the handwritten-page caller. PNG APIs retain their `VlxError` contract.
-The published 0.3.2 archives remain unchanged; this source change is not a new
-VLX release or an application repin.
+VLX and the handwritten-page caller share the independent `vresvg` engine.
+PNG APIs retain their `VlxError` contract. Release archives pin all VPM runtime
+dependencies; earlier archives are immutable.

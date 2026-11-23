@@ -365,9 +365,23 @@ limit. SVG, geometry, pixel and image guards remain independent limits.
 
 `problem-caller.cjs APP_CHECKOUT [REF]` exports only the unchanged
 `functions/src/problemPicture.ts` from Git into temporary storage, stubs the data
-store and unrelated helper imports, and runs four synthetic pages through
+store and unrelated helper imports, and runs six synthetic pages through
 `problemPost` on Node and Bun. It denies network calls, prints aggregate outcomes
 and the source hash, then deletes the private source. `VPM_VLX_PACKAGE_DIR`
 selects an installed release. This verifies the rendering call, not live Discord
 queue processing or the whole Functions application. Elapsed times in this probe
 are observations, not balanced-process performance claims.
+
+## Streamed geometry (0.3.4)
+
+The 26,000-character statement and an exact 8,192-layout-item page now draw at
+960 × 15,628 and 960 × 15,978. Pixel digests come from the previous engine with
+only its cumulative geometry counter reset per path in an isolated reference;
+no guard is disabled in shipping tests. The unchanged app caller at `6e9e0721`
+runs both boundary cases alongside the four shorter pages on Node and Bun.
+
+Each live path retains a two-million-point bound. Every path instance is also
+charged to the 300-million cumulative work budget, including cached and
+invisible geometry. Tests independently reject an oversized path, excessive
+invisible repeated geometry and dense active edges, and verify a rejected call
+does not poison the next request. Exact archive checks include these guards.
