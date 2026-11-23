@@ -18,7 +18,7 @@ const names = [
 ];
 const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
 function build({ ref, tag, out }) {
-  assert.match(tag, /^material-react-table-\d+\.\d+\.\d+(?:-[a-z0-9.-]+)?$/);
+  assert.match(tag, /^vmaterial-react-table-\d+\.\d+\.\d+(?:-[a-z0-9.-]+)?$/);
   assert.ok(out, "An output directory is required");
   out = path.resolve(out);
   fs.mkdirSync(out, { recursive: true });
@@ -163,7 +163,7 @@ function build({ ref, tag, out }) {
       path.join(out, "consumer-package.json"),
       JSON.stringify(
         {
-          dependencies: { "material-react-table": top.url },
+          dependencies: { ...Object.fromEntries(manifest.packages.map(p=>[p.name,p.url])), ...JSON.parse(execFileSync("git", ["show", commit+":scripts/material-table-conformance/material-peers.json"], {cwd:root,encoding:"utf8"})) },
         },
         null,
         2,
@@ -210,7 +210,7 @@ if (require.main === module) {
   const take = (name) => args[args.indexOf(name) + 1];
   assert.ok(
     args.includes("--ref") && args.includes("--tag") && args.includes("--out"),
-    "Usage: node scripts/pack-material-table-release.cjs --ref COMMIT --tag material-react-table-VERSION --out EMPTY_DIRECTORY",
+    "Usage: node scripts/pack-material-table-release.cjs --ref COMMIT --tag vmaterial-react-table-VERSION --out EMPTY_DIRECTORY",
   );
   build({ ref: take("--ref"), tag: take("--tag"), out: take("--out") });
 }

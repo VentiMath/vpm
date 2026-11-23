@@ -1,6 +1,6 @@
 "use strict";
 const React = require("react");
-const { useTheme } = require("@mui/material/styles");
+const { useTheme } = require("vmui-material/styles");
 const {
   Box,
   Paper,
@@ -22,7 +22,7 @@ const {
   Chip,
   Pagination,
   FormControlLabel,
-} = require("@mui/material");
+} = require("vmui-material");
 const core = require("vtanstack-react-table");
 const { rankItem } = require("vtanstack-match-sorter-utils");
 const highlight = require("vhighlight-words").default;

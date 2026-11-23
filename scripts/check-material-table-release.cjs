@@ -23,7 +23,7 @@ const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
   assert.deepEqual(
     JSON.parse(fs.readFileSync(path.join(directory, "consumer-package.json"))),
     {
-      dependencies: { "material-react-table": top.url },
+      dependencies: { ...Object.fromEntries(manifest.packages.map(p=>[p.name,p.url])), ...require("./material-table-conformance/material-peers.json") },
     },
   );
   for (const p of manifest.packages) {

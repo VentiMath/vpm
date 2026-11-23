@@ -2,7 +2,7 @@ import type * as React from "react";
 import type {
   SxProps,
   Theme,
-} from "@mui/material/styles" with { "resolution-mode": "require" };
+} from "vmui-material/styles" with { "resolution-mode": "require" };
 import type {
   BoxProps,
   PaperProps,
@@ -15,7 +15,7 @@ import type {
   AlertProps,
   LinearProgressProps,
   PaginationProps,
-} from "@mui/material" with { "resolution-mode": "require" };
+} from "vmui-material" with { "resolution-mode": "require" };
 import type {
   Table,
   TableOptions,

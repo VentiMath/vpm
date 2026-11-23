@@ -1,7 +1,7 @@
 # vmaterial-react-table
 
 An independently written Material React Table **3.2.1** implementation for
-VentiMath’s flat resource and contest tables. It uses MUI for rendering and the
+VentiMath’s flat resource and contest tables. It uses vmui-material for rendering and the
 VPM Table, fuzzy-ranking and highlighting implementations for data behavior.
 No upstream Material React Table runtime is shipped.
 
@@ -20,8 +20,9 @@ Column movement is available through menus and keyboard controls as well as drag
 
 The six-package VPM dependency closure contains this widget, React Table, Table
 core, Store, match-sorter-utils and highlight-words. It has no runtime dependency
-on upstream Table, React Virtual, MUI icons or date pickers. React, MUI and Emotion
-remain peers. Verified peers are React 19.3.1, MUI 7.2 and Emotion 11.14;
+on upstream Table, React Virtual, MUI icons or date pickers. React and VPM Material/Emotion
+remain peers. Verified peers are React 19.3.1, vmui-material 9.5.0,
+vemotion-react 11.14.0 and vemotion-styled 11.14.1;
 SSR is checked on Node 24 and Bun.
 
 ## Boundaries and differences
@@ -66,3 +67,15 @@ URLs are pinned; no overrides are required. See the
 Application adoption and its visual acceptance remain separate work. The
 [Table-only release](https://github.com/VentiMath/vpm/releases/tag/table-9.3.1)
 remains available for callers keeping upstream MRT.
+
+### VPM Material integration
+
+Runtime imports, public types and peer dependencies use `vmui-material`,
+`vemotion-react` and `vemotion-styled`. Install the shared Material release pins
+from `consumer-package.json` so the application and table share theme and style
+contexts. No original-name package alias is required.
+
+The ESM declarations resolve the ESM Material theme contract, including the
+app's toolbar Box props and sx callbacks. Strict consumers, SSR, grouped
+selection and paired browser actions are checked against npm MRT 3.2.1 using
+its original Material peer and VPM using its owned Material peer.

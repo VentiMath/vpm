@@ -89,7 +89,7 @@ try {
       fs.mkdirSync(cwd);
       const deps = Object.fromEntries(
         names.map((n) => [
-          n === "vmaterial-react-table" ? "material-react-table" : n,
+          n,
           published ? archives[n].url : "file:" + archives[n].archive,
         ]),
       );
@@ -103,22 +103,12 @@ try {
           private: true,
           type: "module",
           dependencies: {
-            ...(published
-              ? {
-                  "material-react-table": archives["vmaterial-react-table"].url,
-                }
-              : extracted
-                ? {}
-                : deps),
+            ...(extracted ? {} : deps),
+            ...require("./material-peers.json"),
             react: version,
             "react-dom": version,
             "@types/react": "19.3.0",
             "@types/react-dom": "19.3.0",
-            "@mui/material": "7.2.0",
-            "@mui/icons-material": "7.2.0",
-            "@mui/x-date-pickers": "8.7.0",
-            "@emotion/react": "11.14.0",
-            "@emotion/styled": "11.14.0",
           },
           ...(!published && !extracted
             ? {
@@ -159,7 +149,7 @@ try {
           const dest = path.join(
             cwd,
             "node_modules",
-            name === "vmaterial-react-table" ? "material-react-table" : name,
+            name,
           );
           fs.cpSync(p.packed, dest, { recursive: true });
         }
@@ -167,7 +157,7 @@ try {
         const installed = path.join(
           cwd,
           "node_modules",
-          name === "vmaterial-react-table" ? "material-react-table" : name,
+          name,
         );
         assert.deepEqual(
           fs
@@ -187,6 +177,7 @@ try {
         "@tanstack/table-core",
         "@tanstack/react-virtual",
         "highlight-words",
+        "material-react-table", "@mui/material", "@emotion/react", "@emotion/styled",
       ])
         assert.equal(
           fs.existsSync(path.join(cwd, "node_modules", name)),
@@ -201,7 +192,7 @@ try {
         ),
         VPM_MATERIAL_ENTRY: path.join(
           cwd,
-          "node_modules/material-react-table/index.cjs",
+          "node_modules/vmaterial-react-table/index.cjs",
         ),
       };
       console.log(
@@ -209,7 +200,7 @@ try {
       );
       fs.writeFileSync(
         path.join(cwd, "identity.mjs"),
-        "import assert from 'node:assert/strict';import {createRequire} from 'node:module';import {useMaterialReactTable} from 'material-react-table';assert.equal(useMaterialReactTable,createRequire(import.meta.url)('material-react-table').useMaterialReactTable);",
+        "import assert from 'node:assert/strict';import {createRequire} from 'node:module';import {useMaterialReactTable} from 'vmaterial-react-table';assert.equal(useMaterialReactTable,createRequire(import.meta.url)('vmaterial-react-table').useMaterialReactTable);",
       );
       for (const runtime of ["node", "bun"]) {
         run(runtime, ["identity.mjs"], cwd);

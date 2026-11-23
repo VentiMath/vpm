@@ -99,3 +99,14 @@ const invalidPagination: MaterialReactTableProps<RecordRow> = {
   // @ts-expect-error pagination is a boolean option
   enablePagination: "false",
 };
+
+// The app spreads toolbar props and evaluates their sx callback on a VPM theme.
+import {Box} from "vmui-material";
+import {useTheme} from "vmui-material/styles";
+function IntegratedToolbar({table}: {table:MRT_TableInstance<RecordRow>}) {
+ const theme=useTheme();
+ const value=table.options.muiTopToolbarProps;
+ const props=typeof value==='function'?value({table}):value;
+ const styles=typeof props?.sx==='function'?props.sx(theme):props?.sx;
+ return <Box {...props} sx={styles}/>;
+}

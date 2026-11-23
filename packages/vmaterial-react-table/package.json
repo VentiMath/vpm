@@ -42,11 +42,11 @@
     "vhighlight-words": "workspace:*"
   },
   "peerDependencies": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "@mui/material": ">=6 <9",
-    "@emotion/react": "^11.0.0",
-    "@emotion/styled": "^11.0.0"
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "vmui-material": "^9.5.0",
+    "vemotion-react": "^11.14.0",
+    "vemotion-styled": "^11.14.1"
   },
   "repository": {
     "type": "git",

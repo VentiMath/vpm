@@ -9,14 +9,7 @@ const filename = path.join(consumer, ".material-types.tsx"),
 try {
   fs.writeFileSync(
     filename,
-    fs
-      .readFileSync(path.join(__dirname, "types.tsx"), "utf8")
-      .replaceAll(
-        /(['"])vmaterial-react-table\1/g,
-        process.env.VPM_MATERIAL_CONSUMER
-          ? "'material-react-table'"
-          : "'vmaterial-react-table'",
-      ),
+    fs.readFileSync(path.join(__dirname, "types.tsx"), "utf8"),
   );
   for (const mode of ["NodeNext", "Bundler"]) {
     fs.writeFileSync(
@@ -51,15 +44,9 @@ try {
                     "node_modules/@types/react/jsx-runtime.d.ts",
                   ),
                 ],
-                "@mui/material": [
-                  path.join(fixture, "node_modules/@mui/material/index.d.ts"),
-                ],
-                "@mui/material/styles": [
-                  path.join(
-                    fixture,
-                    "node_modules/@mui/material/styles/index.d.ts",
-                  ),
-                ],
+                csstype: [path.join(fixture, "node_modules/csstype/index.d.ts")],
+                "vmui-material": [path.resolve(__dirname, "../../packages/vmui-material/index.d.mts")],
+                "vmui-material/styles": [path.resolve(__dirname, "../../packages/vmui-material/styles/index.d.mts")],
                 "vtanstack-react-table": [
                   path.resolve(
                     __dirname,

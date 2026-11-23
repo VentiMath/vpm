@@ -9,7 +9,7 @@ const fixture = path.resolve(__dirname, "../react-table-conformance"),
   out = path.join(fixture, "node_modules/.vpm-material-table");
 const peer = process.env.VPM_MATERIAL_CONSUMER
   ? createRequire(path.join(process.env.VPM_MATERIAL_CONSUMER, "package.json"))
-  : control;
+  : createRequire(path.resolve(__dirname, "../../package.json"));
 (async () => {
   fs.mkdirSync(out, { recursive: true });
   const parts = [];
@@ -35,15 +35,23 @@ const peer = process.env.VPM_MATERIAL_CONSUMER
           b.onResolve({ filter: /^material-react-table$/ }, () => ({
             path: entry,
           }));
+          const owned=id=>{
+            if(process.env.VPM_MATERIAL_CONSUMER)return peer.resolve(id);
+            const [name,...sub]=id.split('/'),dir=path.resolve(__dirname,'../../packages',name),meta=JSON.parse(fs.readFileSync(dir+'/package.json'));
+            const e=meta.exports[sub.length?'./'+sub.join('/'):'.'];
+            return path.resolve(dir,typeof e==='string'?e:e.require?.default||e.default);
+          };
+          b.onResolve({filter:/^v(?:mui|emotion|clsx|stylis|floating|react-transition)-?/},({path:id})=>({path:owned(id)}));
+          if(variant==='vpm')b.onResolve({filter:/^@(mui|emotion)\//},({path:id})=>({path:owned(id.replace('@mui/','vmui-').replace('@emotion/','vemotion-'))}));
           b.onResolve(
             {
               filter:
-                /^(react(?:\/.*)?|react-dom(?:\/.*)?|@mui\/.*|@emotion\/.*)$/,
+                /^(react(?:\/.*)?|react-dom(?:\/.*)?|@mui\/.*|@emotion\/.*|vmui-[^/]+(?:\/.*)?|vemotion-[^/]+(?:\/.*)?)$/,
             },
             ({ path: id }) =>
-              serverBuild
+              serverBuild && /^(react|react-dom)(\/|$)/.test(id)
                 ? { path: id, external: true }
-                : { path: peer.resolve(id) },
+                : { path: (id.startsWith("@") || (!process.env.VPM_MATERIAL_CONSUMER && /^(react|react-dom)(\/|$)/.test(id)) ? control : peer).resolve(id) },
           );
           b.onResolve({ filter: /^@tanstack\/react-table$/ }, () => ({
             path: control.resolve("react-table-app"),
@@ -68,7 +76,7 @@ const peer = process.env.VPM_MATERIAL_CONSUMER
       entrypoints: [entry],
       format: "cjs",
       target: "node",
-      external: ["react", "react-dom", "react-dom/*", "@mui/*", "@emotion/*"],
+      external: ["react", "react-dom", "react-dom/*"],
       plugins,
     });
     assert.ok(server.success, server.logs.join("\n"));
@@ -78,7 +86,7 @@ const peer = process.env.VPM_MATERIAL_CONSUMER
     );
   }
   fs.writeFileSync(path.join(out, "browser.js"), parts.join("\n"));
-  console.log("Built MRT3.2.1 and independent widget against identical peers.");
+  console.log("Built MRT3.2.1 and independent widget with upstream and VPM Material peers respectively.");
 })().catch((e) => {
   console.error(e);
   process.exitCode = 1;
