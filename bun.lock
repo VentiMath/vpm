@@ -1018,6 +1018,14 @@
       "name": "vpath-expression-matcher",
       "version": "0.1.0",
     },
+    "packages/vpath-scurry": {
+      "name": "vpath-scurry",
+      "version": "3.0.0",
+      "dependencies": {
+        "vlru-cache": "11.5.3",
+        "vminipass": "7.1.3",
+      },
+    },
     "packages/vpath-to-regexp": {
       "name": "vpath-to-regexp",
       "version": "0.1.0",
@@ -2335,6 +2343,8 @@
     "vparseurl": ["vparseurl@workspace:packages/vparseurl"],
 
     "vpath-expression-matcher": ["vpath-expression-matcher@workspace:packages/vpath-expression-matcher"],
+
+    "vpath-scurry": ["vpath-scurry@workspace:packages/vpath-scurry"],
 
     "vpath-to-regexp": ["vpath-to-regexp@workspace:packages/vpath-to-regexp"],
 

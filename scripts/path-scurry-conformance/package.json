@@ -1,0 +1,11 @@
+{
+  "name": "vpm-path-scurry-controls",
+  "private": true,
+  "dependencies": {
+    "path-scurry": "3.0.0",
+    "path-scurry-app": "npm:path-scurry@2.0.2",
+    "glob": "13.0.6",
+    "tap": "21.6.1",
+    "rimraf": "6.1.2"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "upstream": {
+    "name": "path-scurry",
+    "version": "3.0.0",
+    "repository": "https://github.com/isaacs/path-scurry",
+    "commit": "31124d97f3bb1e4c7e99e067cacbccc2fbc5dc66",
+    "integrity": "sha512-1pTbQqH1wIwMi/eleQ5leFTTCkzFsPcgXNjwOA8YGGW/W4/kHT3dssE7Z6NH+zuqNLOzOB0uaD61yl7cAcVhgg=="
+  },
+  "implementation": {
+    "kind": "independent",
+    "targetScope": "Cached filesystem paths, directory traversal and streaming for VentiMath glob callers; POSIX, Darwin and Windows resolution."
+  },
+  "differences": [
+    "Independent iterative traversal with VPM LRU and stream dependencies.",
+    "chdir clears resolved-string caches instead of returning paths under the previous directory.",
+    "Wide directory enumeration avoids argument-stack-sized spread calls.",
+    "Internal base-class construction/private state are not compatibility contracts. No bundled glob replacement or application adoption claimed."
+  ],
+  "upstreamTests": {
+    "groupsRun": 17,
+    "groupsTotal": 20,
+    "excluded": [
+      "platform-specific",
+      "all the IFMTs!",
+      "weird readdir failure"
+    ],
+    "reason": "These groups mock upstream module imports; focused public-API tests cover the corresponding behaviors.",
+    "files": {
+      "LICENSE.md": "8a1af140fdfbf5afd3df27f7e662f989c5b963a300020dfafce42033cae9e004",
+      "test/index.ts": "9fe1b24ea07fc8573ecd4d97e36a4ae450243fadfe9eddfd73cdbdab68e27258",
+      "tap-snapshots/test/index.ts.test.cjs": "7b36214938bd1798a4910984a0a0325f4856dd193ef603857aea0905659ecda8",
+      "test/fixtures/normalize-paths.ts": "5661c4943e6ba78486948fd2de655f21b5ba1cc747d3e0cdca8e82710f93dc36"
+    }
+  }
+}

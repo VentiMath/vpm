@@ -132,8 +132,8 @@ matching support from unimplemented upstream introspection APIs.
 Glob 13 embeds dependencies in its default entry. An npm override alone does not
 replace that embedded matcher; the verified fixture deliberately uses its
 published `glob/raw` source entry and instruments replacement calls.
-`vminipass` now supplies the independent streaming leaf. `vpath-scurry` is next
-before an independent `vglob` caller.
+`vminipass` supplies the independent streaming leaf and `vpath-scurry` the
+cached directory walker. The next layer is an independent `vglob` caller.
 
 ## Minipass streams
 
@@ -143,4 +143,14 @@ byte/string decoding, pipe backpressure, collection, iteration and abort cleanup
 83 unchanged caller checks, 50,000 generated operations and fresh archive
 installs pass on Node and Bun. Thirty unchanged upstream regression files pass
 on Node; the TAP harness itself cannot run on Bun's incomplete V8 Serializer.
-This completes a stream leaf, not the directory walker or glob's bundled runtime.
+The flowing-write follow-up removes generic event forwarding overhead without
+bypassing listener or lifecycle behavior; [measurements](../packages/vminipass/bench/flow/README.md) supersede the original Bun regression.
+
+## Cached filesystem paths
+
+[vpath-scurry](../packages/vpath-scurry) independently targets 3.0.0 with the
+app's 2.0.2 behavior checked. Its runtime closure is vlru-cache and vminipass.
+59,256 differential checks, 278 unchanged glob 13 caller checks, 17 selected
+upstream groups and fresh npm/Bun archives pass. Resolution after `chdir()`
+clears stale strings; Windows roots follow the current v3 contract. This does
+not replace glob's bundled default entry or change application pins.

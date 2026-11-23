@@ -170,7 +170,9 @@ app's CSS-variable type augmentation. FuseUtils imports the named color ramps,
 and global.d.ts imports themeCssVarsAugmentation. The independent file-pattern
 closure now includes vbalanced-match, vbrace-expansion and vminimatch.
 The independent vminipass stream leaf is also built and checked through unchanged
-path-scurry and glob callers. Next is path-scurry above vlru-cache and vminipass.
+path-scurry and glob callers. vpath-scurry 3.0.0 now supplies the directory
+walker above vlru-cache and vminipass, with the app's 2.0.2 contract checked.
+Next is the independent vglob caller.
 Glob's bundled default entry still needs an independent caller; the verified
 fixtures use glob/raw.
 
