@@ -26,11 +26,14 @@ async function main(){
  for(const manager of ['npm','bun']){
   const dir=path.join(scratch,manager);fs.mkdirSync(dir);
   const local=Object.fromEntries(manifest.packages.map(p=>[p.name,'file:'+path.join(directory,p.asset)]));
-  const dependencies={...(published?consumer.dependencies:local),react:'19.3.1','react-dom':'19.3.1','@types/react':'19.3.0','@types/react-dom':'19.3.0'};
-  fs.writeFileSync(dir+'/package.json',JSON.stringify({private:true,type:'module',dependencies,...(!published?{overrides:local}:{})}));
+  const stagedBun=manager==='bun'&&!published;
+  const dependencies={...(stagedBun?{}:published?consumer.dependencies:local),react:'19.3.1','react-dom':'19.3.1','@types/react':'19.3.0','@types/react-dom':'19.3.0'};
+  fs.writeFileSync(dir+'/package.json',JSON.stringify({private:true,type:'module',dependencies,...(!published&&!stagedBun?{overrides:local}:{})}));
   run(manager,manager==='npm'?['install','--ignore-scripts','--no-audit','--no-fund']:['install','--ignore-scripts'],dir);
   run(manager,manager==='npm'?['ci','--ignore-scripts','--no-audit','--no-fund']:['install','--ignore-scripts','--frozen-lockfile'],dir);
   const modules=dir+'/node_modules';
+  if(stagedBun)for(const item of manifest.packages){const target=modules+'/'+item.name;fs.mkdirSync(target,{recursive:true});run('tar',['-xzf',path.join(directory,item.asset),'-C',target,'--strip-components=1'],dir);}
+  if(stagedBun)console.log('Before publication: Bun frozen peer install plus exact closure extraction; public URL resolution is checked after publication.');
   for(const item of manifest.packages){
    const pkg=modules+'/'+item.name;const metadata=JSON.parse(fs.readFileSync(pkg+'/package.json'));
    assert.equal(metadata.name,item.name);assert.equal(metadata.version,item.version);
@@ -56,7 +59,7 @@ async function main(){
    const browser=family==='vreact-hook-form'?'hook-form':config.fixture;
    process.stdout.write(run('node',[path.join(__dirname,browser+'-conformance/browser.cjs')],dir,env));
   }
-  console.log(manager+': fresh/frozen VPM-name installs, exact bytes, public entries, TS7, Node/Bun caller checks pass.');
+  console.log(manager+': '+(stagedBun?'frozen peers and exact staged closure':'fresh/frozen VPM-name installs')+', exact bytes, public entries, TS7, Node/Bun caller checks pass.');
  }
  console.log(manifest.tag+': '+(published?'public URLs and SHA256 verified':'exact local archives verified'));
 }
