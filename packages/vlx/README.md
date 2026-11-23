@@ -190,11 +190,19 @@ explicitly. Vector and browser output are unchanged. Antialiasing differs from
 resvg along edges; the tests check dimensions, ink placement, thin rules, holes,
 colors, transparency and embedded figures rather than byte-identical PNGs.
 
-VentiMath reports PR #455 at `6e9e0721` has switched both image callers to VLX
-and `vresvg`, but its backend review is blocked by the 0.3.3 geometry limit.
-Repinning both packages to the 0.3.4 release carries the fix. Merge and deployment
-remain app-side steps. See the [installation pins](../../docs/INSTALLATION.md#handwritten-writeup-pictures)
-and [measurements](bench/raster-optimized/README.md).
+**0.3.5 accelerates PNG rendering while preserving 0.3.4 pixels and limits.**
+The shared renderer runs its owned scan converter and lossless PNG filters in a
+portable WebAssembly module compiled from committed C source. Path parsing
+allocates less temporary data, and compression favors lower latency. Chunked
+filtering uses at most 1 MiB of scratch instead of a second full-page buffer. This does
+not load a native addon or upstream renderer. Compressed PNG bytes can differ;
+decoded RGBA and browser/SVG output do not. [Measurements](../vresvg/bench/README.md)
+include cold application calls, native controls, and peak process memory.
+
+VentiMath main `9e68efc4` has adopted 0.3.4 and `vresvg`, removing native resvg.
+Update both [release pins](../../docs/INSTALLATION.md#handwritten-writeup-pictures)
+for the performance update. Deployment and application verification of the new
+revision remain separate; native handwriting is still faster.
 
 ## Automatic equation references (0.2.0)
 

@@ -7,4 +7,4 @@ const cases=inputs.flatMap(([name,svg,fitTo])=>[true].map(noFonts=>({
  name:name+(noFonts?' (upstream font discovery disabled)':' (unchanged caller defaults)'),
  make(file){const {Resvg}=require(file),options={fitTo,...(file===upstream&&noFonts?{font:{loadSystemFonts:false}}:{})};return()=>new Resvg(svg,options).render().asPng().length;},validate:n=>assert(n>100)
 })));
-require('../../../scripts/bench-process.cjs').run({root,upstream,vpm:root,cases,files:['index.cjs','raster.cjs','raster-paths.cjs','raster-png.cjs','bench/compare.cjs','../../scripts/resvg-conformance/fixtures.cjs','../../scripts/vlx-conformance/package-lock.json']}).catch(e=>{console.error(e);process.exitCode=1});
+require('../../../scripts/bench-process.cjs').run({root,upstream,vpm:root,cases,files:['index.cjs','raster.cjs','raster-paths.cjs','raster-png.cjs','raster-wasm.cjs','scan.wasm','src/scan.c','bench/compare.cjs','../../scripts/resvg-conformance/fixtures.cjs','../../scripts/vlx-conformance/package-lock.json']}).catch(e=>{console.error(e);process.exitCode=1});

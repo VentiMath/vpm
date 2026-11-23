@@ -2,6 +2,7 @@
 // Rasterize the bounded SVG vocabulary emitted by VLX and VentiMath handwriting, never arbitrary SVG,
 // remote assets, system fonts or CSS. The public math/page APIs own layout.
 const {RasterError:VlxError}=require('./error.cjs'),{PNG}=require('vpngjs'),path=require('./raster-paths.cjs'),{encodePng}=require('./raster-png.cjs');
+const scan=require('./raster-wasm.cjs');
 const fail=message=>{throw new VlxError('RASTER',message)};
 const named={black:'#000000',white:'#ffffff',red:'#ff0000',blue:'#0000ff',green:'#008000',gray:'#808080',orange:'#ffa500',purple:'#800080'};
 function color(value,current){if(value==='none')return null;if(value==='currentColor')return current;value=named[value]||value;if(!/^#[\da-f]{3}(?:[\da-f]{3})?$/i.test(value))fail('Unsupported drawing color');if(value.length===4)value='#'+[...value.slice(1)].map(c=>c+c).join('');return [parseInt(value.slice(1,3),16),parseInt(value.slice(3,5),16),parseInt(value.slice(5,7),16),255];}
@@ -10,7 +11,9 @@ function blend(data,i,r,g,b,coverage){if(coverage<=0)return;coverage=Math.min(1,
 // Nonzero winding scan conversion. Integrate horizontal pixel spans at eight
 // subrows, splitting additionally at vertices so thin horizontal rules retain
 // their exact vertical coverage instead of snapping to a sampling grid.
-function paint(polygons,ink,surface,budget){
+function paint(polygons,ink,surface,budget,matrix){
+ if(ink&&scan.paint(polygons,ink,surface,budget,matrix))return;
+ if(matrix)polygons=polygons.map(polygon=>polygon.map(p=>path.apply(matrix,p)));
  if(!ink)return;const {width,height,data}=surface,edges=[];let lo=Infinity,hi=-Infinity,minPoint=Infinity,maxPoint=-Infinity;
  for(const points of polygons)for(let i=0;i<points.length;i++){const a=points[i],b=points[(i+1)%points.length];minPoint=Math.min(minPoint,a[0]);maxPoint=Math.max(maxPoint,a[0]);if(a[1]===b[1])continue;const lower=a[1]<b[1]?a:b,upper=a[1]<b[1]?b:a;edges.push([lower[0],lower[1],upper[1],(upper[0]-lower[0])/(upper[1]-lower[1]),a[1]<b[1]?1:-1]);lo=Math.min(lo,lower[1]);hi=Math.max(hi,upper[1]);}
  if(!edges.length)return;if(edges.length>2000000)throw new VlxError('LIMIT','Raster edge budget exceeded');
@@ -110,7 +113,7 @@ function rasterize(svg,{width:requestedWidth,height:requestedHeight,zoom,backgro
    if(strict&&Math.abs(sourceWidth/sourceHeight-viewBox[2]/viewBox[3])>1e-9)fail('The handwriting subset requires matching viewport and viewBox proportions');
    const width=Math.round(sourceWidth*factor),height=Math.round(sourceHeight*factor);
    if(!Number.isSafeInteger(width)||!Number.isSafeInteger(height)||width<1||height<1||width>16384||height>16384||width*height>16777216)throw new VlxError('LIMIT','Raster dimensions exceed the pixel budget');
-   surface={width,height,data:Buffer.alloc(width*height*4)};if(background==='white')surface.data.fill(255);else if(background&&background!=='transparent')fail('Unsupported raster background');
+   surface=scan.createSurface(width,height);if(background==='white')surface.data.fill(255);else if(background&&background!=='transparent')fail('Unsupported raster background');
    const sx=width/viewBox[2],sy=height/viewBox[3];const state={...rootState,tag,matrix:[sx,0,0,sy,-viewBox[0]*sx,-viewBox[1]*sy]};
    if(strict){const scale=Math.min(sourceWidth/viewBox[2],sourceHeight/viewBox[3]),fx=width/sourceWidth,fy=height/sourceHeight;state.matrix=[scale*fx,0,0,scale*fy,((sourceWidth-viewBox[2]*scale)/2-viewBox[0]*scale)*fx,((sourceHeight-viewBox[3]*scale)/2-viewBox[1]*scale)*fy];}
    inherit(state,attrs);stack.push(state);if(self){stack.pop();ended=true;}continue;
@@ -132,8 +135,8 @@ function rasterize(svg,{width:requestedWidth,height:requestedHeight,zoom,backgro
   else if(tag==='rect'){const x=number(attrs.x),y=number(attrs.y),w=attrs.width==='100%'?viewBox[2]:number(attrs.width),h=attrs.height==='100%'?viewBox[3]:number(attrs.height);if(w<=0||h<=0)continue;contours=[{closed:true,points:[[x,y],[x+w,y],[x+w,y+h],[x,y+h]]}];}
   else {const cx=number(attrs.cx),cy=number(attrs.cy),rx=number(attrs.rx),ry=number(attrs.ry);if(rx<=0||ry<=0)continue;contours=[{closed:true,points:path.circle(0,0,Math.max(rx,ry),tolerance).map(([x,y])=>[cx+x*rx/Math.max(rx,ry),cy+y*ry/Math.max(rx,ry)])}];}
   const fill=color(state.fill,state.color),stroke=color(state.stroke,state.color);
-  if(fill){const polygons=contours.map(c=>c.points.map(p=>path.apply(m,p)));if(tag!=='rect'||!fillRect(polygons[0],fill,surface,budget))paint(polygons,fill,surface,budget);}
-  if(stroke&&state.strokeWidth>0)paint(path.strokes(contours,state.strokeWidth,state.join,state.dash,state.offset,tolerance,state.cap,strict).map(polygon=>polygon.map(p=>path.apply(m,p))),stroke,surface,budget);
+  if(fill){const polygons=contours.map(c=>c.points);if(tag!=='rect'||!fillRect(polygons[0].map(p=>path.apply(m,p)),fill,surface,budget))paint(polygons,fill,surface,budget,m);}
+  if(stroke&&state.strokeWidth>0)paint(path.strokes(contours,state.strokeWidth,state.join,state.dash,state.offset,tolerance,state.cap,strict),stroke,surface,budget,m);
  }
  if(!surface||stack.length||!ended||svg.slice(cursor).trim())fail('Incomplete drawing');return surface;
 }

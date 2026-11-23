@@ -22,7 +22,9 @@
     "*.d.ts",
     "README.md",
     "LICENSE",
-    "PROVENANCE.json"
+    "PROVENANCE.json",
+    "scan.wasm",
+    "src/scan.c"
   ],
   "engines": {
     "node": ">=24"

@@ -8,7 +8,8 @@
   },
   "implementation": {
     "kind": "independent",
-    "targetScope": "The Resvg(svg, {fitTo}).render().asPng() caller in VentiMath functions/src/writeupPicture.ts. Shared repository-owned scan conversion, path geometry and PNG encoder extracted from VLX; no upstream renderer code or native binary copied."
+    "targetScope": "The Resvg(svg, {fitTo}).render().asPng() caller in VentiMath functions/src/writeupPicture.ts. Shared repository-owned scan conversion, path geometry and PNG encoder extracted from VLX; no upstream renderer code or native binary copied.",
+    "portableKernel": "src/scan.c is independently written scan conversion and lossless PNG filtering, compiled to scan.wasm with checksum-pinned wasi-sdk 34 clang/lld. No libc, WASI imports, native addon or upstream renderer code. Runtime imports only bounded host WebAssembly memory. Rebuild with scripts/build-resvg-wasm.cjs."
   },
   "differences": [
     "Only the generated handwriting SVG vocabulary is public: svg, g, rect and absolute M/L/H/V/Q/C/Z paths, opaque colors and round/butt strokes. Unsupported visual semantics throw.",
@@ -22,6 +23,7 @@
     "pixelControls": "66 synthetic paper/pen cases on Node/Bun; 18 additional synthetic pages through unchanged private app layout/caller, with no student data exported.",
     "existingVlxDrawings": 1800,
     "specification": "https://www.w3.org/TR/SVG2/painting.html#LineCaps",
-    "geometryBounds": "Two-million flattened points per live path; every path instance, cached or invisible, is charged to the cumulative 300-million work budget. Exact pixels checked on 26000-character and 8192-item VLX pages; huge paths and excessive total work still reject."
+    "geometryBounds": "Two-million flattened points per live path; every path instance, cached or invisible, is charged to the cumulative 300-million work budget. Exact pixels checked on 26000-character and 8192-item VLX pages; huge paths and excessive total work still reject.",
+    "portableKernel": "Exact RGBA equality against the JavaScript reference for randomized/coincident/clipped curves and transparency, plus the 1800-drawing VLX corpus and large-page hashes. Node/Bun source and release-archive tests. Original geometry/work/pixel limits retained."
   }
 }

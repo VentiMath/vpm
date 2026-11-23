@@ -7,7 +7,7 @@ const summary={maxPreviousChannelDifference:0,drawings:0,maxRelativeDifference:0
 function check(name,svg,options={}){
  const control=new Resvg(svg,{font:{loadSystemFonts:false},background:options.background==='transparent'?undefined:'white',...(options.width?{fitTo:{mode:'width',value:options.width}}:{})}).render();
  const a=PNG.sync.read(control.asPng()),b=rasterize(svg,{background:'white',...options});assert.deepEqual([b.width,b.height],[a.width,a.height],name+' dimensions');
- if(previous){const old=previous(svg,{background:'white',...options});assert.equal(old.data.length,b.data.length);let max=0;for(let i=0;i<b.data.length;i++)max=Math.max(max,Math.abs(old.data[i]-b.data[i]));summary.maxPreviousChannelDifference=Math.max(summary.maxPreviousChannelDifference,max);assert.ok(max<=1,name+' changed previous pixels by '+max);}
+ if(previous){const old=previous(svg,{background:'white',...options});assert.equal(old.data.length,b.data.length);let max=0;for(let i=0;i<b.data.length;i++)max=Math.max(max,Math.abs(old.data[i]-b.data[i]));summary.maxPreviousChannelDifference=Math.max(summary.maxPreviousChannelDifference,max);assert.equal(max,0,name+' changed previous pixels by '+max);}
  let difference=0,inkA=0,inkB=0;for(let i=0;i<a.data.length;i+=4){let da=0,db=0;for(let c=0;c<3;c++){const ca=(255-a.data[i+c])*a.data[i+3]/255,cb=(255-b.data[i+c])*b.data[i+3]/255;difference+=Math.abs(ca-cb);da+=ca;db+=cb;}inkA+=da;inkB+=db;}
  // AA may differ within an edge pixel; neither implementation may lose or
  // invent an isolated solid mark farther than one pixel from the other.

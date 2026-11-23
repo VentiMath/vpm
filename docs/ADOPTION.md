@@ -7,22 +7,20 @@ the production bundle or that the corresponding commit has been deployed.
 
 ## VLX 0.3.2 application verification
 
-**Updated November 23:** the app reports PR #455 at `6e9e0721` uses VLX 0.3.3
-for site and Functions, with `vresvg` replacing native resvg. Its site-side review
-is approved; backend acceptance is blocked by a second large-page regression:
-26,000 characters / 8,000 layout items exceed the cumulative geometry counter,
-while fitting the app's text, layout, pixel and SVG limits.
+**Updated November 23:** application main `9e68efc4` pins VLX 0.3.4 and
+`vresvg` 2.6.2 from its release for both image callers. Native resvg is removed.
+The application reports deployment in progress; production completion is not
+verified here. The previous geometry-limit blocker is resolved, including the
+26,000-character statement and exact 8,192-layout-item boundary.
 
-VLX 0.3.4 bounds live-path geometry separately and charges each path instance
-to the cumulative 300-million work limit. The reported page and an exact
-8,192-layout-item boundary pass with reference-identical RGBA pixels. The
-unchanged `problemPost` at `6e9e0721` passes six synthetic pages on Node/Bun;
-external services are stubbed. Cached/invisible paths still consume work and
-oversized individual paths still reject. App repinning, review, merge and
-deployment remain separate. This does not resolve the performance gap below.
+VLX 0.3.5 accelerates the shared owned rasterizer with a portable kernel compiled
+from VPM's C source, coherent edge sorting, lower-allocation path parsing and
+lossless PNG filtering/compression. Reference pixels and resource limits remain
+unchanged; compressed PNG bytes may differ. See [cold-call and memory measurements](../packages/vresvg/bench/README.md).
+Repinning this newer release and verifying deployment remain application work.
 
 The earlier application-side report for PR #455 at `b7d73475` verifies the 0.3.2 release
-assets against SHA256SUMS. GitHub confirms the PR is open and changes only the
+assets against SHA256SUMS. At that review point, the PR changed only the
 frontend and Functions manifests and lockfiles. Its actual manifest changes are
 frontend 0.3.1 → 0.3.2 and Functions 0.2.3 → 0.3.2; the reported rendering
 comparison uses 0.2.3 as its control.
@@ -183,18 +181,13 @@ alias, CJS/ESM, Node/Bun PNGs and TS7 checks passed. The unchanged writeup calle
 at app `f79f2ffe` passes its two tests and 18 synthetic page cases on Bun and
 Node-targeted transpilation. No private handwriting or app source is published.
 
-The app reports both image callers use VPM in PR #455 at `6e9e0721`, with no
-native resvg dependency, but backend approval is blocked by VLX 0.3.3's geometry
-accounting. Use both 0.3.4 release pins for the fix. No rendering-option change
-is needed. Merge and deployment have not been verified.
+The app's committed main `9e68efc4` uses both archives from `vlx-0.3.4` and
+no longer installs native resvg. Version 0.3.5 supplies the performance update;
+repin both sibling URLs with no rendering-option change. Deployment completion
+has not been independently verified.
 
-App-side single-call measurements on synthetic 1,200 / 4,300 / 8,500-glyph
-handwritten pages were 0.52 / 1.59 / 2.35 seconds on Node 24 versus native
-0.09 / 0.29 / 0.42 seconds with font discovery disabled. Peak memory was
-GC-sensitive; deployed function memory/load were not verified. These are
-reported observations, not balanced-process benchmarks or a proven OOM.
-
-Fresh isolated-process curved-page measurements take 87.8 ms versus native
-11.6 ms on Node and 83.1 ms versus 11.6 ms on Bun. Native font discovery was disabled for a fair rendering
-comparison. This release removes the native dependency; it is not a speedup.
-[Full measurements](../packages/vresvg/bench/README.md).
+[Current measurements](../packages/vresvg/bench/README.md) include balanced
+fresh-process Node/Bun calls, the unchanged application SVG composer, and native
+resvg with font discovery disabled. Memory figures are desktop process peaks,
+not a measured Cloud Functions concurrency limit. Handwriting remains slower
+than native; this is not a universal performance-parity claim.

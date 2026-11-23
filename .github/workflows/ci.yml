@@ -860,6 +860,7 @@ jobs:
       - run: node --test scripts/vlx-conformance/dom.test.cjs scripts/vlx-conformance/selection.test.cjs scripts/vlx-conformance/launch-chrome.test.cjs
       - run: node scripts/vlx-conformance/build-font.cjs --check
       - run: node scripts/vlx-conformance/raster.cjs
+      - run: node scripts/build-resvg-wasm.cjs --check --download
       - run: node --test packages/vresvg/test/*.test.cjs
       - run: node scripts/resvg-conformance/compare.cjs
       - name: Verify handwriting rasterizer archives

@@ -264,11 +264,11 @@ node scripts/check-dnd-release.cjs /absolute/path/to/output --published
 ## VLX math rendering
 
 **VentiLaTeX (VLX)**, pronounced **“Vee Ell Ex,”** is VentiMath's independent math
-renderer. The [VLX release](https://github.com/VentiMath/vpm/releases/tag/vlx-0.3.4)
+renderer. The [VLX release](https://github.com/VentiMath/vpm/releases/tag/vlx-0.3.5)
 provides its `vlx` package for frontend math and backend pictures:
 
 ```sh
-bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.3.4/vlx-0.3.4.tgz
+bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.3.5/vlx-0.3.5.tgz
 ```
 
 Import browser rendering from `vlx` and its optional DOM lifecycle from `vlx/dom`.
@@ -309,20 +309,19 @@ complete visual acceptance. **0.2.3** typesets bounded `itemize`/`enumerate`
 lists in problem pictures and preserves apostrophes/closing quotes across inline
 math boundaries. These are presentation fixes; source records are unchanged.
 
-VentiMath reports PR #455 at `6e9e0721` uses 0.3.3 for both site and Functions,
-but the backend review found a geometry-limit failure at 26,000 characters.
-**Use 0.3.4 for the Functions cutover.** It bounds geometry per live path and
-charges each instance to the same 300-million total work ceiling. The reported
-960 × 15,628 page and an exact 8,192-item page pass with unchanged pixels.
-The [earlier application verification](ADOPTION.md#vlx-032-application-verification)
-and reported Node slowdown remain relevant; no performance-parity claim is made.
+Application main `9e68efc4` uses VLX 0.3.4 and `vresvg`, removing native resvg.
+**0.3.5 supplies the renderer performance update**, preserving decoded pixels and
+the existing geometry, work, SVG and page limits. It ships a portable scanner
+compiled from VPM's own C source; no native install step is required. Compressed
+PNG bytes differ and can be larger. [Measurements](../packages/vresvg/bench/README.md)
+include cold calls and peak process memory, with remaining native-speed gaps stated.
 Update the handwritten-page `vresvg` pin to the sibling archive below as well.
 
 An npm registry mirror is planned for the same implementation and versioned API,
 including its licenses and provenance. GitHub Release archives remain the current
 installation source; the npm mirror has not been published.
 
-VLX is an original API, so **0.3.4 is its own version**, not a claim of KaTeX or
+VLX is an original API, so **0.3.5 is its own version**, not a claim of KaTeX or
 MathJax version compatibility. The app must adapt its rendering calls rather than
 aliasing those packages to VLX. Keep existing legacy source normalization, list
 handling, figure descriptions and text-on-error behavior. See the
@@ -333,13 +332,13 @@ Commit the app's package.json and bun.lock together and use
 it does not change or deploy the application. Actual reader/browser acceptance
 remains recorded separately from the automated Chrome checks.
 
-The release includes `vlx-0.3.4.tgz`, `vresvg-2.6.2.tgz`, `vpngjs-7.0.0.tgz`,
+The release includes `vlx-0.3.5.tgz`, `vresvg-2.6.2.tgz`, `vpngjs-7.0.0.tgz`,
 `consumer-package.json`, `release-manifest.json` and `SHA256SUMS`. The manifest
 records the committed source and exact archive/source hashes. Assets are
 immutable; revisions get new tags and URLs.
 
 ```sh
-node scripts/pack-vlx-release.cjs --ref COMMIT_SHA --tag vlx-0.3.4 --out /absolute/path/to/empty-output
+node scripts/pack-vlx-release.cjs --ref COMMIT_SHA --tag vlx-0.3.5 --out /absolute/path/to/empty-output
 node scripts/check-vlx-release.cjs /absolute/path/to/output
 # After publication:
 node scripts/check-vlx-release.cjs /absolute/path/to/output --published
@@ -776,13 +775,13 @@ upstream `@resvg/resvg-js`; it contains no native resvg addon or platform binari
 The version 2.6.2 identifies the API baseline, not reused upstream implementation.
 
 For the Functions problem-picture and handwritten-page cutover together, use
-these two packages from [VLX 0.3.4](https://github.com/VentiMath/vpm/releases/tag/vlx-0.3.4):
+these two packages from [VLX 0.3.5](https://github.com/VentiMath/vpm/releases/tag/vlx-0.3.5):
 
 ```json
 {
   "dependencies": {
-    "vlx": "https://github.com/VentiMath/vpm/releases/download/vlx-0.3.4/vlx-0.3.4.tgz",
-    "vresvg": "https://github.com/VentiMath/vpm/releases/download/vlx-0.3.4/vresvg-2.6.2.tgz"
+    "vlx": "https://github.com/VentiMath/vpm/releases/download/vlx-0.3.5/vlx-0.3.5.tgz",
+    "vresvg": "https://github.com/VentiMath/vpm/releases/download/vlx-0.3.5/vresvg-2.6.2.tgz"
   }
 }
 ```

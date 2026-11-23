@@ -5,11 +5,33 @@ const cache=new Map();let cachedBytes=0;
 function commands(source){
  let result=cache.get(source);if(result)return result;
  if(source.length>1000000)fail('Drawing path is too long');
- const tokens=[],scan=/[MLCQHVZ]|[-+]?(?:\d*\.\d+|\d+\.?\d*)(?:[eE][+-]?\d+)?/g;let end=0;
- for(const m of source.matchAll(scan)){if(!/^[\s,]*$/.test(source.slice(end,m.index)))fail('Unsupported drawing path command');tokens.push(m[0]);end=m.index+m[0].length;}
+ const scan=/[MLCQHVZ]|[-+]?(?:\d*\.\d+|\d+\.?\d*)(?:[eE][+-]?\d+)?/g;
+ const counts={M:2,L:2,C:6,Q:4,H:1,V:1,Z:0};
+ let end=0,kind,row,count=0,m,expect=false;result=[];
+ while((m=scan.exec(source))){
+  if(!/^[\s,]*$/.test(source.slice(end,m.index)))fail('Unsupported drawing path command');
+  end=scan.lastIndex;
+  const token=m[0],code=token.charCodeAt(0);
+  if(code>=65&&code<=90){
+   const command=counts[token];
+   if(row||expect)fail('Invalid drawing path coordinate');
+   kind=token;count=command;expect=!!count;
+   if(!count){result.push([kind]);kind=null;}
+   continue;
+  }
+  if(!kind)fail('Path must start with a command');
+  const value=Number(token);if(!Number.isFinite(value)||Math.abs(value)>1e9)fail('Invalid drawing path coordinate');
+  expect=false;if(!row)row=[kind];row.push(value);
+  if(row.length===count+1){result.push(row);row=null;if(kind==='M'){kind='L';count=2;}}
+ }
  if(!/^[\s,]*$/.test(source.slice(end)))fail('Invalid drawing path');
- result=[];let kind;for(let i=0;i<tokens.length;){if(/^[A-Z]$/.test(tokens[i]))kind=tokens[i++];if(!kind)fail('Path must start with a command');const count={M:2,L:2,C:6,Q:4,H:1,V:1,Z:0}[kind];if(count===undefined)fail('Unsupported path command');const values=tokens.slice(i,i+count).map(Number);if(values.length!==count||values.some(n=>!Number.isFinite(n)||Math.abs(n)>1e9))fail('Invalid drawing path coordinate');result.push([kind,...values]);i+=count;if(kind==='Z')kind=null;else if(kind==='M')kind='L';}
- if(source.length<=32768){if(cache.size>=2048||cachedBytes+source.length>2000000){cache.clear();cachedBytes=0;}cache.set(source,result);cachedBytes+=source.length;}
+ if(row||expect)fail('Invalid drawing path coordinate');
+ if(source.length<=32768){
+  // Bound retained arrays as well as string bytes. Pen paths often never recur.
+  const bytes=source.length*2+result.reduce((n,row)=>n+40+row.length*8,0);
+  if(cache.size>=2048||cachedBytes+bytes>2000000){cache.clear();cachedBytes=0;}
+  cache.set(source,result);cachedBytes+=bytes;
+ }
  return result;
 }
 const apply=(m,p)=>[m[0]*p[0]+m[2]*p[1]+m[4],m[1]*p[0]+m[3]*p[1]+m[5]];
@@ -23,19 +45,23 @@ function flatten(source,tolerance,budget){
  const contours=[];let points,x=0,y=0,start;
  function put(px,py){if(++budget.points>2000000)throw new VlxError('LIMIT','Raster geometry budget exceeded');points.push([px,py]);x=px;y=py;}
  // Adaptive de Casteljau subdivision, bounded in output-pixel coordinates.
- function cubic(a,b,c,d,depth=0){
-  const chord=Math.hypot(d[0]-a[0],d[1]-a[1]),length=Math.hypot(b[0]-a[0],b[1]-a[1])+Math.hypot(c[0]-b[0],c[1]-b[1])+Math.hypot(d[0]-c[0],d[1]-c[1]);
-  const cross=p=>chord?Math.abs((p[0]-a[0])*(d[1]-a[1])-(p[1]-a[1])*(d[0]-a[0]))/chord:Math.hypot(p[0]-a[0],p[1]-a[1]);
-  if(length-chord<=tolerance&&Math.max(cross(b),cross(c))<=tolerance){put(...d);return;}
+ function cubic(ax,ay,bx,by,cx,cy,dx,dy,depth=0){
+  const chord=Math.hypot(dx-ax,dy-ay),length=Math.hypot(bx-ax,by-ay)+Math.hypot(cx-bx,cy-by)+Math.hypot(dx-cx,dy-cy);
+  const cb=chord?Math.abs((bx-ax)*(dy-ay)-(by-ay)*(dx-ax))/chord:Math.hypot(bx-ax,by-ay);
+  const cc=chord?Math.abs((cx-ax)*(dy-ay)-(cy-ay)*(dx-ax))/chord:Math.hypot(cx-ax,cy-ay);
+  if(length-chord<=tolerance&&Math.max(cb,cc)<=tolerance){put(dx,dy);return;}
   if(depth>=20)throw new VlxError('LIMIT','Raster curve subdivision limit');
-  const mid=(p,q)=>[(p[0]+q[0])/2,(p[1]+q[1])/2],ab=mid(a,b),bc=mid(b,c),cd=mid(c,d),abc=mid(ab,bc),bcd=mid(bc,cd),center=mid(abc,bcd);cubic(a,ab,abc,center,depth+1);cubic(center,bcd,cd,d,depth+1);
+  const abx=(ax+bx)/2,aby=(ay+by)/2,bcx=(bx+cx)/2,bcy=(by+cy)/2,cdx=(cx+dx)/2,cdy=(cy+dy)/2;
+  const abcx=(abx+bcx)/2,abcy=(aby+bcy)/2,bcdx=(bcx+cdx)/2,bcdy=(bcy+cdy)/2;
+  const mx=(abcx+bcdx)/2,my=(abcy+bcdy)/2;
+  cubic(ax,ay,abx,aby,abcx,abcy,mx,my,depth+1);cubic(mx,my,bcdx,bcdy,cdx,cdy,dx,dy,depth+1);
  }
  for(const [kind,...v]of commands(source)){
   if(kind==='M'){points=[];contours.push({points,closed:false});put(v[0],v[1]);start=[x,y];continue;}
   if(!points)fail('Path must begin with moveto');
   if(kind==='L')put(v[0],v[1]);else if(kind==='H')put(v[0],y);else if(kind==='V')put(x,v[0]);
-  else if(kind==='C')cubic([x,y],v.slice(0,2),v.slice(2,4),v.slice(4,6));
-  else if(kind==='Q')cubic([x,y],[x+(v[0]-x)*2/3,y+(v[1]-y)*2/3],[v[2]+(v[0]-v[2])*2/3,v[3]+(v[1]-v[3])*2/3],v.slice(2));
+  else if(kind==='C')cubic(x,y,v[0],v[1],v[2],v[3],v[4],v[5]);
+  else if(kind==='Q')cubic(x,y,x+(v[0]-x)*2/3,y+(v[1]-y)*2/3,v[2]+(v[0]-v[2])*2/3,v[3]+(v[1]-v[3])*2/3,v[2],v[3]);
   else if(kind==='Z'){contours.at(-1).closed=true;[x,y]=start;}
  }
  const count=budget.points-startingPoints;

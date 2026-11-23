@@ -41,8 +41,8 @@ not a decision to recreate an older upstream release.
 | Dependency | Locked version | Application use | VPM status |
 | --- | --- | --- | --- |
 | `stripe` | 17.7.0 | Checkout sessions and signed completion webhooks in `functions/src/payments.ts` | [vstripe](../packages/vstripe): independent app-used APIs targeting current 23.1.0 completed; not released or adopted |
-| `vlx` | 0.2.3 | TeX/page layout in `functions/src/problemPicture.ts` | [VLX](../packages/vlx) release adopted; `mathjax-full` removed from the Functions production dependencies |
-| `@resvg/resvg-js` | 2.6.2 | Problem pictures through VLX 0.2.3 and handwritten pages in `functions/src/writeupPicture.ts` | VLX 0.3.2 replaces the problem-picture use; [vresvg](../packages/vresvg) now implements the writeup caller, with application adoption still pending |
+| `vlx` | 0.3.4 | TeX/page layout in `functions/src/problemPicture.ts` | [VLX](../packages/vlx) release adopted; `mathjax-full` removed from the Functions production dependencies |
+| `vresvg` | 2.6.2 (`vlx-0.3.4` archive) | Shared rasterizer for problem pictures and handwritten pages | Independently built and adopted on application main `9e68efc4`; upstream resvg and its native binaries are removed. |
 | `vpngjs` | 7.0.0 | Figure validation through `vlx/problem` | [Independent PNG reader](../packages/vpngjs), adopted through the VLX release; upstream `pngjs` remains a development comparison dependency |
 
 The Stripe replacement covers Checkout session creation and raw-body snapshot
@@ -62,34 +62,23 @@ are platform artifacts, not automatically separate JavaScript rewrite projects.
 A dependency may instead disappear when its caller is redesigned; that decision
 needs caller evidence, not merely a package count.
 
-### Why resvg says optional
+### Image rendering and native dependencies
 
-The published **VLX 0.2.3** declares resvg as an optional peer because browser
-math and SVG output do not need it. That version needs it for `problemPicture.ts`
-PNG calls. Application PR #455 moves those calls to VLX 0.3.2's owned renderer,
-but `writeupPicture.ts` separately imports resvg to draw handwritten pages.
-A VLX-only repin still needs that direct dependency. The new `vresvg` package
-implements the writeup API and can replace that dependency under its original
-import name after application verification.
+Application main `9e68efc4` uses VLX 0.3.4 and `vresvg` for both problem pictures
+and handwritten writeups. Native `@resvg/resvg-js` and its optional platform
+artifacts are removed. Those artifacts were builds of one renderer, not twelve
+independent JavaScript rewrite projects.
 
-VLX 0.3.0 independently draws its own glyph paths, rules, transforms,
-colors and embedded figures, then encodes PNGs with built-in zlib. It has no
-resvg runtime dependency. This is the useful app scope, not a generic SVG/CSS/font
-renderer. All 1,662 shipped outlines are included in 1,800 Node/Bun pixel
-comparisons; 30 unchanged app layout tests pass. Antialiasing and performance
-tradeoffs are documented in [VLX](../packages/vlx/README.md).
+The 0.3.4 geometry correction admits the 26,000-character page and the exact
+8,192-item boundary without changing pixels. Version 0.3.5 accelerates the same
+bounded rendering vocabulary using VPM's own portable scanner, streaming path
+parsing and lossless PNG filtering. No fonts, remote assets, native addon or
+upstream renderer code are loaded. Browser math remains independent of raster
+code. [Speed and peak-memory measurements](../packages/vresvg/bench/README.md)
+report both improvements and the remaining handwriting gap against native resvg.
 
-Resvg's twelve optional packages are operating-system/CPU/native-library builds
-of one renderer. `vresvg` now covers the writeup caller without these binaries;
-there is no separate JavaScript rewrite for each platform artifact. The atlas
-marks implementation coverage separately from the pending application repin.
-The native library remains installed until that repin lands.
-
-PR #455's application report passes 193/193 Functions and 457/457 site test files.
-Its 1,260-statement Node HTML-plus-PNG comparison takes 24.6 seconds on 0.3.2
-versus 12.8 seconds on 0.2.3. This reported regression needs stage-specific
-profiling; it is not explained away by the smaller synthetic comparisons.
-See the [branch verification record](ADOPTION.md#vlx-032-application-verification).
+The app reported deployment in progress; this record verifies committed adoption,
+not production completion. See [application evidence](ADOPTION.md#vlx-032-application-verification).
 
 ## Unified math rendering
 

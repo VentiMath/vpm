@@ -23,8 +23,17 @@ rounded stroke endpoints, zero-length pen marks and fractional page dimensions.
 
 The raster engine comes from VPM's own VLX implementation. It now lives here so
 math pictures and handwriting share one implementation. `vpngjs` is the only
-package dependency; Node's zlib provides compression and CRC. No resvg native
-addon, platform binary or font discovery is used. The `internal-*` exports serve
+package dependency; Node's zlib provides compression and CRC. The hot scan
+converter and PNG filters are written in `src/scan.c` and shipped
+as portable `scan.wasm`, with no libc or WASI imports. `scripts/build-resvg-wasm.cjs`
+reproduces the binary using checksum-pinned wasi-sdk 34. Only host memory is
+imported, capped at 256 MiB per live surface and grown as needed; that is not a
+total-process or concurrency bound. PNG filtering uses at most 1 MiB of reusable
+scratch and emits one lossless zlib stream in bounded chunks, avoiding a second
+full-page pixel buffer. The JavaScript reference remains available
+when WebAssembly is disabled (`VPM_RASTER_JS=1` also selects it for tests).
+No resvg native addon, platform binary or font discovery is used.
+The `internal-*` exports serve
 VLX and are not a public SVG contract. VLX retains its own error type.
 
 Limits bound source length (32 Mi characters), pixel area (16,777,216), dimensions
@@ -44,10 +53,10 @@ No private source or student handwriting is included in this package.
 
 ## VentiMath installation
 
-Use the updated `vresvg` archive accompanying [VLX 0.3.4](https://github.com/VentiMath/vpm/releases/tag/vlx-0.3.4):
+Use the updated `vresvg` archive accompanying [VLX 0.3.5](https://github.com/VentiMath/vpm/releases/tag/vlx-0.3.5):
 
 ```text
-https://github.com/VentiMath/vpm/releases/download/vlx-0.3.4/vresvg-2.6.2.tgz
+https://github.com/VentiMath/vpm/releases/download/vlx-0.3.5/vresvg-2.6.2.tgz
 ```
 
 Its package version identifies the upstream API baseline; the release URL
@@ -55,4 +64,7 @@ identifies this implementation revision. Update the VLX and direct `vresvg`
 pins together. Remove upstream `@resvg/resvg-js` and use `import { Resvg } from
 'vresvg'` for handwriting. No rendering-option change is needed. VLX 0.2.3 still
 needs the broader native renderer, so make the Functions cutover atomic.
-Application review, merge and production deployment remain separate.
+Application main `9e68efc4` already uses both 0.3.4 release pins and removes native
+resvg. The 0.3.5 update preserves its decoded pixels and limits; faster lossless
+compression can produce larger PNG files. Application repinning and production
+verification remain separate.
