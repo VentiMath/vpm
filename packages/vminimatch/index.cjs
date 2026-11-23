@@ -54,6 +54,7 @@ function optimize(parts,level,pattern=false,isWindows=false){
  return out.length?out:[''];
 }
 function preprocess(parts,options,isWindows){
+ if(options.noglobstar)parts=parts.map(part=>part==='**'?'*':part);
  const level=options.optimizationLevel??1;if(level<1)return [parts];
  const queue=[parts],rows=[];let cells=parts.length;
  for(let q=0;q<queue.length;q++){

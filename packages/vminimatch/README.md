@@ -35,3 +35,6 @@ This package is built and locally verified, not published or adopted by the app.
 - Fresh/frozen npm and Bun installs of the three-package VPM closure; CJS/ESM and TypeScript NodeNext/Bundler consumers.
 
 Commands and pinned controls: [conformance](../../scripts/minimatch-conformance/README.md). Benchmarks use [separate alternating processes](../../docs/DEVELOPMENT.md#replacing-a-package); [measurements and remaining regressions](bench/README.md) retain raw results and controls.
+
+With `noglobstar: true`, consecutive `**` segments remain separate single-level
+wildcards. Pattern optimization preserves their required directory depth.

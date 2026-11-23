@@ -53,3 +53,12 @@ test('bounded interpreter handles deep, repeated and nonmatching patterns withou
  assert.throws(()=>new v.Minimatch('x'.repeat(65537)),/too long/);for(const p of [null,1,{},undefined])assert.throws(()=>new v.Minimatch(p),/invalid pattern/);
  assert.equal(v('a/999999999/b','a/{0..1000000000}/b'),true);assert.equal(v('a/1000000001/b','a/{0..1000000000}/b'),false);
 });
+
+test('noglobstar preserves the depth of consecutive wildcard segments', () => {
+ for (const optimizationLevel of [0, 1, 2]) {
+  const m = new v.Minimatch('a/**/**', { noglobstar: true, optimizationLevel });
+  assert.equal(m.match('a/b/c'), true);
+  assert.equal(m.match('a/b'), false);
+  assert.equal(m.match('a/b/c/d'), false);
+ }
+});
