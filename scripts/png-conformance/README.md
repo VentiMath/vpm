@@ -44,8 +44,20 @@ exports the required private source files temporarily, uses separate Bun process
 and records the source hashes. It invokes no importer entry point or live service.
 
 `archives.cjs` also exercises construction/writing and frozen locks. The release
-check supports the original `pngjs` install name, checks all installed bytes and
+check requires the `vpngjs` tag/dependency/import name, checks all installed bytes and
 runs the writer tests on both runtimes. Public consumer declarations retain the
 reader's metadata fields and work without Node/DOM type dependencies. The writer
 benchmark measures the full construct/fill/write fixture path and three encoding
 inputs with isolated balanced processes; sizes are retained separately from time.
+
+The standalone release recipe is:
+
+```sh
+node scripts/pack-leaf-release.cjs --leaf vpngjs --ref COMMIT --tag vpngjs-7.0.0 --out EMPTY_DIRECTORY
+node scripts/check-pngjs-release.cjs /path/to/output
+node scripts/check-pngjs-release.cjs /path/to/output --published
+```
+
+The checker rejects an original-name consumer dependency/override or release
+tag. Existing incorrectly named releases are historical artifacts, not templates
+for new releases.

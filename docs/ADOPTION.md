@@ -197,15 +197,16 @@ than native; this is not a universal performance-parity claim.
 
 ## Direct PNG reader and fixture writer
 
-[pngjs-7.0.0](https://github.com/VentiMath/vpm/releases/tag/pngjs-7.0.0) is published
-from VPM `a02f9a11`. It adds bounded RGBA8 construction and synchronous writing to
+[vpngjs-7.0.0](https://github.com/VentiMath/vpm/releases/tag/vpngjs-7.0.0) supersedes
+the earlier incorrectly named standalone release. The runtime introduced in
+VPM `a02f9a11` is unchanged; the corrected release adds bounded RGBA8 construction and synchronous writing to
 the independent reader, covering the historical-importer fixture without an npm
-writer. Public URL bytes, fresh/frozen npm/Bun original-name installs, installed
+writer. Public URL bytes, fresh/frozen npm/Bun `vpngjs` installs, installed
 source hashes, Node/Bun writer controls and TypeScript 7 checks pass. The actual
 unchanged local-file fixture passes at app `fa274faf`; this is not a full-app test
 or a claim that the new direct pin has been adopted.
 
-Keep the existing `pngjs` import name and use the
+Use the `vpngjs` dependency/import name and the
 [installation pin](INSTALLATION.md#png-reader-and-fixture-writer). Preserve the
 historical importer's 32-million-pixel / 16-MiB read bounds explicitly. Older
 VLX/resvg sibling reader archives and the renderer encoder remain unchanged.

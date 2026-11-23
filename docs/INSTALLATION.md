@@ -40,29 +40,28 @@ installed runtime bytes. App adoption, full app tests and deployment are separat
 
 ## PNG reader and fixture writer
 
-Use [vpngjs 7.0.0](https://github.com/VentiMath/vpm/releases/tag/pngjs-7.0.0) for
+Use [vpngjs 7.0.0](https://github.com/VentiMath/vpm/releases/tag/vpngjs-7.0.0) for
 `PNG.sync.read`, `new PNG({width,height})` and `PNG.sync.write` with RGBA8 data:
 
 ```json
 {
   "dependencies": {
-    "vpngjs": "https://github.com/VentiMath/vpm/releases/download/pngjs-7.0.0/vpngjs-7.0.0.tgz"
+    "vpngjs": "https://github.com/VentiMath/vpm/releases/download/vpngjs-7.0.0/vpngjs-7.0.0.tgz"
   }
 }
 ```
 
 Import `{PNG}` from `vpngjs` for both readers and the fixture writer. Remove the
 separate npm fixture writer once these callers are migrated.
-The release tag is `pngjs-7.0.0`; the package name is `vpngjs`. Its published
-`consumer-package.json` supplies an optional original-name alias and override
-for callers that must keep `pngjs` imports. Direct callers can use the pin above
-without either alias or override.
+The release tag and consumer manifest use `vpngjs`; the manifest contains only
+a direct dependency under that name, with no original-name alias or override.
+The earlier `pngjs-7.0.0` tag is superseded; existing pinned URLs remain available.
 The package includes its own declarations. It has no runtime dependencies; older
 VLX/resvg sibling archives remain immutable reader-only builds. Read and write
 bounds and excluded streaming/alternate encoding APIs are in the
 [package contract](../packages/vpngjs/README.md). The historical importer must
 explicitly retain its 32-million-pixel / 16-MiB read limits. Release checks cover
-fresh/frozen npm/Bun installs under the original name and exact published bytes.
+fresh/frozen npm/Bun installs under `vpngjs` and exact published bytes.
 
 
 ## Material React Table

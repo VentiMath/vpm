@@ -93,19 +93,18 @@ runtime dependencies. Install it under its package name:
 ```json
 {
   "dependencies": {
-    "vpngjs": "https://github.com/VentiMath/vpm/releases/download/pngjs-7.0.0/vpngjs-7.0.0.tgz"
+    "vpngjs": "https://github.com/VentiMath/vpm/releases/download/vpngjs-7.0.0/vpngjs-7.0.0.tgz"
   }
 }
 ```
 
 Use `import {PNG} from 'vpngjs'` for readers and the constructor/write fixture.
 These callers no longer require npm pngjs or its `@types/pngjs` declarations.
-The release tag is `pngjs-7.0.0`; the archive's package name is `vpngjs`.
-The published `consumer-package.json` supplies an optional `pngjs` install alias
-and override for callers that must retain upstream imports. Direct application
-use under `vpngjs` needs neither. Only override a dependency graph whose callers
-fit the documented synchronous contract. The older VLX/resvg sibling archives
-remain reader-only and are not overwritten by this release.
+The release tag, package name and consumer manifest all use `vpngjs`.
+`consumer-package.json` declares only the direct `vpngjs` dependency; there is
+no original-name alias or override. The earlier `pngjs-7.0.0` tag is superseded
+and retained only so existing pinned URLs keep working. Its assets are unchanged.
+The older VLX/resvg sibling archives remain reader-only.
 
 Preserve each caller's accepted bounds when migrating. VentiMath's historical
 importer permits 32,000,000 pixels and 16 MiB, so its read should use
@@ -114,7 +113,7 @@ Cool importer's 8,000,000-pixel bound and bounded data URL fit the defaults.
 Public types expose bytes as `Uint8Array`; runtime pixel and encoded outputs are
 Buffers. Convert explicitly when a typed caller needs Buffer-specific methods.
 
-Fresh/frozen npm and Bun installs verify both names, CJS/ESM, TypeScript 7,
+Fresh/frozen npm and Bun installs verify the `vpngjs` name, CJS/ESM, TypeScript 7,
 constructor/writer controls and exact archive contents. The unchanged historical
 importer fixture at app `fa274faf` passes with both upstream and VPM; the private
 sources are exported temporarily, never committed. Writer controls cover 192
