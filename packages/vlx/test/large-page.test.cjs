@@ -19,7 +19,9 @@ test('a larger ordinary page and equivalent ordered text parts retain their full
  // An empty or truncated lower half must not count as a successful page.
  assert(png.data.subarray((png.height-100)*png.width*4).some((v,i)=>i%4!==3&&v<128));
 });
-test('26000 characters and the full 8192-item boundary preserve all page pixels',()=>{
+// This checks two near-16M-pixel renders, PNG decodes and whole-image hashes.
+// Bun's default five-second test budget is too short on shared CI runners.
+test('26000 characters and the full 8192-item boundary preserve all page pixels',{timeout:30000},()=>{
  for(const [statement,height,svgLength,digest] of [
   [phrase.repeat(400),15628,12121096,'4b79f2b8ec06e9cd491dffd7374e93d7acfba068a5d8c0ac62b259027c8b2121'],
   [phrase.repeat(409)+'x '.repeat(6),15978,12399185,'a0ef232fcb86eac64b7a00e48ba5316e0bb601673750a68a7d8e6861bc763fdc'],
