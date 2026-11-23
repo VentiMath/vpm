@@ -173,6 +173,9 @@ zero package dependencies. Its callback, Promise and synchronous APIs and
 `utils` formatter pass unchanged fs-extra 11.3.4/9.1.0 and Capacitor 8.2.0 config
 callers. Native filesystem operations replace universalify and the optional
 graceful-fs wrapper; descriptor-exhaustion retry queueing is outside this package.
-The next caller to replace is fs-extra, concentrating on the operations used by
-VentiMath's Capacitor build tools. These source packages are built and verified;
+[vfs-extra](../packages/vfs-extra) now supplies the independent caller above it,
+targeting 11.4.1 with the app's 11.3.4 and Ionic's 9.1.0 checked. The verified
+Capacitor workflows cover asset copies, config files, Swift template moves and
+obsolete CocoaPods cleanup. Its only package dependency is vjsonfile. These source packages are built and
+verified;
 release and application adoption remain separate.

@@ -272,6 +272,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vglob](packages/vglob) | glob 14.0.6; app 13.0.6 and backend 10.5.0 | Independent shared sync/async filesystem matching using VPM matching, paths and streams. Backpressure, abort, subtree pruning and bounded symlink cycles; 5,538 differential checks and unchanged rimraf cleanup callers. [Scope](packages/vglob/README.md), [measurements](packages/vglob/bench/README.md). |
 | [vrimraf](packages/vrimraf) | rimraf 6.1.4; app 6.1.3 and SDK 5.0.10 | Independent cleanup with lazy VPM glob matching. Whole-batch validation, permanent root protection, overlap deduplication, filter/cancellation traversal and unchanged Capacitor archive cleanup checks. [Scope](packages/vrimraf/README.md), [measurements](packages/vrimraf/bench/README.md). |
 | [vjsonfile](packages/vjsonfile) | jsonfile 6.2.1 | Independent callback/Promise/sync JSON file I/O with zero package dependencies. Literal line endings, receiver-preserving filesystem adapters, serialization-before-open behavior and fs-extra helper exports. All 50 upstream tests, 438 comparisons and unchanged Capacitor config callers pass. [Scope](packages/vjsonfile/README.md), [measurements](packages/vjsonfile/bench/README.md). |
+| [vfs-extra](packages/vfs-extra) | fs-extra 11.4.1; app 11.3.4 and Ionic 9.1.0 | Independent shared sync/async filesystem conveniences above vjsonfile. Guards overlapping trees and symlink targets, preserves native descriptor/callback behavior, and passes unchanged Capacitor asset/config/Swift workflows. [Scope](packages/vfs-extra/README.md), [measurements](packages/vfs-extra/bench/README.md). |
 | [vbabel-helper-validator-option](packages/vbabel-helper-validator-option) | @babel/helper-validator-option 7.29.7 | Independent option validation and spelling suggestions verified through Babel Core and both compilation-targets callers. [Measurements](packages/vbabel-helper-validator-option/bench/results/README.md). |
 | [vbabel-code-frame](packages/vbabel-code-frame) | @babel/code-frame 7.29.7; app 7.29.0 | Independent Babel source excerpts and highlighting with VPM tokenizer, identifiers and colors. Corrects tab alignment and multiline marker widths. [Measurements](packages/vbabel-code-frame/bench/results/README.md). |
 | [vjs-tokens](packages/vjs-tokens) | js-tokens 4.0.0 | Tokenizes JavaScript for Babel build diagnostics, with parity checks for highlighted text and source locations through both installed code-frame versions. [Measurements](packages/vjs-tokens/bench/results/README.md). |
@@ -493,9 +494,9 @@ version-scoped integration aliases remain limited to their tested baselines.
 ## Current verification
 
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
-recorded by the tests. All 175 Node runtime packages' public declarations compile
+recorded by the tests. All 176 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **268 packages**, including two declaration-only packages and
+compiler in NodeNext and bundler resolution modes. The catalog covers **269 packages**, including two declaration-only packages and
 browser packages `vcss-box-model`, `vuse-sync-external-store`, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,

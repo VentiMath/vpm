@@ -1,0 +1,48 @@
+{
+  "name": "vfs-extra",
+  "version": "11.4.1",
+  "description": "Independent filesystem conveniences for VentiMath build tools",
+  "type": "commonjs",
+  "main": "./index.cjs",
+  "module": "./index.mjs",
+  "types": "./index.d.cts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./index.d.mts",
+        "default": "./index.mjs"
+      },
+      "require": {
+        "types": "./index.d.cts",
+        "default": "./index.cjs"
+      }
+    },
+    "./esm": {
+      "types": "./esm.d.mts",
+      "default": "./esm.mjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "*.cjs",
+    "*.mjs",
+    "*.cts",
+    "*.mts",
+    "README.md",
+    "PROVENANCE.json",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "vjsonfile": "6.2.1"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "license": "MIT",
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vfs-extra"
+  }
+}

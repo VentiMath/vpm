@@ -467,6 +467,14 @@ jobs:
           node scripts/jsonfile-conformance/contract.cjs
           node scripts/jsonfile-conformance/callers.cjs
           node scripts/jsonfile-conformance/archives.cjs
+      - name: Independent filesystem conveniences and Capacitor workflows
+        run: |
+          npm --prefix scripts/fs-extra-conformance ci --ignore-scripts --no-audit --no-fund
+          node --test packages/vfs-extra/test/*.test.cjs
+          node scripts/fs-extra-conformance/upstream.cjs
+          node scripts/fs-extra-conformance/contract.cjs
+          node scripts/fs-extra-conformance/callers.cjs
+          node scripts/fs-extra-conformance/archives.cjs
       - name: Independent emitter and unchanged API viewer services
         run: |
           node --test packages/veventemitter3/test/*.test.cjs
@@ -1453,6 +1461,11 @@ jobs:
       - run: bun scripts/jsonfile-conformance/upstream.cjs
       - run: bun scripts/jsonfile-conformance/contract.cjs
       - run: bun scripts/jsonfile-conformance/callers.cjs
+      - run: npm --prefix scripts/fs-extra-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: bun test packages/vfs-extra/test
+      - run: bun scripts/fs-extra-conformance/upstream.cjs
+      - run: bun scripts/fs-extra-conformance/contract.cjs
+      - run: bun scripts/fs-extra-conformance/callers.cjs
       - run: bun scripts/source-map-conformance/string-parser-caller.cjs
       - run: bun scripts/source-map-conformance/identifier-caller.cjs
       - run: bun scripts/source-map-conformance/jsesc-caller.cjs

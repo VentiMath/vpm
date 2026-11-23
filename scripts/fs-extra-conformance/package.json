@@ -1,0 +1,1 @@
+{"name":"vpm-fs-extra-controls","private":true,"dependencies":{"@capacitor/cli":"8.2.0","fs-extra":"11.4.1","fs-extra-app":"npm:fs-extra@11.3.4","fs-extra-nine":"npm:fs-extra@9.1.0","klaw-sync":"3.0.2","mocha":"11.7.5"}}

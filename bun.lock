@@ -471,6 +471,13 @@
       "name": "vfresh",
       "version": "0.1.0",
     },
+    "packages/vfs-extra": {
+      "name": "vfs-extra",
+      "version": "11.4.1",
+      "dependencies": {
+        "vjsonfile": "6.2.1",
+      },
+    },
     "packages/vfull-ui-headless-calendar": {
       "name": "vfull-ui-headless-calendar",
       "version": "7.1.3",
@@ -2204,6 +2211,8 @@
     "vforwarded": ["vforwarded@workspace:packages/vforwarded"],
 
     "vfresh": ["vfresh@workspace:packages/vfresh"],
+
+    "vfs-extra": ["vfs-extra@workspace:packages/vfs-extra"],
 
     "vfull-ui-headless-calendar": ["vfull-ui-headless-calendar@workspace:packages/vfull-ui-headless-calendar"],
 

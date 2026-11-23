@@ -1,0 +1,22 @@
+{
+  "upstream": {
+    "name": "fs-extra",
+    "version": "11.4.1",
+    "repository": "https://github.com/jprichardson/node-fs-extra",
+    "commit": "1e223d3b1e26b7ebef7f402acf0e3b5533cc5833",
+    "integrity": "sha512-KYAb4c9BJQI6QqGKthV68OHe0badztdXJWKo0WtBA9IuCFPTKvE5ZdUBglP833aMjhaSPNO4A5j/EkzZtGlKjA=="
+  },
+  "implementation": {
+    "kind": "independent",
+    "targetScope": "Capacitor/Ionic asset copying, native-project moves, JSON config, output/ensure/remove helpers and callback/Promise native filesystem operations. Shared independently written sync/async traversal; only VPM jsonfile is a package dependency."
+  },
+  "differences": [
+    "Overlapping directory trees and convenience removal of filesystem roots reject explicitly.",
+    "Destination directory symlinks are not merged; file copies do not write through destination symlinks. Symlink no-clobber is honored.",
+    "Special device, socket and FIFO copying is outside scope; no graceful-fs global patches or descriptor retry queue.",
+    "Synchronous async filters reject; filters cannot bypass the post-filter source check; options remain unmodified.",
+    "emptyDir resolves undefined rather than incidental arrays or created-path values. Custom validation messages can differ.",
+    "Cross-device fallback uses injected tests; real cross-device mounts and Windows acceptance remain unverified.",
+    "No public release or application adoption claimed."
+  ]
+}
