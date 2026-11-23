@@ -96,7 +96,7 @@ class Minimatch {
  }
  parseNegate(){if(this.nonegate)return;let i=0;while(this.pattern[i]==='!'){this.negate=!this.negate;i++;}this.pattern=this.pattern.slice(i);}
  parse(part,index=0,parts=[]){
-  if(part==='')return '';
+  if(part===''||part==='.'||part==='..')return part;
   if(part==='**'&&!this.options.noglobstar)return GLOBSTAR;
   if(part==='**'&&this.options.noglobstar)part='*';
   part=norm(part,this.options);const options={...this.options};

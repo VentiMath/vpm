@@ -23,3 +23,5 @@ The public default-options helper has a bounded 64-pattern compilation cache. Di
 The initial implementation repeatedly compiled public-call patterns and used generic position sets for simple paths, range segments and exclusions. Bounded private compilation reuse and specialized literal/prefix/suffix/one-globstar/range/exclusion evaluation remove those avoidable allocations while retaining the general bounded interpreter and differential tests.
 
 Run the [conformance commands](../../../scripts/minimatch-conformance/README.md) before recording; run Node and Bun benchmarks sequentially.
+
+The subsequent Linux caller correction keeps dot and parent-directory segments literal under `nocase`. These recordings predate that narrow classification fix; their original source hashes are retained.

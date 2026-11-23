@@ -31,6 +31,7 @@ test('current numeric ranges, option snapshots, defaults, helpers and partial tr
  for(const o of [{},{dot:true},{nonegate:true},{noext:true},{noglobstar:true},{matchBase:true},{preserveMultipleSlashes:true},{nocaseMagicOnly:true,nocase:true}])for(const p of ['**/a','!a','@(a|b)','a//b','A','**'])for(const f of ['a','b','x/a','a/b','a//b','A','a/.x'])assert.equal(v(f,p,o),u.minimatch(f,p,o),JSON.stringify([f,p,o]));
  const d=v.defaults({dot:true}).defaults({nocase:true});assert(d('a/.X','**/*.x'));assert(new d.Minimatch('**/*.x').match('a/.X'));assert.deepEqual(['.a','b'].filter(d.filter('.*')),['.a']);assert.deepEqual(v.match(['a'],'x',{nonull:true}),['x']);
  const options={dot:false},m=new v.Minimatch('*',options);options.dot=true;assert.equal(m.match('.a'),false);
+ for(const dot of ['.','..'])assert.equal(new v.Minimatch(dot,{nocase:true,platform:'linux'}).set[0][0],dot);
  assert(v('/','x',{partial:true}));assert(!v('.x','**/b',{partial:true}));assert(v('a/b','a/**/c',{partial:true}));
  assert(v.makeRe('**/*.ts') instanceof RegExp);assert(v.makeRe('**/*.ts').test('a/b.ts'));assert(!v.makeRe('**/*.ts').test('a/b.js'));
  const segment=new v.Minimatch('*.js').set[0][0];assert(segment instanceof RegExp);assert.equal(segment.test('a.js'),true);assert.equal(segment.testUnchecked('a.js'),true);assert.equal(segment.exec('a.js')[0],'a.js');

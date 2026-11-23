@@ -31,7 +31,7 @@ This package is built and locally verified, not published or adopted by the app.
 
 - 588 upstream fixture comparisons across optimization levels 0/1/2; 28,900 generated comparisons against 11.0.9, 540 parent-traversal comparisons and 1,200 stable caller-pattern comparisons against versions 5/9/10.
 - Upstream extglob regressions, Windows/Unicode/class/escaping cases, compact ranges, partial matching, deep nesting and bounded adversarial inputs.
-- 214 unchanged glob/Redocly checks on each runtime, with positive instrumentation of replacement calls.
+- 244 unchanged glob/Redocly checks on each runtime, with positive instrumentation of replacement calls.
 - Fresh/frozen npm and Bun installs of the three-package VPM closure; CJS/ESM and TypeScript NodeNext/Bundler consumers.
 
 Commands and pinned controls: [conformance](../../scripts/minimatch-conformance/README.md). Benchmarks use [separate alternating processes](../../docs/DEVELOPMENT.md#replacing-a-package); [measurements and remaining regressions](bench/README.md) retain raw results and controls.

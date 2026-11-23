@@ -6,7 +6,7 @@ const control=fixture(),vpm=fixture(process.env.VPM_MINIMATCH_PACKAGE||path.reso
  for(const f of paths){fs.mkdirSync(path.dirname(cwd+'/'+f),{recursive:true});fs.writeFileSync(cwd+'/'+f,'fixture');}
  const patterns=['**/*','{src,functions}/**/*.{ts,tsx}','src/**/!(*.test).tsx','**/*.@(js|ts)','src/a[12].js','**/.*','src/*','**','public/**','src/a{1..2}.js','src/a{0..200}.js','**/../src/*.js','src/**/../*.js','./src/**','src/*/../*.js'];
  let count=0;
- for(const pattern of patterns)for(const extra of [{},{dot:true},{nocase:true},{ignore:['**/*.test.*','**/.cache/**']},{nodir:true},{absolute:true},{matchBase:true}]){
+ for(const pattern of patterns)for(const extra of [{},{dot:true},{nocase:true},{nocase:true,platform:'linux'},{ignore:['**/*.test.*','**/.cache/**']},{nodir:true},{absolute:true},{matchBase:true}]){
   const opts={cwd,...extra};const a=control.req('glob/raw').globSync(pattern,opts).sort(),b=vpm.req('glob/raw').globSync(pattern,opts).sort();assert.deepEqual(b,a,JSON.stringify({pattern,extra}));count++;
   assert.deepEqual((await vpm.req('glob/raw').glob(pattern,opts)).sort(),a);count++;
  }
