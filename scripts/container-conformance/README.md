@@ -24,3 +24,19 @@ mountinfo-only Docker evidence prevents WSL host classification. Current-control
 comparisons with Docker 4 match. Only import/export declarations are adapted for
 filesystem injection; upstream decision code is unmodified. These are simulated
 OS checks, not tests running on native Windows/WSL or inside Docker/Podman.
+
+## WSL implementation
+
+```sh
+node --test packages/vis-wsl/test/*.test.cjs
+node scripts/container-conformance/wsl.cjs
+node scripts/container-conformance/archives.cjs vis-wsl
+```
+
+The WSL contracts cover 384 combinations of platform, kernel release, proc
+version, WSL paths and container status, comparing both results and probe order
+with 3.1.1. Thirteen scenarios then load the unchanged, hashed open 8.4.2 caller
+with the full VPM closure. Four explicitly recorded upgrades from is-wsl 2.2.0
+cover custom kernels, Podman and mountinfo-only Docker evidence. Subprocess
+launching is intercepted. Public boolean snapshots, the private test hook,
+CJS/ESM and the full three-package archive closure are checked separately.

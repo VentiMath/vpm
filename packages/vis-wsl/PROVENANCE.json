@@ -1,0 +1,19 @@
+{
+  "upstream": {
+    "name": "is-wsl",
+    "version": "3.1.1",
+    "repository": "https://github.com/sindresorhus/is-wsl",
+    "commit": "d2ffb4a9844a590a53e14fb0c5e4762b3fdffaf3",
+    "integrity": "sha512-e6rvdUCiQCAuumZslxRJWR/Doq4VpPR82kqclvcS0efgt430SlGIk05vdCN58+VrzgtIcfNODjozVielycD4Sw=="
+  },
+  "implementation": {
+    "kind": "independent",
+    "targetScope": "Import-time WSL boolean from Linux version strings and custom-kernel markers, excluding Podman/Docker through the VPM-only container closure. Includes the installed CommonJS caller interface."
+  },
+  "differences": [
+    "Current custom-kernel marker checks and Podman exclusion deliberately extend the app's is-wsl 2.2.0 behavior.",
+    "vis-docker 4.0.0 also excludes mountinfo-only Docker containers missed by the upstream Docker 3 closure.",
+    "CommonJS exports the primitive boolean directly; ESM shares that snapshot. The upstream private __IS_WSL_TEST__ function hook is retained, outside public declarations.",
+    "No command launch, environment mutation, native WSL verification, public release or application adoption is claimed."
+  ]
+}

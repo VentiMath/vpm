@@ -1,0 +1,7 @@
+{
+  "sha256": {
+    "open/index.js": "6219b51b4164eb59f556fe3e001ee2e57120ac7e758f92d8cb2566dbc3c32ffb",
+    "is-wsl-app/index.js": "ad8b02493e3c5bc619ffe9de753bb41d8757c46dd7024e73a3d22eb66f9f902e"
+  },
+  "scope": "Unchanged open 8.4.2 and app is-wsl 2.2.0 decision paths; launches intercepted."
+}

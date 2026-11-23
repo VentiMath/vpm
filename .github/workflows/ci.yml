@@ -497,6 +497,11 @@ jobs:
           node --test packages/vis-inside-container/test/*.test.cjs
           node scripts/container-conformance/container.cjs
           node scripts/container-conformance/archives.cjs
+      - name: Independent WSL detection and unchanged opener
+        run: |
+          node --test packages/vis-wsl/test/*.test.cjs
+          node scripts/container-conformance/wsl.cjs
+          node scripts/container-conformance/archives.cjs vis-wsl
       - name: Independent emitter and unchanged API viewer services
         run: |
           node --test packages/veventemitter3/test/*.test.cjs
@@ -1501,6 +1506,8 @@ jobs:
       - run: npm --prefix scripts/container-conformance ci --ignore-scripts --no-audit --no-fund
       - run: bun test packages/vis-inside-container/test
       - run: bun scripts/container-conformance/container.cjs
+      - run: bun test packages/vis-wsl/test
+      - run: bun scripts/container-conformance/wsl.cjs
       - run: bun scripts/source-map-conformance/string-parser-caller.cjs
       - run: bun scripts/source-map-conformance/identifier-caller.cjs
       - run: bun scripts/source-map-conformance/jsesc-caller.cjs

@@ -203,3 +203,10 @@ above vis-docker. Current is-wsl 3.1.1 uses this helper; replacing its Docker 3
 closure with Docker 4 also recognizes mountinfo-only containers. The complete
 VPM closure passes packed-install checks, and detection/cache behavior is tested
 through the unchanged WSL caller. No upstream runtime dependency is retained.
+
+[vis-wsl](../packages/vis-wsl) completes the WSL boolean API above those helpers.
+It targets 3.1.1 while preserving the installed 2.2.0 caller interface. Custom
+kernel markers and Podman exclusion are intentional upgrades; unchanged open
+8.4.2 command choices are verified with launches intercepted. All three runtime
+packages are independently implemented in VPM. The opener itself, remaining
+helpers, public release and application cutover are still separate work.

@@ -746,6 +746,13 @@
       "name": "vis-unsafe",
       "version": "0.1.0",
     },
+    "packages/vis-wsl": {
+      "name": "vis-wsl",
+      "version": "3.1.1",
+      "dependencies": {
+        "vis-inside-container": "1.0.0",
+      },
+    },
     "packages/vjs-cookie": {
       "name": "vjs-cookie",
       "version": "3.0.8",
@@ -2314,6 +2321,8 @@
     "vis-stream": ["vis-stream@workspace:packages/vis-stream"],
 
     "vis-unsafe": ["vis-unsafe@workspace:packages/vis-unsafe"],
+
+    "vis-wsl": ["vis-wsl@workspace:packages/vis-wsl"],
 
     "vjs-cookie": ["vjs-cookie@workspace:packages/vjs-cookie"],
 

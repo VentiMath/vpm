@@ -1,0 +1,1323 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-23T10:51:27.150Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/container-conformance/load.cjs": "b375b658a3c8b69c4a7dc15e2be7c0bbc955f39b7030fcfc12244f9db729aaa0",
+    "../../scripts/container-conformance/package-lock.json": "c270a958de53c0f29f478b29076d8900e5f40ca49e5a7818f7addb86dfa38b60",
+    "bench/compare.cjs": "58d7450797d576f7244d26d48a901518be3960d655b8ac443c6a1b560f89a1c3",
+    "index.cjs": "2ce6ab9f239c9cc7f9e694194cc95278539a41bf316dffc336faa1fbe35752d9",
+    "index.mjs": "19674fd40a9bbd370020d95dccdf8b37b1ade5a8acd2a20509ba10bf5bf53f2f",
+    "package.json": "b47bbabf8a1886b699693e9eae649f9cefe9b08ba11ca1035ac256963642a0db"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 82166,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "non-Linux import snapshot (simulated)",
+            "iterations": 1000000,
+            "samples": [
+              6.711708999999985,
+              8.855874999999997,
+              8.178542000000022,
+              7.528958000000017,
+              6.711166999999989,
+              6.93112499999998,
+              6.3856250000000045,
+              6.802415999999994,
+              7.026166000000018,
+              9.369250000000022,
+              7.115291000000013,
+              7.655542000000025
+            ]
+          },
+          {
+            "case": "WSL kernel import snapshot (simulated)",
+            "iterations": 248048,
+            "samples": [
+              45.2461176868993,
+              47.849105818228736,
+              45.97950799845168,
+              45.855540056763154,
+              44.260586660646744,
+              42.833274204992804,
+              43.89372218280326,
+              43.16167435335117,
+              43.591026736760305,
+              44.26965748564792,
+              43.704911952525286,
+              41.58905937560446
+            ]
+          },
+          {
+            "case": "custom kernel import snapshot (simulated)",
+            "iterations": 165590,
+            "samples": [
+              68.25517845280503,
+              70.0960686031766,
+              70.5922761036297,
+              68.23378827223834,
+              68.85102361253746,
+              65.90399178694376,
+              67.56597620629289,
+              68.93053928377336,
+              69.37088592306294,
+              68.89582100368375,
+              69.28130321879365,
+              69.48839301890266
+            ]
+          }
+        ],
+        "checksum": 57280
+      },
+      "vpm": {
+        "pid": 82172,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "non-Linux import snapshot (simulated)",
+            "iterations": 1000000,
+            "samples": [
+              13.777083000000003,
+              14.63091700000001,
+              12.54925,
+              12.748208000000034,
+              12.385917000000006,
+              13.222167000000013,
+              12.11041700000004,
+              10.614874999999984,
+              11.039124999999956,
+              11.347124999999949,
+              11.997374999999977,
+              11.819291000000021
+            ]
+          },
+          {
+            "case": "WSL kernel import snapshot (simulated)",
+            "iterations": 248048,
+            "samples": [
+              45.72334386892864,
+              42.77079033090355,
+              43.22029607172784,
+              44.60494339805198,
+              43.09112349222735,
+              45.3794870347676,
+              45.291806424562665,
+              44.24429545894373,
+              44.56916403276789,
+              41.56621702251189,
+              42.86082129265337,
+              42.23476907695305
+            ]
+          },
+          {
+            "case": "custom kernel import snapshot (simulated)",
+            "iterations": 165590,
+            "samples": [
+              78.18054230327925,
+              84.3526662238055,
+              80.6381725949637,
+              85.41276647140538,
+              80.17644181411943,
+              79.1661634156649,
+              79.50711395615728,
+              81.58428649073018,
+              77.50039857479267,
+              84.3237333172286,
+              77.01954828190078,
+              91.25651911347317
+            ]
+          }
+        ],
+        "checksum": 3840
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 82193,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "non-Linux import snapshot (simulated)",
+            "iterations": 1000000,
+            "samples": [
+              11.568000000000012,
+              12.825832999999989,
+              12.184708,
+              11.17349999999999,
+              11.262666999999965,
+              11.571792000000016,
+              11.810834,
+              11.688084000000003,
+              11.90304100000003,
+              12.733249999999998,
+              12.366584000000046,
+              11.353666999999973
+            ]
+          },
+          {
+            "case": "WSL kernel import snapshot (simulated)",
+            "iterations": 274575,
+            "samples": [
+              45.61747063643794,
+              42.91586998087965,
+              43.40784120914154,
+              43.10206683055667,
+              43.90026768642474,
+              43.82439406355289,
+              43.295092415551245,
+              43.975383774924715,
+              43.02725302740602,
+              43.62560320495331,
+              42.93468815442068,
+              43.94640444323057
+            ]
+          },
+          {
+            "case": "custom kernel import snapshot (simulated)",
+            "iterations": 139148,
+            "samples": [
+              79.7460258142409,
+              86.781103573174,
+              78.42129962342221,
+              80.71352085549213,
+              78.48657544484999,
+              80.17991634806116,
+              78.59946962945929,
+              118.74616235950191,
+              250.69829965216923,
+              87.23355707591996,
+              82.33499583177664,
+              86.46189668554472
+            ]
+          }
+        ],
+        "checksum": 65280
+      },
+      "upstream": {
+        "pid": 82195,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "non-Linux import snapshot (simulated)",
+            "iterations": 1000000,
+            "samples": [
+              7.143292000000002,
+              6.498667000000012,
+              8.451375000000013,
+              7.2551249999999925,
+              7.852458000000013,
+              7.733417000000003,
+              7.968290999999994,
+              7.651167000000015,
+              9.041625000000039,
+              6.920749999999998,
+              7.0915840000000125,
+              7.206707999999992
+            ]
+          },
+          {
+            "case": "WSL kernel import snapshot (simulated)",
+            "iterations": 274575,
+            "samples": [
+              45.27876536465442,
+              44.535948283710944,
+              44.05156332513888,
+              41.44116543749458,
+              41.48729855230825,
+              42.207651825548496,
+              45.7484293908768,
+              43.92728034234723,
+              41.28213056541946,
+              45.01031776381674,
+              43.57294728216316,
+              41.21870162979157
+            ]
+          },
+          {
+            "case": "custom kernel import snapshot (simulated)",
+            "iterations": 139148,
+            "samples": [
+              67.90012073475734,
+              70.84543076436644,
+              67.19015005605549,
+              67.36502141604598,
+              67.24584614942361,
+              67.15511541667892,
+              67.86419495788668,
+              65.74893638428125,
+              71.20655704717328,
+              71.71261534481253,
+              70.894838589128,
+              69.98812774887152
+            ]
+          }
+        ],
+        "checksum": 3968
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 82196,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "non-Linux import snapshot (simulated)",
+            "iterations": 1000000,
+            "samples": [
+              6.37062499999999,
+              5.981125000000019,
+              6.252042000000017,
+              6.3301250000000095,
+              6.0245000000000175,
+              6.417625000000015,
+              5.9467089999999985,
+              6.108708000000007,
+              6.381833999999998,
+              5.410083000000014,
+              6.267667000000017,
+              5.999750000000006
+            ]
+          },
+          {
+            "case": "WSL kernel import snapshot (simulated)",
+            "iterations": 242325,
+            "samples": [
+              44.9456680078407,
+              43.088141958114036,
+              43.590562261425795,
+              43.2752171670278,
+              43.18975755699989,
+              41.72753533477769,
+              42.91550603528315,
+              43.61411740431253,
+              45.69981636232332,
+              44.265275972351205,
+              44.247737542556216,
+              43.12837717940798
+            ]
+          },
+          {
+            "case": "custom kernel import snapshot (simulated)",
+            "iterations": 135488,
+            "samples": [
+              72.79550218469561,
+              70.10891739489848,
+              71.7846451346244,
+              74.98911342701932,
+              71.23570353094054,
+              72.6752553731697,
+              84.60282091402937,
+              70.09569113131778,
+              72.62205508974984,
+              76.95823246339162,
+              72.20166361596611,
+              73.56955597543717
+            ]
+          }
+        ],
+        "checksum": 40512
+      },
+      "vpm": {
+        "pid": 82197,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "non-Linux import snapshot (simulated)",
+            "iterations": 1000000,
+            "samples": [
+              13.220958999999992,
+              12.791832999999997,
+              12.681874999999991,
+              12.100791999999956,
+              11.436749999999961,
+              11.558375000000012,
+              12.412750000000017,
+              12.412499999999966,
+              12.05416699999995,
+              13.56208300000003,
+              12.87824999999998,
+              13.134000000000015
+            ]
+          },
+          {
+            "case": "WSL kernel import snapshot (simulated)",
+            "iterations": 242325,
+            "samples": [
+              39.78489631692948,
+              40.17521510368304,
+              41.88916537707634,
+              38.64266171463964,
+              40.68314041060582,
+              41.471164758073165,
+              42.39330650985254,
+              42.0413370473539,
+              40.5148044980916,
+              41.74558960074274,
+              41.34495821727061,
+              39.81636232332617
+            ]
+          },
+          {
+            "case": "custom kernel import snapshot (simulated)",
+            "iterations": 135488,
+            "samples": [
+              74.47430768776566,
+              73.32353418752913,
+              75.09336620217226,
+              73.85617176428897,
+              71.9513314832313,
+              72.27546350968359,
+              70.68369154463831,
+              73.84602326405324,
+              71.741903341993,
+              71.6281146669815,
+              72.70416568256981,
+              71.40761543457755
+            ]
+          }
+        ],
+        "checksum": 3968
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 82198,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "non-Linux import snapshot (simulated)",
+            "iterations": 1000000,
+            "samples": [
+              11.069040999999999,
+              12.273375000000016,
+              11.334291000000007,
+              11.32008399999998,
+              11.825040999999999,
+              11.58850000000001,
+              11.307249999999954,
+              11.927041000000031,
+              11.554125,
+              11.516166999999996,
+              12.470416999999998,
+              11.428125000000023
+            ]
+          },
+          {
+            "case": "WSL kernel import snapshot (simulated)",
+            "iterations": 169595,
+            "samples": [
+              41.20281847931845,
+              40.40163919926928,
+              41.14188507915892,
+              40.34169639435086,
+              40.5490551018606,
+              40.38076004599211,
+              40.05596273475016,
+              41.38830743830857,
+              44.094259854359514,
+              40.40385624576149,
+              40.006586279077005,
+              41.08390577552403
+            ]
+          },
+          {
+            "case": "custom kernel import snapshot (simulated)",
+            "iterations": 142997,
+            "samples": [
+              75.51324153653597,
+              72.0970859528521,
+              75.16300341965182,
+              77.62050952117902,
+              75.21894165611859,
+              78.66074113442929,
+              77.15749980768801,
+              75.09685517877968,
+              75.12279278586284,
+              74.56857836178321,
+              79.9416561186599,
+              76.97481066036337
+            ]
+          }
+        ],
+        "checksum": 45824
+      },
+      "upstream": {
+        "pid": 82199,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "non-Linux import snapshot (simulated)",
+            "iterations": 1000000,
+            "samples": [
+              5.743666999999988,
+              6.502875000000017,
+              6.256916999999987,
+              6.370207999999991,
+              6.3457500000000095,
+              6.220790999999991,
+              6.925916999999998,
+              6.131,
+              6.412624999999991,
+              6.3230000000000075,
+              6.657500000000027,
+              7.190625000000011
+            ]
+          },
+          {
+            "case": "WSL kernel import snapshot (simulated)",
+            "iterations": 169595,
+            "samples": [
+              43.73114183790798,
+              42.51870043338543,
+              43.47121082579086,
+              42.3558064801439,
+              44.56892597069497,
+              45.053904891064015,
+              45.67769096966309,
+              42.760446947139116,
+              46.02853268079818,
+              46.673693210294985,
+              47.372168990831156,
+              45.549939561897645
+            ]
+          },
+          {
+            "case": "custom kernel import snapshot (simulated)",
+            "iterations": 142997,
+            "samples": [
+              167.04604292397715,
+              75.43951971020326,
+              74.81771645559003,
+              67.87846598180373,
+              71.06151177996786,
+              71.806870074197,
+              73.95143954068973,
+              72.54115121296228,
+              73.31185269621058,
+              72.35174863808348,
+              69.27010356860593,
+              68.43296712518442
+            ]
+          }
+        ],
+        "checksum": 3776
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 82200,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "non-Linux import snapshot (simulated)",
+            "iterations": 1000000,
+            "samples": [
+              8.101666999999992,
+              7.614167000000009,
+              7.636083000000013,
+              7.360416999999984,
+              6.6917080000000055,
+              7.242916999999976,
+              6.847083999999995,
+              8.155833999999999,
+              6.582833999999991,
+              7.0822089999999776,
+              6.5479159999999865,
+              7.411457999999982
+            ]
+          },
+          {
+            "case": "WSL kernel import snapshot (simulated)",
+            "iterations": 257292,
+            "samples": [
+              47.181152153973,
+              41.8141955443619,
+              42.731604558245174,
+              45.939049795563015,
+              46.037187320242815,
+              43.02569454161019,
+              59.66842342552438,
+              45.55232964880356,
+              45.3811544859536,
+              47.323177557016564,
+              45.04091460286362,
+              44.2407498095549
+            ]
+          },
+          {
+            "case": "custom kernel import snapshot (simulated)",
+            "iterations": 152913,
+            "samples": [
+              74.90724791221157,
+              69.81093824593114,
+              69.949088697495,
+              68.22452636466478,
+              72.08946917528264,
+              69.44171522368887,
+              68.17165970192157,
+              69.50494071792437,
+              67.57655660408228,
+              76.08574810513169,
+              74.89007474838589,
+              71.43985795844694
+            ]
+          }
+        ],
+        "checksum": 41792
+      },
+      "vpm": {
+        "pid": 82201,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "non-Linux import snapshot (simulated)",
+            "iterations": 1000000,
+            "samples": [
+              8.075000000000017,
+              7.87937500000001,
+              7.153459000000026,
+              6.609375,
+              6.384124999999983,
+              6.534375000000011,
+              7.206208000000004,
+              6.587166999999994,
+              6.523666999999989,
+              5.964959000000022,
+              6.457875000000001,
+              6.222791000000029
+            ]
+          },
+          {
+            "case": "WSL kernel import snapshot (simulated)",
+            "iterations": 257292,
+            "samples": [
+              43.350228534117036,
+              46.47718934129298,
+              43.89192823717805,
+              43.58536992988546,
+              52.531913157035476,
+              54.13774233166992,
+              47.724146106369446,
+              46.731923262285896,
+              47.422613217667084,
+              60.889635122740025,
+              49.8922430545842,
+              45.63281407894524
+            ]
+          },
+          {
+            "case": "custom kernel import snapshot (simulated)",
+            "iterations": 152913,
+            "samples": [
+              68.98612282801301,
+              66.7765330612833,
+              67.22476833231966,
+              68.09808845552718,
+              66.41303878676146,
+              69.96598065566702,
+              67.09725137823467,
+              67.93133350336431,
+              67.83132892559831,
+              66.65664135815734,
+              69.20356673402536,
+              68.68911080156705
+            ]
+          }
+        ],
+        "checksum": 3968
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 82202,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "non-Linux import snapshot (simulated)",
+            "iterations": 404810,
+            "samples": [
+              6.369449865368943,
+              5.72717077147307,
+              6.5274449741854585,
+              6.888211753662166,
+              6.064983572540252,
+              6.933603418887877,
+              11.575492206220156,
+              7.322879869568414,
+              9.157382475729339,
+              7.340068180133858,
+              8.51984140707985,
+              7.331629653417653
+            ]
+          },
+          {
+            "case": "WSL kernel import snapshot (simulated)",
+            "iterations": 185314,
+            "samples": [
+              41.82158390623465,
+              44.925553385065335,
+              43.66979828831064,
+              42.542657327563056,
+              41.41034136654523,
+              43.51263261275475,
+              42.78301153717475,
+              43.0638483870618,
+              43.709147716848186,
+              42.552775289508645,
+              42.05024984620708,
+              41.64396106068602
+            ]
+          },
+          {
+            "case": "custom kernel import snapshot (simulated)",
+            "iterations": 162833,
+            "samples": [
+              67.08432565880379,
+              67.38575718681099,
+              67.53749547081996,
+              65.09455700011625,
+              67.21764015893577,
+              66.87142655358548,
+              66.15059600940808,
+              69.08458359177784,
+              67.82127701387311,
+              65.79312547210961,
+              68.34481953903678,
+              66.58816087648026
+            ]
+          }
+        ],
+        "checksum": 42240
+      },
+      "upstream": {
+        "pid": 82203,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "non-Linux import snapshot (simulated)",
+            "iterations": 404810,
+            "samples": [
+              5.692485363503849,
+              6.939161581976743,
+              6.444690101529071,
+              6.24439119586968,
+              6.281855685383262,
+              5.8531558014871194,
+              6.624609075862716,
+              7.008226081371481,
+              6.548751266026062,
+              6.143521652133131,
+              6.760475284701448,
+              5.969775944270107
+            ]
+          },
+          {
+            "case": "WSL kernel import snapshot (simulated)",
+            "iterations": 185314,
+            "samples": [
+              46.26224138489261,
+              43.88227548916976,
+              44.385928747963085,
+              44.75894427836007,
+              46.537449949814786,
+              48.506637383036484,
+              45.41795547017497,
+              43.54388767173564,
+              45.752749387525846,
+              44.6215612420001,
+              45.28485165718745,
+              43.55400023743487
+            ]
+          },
+          {
+            "case": "custom kernel import snapshot (simulated)",
+            "iterations": 162833,
+            "samples": [
+              66.51241455970235,
+              68.88243169382105,
+              68.24835260665809,
+              67.36810106059568,
+              68.14701565407509,
+              70.27956863780639,
+              68.3942075623493,
+              69.18539853715161,
+              68.90981557792315,
+              65.91671221435409,
+              68.72020413552558,
+              69.31616441384746
+            ]
+          }
+        ],
+        "checksum": 4096
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "non-Linux import snapshot (simulated)",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 7.0707285000000155,
+          "vpmNs": 12.248167000000024,
+          "changePct": 73.223551151766
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 7.453146000000004,
+          "vpmNs": 11.749459000000002,
+          "changePct": 57.644288733911765
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 6.180375000000012,
+          "vpmNs": 12.547312500000004,
+          "changePct": 103.01862751046626
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 6.357979,
+          "vpmNs": 11.535145999999997,
+          "changePct": 81.42787197000803
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 7.301666999999981,
+          "vpmNs": 6.560771000000003,
+          "changePct": -10.146943156952792
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 6.363272893456166,
+          "vpmNs": 7.1282416442281455,
+          "changePct": 12.021624148143228
+        }
+      ]
+    },
+    {
+      "case": "WSL kernel import snapshot (simulated)",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 44.077154421725,
+          "vpmNs": 43.732295765335785,
+          "changePct": -0.7823977316903097
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 43.750113812255194,
+          "vpmNs": 43.51672220704742,
+          "changePct": -0.533465138420719
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 43.432889714226796,
+          "vpmNs": 41.014049313938216,
+          "changePct": -5.569144526656422
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 44.81141543087949,
+          "vpmNs": 40.476455673811046,
+          "changePct": -9.673784493049576
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 45.466742067378576,
+          "vpmNs": 47.07726823997649,
+          "changePct": 3.542207115282703
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 45.02189796777376,
+          "vpmNs": 42.6678934133417,
+          "changePct": -5.228576894108361
+        }
+      ]
+    },
+    {
+      "case": "custom kernel import snapshot (simulated)",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 68.91318014372855,
+          "vpmNs": 80.40730720454157,
+          "changePct": 16.67914183736743
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 67.882157846322,
+          "vpmNs": 81.52425834363439,
+          "changePct": 20.09673960011209
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 72.64865523145977,
+          "vpmNs": 72.4898145961267,
+          "changePct": -0.21864222376449804
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 72.44644992552287,
+          "vpmNs": 75.36609159632728,
+          "changePct": 4.030068655960206
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 69.88001347171307,
+          "vpmNs": 67.88133121448132,
+          "changePct": -2.860162953518608
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 68.55720584893743,
+          "vpmNs": 67.15098290886978,
+          "changePct": -2.0511672298404338
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "non-Linux import snapshot (simulated)",
+      "upstream_ns": 7,
+      "vpm_ns": 12,
+      "change_pct": 77.3,
+      "upstream_first_pct": 88.1,
+      "vpm_first_pct": 69.5,
+      "process_range_pct": "73.2, 57.6, 103.0, 81.4",
+      "control_max_abs_pct": 12,
+      "evidence": "higher time in every pair, beyond control spread"
+    },
+    {
+      "case": "WSL kernel import snapshot (simulated)",
+      "upstream_ns": 44,
+      "vpm_ns": 42,
+      "change_pct": -3.2,
+      "upstream_first_pct": -3.2,
+      "vpm_first_pct": -5.1,
+      "process_range_pct": "-0.8, -0.5, -5.6, -9.7",
+      "control_max_abs_pct": 5.2,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "custom kernel import snapshot (simulated)",
+      "upstream_ns": 71,
+      "vpm_ns": 78,
+      "change_pct": 10.4,
+      "upstream_first_pct": 8.2,
+      "vpm_first_pct": 12.1,
+      "process_range_pct": "16.7, 20.1, -0.2, 4.0",
+      "control_max_abs_pct": 2.9,
+      "evidence": "unestablished at this precision"
+    }
+  ]
+}
