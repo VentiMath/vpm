@@ -163,4 +163,16 @@ installed frontend 13.0.6 and backend 10.5.0 APIs. The unchanged rimraf 6.1.3 an
 seven-package runtime closure is entirely VPM. The implementation shares one
 segment-state traversal between sync/async calls and streams, supports subtree
 pruning and abort, and bounds cyclic symlink following. It is built and verified;
-release and app adoption are separate. The next caller to replace is rimraf.
+release and app adoption are separate. [vrimraf](../packages/vrimraf) now supplies
+the independent cleanup caller, including the archive cleanup used by Capacitor.
+
+## JSON configuration files
+
+[vjsonfile](../packages/vjsonfile) independently targets jsonfile 6.2.1 with
+zero package dependencies. Its callback, Promise and synchronous APIs and
+`utils` formatter pass unchanged fs-extra 11.3.4/9.1.0 and Capacitor 8.2.0 config
+callers. Native filesystem operations replace universalify and the optional
+graceful-fs wrapper; descriptor-exhaustion retry queueing is outside this package.
+The next caller to replace is fs-extra, concentrating on the operations used by
+VentiMath's Capacitor build tools. These source packages are built and verified;
+release and application adoption remain separate.

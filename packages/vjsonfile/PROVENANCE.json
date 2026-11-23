@@ -1,0 +1,20 @@
+{
+  "upstream": {
+    "name": "jsonfile",
+    "version": "6.2.1",
+    "repository": "https://github.com/jprichardson/node-jsonfile",
+    "commit": "97478af83f115359c331119330b418dfb7c5a6e7",
+    "integrity": "sha512-zwOTdL3rFQ/lRdBnntKVOX6k5cKJwEc1HdilT71BWEu7J41gXIB2MRp+vxduPSwZJPWBxEzv4yH1wYLJGUHX4Q=="
+  },
+  "implementation": {
+    "kind": "independent",
+    "targetScope": "JSON reading/writing with callback, Promise and synchronous APIs plus the utils formatter used by fs-extra. Verified through unchanged Capacitor config and plugin metadata callers. Native fs and JSON; no package dependencies."
+  },
+  "differences": [
+    "Injected filesystem methods retain their receiver.",
+    "Custom EOL strings are literal rather than JavaScript replacement-string programs.",
+    "Frozen reviver errors retain identity; byte-view BOM input is supported.",
+    "Native filesystem errors are surfaced without graceful-fs global patches or descriptor-exhaustion queueing.",
+    "No public release or application adoption claimed."
+  ]
+}

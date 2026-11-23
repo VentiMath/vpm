@@ -1,0 +1,61 @@
+{
+  "name": "vjsonfile",
+  "version": "6.2.1",
+  "description": "Independent JSON file I/O for VentiMath build tools, with zero package dependencies",
+  "type": "commonjs",
+  "main": "./index.cjs",
+  "module": "./index.mjs",
+  "types": "./index.d.cts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./index.d.mts",
+        "default": "./index.mjs"
+      },
+      "require": {
+        "types": "./index.d.cts",
+        "default": "./index.cjs"
+      }
+    },
+    "./package.json": "./package.json",
+    "./utils": {
+      "import": {
+        "types": "./utils.d.mts",
+        "default": "./utils.mjs"
+      },
+      "require": {
+        "types": "./utils.d.cts",
+        "default": "./utils.cjs"
+      }
+    },
+    "./utils.js": {
+      "import": {
+        "types": "./utils.d.mts",
+        "default": "./utils.mjs"
+      },
+      "require": {
+        "types": "./utils.d.cts",
+        "default": "./utils.cjs"
+      }
+    }
+  },
+  "files": [
+    "*.cjs",
+    "*.mjs",
+    "*.mts",
+    "*.cts",
+    "README.md",
+    "PROVENANCE.json",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=24"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vjsonfile"
+  }
+}

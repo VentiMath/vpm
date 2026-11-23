@@ -1,0 +1,12 @@
+{
+  "repository": "https://github.com/jprichardson/node-jsonfile",
+  "commit": "97478af83f115359c331119330b418dfb7c5a6e7",
+  "version": "6.2.1",
+  "sha256": {
+    "LICENSE": "a9801fb52ba22ef808682a094da8a7a480584b7ed0dfd0d888ab543616335031",
+    "test/read-file-sync.test.js": "91bec30a131bb8577b2af480251773bf31cb1187affbfedc7a2f89b7c9ad7dd2",
+    "test/read-file.test.js": "22cc5095060d5d336307342f98ff97955c3d376f16deec9ab555923c0f5508a1",
+    "test/write-file-sync.test.js": "a0002a4149bc82c87dfb27f4922e2ab4bd96b000b8cc95cc1cbb1f994a245b62",
+    "test/write-file.test.js": "bd7a03e165748a79af80d677bab83ee9f9523b1aaa13756ce3661aa29e80da53"
+  }
+}
