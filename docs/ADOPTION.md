@@ -7,7 +7,20 @@ the production bundle or that the corresponding commit has been deployed.
 
 ## VLX 0.3.2 application verification
 
-The application-side report for PR #455 at `b7d73475` verifies the 0.3.2 release
+**Updated November 23:** the app-side review reproduced a 0.3.2 work-budget
+failure for a synthetic 9,750-character statement. PR #455 now upgrades only
+the site; Functions remains on 0.2.3. The older branch results below are retained
+as evidence, not a claim that the Functions cutover is ready.
+
+VLX 0.3.3 uses the shared vresvg engine's active-edge accounting. The reported
+960 × 5,898 page passes with the same decoded glyph pixels, and 140-, 150-,
+160- and 300-repetition pages pass through the unchanged `problemPost` caller
+at `b7d73475` on Node and Bun with a synthetic store and no network. The work
+ceiling stays at 300 million; a dense active-edge regression still fails closed.
+Fresh archive/public-URL checks are required for release and application repinning
+is separate. This corrects acceptance, not the reported timing gap below.
+
+The earlier application-side report for PR #455 at `b7d73475` verifies the 0.3.2 release
 assets against SHA256SUMS. GitHub confirms the PR is open and changes only the
 frontend and Functions manifests and lockfiles. Its actual manifest changes are
 frontend 0.3.1 → 0.3.2 and Functions 0.2.3 → 0.3.2; the reported rendering
@@ -169,8 +182,9 @@ alias, CJS/ESM, Node/Bun PNGs and TS7 checks passed. The unchanged writeup calle
 at app `f79f2ffe` passes its two tests and 18 synthetic page cases on Bun and
 Node-targeted transpilation. No private handwriting or app source is published.
 
-Application adoption is pending. Use this alongside or after the VLX 0.3.2
-upgrade in PR #455; VLX 0.2.3 still depends on native resvg's broader API. No
+Application adoption is pending. Use this alongside or after the corrected VLX
+0.3.3 upgrade; 0.3.2 has a reproduced long-page work-limit failure and the app
+has held its Functions cutover. VLX 0.2.3 still depends on native resvg's broader API. No
 writeup source change or special option is needed. The atlas marks the package
 built and the native artifacts avoidable, without claiming installed adoption.
 

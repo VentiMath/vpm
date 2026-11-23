@@ -264,17 +264,18 @@ node scripts/check-dnd-release.cjs /absolute/path/to/output --published
 ## VLX math rendering
 
 **VentiLaTeX (VLX)**, pronounced **“Vee Ell Ex,”** is VentiMath's independent math
-renderer. The [VLX release](https://github.com/VentiMath/vpm/releases/tag/vlx-0.3.2)
-provides its `vlx` package for frontend integration:
+renderer. The [VLX release](https://github.com/VentiMath/vpm/releases/tag/vlx-0.3.3)
+provides its `vlx` package for frontend math and backend pictures:
 
 ```sh
-bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.3.2/vlx-0.3.2.tgz
+bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.3.3/vlx-0.3.3.tgz
 ```
 
 Import browser rendering from `vlx` and its optional DOM lifecycle from `vlx/dom`.
 No KaTeX stylesheet, engine selection, registry account or dependency overrides
-are needed. The archive pins `vpngjs` to its sibling release URL. That dependency
-supports the separate Node page-export entry; it is excluded from browser builds.
+are needed. The archive pins `vpngjs` and the shared `vresvg` rasterizer to sibling release
+URLs. They support the separate Node image entries and are excluded from browser
+builds.
 VLX 0.3.0 includes its own bounded PNG rasterizer. No native addon is required.
 Import `renderProblemPng` from `vlx/problem` for Discord picture output.
 
@@ -308,17 +309,22 @@ complete visual acceptance. **0.2.3** typesets bounded `itemize`/`enumerate`
 lists in problem pictures and preserves apostrophes/closing quotes across inline
 math boundaries. These are presentation fixes; source records are unchanged.
 
-VentiMath PR #455 at `b7d73475` pins 0.3.2 in the site and Functions; it remains
-open. Its [application verification](ADOPTION.md#vlx-032-application-verification)
-includes a passing deploy-style install and rendering comparison, with a reported
-Node HTML-plus-PNG slowdown. Keep Functions' direct `@resvg/resvg-js` dependency:
-`functions/src/writeupPicture.ts` still needs it for handwritten writeup pictures.
+VentiMath PR #455 now upgrades only the site to 0.3.2. Functions remains on 0.2.3
+because 0.3.2 rejects an ordinary 9,750-character problem page. **Use 0.3.3 for
+the Functions cutover.** It fixes raster work accounting without increasing the
+300-million guard: the reported 960 × 5,898 page and a larger 960 × 11,736 page
+pass through the unchanged app caller on Node/Bun. Its layout and pixels are
+unchanged. The [earlier application verification](ADOPTION.md#vlx-032-application-verification)
+and its reported Node rendering slowdown remain relevant; this release makes
+no performance-parity claim. After adopting corrected VLX, the app can separately
+replace the handwritten-page `@resvg/resvg-js` pin with the released `vresvg`
+archive described below.
 
 An npm registry mirror is planned for the same implementation and versioned API,
 including its licenses and provenance. GitHub Release archives remain the current
 installation source; the npm mirror has not been published.
 
-VLX is an original API, so **0.3.2 is its own version**, not a claim of KaTeX or
+VLX is an original API, so **0.3.3 is its own version**, not a claim of KaTeX or
 MathJax version compatibility. The app must adapt its rendering calls rather than
 aliasing those packages to VLX. Keep existing legacy source normalization, list
 handling, figure descriptions and text-on-error behavior. See the
@@ -329,13 +335,13 @@ Commit the app's package.json and bun.lock together and use
 it does not change or deploy the application. Actual reader/browser acceptance
 remains recorded separately from the automated Chrome checks.
 
-The release includes `vlx-0.3.2.tgz`, `vpngjs-7.0.0.tgz`,
+The release includes `vlx-0.3.3.tgz`, `vresvg-2.6.2.tgz`, `vpngjs-7.0.0.tgz`,
 `consumer-package.json`, `release-manifest.json` and `SHA256SUMS`. The manifest
 records the committed source and exact archive/source hashes. Assets are
 immutable; revisions get new tags and URLs.
 
 ```sh
-node scripts/pack-vlx-release.cjs --ref COMMIT_SHA --tag vlx-0.3.2 --out /absolute/path/to/empty-output
+node scripts/pack-vlx-release.cjs --ref COMMIT_SHA --tag vlx-0.3.3 --out /absolute/path/to/empty-output
 node scripts/check-vlx-release.cjs /absolute/path/to/output
 # After publication:
 node scripts/check-vlx-release.cjs /absolute/path/to/output --published
@@ -781,7 +787,8 @@ Only the URL and lockfile change; no animation settings need adjustment.
 Its `vpngjs` dependency is pinned inside the archive; no registry lookup or
 consumer override is required. This covers the generated SVG from
 `functions/src/writeupPicture.ts`, not arbitrary SVG/CSS/fonts. Adopt alongside
-or after VLX 0.3.2: the older VLX 0.2.3 still needs native resvg for problem
+or after VLX 0.3.3, which corrects 0.3.2’s long-page work-limit regression.
+The older VLX 0.2.3 still needs native resvg for problem
 pictures. Changing the writeup dependency alone is not sufficient while those
 older problem-picture calls remain.
 

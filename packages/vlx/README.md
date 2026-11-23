@@ -151,9 +151,8 @@ React and `observeMath` install the small forced-colors stylesheet once per docu
 For static HTML without either lifecycle, import `vlx/styles.css` once in the page,
 or call `installMathStyles(document)` from `vlx/dom`. No per-formula style tag ships.
 
-The browser entry has no executable upstream engine dependency. The package's
-one VPM dependency, `vpngjs`, validates figures in the separate Node page entry;
-it is not loaded by browser math. Node 24 and Bun are supported.
+The browser entry has no executable upstream engine dependency. Its VPM dependencies, `vpngjs` and `vresvg`, validate figures and draw PNGs in
+the separate Node image entries; neither is loaded by browser math. Node 24 and Bun are supported.
 
 ```js
 import { renderProblemSvg, renderProblemPng } from 'vlx/problem';
@@ -166,12 +165,23 @@ const bytes = renderProblemPng(problem); // Buffer, typed as Uint8Array
 ```
 
 The source PNG methods use VPM's independently written rasterizer, shared through
-`vresvg` starting in source 0.3.3. They
+`vresvg` starting in 0.3.3. They
 flatten the same glyph paths, draw rules and curves, composite embedded PNG
 figures and encode RGBA PNGs with the runtime's built-in zlib. No upstream resvg package,
 native addon, system font or external image lookup is required.
 `renderPng(renderer, tex, {scale: 2, background: 'white'})` remains available from
 `vlx/png`; page methods retain the API shown above.
+
+**0.3.3 corrects the 0.3.2 work-budget rejection of ordinary long Discord pages.**
+The shared scan converter charges active edges on each row and the spans it
+actually fills, rather than charging every edge across the entire glyph height.
+The 300-million work ceiling and pixel, SVG, image and geometry limits remain.
+A 9,750-character synthetic page now renders at 960 × 5,898, with identical
+pixels to the prior scan conversion; a 19,500-character page also passes.
+Dense simultaneous geometry still rejects before unbounded sampling work.
+The page layout and browser output are unchanged. This is an acceptance fix,
+not a claim to close the reported speed gap with native resvg.
+
 
 This rasterizer accepts only VLX's own generated drawing vocabulary. It is not
 an implementation of resvg's general SVG, CSS or font API. Fixed font outlines

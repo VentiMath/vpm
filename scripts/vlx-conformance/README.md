@@ -350,3 +350,24 @@ a detached clone, since native font metrics differ across operating systems.
 The live formula stays untouched. The selection browser gate separately checks
 real mouse/keyboard copying, and proves the bounds gate still catches displaced
 visible paths while ignoring oversized invisible text.
+
+
+## Large Discord pages (0.3.3)
+
+`packages/vlx/test/large-page.test.cjs` retains the reported 9,750-character
+synthetic statement, its 960 × 5,898 dimensions and a decoded RGBA digest. The
+trusted reference uses the 0.3.2 scan-conversion pixels; only its obsolete work
+counter was disabled while deriving the digest, outside shipping code and tests.
+A 19,500-character page and split text parts also pass. The release checker runs
+these tests on Node/Bun against both local and public archive installations.
+`vresvg` also tests that dense simultaneous edges still hit the unchanged work
+limit. SVG, geometry, pixel and image guards remain independent limits.
+
+`problem-caller.cjs APP_CHECKOUT [REF]` exports only the unchanged
+`functions/src/problemPicture.ts` from Git into temporary storage, stubs the data
+store and unrelated helper imports, and runs four synthetic pages through
+`problemPost` on Node and Bun. It denies network calls, prints aggregate outcomes
+and the source hash, then deletes the private source. `VPM_VLX_PACKAGE_DIR`
+selects an installed release. This verifies the rendering call, not live Discord
+queue processing or the whole Functions application. Elapsed times in this probe
+are observations, not balanced-process performance claims.

@@ -37,3 +37,9 @@ test('extreme round joins stop before subdivision can grow without a bound',()=>
  assert.throws(()=>new Resvg('<svg viewBox="0 0 1e-20 1e-20"><path d="M0 0L10 0L10 10" stroke="black" stroke-width="1e9" fill="none" stroke-linejoin="round"/></svg>',{fitTo:{mode:'width',value:100}}).render(),{code:'LIMIT'});
  const reversal=new Resvg(svg('<path d="M10 10L20 10L10 10" stroke="black" stroke-width="4" fill="none" stroke-linejoin="round"/>')).render();assert(dot(reversal,21,10)>100);
 });
+
+test('simultaneously active dense geometry still trips the unchanged work guard',()=>{
+ const {rasterize}=require('../raster.cjs');
+ const paths=Array.from({length:20000},(_,i)=>{const y=.1+i/50000;return `M0 ${y}L1 ${y+.25}L2 ${y}Z`;}).join(' ');
+ assert.throws(()=>rasterize(`<svg width="3" height="1"><path d="${paths}"/></svg>`),{code:'LIMIT',message:'Raster sampling budget exceeded'});
+});
