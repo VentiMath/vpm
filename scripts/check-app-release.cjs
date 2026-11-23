@@ -43,7 +43,8 @@ async function main(){
   }
   // Every exported JS subpath must resolve through the installed package.
   const specifiers=[];
-  for(const item of manifest.packages){const p=JSON.parse(fs.readFileSync(modules+'/'+item.name+'/package.json'));for(const key of Object.keys(p.exports||{'.':null}))if(key!== './package.json'&&!key.includes('*'))specifiers.push(item.name+(key==='.'?'':key.slice(1)));}
+  const runtimeTarget=value=>typeof value==='string'?/\.(?:cjs|mjs|js)$/.test(value):value&&Object.entries(value).some(([condition,target])=>condition!=='types'&&runtimeTarget(target));
+  for(const item of manifest.packages){const p=JSON.parse(fs.readFileSync(modules+'/'+item.name+'/package.json'));for(const [key,target] of Object.entries(p.exports||{'.':p.main}))if(key!== './package.json'&&!key.includes('*')&&runtimeTarget(target))specifiers.push(item.name+(key==='.'?'':key.slice(1)));}
   fs.writeFileSync(dir+'/entries.mjs',`import {createRequire} from 'node:module';const require=createRequire(import.meta.url);for(const s of ${JSON.stringify(specifiers)}){await import(s);require(s);}console.log('Installed ESM/CJS entries: ${specifiers.length}');`);
   for(const runtime of ['node','bun'])process.stdout.write(run(runtime,['entries.mjs'],dir));
   for(const ext of ['mts','cts']){

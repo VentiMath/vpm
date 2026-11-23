@@ -22,7 +22,10 @@ function build({family,ref,tag,out}) {
   const read=file=>JSON.parse(execFileSync('git',['show',manifest.sourceCommit+':'+file],{cwd:path.resolve(__dirname,'..'),encoding:'utf8'}));
   const types=value=>value&&typeof value==='object'&&(value.types||types(value.import)||types(value.default));
   for(const name of config.names){
-   const original=read('packages/'+name+'/PROVENANCE.json').upstream.name;
+   const provenance=read('packages/'+name+'/PROVENANCE.json');
+   const original=provenance.upstream.name||provenance.upstream.package;
+   assert.equal(typeof original,'string',name+': upstream import name required');
+   assert.ok(!Object.hasOwn(aliases,original),'Duplicate upstream import '+original);
    aliases[original]=name;
    for(const [entry,target] of Object.entries(read('packages/'+name+'/package.json').exports||{})){
     const declaration=types(target);if(typeof declaration!=='string')continue;
