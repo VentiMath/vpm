@@ -764,3 +764,27 @@ scenarios. App-side acceptance and production deployment are separate.
 Revision r2 fixes jsdom computed-style reads of authored non-matrix transforms,
 which could throw during animation frames. Matrix validation remains intact.
 Only the URL and lockfile change; no animation settings need adjustment.
+
+## Handwritten writeup pictures
+
+[resvg-2.6.2](https://github.com/VentiMath/vpm/releases/tag/resvg-2.6.2) supplies
+`vresvg` under the existing handwritten-page import name:
+
+```json
+{
+  "dependencies": {
+    "@resvg/resvg-js": "https://github.com/VentiMath/vpm/releases/download/resvg-2.6.2/vresvg-2.6.2.tgz"
+  }
+}
+```
+
+Its `vpngjs` dependency is pinned inside the archive; no registry lookup or
+consumer override is required. This covers the generated SVG from
+`functions/src/writeupPicture.ts`, not arbitrary SVG/CSS/fonts. Adopt alongside
+or after VLX 0.3.2: the older VLX 0.2.3 still needs native resvg for problem
+pictures. Changing the writeup dependency alone is not sufficient while those
+older problem-picture calls remain.
+
+Published checksums, fresh npm/Bun installs, original-name CJS/ESM imports,
+Node/Bun PNG rendering and TS7 consumers pass. See the
+[scope and performance](../packages/vresvg/README.md); native resvg is faster.

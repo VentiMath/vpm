@@ -38,3 +38,19 @@ Run `node --test packages/vresvg/test/*.test.cjs`, `bun test packages/vresvg/tes
 and `node scripts/resvg-conformance/compare.cjs` from the repository root.
 The pixel control uses the test-only resvg fixture in `scripts/vlx-conformance`.
 No private source or student handwriting is included in this package.
+
+## VentiMath installation
+
+[Release resvg-2.6.2](https://github.com/VentiMath/vpm/releases/tag/resvg-2.6.2)
+ships immutable archives with its VPM dependency pinned. Functions can retain
+its `@resvg/resvg-js` imports and set that dependency to:
+
+```text
+https://github.com/VentiMath/vpm/releases/download/resvg-2.6.2/vresvg-2.6.2.tgz
+```
+
+Adopt alongside or after VLX 0.3.2. VLX 0.2.3 still needs the broader native
+renderer for problem pictures and must not be redirected to this handwriting
+subset. The app's direct writeup call needs no new settings. Fresh npm/Bun
+public-URL installs, source hashes, Node/Bun rendering and TS7 checks pass.
+Application adoption and production deployment remain separate.

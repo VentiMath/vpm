@@ -14,7 +14,7 @@ aggregate pixel evidence, and removes the private source afterward.
 `VPM_RESVG_PACKAGE_DIR` can point it at an extracted release package.
 
 The 84-case Node run's maximum ink-weighted pixel difference was 8.25%; total ink
-changed by at most 1.43%. Different edge antialiasing is expected. Dimensions
+changed by at most 1.55%. Different edge antialiasing is expected. Dimensions
 must match exactly. These controls do not establish support for arbitrary SVG.
 
 The shared engine also passes VLX's 1,800 drawings with identical decoded pixels

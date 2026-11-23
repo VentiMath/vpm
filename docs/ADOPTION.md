@@ -160,3 +160,21 @@ Its root follows the current URL, hook and HTTP-error-data contracts. The explic
 responses for the existing callers. Publishing an archive and selecting that
 entry are separate migration steps; changing the dependency URL alone would not
 preserve those APIs. See [vky coverage](../packages/vky/README.md).
+
+## Handwritten-page renderer release
+
+`resvg-2.6.2` is published from VPM `fff4905f`, with `vresvg` 2.6.2 and a pinned
+`vpngjs` 7.0.0 archive. Public-URL npm/Bun installs, checksums, original import
+alias, CJS/ESM, Node/Bun PNGs and TS7 checks passed. The unchanged writeup caller
+at app `f79f2ffe` passes its two tests and 18 synthetic page cases on Bun and
+Node-targeted transpilation. No private handwriting or app source is published.
+
+Application adoption is pending. Use this alongside or after the VLX 0.3.2
+upgrade in PR #455; VLX 0.2.3 still depends on native resvg's broader API. No
+writeup source change or special option is needed. The atlas marks the package
+built and the native artifacts avoidable, without claiming installed adoption.
+
+Curved synthetic pages take 91.6 ms versus native 12.1 ms on Node and 177.5 ms
+versus 12.1 ms on Bun. Native font discovery was disabled for a fair rendering
+comparison. This release removes the native dependency; it is not a speedup.
+[Full measurements](../packages/vresvg/bench/README.md).
