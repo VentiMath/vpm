@@ -1,0 +1,11 @@
+{
+  "upstream": {
+    "name": "sisteransi", "version": "2.0.0",
+    "repository": "https://github.com/terkelg/sisteransi",
+    "commit": "305922fd6654df4c77d1e023aa6c55162958eccb",
+    "integrity": "sha512-2WCqLdt12eN6ehLI50S2/ZxoowXU3DD1KVPRyVP0WEsFahrGZZmCdq1K59qjJljMRIDTwx1D9YaRK+hDneBUMg=="
+  },
+  "implementation": {"kind":"independent","targetScope":"Terminal escape-sequence generation for Prompts and Clack callers; no terminal access or output side effects."},
+  "differences": ["Explicit row zero emits cursor position, instead of upstream's column-only command.","Reject invalid, fractional, nonfinite and unsafe counts; bound repeated output to one million repetitions.","Receiver-independent erase.lines and repeated string blocks; CJS and ESM entries."],
+  "verification": {"controls":["sisteransi 2.0.0","sisteransi 1.0.5"],"unchangedCallers":["prompts 2.4.2","@clack/core 1.4.2"],"byteComparisons":55958,"published":false}
+}

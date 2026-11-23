@@ -511,6 +511,13 @@ jobs:
           node scripts/lazy-prop-conformance/contract.cjs
           node scripts/lazy-prop-conformance/callers.cjs
           node scripts/lazy-prop-conformance/archives.cjs
+      - name: Independent terminal sequences and unchanged prompt callers
+        run: |
+          npm --prefix scripts/sisteransi-conformance ci --ignore-scripts --no-audit --no-fund
+          node --test packages/vsisteransi/test/*.test.cjs
+          node scripts/sisteransi-conformance/contract.cjs
+          node scripts/sisteransi-conformance/callers.cjs
+          node scripts/sisteransi-conformance/archives.cjs
       - name: Independent emitter and unchanged API viewer services
         run: |
           node --test packages/veventemitter3/test/*.test.cjs
@@ -1523,6 +1530,10 @@ jobs:
       - run: bun test packages/vdefine-lazy-prop/test
       - run: bun scripts/lazy-prop-conformance/contract.cjs
       - run: bun scripts/lazy-prop-conformance/callers.cjs
+      - run: npm --prefix scripts/sisteransi-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: bun test packages/vsisteransi/test
+      - run: bun scripts/sisteransi-conformance/contract.cjs
+      - run: bun scripts/sisteransi-conformance/callers.cjs
       - run: bun scripts/source-map-conformance/string-parser-caller.cjs
       - run: bun scripts/source-map-conformance/identifier-caller.cjs
       - run: bun scripts/source-map-conformance/jsesc-caller.cjs

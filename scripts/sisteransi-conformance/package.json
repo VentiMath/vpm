@@ -1,0 +1,11 @@
+{
+  "name": "vpm-sisteransi-conformance",
+  "private": true,
+  "dependencies": {
+    "sisteransi": "2.0.0",
+    "sisteransi-app": "npm:sisteransi@1.0.5",
+    "prompts": "2.4.2",
+    "@clack/core": "1.4.2",
+    "@clack/prompts": "1.6.0"
+  }
+}
