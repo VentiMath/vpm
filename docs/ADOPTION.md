@@ -194,3 +194,21 @@ fresh-process Node/Bun calls, the unchanged application SVG composer, and native
 resvg with font discovery disabled. Memory figures are desktop process peaks,
 not a measured Cloud Functions concurrency limit. Handwriting remains slower
 than native; this is not a universal performance-parity claim.
+
+## Direct PNG reader and fixture writer
+
+[pngjs-7.0.0](https://github.com/VentiMath/vpm/releases/tag/pngjs-7.0.0) is published
+from VPM `a02f9a11`. It adds bounded RGBA8 construction and synchronous writing to
+the independent reader, covering the historical-importer fixture without an npm
+writer. Public URL bytes, fresh/frozen npm/Bun original-name installs, installed
+source hashes, Node/Bun writer controls and TypeScript 7 checks pass. The actual
+unchanged local-file fixture passes at app `fa274faf`; this is not a full-app test
+or a claim that the new direct pin has been adopted.
+
+Keep the existing `pngjs` import name and use the
+[installation pin](INSTALLATION.md#png-reader-and-fixture-writer). Preserve the
+historical importer's 32-million-pixel / 16-MiB read bounds explicitly. Older
+VLX/resvg sibling reader archives and the renderer encoder remain unchanged.
+The app-side handoff carries the pin, SHA256, API limits and benchmark size/noise
+tradeoffs. Direct adoption and removal of upstream PNG declarations remain app
+work.

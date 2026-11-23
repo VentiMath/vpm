@@ -1,11 +1,13 @@
 # Release readiness
 
 Snapshot: November 23, 2026. The workspace has **275 package folders**. GitHub has
-**18 release families**, with 48 published revisions and archives for **82 distinct
+**19 release families**, with 49 published revisions and archives for **82 distinct
 package folders**. Thus 193 folders have no published archive. A release family
 can contain many dependencies; neither folder count nor release count is an app
 adoption count. The removed CSS-to-React-Native chain is one example of a published
-family that the app no longer needs.
+family that the app no longer needs. The standalone `pngjs-7.0.0` release adds
+fixture construction/writing to an already-published package, so the distinct
+package count remains 82; direct app adoption is still separate.
 
 There is a publication backlog: development has outpaced packaging and adoption.
 The whole project does not need to be finished before more packages can ship.
