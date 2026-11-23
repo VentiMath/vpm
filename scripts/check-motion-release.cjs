@@ -28,7 +28,7 @@ const run=(bin,args,cwd=tmp,env={})=>{try{return execFileSync(bin,args,{cwd,enco
   if(extracted)for(const p of manifest.packages)fs.cpSync(tmp+'/'+p.name+'/package',cwd+'/node_modules/'+(p.name==='vmotion'?'motion':p.name),{recursive:true});
   for(const p of manifest.packages){const installed=cwd+'/node_modules/'+(p.name==='vmotion'?'motion':p.name);for(const [file,digest]of Object.entries(p.sourceFiles))assert.equal(hash(fs.readFileSync(installed+'/'+file)),digest);assert.deepEqual(JSON.parse(fs.readFileSync(installed+'/package.json')).dependencies||{},p.dependencies);}
   const check=fs.readFileSync(__dirname+'/motion-react-conformance/archive-check.mjs','utf8').replaceAll("'vmotion'","'motion'").replaceAll("'vmotion/react'","'motion/react'").replace("['framer-motion','motion','motion-dom','@mui/material']","['framer-motion','motion-dom','motion-utils']");fs.writeFileSync(cwd+'/check.mjs',check);
-  for(const runtime of ['node','bun'])process.stdout.write(run(runtime,['check.mjs'],cwd));
+  for(const runtime of ['node','bun']){process.stdout.write(run(runtime,['check.mjs'],cwd));process.stdout.write(run(runtime,[__dirname+'/motion-react-conformance/jsdom.cjs'],root,{VPM_MOTION_RELEASE_INSTALL:cwd}));}
   for(const ext of ['cts','mts'])fs.writeFileSync(cwd+'/consumer.'+ext,fs.readFileSync(__dirname+'/motion-react-conformance/consumer.'+ext,'utf8').replaceAll("'vmotion/react'","'motion/react'").replaceAll("'vmui-material'","'@mui/material'"));
   process.stdout.write(run('node',[__dirname+'/motion-react-conformance/types.cjs',cwd],cwd));
   if(manager==='npm')process.stdout.write(run('node',[__dirname+'/motion-react-conformance/browser.cjs'],root,{VPM_MOTION_RELEASE_INSTALL:cwd,VPM_MOTION_MATERIAL:'app'}));

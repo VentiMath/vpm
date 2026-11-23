@@ -102,3 +102,11 @@ This adds consumer acceptance coverage without changing the runtime or making
 a new performance claim.
 
 [Release SSR measurements](bench/release.md) rerun the balanced isolated-process harness on Node 24 and Bun 1.4.4. They do not measure animation frame rate.
+
+The `motion-14.7.0-r2` correction handles jsdom computed-style readers that return
+authored transform functions instead of matrices. It uses Motion's identity
+fallback for those values while retaining strict matrix validation. The reported
+calendar (8 tests) and powered-by links (13 tests) files pass in an isolated copy
+of the app adoption branch after this correction. A jsdom animation/control
+regression now runs on Node and Bun, including against the packed release. This
+does not claim that the entire site suite or app adoption has completed.

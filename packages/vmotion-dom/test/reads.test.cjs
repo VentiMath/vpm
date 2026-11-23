@@ -78,9 +78,23 @@ test("matrix extraction handles rotation, scale, reflection and absent axes", ()
   assert.equal(p(undefined, "scaleZ"), 1);
 });
 test("invalid matrices reject without poisoning subsequent parses", () => {
-  for (const t of ["matrix(1,2)", "matrix(1,0,0,1,NaN,0)", "translateX(2px)"])
+  for (const t of ["matrix(1,2)", "matrix(1,0,0,1,NaN,0)", "matrix(1,0,0,1,3,0", "matrix3d(1,2)"])
     assert.throws(() => api.parseValueFromTransform(t, "x"));
   assert.equal(api.parseValueFromTransform("matrix(1,0,0,1,3,0)", "x"), 3);
+});
+test("authored non-matrix transforms use identity defaults without poisoning the matrix cache", () => {
+  const matrix = "matrix(2,0,0,3,10,20)";
+  assert.equal(api.parseValueFromTransform(matrix, "x"), 10);
+  for (const transform of ["", "none", "translateX(10px)", "rotate(20deg) scale(.8)", "translate3d(4px, 5px, 6px)", "var(--transform)"]) {
+    const { node } = fixture({ transform });
+    for (const name of ["x", "y", "z", "rotate", "skewX", "transformPerspective", "scale", "scaleX", "scaleY", "scaleZ"]) {
+      const expected = name.startsWith("scale") ? 1 : 0;
+      assert.equal(api.parseValueFromTransform(transform, name), expected);
+      assert.equal(api.readTransformValue(node, name), expected);
+    }
+  }
+  assert.equal(api.parseValueFromTransform(matrix, "x"), 10);
+  assert.equal(api.parseValueFromTransform(matrix, "scaleX"), 2);
 });
 test("nested CSS variable fallbacks, zero and cycles are bounded", () => {
   const { node } = fixture({

@@ -66,3 +66,17 @@ node scripts/check-motion-release.cjs /absolute/directory --published
 The November 22 application inventory at `2721de95` has 43 non-test import files;
 new public error views and powered-by buttons fit the already tested surface.
 This evidence establishes release readiness, not app adoption.
+
+## Authored transforms in jsdom
+
+`node scripts/motion-react-conformance/jsdom.cjs` (also run with Bun) mounts real
+React controls under jsdom 27.4.0 and animates four authored transform strings.
+It checks completion, retained focus/DOM identity and absence of frame errors.
+The pre-r2 runtime fails this fixture with the reported computed-matrix error.
+The release verifier also runs it against each fresh npm/Bun installation.
+
+An isolated copy of VentiMath adoption head `bf740c88` reproduced the report:
+calendar 0/8 and powered-by links 11/13 passed before the correction; 8/8 and
+13/13 pass with the corrected transform reader. Only the package reader changed
+in that scratch copy. The application source/branch and unrelated flaky test
+were not changed, and the whole site suite was not rerun.

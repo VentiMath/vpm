@@ -248,6 +248,7 @@ jobs:
         run: |
           node scripts/motion-react-conformance/build.cjs
           node --test packages/vmotion/test/react.test.cjs
+          node scripts/motion-react-conformance/jsdom.cjs
           node scripts/motion-react-conformance/types.cjs
           node scripts/motion-react-conformance/browser.cjs
           VPM_REACT_MODE=development node scripts/motion-react-conformance/browser.cjs
@@ -1241,6 +1242,7 @@ jobs:
         run: |
           node scripts/motion-react-conformance/build.cjs
           bun test packages/vmotion/test/react.test.cjs
+          bun scripts/motion-react-conformance/jsdom.cjs
       - name: MUI System controls on Bun
         run: |
           bun test packages/vmui-material/test/*.test.cjs

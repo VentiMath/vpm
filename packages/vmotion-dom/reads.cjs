@@ -90,7 +90,11 @@ function matrixValues(text) {
   return values;
 }
 function parseValueFromTransform(transform, name) {
-  if (!transform || transform === "none") return defaultTransformValue(name);
+  // DOM implementations such as jsdom can return authored transform functions
+  // instead of computed matrices. Match the identity fallback for that input;
+  // strings claiming to be matrices still receive strict validation below.
+  if (!transform || transform === "none" || !transform.startsWith("matrix"))
+    return defaultTransformValue(name);
   const m = matrixValues(transform),
     three = m.length === 16;
   const angle = (x) => (x * 180) / Math.PI;

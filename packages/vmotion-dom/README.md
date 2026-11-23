@@ -357,7 +357,10 @@ identity defaults. The decomposition is canonical: 2D rotation plus X skew,
 positive X scale and reflection sign on Y. A matrix does not uniquely identify
 its original transform function list. Simple 3D translation, scale, rotations
 and perspective are supported; arbitrary combined 3D skew/reflection recovery
-is outside this contract. Invalid matrices reject. A single-entry matrix cache
+is outside this contract. Non-matrix authored transforms, such as the values
+returned by jsdom's computed-style reader, use identity defaults (scale 1, other
+components 0), matching Motion's fallback. They are not parsed as computed
+matrices. Malformed matrix/matrix3d strings still reject. A single-entry matrix cache
 avoids repeated parsing without retaining an unbounded list of strings.
 
 `KeyframeResolver` snapshots keyframes, resolves an initial null from a MotionValue
