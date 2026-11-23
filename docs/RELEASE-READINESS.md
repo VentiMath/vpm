@@ -1,8 +1,8 @@
 # Release readiness
 
 Snapshot: November 23, 2026. The workspace has **277 package folders**. GitHub has
-**23 release families**, with 54 published revisions and archives for **90 distinct
-package folders**. Thus 187 folders have no published archive. A release family
+**24 release families**, with 55 published revisions and archives for **95 distinct
+package folders**. Thus 182 folders have no published archive. A release family
 can contain many dependencies; neither folder count nor release count is an app
 adoption count. The removed CSS-to-React-Native chain is one example of a published
 family that the app no longer needs. The notification, translation, form and
@@ -10,7 +10,8 @@ date utility releases add eight previously unpublished package folders. The
 standalone vpngjs archive adds fixture writing to an already-published package.
 The corrected `vpngjs-7.0.0` tag supersedes `pngjs-7.0.0`; those two tags count
 as one package family, with unchanged runtime and declarations.
-Direct app adoption is still separate.
+The Material release adds the five vmui package folders within its complete
+22-package runtime closure. Direct app adoption is still separate.
 
 There is a publication backlog: development has outpaced packaging and adoption.
 The whole project does not need to be finished before more packages can ship.
@@ -20,8 +21,8 @@ entries blurred those boundaries.
 
 | Group | Current state | What stands between it and app use |
 | --- | --- | --- |
-| `vmui-material` | In progress for a complete override; 100 components and the app-used theme factory are implemented. Full app typecheck and production build pass in an isolated VPM install. | Representative route/browser acceptance, a pinned 22-package closure release and app repin. Unsupported unused Material families do not have to be built first, but passing the build alone is not visual acceptance. |
-| `vmui-system`, `vmui-utils`, `vmui-styled-engine`, `vmui-private-theming` | Finished for the documented app scope; unreleased. | Publish with Material so its context, theme, styling and types stay consistent. Their local component/caller/archive tests already exist. |
+| `vmui-material` | Published as `vmui-material-9.5.0`: 100 app-scoped components, public colors and theme factories; exact archive, app build, focused caller and Chrome gates pass. | Merge the VPM-name consumer pins and third-party resolver mappings, then review signed-in routes and adopt in the app. Unobserved unused families remain outside scope. |
+| `vmui-system`, `vmui-utils`, `vmui-styled-engine`, `vmui-private-theming` | Published with Material, with a single verified theme/styling dependency graph. | Adopt the matching closure together; do not retain conflicting old VPM Emotion pins or override URLs. App acceptance remains separate. |
 | `vnotistack`, `vi18next` / `vreact-i18next` | Published as `vnotistack-3.0.2` and `vreact-i18next-18.0.1`, with exact dependency closures and verified public installs. | App adoption and notification/language-switch acceptance. Custom transitions and unobserved plugin/rich-text APIs remain outside scope. |
 | `vreact-hook-form`, `vhookform-resolvers`, `vzod` | Published together as `vreact-hook-form-7.92.0`; public installs, types and installed form-stack checks pass. | App adoption and current route/form acceptance. The source-schema audit is refreshed at f9482ea6. Zod's entire internal/plugin protocol and Hook Form's dynamic field-array/lens APIs are not implemented. Zod parsing regressions remain documented; they are not missing functionality or an automatic publication veto. |
 | `vdate-fns` | Published as `vdate-fns-4.4.0`, including all declared per-function/locale entries; plain Date/en-US and unchanged MUI adapter checks pass. | App adoption, including explicit mapping of MUI's date-fns imports to vdate-fns, and route/picker acceptance. Other locales, FP and UTCDate/TZDate modes are outside scope. |

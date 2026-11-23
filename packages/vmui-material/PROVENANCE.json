@@ -111,7 +111,7 @@
       "Unstable_TrapFocus",
       "TablePagination"
     ],
-    "remainingWork": "Consumer release verification and app-side route acceptance/adoption. Unobserved component families and broader Material APIs remain outside the verified scope; default FilledInput is needed only if a caller adopts it.",
+    "remainingWork": "Application repin and signed-in route acceptance. Unobserved Material families, default FilledInput and broader upstream APIs remain outside the documented application scope.",
     "colorHelpers": [
       "alpha",
       "darken",
@@ -353,5 +353,16 @@
     "typecheck": "pass",
     "productionBuild": "pass",
     "scope": "Isolated committed app snapshot with packed Material and complete owned dependency closure; no app checkout changes or deployment."
+  },
+  "consumerRelease": {
+    "tag": "vmui-material-9.5.0",
+    "sourceCommit": "aedc7ed3e1aecddbb271504373dacb2aac3b21c4",
+    "packages": 22,
+    "publicInstallVerified": [
+      "npm",
+      "Bun"
+    ],
+    "evidence": "scripts/mui-material-conformance/release-verification.json",
+    "appAdopted": false
   }
 }

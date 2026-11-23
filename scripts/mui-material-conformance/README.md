@@ -595,7 +595,7 @@ style intersections and typed styled variants, with negative inference checks.
 `pack-app-release.cjs --family vmui-material` packs a committed snapshot and
 pins the complete VPM closure. `check-app-release.cjs <directory>` verifies
 archive bytes, CJS/ESM exports, strict types, dependency identity and every
-component contract on Node/Bun, then serially runs the production Chrome suite
+component contract on Node/Bun, then runs at most two independent production Chrome fixtures at a time
 and representative development checks. `--published` additionally downloads
 all public assets, compares their checksums and repeats ordinary fresh/frozen
 npm and Bun installs, entries, types, identity and SSR. Before publication, Bun
@@ -612,3 +612,11 @@ requests and writes blocked. Copy, controls, focus and page width match; local
 screenshots retain the expected blocked-asset/3D fallback. This does not claim
 signed-in route or production acceptance. The sanitized
 [report](release-app-report.json) records counts without shipping private source.
+
+[Release verification](release-verification.json) records the complete combined
+gate and public-install outcome. Final package runtime/type/metadata hashes match
+the first candidate; only Material documentation changed before final packing.
+`--install-only` explicitly limits a repeat invocation to installer/archive/type/
+SSR checks; it does not claim another component run. A controlled interrupted
+browser run can resume with `VPM_RELEASE_BROWSER_FROM=<fixture>`, retaining the
+preceding successful log and verifying the same artifact hashes.

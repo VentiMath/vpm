@@ -235,3 +235,23 @@ rich-text/network plugins, dynamic field arrays, Zod internals and non-English
 date locales remain excluded. MUI's own date-fns imports need explicit resolver
 mapping to `vdate-fns`. The app must verify its routes, forms and language changes
 when adopting these packages.
+
+## Material consumer release
+
+[vmui-material-9.5.0](https://github.com/VentiMath/vpm/releases/tag/vmui-material-9.5.0)
+publishes the 100-component application subset and complete 22-package runtime
+closure. All archives and resolver manifests match their public SHA256 records;
+fresh/frozen npm and Bun installs, 363 runtime exports, strict TypeScript 7 and
+shared dependency identity pass. The component gate covers 61 contract groups on
+Node/Bun and 56 production plus five development Chrome groups. The initial
+serial run was intentionally resumed with two independent browser fixtures at a
+time; all groups completed, with identical runtime/declaration/metadata hashes
+across candidates. Only the Material README changed before the final packing.
+
+The committed VentiMath snapshot `f9482ea6` passes full typecheck/build and the
+same 196 dialog/search/theme tests against baseline and packed candidate. Public
+sign-in/404 routes preserve visible text, control semantics, focus and page width
+with external requests/writes blocked. Signed-in routes and non-Chrome browsers
+remain for app acceptance. This release does not change the application checkout
+or deploy it. [Pins and resolver guidance](INSTALLATION.md#material) preserve VPM
+package names and keep the styling/theme dependency instances shared.
