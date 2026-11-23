@@ -741,7 +741,7 @@ Keep existing `motion/react` imports and replace the direct `motion` dependency:
 ```json
 {
   "dependencies": {
-    "motion": "https://github.com/VentiMath/vpm/releases/download/motion-14.7.0/vmotion-14.7.0.tgz"
+    "motion": "https://github.com/VentiMath/vpm/releases/download/motion-14.7.0-r2/vmotion-14.7.0.tgz"
   }
 }
 ```
@@ -758,3 +758,7 @@ AnimatePresence and layout projection are outside this application subset.
 null-leading initial-keyframe and restored custom-root differences. Fresh npm/Bun
 installs verify the entire published closure, SSR, declarations and browser
 scenarios. App-side acceptance and production deployment are separate.
+
+Revision r2 fixes jsdom computed-style reads of authored non-matrix transforms,
+which could throw during animation frames. Matrix validation remains intact.
+Only the URL and lockfile change; no animation settings need adjustment.

@@ -18,7 +18,7 @@ public error views, link buttons and the notification bell. They need:
 - Material polymorphic roots, stable refs and DOM, hydration and reduced motion.
 
 [vmotion](../packages/vmotion) implements this application subset over
-[vmotion-dom](../packages/vmotion-dom). The `motion-14.7.0` consumer release
+[vmotion-dom](../packages/vmotion-dom). The `motion-14.7.0-r2` consumer release
 contains all three runtime packages with pinned internal URLs. Fresh npm/Bun
 installs, Node/Bun SSR, strict TS7 consumers and 46 Chrome scenarios cover both
 the VPM Material fixture and the app’s Material 7.2.0 on React 19.3.1.
