@@ -603,3 +603,12 @@ uses frozen peer installation and exact archive extraction because its resolver
 does not honor unpublished URL overrides; public URL resolution is verified
 after publication. The separate private-app snapshot audit remains opt-in and
 does not modify the application repository or deploy it.
+
+The November 23 release audit also exports the committed private application at
+`f9482ea6`: both baseline and packed candidate pass full typecheck/build and the
+same 196 tests in four dialog/search/theme files. `app-browser.cjs <audit-dir>`
+compares the production sign-in and 404 routes with a fresh profile, external
+requests and writes blocked. Copy, controls, focus and page width match; local
+screenshots retain the expected blocked-asset/3D fallback. This does not claim
+signed-in route or production acceptance. The sanitized
+[report](release-app-report.json) records counts without shipping private source.

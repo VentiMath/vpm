@@ -8,7 +8,13 @@ function run(runtime,file,extra={}) {
  try { process.stdout.write(execFileSync(runtime,[path.join(__dirname,file)],{cwd:path.resolve(__dirname,"../.."),env:{...process.env,...extra},encoding:"utf8",timeout:300000,maxBuffer:8e6})); }
  catch(e){process.stderr.write(String(e.stdout||"")+String(e.stderr||""));throw e;}
 }
-for(const runtime of ["node","bun"])for(const file of contracts)run(runtime,file);
-for(const file of browsers)run("node",file);
+// A bounded runner may be resumed on the same archives after interruption.
+// The caller must retain the preceding successful log; this invocation reports
+// only its selected coverage and never claims the skipped checks ran again.
+const resume=process.env.VPM_RELEASE_BROWSER_FROM;
+if(resume&&!browsers.includes(resume))throw Error("Unknown resume browser "+resume);
+if(!resume)for(const runtime of ["node","bun"])for(const file of contracts)run(runtime,file);
+const selected=resume?browsers.slice(browsers.indexOf(resume)):browsers;
+for(const file of selected)run("node",file);
 for(const file of ["theme-browser.cjs","text-field-browser.cjs","select-browser.cjs","dialog-browser.cjs","consumer-gaps-browser.cjs"])run("node",file,{VPM_REACT_MODE:"development"});
-console.log("Exact Material archives: "+contracts.length+" contracts on Node/Bun, "+browsers.length+" production and 5 development Chrome checks pass");
+console.log("Exact Material archives: "+(resume?0:contracts.length)+" contracts on Node/Bun, "+selected.length+" production and 5 development Chrome checks pass"+(resume?"; resumed at "+resume:""));

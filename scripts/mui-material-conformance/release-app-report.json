@@ -1,0 +1,119 @@
+{
+  "date": "2026-11-23",
+  "appCommit": "f9482ea60271f36969bd3585de0f9de0d589bfae",
+  "vpmBaseCommit": "7d93c0d22b5586a5c74b29660ed3cf9ec0267993",
+  "adopted": false,
+  "scope": "Read-only committed snapshots; packed owned closure. No application checkout edits or deployment.",
+  "checks": [
+    {
+      "label": "baseline-install",
+      "status": 0,
+      "signal": null,
+      "timedOut": false,
+      "ms": 23763
+    },
+    {
+      "label": "baseline-typecheck",
+      "status": 0,
+      "signal": null,
+      "timedOut": false,
+      "ms": 6541
+    },
+    {
+      "label": "baseline-build",
+      "status": 0,
+      "signal": null,
+      "timedOut": false,
+      "ms": 17009
+    },
+    {
+      "label": "candidate-install",
+      "status": 0,
+      "signal": null,
+      "timedOut": false,
+      "ms": 4522
+    },
+    {
+      "label": "candidate-frozen-install",
+      "status": 0,
+      "signal": null,
+      "timedOut": false,
+      "ms": 203
+    },
+    {
+      "label": "candidate-typecheck",
+      "status": 0,
+      "signal": null,
+      "timedOut": false,
+      "ms": 5160
+    },
+    {
+      "label": "candidate-build",
+      "status": 0,
+      "signal": null,
+      "timedOut": false,
+      "ms": 13835
+    }
+  ],
+  "focusedTests": {
+    "runner": "Bun 1.4.4",
+    "scopes": [
+      "external link",
+      "external-link dialog",
+      "toolbar search",
+      "theme construction"
+    ],
+    "baseline": {
+      "files": 4,
+      "passed": 196,
+      "failed": 0,
+      "assertions": 2793
+    },
+    "candidate": {
+      "files": 4,
+      "passed": 196,
+      "failed": 0,
+      "assertions": 2793
+    }
+  },
+  "publicBrowser": {
+    "externalRequestsBlocked": true,
+    "writesBlocked": true,
+    "authenticated": false,
+    "routes": [
+      {
+        "variant": "baseline",
+        "route": "/sign-in",
+        "material": 6,
+        "width": 1280,
+        "uncaughtErrors": 0,
+        "focusRetained": true
+      },
+      {
+        "variant": "baseline",
+        "route": "/404",
+        "material": 7,
+        "width": 1280,
+        "uncaughtErrors": 0,
+        "focusRetained": true
+      },
+      {
+        "variant": "candidate",
+        "route": "/sign-in",
+        "material": 6,
+        "width": 1280,
+        "uncaughtErrors": 0,
+        "focusRetained": true
+      },
+      {
+        "variant": "candidate",
+        "route": "/404",
+        "material": 7,
+        "width": 1280,
+        "uncaughtErrors": 0,
+        "focusRetained": true
+      }
+    ],
+    "comparison": "Visible copy, interactive-control semantics and page width match. Screenshots inspected after entrances settle; blocked external assets/3D are not visual acceptance of those features."
+  }
+}

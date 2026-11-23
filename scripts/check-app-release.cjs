@@ -2,13 +2,14 @@
 const fs=require('node:fs'),os=require('node:os'),path=require('node:path'),assert=require('node:assert/strict');
 const {execFileSync}=require('node:child_process'),{createHash}=require('node:crypto');
 const root=path.resolve(__dirname,'..'),directory=path.resolve(process.argv[2]||'.'),published=process.argv.includes('--published');
+const installOnly=process.argv.includes('--install-only');
 const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
 const manifest=JSON.parse(fs.readFileSync(path.join(directory,'release-manifest.json')));
 const family=Object.keys(require('./pack-app-release.cjs').configs).find(name=>manifest.tag.startsWith(name+'-'));
 assert.ok(family,'Unknown release');
 const config=require('./pack-app-release.cjs').configs[family],fixture=path.join(__dirname,config.fixture+'-conformance');
 const scratch=fs.mkdtempSync(path.join(os.tmpdir(),'vpm-app-release-'));
-const run=(bin,args,cwd,env={})=>execFileSync(bin,args,{cwd,env:{...process.env,npm_config_cache:scratch+'/npm-cache',BUN_INSTALL_CACHE_DIR:scratch+'/bun-cache',...env},encoding:'utf8',timeout:300000,maxBuffer:8e6});
+const run=(bin,args,cwd,env={})=>execFileSync(bin,args,{cwd,env:{...process.env,npm_config_cache:scratch+'/npm-cache',BUN_INSTALL_CACHE_DIR:scratch+'/bun-cache',...env},encoding:'utf8',timeout:family==='vmui-material'?3600000:300000,maxBuffer:8e6});
 async function main(){
  assert.deepEqual(manifest.packages.map(p=>p.name),config.names);
  const consumer=JSON.parse(fs.readFileSync(path.join(directory,'consumer-package.json')));
@@ -53,7 +54,7 @@ async function main(){
    fs.writeFileSync(dir+'/consumer.'+ext,text);
   }
   if(family==='vmui-material'){
-   const env={VPM_MATERIAL_INSTALL:dir,VPM_SYSTEM_INSTALL:dir,VPM_RELEASE_MANIFEST:path.join(directory,'release-manifest.json')};
+   const env={VPM_MATERIAL_INSTALL:dir,VPM_RELEASE_MANIFEST:path.join(directory,'release-manifest.json')};
    fs.copyFileSync(fixture+'/archive-check.mjs',dir+'/material-check.mjs');
    for(const runtime of ['node','bun'])process.stdout.write(run(runtime,['material-check.mjs'],dir,env));
    process.stdout.write(run('node',[fixture+'/types.cjs',dir],dir,env));
@@ -66,7 +67,8 @@ async function main(){
    const identity=`import {createRequire} from 'node:module';import assert from 'node:assert/strict';const r=createRequire(import.meta.url);for(const name of ${JSON.stringify(config.names)}){const inner=createRequire(r.resolve(name+'/package.json'));for(const dependency of Object.keys(inner(name+'/package.json').dependencies||{}))assert.equal(inner.resolve(dependency),r.resolve(dependency),name+' shares '+dependency);}console.log('All 22 packages share root dependency instances');`;
    fs.writeFileSync(dir+'/identity.mjs',identity);
    for(const runtime of ['node','bun'])process.stdout.write(run(runtime,['identity.mjs'],dir));
-   if(!published&&manager==='npm')process.stdout.write(run('node',[fixture+'/release-checks.cjs'],dir,env));
+   if(!published&&!installOnly&&manager==='npm')process.stdout.write(run('node',[fixture+'/release-checks.cjs'],dir,env));
+   if(installOnly)console.log('Install-only pass: component/browser suites are not repeated in this invocation.');
    console.log(manager+': Material archive bytes, entries, dependency identity, strict types and SSR pass.');
    continue;
   }

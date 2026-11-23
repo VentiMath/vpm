@@ -34,7 +34,7 @@ arbitrary 3D and other unobserved APIs remain outside the verified subset.
 components. It covers button controls; text/icons; Box/Paper/Divider; the form,
 input, Select, checkbox/radio/switch foundation; menus; Chip, Avatar, loading
 spinners, LinearProgress and Alert/AlertTitle feedback and Badge counts and ListItemButton navigation, AppBar/Toolbar shell layouts, Accordion with its Summary and Details, Skeleton placeholders, Container page layouts and Card/CardContent panels and their linked CardActionArea roots, plus AvatarGroup, Tooltip, Collapse, Slide, Drawer, SwipeableDrawer, the seven Table primitives, TableSortLabel, PaginationItem, Pagination, Autocomplete and Dialog with its title/content/action/description components. Its app-used theme factory and resolved-theme bridge are built;
-remaining component families are outside the verified scope. The full app typecheck and production build now pass with the packed VPM override; route-level visual acceptance and publication remain.
+remaining component families are outside the verified scope. The full app typecheck and production build pass with the packed VPM closure at app `f9482ea6`. Public sign-in/404 routes retain visible copy, control semantics, focus and page width in a network-blocked Chrome check. The consumer release is `vmui-material-9.5.0`; signed-in route acceptance and app adoption remain separate. [Pins and resolver mappings](INSTALLATION.md#material).
 
 Autocomplete now covers the five direct school/student selection callers.
 TableSortLabel and numbered Pagination now cover the adopted table’s sorting and

@@ -23,11 +23,11 @@ Custom component roots default to native button semantics, including `type="butt
 
 The app-shaped Chrome fixture checks light/dark themes, CSS-variable themes, RTL styles, narrow/wide layouts, custom gradients and icon dimensions, keyboard interactions, loading, toggle selections, hydration and focus preservation. These are component checks, not full application acceptance or Safari/Firefox certification. Generated markup and ripple styling are not required to be byte-identical.
 
-Typography covers semantic variants, custom roots, truncation, spacing and physical alignment in RTL. Link retains native navigation, button and router semantics, underline states and keyboard focus. SvgIcon covers accessible titles, decorative icons, SVG child geometry, theme sizing and forwarded refs. `createSvgIcon` supports unchanged Material icon modules: ArrowBack, OpenInNew and Print from both current 9.5.0 and app-pinned 7.2.0 are checked in Chrome. FuseSvgIcon uses styled Box with SVG sprite references and an Icon fallback; those are separate from SvgIcon. The `utils` entry currently exposes only `createSvgIcon`.
+Typography covers semantic variants, custom roots, truncation, spacing and physical alignment in RTL. Link retains native navigation, button and router semantics, underline states and keyboard focus. SvgIcon covers accessible titles, decorative icons, SVG child geometry, theme sizing and forwarded refs. `createSvgIcon` supports unchanged Material icon modules: ArrowBack, OpenInNew and Print from both current 9.5.0 and app-pinned 7.2.0 are checked in Chrome. FuseSvgIcon uses styled Box with SVG sprite references and an Icon fallback; those are separate from SvgIcon. The `utils` entry exposes the app-used helpers, including `createSvgIcon`; its public exports are checked in the archive gate.
 
 For existing callers, Typography retains Material 7’s `paragraph`, direct System props and CSS/palette-path colors that Material 9 dropped. Explicit root ARIA attributes take precedence over SVG child attributes; a supplied title makes a decorative child accessible unless the root explicitly hides it. Unknown typography variants and icon sizes cannot read inherited object properties.
 
-The app-used theme factory is implemented: palette, typography, transitions, theme assembly and CSS-variable schemes pass 222 unchanged builds across all 37 VentiMath presets. Named color ramps, CSS-variable type augmentation and the full application typecheck/build are now verified in isolated packed installs. The 100 implemented components do not constitute the whole Material API; unobserved families such as the default FilledInput remain outside the verified scope. No upstream Material implementation is bundled. Runtime dependencies are the VPM System closure, with React as a peer; app adoption remains separate.
+The app-used theme factory is implemented: palette, typography, transitions, theme assembly and CSS-variable schemes pass 222 unchanged builds across all 37 VentiMath presets. Named color ramps, CSS-variable type augmentation and the full application typecheck/build are now verified in isolated packed installs. The 100 implemented components do not constitute the whole Material API; unobserved families such as the default FilledInput remain outside the verified scope. No upstream Material implementation is bundled. Runtime dependencies are VPM System, Floating UI and transitions, with React and React DOM as peers; app adoption remains separate.
 
 The earlier button and text/icon benchmarks predate the custom native-root correction. The earlier button measurements found Node icon-button SSR about 20% slower than both controls. The new Typography/Link/SvgIcon measurements are inconclusive on Node and Bun: process-pair variation and identical-source controls do not establish a speedup or regression in any case. Raw samples, including large control differences, are retained. These are isolated SSR costs, not application interaction measurements.
 
@@ -160,7 +160,6 @@ established single-line or full-field regression in this recording. Raw samples
 and all control outliers remain in the report. Browser behavior, textarea
 ownership and theme overrides are checked separately; these are SSR costs.
 
-
 Input and OutlinedInput share the native input engine above. Input adds the
 standard underline; OutlinedInput adds a decorative fieldset/legend and a notch
 that follows focus, filled state and start adornments, with an explicit `notched`
@@ -194,7 +193,6 @@ outlined SSR takes 9–13% less time and multiline about 25% less than the two
 controls. Bun takes less time in seven of eight cases; the app full-field direction
 is unestablished. These are local SSR measurements, not browser latency claims.
 
-
 InputLabel and InputAdornment cover the shared form wrappers used by VentiMath:
 label shrink follows focus, filled values (including zero) and start adornments;
 explicit `shrink` wins. Labels preserve native `htmlFor`, required asterisks,
@@ -215,7 +213,6 @@ outlined and full-field directions are unestablished; multiline takes 20.5% less
 Bun establishes lower time for multiline against both controls and outlined
 against app 7; other directions are unestablished. No case establishes a
 regression. All samples and controls are retained in the report.
-
 
 TextField covers standard and outlined search, password, numeric/date and multiline
 inputs used by VentiMath, including React Hook Form value/reset/focus, generated
@@ -243,7 +240,6 @@ and about 21% less Bun time. Complete form SSR takes 16.5% less on Node and
 runtimes, and outlined is lower on Bun; the remaining directions are
 unestablished at this precision. These measurements do not establish browser
 interaction or application throughput improvements.
-
 
 The menu foundation adds List, ListItem, MenuItem, MenuList, ListItemIcon, ListItemText,
 ListSubheader, Menu, Popover and Select. VentiMath callers include FuseSearch's standalone
@@ -279,7 +275,6 @@ less Node time; several other comparisons remain noisy. Closed-menu SSR is
 than interactive opening. All pairs, including large control outliers, remain
 in the report; no case establishes a regression.
 
-
 Select covers the scalar, numeric and multiple values used by reminder schedules,
 WARML forms, roster switching and table filters. It supports controlled/uncontrolled
 values and opening, empty selections, custom value display, disabled/read-only
@@ -309,7 +304,6 @@ use 25.6% less Bun time. The app7 complete-field Node result is inconclusive
 because identical-source controls vary substantially. All raw samples and
 controls are retained; no measured case establishes a regression.
 
-
 Checkbox and FormControlLabel cover WARML interest/confirmation Controllers,
 authentication remember/terms fields and table selection. The input owns native
 focus, label activation, Space toggling, validation and form submission; its outer
@@ -332,8 +326,7 @@ Chrome checks with React 19.3.1, current/app Hook Form Controllers, native reset
 labels and accessibility, theme/CSS-variable/RTL state matrices, refs and hydration.
 [Checkbox measurements](bench/checkbox/README.md) use prepared 12-control SSR
 workloads and the isolated process harness. They do not measure click latency or
-application throughput. The package remains partial, with no release or app
-cutover in this unit.
+application throughput. App adoption is separate from the package release.
 
 Against app Material 7, the four Checkbox/label workloads use 5–17% less Node
 SSR time and 16–25% less Bun time. Against Material 9, small Checkbox SSR uses
@@ -362,13 +355,12 @@ Verification includes 388 current/app SSR comparisons, React19.3.1 production
 and development Chrome checks, Hook Form settings and team-choice fixtures,
 keyboard navigation, resets, refs and theme changes. [Radio measurements](bench/radio/README.md)
 measure prepared SSR work, not gesture latency or whole-app throughput.
-Material remains partial; this unit does not publish or switch the app.
+App adoption remains separate.
 
 The isolated Radio workloads use 13–26% less Bun SSR time than app Material7.
 Node comparisons are inconclusive: pair variation and identical-source controls
 are too large to establish a direction. Every sample is retained; these results
 do not imply a browser interaction speedup.
-
 
 ## Switch
 
@@ -391,14 +383,12 @@ Current9/app7 SSR and real Chrome comparisons cover light/dark, RTL,
 CSS-variable palettes and the application's compact switch dimensions,
 controlled dependent preferences, Hook Form, hydration, refs and native reset.
 [Switch measurements](bench/switch/README.md) time prepared SSR trees only;
-they do not measure application interactions. This brings the independent
-component count to 38; Material remains partial and unreleased.
+they do not measure application interactions.
 
 The four-control and four-labelled-control Switch workloads use 48% and 33%
 less Bun time than Material9. The other Bun cases and all Node comparisons
 have no established direction beyond process/control variation. These are
 local SSR measurements, not interaction or application latency claims.
-
 
 ## Chip
 
@@ -422,14 +412,12 @@ The subsequent Avatar unit replaces the earlier unchanged Avatar test control.
 The current9/app7 comparisons cover 672 SSR cases, light/dark and variable
 themes, RTL, keyboard/click/drag callbacks, disabled behavior, hydration and
 node/ref lifetime. [Chip measurements](bench/chip/README.md) use prepared SSR
-trees, not application interaction timings. Material now has 39 independent
-components; the package remains partial and unreleased.
+trees, not application interaction timings.
 
 The prepared eight-Chip SSR workloads use 16–29% less Node time and 23–35%
 less Bun time across current9/app7 comparisons. Every process pair shows lower
 time beyond the identical-source control spread. Raw samples and source hashes
 are retained. These results do not establish a browser or application speedup.
-
 
 ## Avatar
 
@@ -449,14 +437,12 @@ SVG geometry is design data; no upstream component implementation is copied.
 Current9/app7 SSR and Chrome checks cover theme/RTL/CSS variables, the app’s
 36px/13px override, Chip/group composition, missing and changing images, refs,
 focus/node identity and hydration. [Avatar measurements](bench/avatar/README.md)
-measure prepared SSR trees only. Material now has 40 independently implemented
-components and remains partial and unreleased.
+measure prepared SSR trees only.
 
 Bun SSR uses 18–34% less time across all current/app workloads. Node establishes
 19–28% less time for current initial/photo/Chip cases and 22% less for app Chip
 composition. The other Node comparisons remain inconclusive under the measured
 control variation. These are local SSR results, not app interaction timings.
-
 
 CircularProgress covers contest results, Mustang exam loading, WARML submission
 buttons and roommate activity indicators. It supports current9 determinate
@@ -467,19 +453,17 @@ and thicknesses throw; values outside a valid range clamp consistently for
 both the arc and accessible value, instead of drawing a backwards arc. Explicit
 ARIA overrides remain caller-owned. App7's deprecated circle variant classes
 are not emitted; its override keys remain supported. These loading indicators
-are built and tested; the whole Material dependency remains partial/unreleased.
+are built and tested within the documented application scope.
 [Progress measurements](bench/progress/README.md).
 
 The [current application inventory](../../docs/FRONTEND.md) distinguishes built
 component scope from the families still blocking a complete Material cutover.
-
 
 The eight-spinner SSR fixtures use 5–22% less time than current Material on Node
 and 16–20% less on Bun. The saving-button composition uses about 14% less than
 the app's Material7 control on both runtimes; standalone app-control comparisons
 remain inconclusive. These include the shared theme and, for saving buttons,
 owned button composition. They do not measure browser frame rate or app latency.
-
 
 Skeleton covers shared Fuse loading screens, AMC/AIME/Putnam/IMO and other contest
 archives/exams, archive search and WARML practice/signup placeholders. Text,
@@ -493,9 +477,7 @@ This intentionally strengthens upstream's child-element visibility rule.
 Reduced motion stops both pulse and wave. The loading region's announcement is
 caller-owned; the skeleton does not invent a status message. The runtime uses
 VPM System and its owned styling closure, with React as a peer.
-[Skeleton measurements](bench/skeleton/README.md). Material remains partial;
-no app dependency or release was changed.
-
+[Skeleton measurements](bench/skeleton/README.md). App adoption remains separate.
 
 The baseline SSR fixtures use actual archive, signup and Fuse loading prop
 patterns. Current-control comparisons are lower on Node and Bun; the Node/app
@@ -519,7 +501,6 @@ comparisons remain inconclusive because the identical-code controls vary too
 much. All six Bun comparisons show 36–43% less time. These are synthetic page
 wrappers using application props, not application performance measurements.
 
-
 Card and CardContent are independently written over the owned Paper surface.
 The 24 direct Card imports and eight CardContent imports were reviewed at
 VentiMath main `7970b7e5` on November 16, 2026: contest exam panels, WARML signup
@@ -533,7 +514,7 @@ caller overrides; these design dimensions do not scale with theme spacing.
 Current/app comparisons cover light/dark and variable themes, RTL, custom roots,
 ref cleanup, stable DOM/focus, hydration and an unchanged upstream CardActionArea
 keyboard caller. CardActionArea now has its own independent implementation and
-acceptance fixtures below. The whole Material package is still partial and unreleased.
+acceptance fixtures below. The supported release scope is described above.
 [Card measurements](bench/cards/README.md) record synthetic exam, signup and
 practice wrapper SSR costs, not application performance or a speed requirement.
 
@@ -556,7 +537,7 @@ It also uncovered and corrected ButtonBase's extra `font: inherit` reset: bare
 native buttons now match browser typography; styled buttons retain their own
 styles. The existing button-family Chrome suite passes with that correction.
 [CardActionArea measurements](bench/card-action/README.md) cover synthetic article
-and exam SSR, not navigation latency. Material remains partial and unreleased.
+and exam SSR, not navigation latency.
 
 ## Avatar groups
 
@@ -571,8 +552,7 @@ CSS variables, RTL, roots/refs and stable member DOM. A focused member survives
 parent renders and list changes; refs clear when members or the group unmount.
 Current 9.5.0/app 7.2.0 SSR and Chrome comparisons, strict types and installed
 archives are checked. [Measurements](bench/avatar-group/README.md) cover synthetic
-community and overflow groups. Material now has 47 independently built components
-and remains partial/unreleased; publication and app adoption are separate.
+community and overflow groups. Publication and app adoption are separate.
 
 ## Tooltip
 
@@ -600,8 +580,7 @@ Additional checks cover touch cancellation, iframe portal ownership, pending-tim
 unmount and custom ref cleanup. Strict declarations and clean npm/Bun archive
 installs are checked. [Measurements](bench/tooltip/README.md) cover synthetic
 server-rendered navigation hints and copy notices; they do not measure client
-positioning or VentiMath page throughput. Material remains partial and unreleased.
-
+positioning or VentiMath page throughput.
 
 ## Collapse
 
@@ -628,7 +607,6 @@ focus/child identity, cancellation, reduced-motion and hydration checks, includi
 fresh package installs. [Measurements](bench/collapse/README.md) cover synthetic
 SSR only; they do not measure browser animation frame rates or application speed.
 
-
 ## Dialog structure
 
 DialogTitle, DialogContent and DialogActions cover the app's WARML confirmations
@@ -653,7 +631,6 @@ Build the dialog measurement fixtures with
 `node scripts/mui-material-conformance/dialog-parts-build.cjs` before running
 the benchmark commands in the report.
 
-
 ## Dialog
 
 Dialog covers the eleven Material dialog import files in VentiMath: confirmations,
@@ -674,7 +651,7 @@ and the app's legacy `TransitionComponent` remain supported, as does the app's
 `onClose`; both forms remain available here.
 
 Settings-panel Slide wrappers now use the owned Slide implementation in the
-VPM fixtures. Standalone Modal, Fade and Backdrop component APIs remain pending. Custom root, container, paper and backdrop slots must forward
+VPM fixtures. Fade is implemented; standalone Modal and Backdrop APIs remain outside the verified app scope. Custom root, container, paper and backdrop slots must forward
 native DOM props and refs. This is not a replacement for every Material family.
 
 Current/app browser checks cover layout, themes, RTL, native keyboard navigation,
@@ -687,7 +664,6 @@ than the current Material control, beyond the same-code control spread in every
 pair. Closed/default-portal SSR produces no visible dialog content; those cases
 measure the server-side shell, not a rendered form. These measurements do not
 claim faster browser opening or animation frame rates.
-
 
 ## Slide
 
@@ -728,20 +704,18 @@ Current/app comparisons cover light/dark, RTL, responsive layout, custom styling
 stable DOM/ref ownership, accessible dialog descriptions and hydration. Upstream's
 duplicate root-class token is emitted once; class membership is unchanged. The
 existing legacy Typography paragraph behavior remains available for app callers.
-The full Material package is still partial and unreleased.
+The application subset is available in the Material consumer release described above.
 
 [Description measurements](bench/dialog-text/README.md) compare single-description
 and confirmation-structure SSR. They include Typography, theme and styling costs;
 they are not measurements of browser interaction or assistive-technology latency.
-
 
 ## Drawer
 
 Drawer covers VentiMath's permanent desktop sidebars in `FusePageCardedSidebar`
 and `FusePageSimpleSidebar`: left/right placement, custom root and paper classes,
 and the paper width set through `sx`. It also provides persistent and temporary
-panels, the foundation used by SwipeableDrawer for mobile sidebars. This partial
-package is not ready for a whole-app override.
+panels, the foundation used by SwipeableDrawer for mobile sidebars. App-wide adoption still requires route acceptance with the consumer release.
 
 The implementation composes owned Paper and Slide with the private modal behavior
 shared with Dialog. It adds no dependency. It supports all four edges and RTL,
@@ -777,7 +751,6 @@ control spread. Current Material 9 persistent/temporary Node medians are lower,
 but noisy identical-source controls leave those two directions unestablished.
 All raw samples, including the noisy controls, are retained in the report.
 
-
 ## SwipeableDrawer
 
 SwipeableDrawer covers the app's shared mobile navigation, page sidebars,
@@ -807,8 +780,7 @@ scrolling, focus, callbacks and retained nodes.
 Edge opening relies on retained paper content (the default). The app disables
 edge opening; `keepMounted:false` is supported for ordinary controlled panels
 but is not a verified edge-opening combination. Native Chrome touch checks do
-not establish physical iOS/Safari or Android device acceptance. No app switch or
-whole-Material release is claimed.
+not establish physical iOS/Safari or Android device acceptance. Physical-device checks and app adoption remain separate from this consumer release.
 
 [SwipeableDrawer measurements](bench/swipeable-drawer/README.md) cover resolved-theme
 SSR for the three variants with inline content. They do not measure touch frame
@@ -835,8 +807,8 @@ overrides, CSS variables, RTL and `sx`. Custom section/row roots receive table
 roles. Synthetic caller checks cover compact sticky score grids, keyboard
 sorting, retained row/input/focus identity, scrolling, hydration and accessibility.
 The current Material 9.5.0 and app 7.2.0 controls agree on the verified contracts.
-These seven are part of the 78 independent components; Material is still partial;
-TablePagination is implemented; unobserved families remain separate work. TableSortLabel and
+These seven are part of the 100 implemented components. TablePagination is
+implemented; unobserved families remain outside scope. TableSortLabel and
 numbered Pagination are now implemented below.
 
 [Table SSR measurements](bench/tables/README.md) use twenty-row synthetic results,
@@ -861,7 +833,7 @@ The independent Autocomplete covers WARML school entry (multiple/free-solo),
 practice and profile student selectors, ARML's View as field and the Hook Form
 example. It composes the owned TextField input, Chip, Paper and IconButton
 foundations, with Floating UI placement in the input's owner document. It adds
-no upstream runtime dependency. Material now has 78 independent components.
+no upstream runtime dependency.
 
 Value, input text and popup state can be controlled separately. Supported
 behavior includes string/object options, custom labels/equality/disabled options,
@@ -887,7 +859,6 @@ selected and multiple-school fields. They measure SSR, not typing latency.
 The first isolated Autocomplete measurements do not establish a speed difference
 beyond same-code controls on Node 24 or Bun 1.4.4. All process samples are retained;
 functional independence and caller correctness are the demonstrated result.
-
 
 ### Table sorting and numbered pagination
 
@@ -915,7 +886,7 @@ preserve caller attributes rather than discarding them.
 or eight paginators per render, using separate workers and same-code controls.
 These measurements do not measure browser interaction speed. Build
 `scripts/mui-material-conformance/navigation-build.cjs` before benchmarking.
-Material remains partial; these controls do not constitute a whole-package release.
+The current release scope and adoption boundary are documented above.
 
 The recorded Bun medians are 23–27% higher for text pagination and 51–54%
 higher for outlined pagination. On Node, outlined pagination against app Material
@@ -923,7 +894,6 @@ higher for outlined pagination. On Node, outlined pagination against app Materia
 control spread. Each case renders eight controls. These are measured SSR costs,
 not a browser speed claim; performance follow-up remains without relaxing the
 behavior or theme checks.
-
 
 ### LinearProgress
 
@@ -952,14 +922,13 @@ the component runtime is independently written.
 [LinearProgress SSR measurements](bench/linear/README.md) render eight loading,
 capacity or buffer bars per operation. Build `linear-build.cjs` in the Material
 conformance fixture before running the isolated Node/Bun harness. This does not
-measure browser animation speed. Material now has 78 independent components and
-remains partial; this is not a whole-package release or app cutover.
+measure browser animation speed. The current package has 100 implemented components; these isolated measurements
+do not establish whole-app performance.
 
 The recorded SSR cases take 28–70% more time than Material 9.5.0 on Node and
 53–81% more on Bun. Against the app's 7.2.0 control the ranges are 12–60% and
 37–70%, respectively. These are measured rendering costs, not a speedup claim;
 reducing them without changing the verified behavior remains follow-up work.
-
 
 ### Alert and AlertTitle
 
@@ -992,13 +961,11 @@ application adoption and Safari/Firefox acceptance remain separate.
 
 [Alert SSR measurements](bench/alert/README.md) compare eight notices, titled
 notices or dismissible notices per operation. Build `alert-build.cjs` first.
-Material now has 78 independent components and remains partial.
 
 Most recorded timing directions are unestablished at this precision. The
 established regressions are titled notices versus Material 9 on Bun (8.1%) and
 dismissible notices versus app Material 7 on Node (12.7%) and Bun (20.1%). All
 processes, outliers and same-code controls are retained; no speedup is claimed.
-
 
 ### Badge
 
@@ -1026,7 +993,6 @@ current contract. Screens, counts and menu contents are synthetic.
 
 [Badge SSR measurements](bench/badge/README.md) cover eight count/dot badges or
 reading-list-shaped icon buttons per operation. Build `badge-build.cjs` first.
-Material has 78 independent components and remains partial.
 
 Against Material 9, count rendering takes 20% more Node time; dot and button
 directions are unestablished. Bun takes 11–16% more time in all three cases.
@@ -1053,7 +1019,7 @@ as rendered sRGB pixels, since equivalent relative-color and rgba spellings can
 differ. The app's 6px/8px padding and 24px icon override are also checked.
 
 [ListItemButton SSR measurements](bench/list-button/README.md) cover eight
-navigation links, dense items or icon/text items per operation. Material remains partial while work on other families and the theme factory continues.
+navigation links, dense items or icon/text items per operation. Theme creation is now implemented; unobserved families remain outside scope.
 
 Node link/icon SSR takes about 21–28% more time than Material 9; links take 22%
 more than app Material 7. The other Node comparisons and every Bun direction
@@ -1067,8 +1033,7 @@ fixed-position print behavior, semantic roots and palette colors. Toolbar owns
 responsive gutters, dense/regular sizing and the resolved theme's toolbar mixin.
 Dark/CSS-variable themes, RTL, app default props, 48px/40px theme overrides,
 caller classes and `sx`, refs, focus retention and hydration are checked against
-Material 9.5.0 and the app's 7.2.0 control. Theme creation remains outside this
-partial component package. [AppBar/Toolbar measurements](bench/bars/README.md).
+Material 9.5.0 and the app's 7.2.0 control. The app-used theme factory is now implemented. [AppBar/Toolbar measurements](bench/bars/README.md).
 
 With `color="inherit"`, VPM follows current Material 9 and inherits its parent
 text color. App Material 7 retains the Paper text color instead. The browser
@@ -1114,13 +1079,11 @@ default and can opt into `unmountOnExit`.
 Full-app override readiness is tracked in the consumer verification section below.
 [Accordion measurements](bench/accordion/README.md).
 
-
 ### Tab and Tabs
 
 The IMO results page uses positional values for its icon tabs. Its official-site tab can handle a click or Enter while the current results panel stays selected. The family growth page selects by learner ID, including when a learner label changes or the list is reordered. Both use the app theme’s full-height selection indicator.
 
 Fixed and full-width layouts support horizontal and vertical orientation, RTL keyboard navigation, disabled tabs, and optional selection on focus. Scrollable strips and scroll buttons remain outside this implementation. The package follows Material 9’s server markup for a strip with no selection. Both app callers supply a selected value. [SSR measurements](bench/tabs/README.md) · [Conformance](../../scripts/mui-material-conformance/README.md#tab-and-tabs)
-
 
 ### Breadcrumbs
 
@@ -1263,7 +1226,6 @@ Packed installs exercise the existing Collapse, Slide and Grow browser checks.
 [Measurements](bench/transitions/README.md) show faster formatting and a small
 settings-creation cost; they do not measure whole-page performance.
 
-
 ## Theme assembly
 
 `createTheme` is available at the root, `styles`, and `styles/createTheme`.
@@ -1285,7 +1247,6 @@ This covers VentiMath's current theme-building pipeline. Native CSS color-space
 theme generation (`cssVariables.nativeColor`) and upstream's full theme-management
 surface are outside this scope. Remaining Material component families are still
 in progress. [Theme measurements](bench/theme/README.md).
-
 
 ## Public colors and CSS-variable theme types
 
@@ -1317,7 +1278,6 @@ identity; the existing theme browser checks cover actual generated variables.
 [Color lookup measurements](bench/color-exports/README.md) retain isolated-process
 samples and same-source controls. Full application adoption remains unverified.
 
-
 ### Complete app build and remaining adoption gate
 
 At VentiMath `d1dfe595`, an isolated source export now passes the complete app
@@ -1348,6 +1308,7 @@ parity for every advanced autocomplete composition. TablePagination navigation
 icons and scroll-button styling are independently designed.
 
 This is **build acceptance**, not a production rollout or a full-app visual
-acceptance claim. A Material consumer release still needs representative app-route
-browser acceptance and exact published-archive checks. FilledInput and other
+acceptance claim. The release gate adds exact archive verification, component
+browser checks and isolated public sign-in/404 route comparisons. Signed-in
+route acceptance remains with application adoption. FilledInput and other
 unobserved families remain outside the verified scope. [Benchmarks](bench/consumer-gaps/README.md).
