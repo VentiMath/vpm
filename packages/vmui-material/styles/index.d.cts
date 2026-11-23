@@ -5,3 +5,4 @@ export type { TypographyVariant, TypographyStyle, TypographyVariants, Typography
 export type { Transitions, TransitionsOptions, Duration, Easing } from "./createTransitions.cjs";
 
 export {default as createTheme,type ThemeOptions,type CssVariablesOptions,type Mixins,type ZIndex} from "./createTheme.cjs";
+export type { CssThemeVariables, CssVarsPalette, ThemeVars } from "./cssVariables.cjs";

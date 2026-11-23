@@ -51,3 +51,19 @@ Object.assign(module.exports,require("./course-step-content.cjs"));
 module.exports.CssBaseline = require("./CssBaseline.cjs");
 
 module.exports.createTheme = require("./create-theme.cjs").createTheme;
+
+// Material exposes the owned System color helpers at its root as well as styles.
+{
+ const colors = require("vmui-system");
+ module.exports.alpha = colors.alpha;
+ module.exports.darken = colors.darken;
+ module.exports.decomposeColor = colors.decomposeColor;
+ module.exports.emphasize = colors.emphasize;
+ module.exports.getContrastRatio = colors.getContrastRatio;
+ module.exports.getLuminance = colors.getLuminance;
+ module.exports.hexToRgb = colors.hexToRgb;
+ module.exports.hslToRgb = colors.hslToRgb;
+ module.exports.lighten = colors.lighten;
+ module.exports.recomposeColor = colors.recomposeColor;
+ module.exports.rgbToHex = colors.rgbToHex;
+}

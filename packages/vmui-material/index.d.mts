@@ -1,5 +1,5 @@
 import type * as React from "react";
-import type { SxProps } from "vmui-system";
+export type SxProps<T extends object = Theme> = import("vmui-system").SxProps<T>;
 import type { Theme } from "./styles/createTheme.mjs";
 export interface ButtonBaseActions {
   focusVisible(): void;
@@ -231,11 +231,11 @@ export function getTypographyUtilityClass(slot:string):string;
 export function getLinkUtilityClass(slot:string):string;
 export function getSvgIconUtilityClass(slot:string):string;
 
-export type {SxProps,BoxProps} from "vmui-system";
+export type BoxProps<C extends React.ElementType = "div", T extends object = Theme> = import("vmui-system").BoxProps<C,T>;
 export type {Theme,ThemeOptions} from "./styles/createTheme.mjs";
-export const Box: typeof import("vmui-system").Box;
+export function Box<C extends React.ElementType = "div">(props:BoxProps<C>):React.ReactElement;
 export const boxClasses: {readonly root:string};
-export const styled: typeof import("vmui-system").styled;
+export const styled: import("vmui-system").CreateMUIStyled<Theme>;
 export function useTheme<T = Theme>(): T;
 export function ThemeProvider<T extends object>(props: Omit<import("vmui-system").ThemeProviderProps<T>, "themeId"> & {defaultMode?:"light"|"dark"|"system"; storageManager?:null; disableStyleSheetGeneration?:boolean; disableNestedContext?:boolean}):React.JSX.Element;
 export type GlobalStylesProps<T extends object = Theme> = Pick<import("vmui-system").GlobalStylesProps<T>, "styles">;
@@ -1084,3 +1084,5 @@ export interface CssBaselineProps { children?: React.ReactNode; enableColorSchem
 export function CssBaseline(props: CssBaselineProps): React.ReactElement;
 
 export {default as createTheme} from "./styles/createTheme.mjs";
+
+export { alpha, darken, decomposeColor, emphasize, getContrastRatio, getLuminance, hexToRgb, hslToRgb, lighten, recomposeColor, rgbToHex } from "vmui-system";

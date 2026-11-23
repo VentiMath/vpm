@@ -146,3 +146,5 @@ export const {ListItem,listItemClasses,getListItemUtilityClass}=listButtons;
 export {default as CssBaseline} from "./CssBaseline.mjs";
 
 export {default as createTheme} from "./styles/createTheme.mjs";
+
+export { alpha, darken, decomposeColor, emphasize, getContrastRatio, getLuminance, hexToRgb, hslToRgb, lighten, recomposeColor, rgbToHex } from "vmui-system";

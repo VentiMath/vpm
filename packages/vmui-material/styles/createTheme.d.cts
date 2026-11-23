@@ -19,14 +19,16 @@ export interface ThemeOptions extends Omit<SystemThemeOptions,"palette"|"typogra
  cssVariables?:boolean | CssVariablesOptions; defaultColorScheme?:string;
  colorSchemes?:Record<string,boolean | ColorSchemeOptions>;
 }
-export interface Theme extends SystemTheme {
- palette:Palette; typography:TypographyVariants; transitions:Transitions;
+import type { CssThemeVariables, CssVarsPalette, ThemeVars } from "./cssVariables.cjs";
+export type { CssThemeVariables, CssVarsPalette, ThemeVars } from "./cssVariables.cjs";
+type CssVarState = CssThemeVariables extends { enabled:true } ? { vars:ThemeVars } : { vars?:ThemeVars };
+export interface Theme extends SystemTheme, CssVarState {
+ palette:Palette & (CssThemeVariables extends {enabled:true} ? CssVarsPalette : {}); typography:TypographyVariants; transitions:Transitions;
  shadows:string[]; zIndex:ZIndex; mixins:Mixins;
  motion:{reducedMotion:"never"|"always"|"user"};
  alpha:(color:string,value:number)=>string;
  lighten:(color:string,value:number)=>string;
  darken:(color:string,value:number)=>string;
- vars?:{palette:Record<string,any>;[key:string]:any};
  cssVarPrefix?:string; rootSelector?:string; colorSchemeSelector?:string; defaultColorScheme?:string;
  colorSchemes?:Record<string,ColorSchemeOptions & {palette:Palette}>;
  generateThemeVars?:()=>NonNullable<Theme["vars"]>;

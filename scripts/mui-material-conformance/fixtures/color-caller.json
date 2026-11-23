@@ -1,0 +1,7 @@
+{
+  "appCommit": "d1b2df824dfef0da23f8d297fb02fa4c94991dde",
+  "path": "src/@fuse/utils/FuseUtils.ts",
+  "sourceSha256": "c4a9f356403b6d59fddabde3e67ededd1f938f43797896b266cd57dda692b119",
+  "methodSha256": "994e5ecf6f6af505e175de4ca5198bd4893c37a6bf454877d7c7b832850952b8",
+  "method": "  static randomMatColor(hue: hueTypes = '400') {\n    const mainColors = [\n      'red',\n      'pink',\n      'purple',\n      'deepPurple',\n      'indigo',\n      'blue',\n      'lightBlue',\n      'cyan',\n      'teal',\n      'green',\n      'lightGreen',\n      'lime',\n      'yellow',\n      'amber',\n      'orange',\n      'deepOrange',\n    ];\n\n    const randomColor = mainColors[Math.floor(Math.random() * mainColors.length)];\n\n    return (colors as Record<string, Color>)[randomColor][hue];\n  }"
+}

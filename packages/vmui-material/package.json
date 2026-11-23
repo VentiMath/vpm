@@ -2067,6 +2067,226 @@
         "types": "./styles/createTheme.d.cts",
         "default": "./styles/createTheme.cjs"
       }
+    },
+    "./colors": {
+      "import": {
+        "types": "./colors/index.d.mts",
+        "default": "./colors/index.mjs"
+      },
+      "require": {
+        "types": "./colors/index.d.cts",
+        "default": "./colors/index.cjs"
+      }
+    },
+    "./themeCssVarsAugmentation": {
+      "import": {
+        "types": "./themeCssVarsAugmentation/index.d.mts",
+        "default": "./themeCssVarsAugmentation/index.mjs"
+      },
+      "require": {
+        "types": "./themeCssVarsAugmentation/index.d.cts",
+        "default": "./themeCssVarsAugmentation/index.cjs"
+      }
+    },
+    "./colors/green": {
+      "import": {
+        "types": "./colors/green.d.mts",
+        "default": "./colors/green.mjs"
+      },
+      "require": {
+        "types": "./colors/green.d.cts",
+        "default": "./colors/green.cjs"
+      }
+    },
+    "./colors/deepPurple": {
+      "import": {
+        "types": "./colors/deepPurple.d.mts",
+        "default": "./colors/deepPurple.mjs"
+      },
+      "require": {
+        "types": "./colors/deepPurple.d.cts",
+        "default": "./colors/deepPurple.cjs"
+      }
+    },
+    "./colors/orange": {
+      "import": {
+        "types": "./colors/orange.d.mts",
+        "default": "./colors/orange.mjs"
+      },
+      "require": {
+        "types": "./colors/orange.d.cts",
+        "default": "./colors/orange.cjs"
+      }
+    },
+    "./colors/grey": {
+      "import": {
+        "types": "./colors/grey.d.mts",
+        "default": "./colors/grey.mjs"
+      },
+      "require": {
+        "types": "./colors/grey.d.cts",
+        "default": "./colors/grey.cjs"
+      }
+    },
+    "./colors/lightGreen": {
+      "import": {
+        "types": "./colors/lightGreen.d.mts",
+        "default": "./colors/lightGreen.mjs"
+      },
+      "require": {
+        "types": "./colors/lightGreen.d.cts",
+        "default": "./colors/lightGreen.cjs"
+      }
+    },
+    "./colors/indigo": {
+      "import": {
+        "types": "./colors/indigo.d.mts",
+        "default": "./colors/indigo.mjs"
+      },
+      "require": {
+        "types": "./colors/indigo.d.cts",
+        "default": "./colors/indigo.cjs"
+      }
+    },
+    "./colors/lightBlue": {
+      "import": {
+        "types": "./colors/lightBlue.d.mts",
+        "default": "./colors/lightBlue.mjs"
+      },
+      "require": {
+        "types": "./colors/lightBlue.d.cts",
+        "default": "./colors/lightBlue.cjs"
+      }
+    },
+    "./colors/brown": {
+      "import": {
+        "types": "./colors/brown.d.mts",
+        "default": "./colors/brown.mjs"
+      },
+      "require": {
+        "types": "./colors/brown.d.cts",
+        "default": "./colors/brown.cjs"
+      }
+    },
+    "./colors/common": {
+      "import": {
+        "types": "./colors/common.d.mts",
+        "default": "./colors/common.mjs"
+      },
+      "require": {
+        "types": "./colors/common.d.cts",
+        "default": "./colors/common.cjs"
+      }
+    },
+    "./colors/cyan": {
+      "import": {
+        "types": "./colors/cyan.d.mts",
+        "default": "./colors/cyan.mjs"
+      },
+      "require": {
+        "types": "./colors/cyan.d.cts",
+        "default": "./colors/cyan.cjs"
+      }
+    },
+    "./colors/purple": {
+      "import": {
+        "types": "./colors/purple.d.mts",
+        "default": "./colors/purple.mjs"
+      },
+      "require": {
+        "types": "./colors/purple.d.cts",
+        "default": "./colors/purple.cjs"
+      }
+    },
+    "./colors/red": {
+      "import": {
+        "types": "./colors/red.d.mts",
+        "default": "./colors/red.mjs"
+      },
+      "require": {
+        "types": "./colors/red.d.cts",
+        "default": "./colors/red.cjs"
+      }
+    },
+    "./colors/deepOrange": {
+      "import": {
+        "types": "./colors/deepOrange.d.mts",
+        "default": "./colors/deepOrange.mjs"
+      },
+      "require": {
+        "types": "./colors/deepOrange.d.cts",
+        "default": "./colors/deepOrange.cjs"
+      }
+    },
+    "./colors/teal": {
+      "import": {
+        "types": "./colors/teal.d.mts",
+        "default": "./colors/teal.mjs"
+      },
+      "require": {
+        "types": "./colors/teal.d.cts",
+        "default": "./colors/teal.cjs"
+      }
+    },
+    "./colors/lime": {
+      "import": {
+        "types": "./colors/lime.d.mts",
+        "default": "./colors/lime.mjs"
+      },
+      "require": {
+        "types": "./colors/lime.d.cts",
+        "default": "./colors/lime.cjs"
+      }
+    },
+    "./colors/blueGrey": {
+      "import": {
+        "types": "./colors/blueGrey.d.mts",
+        "default": "./colors/blueGrey.mjs"
+      },
+      "require": {
+        "types": "./colors/blueGrey.d.cts",
+        "default": "./colors/blueGrey.cjs"
+      }
+    },
+    "./colors/blue": {
+      "import": {
+        "types": "./colors/blue.d.mts",
+        "default": "./colors/blue.mjs"
+      },
+      "require": {
+        "types": "./colors/blue.d.cts",
+        "default": "./colors/blue.cjs"
+      }
+    },
+    "./colors/pink": {
+      "import": {
+        "types": "./colors/pink.d.mts",
+        "default": "./colors/pink.mjs"
+      },
+      "require": {
+        "types": "./colors/pink.d.cts",
+        "default": "./colors/pink.cjs"
+      }
+    },
+    "./colors/amber": {
+      "import": {
+        "types": "./colors/amber.d.mts",
+        "default": "./colors/amber.mjs"
+      },
+      "require": {
+        "types": "./colors/amber.d.cts",
+        "default": "./colors/amber.cjs"
+      }
+    },
+    "./colors/yellow": {
+      "import": {
+        "types": "./colors/yellow.d.mts",
+        "default": "./colors/yellow.mjs"
+      },
+      "require": {
+        "types": "./colors/yellow.d.cts",
+        "default": "./colors/yellow.cjs"
+      }
     }
   },
   "files": [
@@ -2081,7 +2301,9 @@
     "styles",
     "FormControl",
     "RadioGroup",
-    "theme-tokens.json"
+    "theme-tokens.json",
+    "colors",
+    "themeCssVarsAugmentation"
   ],
   "sideEffects": false,
   "engines": {

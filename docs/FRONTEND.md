@@ -165,9 +165,11 @@ The target is semver 7.8.6, with caller checks against the app’s 7.5.4 and Bab
 6.3.2. Release incrementing, the CLI and range-analysis APIs outside these callers
 remain outside its documented scope. App adoption is separate.
 
-The next theme integration unit is the public Material color exports and the
-app's CSS-variable type augmentation. FuseUtils imports the named color ramps,
-and global.d.ts imports themeCssVarsAugmentation. The independent file-pattern
+Material now exposes the public color ramps used by FuseUtils and the CSS-variable
+theme augmentation imported by global.d.ts. Material styled/Box/sx callbacks use
+the typed Material theme, and color helpers are available at the root and styles.
+These close VPM compatibility gaps; they are not upstream bug fixes. Next check
+the complete app consumer in an isolated installation before a Material release. The independent file-pattern
 closure now includes vbalanced-match, vbrace-expansion and vminimatch.
 The independent vminipass stream leaf is also built and checked through unchanged
 path-scurry and glob callers. vpath-scurry 3.0.0 now supplies the directory
@@ -191,3 +193,7 @@ and current `open` 11.0.4. It has no runtime dependencies. Both unchanged caller
 32 simulated platform cases, descriptor/lifecycle operations and packed types
 pass on Node/Bun. No command is launched. The opener itself, publication and
 application adoption remain separate work.
+
+The next untouched build leaf is `sisteransi`: the app's `prompts` and Clack
+callers use its terminal cursor/erase sequences. Target current 2.0.0 while
+checking their installed 1.0.5 behavior. This remains planned, not implemented.

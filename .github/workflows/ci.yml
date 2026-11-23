@@ -129,6 +129,8 @@ jobs:
           node scripts/mui-material-conformance/list-item-contract.cjs
           node scripts/mui-material-conformance/css-baseline-contract.cjs
           node scripts/mui-material-conformance/colors-contract.cjs
+          node scripts/mui-material-conformance/color-exports-contract.cjs
+          node scripts/mui-material-conformance/color-types.cjs
           node scripts/mui-material-conformance/palette-contract.cjs
           node scripts/mui-material-conformance/typography-contract.cjs
           node scripts/mui-material-conformance/transitions-contract.cjs
@@ -1370,6 +1372,7 @@ jobs:
           bun scripts/mui-material-conformance/list-item-contract.cjs
           bun scripts/mui-material-conformance/css-baseline-contract.cjs
           bun scripts/mui-material-conformance/colors-contract.cjs
+          bun scripts/mui-material-conformance/color-exports-contract.cjs
           bun scripts/mui-material-conformance/palette-contract.cjs
           bun scripts/mui-material-conformance/typography-contract.cjs
           bun scripts/mui-material-conformance/transitions-contract.cjs

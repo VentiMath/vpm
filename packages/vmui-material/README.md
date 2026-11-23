@@ -1279,3 +1279,34 @@ This covers VentiMath's current theme-building pipeline. Native CSS color-space
 theme generation (`cssVariables.nativeColor`) and upstream's full theme-management
 surface are outside this scope. Remaining Material component families are still
 in progress. [Theme measurements](bench/theme/README.md).
+
+
+## Public colors and CSS-variable theme types
+
+`vmui-material/colors` exports the 20 public Material color objects, with
+individual entries such as `vmui-material/colors/red`. Each ramp preserves its
+literal shade types and its identity across CommonJS, ESM and namespace imports.
+An individual color entry loads no React or theme code. These values are static
+MIT-licensed compatibility data from Material 9.6.0, attributed in LICENSE and
+PROVENANCE.json; the wrappers and declarations are independently generated.
+
+Importing `vmui-material/themeCssVarsAugmentation` as a type enables
+`theme.vars`. Material `styled`, `Box`, `sx` and `useTheme` then expose the typed
+Material palette, channel variables and design tokens. Without the opt-in,
+`theme.vars` remains optional. The eleven owned System color helpers are
+available at both the Material root and `styles`.
+
+These changes close **VPM compatibility gaps**, not defects in upstream MUI:
+missing color paths, a missing augmentation entry, System-theme types on Material
+callbacks, and missing root color-helper exports. They add no new runtime theme
+behavior and do not constitute a full Material 9.6 upgrade or an app release.
+
+The captured, unchanged `FuseUtils.randomMatColor` method from VentiMath
+`d1b2df82` matches Material 7.2, 9.5 and 9.6 for every selectable color and shade,
+including its default (720 comparisons). Strict TypeScript 7 consumers use the
+app's original import names and check both enabled and disabled augmentation,
+CJS/ESM/Bundler resolution, and rejected misspellings. The [caller snapshot](../../scripts/mui-material-conformance/fixtures/color-caller.json)
+records its source hash. Exact npm/Bun archives verify entry points and module
+identity; the existing theme browser checks cover actual generated variables.
+[Color lookup measurements](bench/color-exports/README.md) retain isolated-process
+samples and same-source controls. Full application adoption remains unverified.

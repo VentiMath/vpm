@@ -21,6 +21,7 @@ for (const key of Object.keys(require("vmui-material/package.json").exports)) {
   const id = "vmui-material/" + key.slice(2),
     a = require(id),
     b = await import(id);
+  if(key === "./colors" || key === "./themeCssVarsAugmentation"){continue;}
   if(key === "./styles"){assert.equal(a.useTheme,b.useTheme);assert.equal(a.ThemeProvider,b.ThemeProvider);continue;}
   assert.equal(a.default, b.default, id);
   assert.notEqual(a.default, undefined);
@@ -229,3 +230,15 @@ assert.equal(typographyModule.default(paletteModule.default(),{}).pxToRem(16),"1
 const transitionsModule=await import("vmui-material/styles/createTransitions");
 assert.equal(transitionsModule.default,require("vmui-material/styles/createTransitions").default);
 assert.equal(transitionsModule.default().create("margin"),"margin 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms");
+
+const ramps = await import("vmui-material/colors");
+for (const name of Object.keys(ramps)) {
+  assert.equal((await import("vmui-material/colors/"+name)).default, ramps[name]);
+}
+await import("vmui-material/themeCssVarsAugmentation");
+
+const materialStyles = await import("vmui-material/styles");
+for (const name of ["alpha", "darken", "decomposeColor", "emphasize", "getContrastRatio", "getLuminance", "hexToRgb", "hslToRgb", "lighten", "recomposeColor", "rgbToHex"]) {
+ assert.equal(api[name], materialStyles[name]);
+ assert.equal(c[name], api[name]);
+}
