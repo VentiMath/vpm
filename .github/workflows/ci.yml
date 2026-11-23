@@ -452,6 +452,13 @@ jobs:
           node scripts/glob-conformance/contract.cjs
           node scripts/glob-conformance/callers.cjs
           node scripts/glob-conformance/archives.cjs
+      - name: Independent rimraf and unchanged Capacitor cleanup
+        run: |
+          npm --prefix scripts/rimraf-conformance ci --ignore-scripts --no-audit --no-fund
+          node --test packages/vrimraf/test/*.test.cjs
+          node scripts/rimraf-conformance/contract.cjs
+          node scripts/rimraf-conformance/callers.cjs
+          node scripts/rimraf-conformance/archives.cjs
       - name: Independent emitter and unchanged API viewer services
         run: |
           node --test packages/veventemitter3/test/*.test.cjs
@@ -1429,6 +1436,10 @@ jobs:
       - run: bun test packages/vglob/test
       - run: bun scripts/glob-conformance/contract.cjs
       - run: bun scripts/glob-conformance/callers.cjs
+      - run: npm --prefix scripts/rimraf-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: bun test packages/vrimraf/test
+      - run: bun scripts/rimraf-conformance/contract.cjs
+      - run: bun scripts/rimraf-conformance/callers.cjs
       - run: bun scripts/source-map-conformance/string-parser-caller.cjs
       - run: bun scripts/source-map-conformance/identifier-caller.cjs
       - run: bun scripts/source-map-conformance/jsesc-caller.cjs

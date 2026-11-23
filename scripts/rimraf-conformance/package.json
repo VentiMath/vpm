@@ -1,0 +1,1 @@
+{"name":"vpm-rimraf-controls","private":true,"dependencies":{"@capacitor/cli":"8.2.0","rimraf":"6.1.4","rimraf-app":"npm:rimraf@6.1.3","rimraf-five":"npm:rimraf@5.0.10"}}

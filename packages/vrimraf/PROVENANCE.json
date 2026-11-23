@@ -1,0 +1,21 @@
+{
+  "upstream": {
+    "name": "rimraf",
+    "version": "6.1.4",
+    "repository": "https://github.com/isaacs/rimraf",
+    "commit": "cbbc0004f4716e969773c57f88f13d3657315900",
+    "integrity": "sha512-Fk3reQDVPZUMbEm7Zwxz03BWQMW3V5buSk9aU8OckTrO8A1nQtbqvYsAantGNermwsIsXcuOBqcoJ3HuMELctw=="
+  },
+  "implementation": {
+    "kind": "independent",
+    "targetScope": "Capacitor archive cleanup and the async/sync string-path removal, opt-in glob, filter, cancellation and retry APIs. Built-in fs removal for plain cleanup; independently written postorder traversal for filters and signals."
+  },
+  "differences": [
+    "Root protection cannot be disabled; complete input batches are validated before removal.",
+    "Duplicate and overlapping roots are collapsed and independent roots run sequentially.",
+    "Synchronous promise filters and malformed retry values reject explicitly.",
+    "Named implementation strategies, interactive CLI, legacy callbacks and Windows move/remove fallbacks are outside scope.",
+    "Path identity checks reduce observed replacement hazards but do not create an atomic filesystem sandbox.",
+    "No application adoption or public release claimed."
+  ]
+}

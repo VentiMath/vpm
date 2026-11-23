@@ -1585,6 +1585,16 @@
       "name": "vretry-request",
       "version": "0.1.0",
     },
+    "packages/vrimraf": {
+      "name": "vrimraf",
+      "version": "6.1.4",
+      "bin": {
+        "rimraf": "./bin.cjs",
+      },
+      "dependencies": {
+        "vglob": "14.0.6",
+      },
+    },
     "packages/vrope-sequence": {
       "name": "vrope-sequence",
       "version": "1.3.4",
@@ -2498,6 +2508,8 @@
     "vretry": ["vretry@workspace:packages/vretry"],
 
     "vretry-request": ["vretry-request@workspace:packages/vretry-request"],
+
+    "vrimraf": ["vrimraf@workspace:packages/vrimraf"],
 
     "vrope-sequence": ["vrope-sequence@workspace:packages/vrope-sequence"],
 
