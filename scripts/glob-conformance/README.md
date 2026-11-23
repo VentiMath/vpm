@@ -20,7 +20,7 @@ Verification:
   created in a private temporary directory. Bun cannot run this TAP harness's
   unimplemented `node:v8` Serializer; Bun runs the independent and differential
   checks instead.
-- `callers.cjs`: 20 unchanged rimraf runtime checks. Instrumented dependency
+- `callers.cjs`: 24 unchanged rimraf runtime checks. Instrumented dependency
   resolution proves every glob call reaches VPM; deleted files and retained
   files match the controls. Nothing outside scratch fixtures is deleted.
 - `archives.cjs`: fresh and frozen npm/Bun installs of the seven-package VPM
@@ -46,3 +46,10 @@ This is selected public-contract coverage, not the complete upstream suite.
 Upstream private-object introspection, CLI behavior, native Windows execution
 and unbounded cyclic symlink expansion are outside the verified scope.
 See [vglob](../../packages/vglob/README.md) for the supported API and differences.
+
+The overlapping parent/child glob case independently compares expanded target
+sets and uses the caller's filter-capable traversal. Bun 1.4.4 native `fs.rm` can
+leave an empty parent when both it and its children are removed concurrently;
+this reproduced on either side of the comparison. A separate disjoint-array
+case retains the default native path. The revised caller check passed twenty
+consecutive Bun runs, in addition to Node.
