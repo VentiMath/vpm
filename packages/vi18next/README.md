@@ -35,3 +35,23 @@ These differences are covered by fixed tests and separated from matching-control
 ## Evidence
 
 [Conformance fixtures](../../scripts/i18next-conformance/README.md) cover current/app engines and React adapters, browser behavior, strict TypeScript and actual packed installs. [Isolated benchmarks](bench/results/README.md) retain controls, process-order results and source hashes. [Provenance](PROVENANCE.json) records the target and independently written scope.
+
+## Consumer release
+
+Install the two direct VPM packages from `vreact-i18next-18.0.1`:
+
+```json
+{
+  "dependencies": {
+    "vi18next": "https://github.com/VentiMath/vpm/releases/download/vreact-i18next-18.0.1/vi18next-27.1.1.tgz",
+    "vreact-i18next": "https://github.com/VentiMath/vpm/releases/download/vreact-i18next-18.0.1/vreact-i18next-18.0.1.tgz"
+  }
+}
+```
+
+Use `vi18next` for the engine and `vreact-i18next` for initialization, providers
+and hooks. Using both pins keeps the same translation engine throughout the
+app; React 19.3 remains a peer. Internal dependencies are pinned to the same
+release. No original-name aliases are required. Keep the app's explicit fallback
+language, key separator and interpolation settings. Publication does not imply
+application adoption or support for the excluded plugin/rich-text APIs.

@@ -1,5 +1,5 @@
 {
-  "revision": "664673678be2699602121ff2ceee0189c12a7e12",
+  "revision": "f9482ea60271f36969bd3585de0f9de0d589bfae",
   "current": "27.1.1",
   "application": "25.0.1",
   "bundles": 183,
@@ -17,7 +17,7 @@
     "zh-CN",
     "zh-TW"
   ],
-  "comparisons": 74628,
+  "comparisons": 77940,
   "currentDifferences": 0,
   "legacyDifferences": 0,
   "migrationKinds": {},

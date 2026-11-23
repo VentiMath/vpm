@@ -27,3 +27,23 @@ function ContestTitle() {
 There is no rich-text HTML parser, `Trans`, `Translation`, HOC, SSR state-injection helper or complete upstream resource-schema type inference. None of those exports has a caller in the audited application. Ordinary translated text uses React's normal escaping. `vi18next` is the declared VPM dependency; React is a peer. The engine's documented resource-only loading scope still applies.
 
 [Conformance](../../scripts/react-i18next-conformance/README.md) covers current and app-pinned controls, Node/Bun, React production/development browser behavior, strict TypeScript and packed consumers. [Benchmarks](bench/results/README.md) isolate the wrapper with the **same translation engine and React version** in each implementation. They measure SSR work, not application navigation or browser frame rate. [Provenance](PROVENANCE.json) records the independently written scope. Source completion does not imply publication or adoption.
+
+## Consumer release
+
+Install the two direct VPM packages from `vreact-i18next-18.0.1`:
+
+```json
+{
+  "dependencies": {
+    "vi18next": "https://github.com/VentiMath/vpm/releases/download/vreact-i18next-18.0.1/vi18next-27.1.1.tgz",
+    "vreact-i18next": "https://github.com/VentiMath/vpm/releases/download/vreact-i18next-18.0.1/vreact-i18next-18.0.1.tgz"
+  }
+}
+```
+
+Use `vi18next` for the engine and `vreact-i18next` for initialization, providers
+and hooks. Using both pins keeps the same translation engine throughout the
+app; React 19.3 remains a peer. Internal dependencies are pinned to the same
+release. No original-name aliases are required. Keep the app's explicit fallback
+language, key separator and interpolation settings. Publication does not imply
+application adoption or support for the excluded plugin/rich-text APIs.
