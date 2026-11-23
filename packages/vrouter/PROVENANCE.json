@@ -107,5 +107,11 @@
     "commit": "692d77331751cfe63a23ebe6fc44d610fb6d56d5",
     "directory": "test/fixtures/vrouter-692d773",
     "note": "Unmodified previous entry and layer implementations, with unchanged workspace VPM dependencies, for the pathname follow-up benchmark."
+  },
+  "implementation": {
+    "kind": "upstream-derived with focused modifications",
+    "replacementStatus": "independent runtime rewrite pending",
+    "targetScope": "The documented application-facing API is implemented and tested over VPM dependencies, but the shipped runtime retains upstream implementation. Functional conformance is not proof of an independent rewrite.",
+    "remainingWork": "Independently implement the app-used runtime, check the dependency closure under the same requirement, and rerun caller/conformance and packed-install gates before an all-in-house consumer release."
   }
 }

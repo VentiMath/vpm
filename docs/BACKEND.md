@@ -1,8 +1,6 @@
 # Backend coverage
 
-VPM has completed independent implementations of the documented application-used
-HTTP, Firebase and Google client APIs. **The entire backend is not finished, and
-those implementations have not been adopted by VentiMath's Functions app.**
+VPM has implemented the documented application-used HTTP, Firebase and Google client APIs. **That does not mean the whole backend is independently rewritten or released.** The Firebase and Google application-facing rewrites are scoped implementations; Express, router and Functions Framework still contain upstream-derived runtime code. Their dependency closures also need an independence review before an all-in-house backend release. These HTTP/cloud packages have not been adopted by VentiMath's Functions app.
 
 The consumption snapshot below is VentiMath main `a7ce009f`, checked November 17,
 2026, using `functions/package.json`, `functions/bun.lock` and actual source
@@ -10,7 +8,8 @@ imports. A lockfile upgrade is not evidence of installing a VPM replacement.
 
 ## Implemented application paths
 
-The [Functions Framework](../packages/vfunctions-framework),
+The [Functions Framework](../packages/vfunctions-framework) is a tested upstream-derived implementation over VPM dependencies. [Express](../packages/vexpress) and [router](../packages/vrouter) have the same source boundary.
+
 [Firebase Functions](../packages/vfirebase-functions),
 [Firebase Admin](../packages/vfirebase-admin),
 [Google Auth](../packages/vgoogle-auth-library),
@@ -126,3 +125,5 @@ See [application adoption](ADOPTION.md) for installed VPM artifacts and the
 [comparison catalog](../IMPROVEMENTS.md) for implementation evidence. Recheck the
 actual application manifests, lockfiles and imports before claiming backend
 completion or marking an available package as in use.
+
+See [release readiness](RELEASE-READINESS.md) for the distinction between implemented scope, independent code, publication and app acceptance.

@@ -5,6 +5,8 @@ Adoption here means a VPM artifact is reachable from VentiMath's committed
 production dependencies. It does not prove that every installed module reaches
 the production bundle or that the corresponding commit has been deployed.
 
+See [release readiness](RELEASE-READINESS.md) for unpublished packages and their remaining gates.
+
 ## VLX 0.3.2 application verification
 
 **Updated November 23:** application main `9e68efc4` pins VLX 0.3.4 and

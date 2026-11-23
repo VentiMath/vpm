@@ -25,5 +25,11 @@
     "Avoid promise allocation for ordinary HTTP handler return values while retaining native/foreign promises, once-read thenable getters and deferred, once-only settlement.",
     "Classify known ASCII media types once while retaining full original-header parameter/charset checks, framing validation and the checked fallback for other types.",
     "Pass captured domains directly to internal event adapters, preserve public handler arguments, reuse completion callbacks, and omit the disabled timeout layer."
-  ]
+  ],
+  "implementation": {
+    "kind": "upstream-derived with focused modifications",
+    "replacementStatus": "independent runtime rewrite pending",
+    "targetScope": "The documented application-facing API is implemented and tested over VPM dependencies, but the shipped runtime retains upstream implementation. Functional conformance is not proof of an independent rewrite.",
+    "remainingWork": "Independently implement the app-used runtime, check the dependency closure under the same requirement, and rerun caller/conformance and packed-install gates before an all-in-house consumer release."
+  }
 }

@@ -50,5 +50,11 @@
     "file": "bench/fixtures/express-before.cjs",
     "sha256": "240b9c60511bff4d2cb3772fbe8f18f28c6f53a950d64f6372d62719b71b92f5",
     "contents": "Exact pre-specialization lib/express.js. Before/after controls share unchanged application, request, response and VPM dependencies. The fixture is benchmark-only and excluded from package archives."
+  },
+  "implementation": {
+    "kind": "upstream-derived with focused modifications",
+    "replacementStatus": "independent runtime rewrite pending",
+    "targetScope": "The documented application-facing API is implemented and tested over VPM dependencies, but the shipped runtime retains upstream implementation. Functional conformance is not proof of an independent rewrite.",
+    "remainingWork": "Independently implement the app-used runtime, check the dependency closure under the same requirement, and rerun caller/conformance and packed-install gates before an all-in-house consumer release."
   }
 }
