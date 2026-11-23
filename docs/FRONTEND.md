@@ -168,10 +168,11 @@ remain outside its documented scope. App adoption is separate.
 The next theme integration unit is the public Material color exports and the
 app's CSS-variable type augmentation. FuseUtils imports the named color ramps,
 and global.d.ts imports themeCssVarsAugmentation. The independent file-pattern
-closure now includes vbalanced-match, vbrace-expansion and vminimatch. The next
-untouched build leaf is minipass, used by path-scurry and glob. Glob's bundled
-default entry still needs an independent caller; the verified minimatch fixture
-uses glob/raw.
+closure now includes vbalanced-match, vbrace-expansion and vminimatch.
+The independent vminipass stream leaf is also built and checked through unchanged
+path-scurry and glob callers. Next is path-scurry above vlru-cache and vminipass.
+Glob's bundled default entry still needs an independent caller; the verified
+fixtures use glob/raw.
 
 The independent `vlru-cache` now covers bounded synchronous caches beneath
 Babel compilation targets, CSS parsing, DOM selectors and path-scurry. Actual
