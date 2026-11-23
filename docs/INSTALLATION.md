@@ -1,5 +1,43 @@
 # Installing VPM packages
 
+## Notifications, translations, forms and date utilities
+
+These releases retain VPM package names in direct dependencies and imports.
+Merge the applicable pins, then migrate those application imports. React/React
+DOM 19.3 remain peers; internal VPM runtime dependencies are pinned to immutable
+assets in the same release. No VPM name falls back to an npm registry package.
+
+| Package | Direct dependency URL |
+| --- | --- |
+| `vnotistack` | `https://github.com/VentiMath/vpm/releases/download/vnotistack-3.0.2/vnotistack-3.0.2.tgz` |
+| `vi18next` | `https://github.com/VentiMath/vpm/releases/download/vreact-i18next-18.0.1/vi18next-27.1.1.tgz` |
+| `vreact-i18next` | `https://github.com/VentiMath/vpm/releases/download/vreact-i18next-18.0.1/vreact-i18next-18.0.1.tgz` |
+| `vreact-hook-form` | `https://github.com/VentiMath/vpm/releases/download/vreact-hook-form-7.92.0/vreact-hook-form-7.92.0.tgz` |
+| `vhookform-resolvers` | `https://github.com/VentiMath/vpm/releases/download/vreact-hook-form-7.92.0/vhookform-resolvers-7.0.6.tgz` |
+| `vzod` | `https://github.com/VentiMath/vpm/releases/download/vreact-hook-form-7.92.0/vzod-4.6.7.tgz` |
+| `vdate-fns` | `https://github.com/VentiMath/vpm/releases/download/vdate-fns-4.4.0/vdate-fns-4.4.0.tgz` |
+
+Use both translation pins together so initialization and hooks share one engine.
+Keep explicit English fallback, key separator and interpolation settings. Resource
+bundles and hooks are supported; rich-text components and network plugins are not.
+The form stack uses `vhookform-resolvers/zod` and adopts Zod 4 error/default
+semantics; remaining parsing overhead and excluded APIs are documented in the
+[form](../packages/vreact-hook-form/README.md) and [schema](../packages/vzod/README.md)
+contracts. Notification custom transitions remain outside the
+[vnotistack contract](../packages/vnotistack/README.md).
+
+`vdate-fns` supports plain Date/en-US and the tested MUI adapter. MUI's unchanged
+AdapterDateFns imports `date-fns`; map that name **and its subpaths** to
+`vdate-fns` in the application's bundler and type resolution. Merely updating
+application imports leaves the adapter using upstream. Keep the direct package
+named `vdate-fns`; the indirect caller mapping is an explicit migration step.
+See [date scope and timezone requirements](../packages/vdate-fns/README.md).
+
+Each release includes `consumer-package.json`, `release-manifest.json` and
+`SHA256SUMS`. Exact archives are checked before publication; public-URL npm/Bun
+installs, frozen locks and hashes are checked afterwards. Browser controls use
+installed runtime bytes. App adoption, full app tests and deployment are separate.
+
 ## PNG reader and fixture writer
 
 Use [vpngjs 7.0.0](https://github.com/VentiMath/vpm/releases/tag/pngjs-7.0.0) for

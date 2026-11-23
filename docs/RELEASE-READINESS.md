@@ -1,13 +1,14 @@
 # Release readiness
 
 Snapshot: November 23, 2026. The workspace has **276 package folders**. GitHub has
-**19 release families**, with 49 published revisions and archives for **82 distinct
-package folders**. Thus 194 folders have no published archive. A release family
+**23 release families**, with 53 published revisions and archives for **90 distinct
+package folders**. Thus 186 folders have no published archive. A release family
 can contain many dependencies; neither folder count nor release count is an app
 adoption count. The removed CSS-to-React-Native chain is one example of a published
-family that the app no longer needs. The standalone `pngjs-7.0.0` release adds
-fixture construction/writing to an already-published package, so the distinct
-package count remains 82; direct app adoption is still separate.
+family that the app no longer needs. The notification, translation, form and
+date utility releases add eight previously unpublished package folders. The
+standalone vpngjs archive adds fixture writing to an already-published package.
+Direct app adoption is still separate.
 
 There is a publication backlog: development has outpaced packaging and adoption.
 The whole project does not need to be finished before more packages can ship.
@@ -19,9 +20,9 @@ entries blurred those boundaries.
 | --- | --- | --- |
 | `vmui-material` | In progress for a complete override; 100 components and the app-used theme factory are implemented. Full app typecheck and production build pass in an isolated VPM install. | Representative route/browser acceptance, a pinned 22-package closure release and app repin. Unsupported unused Material families do not have to be built first, but passing the build alone is not visual acceptance. |
 | `vmui-system`, `vmui-utils`, `vmui-styled-engine`, `vmui-private-theming` | Finished for the documented app scope; unreleased. | Publish with Material so its context, theme, styling and types stay consistent. Their local component/caller/archive tests already exist. |
-| `vnotistack`, `vi18next` / `vreact-i18next` | Finished for documented app notification and translation APIs; unreleased. | Package exact dependency closures, fresh-install checks and app notification/language-switch acceptance. Notistack custom transitions and i18next's unobserved plugin/rich-text APIs are outside scope. |
-| `vreact-hook-form`, `vhookform-resolvers`, `vzod` | Finished for the checked form/schema scope; unreleased. | Release a compatible form stack and validate current app forms/schema imports together. Zod's entire internal/plugin protocol and Hook Form's dynamic field-array/lens APIs are not implemented. Zod parsing regressions remain documented; they are not missing functionality or an automatic publication veto. |
-| `vdate-fns` | Finished for app date displays and the checked MUI adapter, using plain Date/en-US; unreleased. | Preserve every per-function and locale import in the release; rerun actual date-picker and timezone/DST checks on app adoption. Other locales, FP and UTCDate/TZDate modes are outside scope. |
+| `vnotistack`, `vi18next` / `vreact-i18next` | Published as `vnotistack-3.0.2` and `vreact-i18next-18.0.1`, with exact dependency closures and verified public installs. | App adoption and notification/language-switch acceptance. Custom transitions and unobserved plugin/rich-text APIs remain outside scope. |
+| `vreact-hook-form`, `vhookform-resolvers`, `vzod` | Published together as `vreact-hook-form-7.92.0`; public installs, types and installed form-stack checks pass. | App adoption and current route/form acceptance. The source-schema audit is refreshed at f9482ea6. Zod's entire internal/plugin protocol and Hook Form's dynamic field-array/lens APIs are not implemented. Zod parsing regressions remain documented; they are not missing functionality or an automatic publication veto. |
+| `vdate-fns` | Published as `vdate-fns-4.4.0`, including all declared per-function/locale entries; plain Date/en-US and unchanged MUI adapter checks pass. | App adoption, including explicit mapping of MUI's date-fns imports to vdate-fns, and route/picker acceptance. Other locales, FP and UTCDate/TZDate modes are outside scope. |
 | `vmoment` | Finished for FuseCountdown's fixed-unit/date arithmetic scope; unreleased. | Small release and caller check. The caller is coming-soon templates, not contest exam timers; this is lower priority than broadly used app dependencies. Full Moment formatting/plugins are not implemented. |
 | `vfirebase-admin`, `vfirebase-functions`, `vgoogle-auth-library`, `vgoogle-cloud-firestore`, `vgoogle-cloud-storage` | Application-facing implementations complete for their documented scope; unreleased. Not the entire upstream SDK surface. | Reconcile current app imports, review the complete runtime closure for retained upstream implementations, package immutable internal URLs, then run deployment-style install, Functions discovery/emulator/caller tests and credential/transport acceptance. No deployment is implied. |
 | `vgoogle-gax`, `vgrpc-js` and protocol foundations | App-used Firestore/client paths implemented and tested; unpublished. Some packages retain attributed protocol data and unused compatibility/server runtime. | Separate generated data from executable code and keep unnecessary retained runtime out of an all-in-house consumer closure. Validate retries, streams, cancellation, auth and transaction behavior through the SDK callers when publishing. |
@@ -37,10 +38,10 @@ entries blurred those boundaries.
 | `vnode-types`, `vundici-types` | Declaration-only work based on Node 22 / Undici 6; not runtime replacements. | Refresh to the supported Node baseline and check current consumers before adoption. Their old baseline is not an invitation to restore Node 22 runtime support. |
 | Build-tool leaves, source-map helpers and other small frontend foundations | Built to documented contracts, generally unpublished; not all have a current app caller. | Choose current callers, pack the needed closure and repeat fresh-install/caller gates. Babel helpers do not replace Babel itself. Redoc-only `vdecko` / `veventemitter3` evidence is historical after the viewer's removal. No need to adopt packages whose callers disappeared. |
 
-The practical next publication candidates are notifications, the translation pair,
-the form stack and date utilities, each with its existing app caller checks. They
-need not wait for Material, the editor or a backend-wide cutover. This is a
-readiness recommendation, not a claim that those releases have been published.
+Notifications, the translation pair, the form stack and date utilities now have
+consumer releases; [pins and migration scope](INSTALLATION.md#notifications-translations-forms-and-date-utilities)
+are available. Their adoption need not wait for Material, the editor or a
+backend-wide cutover. Publication is not an application deployment.
 
 [Backend scope](BACKEND.md), [frontend scope](FRONTEND.md), package READMEs and
 provenance remain the detailed contract. The status above does not assert that

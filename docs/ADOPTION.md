@@ -212,3 +212,25 @@ VLX/resvg sibling reader archives and the renderer encoder remain unchanged.
 The app-side handoff carries the pin, SHA256, API limits and benchmark size/noise
 tradeoffs. Direct adoption and removal of upstream PNG declarations remain app
 work.
+
+## Four additional frontend release scopes
+
+The November 23 publication batch adds `vnotistack-3.0.2`,
+`vreact-i18next-18.0.1` (including `vi18next`), `vreact-hook-form-7.92.0`
+(including `vhookform-resolvers` and `vzod`) and `vdate-fns-4.4.0`.
+[Installation pins](INSTALLATION.md#notifications-translations-forms-and-date-utilities)
+retain VPM direct dependency names. App adoption is pending; no application
+source or production configuration was changed by the release work.
+
+Source package suites pass 69 tests on Node 24.22.1 and Bun 1.4.4. Exact archives
+pass public entry/type and consumer checks, including Chrome notifications,
+language/resource switching, form validation/submission and the unchanged MUI
+date-time picker. Date comparisons cover six time zones. The refreshed private
+app audits at `f9482ea6` retain translation parity and the documented 15 Zod 3/4
+note-default differences; private source is not shipped.
+
+Release readiness remains scoped: custom notification transitions, translation
+rich-text/network plugins, dynamic field arrays, Zod internals and non-English
+date locales remain excluded. MUI's own date-fns imports need explicit resolver
+mapping to `vdate-fns`. The app must verify its routes, forms and language changes
+when adopting these packages.
