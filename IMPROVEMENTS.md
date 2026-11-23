@@ -266,6 +266,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vbalanced-match](packages/vbalanced-match) | balanced-match 5.0.0; caller controls 1.0.2 and 4.0.4 | Independent iterative delimiter matching without runtime dependencies. Preserves nesting, overlapping tokens and incomplete groups for unchanged brace-expansion/minimatch callers; explicit empty-delimiter behavior and cross-realm RegExp support. [Scope](packages/vbalanced-match/README.md) and [measurements](packages/vbalanced-match/bench/results/README.md). |
 | [vbrace-expansion](packages/vbrace-expansion) | brace-expansion 5.0.13; app controls 5.0.4 and 2.0.2 | Independent expansion using vbalanced-match, explicit interpreter frames and bounded products. No random escape sentinels or JavaScript recursion; unchanged minimatch 5/9/10 and glob 13 source callers verified. [Scope and limits](packages/vbrace-expansion/README.md), [measurements](packages/vbrace-expansion/bench/results/README.md). |
 | [vminimatch](packages/vminimatch) | minimatch 11.0.9; caller controls 5.1.9, 9.0.9 and 10.2.4 | Independent bounded glob interpreter using the VPM brace closure. Compact numeric ranges, explicit extglob/path stacks and adapters for unchanged glob 13 raw/Redocly callers. [Scope and limits](packages/vminimatch/README.md), [measurements](packages/vminimatch/bench/README.md). |
+| [vminipass](packages/vminipass) | minipass 7.1.3 | Independent zero-dependency synchronous byte/string/object stream with a head-cursor queue, backpressure, collectors, abort and iterator cleanup. Unchanged glob/path-scurry callers, 30 upstream regression files and 50,000 generated operations. [Scope](packages/vminipass/README.md), [measurements](packages/vminipass/bench/README.md). |
 | [vbabel-helper-validator-option](packages/vbabel-helper-validator-option) | @babel/helper-validator-option 7.29.7 | Independent option validation and spelling suggestions verified through Babel Core and both compilation-targets callers. [Measurements](packages/vbabel-helper-validator-option/bench/results/README.md). |
 | [vbabel-code-frame](packages/vbabel-code-frame) | @babel/code-frame 7.29.7; app 7.29.0 | Independent Babel source excerpts and highlighting with VPM tokenizer, identifiers and colors. Corrects tab alignment and multiline marker widths. [Measurements](packages/vbabel-code-frame/bench/results/README.md). |
 | [vjs-tokens](packages/vjs-tokens) | js-tokens 4.0.0 | Tokenizes JavaScript for Babel build diagnostics, with parity checks for highlighted text and source locations through both installed code-frame versions. [Measurements](packages/vjs-tokens/bench/results/README.md). |
@@ -487,9 +488,9 @@ version-scoped integration aliases remain limited to their tested baselines.
 ## Current verification
 
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
-recorded by the tests. All 169 Node runtime packages' public declarations compile
+recorded by the tests. All 170 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **262 packages**, including two declaration-only packages and
+compiler in NodeNext and bundler resolution modes. The catalog covers **263 packages**, including two declaration-only packages and
 browser packages `vcss-box-model`, `vuse-sync-external-store`, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,

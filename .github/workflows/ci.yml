@@ -427,6 +427,14 @@ jobs:
           node --test packages/vminimatch/test/*.test.cjs
           node scripts/minimatch-conformance/callers.cjs
           node scripts/minimatch-conformance/archives.cjs
+      - name: Independent Minipass and unchanged streaming callers
+        run: |
+          npm --prefix scripts/minipass-conformance ci --ignore-scripts --no-audit --no-fund
+          node --test packages/vminipass/test/*.test.cjs
+          node scripts/minipass-conformance/upstream.cjs
+          node scripts/minipass-conformance/contract.cjs
+          node scripts/minipass-conformance/callers.cjs
+          node scripts/minipass-conformance/archives.cjs
       - name: Independent emitter and unchanged API viewer services
         run: |
           node --test packages/veventemitter3/test/*.test.cjs
@@ -1385,6 +1393,10 @@ jobs:
       - run: npm --prefix scripts/minimatch-conformance ci --ignore-scripts --no-audit --no-fund
       - run: bun test packages/vminimatch/test
       - run: bun scripts/minimatch-conformance/callers.cjs
+      - run: npm --prefix scripts/minipass-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: bun test packages/vminipass/test
+      - run: bun scripts/minipass-conformance/contract.cjs
+      - run: bun scripts/minipass-conformance/callers.cjs
       - run: bun scripts/source-map-conformance/string-parser-caller.cjs
       - run: bun scripts/source-map-conformance/identifier-caller.cjs
       - run: bun scripts/source-map-conformance/jsesc-caller.cjs

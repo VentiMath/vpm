@@ -131,5 +131,16 @@ matching support from unimplemented upstream introspection APIs.
 
 Glob 13 embeds dependencies in its default entry. An npm override alone does not
 replace that embedded matcher; the verified fixture deliberately uses its
-published `glob/raw` source entry and instruments replacement calls. Completing
-`vminipass` and `vpath-scurry` would prepare an independent `vglob` caller.
+published `glob/raw` source entry and instruments replacement calls.
+`vminipass` now supplies the independent streaming leaf. `vpath-scurry` is next
+before an independent `vglob` caller.
+
+## Minipass streams
+
+[vminipass](../packages/vminipass) targets 7.1.3 with no package dependencies.
+It implements the object streams used by glob 13 and path-scurry 2, along with
+byte/string decoding, pipe backpressure, collection, iteration and abort cleanup.
+83 unchanged caller checks, 50,000 generated operations and fresh archive
+installs pass on Node and Bun. Thirty unchanged upstream regression files pass
+on Node; the TAP harness itself cannot run on Bun's incomplete V8 Serializer.
+This completes a stream leaf, not the directory walker or glob's bundled runtime.

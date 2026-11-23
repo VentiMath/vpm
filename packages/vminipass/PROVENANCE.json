@@ -1,0 +1,19 @@
+{
+  "upstream": {
+    "name": "minipass",
+    "version": "7.1.3",
+    "repository": "https://github.com/isaacs/minipass",
+    "commit": "ab4b3b05d0d557ac6bb178f38501b11d0c96454e",
+    "integrity": "sha512-tEBHqDnIoM/1rXME1zgka9g6Q2lcoCkxHLuc7ODJ5BxbP5d4c2Z5cGgtXAku59200Cx7diuHTOYfSBD8n6mm8A=="
+  },
+  "implementation": {
+    "kind": "independent",
+    "targetScope": "Synchronous byte/string/object streams for current glob and path-scurry file discovery, with backpressure, collectors, async iteration and abort cleanup."
+  },
+  "differences": [
+    "Own queue with a head cursor and bounded compaction; no runtime package dependencies.",
+    "Pending iterator return resolves the pending next operation and removes listeners.",
+    "No debugExposeBuffer private-symbol introspection. Internal EventEmitter/decoder scheduling is independently implemented; exact asynchronous microtask ordering is not claimed.",
+    "No application override, deployment or complete tar/npm toolchain migration is claimed."
+  ]
+}

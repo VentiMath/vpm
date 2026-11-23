@@ -839,6 +839,10 @@
       "name": "vminimist",
       "version": "0.1.0",
     },
+    "packages/vminipass": {
+      "name": "vminipass",
+      "version": "7.1.3",
+    },
     "packages/vmoment": {
       "name": "vmoment",
       "version": "2.31.0",
@@ -2277,6 +2281,8 @@
     "vminimatch": ["vminimatch@workspace:packages/vminimatch"],
 
     "vminimist": ["vminimist@workspace:packages/vminimist"],
+
+    "vminipass": ["vminipass@workspace:packages/vminipass"],
 
     "vmoment": ["vmoment@workspace:packages/vmoment"],
 
