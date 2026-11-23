@@ -133,7 +133,7 @@ Glob 13 embeds dependencies in its default entry. An npm override alone does not
 replace that embedded matcher; the verified fixture deliberately uses its
 published `glob/raw` source entry and instruments replacement calls.
 `vminipass` supplies the independent streaming leaf and `vpath-scurry` the
-cached directory walker. The next layer is an independent `vglob` caller.
+cached directory walker. `vglob` now combines these for filesystem searches.
 
 ## Minipass streams
 
@@ -154,3 +154,13 @@ app's 2.0.2 behavior checked. Its runtime closure is vlru-cache and vminipass.
 upstream groups and fresh npm/Bun archives pass. Resolution after `chdir()`
 clears stale strings; Windows roots follow the current v3 contract. This does
 not replace glob's bundled default entry or change application pins.
+
+## Filesystem glob caller
+
+[vglob](../packages/vglob) independently targets glob 14.0.6 while checking the
+installed frontend 13.0.6 and backend 10.5.0 APIs. The unchanged rimraf 6.1.3 and
+5.0.10 callers select and remove the same files in disposable fixtures. Its
+seven-package runtime closure is entirely VPM. The implementation shares one
+segment-state traversal between sync/async calls and streams, supports subtree
+pruning and abort, and bounds cyclic symlink following. It is built and verified;
+release and app adoption are separate. The next caller to replace is rimraf.

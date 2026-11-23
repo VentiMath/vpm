@@ -1,0 +1,1 @@
+{"name":"vpm-glob-controls","private":true,"dependencies":{"glob":"14.0.6","glob-app":"npm:glob@13.0.6","glob-ten":"npm:glob@10.5.0","rimraf":"6.1.3","rimraf-five":"npm:rimraf@5.0.10","tap":"21.6.1"}}

@@ -1,0 +1,39 @@
+{
+  "upstream": {
+    "name": "glob",
+    "version": "14.0.6",
+    "repository": "https://github.com/isaacs/node-glob",
+    "commit": "908e6169a79870d8694124f197f5aa052c6cfe2a",
+    "integrity": "sha512-OwXjVP2svY5EyLY75Vek96C8qK43gqrt4xsZ+qSILdnaEiJPXkd62mcfUSNx/TQErQRdu5uM5kF67sfONragKw=="
+  },
+  "implementation": {
+    "kind": "independent",
+    "targetScope": "Filesystem glob APIs used by VentiMath rimraf build and backend cleanup callers; shared sync/async segment-state traversal."
+  },
+  "differences": [
+    "Canonical ancestor cycles terminate with follow:true instead of expanding until the filesystem link limit.",
+    "Pattern-array traversal order is deterministic but does not promise upstream discovery ordering.",
+    "Legacy callbacks, CLI and private upstream Pattern/Processor/Walker internals are not compatibility contracts.",
+    "No application adoption or public release claimed."
+  ],
+  "upstreamTests": {
+    "filesRun": 12,
+    "assertions": 135,
+    "runtime": "Node 24",
+    "files": {
+      "LICENSE.md": "a49c9ba464796f65b59fca3f1e6ca40912df1e859f575383223f7ec6c5baae09",
+      "test/absolute-must-be-strings.ts": "e3f5a052a9e28a2a8fa0cf18faa1b7fcea7337ee3d412aa14556505ad7fdd1b6",
+      "test/custom-ignore.ts": "ab323b40945769f96696976cba17bb0e2325cef0ad8dfd3ca96b40d882575ddb",
+      "test/empty-set.ts": "3486ba076691c93aa83120b73c2718ac42c8a17df9613841b9c5a04e76103045",
+      "test/has-magic.ts": "c119d7870f9249209f257bb197307afc11464a2f495e3c03d77daaf94d6f9732",
+      "test/include-child-matches.ts": "cf21fb9f5571fbe607b4d91bcb81f9f1fce3fddccce369437dff48a2ca0ad3d4",
+      "test/mark.ts": "e8b75389d8ccedf086473b7a7f7e701887f52690f6c309496b19f16489ca9b46",
+      "test/match-base.ts": "3a8bb18eb3d96c144da86aaffd813918123272633f543287048f09fb0c333645",
+      "test/match-root.ts": "c7f51a21596bebf1b2029185fdf37414a42d894129d9fba667a8bd55bccfefac",
+      "test/max-depth.ts": "e8f331dfc09b6edaa99f648aed038b0c5f2de6e4cdee90ed2c20884995e780c7",
+      "test/nodir.ts": "179b431c76d6eb262facc26520f85115b0a728689845b44c2d20faef626738bc",
+      "test/normalize.ts": "e46c9f3c3c4afa35bac28f1a1e2bcebeeaf0614fc24c29da7b5a6e98fed04e17",
+      "test/stat.ts": "a14123731ff3915272a048e5d52097e5d606bc34cf6dbff02fa5f869f4c35d0d"
+    }
+  }
+}

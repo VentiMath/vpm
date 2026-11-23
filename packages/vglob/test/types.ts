@@ -1,0 +1,14 @@
+import { glob, Glob, globSync, globStream, type Path, type GlobOptions, type IgnoreLike } from '../index.cjs';
+const text: string[] = globSync('**');
+const paths: Path[] = globSync('**', { withFileTypes: true });
+const g = new Glob('**', { withFileTypes: true });
+const paths2: Path[] = new Glob('**', g).walkSync();
+const p: Promise<string[]> = glob('**', { ignore: { ignored: e => e.name === 'tmp' } });
+globStream('**', { withFileTypes: true }).on('data', e => e.fullpath());
+glob.sync.stream('**'); glob.iterate.sync('**'); glob.hasMagic('**'); glob.escape('*');
+const options: GlobOptions = { withFileTypes: Math.random() > 0.5 };
+const mixed: (Path | string)[] = globSync('**', options);
+const ign: IgnoreLike = { childrenIgnored: p => p.isNamed('skip') };
+void [text, paths, paths2, p, mixed, ign];
+const reusedText: string[] = new Glob('**', new Glob('**', { withFileTypes: false })).walkSync();
+void reusedText;
