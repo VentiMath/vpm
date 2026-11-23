@@ -42,7 +42,7 @@ not a decision to recreate an older upstream release.
 | --- | --- | --- | --- |
 | `stripe` | 17.7.0 | Checkout sessions and signed completion webhooks in `functions/src/payments.ts` | [vstripe](../packages/vstripe): independent app-used APIs targeting current 23.1.0 completed; not released or adopted |
 | `vlx` | 0.2.3 | TeX/page layout in `functions/src/problemPicture.ts` | [VLX](../packages/vlx) release adopted; `mathjax-full` removed from the Functions production dependencies |
-| `@resvg/resvg-js` | 2.6.2 | Rasterizes VLX SVG into Discord PNG pictures | Required by the app’s pinned VLX 0.2.3; VLX 0.3.0 has an independent rasterizer; app repin remains |
+| `@resvg/resvg-js` | 2.6.2 | Problem pictures through VLX 0.2.3 and handwritten pages in `functions/src/writeupPicture.ts` | VLX 0.3.2 replaces the problem-picture use; the writeup caller still requires resvg |
 | `vpngjs` | 7.0.0 | Figure validation through `vlx/problem` | [Independent PNG reader](../packages/vpngjs), adopted through the VLX release; upstream `pngjs` remains a development comparison dependency |
 
 The Stripe replacement covers Checkout session creation and raw-body snapshot
@@ -65,9 +65,10 @@ needs caller evidence, not merely a package count.
 ### Why resvg says optional
 
 The published **VLX 0.2.3** declares resvg as an optional peer because browser
-math and SVG output do not need it. VentiMath's pinned Functions release still
-needs it for `problemPicture.ts` PNG calls. Do not remove that dependency from
-the app until its VLX URL is updated to a release containing the owned renderer.
+math and SVG output do not need it. That version needs it for `problemPicture.ts`
+PNG calls. Application PR #455 moves those calls to VLX 0.3.2's owned renderer,
+but `writeupPicture.ts` separately imports resvg to draw handwritten pages.
+Keep the application's direct dependency after the VLX repin.
 
 VLX 0.3.0 independently draws its own glyph paths, rules, transforms,
 colors and embedded figures, then encodes PNGs with built-in zlib. It has no
@@ -77,9 +78,15 @@ comparisons; 30 unchanged app layout tests pass. Antialiasing and performance
 tradeoffs are documented in [VLX](../packages/vlx/README.md).
 
 Resvg's twelve optional packages are operating-system/CPU/native-library builds
-of one renderer. They can disappear from this caller after adoption;
-there is no separate JavaScript rewrite for each platform artifact. Source
-completion and installed application dependencies remain distinct in the atlas.
+of one renderer. The writeup caller still requires the appropriate native build;
+there is no separate JavaScript rewrite for each platform artifact. Replacing
+that caller remains backend work, and the atlas keeps resvg outstanding.
+
+PR #455's application report passes 193/193 Functions and 457/457 site test files.
+Its 1,260-statement Node HTML-plus-PNG comparison takes 24.6 seconds on 0.3.2
+versus 12.8 seconds on 0.2.3. This reported regression needs stage-specific
+profiling; it is not explained away by the smaller synthetic comparisons.
+See the [branch verification record](ADOPTION.md#vlx-032-application-verification).
 
 ## Unified math rendering
 
