@@ -412,3 +412,11 @@ The optimized Node 24 measurements reduce owned formula/page PNG time by about
 3.1 ms for native resvg, rather than the earlier roughly tenfold gap. Bun's
 complete-page comparison is 4.4 ms versus 3.1 ms; figure pages still regress and
 its previous-renderer controls are very noisy. Native parity is not claimed.
+
+## Three.js books and parchment
+
+The [surface example](../../examples/vlx-three) maps VLX's SVG outlines onto
+curved page textures while retaining source TeX and a selectable MathML reading
+view. It is checked against Three.js 0.184.0 and 0.187.0 and adds no Three.js
+runtime dependency to VLX. The example documents texture budgets and zoom
+limits. Live-scene integration and physical-device acceptance remain separate.

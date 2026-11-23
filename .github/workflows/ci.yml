@@ -774,6 +774,13 @@ jobs:
       - run: node scripts/vlx-conformance/archives.cjs
       - run: node scripts/vlx-conformance/selection-browser.cjs
       - run: node scripts/vlx-conformance/browser.cjs
+      - name: VLX Three.js book and parchment surfaces
+        run: |
+          npm --prefix scripts/vlx-three-conformance ci --ignore-scripts --no-audit --no-fund
+          node scripts/vlx-three-conformance/build.cjs "$RUNNER_TEMP/vlx-three.html"
+          node scripts/vlx-three-conformance/browser.cjs "$RUNNER_TEMP/vlx-three.html" 187
+          node scripts/vlx-three-conformance/build.cjs "$RUNNER_TEMP/vlx-three-app.html" three-app
+          node scripts/vlx-three-conformance/browser.cjs "$RUNNER_TEMP/vlx-three-app.html" 184
       - name: Check VLX release archives
         run: |
           VLX_CI_VERSION=$(node -p 'require("./packages/vlx/package.json").version')
