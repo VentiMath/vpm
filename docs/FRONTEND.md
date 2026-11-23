@@ -197,3 +197,8 @@ callers use its terminal cursor/erase sequences. Target current 2.0.0 while
 checking their installed 1.0.5 behavior. This remains planned, not implemented.
 
 `vsisteransi` independently covers terminal sequences beneath the app’s Prompts and Clack build tools. Explicit row zero, bounded output, unchanged caller traces and exact archives are tested; release/adoption are separate.
+
+`vpath-key` independently supplies PATH key lookup for the current cross-spawn
+7.0.6 tooling dependency. Windows casing and duplicate ordering, unchanged
+resolver calls, and Node/Bun packed installs are covered. It is built but not
+published or adopted; native Windows process launch is outside the local checks.

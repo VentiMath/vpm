@@ -276,6 +276,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [venv-paths](packages/venv-paths) | env-paths 4.0.0; app 2.2.1 | Independent platform data/config/cache/log/temp directories with current name validation and zero package dependencies. CommonJS compatibility, live environment overrides, OS contract comparisons and unchanged Capacitor config/IPC callers. [Scope](packages/venv-paths/README.md), [measurements](packages/venv-paths/bench/README.md). |
 | [vis-docker](packages/vis-docker) | is-docker 4.0.0; app 2.2.1 | Independent cached Docker filesystem detection, including mountinfo evidence on cgroup v2. Zero package dependencies; CJS/ESM and original-name CLI; unchanged open/is-wsl caller comparisons. [Scope](packages/vis-docker/README.md), [measurements](packages/vis-docker/bench/README.md). |
 | [vis-inside-container](packages/vis-inside-container) | is-inside-container 1.0.0 | Independent cached Podman marker detection above vis-docker. Current WSL caller, CJS/ESM, silent CLI and complete packed VPM closure verified. [Scope](packages/vis-inside-container/README.md), [measurements](packages/vis-inside-container/bench/README.md). |
+| [vpath-key](packages/vpath-key) | path-key 4.0.0; app 3.1.1 | Independent reverse ASCII scan preserves Windows key spelling/order without reading environment values. Zero dependencies; unchanged cross-spawn resolver and packed dual-module consumers tested. [Measurements](packages/vpath-key/bench/README.md). |
 | [vdefine-lazy-prop](packages/vdefine-lazy-prop) | define-lazy-prop 3.0.0 | Independent lazy accessors with assignment-before-read and retry behavior; dual module entries and symbol/numeric key declarations. Current/app opener callers, generated descriptor operations and exact archives pass. [Measurements](packages/vdefine-lazy-prop/bench/README.md). |
 | [vsisteransi](packages/vsisteransi) | sisteransi 2.0.0 | Independent terminal sequences; fixes explicit row zero, validates counts and bounds repeated output. 55,958 byte comparisons, unchanged Prompts/Clack callers and exact archives pass. [Measurements](packages/vsisteransi/bench/README.md). |
 | [vis-wsl](packages/vis-wsl) | is-wsl 3.1.1; app 2.2.0 | Independent import-time WSL detection with custom-kernel markers and container exclusion. Entire runtime closure is VPM; 384 contracts and unchanged open caller checks. [Scope](packages/vis-wsl/README.md), [measurements](packages/vis-wsl/bench/README.md). |
@@ -500,9 +501,9 @@ version-scoped integration aliases remain limited to their tested baselines.
 ## Current verification
 
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
-recorded by the tests. All 182 Node runtime packages' public declarations compile
+recorded by the tests. All 183 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **275 packages**, including two declaration-only packages and
+compiler in NodeNext and bundler resolution modes. The catalog covers **276 packages**, including two declaration-only packages and
 browser packages `vcss-box-model`, `vuse-sync-external-store`, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,

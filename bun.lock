@@ -1073,6 +1073,10 @@
       "name": "vpath-expression-matcher",
       "version": "0.1.0",
     },
+    "packages/vpath-key": {
+      "name": "vpath-key",
+      "version": "4.0.0",
+    },
     "packages/vpath-scurry": {
       "name": "vpath-scurry",
       "version": "3.0.0",
@@ -2435,6 +2439,8 @@
     "vparseurl": ["vparseurl@workspace:packages/vparseurl"],
 
     "vpath-expression-matcher": ["vpath-expression-matcher@workspace:packages/vpath-expression-matcher"],
+
+    "vpath-key": ["vpath-key@workspace:packages/vpath-key"],
 
     "vpath-scurry": ["vpath-scurry@workspace:packages/vpath-scurry"],
 

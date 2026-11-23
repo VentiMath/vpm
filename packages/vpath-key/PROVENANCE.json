@@ -1,0 +1,28 @@
+{
+  "upstream": {
+    "name": "path-key",
+    "version": "4.0.0",
+    "repository": "https://github.com/sindresorhus/path-key",
+    "commit": "d5ad08865acad539d2d64655f14987a7ad764451",
+    "integrity": "sha512-haREypq7xkM7ErfgIyA0z+Bj4AGKlMSdlQE2jvJo6huWD1EdkKYV+G/T4nq0YEF2vgTT8kqMFKo1uHn950r4SQ==",
+    "checked": "2026-11-23"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "PATH key lookup for cross-spawn and VentiMath tooling; independent reverse ASCII-key scan, no dependencies or cached environment values."
+  },
+  "differences": [
+    "CJS callable/default and ESM default support both current and installed callers.",
+    "Uses version 4 defaults: only undefined selects the runtime default; version 3 also replaces null/empty option values.",
+    "Windows key behavior is simulated on the test host; this is not a native Windows process-launch certification."
+  ],
+  "verification": {
+    "controls": [
+      "path-key 4.0.0",
+      "path-key 3.1.1"
+    ],
+    "caller": "cross-spawn 7.0.6",
+    "generatedEnvironments": 8192
+  }
+}

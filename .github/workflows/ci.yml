@@ -504,6 +504,12 @@ jobs:
           node --test packages/vis-wsl/test/*.test.cjs
           node scripts/container-conformance/wsl.cjs
           node scripts/container-conformance/archives.cjs vis-wsl
+      - name: Independent PATH key lookup and unchanged cross-spawn resolver
+        run: |
+          npm --prefix scripts/path-key-conformance ci --ignore-scripts --no-audit --no-fund
+          node --test packages/vpath-key/test/*.test.cjs
+          node scripts/path-key-conformance/callers.cjs
+          node scripts/path-key-conformance/archives.cjs
       - name: Independent lazy properties and unchanged opener app names
         run: |
           npm --prefix scripts/lazy-prop-conformance ci --ignore-scripts --no-audit --no-fund
@@ -1527,6 +1533,9 @@ jobs:
       - run: bun test packages/vis-wsl/test
       - run: bun scripts/container-conformance/wsl.cjs
       - run: npm --prefix scripts/lazy-prop-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/path-key-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: bun test packages/vpath-key/test
+      - run: bun scripts/path-key-conformance/callers.cjs
       - run: bun test packages/vdefine-lazy-prop/test
       - run: bun scripts/lazy-prop-conformance/contract.cjs
       - run: bun scripts/lazy-prop-conformance/callers.cjs

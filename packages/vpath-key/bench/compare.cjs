@@ -1,0 +1,5 @@
+"use strict";
+const path=require('node:path'),assert=require('node:assert/strict'),{pathToFileURL}=require('node:url');
+const root=path.resolve(__dirname,'..'),upstream=require.resolve('path-key',{paths:[path.resolve(__dirname,'../../../scripts/path-key-conformance')]}),vpm=root+'/index.cjs';
+const cases=[['POSIX', {platform:'linux',env:{PATH:'bin'}}],['Windows short',{platform:'win32',env:{HOME:'x',Path:'bin',OTHER:'x'}}],['Windows 64 keys', {platform:'win32',env:Object.fromEntries([['Path','bin'],...Array.from({length:64},(_,i)=>['OTHER_'+i,'x'])])}],['Windows duplicate',{platform:'win32',env:{PATH:'a',Path:'b',path:'c'}}]].map(([name,options])=>({name,async make(file){const fn=(await import(pathToFileURL(file))).default;return()=>fn(options)},validate(value){assert.equal(value,name==='POSIX'?'PATH':name==='Windows duplicate'?'path':'Path')}}));
+require('../../../scripts/bench-process.cjs').run({root,upstream,vpm,cases,files:['index.cjs','index.mjs','package.json','bench/compare.cjs','../../scripts/path-key-conformance/package-lock.json']}).catch(e=>{console.error(e);process.exitCode=1});
