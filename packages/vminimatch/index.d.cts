@@ -1,4 +1,5 @@
 declare function minimatch(path: string, pattern: string, options?: minimatch.MinimatchOptions): boolean;
+type MinimatchAPI = typeof minimatch;
 declare namespace minimatch {
  interface MinimatchOptions {
   nobrace?: boolean; nocomment?: boolean; nonegate?: boolean; noglobstar?: boolean; noext?: boolean; nonull?: boolean;
@@ -23,13 +24,13 @@ declare namespace minimatch {
   makeRe(): RegExp | false;
   static defaults(options: MinimatchOptions): typeof Minimatch;
  }
- function minimatch(path: string, pattern: string, options?: MinimatchOptions): boolean;
+ const minimatch: MinimatchAPI;
  function filter(pattern: string, options?: MinimatchOptions): (path: string) => boolean;
  function match(paths: string[], pattern: string, options?: MinimatchOptions): string[];
  function braceExpand(pattern: string, options?: MinimatchOptions): string[];
  function escape(value: string, options?: Pick<MinimatchOptions, 'windowsPathsNoEscape' | 'magicalBraces'>): string;
  function unescape(value: string, options?: Pick<MinimatchOptions, 'windowsPathsNoEscape' | 'magicalBraces'>): string;
- function defaults(options?: MinimatchOptions): typeof minimatch;
+ function defaults(options?: MinimatchOptions): MinimatchAPI;
  function makeRe(pattern: string, options?: MinimatchOptions): RegExp | false;
  const sep: '/' | '\\';
 }

@@ -10,3 +10,8 @@ const parts: mm.ParseReturnFiltered[][] = matcher.set;
 mm('x', 1);
 // @ts-expect-error Unknown Unicode normalization form.
 mm('x', 'x', {normalize:'invalid'});
+
+const recursiveNamed = mm.minimatch.defaults({dot:true}).minimatch.defaults({nocase:true});
+const namedMatcher: mm.Minimatch = new recursiveNamed.Minimatch('*.ts');
+// @ts-expect-error Nested helper calls retain their input types.
+recursiveNamed.defaults({normalize:'invalid'});
