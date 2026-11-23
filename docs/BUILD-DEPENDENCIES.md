@@ -100,6 +100,21 @@ caller. Unchanged brace-expansion 2/5 and minimatch 10 callers pass alongside
 49,200 generated comparisons against three upstream versions. Empty delimiters
 return no match; real brace callers use nonempty delimiters.
 
-This completes the leaf implementation. Brace expansion, a consumer release
-and application adoption remain separate. See the
+This completes the delimiter leaf. Its [brace expansion caller](../packages/vbrace-expansion)
+is also independently built; consumer releases and application adoption remain
+separate. See the
 [conformance commands](../scripts/balanced-match-conformance/README.md).
+
+## Brace expansion in glob callers
+
+[vbrace-expansion](../packages/vbrace-expansion) targets current 5.0.13 with
+vbalanced-match as its only runtime dependency. Its explicit frame stack owns
+nested expansion, and output/work budgets bound products and rewrites. The
+current option names and defaults are supported; operation counts and strict
+input handling have documented differences.
+
+The application installs brace-expansion 2.0.2 and 5.0.4 through minimatch.
+Unchanged minimatch 5.1.9/9.0.9/10.2.4 and glob 13.0.6 source pass matching and real
+file-enumeration comparisons with the replacement. This closes the brace
+expansion layer, not all of minimatch/glob. Consumer publication and application
+adoption remain separate.

@@ -84,6 +84,13 @@
         "vtype-is": "workspace:*",
       },
     },
+    "packages/vbrace-expansion": {
+      "name": "vbrace-expansion",
+      "version": "5.0.13",
+      "dependencies": {
+        "vbalanced-match": "5.0.0",
+      },
+    },
     "packages/vbuffer-builder": {
       "name": "vbuffer-builder",
       "version": "0.2.0",
@@ -2033,6 +2040,8 @@
     "vbase64-js": ["vbase64-js@workspace:packages/vbase64-js"],
 
     "vbody-parser": ["vbody-parser@workspace:packages/vbody-parser"],
+
+    "vbrace-expansion": ["vbrace-expansion@workspace:packages/vbrace-expansion"],
 
     "vbuffer-builder": ["vbuffer-builder@workspace:packages/vbuffer-builder"],
 

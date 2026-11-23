@@ -1,0 +1,20 @@
+{
+  "upstream": {
+    "name": "brace-expansion",
+    "version": "5.0.13",
+    "repository": "https://github.com/juliangruber/brace-expansion",
+    "commit": "420ede4ada8375a94c8afa31d62fc038da44b9a1",
+    "integrity": "sha512-Vh3dmFbc4wZeox7M9I/0L9GfFd83Su4+yCck/OF9Gi/P/dAHn0RT7X4K9R7gMNMhDck3DvhR6QXsnQdjjgwNvQ=="
+  },
+  "implementation": {
+    "kind": "independent",
+    "targetScope": "File-pattern brace alternatives and ranges for unchanged minimatch 5/9/10 and glob 13 source callers; explicit interpreter stack, VPM delimiter scan and bounded output/work."
+  },
+  "differences": [
+    "Implementation-specific work accounting and literal fallback boundary.",
+    "Decoded UTF-16 length budgeting instead of escaped-placeholder length.",
+    "Strict string/number input types; negative bounds clamp to zero and fractions round down.",
+    "Unsafe numeric endpoints/steps remain literal.",
+    "Current malformed-input behavior may differ from brace-expansion 2.x."
+  ]
+}
