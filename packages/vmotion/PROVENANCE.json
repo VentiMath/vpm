@@ -9,12 +9,12 @@
     "kind": "independent implementation",
     "replacementStatus": "independent application implementation",
     "targetScope": "React motion div/span/button and custom roots, initial/animate targets, hidden/show variant inheritance and staggering, initial=false, useAnimation start/set/stop, CSS-variable bell colors and repeat/reset, stable refs/DOM, hydration and reduced motion. Direct React rendering over vmotion-dom; no upstream runtime.",
-    "remainingWork": "Consumer release and actual VentiMath integration. Gestures, drag/layout projection, AnimatePresence, sequences, useAnimate, SVG-specific geometry and other unobserved Motion APIs are outside this subset."
+    "remainingWork": "Actual VentiMath integration of the published motion-14.7.0 application subset. Gestures, drag/layout projection, AnimatePresence, sequences, useAnimate, SVG-specific geometry and other unobserved Motion APIs remain outside this subset."
   },
   "caller": {
-    "revision": "d0a71aaf413afad1f5a95f6496e0654e145b59f0",
+    "revision": "2721de950b0f0668dbd03593d6aa36d92e1d04bb",
     "appControl": "motion 12.20.5; framer-motion and motion-dom 12.36.0; React 19.3.1",
-    "scope": "November 18 inventory: 40 non-test files, 99 direct JSX roots (94 divs, five spans), and eight polymorphic component={motion.*} uses; only motion and useAnimation from motion/react. Contest entries, calendar/list entrances, sidebar/directory transitions, repeated notification bell and polymorphic roots. Static counts do not establish route reachability or adoption."
+    "scope": "November 22 inventory: 43 non-test import files use motion or useAnimation from motion/react. Contest entries, calendar/list entrances, directory transitions, public error views, powered-by buttons, repeated notification bell and polymorphic Material roots. Static counts do not establish route reachability or adoption."
   },
   "changes": [
     "Independently written from public types/API observations and app-shaped black-box controls; no upstream runtime source copied.",
@@ -30,5 +30,12 @@
     "https://motion.dev/docs/react-motion-component",
     "https://motion.dev/docs/react-animation",
     "https://motion.dev/docs/react-accessibility"
-  ]
+  ],
+  "release": {
+    "tag": "motion-14.7.0",
+    "sourceCommit": "28e4f3af1a30def63a65554a2d50fa3b7a98d19c",
+    "verified": "2026-11-22",
+    "consumerDependency": "https://github.com/VentiMath/vpm/releases/download/motion-14.7.0/vmotion-14.7.0.tgz",
+    "checks": "Public asset/source hashes, fresh/frozen npm and Bun root-only installs, Node/Bun SSR, strict TS7 and 46 Chrome scenarios with app Material 7.2.0 / React 19.3.1. App adoption pending."
+  }
 }
