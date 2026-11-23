@@ -483,6 +483,14 @@ jobs:
           node scripts/env-paths-conformance/contract.cjs
           node scripts/env-paths-conformance/callers.cjs
           node scripts/env-paths-conformance/archives.cjs
+      - name: Independent Docker detection and unchanged opener callers
+        run: |
+          npm --prefix scripts/docker-conformance ci --ignore-scripts --no-audit --no-fund
+          node --test packages/vis-docker/test/*.test.cjs
+          node scripts/docker-conformance/upstream.cjs
+          node scripts/docker-conformance/contract.cjs
+          node scripts/docker-conformance/callers.cjs
+          node scripts/docker-conformance/archives.cjs
       - name: Independent emitter and unchanged API viewer services
         run: |
           node --test packages/veventemitter3/test/*.test.cjs
@@ -1479,6 +1487,11 @@ jobs:
       - run: bun scripts/env-paths-conformance/upstream.cjs
       - run: bun scripts/env-paths-conformance/contract.cjs
       - run: bun scripts/env-paths-conformance/callers.cjs
+      - run: npm --prefix scripts/docker-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: bun test packages/vis-docker/test
+      - run: bun test ./scripts/docker-conformance/upstream.cjs
+      - run: bun scripts/docker-conformance/contract.cjs
+      - run: bun scripts/docker-conformance/callers.cjs
       - run: bun scripts/source-map-conformance/string-parser-caller.cjs
       - run: bun scripts/source-map-conformance/identifier-caller.cjs
       - run: bun scripts/source-map-conformance/jsesc-caller.cjs

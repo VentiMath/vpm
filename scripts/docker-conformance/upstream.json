@@ -1,0 +1,6 @@
+{
+  "version": "4.0.0",
+  "commit": "59379f14b6dda26a0167fce55d80bf546857f92d",
+  "sha256": "a56a43bbb0674cba39994b1f595ee452442de39b5f39e8cbb4aca43eb571d40f",
+  "adaptation": "Original test file; esmock resolves the VPM implementation with the requested filesystem mock. Bun changes module syntax only; node:test and node:assert remain real."
+}

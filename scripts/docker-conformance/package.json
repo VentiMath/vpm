@@ -1,0 +1,11 @@
+{
+  "name": "vpm-docker-controls",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "is-docker": "4.0.0",
+    "is-docker-app": "npm:is-docker@2.2.1",
+    "is-wsl": "2.2.0",
+    "open": "8.4.2"
+  }
+}

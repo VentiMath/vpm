@@ -1,0 +1,20 @@
+{
+  "upstream": {
+    "name": "is-docker",
+    "version": "4.0.0",
+    "repository": "https://github.com/sindresorhus/is-docker",
+    "commit": "59379f14b6dda26a0167fce55d80bf546857f92d",
+    "integrity": "sha512-LHE+wROyG/Y/0ZnbktRCoTix2c1RhgWaZraMZ8o1Q7zCh0VSrICJQO5oqIIISrcSBtrXv0o233w1IYwsWCjTzA=="
+  },
+  "implementation": {
+    "kind": "independent",
+    "targetScope": "Lazy, cached Docker evidence from the marker file, cgroup and mountinfo; current ESM and legacy CommonJS API plus silent CLI exit statuses. No package dependencies."
+  },
+  "differences": [
+    "Adds a CommonJS callable/default bridge and original-name CLI alias for installed open 8.4.2 and is-wsl 2.2.0 callers.",
+    "Mountinfo detection matches 4.0.0 and deliberately extends the app's 2.2.1 detection for cgroup v2.",
+    "A missing /.dockerenv uses nonthrowing stat; permission and other filesystem failures still fall through.",
+    "No Podman/general-container guarantee, Docker daemon query, refresh API or filesystem mutation. Detection is heuristic and must not be used as a security boundary.",
+    "Platform caller behavior is simulated; native Windows/WSL/Docker execution, public release and application adoption are not claimed."
+  ]
+}

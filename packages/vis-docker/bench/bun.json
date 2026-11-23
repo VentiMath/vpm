@@ -1,0 +1,1323 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-23T10:35:46.125Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/docker-conformance/load.cjs": "2be5960ba88f372c2236ca5f04095fdf653c67fc3a3ce7b9738d8fe85d52922a",
+    "../../scripts/docker-conformance/package-lock.json": "aeeb4bd5d5b0835a14588a94090e76183d7f9e02d2b2af3e5d77391928ac2fbb",
+    "bench/compare.cjs": "3b8216e3d93127b9bc3b6068aa7adece5d4f37123ecad9045efbb49b8d2b20df",
+    "index.cjs": "c568f1f4b9ecc4bc0beae8a8722897521229000b3b819a75824736fc51431caf",
+    "index.mjs": "7ed063b12084e6c026628388dbb0448d944a91f25f37d2bcca1962bab012ef6c",
+    "package.json": "cc2e70a60af6741f21ba3caecd07649c4b4448d9f1b6aebbde2d422c59ee0723"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 72684,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "cached host detection",
+            "iterations": 1000000,
+            "samples": [
+              2.271833999999984,
+              2.2755420000000015,
+              2.2365000000000066,
+              2.345624999999984,
+              2.192542000000003,
+              2.191457999999983,
+              2.251708000000008,
+              2.229208,
+              2.264417000000009,
+              2.199792000000002,
+              2.3437920000000076,
+              2.204541000000006
+            ]
+          },
+          {
+            "case": "fresh module and host probes",
+            "iterations": 2373,
+            "samples": [
+              4288.5937631689785,
+              3981.7214496418246,
+              4228.2448377581,
+              4204.31226295828,
+              4158.150863885386,
+              4126.983986514968,
+              4097.538558786342,
+              4214.215339233043,
+              4289.963758954895,
+              4213.7412557943335,
+              4221.6953223767105,
+              4256.777496839472
+            ]
+          },
+          {
+            "case": "fresh module and cgroup-v2 probes (simulated)",
+            "iterations": 21283,
+            "samples": [
+              479.9546586477473,
+              474.4416200723572,
+              470.6514589108638,
+              463.73866466193994,
+              468.3628247897381,
+              471.4345721937702,
+              454.12808344688284,
+              460.42808814547004,
+              468.23756049428687,
+              582.6617957994656,
+              443.67175680119897,
+              466.6655076821888
+            ]
+          }
+        ],
+        "checksum": 4768
+      },
+      "vpm": {
+        "pid": 72685,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "cached host detection",
+            "iterations": 1000000,
+            "samples": [
+              2.180333999999988,
+              2.1927080000000103,
+              2.2115829999999903,
+              2.229291999999987,
+              2.1812500000000057,
+              2.3145419999999888,
+              2.200917000000004,
+              2.1739169999999888,
+              2.335250000000002,
+              2.341750000000019,
+              2.2902090000000044,
+              2.3124159999999847
+            ]
+          },
+          {
+            "case": "fresh module and host probes",
+            "iterations": 2373,
+            "samples": [
+              3790.9292035398284,
+              3610.8651495996583,
+              3423.9182469447924,
+              4012.2557943531538,
+              4490.641382216607,
+              3426.6224188790766,
+              3367.976822587443,
+              3476.8225874420755,
+              3628.8980193847487,
+              3528.9013906447713,
+              3348.504003371271,
+              3700.8356510745894
+            ]
+          },
+          {
+            "case": "fresh module and cgroup-v2 probes (simulated)",
+            "iterations": 21283,
+            "samples": [
+              67.08405769863019,
+              66.59657942959136,
+              68.44857397923005,
+              69.31978574448986,
+              66.11102758070052,
+              67.47559084715218,
+              67.70662030728363,
+              63.96142461118909,
+              68.20194521449127,
+              157.70018324484093,
+              64.32166517878215,
+              75.09707278109371
+            ]
+          }
+        ],
+        "checksum": 7264
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 72697,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "cached host detection",
+            "iterations": 1000000,
+            "samples": [
+              3.5017090000000053,
+              3.618916999999982,
+              3.379207999999977,
+              3.3569999999999993,
+              3.450417000000016,
+              3.3962499999999802,
+              3.539041999999995,
+              3.358417000000003,
+              3.420749999999998,
+              3.423999999999978,
+              3.4169169999999838,
+              3.577916000000016
+            ]
+          },
+          {
+            "case": "fresh module and host probes",
+            "iterations": 2750,
+            "samples": [
+              3651.106181818188,
+              3704.681818181825,
+              3479.4999999999995,
+              3583.0454545454645,
+              3679.0759999999987,
+              3660.5454545454613,
+              3634.484727272717,
+              3624.651636363648,
+              3548.4090909090937,
+              3625.378909090924,
+              3496.9545454545455,
+              3361.46981818179
+            ]
+          },
+          {
+            "case": "fresh module and cgroup-v2 probes (simulated)",
+            "iterations": 172162,
+            "samples": [
+              76.7682938162894,
+              71.9574238217492,
+              68.65190924826557,
+              67.4483451632763,
+              72.54165262949957,
+              71.44118911257978,
+              72.02373346034571,
+              76.06183710691106,
+              77.66134803266667,
+              72.94098581568547,
+              79.77587969470615,
+              102.36071258465914
+            ]
+          }
+        ],
+        "checksum": 14816
+      },
+      "upstream": {
+        "pid": 72703,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "cached host detection",
+            "iterations": 1000000,
+            "samples": [
+              2.1882920000000183,
+              2.2663749999999823,
+              2.2510839999999916,
+              2.2489579999999876,
+              2.4130830000000003,
+              2.427250000000015,
+              2.191874999999982,
+              2.2007079999999917,
+              2.1879160000000013,
+              2.192457999999988,
+              2.274957999999998,
+              2.2242080000000044
+            ]
+          },
+          {
+            "case": "fresh module and host probes",
+            "iterations": 2750,
+            "samples": [
+              4189.681818181808,
+              4261.181818181823,
+              4299.74254545453,
+              4064.121090909091,
+              4189.121454545453,
+              4154.81818181818,
+              5572.394181818171,
+              5160.77272727274,
+              4688.697090909066,
+              4396.3029090909085,
+              5130.7578181818335,
+              4394.742181818154
+            ]
+          },
+          {
+            "case": "fresh module and cgroup-v2 probes (simulated)",
+            "iterations": 172162,
+            "samples": [
+              495.9163926998991,
+              514.7455594149686,
+              536.9414679197508,
+              508.15510972223774,
+              483.9153413645287,
+              487.81573750305023,
+              488.86078228645016,
+              517.1754394117175,
+              521.1840185406767,
+              565.5492094655028,
+              514.9909678093875,
+              493.0119131980332
+            ]
+          }
+        ],
+        "checksum": 1184
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 72718,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "cached host detection",
+            "iterations": 1000000,
+            "samples": [
+              2.2573750000000246,
+              2.2723330000000033,
+              2.268459000000007,
+              2.262042000000008,
+              2.210542000000004,
+              2.3169579999999996,
+              2.297124999999994,
+              2.273541999999992,
+              2.2452499999999986,
+              2.3531250000000057,
+              2.197499999999991,
+              2.1866249999999923
+            ]
+          },
+          {
+            "case": "fresh module and host probes",
+            "iterations": 2289,
+            "samples": [
+              4353.938837920484,
+              5719.072957623416,
+              4071.8291830493754,
+              4245.722586282218,
+              4077.4172127566435,
+              4070.500218435985,
+              4166.411533420716,
+              4376.383573612929,
+              4288.080384447369,
+              4365.4250764526,
+              4159.676714722563,
+              4223.350808213179
+            ]
+          },
+          {
+            "case": "fresh module and cgroup-v2 probes (simulated)",
+            "iterations": 20437,
+            "samples": [
+              494.08548221363185,
+              518.3531829524863,
+              482.2442139257245,
+              465.0878308949453,
+              491.8367177178623,
+              507.97979155453237,
+              466.87992366785505,
+              474.4193374761447,
+              484.74174291725643,
+              481.33082154915013,
+              517.1543768654934,
+              501.4699809169609
+            ]
+          }
+        ],
+        "checksum": 3680
+      },
+      "vpm": {
+        "pid": 72720,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "cached host detection",
+            "iterations": 1000000,
+            "samples": [
+              3.4552500000000066,
+              3.354667000000006,
+              3.3722499999999798,
+              3.437250000000006,
+              3.3520830000000217,
+              3.3872499999999945,
+              3.4093750000000114,
+              3.44633300000001,
+              3.5208330000000103,
+              3.4055409999999995,
+              3.3926660000000197,
+              3.304833000000002
+            ]
+          },
+          {
+            "case": "fresh module and host probes",
+            "iterations": 2289,
+            "samples": [
+              3598.3145478374777,
+              3532.383136740957,
+              3628.31323722149,
+              3749.6356487549197,
+              3605.7776321538036,
+              3519.55002184359,
+              3645.3145478374922,
+              3738.3866317169036,
+              3721.9488859764106,
+              3378.950196592402,
+              3701.2158147662726,
+              3677.042376583652
+            ]
+          },
+          {
+            "case": "fresh module and cgroup-v2 probes (simulated)",
+            "iterations": 20437,
+            "samples": [
+              69.41048099036072,
+              69.24533933551875,
+              68.59088907373884,
+              65.33904193374707,
+              61.63047414004063,
+              73.93453050839004,
+              77.70832313940357,
+              79.65738611341789,
+              78.39541028526735,
+              72.81729216616802,
+              69.1678328521807,
+              70.26877721779387
+            ]
+          }
+        ],
+        "checksum": 7520
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 72721,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "cached host detection",
+            "iterations": 1000000,
+            "samples": [
+              3.308374999999984,
+              3.400666000000001,
+              3.448541000000006,
+              3.426540999999986,
+              3.458708999999999,
+              3.3067920000000015,
+              3.3205839999999966,
+              3.539375000000007,
+              3.4592499999999973,
+              3.4178329999999733,
+              3.5671669999999835,
+              3.461749999999995
+            ]
+          },
+          {
+            "case": "fresh module and host probes",
+            "iterations": 3017,
+            "samples": [
+              3614.1170036460103,
+              3517.318528339401,
+              3687.341067285382,
+              3517.0835266821346,
+              3430.2701358965724,
+              3644.970169042091,
+              3581.731189923766,
+              3505.5104408352636,
+              3498.038780245278,
+              3494.434206165085,
+              3717.7659927079867,
+              3415.865760689455
+            ]
+          },
+          {
+            "case": "fresh module and cgroup-v2 probes (simulated)",
+            "iterations": 176558,
+            "samples": [
+              64.9741671292155,
+              65.86858142933156,
+              66.70400095152907,
+              67.37870841309943,
+              65.75884411921332,
+              66.85055335923605,
+              66.53762502973525,
+              69.4481416871515,
+              66.43071965020003,
+              63.963638011305434,
+              64.54087608604551,
+              70.3862186930078
+            ]
+          }
+        ],
+        "checksum": 17184
+      },
+      "upstream": {
+        "pid": 72722,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "cached host detection",
+            "iterations": 1000000,
+            "samples": [
+              2.359000000000009,
+              2.2918750000000045,
+              2.3048750000000098,
+              2.3797500000000014,
+              2.20233300000001,
+              2.1934579999999926,
+              2.232666999999992,
+              2.3572499999999934,
+              2.3440840000000094,
+              2.188749999999999,
+              2.1871249999999804,
+              2.2513329999999883
+            ]
+          },
+          {
+            "case": "fresh module and host probes",
+            "iterations": 3017,
+            "samples": [
+              4177.742790851833,
+              4105.264501160092,
+              4217.68312893602,
+              4454.535299966866,
+              4134.22538945973,
+              4397.621809744783,
+              4112.819025522034,
+              4191.760689426567,
+              4243.1498176997,
+              4063.225058004628,
+              4102.21246271132,
+              4244.393105734141
+            ]
+          },
+          {
+            "case": "fresh module and cgroup-v2 probes (simulated)",
+            "iterations": 176558,
+            "samples": [
+              558.5067399947892,
+              538.6348452066741,
+              498.16679504751914,
+              545.3356687320879,
+              601.9549269928287,
+              576.9242005459957,
+              689.2130801209804,
+              668.906959752603,
+              564.3478347058751,
+              535.1055573805776,
+              511.34117400514293,
+              517.9773332276085
+            ]
+          }
+        ],
+        "checksum": 1184
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 72725,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "cached host detection",
+            "iterations": 1000000,
+            "samples": [
+              2.3037080000000003,
+              2.3083330000000046,
+              2.3444999999999823,
+              2.3317499999999995,
+              2.3555829999999958,
+              2.316874999999982,
+              2.3155000000000143,
+              2.328541999999999,
+              2.253957999999983,
+              2.251541000000003,
+              2.293249999999972,
+              2.3279579999999953
+            ]
+          },
+          {
+            "case": "fresh module and host probes",
+            "iterations": 1916,
+            "samples": [
+              5008.242171189988,
+              5585.98643006265,
+              4756.7630480167145,
+              4609.277139874758,
+              5025.291231732759,
+              4510.677453027158,
+              4850.295407098113,
+              4439.152922755724,
+              4268.462943632547,
+              4372.8470772442615,
+              4349.2082463465495,
+              5363.648225469755
+            ]
+          },
+          {
+            "case": "fresh module and cgroup-v2 probes (simulated)",
+            "iterations": 19816,
+            "samples": [
+              484.09532700848007,
+              509.8174202664499,
+              490.84073475979517,
+              501.8125252321327,
+              494.79587202260416,
+              498.36415018167156,
+              521.0225575292673,
+              477.73682882519506,
+              491.6208114654801,
+              475.6005248284198,
+              492.47451554300073,
+              510.73203471941434
+            ]
+          }
+        ],
+        "checksum": 3872
+      },
+      "vpm": {
+        "pid": 72754,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "cached host detection",
+            "iterations": 1000000,
+            "samples": [
+              2.2595830000000205,
+              2.360500000000002,
+              2.364542,
+              2.30366699999999,
+              2.2618750000000034,
+              2.269999999999982,
+              2.2553749999999866,
+              2.275499999999994,
+              2.3712079999999958,
+              2.238915999999989,
+              2.2477090000000146,
+              2.198167000000012
+            ]
+          },
+          {
+            "case": "fresh module and host probes",
+            "iterations": 1916,
+            "samples": [
+              4202.26617954073,
+              4257.284968684747,
+              4402.683194154489,
+              4534.055323590817,
+              4401.72651356995,
+              4307.672233820445,
+              4570.720250521917,
+              4247.107515657611,
+              4131.52400835073,
+              4311.956158663883,
+              4426.257306889348,
+              4171.0814196242345
+            ]
+          },
+          {
+            "case": "fresh module and cgroup-v2 probes (simulated)",
+            "iterations": 19816,
+            "samples": [
+              491.96987283003625,
+              506.4888473960411,
+              476.468964473156,
+              488.3995256358509,
+              529.1557327412161,
+              527.031994348002,
+              501.6443278159035,
+              495.3320549051236,
+              478.84497375857836,
+              495.91658255954866,
+              496.75136253532366,
+              506.97880500605544
+            ]
+          }
+        ],
+        "checksum": 2016
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 72755,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "cached host detection",
+            "iterations": 1000000,
+            "samples": [
+              2.390500000000003,
+              2.295667000000009,
+              2.3113329999999905,
+              2.3055000000000234,
+              2.2975420000000213,
+              2.3467919999999935,
+              2.282416999999981,
+              2.236499999999978,
+              2.3011669999999924,
+              2.361208000000005,
+              2.423833000000002,
+              2.3250420000000247
+            ]
+          },
+          {
+            "case": "fresh module and host probes",
+            "iterations": 2343,
+            "samples": [
+              4588.259496372173,
+              4181.693982074263,
+              4255.921895006385,
+              4457.710627400764,
+              4153.418267178843,
+              4658.752880921896,
+              4213.579598804945,
+              4150.7503201024365,
+              3997.49253094324,
+              4399.096457533092,
+              4281.6188647033505,
+              4411.011523687546
+            ]
+          },
+          {
+            "case": "fresh module and cgroup-v2 probes (simulated)",
+            "iterations": 21615,
+            "samples": [
+              502.41535970390726,
+              524.5739532731894,
+              531.3844552394154,
+              479.56664353458547,
+              509.96414526948877,
+              492.0425630349285,
+              511.1843627110764,
+              510.98001387924705,
+              481.84515382835906,
+              496.18514920194445,
+              532.9265787647437,
+              489.6483923201485
+            ]
+          }
+        ],
+        "checksum": 4640
+      },
+      "upstream": {
+        "pid": 72758,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "cached host detection",
+            "iterations": 1000000,
+            "samples": [
+              2.2035410000000013,
+              2.2384999999999877,
+              2.2382499999999936,
+              2.2838749999999948,
+              2.239458000000013,
+              2.241041999999993,
+              2.3357090000000085,
+              2.312708000000015,
+              2.3171669999999835,
+              2.2850420000000042,
+              2.290124999999989,
+              2.3251670000000217
+            ]
+          },
+          {
+            "case": "fresh module and host probes",
+            "iterations": 2343,
+            "samples": [
+              4793.818181818187,
+              4477.379428083653,
+              4315.176696542891,
+              4294.138284250942,
+              4268.10371318821,
+              4488.654289372615,
+              4171.414852752898,
+              4429.684165599645,
+              4228.784464361938,
+              4126.903115663676,
+              4535.7093469910305,
+              4080.274434485711
+            ]
+          },
+          {
+            "case": "fresh module and cgroup-v2 probes (simulated)",
+            "iterations": 21615,
+            "samples": [
+              498.62942401110314,
+              509.02535276428216,
+              484.3974092065731,
+              521.0579227388371,
+              574.0650936849403,
+              503.04570899838086,
+              630.9642377978299,
+              588.7925052047208,
+              516.7996761508199,
+              478.1459634513098,
+              481.52903076566986,
+              490.0686097617362
+            ]
+          }
+        ],
+        "checksum": 2016
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "cached host detection",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2.244104000000007,
+          "vpmNs": 2.2204374999999885,
+          "changePct": -1.0546079860834667
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2.236582999999996,
+          "vpmNs": 3.422374999999988,
+          "changePct": 53.01801900488354
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 2.2652505000000076,
+          "vpmNs": 3.3991035000000096,
+          "changePct": 50.054199303785516
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2.2716039999999964,
+          "vpmNs": 3.437540999999996,
+          "changePct": 51.326595656637394
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2.316187499999998,
+          "vpmNs": 2.2659374999999926,
+          "changePct": -2.1695134785074788
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2.2844584999999995,
+          "vpmNs": 2.308416500000007,
+          "changePct": 1.0487386835877022
+        }
+      ]
+    },
+    {
+      "case": "fresh module and host probes",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 4213.978297513688,
+          "vpmNs": 3569.8832701222145,
+          "changePct": -15.284725784456443
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 4347.242363636342,
+          "vpmNs": 3625.015272727286,
+          "changePct": -16.613453552769798
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 4234.536697247699,
+          "vpmNs": 3636.813892529491,
+          "changePct": -14.115423892930401
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 4184.7517401392,
+          "vpmNs": 3517.2010275107677,
+          "changePct": -15.951978852782
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 4683.020093945736,
+          "vpmNs": 4309.814196242164,
+          "changePct": -7.96934222396477
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 4304.657490396916,
+          "vpmNs": 4268.770379854868,
+          "changePct": -0.8336809751323226
+        }
+      ]
+    },
+    {
+      "case": "fresh module and cgroup-v2 probes (simulated)",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 468.30019264201246,
+          "vpmNs": 67.5911055772179,
+          "changePct": -85.56671412072485
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 511.4503345686032,
+          "vpmNs": 72.74131922259252,
+          "changePct": -85.77744224491549
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 488.2892303175594,
+          "vpmNs": 69.83962910407729,
+          "changePct": -85.69707772201795
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 551.9212043634386,
+          "vpmNs": 66.48417233996764,
+          "changePct": -87.95404637213612
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 493.63519378280245,
+          "vpmNs": 496.33397254743613,
+          "changePct": 0.5467152258639585
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 506.0355308813315,
+          "vpmNs": 506.189752486698,
+          "changePct": 0.03047643810660805
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "cached host detection",
+      "upstream_ns": 2,
+      "vpm_ns": 3,
+      "change_pct": 50.7,
+      "upstream_first_pct": 24.5,
+      "vpm_first_pct": 52.2,
+      "process_range_pct": "-1.1, 53.0, 50.1, 51.3",
+      "control_max_abs_pct": 2.2,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "fresh module and host probes",
+      "upstream_ns": 4224,
+      "vpm_ns": 3597,
+      "change_pct": -15.6,
+      "upstream_first_pct": -14.7,
+      "vpm_first_pct": -16.3,
+      "process_range_pct": "-15.3, -16.6, -14.1, -16.0",
+      "control_max_abs_pct": 8,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "fresh module and cgroup-v2 probes (simulated)",
+      "upstream_ns": 500,
+      "vpm_ns": 69,
+      "change_pct": -85.7,
+      "upstream_first_pct": -85.6,
+      "vpm_first_pct": -86.9,
+      "process_range_pct": "-85.6, -85.8, -85.7, -88.0",
+      "control_max_abs_pct": 0.5,
+      "evidence": "lower time in every pair, beyond control spread"
+    }
+  ]
+}

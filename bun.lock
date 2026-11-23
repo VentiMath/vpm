@@ -719,6 +719,14 @@
       "name": "vipaddr",
       "version": "0.1.0",
     },
+    "packages/vis-docker": {
+      "name": "vis-docker",
+      "version": "4.0.0",
+      "bin": {
+        "is-docker": "./cli.cjs",
+        "vis-docker": "./cli.cjs",
+      },
+    },
     "packages/vis-stream": {
       "name": "vis-stream",
       "version": "0.1.0",
@@ -2287,6 +2295,8 @@
     "vieee754": ["vieee754@workspace:packages/vieee754"],
 
     "vipaddr": ["vipaddr@workspace:packages/vipaddr"],
+
+    "vis-docker": ["vis-docker@workspace:packages/vis-docker"],
 
     "vis-stream": ["vis-stream@workspace:packages/vis-stream"],
 

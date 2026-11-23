@@ -1,0 +1,13 @@
+'use strict';
+const fs = require('node:fs');
+const path = require('node:path');
+const assert = require('node:assert/strict');
+const {createHash} = require('node:crypto');
+const {execFileSync} = require('node:child_process');
+const {loadModule, load} = require('./load.cjs');
+const metadata = require('./upstream.json');
+const source = path.join(__dirname, 'upstream/test.js');
+assert.equal(createHash('sha256').update(fs.readFileSync(source)).digest('hex'), metadata.sha256);
+const compiled = path.join(__dirname, 'node_modules/.docker-tests.cjs');
+execFileSync('bun', ['build', source, '--target=node', '--format=cjs', '--external', '*', '--outfile=' + compiled], {stdio:'pipe'});
+loadModule(compiled, {esmock: async (_file, modules) => ({default: load(path.resolve(__dirname, '../../packages/vis-docker/index.cjs'), modules['node:fs'])})});

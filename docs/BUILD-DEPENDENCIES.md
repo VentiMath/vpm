@@ -189,3 +189,11 @@ rejects names that the old version accepted. Current/app contract controls and
 unchanged configuration/log operations pass on Node/Bun. OS path rules are
 simulated; native Windows execution, public release and app adoption remain
 separate.
+
+[vis-docker](../packages/vis-docker) supplies the cached container check beneath
+Capacitor's open/is-wsl helpers. It targets is-docker 4.0.0 with zero dependencies
+and retains the app's CommonJS and CLI interface. Mountinfo evidence adds the
+current cgroup-v2 behavior missing from the installed 2.2.1. The unchanged open
+8.4.2 and is-wsl 2.2.0 callers select the expected commands in nine simulated
+contexts, with all launching intercepted. Detection is heuristic; native
+WSL/Windows execution, public release and application adoption remain separate.
