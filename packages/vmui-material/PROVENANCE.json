@@ -364,5 +364,14 @@
     ],
     "evidence": "scripts/mui-material-conformance/release-verification.json",
     "appAdopted": false
+  },
+  "adoptionFixes": {
+    "date": "2026-11-23",
+    "scope": [
+      "Public OverridableComponent and transitions declarations for unchanged MUI add-ons.",
+      "Development createSvgIcon IDs match upstream and remain caller-overridable.",
+      "Resolver paths supply declaration and executable targets for TypeScript and Bun; no upstream fallback."
+    ],
+    "upstreamDefects": false
   }
 }

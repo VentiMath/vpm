@@ -1312,3 +1312,17 @@ acceptance claim. The release gate adds exact archive verification, component
 browser checks and isolated public sign-in/404 route comparisons. Signed-in
 route acceptance remains with application adoption. FilledInput and other
 unobserved families remain outside the verified scope. [Benchmarks](bench/consumer-gaps/README.md).
+
+### Add-on type and test integration
+
+`OverridableComponent` and `transitions` export the polymorphic and transition
+contracts consumed by Lab, date pickers and icons. They are type-only APIs, with
+empty runtime entries for resolvers that inspect every export. `createSvgIcon`
+sets `<Name>Icon` as its default `data-testid` outside production; caller props
+can replace or suppress it.
+
+The release's `tsconfig-paths.json` supplies declarations first and executable
+fallbacks second. TypeScript retains the public contracts, while Bun skips the
+declarations and executes VPM code even when npm Material is also installed.
+Use the complete paths file with the matching Vite aliases; a JavaScript-only
+paths map can lose inherited add-on types. These repair VPM integration defects.

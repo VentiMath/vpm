@@ -1,7 +1,7 @@
 {
   "name": "vmui-material",
   "version": "9.5.0",
-  "description": "Independent Material controls, forms, text, icons, surfaces and resolved-theme integration for VentiMath; remaining families in progress",
+  "description": "Independent application-scoped Material controls and theme integration for VentiMath",
   "type": "commonjs",
   "main": "./index.cjs",
   "module": "./index.mjs",
@@ -2336,6 +2336,26 @@
       "require": {
         "types": "./useAutocomplete.d.cts",
         "default": "./useAutocomplete.cjs"
+      }
+    },
+    "./OverridableComponent": {
+      "import": {
+        "types": "./OverridableComponent.d.mts",
+        "default": "./OverridableComponent.mjs"
+      },
+      "require": {
+        "types": "./OverridableComponent.d.cts",
+        "default": "./OverridableComponent.cjs"
+      }
+    },
+    "./transitions": {
+      "import": {
+        "types": "./transitions.d.mts",
+        "default": "./transitions.mjs"
+      },
+      "require": {
+        "types": "./transitions.d.cts",
+        "default": "./transitions.cjs"
       }
     }
   },

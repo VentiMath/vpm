@@ -115,7 +115,7 @@ const SvgIcon=React.forwardRef(function SvgIcon(input,ref){
 });
 SvgIcon.muiName="SvgIcon";
 function createSvgIcon(path,displayName){
-  const Icon=React.memo(React.forwardRef(function Icon(props,ref){return h(SvgIcon,{...props,ref},path);}));
+  const Icon=React.memo(React.forwardRef(function Icon(props,ref){return h(SvgIcon,{"data-testid":process.env.NODE_ENV!=="production"?displayName+"Icon":undefined,...props,ref},path);}));
   Icon.displayName=displayName+"Icon";Icon.muiName=SvgIcon.muiName;
   return Icon;
 }

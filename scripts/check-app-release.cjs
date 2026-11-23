@@ -56,6 +56,7 @@ async function main(){
   if(family==='vmui-material'){
    const env={VPM_MATERIAL_INSTALL:dir,VPM_RELEASE_MANIFEST:path.join(directory,'release-manifest.json')};
    fs.copyFileSync(fixture+'/archive-check.mjs',dir+'/material-check.mjs');
+   fs.copyFileSync(fixture+'/adoption-types.mts',dir+'/adoption-types.mts');
    for(const runtime of ['node','bun'])process.stdout.write(run(runtime,['material-check.mjs'],dir,env));
    process.stdout.write(run('node',[fixture+'/types.cjs',dir],dir,env));
    // Runtime and type mappings are explicit third-party resolver configuration;
@@ -64,6 +65,8 @@ async function main(){
    const paths=JSON.parse(fs.readFileSync(directory+'/tsconfig-paths.json'));
    assert.deepEqual(Object.values(aliases).sort(),config.names.toSorted());
    for(const targets of Object.values(paths))for(const target of targets)assert.ok(fs.existsSync(path.resolve(dir,target)),target);
+   process.stdout.write(run('node',[fixture+'/adoption-icons.cjs'],dir,env));
+   process.stdout.write(run('node',[fixture+'/adoption-resolver.cjs',dir,directory],dir,env));
    const identity=`import {createRequire} from 'node:module';import assert from 'node:assert/strict';const r=createRequire(import.meta.url);for(const name of ${JSON.stringify(config.names)}){const inner=createRequire(r.resolve(name+'/package.json'));for(const dependency of Object.keys(inner(name+'/package.json').dependencies||{}))assert.equal(inner.resolve(dependency),r.resolve(dependency),name+' shares '+dependency);}console.log('All 22 packages share root dependency instances');`;
    fs.writeFileSync(dir+'/identity.mjs',identity);
    for(const runtime of ['node','bun'])process.stdout.write(run(runtime,['identity.mjs'],dir));

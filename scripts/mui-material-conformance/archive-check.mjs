@@ -21,6 +21,7 @@ for (const key of Object.keys(require("vmui-material/package.json").exports)) {
   const id = "vmui-material/" + key.slice(2),
     a = require(id),
     b = await import(id);
+  if(key === "./OverridableComponent" || key === "./transitions"){assert.deepEqual(Object.keys(a),[]);assert.deepEqual(Object.keys(b),[]);continue;}
   if(key === "./internal" || key === "./colors" || key === "./themeCssVarsAugmentation"){continue;}
   if(key === "./styles"){assert.equal(a.useTheme,b.useTheme);assert.equal(a.ThemeProvider,b.ThemeProvider);continue;}
   assert.equal(a.default, b.default, id);

@@ -35,7 +35,7 @@ for (const bundler of [false, true]) {
       types: [],
       paths,
     },
-    files: [dir + "/consumer.mts", ...(bundler ? [] : [dir + "/consumer.cts"])],
+    files: [...(fs.existsSync(dir + "/adoption-types.mts") ? [dir + "/adoption-types.mts"] : []), dir + "/consumer.mts", ...(bundler ? [] : [dir + "/consumer.cts"])],
   });
   if (r.status) {
     console.error(

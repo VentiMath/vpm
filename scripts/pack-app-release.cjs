@@ -29,7 +29,10 @@ function build({family,ref,tag,out}) {
    aliases[original]=name;
    for(const [entry,target] of Object.entries(read('packages/'+name+'/package.json').exports||{})){
     const declaration=types(target);if(typeof declaration!=='string')continue;
-    paths[original+(entry==='.'?'':entry.slice(1))]=['./node_modules/'+name+'/'+declaration.replace(/^\.\//,'')];
+    // TS needs the declaration first; Bun skips it and uses the executable fallback.
+    const runtime=v=>typeof v==='string'?(/\.(?:mjs|cjs|js)$/.test(v)?v:undefined):v&&(runtime(v.import)||runtime(v.default));
+    const resolved=runtime(target)||declaration;
+    paths[original+(entry==='.'?'':entry.slice(1))]=[...new Set([declaration,resolved])].map(file=>'./node_modules/'+name+'/'+file.replace(/^\.\//,''));
    }
   }
   for(const [file,data] of [['vite-aliases.json',aliases],['tsconfig-paths.json',paths]]){
