@@ -570,3 +570,22 @@ Run `node step-content-contract.cjs` or `bun step-content-contract.cjs` for comp
 The ListItem contract checks QuickPanel-style event, note and quick-setting rows against both Material controls. The Chrome check exercises a focused switch during a keyed reorder. Run `node scripts/mui-material-conformance/list-item-browser.cjs`.
 
 The CssBaseline contract checks both Material versions for document rules, overrides and native color schemes. Its Chrome check switches the app’s cache direction and verifies cascade layers, print and cleanup. Set `VPM_APP_CHECKOUT` and optionally `VPM_APP_REF` to exercise the layer plugin from the app source.
+
+
+## Complete private-app build audit
+
+`VPM_APP_REPO=/absolute/path/to/app node scripts/mui-material-conformance/app-consumer.cjs`
+exports the requested app Git revision into fresh baseline/candidate directories,
+packs the owned closure, installs aliases with frozen verification, then runs the
+full app typecheck and Vite production build. It exits nonzero on any failure.
+It reads the checkout without editing it or using live data/credentials. Logs and
+archive hashes stay in its temporary report directory. The committed
+[summary](app-consumer-report.json) records the fixed defect categories without
+copying private app sources into this repository.
+
+`consumer-gaps-contract.cjs` checks 72 pagination/focus/fade/hook SSR contracts;
+`consumer-gaps-browser.cjs` compares current/app controls for pagination callbacks,
+unknown counts, focus containment/restoration, disabled autofocus, Fade visibility,
+keyboard/filter/clear selection and scrollable learner Tabs. Exact archive checks
+include both fixtures. Strict type consumers preserve React content in System
+style intersections and typed styled variants, with negative inference checks.

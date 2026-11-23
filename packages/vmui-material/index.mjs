@@ -148,3 +148,8 @@ export {default as CssBaseline} from "./CssBaseline.mjs";
 export {default as createTheme} from "./styles/createTheme.mjs";
 
 export { alpha, darken, decomposeColor, emphasize, getContrastRatio, getLuminance, hexToRgb, hslToRgb, lighten, recomposeColor, rgbToHex } from "vmui-system";
+
+export {default as Fade} from "./Fade.mjs";
+export {default as Unstable_TrapFocus} from "./Unstable_TrapFocus.mjs";
+export {default as useAutocomplete} from "./useAutocomplete.mjs";
+export const {TablePagination,tablePaginationClasses,getTablePaginationUtilityClass}=a;

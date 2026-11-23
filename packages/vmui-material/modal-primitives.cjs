@@ -57,4 +57,4 @@ function useModalLayer(p,root,paper,exited,enabled=true){
  },[enabled,open,host,disableAutoFocus]);
  return {host,previous,owner};
 }
-module.exports={useRefs,Fade,useModalLayer};
+module.exports={useRefs,Fade,useModalLayer,tabbables};

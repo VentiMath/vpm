@@ -529,9 +529,9 @@ import TabsEntry, {type TabsProps} from 'vmui-material/Tabs';
 const learnerTabs:TabsProps<'div',string>={value:'learner-a',onChange:(_,id)=>id.toUpperCase()};
 const countryTab:TabProps={label:'Countries',icon:React.createElement('svg')};
 React.createElement(TabsEntry<'div',string>,learnerTabs,React.createElement(TabEntry<'button'>,countryTab));
-// @ts-expect-error the fixed-layout implementation has no scroll-button variant
-const unsupportedTabs:TabsProps={value:0,variant:'scrollable'};
-void unsupportedTabs;
+// The family learner selector scrolls when its tabs exceed the viewport.
+const scrollableTabs:TabsProps={value:0,variant:'scrollable'};
+void scrollableTabs;
 
 import Trail, {type BreadcrumbsProps} from 'vmui-material/Breadcrumbs';
 const routeTrail:BreadcrumbsProps = {maxItems:4, color:'action.active', 'aria-label':'breadcrumb', classes:{ol:'list-none'}, separator:'›'};
@@ -646,3 +646,26 @@ const weight:React.CSSProperties["fontWeight"]=assembled.typography.fontWeightBo
 createMaterialTheme({mixins:{toolbar:{minHeight:42}}});
 // @ts-expect-error Invalid mode.
 materialTheme({palette:{mode:"blue"}});
+
+import type {Theme} from 'vmui-material/styles';
+// Unchanged application-shaped intersections must admit React content and styled variants.
+import type {SystemStyleObject} from 'vmui-system';
+import type {Interpolation as MaterialInterpolation} from 'vmui-styled-engine';
+type PageSurface = SystemStyleObject<Theme> & {header?:React.ReactNode;content?:React.ReactNode;children?:React.ReactNode};
+const pageSurface:PageSurface={header:React.createElement('header'),content:React.createElement('main'),children:React.createElement('aside')};
+const themeVariant:MaterialInterpolation<{theme:Theme;compact:boolean}>={variants:[{props:({compact})=>compact,style:({theme})=>({color:theme.palette.primary.main})}]};
+void pageSurface;void themeVariant;
+// @ts-expect-error variant predicates receive the declared props
+const badThemeVariant:MaterialInterpolation<{theme:Theme;compact:boolean}>={variants:[{props:({missing})=>missing,style:{}}]};
+void badThemeVariant;
+import FadeEntry from 'vmui-material/Fade';
+import TrapEntry from 'vmui-material/Unstable_TrapFocus';
+import PaginationEntry from 'vmui-material/TablePagination';
+import useHook from 'vmui-material/useAutocomplete';
+React.createElement(FadeEntry,{in:true,children:React.createElement('div')});
+React.createElement(TrapEntry,{open:true,children:React.createElement('div')});
+React.createElement(PaginationEntry,{count:27,page:0,rowsPerPage:10,onPageChange:(_,page)=>page.toFixed()});
+const hook=useHook({options:[{name:'Ada'}],getOptionLabel:item=>item.name});
+hook.value?.name;
+// @ts-expect-error hook values retain option types
+hook.value?.missing;

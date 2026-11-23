@@ -30,12 +30,11 @@ arbitrary 3D and other unobserved APIs remain outside the verified subset.
 
 ## Material
 
-[vmui-material](../packages/vmui-material) now has 97 independently implemented
+[vmui-material](../packages/vmui-material) now has 100 independently implemented
 components. It covers button controls; text/icons; Box/Paper/Divider; the form,
 input, Select, checkbox/radio/switch foundation; menus; Chip, Avatar, loading
 spinners, LinearProgress and Alert/AlertTitle feedback and Badge counts and ListItemButton navigation, AppBar/Toolbar shell layouts, Accordion with its Summary and Details, Skeleton placeholders, Container page layouts and Card/CardContent panels and their linked CardActionArea roots, plus AvatarGroup, Tooltip, Collapse, Slide, Drawer, SwipeableDrawer, the seven Table primitives, TableSortLabel, PaginationItem, Pagination, Autocomplete and Dialog with its title/content/action/description components. Its app-used theme factory and resolved-theme bridge are built;
-remaining component families and full dependency-override acceptance are not. It cannot replace the entire
-`@mui/material` dependency yet.
+remaining component families are outside the verified scope. The full app typecheck and production build now pass with the packed VPM override; route-level visual acceptance and publication remain.
 
 Autocomplete now covers the five direct school/student selection callers.
 TableSortLabel and numbered Pagination now cover the adopted table’s sorting and
@@ -168,8 +167,7 @@ remain outside its documented scope. App adoption is separate.
 Material now exposes the public color ramps used by FuseUtils and the CSS-variable
 theme augmentation imported by global.d.ts. Material styled/Box/sx callbacks use
 the typed Material theme, and color helpers are available at the root and styles.
-These close VPM compatibility gaps; they are not upstream bug fixes. Next check
-the complete app consumer in an isolated installation before a Material release. The independent file-pattern
+These close VPM compatibility gaps; they are not upstream bug fixes. The full app consumer at `d1dfe595` now typechecks and builds in an isolated packed install. That check also closed declaration, indirect Lab/date-picker import, pagination, focus and scrollable Tabs gaps. Next verify representative app routes before a Material release. The independent file-pattern
 closure now includes vbalanced-match, vbrace-expansion and vminimatch.
 The independent vminipass stream leaf is also built and checked through unchanged
 path-scurry and glob callers. vpath-scurry 3.0.0 now supplies the directory
@@ -197,3 +195,5 @@ application adoption remain separate work.
 The next untouched build leaf is `sisteransi`: the app's `prompts` and Clack
 callers use its terminal cursor/erase sequences. Target current 2.0.0 while
 checking their installed 1.0.5 behavior. This remains planned, not implemented.
+
+`vsisteransi` independently covers terminal sequences beneath the app’s Prompts and Clack build tools. Explicit row zero, bounded output, unchanged caller traces and exact archives are tested; release/adoption are separate.

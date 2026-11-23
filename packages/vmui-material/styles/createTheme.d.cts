@@ -32,7 +32,7 @@ export interface Theme extends SystemTheme, CssVarState {
  cssVarPrefix?:string; rootSelector?:string; colorSchemeSelector?:string; defaultColorScheme?:string;
  colorSchemes?:Record<string,ColorSchemeOptions & {palette:Palette}>;
  generateThemeVars?:()=>NonNullable<Theme["vars"]>;
- generateStyleSheets?:()=>Record<string,unknown>[];
+ generateStyleSheets?:()=>CSSObject[];
  generateSpacing?:()=>Theme["spacing"];
  getCssVar?:(field:string,...fallbacks:string[])=>string;
  getColorSchemeSelector?:(scheme:string)=>string;

@@ -73,9 +73,16 @@ type StyleValue<T extends object> =
 	| SystemStyleObject<T>
 	| ReadonlyArray<StyleValue<T>>
 	| ((theme: T) => StyleValue<T>);
-export interface SystemStyleObject<T extends object = {}> {
-	[key: string]: StyleValue<T>;
+export type SystemCssProperties<T extends object = {}> = {
+ [K in keyof CSSProperties]?: ResponsiveStyleValue<CSSProperties[K]> | ((theme:T)=>ResponsiveStyleValue<CSSProperties[K]>);
+} & SystemProps<T>;
+export type CSSPseudoSelectorProps<T extends object = {}> = {
+ [K in import("csstype").Pseudos]?: SystemStyleObject<T> | ((theme:T)=>SystemStyleObject<T>);
+};
+export interface CSSSelectorObjectOrCssVariables<T extends object = {}> {
+ [key:string]: StyleValue<T>;
 }
+export type SystemStyleObject<T extends object = {}> = SystemCssProperties<T> | CSSPseudoSelectorProps<T> | CSSSelectorObjectOrCssVariables<T> | null;
 export type SxProps<T extends object = {}> =
 	| SystemStyleObject<T>
 	| ((theme: T) => SystemStyleObject<T>)

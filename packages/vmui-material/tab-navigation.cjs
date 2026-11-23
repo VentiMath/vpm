@@ -178,6 +178,7 @@ const Scroller = styled("div", {
   width: "100%",
   overflowX: "hidden",
 });
+const ScrollButton=styled("button")(({ownerState:s})=>({border:0,background:"transparent",color:"inherit",flexShrink:0,width:s.vertical?undefined:40,height:s.vertical?40:undefined,cursor:"pointer",opacity:1,"&:disabled":{opacity:0},...(!s.allowScrollButtonsMobile&&{"@media (max-width:599.95px)":{display:"none"}})}));
 const List = styled("div", {
   name: "MuiTabs",
   slot: "List",
@@ -228,6 +229,10 @@ const Tabs = React.forwardRef(function Tabs(input, ref) {
     onChange,
     orientation = "horizontal",
     variant = "standard",
+    scrollButtons = "auto",
+    allowScrollButtonsMobile = false,
+    visibleScrollbar = false,
+    action,
     centered = false,
     selectionFollowsFocus = false,
     indicatorColor = "primary",
@@ -238,16 +243,18 @@ const Tabs = React.forwardRef(function Tabs(input, ref) {
     "aria-labelledby": labelled,
     ...root
   } = p;
-  if (variant !== "standard" && variant !== "fullWidth")
-    throw new RangeError("Tabs supports standard and fullWidth variants");
+  if (!["standard","fullWidth","scrollable"].includes(variant))
+    throw new RangeError("Invalid Tabs variant");
   const vertical = orientation === "vertical",
     rtl = useTheme().direction === "rtl";
-  const state = { ...p, vertical, centered, indicatorColor };
+  const scrollable = variant === "scrollable";
+  const state = { ...p, vertical, centered, indicatorColor, scrollable };
   const cls = (key) => join(tabsClasses[key], classes[key]);
   const scroller = React.useRef(null),
     list = React.useRef(null);
   const [mounted, setMounted] = React.useState(false);
   const [bounds, setBounds] = React.useState({});
+  const [edges,setEdges] = React.useState({start:true,end:true});
   // Keep the indicator in scroller coordinates, including a scrolled RTL strip.
   const measure = React.useCallback(() => {
     const box = scroller.current,
@@ -266,6 +273,7 @@ const Tabs = React.forwardRef(function Tabs(input, ref) {
           : item.left - viewport.left + box.scrollLeft;
       length = item[size];
     }
+    if(box){const size=vertical?box.clientHeight:box.clientWidth,max=(vertical?box.scrollHeight:box.scrollWidth)-size,offset=vertical?box.scrollTop:Math.abs(box.scrollLeft);const start=offset<=1,end=offset>=max-1;setEdges(old=>old.start===start&&old.end===end?old:{start,end});}
     setBounds((old) =>
       old[axis] === offset && old[size] === length ? old : { [axis]: offset, [size]: length },
     );
@@ -273,7 +281,12 @@ const Tabs = React.forwardRef(function Tabs(input, ref) {
   React.useLayoutEffect(() => {
     setMounted(true);
   }, []);
-  React.useLayoutEffect(measure, [measure, value, children]);
+  React.useLayoutEffect(()=>{
+    const box=scroller.current,tab=list.current?.querySelector('[role="tab"][aria-selected="true"]');
+    if(scrollable&&box&&tab){const viewport=box.getBoundingClientRect(),item=tab.getBoundingClientRect(),start=vertical?'top':'left',end=vertical?'bottom':'right';const delta=item[start]<viewport[start]?item[start]-viewport[start]:item[end]>viewport[end]?item[end]-viewport[end]:0;if(delta)box[vertical?'scrollTop':'scrollLeft']+=delta;}
+    measure();
+  }, [measure, value, children,scrollable]);
+  React.useImperativeHandle(action,()=>({updateIndicator:measure,updateScrollButtons:measure}),[measure]);
   React.useEffect(() => {
     const group = list.current,
       win = group.ownerDocument.defaultView;
@@ -317,6 +330,13 @@ const Tabs = React.forwardRef(function Tabs(input, ref) {
         child.props.tabIndex === undefined && { tabIndex: 0 }),
     });
   });
+  const arrow=(back)=>{
+    if(!scrollable||scrollButtons===false||scrollButtons==='auto'&&edges.start&&edges.end)return null;
+    const disabled=back?edges.start:edges.end;
+    return h(ScrollButton,{type:'button',tabIndex:-1,disabled,ownerState:{...state,allowScrollButtonsMobile},className:join(cls('scrollButtons'),!allowScrollButtonsMobile&&cls('scrollButtonsHideMobile')),'aria-label':vertical?(back?'scroll up':'scroll down'):(back?'scroll left':'scroll right'),onClick:()=>{
+      const box=scroller.current,axis=vertical?'scrollTop':'scrollLeft',amount=(vertical?box.clientHeight:box.clientWidth)*(back?-1:1)*(rtl&&!vertical?-1:1);box[axis]+=amount;measure();
+    }},vertical?(back?'↑':'↓'):(back?'‹':'›'));
+  };
   return h(
     Root,
     {
@@ -326,13 +346,15 @@ const Tabs = React.forwardRef(function Tabs(input, ref) {
       ownerState: state,
       className: join(cls("root"), vertical && cls("vertical"), className),
     },
+    arrow(true),
     h(
       Scroller,
       {
         ref: scroller,
         ownerState: state,
-        style: { overflow: "hidden", [vertical ? (rtl ? "marginLeft" : "marginRight") : "marginBottom"]: 0 },
-        className: join(cls("scroller"), cls("fixed")),
+        onScroll: measure,
+        style: { ...(scrollable?{overflowX:vertical?"hidden":"auto",overflowY:vertical?"auto":"hidden",scrollbarWidth:!visibleScrollbar?"none":undefined}:{overflow:"hidden"}), [vertical ? (rtl ? "marginLeft" : "marginRight") : "marginBottom"]: 0 },
+        className: join(cls("scroller"),cls(scrollable?(vertical?"scrollableY":"scrollableX"):"fixed"),scrollable&&!visibleScrollbar&&cls("hideScrollbar")),
       },
       h(
         List,
@@ -350,6 +372,7 @@ const Tabs = React.forwardRef(function Tabs(input, ref) {
       ),
       mounted && indicator,
     ),
+    arrow(false),
   );
 });
 module.exports = { Tab, Tabs, tabClasses, tabsClasses, getTabUtilityClass, getTabsUtilityClass };

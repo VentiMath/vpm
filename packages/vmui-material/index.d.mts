@@ -1,4 +1,5 @@
 import type * as React from "react";
+type DistributiveOmit<T,K extends PropertyKey> = T extends unknown ? Omit<T,K> : never;
 export type SxProps<T extends object = Theme> = import("vmui-system").SxProps<T>;
 import type { Theme } from "./styles/createTheme.mjs";
 export interface ButtonBaseActions {
@@ -33,7 +34,7 @@ export interface ButtonBaseOwnProps {
 }
 export type ButtonBaseProps<C extends React.ElementType = "button"> =
   ButtonBaseOwnProps &
-    Omit<React.ComponentPropsWithRef<C>, keyof ButtonBaseOwnProps> & {
+    DistributiveOmit<React.ComponentPropsWithRef<C>, keyof ButtonBaseOwnProps | "component"> & {
       component?: C;
     };
 export type ButtonColor =
@@ -46,6 +47,7 @@ export type ButtonColor =
   | "inherit"
   | (string & {});
 export interface ButtonOwnProps extends ButtonBaseOwnProps {
+  disableFocusRipple?:boolean;
   color?: ButtonColor;
   variant?: "text" | "outlined" | "contained" | (string & {});
   size?: "small" | "medium" | "large";
@@ -59,7 +61,7 @@ export interface ButtonOwnProps extends ButtonBaseOwnProps {
 }
 export type ButtonProps<C extends React.ElementType = "button"> =
   ButtonOwnProps &
-    Omit<React.ComponentPropsWithRef<C>, keyof ButtonOwnProps> & {
+    DistributiveOmit<React.ComponentPropsWithRef<C>, keyof ButtonOwnProps | "component"> & {
       component?: C;
     };
 export interface IconButtonOwnProps extends ButtonBaseOwnProps {
@@ -72,7 +74,7 @@ export interface IconButtonOwnProps extends ButtonBaseOwnProps {
 }
 export type IconButtonProps<C extends React.ElementType = "button"> =
   IconButtonOwnProps &
-    Omit<React.ComponentPropsWithRef<C>, keyof IconButtonOwnProps> & {
+    DistributiveOmit<React.ComponentPropsWithRef<C>, keyof IconButtonOwnProps | "component"> & {
       component?: C;
     };
 export interface FabOwnProps extends ButtonBaseOwnProps {
@@ -82,7 +84,7 @@ export interface FabOwnProps extends ButtonBaseOwnProps {
   disableFocusRipple?: boolean;
 }
 export type FabProps<C extends React.ElementType = "button"> = FabOwnProps &
-  Omit<React.ComponentPropsWithRef<C>, keyof FabOwnProps> & { component?: C };
+  DistributiveOmit<React.ComponentPropsWithRef<C>, keyof FabOwnProps | "component"> & { component?: C };
 export interface ButtonGroupOwnProps extends Omit<
   ButtonOwnProps,
   | "action"
@@ -96,7 +98,7 @@ export interface ButtonGroupOwnProps extends Omit<
 }
 export type ButtonGroupProps<C extends React.ElementType = "div"> =
   ButtonGroupOwnProps &
-    Omit<React.ComponentPropsWithRef<C>, keyof ButtonGroupOwnProps> & {
+    DistributiveOmit<React.ComponentPropsWithRef<C>, keyof ButtonGroupOwnProps | "component"> & {
       component?: C;
     };
 export interface ToggleButtonOwnProps extends ButtonBaseOwnProps {
@@ -109,7 +111,7 @@ export interface ToggleButtonOwnProps extends ButtonBaseOwnProps {
 }
 export type ToggleButtonProps<C extends React.ElementType = "button"> =
   ToggleButtonOwnProps &
-    Omit<React.ComponentPropsWithRef<C>, keyof ToggleButtonOwnProps> & {
+    DistributiveOmit<React.ComponentPropsWithRef<C>, keyof ToggleButtonOwnProps | "component"> & {
       component?: C;
     };
 export interface ToggleButtonGroupOwnProps extends Omit<
@@ -133,7 +135,7 @@ export interface ToggleButtonGroupOwnProps extends Omit<
 }
 export type ToggleButtonGroupProps<C extends React.ElementType = "div"> =
   ToggleButtonGroupOwnProps &
-    Omit<React.ComponentPropsWithRef<C>, keyof ToggleButtonGroupOwnProps> & {
+    DistributiveOmit<React.ComponentPropsWithRef<C>, keyof ToggleButtonGroupOwnProps | "component"> & {
       component?: C;
     };
 export interface Control<P, D extends React.ElementType> {
@@ -150,7 +152,7 @@ export interface Control<P, D extends React.ElementType> {
       >,
   ): React.JSX.Element | null;
   (
-    props: P & { component?: D } & Omit<
+    props: P & Omit<
         React.ComponentPropsWithRef<D>,
         keyof P | "component"
       >,
@@ -210,12 +212,12 @@ export interface SvgIconOwnProps {
   titleAccess?: string;
   viewBox?: string;
 }
-export type TypographyProps<C extends React.ElementType = "span"> = TypographyOwnProps & Omit<React.ComponentPropsWithRef<C>, keyof TypographyOwnProps> & {component?: C};
-export type LinkProps<C extends React.ElementType = "a"> = LinkOwnProps & Omit<React.ComponentPropsWithRef<C>, keyof LinkOwnProps> & {component?: C};
-export type SvgIconProps<C extends React.ElementType = "svg"> = SvgIconOwnProps & Omit<React.ComponentPropsWithRef<C>, keyof SvgIconOwnProps> & {component?: C};
+export type TypographyProps<C extends React.ElementType = "span"> = TypographyOwnProps & DistributiveOmit<React.ComponentPropsWithRef<C>, keyof TypographyOwnProps | "component"> & {component?: C};
+export type LinkProps<C extends React.ElementType = "a"> = LinkOwnProps & DistributiveOmit<React.ComponentPropsWithRef<C>, keyof LinkOwnProps | "component"> & {component?: C};
+export type SvgIconProps<C extends React.ElementType = "svg"> = SvgIconOwnProps & DistributiveOmit<React.ComponentPropsWithRef<C>, keyof SvgIconOwnProps | "component"> & {component?: C};
 export interface TextComponent<P, D extends React.ElementType> {
-  <C extends React.ElementType>(props:P & {component:C} & Omit<React.ComponentPropsWithRef<C>,keyof P | "component">):React.JSX.Element | null;
-  (props:P & {component?:D} & Omit<React.ComponentPropsWithRef<D>,keyof P | "component">):React.JSX.Element | null;
+  <C extends React.ElementType>(props:P & {component:C} & DistributiveOmit<React.ComponentPropsWithRef<C>,keyof P | "component">):React.JSX.Element | null;
+  (props:P & Omit<React.ComponentPropsWithRef<D>,keyof P | "component">):React.JSX.Element | null;
 }
 export const Typography:TextComponent<TypographyOwnProps,"span">;
 export const Link:TextComponent<LinkOwnProps,"a">;
@@ -251,15 +253,15 @@ export interface IconOwnProps {children?:React.ReactNode; className?:string; cla
 export type PaperClasses=Record<'root'|'rounded'|'outlined'|'elevation'|`elevation${number}`,string>;
 export type DividerClasses=Record<'root'|'absolute'|'fullWidth'|'inset'|'middle'|'flexItem'|'light'|'vertical'|'withChildren'|'withChildrenVertical'|'textAlignLeft'|'textAlignRight'|'wrapper'|'wrapperVertical',string>;
 export type IconClasses=Record<'root'|'colorPrimary'|'colorSecondary'|'colorAction'|'colorError'|'colorDisabled'|'fontSizeInherit'|'fontSizeSmall'|'fontSizeMedium'|'fontSizeLarge',string>;
-export type PaperProps<C extends React.ElementType="div">=PaperOwnProps & Omit<React.ComponentPropsWithRef<C>,keyof PaperOwnProps> & {component?:C};
+export type PaperProps<C extends React.ElementType="div">=PaperOwnProps & DistributiveOmit<React.ComponentPropsWithRef<C>,keyof PaperOwnProps | "component"> & {component?:C};
 export const Paper:TextComponent<PaperOwnProps,"div">;
 export const paperClasses:Readonly<PaperClasses>;
 export function getPaperUtilityClass(slot:string):string;
-export type DividerProps<C extends React.ElementType="hr">=DividerOwnProps & Omit<React.ComponentPropsWithRef<C>,keyof DividerOwnProps> & {component?:C};
+export type DividerProps<C extends React.ElementType="hr">=DividerOwnProps & DistributiveOmit<React.ComponentPropsWithRef<C>,keyof DividerOwnProps | "component"> & {component?:C};
 export const Divider:TextComponent<DividerOwnProps,"hr">;
 export const dividerClasses:Readonly<DividerClasses>;
 export function getDividerUtilityClass(slot:string):string;
-export type IconProps<C extends React.ElementType="span">=IconOwnProps & Omit<React.ComponentPropsWithRef<C>,keyof IconOwnProps> & {component?:C};
+export type IconProps<C extends React.ElementType="span">=IconOwnProps & DistributiveOmit<React.ComponentPropsWithRef<C>,keyof IconOwnProps | "component"> & {component?:C};
 export const Icon:TextComponent<IconOwnProps,"span"> & {muiName:string};
 export const iconClasses:Readonly<IconClasses>;
 export function getIconUtilityClass(slot:string):string;
@@ -272,15 +274,15 @@ export type FormLabelClasses=Record<'root'|'colorSecondary'|'focused'|'disabled'
 export type FormHelperTextClasses=Record<'root'|'error'|'disabled'|'sizeSmall'|'sizeMedium'|'contained'|'focused'|'filled'|'required',string>;
 export interface FormControlState {adornedStart:boolean; color:ButtonColor; disabled:boolean; error:boolean; filled:boolean; focused:boolean; fullWidth:boolean; hiddenLabel:boolean; required:boolean; size:NonNullable<FormControlOwnProps['size']>; variant:NonNullable<FormControlOwnProps['variant']>; onFocus:React.FocusEventHandler; onBlur:React.FocusEventHandler; onFilled():void; onEmpty():void; registerEffect():()=>void; setAdornedStart:React.Dispatch<React.SetStateAction<boolean>>;}
 export function useFormControl():FormControlState|undefined;
-export type FormControlProps<C extends React.ElementType="div">=FormControlOwnProps & Omit<React.ComponentPropsWithRef<C>,keyof FormControlOwnProps> & {component?:C};
+export type FormControlProps<C extends React.ElementType="div">=FormControlOwnProps & DistributiveOmit<React.ComponentPropsWithRef<C>,keyof FormControlOwnProps | "component"> & {component?:C};
 export const FormControl:TextComponent<FormControlOwnProps,"div">;
 export const formControlClasses:Readonly<FormControlClasses>;
 export function getFormControlUtilityClass(slot:string):string;
-export type FormLabelProps<C extends React.ElementType="label">=FormLabelOwnProps & Omit<React.ComponentPropsWithRef<C>,keyof FormLabelOwnProps> & {component?:C};
+export type FormLabelProps<C extends React.ElementType="label">=FormLabelOwnProps & DistributiveOmit<React.ComponentPropsWithRef<C>,keyof FormLabelOwnProps | "component"> & {component?:C};
 export const FormLabel:TextComponent<FormLabelOwnProps,"label">;
 export const formLabelClasses:Readonly<FormLabelClasses>;
 export function getFormLabelUtilityClass(slot:string):string;
-export type FormHelperTextProps<C extends React.ElementType="p">=FormHelperTextOwnProps & Omit<React.ComponentPropsWithRef<C>,keyof FormHelperTextOwnProps> & {component?:C};
+export type FormHelperTextProps<C extends React.ElementType="p">=FormHelperTextOwnProps & DistributiveOmit<React.ComponentPropsWithRef<C>,keyof FormHelperTextOwnProps | "component"> & {component?:C};
 export const FormHelperText:TextComponent<FormHelperTextOwnProps,"p">;
 export const formHelperTextClasses:Readonly<FormHelperTextClasses>;
 export function getFormHelperTextUtilityClass(slot:string):string;
@@ -319,13 +321,13 @@ export function getOutlinedInputUtilityClass(slot:string):string;
 
 export type InputLabelClasses=Record<'root'|'focused'|'disabled'|'error'|'required'|'asterisk'|'formControl'|'sizeSmall'|'shrink'|'animated'|'standard'|'filled'|'outlined',string>;
 export interface InputLabelOwnProps extends Omit<FormLabelOwnProps,'classes'> {classes?:Partial<InputLabelClasses>; disableAnimation?:boolean; shrink?:boolean; margin?:'dense'; size?:'small'|'medium'|(string & {}); variant?:'standard'|'outlined'|'filled';}
-export type InputLabelProps<C extends React.ElementType='label'>=InputLabelOwnProps & Omit<React.ComponentPropsWithRef<C>,keyof InputLabelOwnProps> & {component?:C};
+export type InputLabelProps<C extends React.ElementType='label'>=InputLabelOwnProps & DistributiveOmit<React.ComponentPropsWithRef<C>,keyof InputLabelOwnProps | "component"> & {component?:C};
 export const InputLabel:TextComponent<InputLabelOwnProps,'label'>;
 export const inputLabelClasses:Readonly<InputLabelClasses>;
 export function getInputLabelUtilityClass(slot:string):string;
 export type InputAdornmentClasses=Record<'root'|'filled'|'standard'|'outlined'|'positionStart'|'positionEnd'|'disablePointerEvents'|'hiddenLabel'|'sizeSmall',string>;
 export interface InputAdornmentOwnProps {children?:React.ReactNode; className?:string; classes?:Partial<InputAdornmentClasses>; disablePointerEvents?:boolean; disableTypography?:boolean; position:'start'|'end'; variant?:'standard'|'outlined'|'filled'; sx?:SxProps<Theme>;}
-export type InputAdornmentProps<C extends React.ElementType='div'>=InputAdornmentOwnProps & Omit<React.ComponentPropsWithRef<C>,keyof InputAdornmentOwnProps> & {component?:C};
+export type InputAdornmentProps<C extends React.ElementType='div'>=InputAdornmentOwnProps & DistributiveOmit<React.ComponentPropsWithRef<C>,keyof InputAdornmentOwnProps | "component"> & {component?:C};
 export const InputAdornment:TextComponent<InputAdornmentOwnProps,'div'>;
 export const inputAdornmentClasses:Readonly<InputAdornmentClasses>;
 export function getInputAdornmentUtilityClass(slot:string):string;
@@ -349,10 +351,10 @@ export const textFieldClasses:Readonly<TextFieldClasses>;
 export function getTextFieldUtilityClass(slot:string):string;
 
 export interface ListOwnProps { children?: React.ReactNode; dense?: boolean; disablePadding?: boolean; subheader?: React.ReactNode; classes?: Partial<Record<'root'|'padding'|'dense'|'subheader',string>>; sx?: SxProps<Theme>; }
-export type ListProps<C extends React.ElementType='ul'>=ListOwnProps & Omit<React.ComponentPropsWithRef<C>,keyof ListOwnProps> & {component?:C};
+export type ListProps<C extends React.ElementType='ul'>=ListOwnProps & DistributiveOmit<React.ComponentPropsWithRef<C>,keyof ListOwnProps | "component"> & {component?:C};
 export declare const List:<C extends React.ElementType='ul'>(props:ListProps<C>)=>React.ReactElement|null;
 export interface MenuItemOwnProps extends ButtonBaseOwnProps {autoFocus?:boolean;dense?:boolean;disableGutters?:boolean;divider?:boolean;selected?:boolean;value?:unknown;}
-export type MenuItemProps<C extends React.ElementType='li'>=MenuItemOwnProps & Omit<React.ComponentPropsWithRef<C>,keyof MenuItemOwnProps> & {component?:C};
+export type MenuItemProps<C extends React.ElementType='li'>=MenuItemOwnProps & DistributiveOmit<React.ComponentPropsWithRef<C>,keyof MenuItemOwnProps | "component"> & {component?:C};
 export declare const MenuItem:<C extends React.ElementType='li'>(props:MenuItemProps<C>)=>React.ReactElement|null;
 export type MenuListProps<C extends React.ElementType='ul'>=ListProps<C>&{autoFocus?:boolean;autoFocusItem?:boolean;disabledItemsFocusable?:boolean;disableListWrap?:boolean;variant?:'menu'|'selectedMenu'};
 export declare const MenuList:<C extends React.ElementType='ul'>(props:MenuListProps<C>)=>React.ReactElement|null;
@@ -360,12 +362,13 @@ export type ListItemIconProps=React.HTMLAttributes<HTMLDivElement>&{ref?:React.R
 export declare const ListItemIcon:React.ForwardRefExoticComponent<ListItemIconProps>;
 export type ListItemTextProps=React.HTMLAttributes<HTMLDivElement>&{ref?:React.Ref<HTMLDivElement>;primary?:React.ReactNode;secondary?:React.ReactNode;inset?:boolean;disableTypography?:boolean;classes?:Partial<Record<'root'|'primary'|'secondary'|'inset'|'dense'|'multiline',string>>;sx?:SxProps<Theme>;slots?:{root?:React.ElementType;primary?:React.ElementType;secondary?:React.ElementType};slotProps?:{root?:Record<string,unknown>|((state:ListItemTextProps)=>Record<string,unknown>);primary?:TypographyProps|((state:ListItemTextProps)=>TypographyProps);secondary?:TypographyProps|((state:ListItemTextProps)=>TypographyProps)};primaryTypographyProps?:TypographyProps;secondaryTypographyProps?:TypographyProps};
 export declare const ListItemText:React.ForwardRefExoticComponent<ListItemTextProps>;
-export type ListSubheaderProps<C extends React.ElementType='li'>=Omit<React.ComponentPropsWithRef<C>,'color'>&{component?:C;color?:'default'|'primary'|'inherit';disableGutters?:boolean;disableSticky?:boolean;inset?:boolean;classes?:Partial<Record<'root'|'colorPrimary'|'colorInherit'|'gutters'|'inset'|'sticky',string>>;sx?:SxProps<Theme>};
+export type ListSubheaderProps<C extends React.ElementType='li'>=DistributiveOmit<React.ComponentPropsWithRef<C>,'color'>&{component?:C;color?:'default'|'primary'|'inherit';disableGutters?:boolean;disableSticky?:boolean;inset?:boolean;classes?:Partial<Record<'root'|'colorPrimary'|'colorInherit'|'gutters'|'inset'|'sticky',string>>;sx?:SxProps<Theme>};
 export declare const ListSubheader:(<C extends React.ElementType='li'>(props:ListSubheaderProps<C>)=>React.ReactElement|null)&{muiSkipListHighlight:true};
 export interface PopoverOrigin {vertical:'top'|'center'|'bottom'|number;horizontal:'left'|'center'|'right'|number;}
 export interface PopoverActions {updatePosition():void;}
 export type PopupSlotProps=Record<string,unknown>|((state:PopoverProps)=>Record<string,unknown>);
 export interface PopoverProps extends React.HTMLAttributes<HTMLDivElement> {
+ component?:React.ElementType;
  ref?:React.Ref<HTMLDivElement>;open:boolean;anchorEl?:Element|{nodeType:number;getBoundingClientRect():DOMRect}|null|(()=>Element|{nodeType:number;getBoundingClientRect():DOMRect}|null);anchorOrigin?:PopoverOrigin;transformOrigin?:PopoverOrigin;anchorReference?:'anchorEl'|'anchorPosition'|'none';anchorPosition?:{left:number;top:number};marginThreshold?:number|null;container?:Element|(()=>Element|null)|null;
  action?:React.Ref<PopoverActions>;disablePortal?:boolean;keepMounted?:boolean;disableAutoFocus?:boolean;disableEnforceFocus?:boolean;disableRestoreFocus?:boolean;disableEscapeKeyDown?:boolean;disableScrollLock?:boolean;hideBackdrop?:boolean;elevation?:number;sx?:SxProps<Theme>;
  onClose?:(event:{},reason:'escapeKeyDown'|'backdropClick'|'tabKeyDown')=>void;
@@ -460,7 +463,7 @@ export interface ChipOwnProps {
  slotProps?:{root?:ChipSlotProps|((state:ChipOwnProps)=>ChipSlotProps);label?:ChipSlotProps|((state:ChipOwnProps)=>ChipSlotProps)};
 }
 export type ChipSlotProps=React.HTMLAttributes<HTMLElement>&{ref?:React.Ref<HTMLElement>;sx?:SxProps<Theme>};
-export type ChipProps<C extends React.ElementType='div'>=ChipOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof ChipOwnProps>&{component?:C};
+export type ChipProps<C extends React.ElementType='div'>=ChipOwnProps&DistributiveOmit<React.ComponentPropsWithRef<C>,keyof ChipOwnProps | "component">&{component?:C};
 export const Chip:<C extends React.ElementType='div'>(props:ChipProps<C>)=>React.ReactElement|null;
 export const chipClasses:Readonly<ChipClasses>;
 export function getChipUtilityClass(slot:string):string;
@@ -474,7 +477,7 @@ export interface AvatarOwnProps {
  slots?:{root?:React.ElementType;img?:React.ElementType;fallback?:React.ElementType};
  slotProps?:{root?:AvatarRootSlotProps|((state:AvatarOwnProps)=>AvatarRootSlotProps);img?:AvatarImageSlotProps|((state:AvatarOwnProps)=>AvatarImageSlotProps);fallback?:Partial<SvgIconProps>|((state:AvatarOwnProps)=>Partial<SvgIconProps>)};
 }
-export type AvatarProps<C extends React.ElementType='div'>=AvatarOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof AvatarOwnProps>&{component?:C};
+export type AvatarProps<C extends React.ElementType='div'>=AvatarOwnProps&DistributiveOmit<React.ComponentPropsWithRef<C>,keyof AvatarOwnProps | "component">&{component?:C};
 export const Avatar:<C extends React.ElementType='div'>(props:AvatarProps<C>)=>React.ReactElement|null;
 export const avatarClasses:Readonly<AvatarClasses>;
 export function getAvatarUtilityClass(slot:string):string;
@@ -495,7 +498,7 @@ export interface SkeletonOwnProps {
  width?:number|string;height?:number|string;children?:React.ReactNode;
  classes?:Partial<SkeletonClasses>;sx?:SxProps<Theme>;
 }
-export type SkeletonProps<C extends React.ElementType='span'>=SkeletonOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof SkeletonOwnProps>&{component?:C};
+export type SkeletonProps<C extends React.ElementType='span'>=SkeletonOwnProps&DistributiveOmit<React.ComponentPropsWithRef<C>,keyof SkeletonOwnProps | "component">&{component?:C};
 export const Skeleton:<C extends React.ElementType='span'>(props:SkeletonProps<C>)=>React.ReactElement|null;
 export const skeletonClasses:Readonly<SkeletonClasses>;
 export function getSkeletonUtilityClass(slot:string):string;
@@ -506,7 +509,7 @@ export interface ContainerOwnProps {
  children?:React.ReactNode;disableGutters?:boolean;fixed?:boolean;maxWidth?:import('vmui-system').Breakpoint|false;
  classes?:Partial<ContainerClasses>;sx?:SxProps<Theme>;
 }
-export type ContainerProps<C extends React.ElementType='div'>=ContainerOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof ContainerOwnProps>&{component?:C};
+export type ContainerProps<C extends React.ElementType='div'>=ContainerOwnProps&DistributiveOmit<React.ComponentPropsWithRef<C>,keyof ContainerOwnProps | "component">&{component?:C};
 export const Container:<C extends React.ElementType='div'>(props:ContainerProps<C>)=>React.ReactElement|null;
 export const containerClasses:Readonly<ContainerClasses>;
 export function getContainerUtilityClass(slot:string):string;
@@ -514,14 +517,14 @@ export function getContainerUtilityClass(slot:string):string;
 export interface CardClasses {root:string}
 export type CardClassKey=keyof CardClasses;
 export interface CardOwnProps extends Omit<PaperOwnProps,'classes'> {raised?:boolean;classes?:Partial<CardClasses>}
-export type CardProps<C extends React.ElementType='div'>=CardOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof CardOwnProps>&{component?:C};
+export type CardProps<C extends React.ElementType='div'>=CardOwnProps&DistributiveOmit<React.ComponentPropsWithRef<C>,keyof CardOwnProps | "component">&{component?:C};
 export const Card:TextComponent<CardOwnProps,'div'>;
 export const cardClasses:Readonly<CardClasses>;
 export function getCardUtilityClass(slot:string):string;
 export interface CardContentClasses {root:string}
 export type CardContentClassKey=keyof CardContentClasses;
 export interface CardContentOwnProps {children?:React.ReactNode;classes?:Partial<CardContentClasses>;sx?:SxProps<Theme>}
-export type CardContentProps<C extends React.ElementType='div'>=CardContentOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof CardContentOwnProps>&{component?:C};
+export type CardContentProps<C extends React.ElementType='div'>=CardContentOwnProps&DistributiveOmit<React.ComponentPropsWithRef<C>,keyof CardContentOwnProps | "component">&{component?:C};
 export const CardContent:TextComponent<CardContentOwnProps,'div'>;
 export const cardContentClasses:Readonly<CardContentClasses>;
 export function getCardContentUtilityClass(slot:string):string;
@@ -535,7 +538,7 @@ export interface CardActionAreaOwnProps extends Omit<ButtonBaseOwnProps,'classes
  slots?:{root?:React.ElementType;focusHighlight?:React.ElementType};
  slotProps?:{root?:CardActionAreaRootSlotProps|((state:CardActionAreaOwnProps)=>CardActionAreaRootSlotProps);focusHighlight?:CardActionAreaHighlightSlotProps|((state:CardActionAreaOwnProps)=>CardActionAreaHighlightSlotProps)};
 }
-export type CardActionAreaProps<C extends React.ElementType='button'>=CardActionAreaOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof CardActionAreaOwnProps>&{component?:C};
+export type CardActionAreaProps<C extends React.ElementType='button'>=CardActionAreaOwnProps&DistributiveOmit<React.ComponentPropsWithRef<C>,keyof CardActionAreaOwnProps | "component">&{component?:C};
 export const CardActionArea:TextComponent<CardActionAreaOwnProps,'button'>;
 export const cardActionAreaClasses:Readonly<CardActionAreaClasses>;
 export function getCardActionAreaUtilityClass(slot:string):string;
@@ -551,7 +554,7 @@ export interface AvatarGroupOwnProps {
  slotProps?:{surplus?:Partial<AvatarProps>|((state:AvatarGroupOwnerState)=>Partial<AvatarProps>)};
 }
 export type AvatarGroupOwnerState=AvatarGroupOwnProps&{component:React.ElementType;max:number;spacing:'small'|'medium'|number;variant:NonNullable<AvatarOwnProps['variant']>};
-export type AvatarGroupProps<C extends React.ElementType='div'>=AvatarGroupOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof AvatarGroupOwnProps>&{component?:C};
+export type AvatarGroupProps<C extends React.ElementType='div'>=AvatarGroupOwnProps&DistributiveOmit<React.ComponentPropsWithRef<C>,keyof AvatarGroupOwnProps | "component">&{component?:C};
 export const AvatarGroup:TextComponent<AvatarGroupOwnProps,'div'>;
 export const avatarGroupClasses:Readonly<AvatarGroupClasses>;
 export function getAvatarGroupUtilityClass(slot:string):string;
@@ -592,7 +595,7 @@ export interface CollapseOwnProps {
  slotProps?:{[K in 'root'|'wrapper'|'wrapperInner']?:CollapseSlotProps|((state:CollapseOwnerState)=>CollapseSlotProps)};
 }
 export type CollapseOwnerState=CollapseOwnProps&{state:CollapsePhase;orientation:'vertical'|'horizontal';in:boolean};
-export type CollapseProps<C extends React.ElementType='div'>=CollapseOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof CollapseOwnProps>&{component?:C};
+export type CollapseProps<C extends React.ElementType='div'>=CollapseOwnProps&DistributiveOmit<React.ComponentPropsWithRef<C>,keyof CollapseOwnProps | "component">&{component?:C};
 export const Collapse:TextComponent<CollapseOwnProps,'div'>;
 export const collapseClasses:Readonly<CollapseClasses>;
 export function getCollapseUtilityClass(slot:string):string;
@@ -603,7 +606,7 @@ export type DialogContentClasses=Record<'root'|'dividers',string>;
 export type DialogActionsClasses=Record<'root'|'spacing',string>;
 export interface DialogContentOwnProps {children?:React.ReactNode;dividers?:boolean;classes?:Partial<DialogContentClasses>;sx?:SxProps<Theme>}
 export interface DialogActionsOwnProps {children?:React.ReactNode;disableSpacing?:boolean;classes?:Partial<DialogActionsClasses>;sx?:SxProps<Theme>}
-export type DialogTitleProps<C extends React.ElementType='h2'>=DialogTitleOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof DialogTitleOwnProps>&{component?:C};
+export type DialogTitleProps<C extends React.ElementType='h2'>=DialogTitleOwnProps&DistributiveOmit<React.ComponentPropsWithRef<C>,keyof DialogTitleOwnProps | "component">&{component?:C};
 export type DialogContentProps=DialogContentOwnProps&Omit<React.ComponentPropsWithRef<'div'>,keyof DialogContentOwnProps>;
 export type DialogActionsProps=DialogActionsOwnProps&Omit<React.ComponentPropsWithRef<'div'>,keyof DialogActionsOwnProps>;
 export const DialogTitle:TextComponent<DialogTitleOwnProps,'h2'>;
@@ -650,7 +653,7 @@ export const Slide:React.ForwardRefExoticComponent<SlideProps>;
 
 export interface DialogContentTextOwnProps extends Omit<TypographyOwnProps,'classes'> {classes?:Partial<DialogContentTextClasses>}
 export type DialogContentTextClasses=Record<'root',string>;
-export type DialogContentTextProps<C extends React.ElementType='p'>=DialogContentTextOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof DialogContentTextOwnProps>&{component?:C};
+export type DialogContentTextProps<C extends React.ElementType='p'>=DialogContentTextOwnProps&DistributiveOmit<React.ComponentPropsWithRef<C>,keyof DialogContentTextOwnProps | "component">&{component?:C};
 export const DialogContentText:TextComponent<DialogContentTextOwnProps,'p'>;
 export type DialogContentTextClassKey=keyof DialogContentTextClasses;
 export const dialogContentTextClasses:Readonly<DialogContentTextClasses>;
@@ -686,31 +689,31 @@ export interface TableBaseProps {children?:React.ReactNode;className?:string;cla
 export interface TableOwnProps extends TableBaseProps {padding?:'normal'|'checkbox'|'none';size?:'small'|'medium';stickyHeader?:boolean;}
 export interface TableCellOwnProps extends TableBaseProps {align?:'inherit'|'left'|'center'|'right'|'justify';padding?:'normal'|'checkbox'|'none';size?:'small'|'medium';variant?:'head'|'body'|'footer';sortDirection?:'asc'|'desc'|false;}
 export interface TableRowOwnProps extends TableBaseProps {hover?:boolean;selected?:boolean;}
-export type TableProps<C extends React.ElementType="table">=TableOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof TableOwnProps>&{component?:C};
+export type TableProps<C extends React.ElementType="table">=TableOwnProps&DistributiveOmit<React.ComponentPropsWithRef<C>,keyof TableOwnProps | "component">&{component?:C};
 export const Table:<C extends React.ElementType="table">(props:TableProps<C>)=>React.ReactElement|null;
 export const tableClasses:Readonly<Record<string,string>>;
 export function getTableUtilityClass(slot:string):string;
-export type TableHeadProps<C extends React.ElementType="thead">=TableBaseProps&Omit<React.ComponentPropsWithRef<C>,keyof TableBaseProps>&{component?:C};
+export type TableHeadProps<C extends React.ElementType="thead">=TableBaseProps&DistributiveOmit<React.ComponentPropsWithRef<C>,keyof TableBaseProps | "component">&{component?:C};
 export const TableHead:<C extends React.ElementType="thead">(props:TableHeadProps<C>)=>React.ReactElement|null;
 export const tableHeadClasses:Readonly<Record<string,string>>;
 export function getTableHeadUtilityClass(slot:string):string;
-export type TableBodyProps<C extends React.ElementType="tbody">=TableBaseProps&Omit<React.ComponentPropsWithRef<C>,keyof TableBaseProps>&{component?:C};
+export type TableBodyProps<C extends React.ElementType="tbody">=TableBaseProps&DistributiveOmit<React.ComponentPropsWithRef<C>,keyof TableBaseProps | "component">&{component?:C};
 export const TableBody:<C extends React.ElementType="tbody">(props:TableBodyProps<C>)=>React.ReactElement|null;
 export const tableBodyClasses:Readonly<Record<string,string>>;
 export function getTableBodyUtilityClass(slot:string):string;
-export type TableFooterProps<C extends React.ElementType="tfoot">=TableBaseProps&Omit<React.ComponentPropsWithRef<C>,keyof TableBaseProps>&{component?:C};
+export type TableFooterProps<C extends React.ElementType="tfoot">=TableBaseProps&DistributiveOmit<React.ComponentPropsWithRef<C>,keyof TableBaseProps | "component">&{component?:C};
 export const TableFooter:<C extends React.ElementType="tfoot">(props:TableFooterProps<C>)=>React.ReactElement|null;
 export const tableFooterClasses:Readonly<Record<string,string>>;
 export function getTableFooterUtilityClass(slot:string):string;
-export type TableRowProps<C extends React.ElementType="tr">=TableRowOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof TableRowOwnProps>&{component?:C};
+export type TableRowProps<C extends React.ElementType="tr">=TableRowOwnProps&DistributiveOmit<React.ComponentPropsWithRef<C>,keyof TableRowOwnProps | "component">&{component?:C};
 export const TableRow:<C extends React.ElementType="tr">(props:TableRowProps<C>)=>React.ReactElement|null;
 export const tableRowClasses:Readonly<Record<string,string>>;
 export function getTableRowUtilityClass(slot:string):string;
-export type TableCellProps<C extends React.ElementType="td">=TableCellOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof TableCellOwnProps>&{component?:C};
+export type TableCellProps<C extends React.ElementType="td">=TableCellOwnProps&DistributiveOmit<React.ComponentPropsWithRef<C>,keyof TableCellOwnProps | "component">&{component?:C};
 export const TableCell:<C extends React.ElementType="td">(props:TableCellProps<C>)=>React.ReactElement|null;
 export const tableCellClasses:Readonly<Record<string,string>>;
 export function getTableCellUtilityClass(slot:string):string;
-export type TableContainerProps<C extends React.ElementType="div">=TableBaseProps&Omit<React.ComponentPropsWithRef<C>,keyof TableBaseProps>&{component?:C};
+export type TableContainerProps<C extends React.ElementType="div">=TableBaseProps&DistributiveOmit<React.ComponentPropsWithRef<C>,keyof TableBaseProps | "component">&{component?:C};
 export const TableContainer:<C extends React.ElementType="div">(props:TableContainerProps<C>)=>React.ReactElement|null;
 export const tableContainerClasses:Readonly<Record<string,string>>;
 export function getTableContainerUtilityClass(slot:string):string;
@@ -759,7 +762,7 @@ export interface TableSortLabelOwnProps extends ButtonBaseOwnProps {
  slots?:{root?:React.ElementType;icon?:React.ElementType};
  slotProps?:Partial<Record<'root'|'icon',Record<string,unknown>|((state:TableSortLabelOwnProps)=>Record<string,unknown>)>>;
 }
-export type TableSortLabelProps<C extends React.ElementType='span'>=TableSortLabelOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof TableSortLabelOwnProps>&{component?:C};
+export type TableSortLabelProps<C extends React.ElementType='span'>=TableSortLabelOwnProps&DistributiveOmit<React.ComponentPropsWithRef<C>,keyof TableSortLabelOwnProps | "component">&{component?:C};
 export const TableSortLabel:<C extends React.ElementType='span'>(props:TableSortLabelProps<C>)=>React.ReactElement|null;
 export const tableSortLabelClasses:Readonly<Record<'root'|'active'|'icon'|'directionAsc'|'directionDesc',string>>;
 export function getTableSortLabelUtilityClass(slot:string):string;
@@ -780,7 +783,7 @@ export interface PaginationItemOwnProps extends Omit<ButtonBaseOwnProps,'childre
  slotProps?:Partial<Record<'first'|'last'|'previous'|'next',Record<string,unknown>|((state:PaginationItemOwnProps)=>Record<string,unknown>)>>;
  components?:Partial<Record<'First'|'Last'|'Previous'|'Next',React.ElementType>>;
 }
-export type PaginationItemProps<C extends React.ElementType='button'>=PaginationItemOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof PaginationItemOwnProps>&{component?:C};
+export type PaginationItemProps<C extends React.ElementType='button'>=PaginationItemOwnProps&DistributiveOmit<React.ComponentPropsWithRef<C>,keyof PaginationItemOwnProps | "component">&{component?:C};
 export const PaginationItem:<C extends React.ElementType='button'>(props:PaginationItemProps<C>)=>React.ReactElement|null;
 export const paginationItemClasses:Readonly<Record<string,string>>;
 export function getPaginationItemUtilityClass(slot:string):string;
@@ -817,7 +820,7 @@ export interface AlertOwnProps extends Omit<PaperOwnProps,'classes'|'variant'> {
  slots?:Partial<Record<'root'|'icon'|'message'|'action'|'closeButton'|'closeIcon',React.ElementType>>;
  slotProps?:{root?:AlertSlot<Partial<PaperProps>>;icon?:AlertSlot<React.HTMLAttributes<HTMLDivElement>&{ref?:React.Ref<HTMLDivElement>;sx?:SxProps<Theme>}>;message?:AlertSlot<React.HTMLAttributes<HTMLDivElement>&{ref?:React.Ref<HTMLDivElement>;sx?:SxProps<Theme>}>;action?:AlertSlot<React.HTMLAttributes<HTMLDivElement>&{ref?:React.Ref<HTMLDivElement>;sx?:SxProps<Theme>}>;closeButton?:AlertSlot<Partial<IconButtonProps>>;closeIcon?:AlertSlot<Partial<SvgIconProps>>};
 }
-export type AlertProps<C extends React.ElementType='div'>=AlertOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof AlertOwnProps>&{component?:C};
+export type AlertProps<C extends React.ElementType='div'>=AlertOwnProps&DistributiveOmit<React.ComponentPropsWithRef<C>,keyof AlertOwnProps | "component">&{component?:C};
 export const Alert:<C extends React.ElementType='div'>(props:AlertProps<C>)=>React.ReactElement|null;
 export const alertClasses:Readonly<Record<AlertClassKey,string>>;
 export function getAlertUtilityClass(slot:string):string;
@@ -838,7 +841,7 @@ export interface BadgeOwnProps {
 }
 export type BadgeElementProps=React.HTMLAttributes<HTMLSpanElement>&{ref?:React.Ref<HTMLSpanElement>;sx?:SxProps<Theme>};
 export type BadgeOwnerState=Omit<BadgeOwnProps,'slots'|'slotProps'>&{invisible:boolean;max:number;displayValue:React.ReactNode;showZero:boolean;anchorOrigin:Required<BadgeOrigin>;color:string;overlap:'rectangular'|'circular';variant:'standard'|'dot'};
-export type BadgeProps<C extends React.ElementType='span'>=BadgeOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof BadgeOwnProps>&{component?:C};
+export type BadgeProps<C extends React.ElementType='span'>=BadgeOwnProps&DistributiveOmit<React.ComponentPropsWithRef<C>,keyof BadgeOwnProps | "component">&{component?:C};
 export const Badge:<C extends React.ElementType='span'>(props:BadgeProps<C>)=>React.ReactElement|null;
 export const badgeClasses:Readonly<Record<BadgeClassKey,string>>;
 export function getBadgeUtilityClass(slot:string):string;
@@ -847,20 +850,20 @@ export const BadgeMark:React.ComponentType<BadgeElementProps&{ownerState:BadgeOw
 
 export type ListItemButtonClassKey='root'|'focusVisible'|'dense'|'alignItemsFlexStart'|'disabled'|'divider'|'gutters'|'selected';
 export interface ListItemButtonOwnProps extends ButtonBaseOwnProps {alignItems?:'center'|'flex-start';autoFocus?:boolean;dense?:boolean;disableGutters?:boolean;divider?:boolean;selected?:boolean;href?:string;classes?:Partial<Record<ListItemButtonClassKey,string>>;}
-export type ListItemButtonProps<C extends React.ElementType='div'>=ListItemButtonOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof ListItemButtonOwnProps>&{component?:C};
+export type ListItemButtonProps<C extends React.ElementType='div'>=ListItemButtonOwnProps&DistributiveOmit<React.ComponentPropsWithRef<C>,keyof ListItemButtonOwnProps | "component">&{component?:React.ElementType};
 export const ListItemButton:<C extends React.ElementType='div'>(props:ListItemButtonProps<C>)=>React.ReactElement|null;
 export const listItemButtonClasses:Readonly<Record<ListItemButtonClassKey,string>>;
 export function getListItemButtonUtilityClass(slot:string):string;
 
 export type AppBarClassKey='root'|'positionFixed'|'positionAbsolute'|'positionSticky'|'positionStatic'|'positionRelative'|'colorDefault'|'colorPrimary'|'colorSecondary'|'colorInherit'|'colorTransparent'|'colorError'|'colorInfo'|'colorSuccess'|'colorWarning';
 export interface AppBarOwnProps extends Omit<PaperOwnProps,'classes'> {color?:'default'|'primary'|'secondary'|'inherit'|'transparent'|'error'|'info'|'success'|'warning'|(string & {});position?:'fixed'|'absolute'|'sticky'|'static'|'relative';enableColorOnDark?:boolean;classes?:Partial<Record<AppBarClassKey,string>>;}
-export type AppBarProps<C extends React.ElementType='header'>=AppBarOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof AppBarOwnProps>&{component?:C};
+export type AppBarProps<C extends React.ElementType='header'>=AppBarOwnProps&DistributiveOmit<React.ComponentPropsWithRef<C>,keyof AppBarOwnProps | "component">&{component?:C};
 export const AppBar:<C extends React.ElementType='header'>(props:AppBarProps<C>)=>React.ReactElement|null;
 export const appBarClasses:Readonly<Record<AppBarClassKey,string>>;
 export function getAppBarUtilityClass(slot:string):string;
 export type ToolbarClassKey='root'|'gutters'|'regular'|'dense';
 export interface ToolbarOwnProps {children?:React.ReactNode;className?:string;disableGutters?:boolean;variant?:'regular'|'dense'|(string & {});classes?:Partial<Record<ToolbarClassKey,string>>;sx?:SxProps<Theme>;}
-export type ToolbarProps<C extends React.ElementType='div'>=ToolbarOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof ToolbarOwnProps>&{component?:C};
+export type ToolbarProps<C extends React.ElementType='div'>=ToolbarOwnProps&DistributiveOmit<React.ComponentPropsWithRef<C>,keyof ToolbarOwnProps | "component">&{component?:C};
 export const Toolbar:<C extends React.ElementType='div'>(props:ToolbarProps<C>)=>React.ReactElement|null;
 export const toolbarClasses:Readonly<Record<ToolbarClassKey,string>>;
 export function getToolbarUtilityClass(slot:string):string;
@@ -874,7 +877,7 @@ export interface AccordionSummaryOwnProps extends ButtonBaseOwnProps {
 export type AccordionSummaryElementProps=React.HTMLAttributes<HTMLSpanElement>&{ref?:React.Ref<HTMLSpanElement>;sx?:SxProps<Theme>};
 export type AccordionSummaryOwnerState=AccordionSummaryOwnProps&{expanded?:boolean;disabled:boolean;disableGutters?:boolean};
 export type AccordionSummarySlot<T>=T|((state:AccordionSummaryOwnerState)=>T);
-export type AccordionSummaryProps<C extends React.ElementType='button'>=AccordionSummaryOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof AccordionSummaryOwnProps>&{component?:C};
+export type AccordionSummaryProps<C extends React.ElementType='button'>=AccordionSummaryOwnProps&DistributiveOmit<React.ComponentPropsWithRef<C>,keyof AccordionSummaryOwnProps | "component">&{component?:C};
 export const AccordionSummary:<C extends React.ElementType='button'>(props:AccordionSummaryProps<C>)=>React.ReactElement|null;
 export const accordionSummaryClasses:Readonly<Record<AccordionSummaryClassKey,string>>;
 export function getAccordionSummaryUtilityClass(slot:string):string;
@@ -899,7 +902,7 @@ export interface AccordionOwnProps extends Omit<PaperOwnProps,'classes'|'childre
   slots?: Partial<Record<'root'|'heading'|'region'|'transition',React.ElementType>>;
   slotProps?: {root?:AccordionSlotProps<Partial<PaperProps>>;heading?:AccordionSlotProps<AccordionDOMSlot>;region?:AccordionSlotProps<AccordionDOMSlot>;transition?:AccordionSlotProps<Partial<CollapseProps>>};
 }
-export type AccordionProps<C extends React.ElementType='div'> = AccordionOwnProps & Omit<React.ComponentPropsWithRef<C>,keyof AccordionOwnProps> & {component?:C};
+export type AccordionProps<C extends React.ElementType='div'> = AccordionOwnProps & DistributiveOmit<React.ComponentPropsWithRef<C>,keyof AccordionOwnProps | "component"> & {component?:C};
 export const Accordion:<C extends React.ElementType='div'>(props:AccordionProps<C>)=>React.ReactElement|null;
 export const accordionClasses:Readonly<Record<AccordionClassKey,string>>;
 export function getAccordionUtilityClass(slot:string):string;
@@ -911,9 +914,9 @@ export type TabProps<C extends React.ElementType='button'> = Omit<ButtonBaseProp
   value?:unknown;wrapped?:boolean;classes?:Partial<Record<TabClassKey,string>>;
 };
 export const Tab:<C extends React.ElementType='button'>(props:TabProps<C>)=>React.ReactElement|null;
-export type TabsProps<C extends React.ElementType='div',V=any> = Omit<React.ComponentPropsWithRef<C>,'onChange'|'value'> & {
+export type TabsProps<C extends React.ElementType='div',V=any> = DistributiveOmit<React.ComponentPropsWithRef<C>,'onChange'|'value'> & {
   component?:C; children?:React.ReactNode; value:V; onChange?:(event:React.SyntheticEvent,value:V)=>void;
-  variant?:'standard'|'fullWidth';orientation?:'horizontal'|'vertical';selectionFollowsFocus?:boolean;
+  variant?:'standard'|'fullWidth'|'scrollable';scrollButtons?:'auto'|boolean;allowScrollButtonsMobile?:boolean;visibleScrollbar?:boolean;action?:React.Ref<{updateIndicator():void;updateScrollButtons():void}>;orientation?:'horizontal'|'vertical';selectionFollowsFocus?:boolean;
   indicatorColor?:'primary'|'secondary';textColor?:'inherit'|'primary'|'secondary';centered?:boolean;
   classes?:Partial<Record<TabsClassKey,string>>;sx?:SxProps<Theme>;
 };
@@ -982,7 +985,7 @@ export interface RatingOwnProps {
   classes?: Partial<RatingClasses>;
   sx?: SxProps<Theme>;
 }
-export type RatingProps<C extends React.ElementType = "span"> = RatingOwnProps & {component?: C} & Omit<React.ComponentPropsWithRef<C>, keyof RatingOwnProps>;
+export type RatingProps<C extends React.ElementType = "span"> = RatingOwnProps & {component?: C} & DistributiveOmit<React.ComponentPropsWithRef<C>, keyof RatingOwnProps | "component">;
 export function Rating<C extends React.ElementType = "span">(props: RatingProps<C>): React.ReactElement;
 
 export interface ClickAwayListenerProps {
@@ -1037,7 +1040,7 @@ export type StepperClasses=Readonly<Record<StepperClassKey,string>>;
 export const stepperClasses:StepperClasses;
 export function getStepperUtilityClass(slot:string):string;
 interface StepperOwnProps { activeStep?:number; alternativeLabel?:boolean; nonLinear?:boolean; orientation?:"horizontal"|"vertical"; connector?:React.ReactElement|null; classes?:Partial<StepperClasses>; sx?:SxProps<Theme>; }
-export type StepperProps<C extends React.ElementType = "ol"> = StepperOwnProps & {component?: C} & Omit<React.ComponentPropsWithRef<C>,keyof StepperOwnProps | "component">;
+export type StepperProps<C extends React.ElementType = "ol"> = StepperOwnProps & {component?: C} & DistributiveOmit<React.ComponentPropsWithRef<C>,keyof StepperOwnProps | "component">;
 export function Stepper<C extends React.ElementType = "ol">(props:StepperProps<C>):React.ReactElement|null;
 
 export type StepClassKey="root"|"horizontal"|"vertical"|"alternativeLabel"|"completed";
@@ -1045,7 +1048,7 @@ export type StepClasses=Readonly<Record<StepClassKey,string>>;
 export const stepClasses:StepClasses;
 export function getStepUtilityClass(slot:string):string;
 interface StepOwnProps { active?:boolean; completed?:boolean; disabled?:boolean; expanded?:boolean; index?:number; last?:boolean; classes?:Partial<StepClasses>; sx?:SxProps<Theme>; }
-export type StepProps<C extends React.ElementType = "li"> = StepOwnProps & {component?: C} & Omit<React.ComponentPropsWithRef<C>,keyof StepOwnProps | "component">;
+export type StepProps<C extends React.ElementType = "li"> = StepOwnProps & {component?: C} & DistributiveOmit<React.ComponentPropsWithRef<C>,keyof StepOwnProps | "component">;
 export function Step<C extends React.ElementType = "li">(props:StepProps<C>):React.ReactElement|null;
 
 export type StepLabelClassKey="root"|"horizontal"|"vertical"|"label"|"active"|"completed"|"error"|"disabled"|"iconContainer"|"alternativeLabel"|"labelContainer";
@@ -1075,7 +1078,7 @@ export interface ListItemOwnProps {
   slots?: {root?: React.ElementType; secondaryAction?: React.ElementType};
   slotProps?: Partial<Record<'root'|'secondaryAction', React.HTMLAttributes<HTMLElement> & React.RefAttributes<HTMLElement> | ((state: ListItemOwnProps) => React.HTMLAttributes<HTMLElement> & React.RefAttributes<HTMLElement>)>>;
 }
-export type ListItemProps<C extends React.ElementType='li'>=ListItemOwnProps&Omit<React.ComponentPropsWithRef<C>,keyof ListItemOwnProps>&{component?:C};
+export type ListItemProps<C extends React.ElementType='li'>=ListItemOwnProps&DistributiveOmit<React.ComponentPropsWithRef<C>,keyof ListItemOwnProps | "component">&{component?:C};
 export const ListItem:<C extends React.ElementType='li'>(props:ListItemProps<C>)=>React.ReactElement|null;
 export const listItemClasses:Readonly<Record<ListItemClassKey,string>>;
 export function getListItemUtilityClass(slot:string):string;
@@ -1086,3 +1089,40 @@ export function CssBaseline(props: CssBaselineProps): React.ReactElement;
 export {default as createTheme} from "./styles/createTheme.mjs";
 
 export { alpha, darken, decomposeColor, emphasize, getContrastRatio, getLuminance, hexToRgb, hslToRgb, lighten, recomposeColor, rgbToHex } from "vmui-system";
+
+export type FadeProps = Omit<SlideProps,"direction"|"container">;
+export const Fade: React.ForwardRefExoticComponent<FadeProps>;
+export interface TrapFocusProps {children:React.ReactElement;open:boolean;disableAutoFocus?:boolean;disableEnforceFocus?:boolean;disableRestoreFocus?:boolean;isEnabled?:()=>boolean;getTabbable?:(root:HTMLElement)=>HTMLElement[];}
+export function Unstable_TrapFocus(props:TrapFocusProps):React.ReactElement;
+export interface TablePaginationOwnProps {
+ count:number;page:number;rowsPerPage:number;onPageChange:(event:React.MouseEvent<HTMLButtonElement>|null,page:number)=>void;
+ onRowsPerPageChange?:React.ChangeEventHandler<HTMLInputElement|HTMLTextAreaElement>;
+ rowsPerPageOptions?:readonly (number|{label:string;value:number})[];labelRowsPerPage?:React.ReactNode;
+ labelDisplayedRows?:(info:{from:number;to:number;count:number;page:number})=>React.ReactNode;
+ getItemAriaLabel?:(type:'first'|'previous'|'next'|'last')=>string;
+ showFirstButton?:boolean;showLastButton?:boolean;disabled?:boolean;ActionsComponent?:React.ElementType;
+ SelectProps?:Partial<SelectProps>;backIconButtonProps?:Partial<IconButtonProps>;nextIconButtonProps?:Partial<IconButtonProps>;
+ classes?:Partial<Record<TablePaginationClassKey,string>>;sx?:SxProps<Theme>;
+ slots?:Partial<Record<'root'|'toolbar'|'spacer'|'selectLabel'|'select'|'menuItem'|'displayedRows'|'actions',React.ElementType>>;
+ slotProps?:Partial<Record<'root'|'toolbar'|'spacer'|'selectLabel'|'select'|'menuItem'|'displayedRows'|'actions',Record<string,unknown>|((state:TablePaginationOwnProps)=>Record<string,unknown>)>>;
+}
+export type TablePaginationProps<C extends React.ElementType='td'>=TablePaginationOwnProps & {component?:C} & DistributiveOmit<React.ComponentPropsWithRef<C>,keyof TablePaginationOwnProps|'component'>;
+export function TablePagination<C extends React.ElementType='td'>(props:TablePaginationProps<C>):React.ReactElement;
+export type TablePaginationClassKey='root'|'toolbar'|'spacer'|'selectLabel'|'selectRoot'|'select'|'selectIcon'|'input'|'menuItem'|'displayedRows'|'actions';
+export const tablePaginationClasses:Readonly<Record<TablePaginationClassKey,string>>;
+export function getTablePaginationUtilityClass(slot:string):string;
+export type UseAutocompleteProps<T,M extends boolean|undefined=false,D extends boolean|undefined=false,F extends boolean|undefined=false> = Omit<AutocompleteProps<T,M,D,F>,'renderInput'>;
+export interface UseAutocompleteReturnValue<T,M extends boolean|undefined=false,D extends boolean|undefined=false,F extends boolean|undefined=false> {
+ id:string;value:AutocompleteValue<T,M,D,F>;inputValue:string;popupOpen:boolean;expanded:HTMLElement|false|null;focused:boolean;focusedTag:number;dirty:boolean;
+ anchorEl:HTMLElement|null;setAnchorEl:React.Dispatch<React.SetStateAction<HTMLElement|null>>;
+ groupedOptions:T[]|{key:number;index:number;group:string;options:T[]}[];
+ getRootProps:(props?:React.HTMLAttributes<HTMLElement>)=>React.HTMLAttributes<HTMLElement>;
+ getInputLabelProps:()=>React.LabelHTMLAttributes<HTMLLabelElement>;
+ getInputProps:()=>React.InputHTMLAttributes<HTMLInputElement>&{ref:React.Ref<HTMLInputElement>};
+ getListboxProps:()=>React.HTMLAttributes<HTMLUListElement>&{ref:React.Ref<HTMLUListElement>};
+ getOptionProps:(params:{option:T;index:number})=>React.HTMLAttributes<HTMLLIElement>&{key:React.Key};
+ getClearProps:()=>React.ButtonHTMLAttributes<HTMLButtonElement>;getPopupIndicatorProps:()=>React.ButtonHTMLAttributes<HTMLButtonElement>;
+ getTagProps:(params:{index:number})=>{key:number;tabIndex:number;onDelete?:(event:React.SyntheticEvent)=>void};
+ getItemProps:(params?:{index?:number})=>{key:number;tabIndex:number;onDelete?:(event:React.SyntheticEvent)=>void};
+}
+export function useAutocomplete<T,M extends boolean|undefined=false,D extends boolean|undefined=false,F extends boolean|undefined=false>(props:UseAutocompleteProps<T,M,D,F>):UseAutocompleteReturnValue<T,M,D,F>;

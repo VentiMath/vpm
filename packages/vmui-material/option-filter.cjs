@@ -1,0 +1,3 @@
+"use strict";
+function createFilterOptions({ignoreAccents=true,ignoreCase=true,limit,matchFrom='any',stringify,trim=false}={}){const fold=v=>{let s=String(v);if(ignoreCase)s=s.toLowerCase();return ignoreAccents?s.normalize('NFD').replace(/[\u0300-\u036f]/g,''):s;};return(options,{inputValue,getOptionLabel})=>{const q=fold(trim?inputValue.trim():inputValue),found=q?options.filter(o=>{const s=fold((stringify||getOptionLabel)(o));return matchFrom==='start'?s.startsWith(q):s.includes(q);}):options.slice();return typeof limit==='number'?found.slice(0,limit):found;};}
+module.exports={createFilterOptions};

@@ -1,13 +1,13 @@
 # vmui-material
 
-Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, GlobalStyles, CssBaseline, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, ListItem, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card, CardContent, CardActionArea, AvatarGroup, Tooltip, Collapse, DialogTitle, DialogContent, DialogActions, Dialog, Slide, DialogContentText, Drawer, SwipeableDrawer, Table, TableHead, TableBody, TableFooter, TableRow, TableCell, TableContainer, Autocomplete, TableSortLabel, PaginationItem, Pagination, LinearProgress, Alert, AlertTitle, Badge, ListItemButton, AppBar, Toolbar, Accordion, AccordionSummary, AccordionDetails, Tab, Tabs, Breadcrumbs, Snackbar, SnackbarContent, Stack, Grid, Rating, ClickAwayListener, Grow, Popper, Slider, Stepper, Step, StepLabel and StepContent, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
+Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, GlobalStyles, CssBaseline, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, ListItem, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup, Switch, Chip, Avatar, CircularProgress, Skeleton, Container, Card, CardContent, CardActionArea, AvatarGroup, Tooltip, Collapse, DialogTitle, DialogContent, DialogActions, Dialog, Slide, DialogContentText, Drawer, SwipeableDrawer, Table, TableHead, TableBody, TableFooter, TableRow, TableCell, TableContainer, Autocomplete, TableSortLabel, PaginationItem, Pagination, LinearProgress, Alert, AlertTitle, Badge, ListItemButton, AppBar, Toolbar, Accordion, AccordionSummary, AccordionDetails, Tab, Tabs, Breadcrumbs, Snackbar, SnackbarContent, Stack, Grid, Rating, ClickAwayListener, Grow, Popper, Slider, Stepper, Step, StepLabel, StepContent, Fade, Unstable_TrapFocus and TablePagination, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
 
 ```js
 import { Button, ToggleButton, ToggleButtonGroup } from 'vmui-material';
 import IconButton from 'vmui-material/IconButton';
 ```
 
-The button contract covers native buttons, links and custom router roots; keyboard activation, focus-visible actions and ref cleanup; disabled and loading controls; icons, variants, colors and sizes; grouped defaults; controlled exclusive/multiple toggles; and theme defaults, slot overrides, variants and responsive `sx`. Theme creation remains with the existing caller. VentiMath's current theme disables ripples; basic local ripple feedback is also available, with owned timers cleaned up on unmount. Custom TouchRipple props reject explicitly. Ripple animation is independently designed, not pixel-identical to upstream. Color states use CSS relative colors so translucent theme colors and variable opacity retain the correct alpha; browser support for relative colors is required.
+The button contract covers native buttons, links and custom router roots; keyboard activation, focus-visible actions and ref cleanup; disabled and loading controls; icons, variants, colors and sizes; grouped defaults; controlled exclusive/multiple toggles; and theme defaults, slot overrides, variants and responsive `sx`. The owned theme factory accepts the existing caller presets. VentiMath's current theme disables ripples; basic local ripple feedback is also available, with owned timers cleaned up on unmount. Custom TouchRipple props reject explicitly. Ripple animation is independently designed, not pixel-identical to upstream. Color states use CSS relative colors so translucent theme colors and variable opacity retain the correct alpha; browser support for relative colors is required.
 
 Current Material and the app's 7.2.0 are separate controls on React 19.3.1. VPM follows Material 9 when keyboard activation dispatches a real click and when disabled links reject programmatic clicks; Material 7 forwards keyboard events and permits that disabled-link callback. VPM also preserves the app's older `containedPrimary`-style override keys, alongside current root callbacks. Material 9 no longer applies those legacy color/variant keys itself.
 
@@ -19,7 +19,7 @@ Typography covers semantic variants, custom roots, truncation, spacing and physi
 
 For existing callers, Typography retains Material 7’s `paragraph`, direct System props and CSS/palette-path colors that Material 9 dropped. Explicit root ARIA attributes take precedence over SVG child attributes; a supplied title makes a decorative child accessible unless the root explicitly hides it. Unknown typography variants and icon sizes cannot read inherited object properties.
 
-The app-used theme factory is implemented: palette, typography, transitions, theme assembly and CSS-variable schemes pass 222 unchanged builds across all 37 VentiMath presets. The next integration gaps are named color-ramp exports and the app’s CSS-variable type augmentation, followed by full consumer verification and a release. The 97 implemented components do not constitute the whole Material API; unobserved families such as the default FilledInput remain outside the verified scope. No upstream Material implementation is bundled. Runtime dependencies are the VPM System closure, with React as a peer; app adoption remains separate.
+The app-used theme factory is implemented: palette, typography, transitions, theme assembly and CSS-variable schemes pass 222 unchanged builds across all 37 VentiMath presets. Named color ramps, CSS-variable type augmentation and the full application typecheck/build are now verified in isolated packed installs. The 100 implemented components do not constitute the whole Material API; unobserved families such as the default FilledInput remain outside the verified scope. No upstream Material implementation is bundled. Runtime dependencies are the VPM System closure, with React as a peer; app adoption remains separate.
 
 The earlier button and text/icon benchmarks predate the custom native-root correction. The earlier button measurements found Node icon-button SSR about 20% slower than both controls. The new Typography/Link/SvgIcon measurements are inconclusive on Node and Bun: process-pair variation and identical-source controls do not establish a speedup or regression in any case. Raw samples, including large control differences, are retained. These are isolated SSR costs, not application interaction measurements.
 
@@ -29,8 +29,7 @@ Current application priorities (reviewed at `82457c3c`, November 16, 2026): Mate
 
 The `styles` entry exposes `ThemeProvider`, `useTheme`, `styled`, `GlobalStyles`,
 `useThemeProps`, `useMediaQuery` and `useColorScheme`. Pass an existing resolved
-Material theme, including its CSS-variable configuration; this bridge does not
-implement Material's full `createTheme` factory. `$$material` scoping and nested
+Material theme, including its CSS-variable configuration; the owned `createTheme` factory is described below. `$$material` scoping and nested
 callback providers keep Material separate from other styled-library themes.
 Box accepts polymorphic HTML/SVG roots, refs, responsive `sx`, and the direct
 System props used by the app's Material 7 callers. Browser comparisons include
@@ -829,7 +828,7 @@ roles. Synthetic caller checks cover compact sticky score grids, keyboard
 sorting, retained row/input/focus identity, scrolling, hydration and accessibility.
 The current Material 9.5.0 and app 7.2.0 controls agree on the verified contracts.
 These seven are part of the 78 independent components; Material is still partial;
-TablePagination and remaining families are still separate work. TableSortLabel and
+TablePagination is implemented; unobserved families remain separate work. TableSortLabel and
 numbered Pagination are now implemented below.
 
 [Table SSR measurements](bench/tables/README.md) use twenty-row synthetic results,
@@ -1104,8 +1103,7 @@ and waits for the caller to update `expanded`. Supplied summary IDs and
 `aria-controls` link its heading to the region. Detail content stays mounted by
 default and can opt into `unmountOnExit`.
 
-Material now covers 78 independently built components. The full package override
-still requires the remaining app-used components and theme factory.
+Full-app override readiness is tracked in the consumer verification section below.
 [Accordion measurements](bench/accordion/README.md).
 
 
@@ -1310,3 +1308,38 @@ records its source hash. Exact npm/Bun archives verify entry points and module
 identity; the existing theme browser checks cover actual generated variables.
 [Color lookup measurements](bench/color-exports/README.md) retain isolated-process
 samples and same-source controls. Full application adoption remains unverified.
+
+
+### Complete app build and remaining adoption gate
+
+At VentiMath `d1dfe595`, an isolated source export now passes the complete app
+TypeScript 7 check and Vite production build with packed VPM Material, System,
+Utils, styled-engine and theming aliases. The unchanged baseline passed earlier;
+the retained fresh repeat passed typecheck but hit the ten-minute build limit
+after transforming its modules. The candidate repeat completed. This audit is
+not a build-speed comparison.
+The initial candidate exposed 144 type errors and runtime import failures; the
+[retained report](../../scripts/mui-material-conformance/app-consumer-report.json)
+records their categories and verification. These were VPM defects, not upstream
+bugs. No application source was changed to make the checks pass.
+
+The fixes preserve typed React content/style intersections, styled variant
+predicates, polymorphic router/native props and CSS-variable stylesheet output.
+Lab can import the internal standard props; date pickers and Lab resolve
+FormControl/utility exports and the Fade, focus-trap and autocomplete-hook entries.
+TablePagination covers count/unknown-count ranges, page/row-size callbacks,
+disabled navigation, native/custom selects and accessible button names.
+Scrollable Tabs reveal the selected learner and provide overflow controls.
+
+Independent Chrome comparisons against Material 7 and 9 cover those controls,
+Tab wrapping and focus restoration, fade visibility, autocomplete keyboard/filter/
+clear behavior and learner-tab scrolling. Shared changes also rerun the existing
+Tabs, Autocomplete, Menu and Dialog browser fixtures and archive SSR contracts.
+The hook is verified for the listed selection paths; this does not establish
+parity for every advanced autocomplete composition. TablePagination navigation
+icons and scroll-button styling are independently designed.
+
+This is **build acceptance**, not a production rollout or a full-app visual
+acceptance claim. A Material consumer release still needs representative app-route
+browser acceptance and exact published-archive checks. FilledInput and other
+unobserved families remain outside the verified scope. [Benchmarks](bench/consumer-gaps/README.md).

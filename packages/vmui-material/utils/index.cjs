@@ -1,3 +1,21 @@
 "use strict";
 const a=require("../text.cjs");
 module.exports={__esModule:true,default:a.iconUtilities,createSvgIcon:a.createSvgIcon};
+
+const utils=require("vmui-utils");
+module.exports.capitalize=utils.unstable_capitalize;
+module.exports.createChainedFunction=utils.unstable_createChainedFunction;
+module.exports.debounce=utils.unstable_debounce;
+module.exports.deprecatedPropType=utils.unstable_deprecatedPropType;
+module.exports.isMuiElement=utils.unstable_isMuiElement;
+module.exports.ownerDocument=utils.unstable_ownerDocument;
+module.exports.ownerWindow=utils.unstable_ownerWindow;
+module.exports.requirePropFactory=utils.unstable_requirePropFactory;
+module.exports.setRef=utils.unstable_setRef;
+module.exports.unsupportedProp=utils.unstable_unsupportedProp;
+module.exports.useControlled=utils.unstable_useControlled;
+module.exports.useEventCallback=utils.unstable_useEventCallback;
+module.exports.useForkRef=utils.unstable_useForkRef;
+module.exports.unstable_useEnhancedEffect=utils.unstable_useEnhancedEffect;
+module.exports.unstable_useId=utils.unstable_useId;
+module.exports.unstable_ClassNameGenerator=utils.unstable_ClassNameGenerator;

@@ -1,0 +1,305 @@
+{
+  "schemaVersion": 1,
+  "recordedOn": "2026-11-23",
+  "appCommit": "fa274faf1445bec2a678df0dbf7600d3920e563d",
+  "vpmBaseCommit": "6e6037445531eb10c349214b52649be12fb6c563",
+  "vpmWorkingTree": true,
+  "scope": "Complete read-only application source export with only dependency pins and the generated lockfile changed in an isolated candidate. No application source edits, deployment, or adoption.",
+  "runtime": {
+    "node": "24.22.1",
+    "bun": "1.4.4",
+    "react": "19.3.1",
+    "typescript": "7.1.0-beta"
+  },
+  "initialFindings": {
+    "typeErrors": 144,
+    "typeErrorCodes": {
+      "TS2322": 136,
+      "TS2769": 8
+    },
+    "runtimeImportGaps": [
+      "useAutocomplete",
+      "Fade",
+      "Unstable_TrapFocus",
+      "TablePagination",
+      "FormControl/useFormControl",
+      "utils named helpers"
+    ],
+    "typeAndBehaviorGaps": [
+      "React content / SystemStyleObject intersections",
+      "Styled variant predicate props",
+      "Polymorphic native/router props",
+      "CSS-variable stylesheet return type",
+      "Lab internal standard props",
+      "Scrollable learner Tabs"
+    ]
+  },
+  "classification": "VPM compatibility omissions and declaration defects, not upstream bugs.",
+  "finalCandidate": {
+    "freshInstall": "pass",
+    "frozenInstall": "pass",
+    "typecheck": "pass",
+    "productionBuild": "pass"
+  },
+  "baseline": "Full typecheck and build passed earlier in this work. In this retained fresh repeat, typecheck passed and the production build hit the 600-second command limit after 9,290 modules transformed. The repeat is inconclusive; no build-speed claim is made.",
+  "aliases": {
+    "@mui/material": "vmui-material",
+    "@mui/system": "vmui-system",
+    "@mui/utils": "vmui-utils",
+    "@mui/private-theming": "vmui-private-theming",
+    "@mui/styled-engine": "vmui-styled-engine"
+  },
+  "packages": [
+    {
+      "name": "vclsx",
+      "version": "2.1.1",
+      "sha256": "4ef44f890f25c74f6b491ff1a0895b6a0414166e587846d2bdfc993cb6759cbc"
+    },
+    {
+      "name": "vmui-utils",
+      "version": "9.5.0",
+      "sha256": "4c686b02836dcf4ba9c8edebb2ac745e3aa7f8a745d665f0f6abbb7660beb670"
+    },
+    {
+      "name": "vmui-private-theming",
+      "version": "9.5.0",
+      "sha256": "62eabcabe00bf6aa6e55f7ca95c779a3abc3228136d8b9589706eef2b6bb1b39"
+    },
+    {
+      "name": "vemotion-sheet",
+      "version": "1.4.0",
+      "sha256": "917289d18ad1f0c32d068a3955fb036ab77f57fef5aa1e12a123380d5b5aeef2"
+    },
+    {
+      "name": "vemotion-utils",
+      "version": "1.4.2",
+      "sha256": "580e7615bd3d87ede2df5930ce90fe072072f9f31ba3235f1baa477427c11b63"
+    },
+    {
+      "name": "vstylis",
+      "version": "4.4.0",
+      "sha256": "a8d4d1e52dcae4ad8bfc43b4a291c6d561eeafb5e9fbd37f19ef63dc4765c350"
+    },
+    {
+      "name": "vemotion-cache",
+      "version": "11.14.0",
+      "sha256": "65ab29113ee43a5f04495e000d035a537b56e387bac5bf16deec4cab6595d3cb"
+    },
+    {
+      "name": "vemotion-hash",
+      "version": "0.9.2",
+      "sha256": "d4a3b1b3e815c1654dc67efbac2ed60586c2405972b35faccb77c5191572e862"
+    },
+    {
+      "name": "vemotion-memoize",
+      "version": "0.9.0",
+      "sha256": "9500e7c9193a2dd706dfe4a5a8ff30e801d3ae7cef27e9a235d77a9bcc007fd5"
+    },
+    {
+      "name": "vemotion-unitless",
+      "version": "0.10.0",
+      "sha256": "f61d25c2a67a7f7a07641698cb40116e86187445af03f83a4f0f7c721774e1d8"
+    },
+    {
+      "name": "vemotion-serialize",
+      "version": "1.3.3",
+      "sha256": "ff5f1df538a5192aef731eb0ead70249815738832f149e00cbb6aae7124a707c"
+    },
+    {
+      "name": "vemotion-use-insertion-effect-with-fallbacks",
+      "version": "1.2.0",
+      "sha256": "c51973c45de1c46660472b4541b1411fd4250a26b748a4e13ee62bb0961d4b43"
+    },
+    {
+      "name": "vemotion-react",
+      "version": "11.14.0",
+      "sha256": "d3b915a847eb8ffd3ce0346851115a895dc04aaa02f603856db9d4a30e033c71"
+    },
+    {
+      "name": "vemotion-is-prop-valid",
+      "version": "1.4.0",
+      "sha256": "bb429d53929b3ee9b52fd27e52001bd6fa0db9fdf220c02b4d4c9a91a68d5452"
+    },
+    {
+      "name": "vemotion-styled",
+      "version": "11.14.1",
+      "sha256": "4c4916a9e9acf6ed0a1756ae42c9a0f716d1fd9a986f1933fce2e85d4c28b621"
+    },
+    {
+      "name": "vmui-styled-engine",
+      "version": "9.5.0",
+      "sha256": "292d847439f14cd932996e904716956d89f2ccb06621dc28042d5a9961620001"
+    },
+    {
+      "name": "vmui-system",
+      "version": "9.5.0",
+      "sha256": "57d85aa2610dabac2e54a359a2e004275c35eff6eb306e42ba148ac54ac015b0"
+    },
+    {
+      "name": "vfloating-ui-utils",
+      "version": "0.2.12",
+      "sha256": "37bd2040a5ae81439042e150cba8a6d4b20d4aef3371126bff10d37ff6ba4ec2"
+    },
+    {
+      "name": "vfloating-ui-core",
+      "version": "1.8.0",
+      "sha256": "9a729d065343737c5b9cf799789e7ac599993438fb1a9bc628a0d94ba74d23e5"
+    },
+    {
+      "name": "vfloating-ui-dom",
+      "version": "1.8.0",
+      "sha256": "e2e655fcecca5b5ac57f4203f7c3e4b82c99d820a27ea843eb4af50d17b471c2"
+    },
+    {
+      "name": "vreact-transition-group",
+      "version": "4.4.5",
+      "sha256": "fbf93acb85a08704bbeda51c18f244f7ac3aa894229a2361e4ae11e286f15da1"
+    },
+    {
+      "name": "vmui-material",
+      "version": "9.5.0",
+      "sha256": "0556406dc8cda26054287dc4f8c7f452aff62a7695c2688878b0ce93ab874656"
+    }
+  ],
+  "checks": [
+    {
+      "label": "baseline-install",
+      "command": [
+        "bun",
+        "install",
+        "--ignore-scripts",
+        "--frozen-lockfile"
+      ],
+      "status": 0,
+      "signal": null,
+      "ms": 84108,
+      "logFile": "baseline-install.log",
+      "logSha256": "dac8cea1d7f8a298455fb175ccbaae788ffd12cf44fa8afd628ac92816b80102",
+      "timedOut": false
+    },
+    {
+      "label": "baseline-typecheck",
+      "command": [
+        "bun",
+        "run",
+        "typecheck"
+      ],
+      "status": 0,
+      "signal": null,
+      "ms": 25880,
+      "logFile": "baseline-typecheck.log",
+      "logSha256": "8366207267355d3e3d5bf3bf6e8c94c5f93f6078c34f08973fa2b38cdda6cc92",
+      "timedOut": false
+    },
+    {
+      "label": "baseline-build",
+      "command": [
+        "bun",
+        "x",
+        "--no-install",
+        "vite",
+        "build"
+      ],
+      "status": null,
+      "signal": "SIGTERM",
+      "ms": 600238,
+      "logFile": "baseline-build.log",
+      "logSha256": "6b969198ccf184229d1e98a25b6ae49af32e95f1ce9f240db219aef1a6cdd6a3",
+      "timedOut": true
+    },
+    {
+      "label": "candidate-install",
+      "command": [
+        "bun",
+        "install",
+        "--ignore-scripts"
+      ],
+      "status": 0,
+      "signal": null,
+      "ms": 23296,
+      "logFile": "candidate-install.log",
+      "logSha256": "070d176a4be7e612c8e6afd20787b69cb1483a17301acfeca7f813a1480f8083",
+      "timedOut": false
+    },
+    {
+      "label": "candidate-frozen-install",
+      "command": [
+        "bun",
+        "install",
+        "--ignore-scripts",
+        "--frozen-lockfile"
+      ],
+      "status": 0,
+      "signal": null,
+      "ms": 8561,
+      "logFile": "candidate-frozen-install.log",
+      "logSha256": "205e0ed1267c3289ecde8a3024c9776edc466246f6dbab3d3928221b132d9993",
+      "timedOut": false
+    },
+    {
+      "label": "candidate-typecheck",
+      "command": [
+        "bun",
+        "run",
+        "typecheck"
+      ],
+      "status": 0,
+      "signal": null,
+      "ms": 22027,
+      "logFile": "candidate-typecheck.log",
+      "logSha256": "8366207267355d3e3d5bf3bf6e8c94c5f93f6078c34f08973fa2b38cdda6cc92",
+      "timedOut": false
+    },
+    {
+      "label": "candidate-build",
+      "command": [
+        "bun",
+        "x",
+        "--no-install",
+        "vite",
+        "build"
+      ],
+      "status": 0,
+      "signal": null,
+      "ms": 130636,
+      "logFile": "candidate-build.log",
+      "logSha256": "30b462b02261eee890abe33f6ed1a4bfa09dfdd4c43b477d40fe99083eb7f868",
+      "timedOut": false
+    }
+  ],
+  "archiveVerification": {
+    "packageManagers": [
+      "npm fresh/frozen",
+      "Bun fresh/frozen"
+    ],
+    "closurePackages": 22,
+    "runtimeChecks": [
+      "Node",
+      "Bun"
+    ],
+    "typeChecks": [
+      "TS7 NodeNext",
+      "TS7 Bundler"
+    ],
+    "contracts": {
+      "tabs": 192,
+      "autocomplete": 960,
+      "consumerGaps": 72
+    },
+    "browserChecks": [
+      "New consumer gaps against Material 7 and 9 upstream/VPM controls",
+      "Existing Tabs",
+      "Existing Autocomplete",
+      "Existing menus",
+      "Existing Dialog"
+    ],
+    "latestDeclarationCheck": "Material, System and styled-engine TS7 consumers pass after the css/keyframes declaration bridge change."
+  },
+  "remainingAcceptance": [
+    "Representative app routes and visual acceptance",
+    "Published archive verification",
+    "Application repin and adoption"
+  ],
+  "adopted": false,
+  "archiveNote": "SHA256 values identify local integration archives whose internal dependencies use scratch file URLs. These are not public release assets."
+}

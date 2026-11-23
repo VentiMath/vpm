@@ -67,3 +67,6 @@ module.exports.createTheme = require("./create-theme.cjs").createTheme;
  module.exports.recomposeColor = colors.recomposeColor;
  module.exports.rgbToHex = colors.rgbToHex;
 }
+
+Object.assign(module.exports, require("./fade-control.cjs"), require("./table-pagination.cjs"), require("./autocomplete-hook.cjs"));
+module.exports.Unstable_TrapFocus=require("./focus-trap.cjs").TrapFocus;

@@ -2287,6 +2287,56 @@
         "types": "./colors/yellow.d.cts",
         "default": "./colors/yellow.cjs"
       }
+    },
+    "./internal": {
+      "import": {
+        "types": "./internal/index.d.mts",
+        "default": "./internal/index.mjs"
+      },
+      "require": {
+        "types": "./internal/index.d.cts",
+        "default": "./internal/index.cjs"
+      }
+    },
+    "./Fade": {
+      "import": {
+        "types": "./Fade.d.mts",
+        "default": "./Fade.mjs"
+      },
+      "require": {
+        "types": "./Fade.d.cts",
+        "default": "./Fade.cjs"
+      }
+    },
+    "./Unstable_TrapFocus": {
+      "import": {
+        "types": "./Unstable_TrapFocus.d.mts",
+        "default": "./Unstable_TrapFocus.mjs"
+      },
+      "require": {
+        "types": "./Unstable_TrapFocus.d.cts",
+        "default": "./Unstable_TrapFocus.cjs"
+      }
+    },
+    "./TablePagination": {
+      "import": {
+        "types": "./TablePagination.d.mts",
+        "default": "./TablePagination.mjs"
+      },
+      "require": {
+        "types": "./TablePagination.d.cts",
+        "default": "./TablePagination.cjs"
+      }
+    },
+    "./useAutocomplete": {
+      "import": {
+        "types": "./useAutocomplete.d.mts",
+        "default": "./useAutocomplete.mjs"
+      },
+      "require": {
+        "types": "./useAutocomplete.d.cts",
+        "default": "./useAutocomplete.cjs"
+      }
     }
   },
   "files": [
@@ -2303,7 +2353,8 @@
     "RadioGroup",
     "theme-tokens.json",
     "colors",
-    "themeCssVarsAugmentation"
+    "themeCssVarsAugmentation",
+    "internal"
   ],
   "sideEffects": false,
   "engines": {

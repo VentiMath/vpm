@@ -1,5 +1,6 @@
 import type * as React from "react";
-import type { Interpolation, SerializedStyles } from "vemotion-serialize";
+import type { CSSPropertiesWithMultiValues as importCSSProperties } from "vemotion-serialize";
+import type { SerializedStyles } from "vemotion-serialize";
 import type { StyledComponent } from "vemotion-styled";
 export { default } from "vemotion-styled";
 export type {
@@ -8,21 +9,18 @@ export type {
   StyledOptions,
   StyledTags,
 } from "vemotion-styled";
-export { ThemeContext, keyframes, css } from "vemotion-react";
+export { ThemeContext } from "vemotion-react";
+export function css(...styles:CSSInterpolation[]):SerializedStyles;
+export function css(template:TemplateStringsArray,...styles:CSSInterpolation[]):SerializedStyles;
+export function keyframes(...styles:CSSInterpolation[]):import("vemotion-serialize").Keyframes;
+export function keyframes(template:TemplateStringsArray,...styles:CSSInterpolation[]):import("vemotion-serialize").Keyframes;
 export type {
   CSSProperties,
   CSSPropertiesWithMultiValues,
-  CSSPseudos,
-  CSSOthersObject,
   ArrayCSSInterpolation,
-  CSSObject,
   ComponentSelector,
   Keyframes,
   InterpolationPrimitive,
-  CSSInterpolation,
-  FunctionInterpolation,
-  ArrayInterpolation,
-  Interpolation,
   SerializedStyles,
 } from "vemotion-serialize";
 export type MUIStyledComponent<
@@ -97,3 +95,17 @@ export interface CreateMUIStyled<
     },
   ): CreateStyledComponent<Common, React.ComponentPropsWithRef<C>, {}, Theme>;
 }
+
+/** MUI accepts dynamic selector metadata in addition to typed CSS properties. */
+export interface CSSObject extends importCSSProperties {
+ [selector:string]: unknown;
+}
+export type CSSPseudos = {[K in import("csstype").Pseudos]?:unknown};
+export interface CSSOthersObject {[selector:string]:unknown}
+export type CSSInterpolation = CSSObject | import("vemotion-serialize").InterpolationPrimitive | ReadonlyArray<CSSInterpolation>;
+type VariantState<P> = P extends {ownerState:infer O} ? P & O : P;
+export type Interpolation<P> = Exclude<import("vemotion-serialize").InterpolationPrimitive, import("vemotion-serialize").CSSObject> | (CSSObject & {
+ variants?:ReadonlyArray<{props:Partial<VariantState<P>>|((props:VariantState<P>)=>boolean);style:CSSObject|((props:P extends {theme:infer T}?{theme:T}:P)=>CSSObject)}>;
+}) | ArrayInterpolation<P> | FunctionInterpolation<P>;
+export interface ArrayInterpolation<P> extends ReadonlyArray<Interpolation<P>> {}
+export interface FunctionInterpolation<P> {(props:P):Interpolation<P>}
