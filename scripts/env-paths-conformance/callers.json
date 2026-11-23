@@ -1,0 +1,9 @@
+{
+  "package": "@capacitor/cli",
+  "version": "8.2.0",
+  "files": {
+    "dist/util/cli.js": "2a6f6e8f77b24546d82ba68a98d80948f2de76e03d941f93cf6d5f6146d7eac5",
+    "dist/sysconfig.js": "4aa1f560a00a6bcdf5c5e819cdc1f0177d9509663cce4f9c6687f4fc9fcee009",
+    "dist/ipc.js": "37b4ee0b70ecb0da82a8b9bb8d898490a9c45d5d278d0296454da08bb887dea4"
+  }
+}

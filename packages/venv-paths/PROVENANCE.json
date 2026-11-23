@@ -1,0 +1,21 @@
+{
+  "upstream": {
+    "name": "env-paths",
+    "version": "4.0.0",
+    "repository": "https://github.com/sindresorhus/env-paths",
+    "commit": "c3c0dd464c268a99a28feeaec54c54d0a12c4291",
+    "integrity": "sha512-pxP8eL2SwwaTRi/KHYwLYXinDs7gL3jxFcBYmEdYfZmZXbaVDvdppd0XBU8qVz03rDfKZMXg1omHCbsJjZrMsw=="
+  },
+  "implementation": {
+    "kind": "independent",
+    "targetScope": "Platform-specific data/config/cache/log/temp paths with current filename validation, live environment overrides and a CommonJS bridge for unchanged Capacitor 8.2.0 env-paths 2.2.1 callers. Native path/os only; no package dependencies."
+  },
+  "differences": [
+    "Includes CommonJS callable/default identity alongside the current ESM default API.",
+    "Validation rejects empty, dot-only, slash, backslash and NUL names before and after suffixing, matching env-paths 4.0.0. Legacy 2.2.1 accepted these inputs; its explicit undefined suffix also differed from the current default.",
+    "Filename validation is implemented locally instead of depending on is-safe-filename.",
+    "No directories are created and no environment variables are changed. Environment override paths are trusted as in upstream; this is not a filesystem sandbox or general Windows filename validator.",
+    "Windows/Linux/FreeBSD path rules are simulated with the native path implementations. Native Windows execution is not claimed.",
+    "No public release or application adoption claimed."
+  ]
+}

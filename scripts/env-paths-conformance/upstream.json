@@ -1,0 +1,8 @@
+{
+  "repository": "https://github.com/sindresorhus/env-paths",
+  "commit": "c3c0dd464c268a99a28feeaec54c54d0a12c4291",
+  "files": {
+    "test.js": "762739024b496d68d82e54b984973c1bfc4030a55ae593e23a007d213936be1d",
+    "license": "5c932d88256b4ab958f64a856fa48e8bd1f55bc1d96b8149c65689e0c61789d3"
+  }
+}

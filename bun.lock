@@ -304,6 +304,10 @@
       "name": "vencodeurl",
       "version": "0.1.0",
     },
+    "packages/venv-paths": {
+      "name": "venv-paths",
+      "version": "4.0.0",
+    },
     "packages/vescape-html": {
       "name": "vescape-html",
       "version": "0.1.0",
@@ -2175,6 +2179,8 @@
     "vemotion-weak-memoize": ["vemotion-weak-memoize@workspace:packages/vemotion-weak-memoize"],
 
     "vencodeurl": ["vencodeurl@workspace:packages/vencodeurl"],
+
+    "venv-paths": ["venv-paths@workspace:packages/venv-paths"],
 
     "vescape-html": ["vescape-html@workspace:packages/vescape-html"],
 

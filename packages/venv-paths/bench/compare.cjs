@@ -1,0 +1,5 @@
+'use strict';
+const path=require('node:path'),assert=require('node:assert/strict'),{pathToFileURL}=require('node:url');
+const root=path.resolve(__dirname,'..'),upstream=path.resolve(__dirname,'../../../scripts/env-paths-conformance/node_modules/env-paths/index.js');
+const cases=[['Capacitor directories','capacitor',{suffix:''}],['default suffix','VentiMath',undefined],['Unicode and custom suffix','数学',{suffix:'desktop'}]].map(([name,app,options])=>({name,async make(file){const fn=file===root?require(root):(await import(pathToFileURL(file))).default;return()=>fn(app,options)},validate:value=>{assert.equal(typeof value.config,'string');assert(value.config.endsWith(app+(options?.suffix?'-'+options.suffix:options?'':'-nodejs')));assert.equal(Object.keys(value).length,5)}}));
+require('../../../scripts/bench-process.cjs').run({root,upstream,vpm:root,cases,files:['index.cjs','index.mjs','package.json','bench/compare.cjs','../../scripts/env-paths-conformance/package-lock.json']}).catch(e=>{console.error(e);process.exitCode=1});

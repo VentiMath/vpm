@@ -475,6 +475,14 @@ jobs:
           node scripts/fs-extra-conformance/contract.cjs
           node scripts/fs-extra-conformance/callers.cjs
           node scripts/fs-extra-conformance/archives.cjs
+      - name: Independent application directories and Capacitor callers
+        run: |
+          npm --prefix scripts/env-paths-conformance ci --ignore-scripts --no-audit --no-fund
+          node --test packages/venv-paths/test/*.test.cjs
+          node scripts/env-paths-conformance/upstream.cjs
+          node scripts/env-paths-conformance/contract.cjs
+          node scripts/env-paths-conformance/callers.cjs
+          node scripts/env-paths-conformance/archives.cjs
       - name: Independent emitter and unchanged API viewer services
         run: |
           node --test packages/veventemitter3/test/*.test.cjs
@@ -1466,6 +1474,11 @@ jobs:
       - run: bun scripts/fs-extra-conformance/upstream.cjs
       - run: bun scripts/fs-extra-conformance/contract.cjs
       - run: bun scripts/fs-extra-conformance/callers.cjs
+      - run: npm --prefix scripts/env-paths-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: bun test packages/venv-paths/test
+      - run: bun scripts/env-paths-conformance/upstream.cjs
+      - run: bun scripts/env-paths-conformance/contract.cjs
+      - run: bun scripts/env-paths-conformance/callers.cjs
       - run: bun scripts/source-map-conformance/string-parser-caller.cjs
       - run: bun scripts/source-map-conformance/identifier-caller.cjs
       - run: bun scripts/source-map-conformance/jsesc-caller.cjs

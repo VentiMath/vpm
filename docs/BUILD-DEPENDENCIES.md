@@ -179,3 +179,13 @@ Capacitor workflows cover asset copies, config files, Swift template moves and
 obsolete CocoaPods cleanup. Its only package dependency is vjsonfile. These source packages are built and
 verified;
 release and application adoption remain separate.
+
+
+[venv-paths](../packages/venv-paths) supplies the directory choices used directly
+by Capacitor's system configuration and IPC log caller. It targets env-paths 4.0.0
+with zero dependencies, implements the small filename check locally, and retains
+the installed 2.2.1 caller's CommonJS/empty-suffix behavior. The current validation
+rejects names that the old version accepted. Current/app contract controls and
+unchanged configuration/log operations pass on Node/Bun. OS path rules are
+simulated; native Windows execution, public release and app adoption remain
+separate.

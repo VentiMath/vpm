@@ -1,0 +1,1 @@
+{"name":"vpm-env-paths-controls","private":true,"type":"module","dependencies":{"env-paths":"4.0.0","env-paths-app":"npm:env-paths@2.2.1","@capacitor/cli":"8.2.0"}}
