@@ -197,3 +197,9 @@ current cgroup-v2 behavior missing from the installed 2.2.1. The unchanged open
 8.4.2 and is-wsl 2.2.0 callers select the expected commands in nine simulated
 contexts, with all launching intercepted. Detection is heuristic; native
 WSL/Windows execution, public release and application adoption remain separate.
+
+[vis-inside-container](../packages/vis-inside-container) adds the Podman marker
+above vis-docker. Current is-wsl 3.1.1 uses this helper; replacing its Docker 3
+closure with Docker 4 also recognizes mountinfo-only containers. The complete
+VPM closure passes packed-install checks, and detection/cache behavior is tested
+through the unchanged WSL caller. No upstream runtime dependency is retained.

@@ -727,6 +727,17 @@
         "vis-docker": "./cli.cjs",
       },
     },
+    "packages/vis-inside-container": {
+      "name": "vis-inside-container",
+      "version": "1.0.0",
+      "bin": {
+        "is-inside-container": "./cli.cjs",
+        "vis-inside-container": "./cli.cjs",
+      },
+      "dependencies": {
+        "vis-docker": "4.0.0",
+      },
+    },
     "packages/vis-stream": {
       "name": "vis-stream",
       "version": "0.1.0",
@@ -2297,6 +2308,8 @@
     "vipaddr": ["vipaddr@workspace:packages/vipaddr"],
 
     "vis-docker": ["vis-docker@workspace:packages/vis-docker"],
+
+    "vis-inside-container": ["vis-inside-container@workspace:packages/vis-inside-container"],
 
     "vis-stream": ["vis-stream@workspace:packages/vis-stream"],
 

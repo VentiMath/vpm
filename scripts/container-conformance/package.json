@@ -1,0 +1,12 @@
+{
+  "name": "vpm-container-controls",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "is-inside-container": "1.0.0",
+    "is-wsl": "3.1.1",
+    "is-wsl-app": "npm:is-wsl@2.2.0",
+    "is-docker-current": "npm:is-docker@4.0.0",
+    "open": "8.4.2"
+  }
+}

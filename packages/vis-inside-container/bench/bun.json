@@ -1,0 +1,1323 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-23T10:46:44.954Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/container-conformance/load.cjs": "b375b658a3c8b69c4a7dc15e2be7c0bbc955f39b7030fcfc12244f9db729aaa0",
+    "../../scripts/container-conformance/package-lock.json": "c270a958de53c0f29f478b29076d8900e5f40ca49e5a7818f7addb86dfa38b60",
+    "bench/compare.cjs": "fa9eecd373cfd62946e060f737db02f5c3e6387d90aabfa9a2b979573442de19",
+    "index.cjs": "a9f7aed1f596f4cf48453e25bcb0a47fca8ab4eed30444eb6b162fc3e8cbaaa2",
+    "index.mjs": "9ae29372446c1a443c5d976476cfea52a9bb01b19a8a984c4358ae85feef62e2",
+    "package.json": "00482de42bb3ef5f959950841104d25bbb521f59ff87bb50ec36ef7388767d72"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 80649,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "cached result",
+            "iterations": 1000000,
+            "samples": [
+              1.9335419999999885,
+              2.021500000000003,
+              2.0269169999999974,
+              2.340082999999993,
+              1.9012499999999761,
+              2.008999999999986,
+              2.0109999999999957,
+              1.9177500000000123,
+              1.9337079999999958,
+              1.9056249999999864,
+              1.9496249999999975,
+              2.0064160000000015
+            ]
+          },
+          {
+            "case": "fresh module and Podman marker (simulated)",
+            "iterations": 953758,
+            "samples": [
+              14.573010134646283,
+              16.950796742989336,
+              14.393152141318845,
+              16.287019348723703,
+              16.07282245601087,
+              15.392749523463998,
+              14.322640544037355,
+              16.51406017039959,
+              16.136824016155042,
+              15.721056075021057,
+              17.14542158493033,
+              15.373964884173992
+            ]
+          },
+          {
+            "case": "fresh module and native marker; Docker stubbed",
+            "iterations": 8054,
+            "samples": [
+              1191.7162900422118,
+              1228.385398559722,
+              1323.7521728333804,
+              1269.208964489697,
+              1370.9596473801798,
+              1296.1313632977367,
+              1518.2983610628294,
+              1385.5692823441855,
+              1483.4191705984583,
+              1320.0531412962507,
+              1481.127390116709,
+              1286.6691085174955
+            ]
+          }
+        ],
+        "checksum": 258816
+      },
+      "vpm": {
+        "pid": 80663,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "cached result",
+            "iterations": 1000000,
+            "samples": [
+              2.625583000000006,
+              2.2360419999999976,
+              2.2533339999999953,
+              2.371542000000005,
+              2.2933339999999873,
+              2.3221670000000074,
+              2.2407499999999914,
+              2.2590830000000035,
+              2.2899170000000026,
+              2.324040999999994,
+              2.2198329999999937,
+              2.235541000000012
+            ]
+          },
+          {
+            "case": "fresh module and Podman marker (simulated)",
+            "iterations": 953758,
+            "samples": [
+              12.930035711364956,
+              13.80910251866821,
+              12.655639061481025,
+              12.701772357348514,
+              14.34815435362009,
+              13.619457975712912,
+              13.025403718763062,
+              13.074769490793267,
+              13.142484781254698,
+              14.558200298188838,
+              13.467252699321973,
+              14.09433315369309
+            ]
+          },
+          {
+            "case": "fresh module and native marker; Docker stubbed",
+            "iterations": 8054,
+            "samples": [
+              925.1251552023856,
+              559.8718649118381,
+              558.7441023094146,
+              629.4335733796797,
+              555.9556741991553,
+              578.537496895951,
+              575.1592997268459,
+              596.4478519989984,
+              616.231065309162,
+              560.2703004718187,
+              582.5624534392848,
+              558.0973429351861
+            ]
+          }
+        ],
+        "checksum": 6720
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 80665,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "cached result",
+            "iterations": 1000000,
+            "samples": [
+              2.2379999999999995,
+              2.326625000000007,
+              2.3208329999999933,
+              2.255540999999994,
+              2.239082999999994,
+              2.2359999999999904,
+              2.2605409999999893,
+              2.2812079999999924,
+              2.3722080000000005,
+              2.2975420000000213,
+              2.272083000000009,
+              2.3722499999999798
+            ]
+          },
+          {
+            "case": "fresh module and Podman marker (simulated)",
+            "iterations": 1000000,
+            "samples": [
+              14.579875000000015,
+              14.431250000000034,
+              14.32612499999999,
+              13.856417000000022,
+              13.424750000000017,
+              14.55604199999999,
+              14.199708999999984,
+              14.191250000000025,
+              13.788167000000044,
+              13.693667000000005,
+              14.062332999999967,
+              15.237040999999977
+            ]
+          },
+          {
+            "case": "fresh module and native marker; Docker stubbed",
+            "iterations": 12009,
+            "samples": [
+              546.9473728037343,
+              589.5092847031423,
+              554.3897909900958,
+              573.531601299021,
+              554.9934216004715,
+              584.894662336581,
+              562.6127071363098,
+              545.1675410109091,
+              762.8757598467832,
+              607.9780164876321,
+              563.1783662253277,
+              563.9451244899674
+            ]
+          }
+        ],
+        "checksum": 214592
+      },
+      "upstream": {
+        "pid": 80668,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "cached result",
+            "iterations": 1000000,
+            "samples": [
+              1.9082500000000095,
+              1.9563750000000084,
+              1.9187080000000094,
+              1.9281249999999943,
+              1.927082999999982,
+              2.026457999999991,
+              1.9918749999999932,
+              1.9736249999999984,
+              1.9724579999999892,
+              1.958750000000009,
+              1.9104999999999848,
+              1.894834000000003
+            ]
+          },
+          {
+            "case": "fresh module and Podman marker (simulated)",
+            "iterations": 1000000,
+            "samples": [
+              13.922082999999986,
+              14.049500000000023,
+              14.353666999999973,
+              16.531209000000047,
+              15.238042000000007,
+              14.813416000000018,
+              14.399083000000019,
+              15.158542000000011,
+              14.941625000000045,
+              13.731416999999965,
+              14.668749999999932,
+              14.728375000000028
+            ]
+          },
+          {
+            "case": "fresh module and native marker; Docker stubbed",
+            "iterations": 12009,
+            "samples": [
+              1247.0264801398873,
+              1489.3552335748197,
+              1255.8081438920824,
+              1287.3331667915688,
+              1328.4307602631359,
+              1282.4929636106294,
+              1229.7165459238872,
+              1199.3851278208003,
+              1215.6369389624415,
+              1217.4237655092024,
+              1180.5624947955687,
+              1231.8365392622227
+            ]
+          }
+        ],
+        "checksum": 7680
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 80670,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "cached result",
+            "iterations": 1000000,
+            "samples": [
+              1.9260829999999771,
+              1.9306250000000205,
+              1.9607090000000085,
+              1.99758300000002,
+              2.02800000000002,
+              1.9963339999999903,
+              1.946708000000001,
+              2.0453749999999786,
+              1.9263750000000073,
+              1.8941250000000025,
+              1.9654999999999916,
+              1.9807500000000005
+            ]
+          },
+          {
+            "case": "fresh module and Podman marker (simulated)",
+            "iterations": 478116,
+            "samples": [
+              14.905464364296597,
+              14.04845685984154,
+              14.51800818211475,
+              13.745618218173002,
+              13.978563779501235,
+              14.595656702557612,
+              16.24788754193553,
+              15.168040810180013,
+              15.978775025307632,
+              15.171527411757868,
+              14.052552100327118,
+              15.047864953274884
+            ]
+          },
+          {
+            "case": "fresh module and native marker; Docker stubbed",
+            "iterations": 8323,
+            "samples": [
+              1231.627297849326,
+              1214.6562537546606,
+              1252.3429052024574,
+              1261.8797308662702,
+              1228.2380151387715,
+              1215.7174095878918,
+              1288.3825543674157,
+              1225.2692538748142,
+              1285.1886339060345,
+              1186.816652649287,
+              1243.1764988585812,
+              1195.742640874675
+            ]
+          }
+        ],
+        "checksum": 172736
+      },
+      "vpm": {
+        "pid": 80671,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "cached result",
+            "iterations": 1000000,
+            "samples": [
+              2.222583999999983,
+              2.3580410000000143,
+              2.2186249999999745,
+              2.2174579999999935,
+              2.2105839999999835,
+              2.338540999999992,
+              2.302042,
+              2.2480410000000006,
+              2.244041999999979,
+              2.2559579999999926,
+              2.3265419999999892,
+              2.2358329999999853
+            ]
+          },
+          {
+            "case": "fresh module and Podman marker (simulated)",
+            "iterations": 478116,
+            "samples": [
+              12.556141187494223,
+              14.593563068376724,
+              13.24155644236967,
+              12.78394573701781,
+              14.106233633678858,
+              12.623419839536854,
+              12.826734516309903,
+              13.195628257577734,
+              13.833201566147142,
+              14.112334663554387,
+              13.479122221385648,
+              17.186816588442944
+            ]
+          },
+          {
+            "case": "fresh module and native marker; Docker stubbed",
+            "iterations": 8323,
+            "samples": [
+              923.6503664544043,
+              724.2680523849483,
+              563.9943529977154,
+              577.661300012011,
+              572.0293163522729,
+              568.7402378949851,
+              636.8147302655287,
+              605.5709479755029,
+              596.1892346509679,
+              555.9394449116867,
+              583.4835996635901,
+              647.4628138892199
+            ]
+          }
+        ],
+        "checksum": 7744
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 80672,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "cached result",
+            "iterations": 1000000,
+            "samples": [
+              2.265790999999979,
+              2.2622499999999945,
+              2.3330839999999853,
+              2.4557499999999948,
+              2.3698750000000075,
+              2.2920409999999833,
+              2.308792000000011,
+              2.234375,
+              2.2097090000000037,
+              2.2791249999999934,
+              2.2126250000000027,
+              2.2172079999999994
+            ]
+          },
+          {
+            "case": "fresh module and Podman marker (simulated)",
+            "iterations": 454177,
+            "samples": [
+              15.227911144773895,
+              13.357860481706414,
+              13.344834723026398,
+              13.820695455736407,
+              13.39556604583687,
+              12.331095586082103,
+              13.93986485445101,
+              12.900624646338352,
+              13.089885661316979,
+              13.905279219335146,
+              12.665584122489644,
+              14.561043381765142
+            ]
+          },
+          {
+            "case": "fresh module and native marker; Docker stubbed",
+            "iterations": 16337,
+            "samples": [
+              573.3993389239205,
+              615.9331578625206,
+              570.8820468874341,
+              590.6250841647799,
+              597.0343392299668,
+              570.6881924465965,
+              595.2209708024774,
+              568.2372528616002,
+              585.220664748729,
+              799.9300973250881,
+              597.0470710656729,
+              591.7192262961383
+            ]
+          }
+        ],
+        "checksum": 234432
+      },
+      "upstream": {
+        "pid": 80673,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "cached result",
+            "iterations": 1000000,
+            "samples": [
+              1.9335000000000093,
+              2.0700410000000034,
+              1.9034580000000005,
+              1.8976249999999766,
+              1.988332999999983,
+              1.9611249999999814,
+              2.039791000000008,
+              1.9481250000000045,
+              1.9201249999999845,
+              2.040582999999998,
+              1.9589170000000138,
+              1.9732499999999789
+            ]
+          },
+          {
+            "case": "fresh module and Podman marker (simulated)",
+            "iterations": 454177,
+            "samples": [
+              14.099036278807603,
+              13.124563771393188,
+              13.478135176374003,
+              14.293619007567502,
+              15.011676064617927,
+              17.887664941201344,
+              17.075208564061967,
+              15.049474103708476,
+              14.655354630463524,
+              14.818654401257703,
+              12.63053831435757,
+              14.5082005473637
+            ]
+          },
+          {
+            "case": "fresh module and native marker; Docker stubbed",
+            "iterations": 16337,
+            "samples": [
+              1236.0465201689442,
+              1277.065311868766,
+              1226.7985554263303,
+              1448.2590438881075,
+              1264.01469057966,
+              1218.8131235845005,
+              1233.557262655319,
+              1213.6637693579,
+              1231.9224459815186,
+              1214.762991981394,
+              1221.8328334455548,
+              1287.5018057170823
+            ]
+          }
+        ],
+        "checksum": 8384
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 80674,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "cached result",
+            "iterations": 1000000,
+            "samples": [
+              2.7174579999999935,
+              3.726458000000008,
+              3.6516249999999957,
+              3.255334000000005,
+              3.154042000000004,
+              2.7889590000000055,
+              3.3489160000000027,
+              6.170999999999992,
+              3.1404589999999932,
+              2.663624999999996,
+              2.8427499999999952,
+              1.994082999999989
+            ]
+          },
+          {
+            "case": "fresh module and Podman marker (simulated)",
+            "iterations": 971218,
+            "samples": [
+              13.544976514026715,
+              13.327852243265625,
+              13.10845453852788,
+              13.524641223700561,
+              13.068812563193818,
+              12.928053228008517,
+              13.433690479377477,
+              13.489547145954877,
+              13.729538579392086,
+              13.802771365440174,
+              13.191168203225253,
+              14.515922274916749
+            ]
+          },
+          {
+            "case": "fresh module and native marker; Docker stubbed",
+            "iterations": 7902,
+            "samples": [
+              1437.4104024297542,
+              1307.8070108833217,
+              1256.1693242217136,
+              1353.7500632751292,
+              1287.2109592508284,
+              1341.0159453303006,
+              1216.574917742346,
+              1343.8476335104947,
+              1254.2868893950924,
+              1304.1686914705215,
+              1285.6028853454766,
+              1208.1118704125586
+            ]
+          }
+        ],
+        "checksum": 195840
+      },
+      "vpm": {
+        "pid": 80675,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "cached result",
+            "iterations": 1000000,
+            "samples": [
+              1.96875,
+              2.045375000000007,
+              1.9604579999999885,
+              2.032749999999993,
+              1.9670830000000024,
+              1.9303329999999903,
+              1.9604170000000067,
+              1.9552499999999782,
+              1.9574580000000026,
+              1.9698329999999942,
+              1.9627499999999998,
+              1.9184999999999945
+            ]
+          },
+          {
+            "case": "fresh module and Podman marker (simulated)",
+            "iterations": 971218,
+            "samples": [
+              13.754421767306619,
+              14.51888247540717,
+              13.528502354775174,
+              14.66908047420872,
+              14.229984411326829,
+              14.883545197885558,
+              13.499201003276335,
+              13.956015024433222,
+              13.307903066047007,
+              13.941257266648645,
+              17.026772568053698,
+              14.672640951876993
+            ]
+          },
+          {
+            "case": "fresh module and native marker; Docker stubbed",
+            "iterations": 7902,
+            "samples": [
+              1181.283219438123,
+              1262.6919767147585,
+              1260.941280688425,
+              1291.0392305745324,
+              1288.7243735763218,
+              1229.8573778790217,
+              1294.55087319665,
+              1241.6160465704993,
+              1257.3030878258653,
+              1209.762212098199,
+              1243.8358643381453,
+              1265.5288534548267
+            ]
+          }
+        ],
+        "checksum": 7552
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 80676,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "cached result",
+            "iterations": 1000000,
+            "samples": [
+              1.9373329999999953,
+              1.9749579999999867,
+              1.9164580000000058,
+              1.9190830000000005,
+              1.9816660000000184,
+              1.9184580000000153,
+              1.95041599999999,
+              1.933917000000008,
+              1.9060839999999928,
+              2.0115419999999915,
+              1.9341249999999945,
+              1.9299589999999966
+            ]
+          },
+          {
+            "case": "fresh module and Podman marker (simulated)",
+            "iterations": 1000000,
+            "samples": [
+              14.465207999999961,
+              14.208833000000027,
+              14.781582999999955,
+              18.526624999999967,
+              14.63958299999996,
+              13.904416999999967,
+              14.102874999999983,
+              17.404000000000053,
+              14.103665999999976,
+              13.261041000000091,
+              13.361792000000037,
+              14.861209000000033
+            ]
+          },
+          {
+            "case": "fresh module and native marker; Docker stubbed",
+            "iterations": 7731,
+            "samples": [
+              1267.640020695897,
+              1252.9265295563314,
+              1333.8076574828538,
+              1233.782822403308,
+              1315.9520113827468,
+              1242.4276290260073,
+              1257.2382615444271,
+              1275.4765230888686,
+              1253.939723192343,
+              1289.97982149787,
+              1215.652308886296,
+              1276.3496313542803
+            ]
+          }
+        ],
+        "checksum": 201344
+      },
+      "upstream": {
+        "pid": 80705,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "cached result",
+            "iterations": 1000000,
+            "samples": [
+              1.9185840000000098,
+              1.9187090000000069,
+              1.9186249999999916,
+              1.9160420000000045,
+              1.9470829999999921,
+              1.8964579999999955,
+              1.8940419999999847,
+              1.8980000000000246,
+              1.8951250000000073,
+              1.8945420000000015,
+              1.9569159999999783,
+              1.9185839999999814
+            ]
+          },
+          {
+            "case": "fresh module and Podman marker (simulated)",
+            "iterations": 1000000,
+            "samples": [
+              14.462375000000009,
+              15.357291999999973,
+              14.994416999999999,
+              15.402874999999995,
+              13.632165999999984,
+              15.043333000000018,
+              14.812792000000059,
+              14.64487500000007,
+              14.817666999999915,
+              14.990542000000005,
+              15.177625000000035,
+              14.481250000000045
+            ]
+          },
+          {
+            "case": "fresh module and native marker; Docker stubbed",
+            "iterations": 7731,
+            "samples": [
+              1343.3471737162024,
+              1249.1592290777357,
+              1279.4970896391164,
+              1301.9283404475468,
+              1435.066614926908,
+              1248.5016168671687,
+              1341.8218859138465,
+              1401.3064286638303,
+              1245.9038934161126,
+              1362.4100375113144,
+              1393.2273961971243,
+              1336.7879963782148
+            ]
+          }
+        ],
+        "checksum": 7680
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "cached result",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1.9780204999999995,
+          "vpmNs": 2.2745000000000033,
+          "changePct": 14.988697033221033
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1.9422500000000014,
+          "vpmNs": 2.2766455000000008,
+          "changePct": 17.21691337366451
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 1.9631045,
+          "vpmNs": 2.24604149999999,
+          "changePct": 14.412732485712798
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1.9600209999999976,
+          "vpmNs": 2.272457999999986,
+          "changePct": 15.940492474314771
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 3.1472504999999984,
+          "vpmNs": 1.9616039999999941,
+          "changePct": -37.67245409922104
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1.917312999999993,
+          "vpmNs": 1.9340210000000013,
+          "changePct": 0.8714278784949903
+        }
+      ]
+    },
+    {
+      "case": "fresh module and Podman marker (simulated)",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 15.896939265515963,
+          "vpmNs": 13.304868740288335,
+          "changePct": -16.30546913424028
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 14.69856249999998,
+          "vpmNs": 14.195479500000005,
+          "changePct": -3.4226680330132653
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 14.750560533427105,
+          "vpmNs": 13.36033933187766,
+          "changePct": -9.424870318649825
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 14.581777588913612,
+          "vpmNs": 13.376713263771641,
+          "changePct": -8.26417984908897
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 13.461618812666178,
+          "vpmNs": 14.092999717880026,
+          "changePct": 4.690230157310471
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 14.90410449999996,
+          "vpmNs": 14.337020499999994,
+          "changePct": -3.8048847550684273
+        }
+      ]
+    },
+    {
+      "case": "fresh module and native marker; Docker stubbed",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1321.9026570648157,
+          "vpmNs": 576.8483983113985,
+          "changePct": -56.36226349735567
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1239.431509701055,
+          "vpmNs": 563.5617453576476,
+          "changePct": -54.530626263199
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 1229.9326564940488,
+          "vpmNs": 589.836417157279,
+          "changePct": -52.043194068964624
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1232.7398543184188,
+          "vpmNs": 591.1721552304591,
+          "changePct": -52.04404618220786
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1295.689825360675,
+          "vpmNs": 1259.1221842571451,
+          "changePct": -2.822252701826289
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1339.3049411460306,
+          "vpmNs": 1262.439141120162,
+          "changePct": -5.7392306758829115
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "cached result",
+      "upstream_ns": 2,
+      "vpm_ns": 2,
+      "change_pct": 15.5,
+      "upstream_first_pct": 14.7,
+      "vpm_first_pct": 16.6,
+      "process_range_pct": "15.0, 17.2, 14.4, 15.9",
+      "control_max_abs_pct": 37.7,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "fresh module and Podman marker (simulated)",
+      "upstream_ns": 15,
+      "vpm_ns": 13,
+      "change_pct": -8.8,
+      "upstream_first_pct": -12.9,
+      "vpm_first_pct": -5.8,
+      "process_range_pct": "-16.3, -3.4, -9.4, -8.3",
+      "control_max_abs_pct": 4.7,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "fresh module and native marker; Docker stubbed",
+      "upstream_ns": 1236,
+      "vpm_ns": 583,
+      "change_pct": -53.3,
+      "upstream_first_pct": -54.2,
+      "vpm_first_pct": -53.3,
+      "process_range_pct": "-56.4, -54.5, -52.0, -52.0",
+      "control_max_abs_pct": 5.7,
+      "evidence": "lower time in every pair, beyond control spread"
+    }
+  ]
+}

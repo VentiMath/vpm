@@ -1,0 +1,19 @@
+{
+  "upstream": {
+    "name": "is-inside-container",
+    "version": "1.0.0",
+    "repository": "https://github.com/sindresorhus/is-inside-container",
+    "commit": "fddf5c228e8591f5584fc772e5514e425777bc0c",
+    "integrity": "sha512-KIYLCCJghfHZxqjYBE7rEy0OBuTd5xCHS7tHVgvCLkx7StIoaxwNW3hCALgEUjFfeRk+MG/Qxmp/vtETEF3tRA=="
+  },
+  "implementation": {
+    "kind": "independent",
+    "targetScope": "Lazy, cached Podman marker and VPM Docker detection, with CJS/ESM entries and original-name CLI. The only runtime dependency is vis-docker."
+  },
+  "differences": [
+    "Uses vis-docker 4.0.0, adding mountinfo-only Docker evidence beyond upstream's is-docker 3 dependency.",
+    "A missing Podman marker uses nonthrowing stat; other filesystem failures fall through to Docker detection.",
+    "Adds a callable CommonJS entry, sharing the same cache with ESM.",
+    "Detection is heuristic, not a security boundary. No native Docker/Podman/WSL execution or application adoption is claimed."
+  ]
+}

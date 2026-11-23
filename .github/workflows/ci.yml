@@ -491,6 +491,12 @@ jobs:
           node scripts/docker-conformance/contract.cjs
           node scripts/docker-conformance/callers.cjs
           node scripts/docker-conformance/archives.cjs
+      - name: Independent container detection and current WSL caller
+        run: |
+          npm --prefix scripts/container-conformance ci --ignore-scripts --no-audit --no-fund
+          node --test packages/vis-inside-container/test/*.test.cjs
+          node scripts/container-conformance/container.cjs
+          node scripts/container-conformance/archives.cjs
       - name: Independent emitter and unchanged API viewer services
         run: |
           node --test packages/veventemitter3/test/*.test.cjs
@@ -1492,6 +1498,9 @@ jobs:
       - run: bun test ./scripts/docker-conformance/upstream.cjs
       - run: bun scripts/docker-conformance/contract.cjs
       - run: bun scripts/docker-conformance/callers.cjs
+      - run: npm --prefix scripts/container-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: bun test packages/vis-inside-container/test
+      - run: bun scripts/container-conformance/container.cjs
       - run: bun scripts/source-map-conformance/string-parser-caller.cjs
       - run: bun scripts/source-map-conformance/identifier-caller.cjs
       - run: bun scripts/source-map-conformance/jsesc-caller.cjs
