@@ -8,7 +8,7 @@ const output = path.join(
 fs.mkdirSync(path.dirname(output), { recursive: true });
 require("esbuild").buildSync({
   entryPoints: [
-    path.resolve(__dirname, "../../packages/vreact-i18next/index.cjs"),
+    process.env.VPM_RELEASE_NODE_MODULES ? process.env.VPM_RELEASE_NODE_MODULES + "/vreact-i18next/index.cjs" : path.resolve(__dirname, "../../packages/vreact-i18next/index.cjs"),
   ],
   outfile: output,
   bundle: true,

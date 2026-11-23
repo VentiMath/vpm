@@ -1,6 +1,6 @@
 "use strict";
 const assert = require("node:assert/strict");
-const v = require("../../packages/vi18next"),
+const v = require(process.env.VPM_RELEASE_NODE_MODULES ? process.env.VPM_RELEASE_NODE_MODULES + "/vi18next" : "../../packages/vi18next"),
   up = require("i18next"),
   app = require("i18next-app");
 const languages = [

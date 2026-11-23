@@ -25,10 +25,10 @@ for (const variant of [
       react: path.join(__dirname, "node_modules/react"),
       "react-dom": path.join(__dirname, "node_modules/react-dom"),
       i18next: engine
-        ? path.resolve(__dirname, "../../packages/vi18next")
+        ? process.env.VPM_RELEASE_NODE_MODULES ? process.env.VPM_RELEASE_NODE_MODULES + "/vi18next" : path.resolve(__dirname, "../../packages/vi18next")
         : path.join(__dirname, "node_modules", app ? "i18next-app" : "i18next"),
       "react-i18next": vpm
-        ? path.resolve(__dirname, "../../packages/vreact-i18next")
+        ? process.env.VPM_RELEASE_NODE_MODULES ? process.env.VPM_RELEASE_NODE_MODULES + "/vreact-i18next" : path.resolve(__dirname, "../../packages/vreact-i18next")
         : path.join(
             __dirname,
             "node_modules",

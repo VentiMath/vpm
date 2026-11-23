@@ -20,7 +20,7 @@ if (!process.env.DATE_FNS_ZONE) {
   }
   return;
 }
-const v = require("../../packages/vdate-fns"),
+const v = require(process.env.VPM_RELEASE_NODE_MODULES ? process.env.VPM_RELEASE_NODE_MODULES + "/vdate-fns" : "../../packages/vdate-fns"),
   controls = [require("date-fns"), require("date-fns-app")];
 let count = 0,
   failures = [];

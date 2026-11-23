@@ -9,7 +9,7 @@ for (const variant of ["upstream", "app", "vpm"]) {
       ? path.join(__dirname, "node_modules/date-fns")
       : variant === "app"
         ? path.join(__dirname, "node_modules/date-fns-app")
-        : path.resolve(__dirname, "../../packages/vdate-fns");
+        : process.env.VPM_RELEASE_NODE_MODULES ? process.env.VPM_RELEASE_NODE_MODULES + "/vdate-fns" : path.resolve(__dirname, "../../packages/vdate-fns");
   fs.mkdirSync(path.join(out, variant), { recursive: true });
   for (const [entry, platform] of [
     ["adapter-entry.cjs", "node"],

@@ -7,7 +7,7 @@ const own = require(require("./prepare.cjs"));
 const engines = [
   require("i18next"),
   require("i18next-app"),
-  require("../../packages/vi18next"),
+  require(process.env.VPM_RELEASE_NODE_MODULES ? process.env.VPM_RELEASE_NODE_MODULES + "/vi18next" : "../../packages/vi18next"),
 ];
 let checks = 0;
 const resources = {
