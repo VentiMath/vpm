@@ -19,8 +19,9 @@ default image can be read; animation frames are not decoded.
 
 This is the application's reader contract, not the entire pngjs API. There is no
 streaming constructor, writer, bitblt, gamma-adjustment API or `skipRescale` option.
-Unknown options fail explicitly. Neither the app's production caller nor its
-image tests use those omitted APIs.
+Unknown options fail explicitly. The reader callers use the supported API; the
+historical-contest importer test also constructs and writes fixture PNGs, which
+requires a separate writer.
 
 ## Validation and limits
 
@@ -32,8 +33,8 @@ image tests use those omitted APIs.
   synchronous path can accept a truncated zlib checksum.
 - Unused IDAT padding is tolerated, and unused transparency-key bits are masked,
   as required by the PNG decoder contract.
-- Default bounds are **16,000,000 pixels** and **10 MiB input**, matching the app's
-  figure limits. `maxPixels` and `maxBytes` can explicitly override them. Dimensions
+- Default bounds are **16,000,000 pixels** and **10 MiB input**, matching the original
+  figure-validation limits. `maxPixels` and `maxBytes` can explicitly override them. Dimensions
   are checked before bitmap allocation; inflate is bounded to the exact expected
   bytes for all passes, including Adam7. Buffers also have an internal size bound.
 
@@ -60,4 +61,41 @@ controls. Small RGBA, interlaced 16-bit RGB and 960×480 resvg output decode in
 17.7–26.0% less time on Node and 9.5–42.4% less on Bun. Indexed transparency is
 inconclusive on both runtimes; no measured case establishes a regression. [Provenance](PROVENANCE.json) records source hashes and the
 [PNG specification](https://www.w3.org/TR/png-3/) used for the independent design.
-Built, not yet released or adopted by VentiMath.
+
+## Direct application use
+
+`vpngjs` is a public standalone server/tooling package, not an internal-only
+`vresvg` module. A sibling release archive can be installed directly; it does not
+require VLX or vresvg. The reader is published in
+[VLX 0.3.6](https://github.com/VentiMath/vpm/releases/tag/vlx-0.3.6):
+
+```json
+{
+  "dependencies": {
+    "vpngjs": "https://github.com/VentiMath/vpm/releases/download/vlx-0.3.6/vpngjs-7.0.0.tgz"
+  },
+  "devDependencies": {
+    "pngjs-fixtures": "npm:pngjs@7.0.0"
+  }
+}
+```
+
+Reader callers import `{PNG}` from `vpngjs`. A test that needs `new PNG` or
+`PNG.sync.write` can import `{PNG as FixturePNG}` from the separately named
+`pngjs-fixtures` dev dependency. Keeping upstream `pngjs` under its existing name
+for that test also works. Do not globally override `pngjs` while a caller still
+needs its constructor or writer. The reader's public types expose decoded pixels
+as `Uint8Array`; code requiring Buffer-specific methods should convert explicitly.
+
+Preserve each caller's accepted bounds when migrating. For example, VentiMath's
+historical-contest importer admits 32,000,000 pixels and 16 MiB, so its read should
+use `{checkCRC: true, maxPixels: 32_000_000, maxBytes: 16 * 1024 * 1024}` rather
+than silently narrowing those limits to this package's defaults. Its Math Is Cool
+importer's 8,000,000-pixel limit and bounded data URL fit the reader defaults.
+Structural and CRC validation remain stricter than upstream as described above.
+
+The VLX 0.3.6 archive was checked against its published SHA256SUMS and source
+runtime bytes. A direct URL install and frozen reinstall, CJS/ESM reading, and
+coexistence with the separately named upstream fixture writer pass on Node 24
+and Bun 1.4.4. This package is consumed transitively by VLX/vresvg; direct adoption
+by additional app callers is separate. No streaming or writer support is implied.

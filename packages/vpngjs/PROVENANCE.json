@@ -22,7 +22,7 @@
   "changes": [
     "Independent bounded chunk parser, scanline reconstruction and sample conversion, using supported-runtime zlib inflate and CRC32.",
     "Input and pixel bounds before bitmap allocation; exact inflated lengths including Adam7 passes and strict chunk ordering/CRC checks.",
-    "No PNG stream/writer implementation, compatibility shims or third-party runtime dependencies; app uses synchronous reading only.",
+    "No PNG stream/writer implementation, compatibility shims or third-party runtime dependencies; the supported application contract is synchronous reading.",
     "Follow PNG decoder compatibility rules for final IDAT padding, transparency-key high bits and empty palette transparency."
   ],
   "verification": {
@@ -35,6 +35,18 @@
         "problemImage.test.ts": "f17ab8bb8ebaf0918c5c7e65c2046c1bee6a80953ca6032ef0dc00739d38698d"
       }
     },
-    "limitations": "No writer, async parser, PNG constructor, bitblt, gamma adjustment, 16-bit skipRescale output or animation-frame API. Resource defaults match app bounds; no adoption or release claim."
+    "limitations": "No writer, async parser, PNG constructor, bitblt, gamma adjustment, 16-bit skipRescale output or animation-frame API. Reader defaults are 16 million pixels and 10 MiB; callers with larger accepted bounds must pass explicit finite limits.",
+    "directConsumption": {
+      "checked": "2026-11-23",
+      "release": "vlx-0.3.6",
+      "url": "https://github.com/VentiMath/vpm/releases/download/vlx-0.3.6/vpngjs-7.0.0.tgz",
+      "sha256": "ddb2669f861d1b4b0fa4bda37a1d05f7fa5b0704c892297aa6691fbaf58b9937",
+      "checks": [
+        "Published SHA256SUMS and runtime source match",
+        "Direct URL Bun install and frozen reinstall",
+        "Node 24 and Bun 1.4.4 CJS/ESM reads with a separately named upstream fixture writer"
+      ],
+      "scope": "Public standalone synchronous reader; no dependency on vresvg or VLX. No application files changed and no claim of direct application adoption."
+    }
   }
 }
