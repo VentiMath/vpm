@@ -603,6 +603,8 @@ jobs:
         run: |
           node scripts/mui-material-conformance/pickers-browser.cjs
           VPM_REACT_MODE=development node scripts/mui-material-conformance/pickers-browser.cjs
+          node scripts/mui-material-conformance/focus-removal-browser.cjs
+          VPM_REACT_MODE=development node scripts/mui-material-conformance/focus-removal-browser.cjs
       - run: npm --prefix scripts/zod-conformance ci --ignore-scripts --no-audit --no-fund
       - name: Zod schema language, form stack and installed consumers
         run: |

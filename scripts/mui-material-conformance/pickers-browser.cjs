@@ -150,6 +150,14 @@ require("./compare-scenes.cjs")(
           await evaluate(focusInField),
         ]);
       }
+      // Programmatic view changes can remove the currently focused day without
+      // a focusin event. Keep keyboard focus in the dialog after that removal.
+      await evaluate("window.draw('datetime',{layout:'dialog'})");
+      await click("window.opener()");await wait("window.sheetReport()?.shown");
+      await evaluate("window.days().find(day=>day.getAttribute('aria-selected')==='true').focus();window.actions().at(-1).click()");
+      await wait("window.days().length===0 && window.sheet().contains(document.activeElement)");
+      out.push(['datetime dialog','removed day',await evaluate('window.sheet().contains(document.activeElement)')]);
+      await press('Escape',27);await wait("window.sheet()===null");
     }
     assert.deepEqual(seen.vpm, seen.upstream);
     console.log(

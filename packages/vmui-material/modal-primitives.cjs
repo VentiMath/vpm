@@ -2,6 +2,7 @@
 const React=require('react');
 const {Transition}=require('vreact-transition-group');
 const {enter}=require('./overlay-owner.cjs');
+const {observeRemovedFocus}=require('./focus-recovery.cjs');
 const h=React.createElement,empty=Object.freeze({}),layout=typeof document==='undefined'?React.useEffect:React.useLayoutEffect;
 function useRefs(...refs){return React.useMemo(()=>node=>{const cleanups=refs.map(ref=>typeof ref==='function'?ref(node):ref&&(ref.current=node));return()=>refs.forEach((ref,i)=>{if(typeof cleanups[i]==='function')cleanups[i]();else if(typeof ref==='function')ref(null);else if(ref)ref.current=null;});},refs);}
 // Private fade primitive over the already-owned, cancellable transition engine.
@@ -37,11 +38,15 @@ function useModalLayer(p,root,paper,exited,enabled=true){
   const epoch=++focusEpoch.current,node=paper.current,doc=node.ownerDocument;let last=node,listening=true;
   if(!previous.current&&!node.contains(doc.activeElement))previous.current=doc.activeElement;
   if(!disableAutoFocus&&!node.contains(doc.activeElement))node.focus();
+  let activated=node.contains(doc.activeElement);
+  // A hidden or disabled control cannot take focus back; the panel then does.
+  const recover=()=>{if(listening&&current.current.open&&owner.current?.top()&&!current.current.disableEnforceFocus&&!node.contains(doc.activeElement)){if(last.isConnected&&node.contains(last))last.focus();if(!node.contains(doc.activeElement))node.focus();}};
+  const stopRecovery=observeRemovedFocus(node,()=>{if(activated)recover()});
   const focus=event=>{
-   if(node.contains(event.target)){last=event.target;return;}
+   if(node.contains(event.target)){activated=true;last=event.target;return;}
    // A nested portal's autoFocus precedes its layout effects. Check ownership
    // after that commit, so the parent does not steal the child's initial focus.
-   queueMicrotask(()=>{if(listening&&current.current.open&&owner.current?.top()&&!current.current.disableEnforceFocus&&!node.contains(doc.activeElement))(last.isConnected&&node.contains(last)?last:node).focus();});
+   queueMicrotask(recover);
   };
   const key=event=>{
    if(!owner.current?.top()||event.defaultPrevented)return;
@@ -49,7 +54,7 @@ function useModalLayer(p,root,paper,exited,enabled=true){
    else if(event.key==='Tab'&&!current.current.disableEnforceFocus){const items=tabbables(node),selected=doc.activeElement;if(!items.length){event.preventDefault();node.focus();}else if(event.shiftKey&&(selected===items[0]||selected===node)){event.preventDefault();items.at(-1).focus();}else if(!event.shiftKey&&(selected===items.at(-1)||selected===node)){event.preventDefault();items[0].focus();}}
   };
   doc.addEventListener('focusin',focus);doc.addEventListener('keydown',key);
-  return()=>{listening=false;doc.removeEventListener('focusin',focus);doc.removeEventListener('keydown',key);const target=previous.current;
+  return()=>{listening=false;stopRecovery();doc.removeEventListener('focusin',focus);doc.removeEventListener('keydown',key);const target=previous.current;
    // React restores selection after layout-effect cleanup. Restore afterwards,
    // and cancel this restoration if the dialog has already reopened.
    queueMicrotask(()=>{if(focusEpoch.current!==epoch)return;previous.current=null;if(!current.current.disableRestoreFocus&&target?.isConnected)target.focus();});
