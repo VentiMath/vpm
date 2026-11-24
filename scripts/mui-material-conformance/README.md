@@ -586,6 +586,15 @@ node scripts/mui-material-conformance/pickers-browser.cjs
 VPM_REACT_MODE=development node scripts/mui-material-conformance/pickers-browser.cjs
 ```
 
+### Focus after a control goes away
+
+`focus-removal-browser.cjs` opens a Dialog and an `Unstable_TrapFocus` from Material 7.2.0, Material 9.5.0 and VPM against each, then takes the focused control away. A removed control must hand focus back to the open panel; a closed panel, `disableEnforceFocus` and an unentered `disableAutoFocus` panel must leave focus alone; a nested dialog keeps its own focus; a dialog in an iframe recovers inside its own document. With the panel's first control hidden in place, a real Shift+Tab must end inside the panel and not on the page behind it. `pickers-browser.cjs` adds the caller that showed it: the npm DateTimePicker's dialog removing its focused day on the way to the clock.
+
+```sh
+node scripts/mui-material-conformance/focus-removal-browser.cjs
+VPM_REACT_MODE=development node scripts/mui-material-conformance/focus-removal-browser.cjs
+```
+
 ## Complete private-app build audit
 
 `VPM_APP_REPO=/absolute/path/to/app node scripts/mui-material-conformance/app-consumer.cjs`

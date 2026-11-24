@@ -1330,3 +1330,19 @@ fallbacks second. TypeScript retains the public contracts, while Bun skips the
 declarations and executes VPM code even when npm Material is also installed.
 Use the complete paths file with the matching Vite aliases; a JavaScript-only
 paths map can lose inherited add-on types. These repair VPM integration defects.
+
+### Focus after a control is removed
+
+Dialog, temporary Drawer and `Unstable_TrapFocus` recover focus when a focused
+control is removed and the browser leaves focus on the document body. Recovery
+respects disabled enforcement/autofocus, nested overlay ownership, closing and
+iframe documents. A shared mutation observer runs only while traps are mounted;
+there is no periodic focus polling. The unchanged MUI DateTimePicker is checked
+when its date view removes the focused day while advancing to its clock.
+
+When the last-focused control can no longer take focus because it was hidden or
+disabled in place, focus returns to the panel itself, so a key press cannot
+leave an open panel for the page behind it. A control that is hidden, disabled
+or blurred without any removal gives the observer nothing to see: focus rests on
+the document body until the next key press or focus move, where Material's
+50 ms poll moves it back at once.

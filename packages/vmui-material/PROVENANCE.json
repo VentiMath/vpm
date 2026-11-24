@@ -374,5 +374,12 @@
       "Popper transition children receive TransitionProps and keep the panel until their exit, as unchanged MUI X date pickers require."
     ],
     "upstreamDefects": false
+  },
+  "focusRemovalRecovery": {
+    "date": "2026-11-23",
+    "defect": "A removed focused control left Dialog/TrapFocus focus on body without a focusin event.",
+    "implementation": "One MutationObserver per document, subscribed only while open traps exist; preserves activation, opt-outs, ownership and cleanup. When the last-focused control cannot take focus, the panel does.",
+    "limit": "A control hidden, disabled or blurred with no removal leaves focus on body until the next key press or focus move; Material polls every 50 ms.",
+    "caller": "Unchanged npm MUI X 8.7.0 DateTimePicker date-to-clock view change."
   }
 }
