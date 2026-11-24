@@ -34,6 +34,7 @@
     "pickers-browser.cjs: npm DatePicker and DateTimePicker on npm Material and on VPM Material, 13 observations, production and development"
   ],
   "gateExecution": "The first run completed every contract on both runtimes and 31 production groups, then stopped at navigation-browser.cjs: its fixture could not resolve vmui-material/styles for the Material React Table caller, as on main since 58d25cd7. Commit 79a45e10 fixes the four table-caller fixtures and changes no package bytes. The run was resumed at navigation-browser.cjs on the same archives; the remaining 26 production and six development groups pass.",
+  "afterPublication": "GitHub's Linux Chrome reports no fine pointer, so the pickers drew their dialog layout there and the gated pickers-browser.cjs, which waited for a popup, timed out on npm Material before reaching VPM. The fixture now names each scene's layout and also compares the dialog layout with real clicks and key presses (22 observations, production and development, also under a Chrome launched without a pointer). Scripts only; the published archives are unchanged.",
   "installedDependencyIdentity": "All 22 packages resolve their dependency instances identically to the consumer root.",
   "types": [
     "TypeScript 7 NodeNext",

@@ -591,7 +591,7 @@ jobs:
           node scripts/date-fns-conformance/types.cjs
           node scripts/date-fns-conformance/browser.cjs
           node scripts/date-fns-conformance/archives.cjs
-      - name: Material Popper transitions under the unchanged MUI pickers
+      - name: Unchanged MUI pickers in their popup and dialog layouts on VPM Material
         run: |
           node scripts/mui-material-conformance/pickers-browser.cjs
           VPM_REACT_MODE=development node scripts/mui-material-conformance/pickers-browser.cjs
