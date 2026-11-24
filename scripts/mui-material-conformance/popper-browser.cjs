@@ -3,6 +3,7 @@ const assert = require("node:assert/strict");
 require("./compare-scenes.cjs")(
   "popper",
   async ({ send, evaluate, wait, baseUrl }) => {
+    const transitions = {};
     for (const version of ["app", "current"])
       for (const lib of ["upstream", "vpm"]) {
         const variant = version + "-" + lib;
@@ -95,9 +96,87 @@ require("./compare-scenes.cjs")(
           true,
         );
         await evaluate("window.draw('closed');testFrame.remove()");
+
+        // Transition children: the panel is positioned once its child enters,
+        // stays in place while the child leaves, and goes when the child is done.
+        const placed =
+          "window.bounds()?.side==='bottom' && Math.abs(window.bounds().below)<1";
+        const record = [];
+        const note = async (step) =>
+          record.push([
+            step,
+            await evaluate(
+              "({shown:window.shown(),phases:window.phases.join(' '),placed:!!(" +
+                placed +
+                ")})",
+            ),
+          ]);
+        await evaluate("viewport.scrollTop=0;window.drawTransition(true)");
+        await wait(placed + " && window.shown()?.visible");
+        await note("opened");
+        await evaluate(
+          "window.leaving=document.querySelector('.MuiPopper-root');window.drawTransition(false)",
+        );
+        assert.equal(
+          await evaluate(
+            "leaving.isConnected && getComputedStyle(leaving).display!=='none' && " +
+              placed,
+          ),
+          true,
+          variant + ": the panel must stay placed while its child leaves",
+        );
+        await note("leaving");
+        await wait("window.bounds()===null");
+        await note("closed");
+
+        // Reopened before the exit ends, the same panel enters again.
+        await evaluate("window.phases=[];window.drawTransition(true)");
+        await wait(placed + " && window.shown()?.visible");
+        await evaluate(
+          "window.kept=document.querySelector('.MuiPopper-root');window.drawTransition(false);window.drawTransition(true)",
+        );
+        await wait(placed + " && window.shown()?.visible");
+        assert.equal(
+          await evaluate("document.querySelector('.MuiPopper-root')===kept"),
+          true,
+        );
+        await note("reopened during exit");
+        await evaluate("window.drawTransition(false)");
+        await wait("window.bounds()===null");
+
+        // A retained panel is hidden only after its child has left.
+        await evaluate(
+          "window.phases=[];window.drawTransition(false,{keepMounted:true})",
+        );
+        await note("retained before opening");
+        await evaluate("window.drawTransition(true,{keepMounted:true})");
+        await wait(placed + " && window.shown()?.visible");
+        await evaluate(
+          "window.kept=document.querySelector('.MuiPopper-root');window.drawTransition(false,{keepMounted:true})",
+        );
+        await note("retained while leaving");
+        await wait("getComputedStyle(kept).display==='none'");
+        assert.equal(await evaluate("kept.isConnected"), true);
+        await note("retained after leaving");
+        await evaluate("window.drawTransition(true,{keepMounted:true})");
+        await wait(
+          placed +
+            " && window.shown()?.visible && document.querySelector('.MuiPopper-root')===kept",
+        );
+        await note("retained and reopened");
+        await evaluate("window.draw('closed');window.phases=[]");
+        (transitions[version] ??= {})[lib] = record;
       }
+    for (const version of ["app", "current"])
+      assert.deepEqual(
+        transitions[version].vpm,
+        transitions[version].upstream,
+        version + " transition lifecycle",
+      );
     console.log(
-      "Both Material controls and VPM position search results, retain focus for empty results, flip at the viewport edge and remove the portal on close.",
+      "Both Material controls and VPM position search results, retain focus for empty results, flip at the viewport edge and remove the portal on close. Transition children enter, leave, reopen mid-exit and stay retained identically (" +
+        transitions.current.vpm.length +
+        " observations per control).",
     );
   },
 ).catch((e) => {

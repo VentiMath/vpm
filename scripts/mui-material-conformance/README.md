@@ -572,6 +572,18 @@ The ListItem contract checks QuickPanel-style event, note and quick-setting rows
 The CssBaseline contract checks both Material versions for document rules, overrides and native color schemes. Its Chrome check switches the app’s cache direction and verifies cascade layers, print and cleanup. Set `VPM_APP_CHECKOUT` and optionally `VPM_APP_REF` to exercise the layer plugin from the app source.
 
 
+### Popper transitions and the npm date pickers
+
+`popper-contract.cjs` compares 48 server renders with both Material controls, including what a render-function child is handed with and without `transition`. `popper-browser.cjs` also records the transition lifecycle in Chrome for each control and VPM: a Grow child enters, the panel stays placed while the child leaves, a reopening interrupts the exit, and a retained panel is hidden only after the exit.
+
+`pickers-browser.cjs` bundles the unchanged npm `@mui/x-date-pickers` 8.7.0 DatePicker and DateTimePicker twice: with the npm Material they were installed against, and with every Material, Emotion, clsx and transition import mapped to VPM through the release's own name mapping. In Chrome it opens each calendar with Grow and with Fade, closes it with Escape, chooses a day and opens above the field at the viewport edge. The popup's place, visibility, month and selection must be identical. It uses the date fixture's locked picker:
+
+```sh
+npm --prefix scripts/date-fns-conformance ci --ignore-scripts --no-audit --no-fund
+node scripts/mui-material-conformance/pickers-browser.cjs
+VPM_REACT_MODE=development node scripts/mui-material-conformance/pickers-browser.cjs
+```
+
 ## Complete private-app build audit
 
 `VPM_APP_REPO=/absolute/path/to/app node scripts/mui-material-conformance/app-consumer.cjs`
@@ -596,7 +608,8 @@ style intersections and typed styled variants, with negative inference checks.
 pins the complete VPM closure. `check-app-release.cjs <directory>` verifies
 archive bytes, CJS/ESM exports, strict types, dependency identity and every
 component contract on Node/Bun, then runs at most two independent production Chrome fixtures at a time
-and representative development checks. `--published` additionally downloads
+and representative development checks. The picker fixture needs
+`scripts/date-fns-conformance` installed. `--published` additionally downloads
 all public assets, compares their checksums and repeats ordinary fresh/frozen
 npm and Bun installs, entries, types, identity and SSR. Before publication, Bun
 uses frozen peer installation and exact archive extraction because its resolver

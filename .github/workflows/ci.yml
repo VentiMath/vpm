@@ -591,6 +591,10 @@ jobs:
           node scripts/date-fns-conformance/types.cjs
           node scripts/date-fns-conformance/browser.cjs
           node scripts/date-fns-conformance/archives.cjs
+      - name: Material Popper transitions under the unchanged MUI pickers
+        run: |
+          node scripts/mui-material-conformance/pickers-browser.cjs
+          VPM_REACT_MODE=development node scripts/mui-material-conformance/pickers-browser.cjs
       - run: npm --prefix scripts/zod-conformance ci --ignore-scripts --no-audit --no-fund
       - name: Zod schema language, form stack and installed consumers
         run: |

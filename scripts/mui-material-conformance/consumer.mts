@@ -588,6 +588,14 @@ import Popper from "vmui-material/Popper";
 import type {PopperProps} from "vmui-material/Popper";
 const suggestionProps:PopperProps = { open:true, anchorEl:()=>document.querySelector("input"), className:"z-9999", children:React.createElement("section") };
 React.createElement(Popper,suggestionProps);
+// A transition child receives the open state and the callbacks that end the panel.
+const calendarProps:PopperProps = { open:true, transition:true, role:"dialog", children:({placement,TransitionProps})=>React.createElement(Grow,{...TransitionProps,children:React.createElement("section",{"data-side":placement})}) };
+React.createElement(Popper,calendarProps);
+const popperChild=(options:import("vmui-material/Popper").PopperChildrenProps)=>options.TransitionProps?.in===true;
+// @ts-expect-error A transition is on or off.
+React.createElement(Popper,{open:true,transition:"grow"});
+// @ts-expect-error The child is told the placement, not handed the panel element.
+React.createElement(Popper,{open:true,children:(options)=>options.element});
 
 import FontSlider from "vmui-material/Slider";
 React.createElement(FontSlider,{value:16,marks:[{value:16,label:"100%"}],step:null,track:false,onChangeCommitted:(_,v)=>v.toFixed()});
