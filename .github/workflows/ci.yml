@@ -783,7 +783,7 @@ jobs:
           node scripts/virtual-core-conformance/archives.cjs
       - name: Verify independent Material React Table release
         run: |
-          node scripts/pack-material-table-release.cjs --ref "$GITHUB_SHA" --tag material-react-table-3.2.1-ci --out "$RUNNER_TEMP/material-table-release"
+          node scripts/pack-material-table-release.cjs --ref "$GITHUB_SHA" --tag vmaterial-react-table-3.2.1-ci --out "$RUNNER_TEMP/material-table-release"
           node scripts/check-material-table-release.cjs "$RUNNER_TEMP/material-table-release"
       - name: Verify independent React table adapter
         run: node scripts/react-table-conformance/archives.cjs
