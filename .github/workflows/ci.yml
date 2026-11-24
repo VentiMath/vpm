@@ -2,7 +2,15 @@ name: Package checks
 
 on:
   push:
+    branches: [main]
+    tags: ['*']
   pull_request:
+
+# Pull requests have one run per revision; direct main commits and releases
+# remain checked. Replace superseded runs on the same branch/PR, not other refs.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
