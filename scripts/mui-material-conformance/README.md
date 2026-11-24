@@ -633,3 +633,7 @@ the first candidate; only Material documentation changed before final packing.
 SSR checks; it does not claim another component run. A controlled interrupted
 browser run can resume with `VPM_RELEASE_BROWSER_FROM=<fixture>`, retaining the
 preceding successful log and verifying the same artifact hashes.
+
+[Revision r3](release-r3-verification.json) records the Popper transition fix:
+the full gate on its exact archives, the resumed browser run and the public
+install check.

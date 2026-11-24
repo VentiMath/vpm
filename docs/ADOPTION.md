@@ -272,3 +272,13 @@ checks; the application branch was not edited, merged or deployed.
 The table browser gate checks 37 paired caller snapshots plus actual control
 actions against npm MRT, with VPM Material furnishing the candidate's provider
 and controls. Current scope and remaining browser acceptance are unchanged.
+
+`vmui-material-9.5.0-r3` fixes Popper's `transition` contract. Review of the
+VentiMath adoption found that the calendar event and note reminder pickers, which
+stay on npm `@mui/x-date-pickers` 8.7.0, opened a popup with no visible calendar:
+Popper told its render-function child the placement but not `TransitionProps`, so
+the picker's Grow never entered. Popper now supplies them and keeps the panel
+until that child has exited. The release gate opens the npm DatePicker and
+DateTimePicker in Chrome on npm Material and on VPM Material and requires the
+same result. [Verification](../scripts/mui-material-conformance/release-r3-verification.json).
+Modifiers, `popperOptions`, `popperRef` and the root slot remain unimplemented.
