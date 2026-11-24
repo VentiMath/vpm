@@ -1,0 +1,67 @@
+{
+  "date": "2026-11-23",
+  "publishedAt": "2026-11-24T03:44:50Z",
+  "tag": "vmui-material-9.5.0-r3",
+  "sourceCommit": "9de29909bfe035221ccd6ea4652fd99767e13ccc",
+  "supersedes": "vmui-material-9.5.0-r2",
+  "defect": "Popper gave a render-function child the placement but no TransitionProps, and removed the panel as soon as open turned false. Unchanged npm @mui/x-date-pickers 8.7.0 pickers opened a popup whose calendar never became visible.",
+  "packageCount": 22,
+  "runtimeEntries": 365,
+  "changedSinceR2": {
+    "vmui-material": [
+      "search-popper.cjs",
+      "Popper.d.mts",
+      "Popper.d.cts",
+      "index.d.mts",
+      "index.d.cts",
+      "README.md",
+      "PROVENANCE.json"
+    ],
+    "otherPackages": "Same source files; internal dependency URLs name r3.",
+    "resolverMaps": "vite-aliases.json and tsconfig-paths.json are identical to r2."
+  },
+  "contractGroups": 61,
+  "contractRuntimes": [
+    "Node 24.22.1",
+    "Bun 1.4.4"
+  ],
+  "productionBrowserGroups": 57,
+  "developmentBrowserGroups": 6,
+  "addedChecks": [
+    "packages/vmui-material/test/popper.test.cjs: six child-contract tests",
+    "popper-contract.cjs: 48 server-render comparisons with Material 7.2.0 and 9.5.0, including render-function children",
+    "popper-browser.cjs: Grow lifecycle with both controls (enter, placed while leaving, reopened during exit, retained)",
+    "pickers-browser.cjs: npm DatePicker and DateTimePicker on npm Material and on VPM Material, 13 observations, production and development"
+  ],
+  "gateExecution": "The first run completed every contract on both runtimes and 31 production groups, then stopped at navigation-browser.cjs: its fixture could not resolve vmui-material/styles for the Material React Table caller, as on main since 58d25cd7. Commit 79a45e10 fixes the four table-caller fixtures and changes no package bytes. The run was resumed at navigation-browser.cjs on the same archives; the remaining 26 production and six development groups pass.",
+  "afterPublication": "GitHub's Linux Chrome reports no fine pointer, so the pickers drew their dialog layout there and the gated pickers-browser.cjs, which waited for a popup, timed out on npm Material before reaching VPM. The fixture now names each scene's layout and also compares the dialog layout with real clicks and key presses (22 observations, production and development, also under a Chrome launched without a pointer). Scripts only; the published archives are unchanged.",
+  "installedDependencyIdentity": "All 22 packages resolve their dependency instances identically to the consumer root.",
+  "types": [
+    "TypeScript 7 NodeNext",
+    "TypeScript 7 Bundler"
+  ],
+  "publicVerification": {
+    "allAssetBytesAndSHA256": "pass",
+    "freshFrozenNpm": "pass",
+    "freshFrozenBun": "pass",
+    "originalNameDependencyAliases": false,
+    "rootArchiveSHA256": "04b86d0ec2cc60e9a444415e133355b35d642228a60519b3b89cfed3f3ec5f3e",
+    "release": "https://github.com/VentiMath/vpm/releases/tag/vmui-material-9.5.0-r3"
+  },
+  "appCheck": {
+    "branchHead": "96a3c073",
+    "noteReminderPicker": "Two tests fail on r2 and pass on r3; they pass on the app's npm Material baseline.",
+    "typecheck": "pass",
+    "productionBuild": "pass",
+    "siteSuite": {
+      "passFiles": 467,
+      "totalFiles": 467
+    },
+    "adopted": false
+  },
+  "limits": [
+    "Popper.js modifiers, popperOptions, popperRef and the root slot are not implemented; those props still reach the panel element.",
+    "Chrome only. The signed-in calendar event dialog was not driven in a browser.",
+    "Local application checks; the application branch is under review and not merged or deployed."
+  ]
+}

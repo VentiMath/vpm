@@ -370,7 +370,8 @@
     "scope": [
       "Public OverridableComponent and transitions declarations for unchanged MUI add-ons.",
       "Development createSvgIcon IDs match upstream and remain caller-overridable.",
-      "Resolver paths supply declaration and executable targets for TypeScript and Bun; no upstream fallback."
+      "Resolver paths supply declaration and executable targets for TypeScript and Bun; no upstream fallback.",
+      "Popper transition children receive TransitionProps and keep the panel until their exit, as unchanged MUI X date pickers require."
     ],
     "upstreamDefects": false
   }

@@ -80,6 +80,8 @@ it as `vmaterial-react-table`:
 
 Merge the release's full `consumer-package.json`: it pins the six table packages
 and all 22 shared [Material packages](#material) from `vmui-material-9.5.0-r2`.
+The table declares Material and Emotion as peers, so take those 22 pins from the
+current Material revision's manifest instead; one revision must supply all 22.
 Runtime imports, public types and peers all use VPM names. React and React DOM
 remain application peers; npm Material and Emotion are not required by this
 widget. Original-name resolver mappings are only for unchanged third-party
@@ -872,7 +874,7 @@ inputs and external services stubbed. The handwritten API covers
 
 ## Material
 
-`vmui-material-9.5.0-r2` packages the 100 documented controls, app-used theme
+`vmui-material-9.5.0-r3` packages the 100 documented controls, app-used theme
 factories and all 22 runtime dependencies. Use the release's
 `consumer-package.json` to pin the **VPM names**, including existing VPM Emotion,
 Floating UI and transition dependencies, to one coherent release closure:
@@ -880,10 +882,16 @@ Floating UI and transition dependencies, to one coherent release closure:
 ```json
 {
   "dependencies": {
-    "vmui-material": "https://github.com/VentiMath/vpm/releases/download/vmui-material-9.5.0-r2/vmui-material-9.5.0.tgz"
+    "vmui-material": "https://github.com/VentiMath/vpm/releases/download/vmui-material-9.5.0-r3/vmui-material-9.5.0.tgz"
   }
 }
 ```
+
+Revision r3 gives Popper's `transition` children their `TransitionProps` and
+exit lifecycle. On r2 the unchanged npm MUI X date pickers opened a popup whose
+calendar stayed invisible. Only `vmui-material` changes; the other 21 archives
+carry the same files with r3 dependency URLs, so move all 22 pins together. The
+resolver mappings are unchanged from r2.
 
 The excerpt shows the main package only. Merge the complete consumer manifest
 when the app already directly installs VPM styling packages; this keeps theme

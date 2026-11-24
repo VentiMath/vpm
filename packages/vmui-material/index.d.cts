@@ -1004,11 +1004,18 @@ export const Grow: React.ForwardRefExoticComponent<GrowProps> & { muiSupportAuto
 
 export type PopperPlacementType = "top" | "bottom" | "left" | "right" | `${"top" | "bottom" | "left" | "right"}-${"start" | "end"}`;
 export interface PopperVirtualElement { getBoundingClientRect(): DOMRect; contextElement?: Element; }
+export interface PopperChildrenProps {
+  placement: PopperPlacementType;
+  /** Present when `transition` is set: spread onto the transition component. */
+  TransitionProps?: {in: boolean; onEnter: () => void; onExited: () => void} | undefined;
+}
 export interface PopperProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "children"> {
   open: boolean;
   anchorEl?: Element | PopperVirtualElement | null | (() => Element | PopperVirtualElement | null);
-  children?: React.ReactNode | ((options: {placement: PopperPlacementType}) => React.ReactNode);
+  children?: React.ReactNode | ((options: PopperChildrenProps) => React.ReactNode);
   placement?: PopperPlacementType;
+  /** Hands a render-function child `TransitionProps` and keeps the panel until that child has exited. */
+  transition?: boolean;
   disablePortal?: boolean;
   keepMounted?: boolean;
   container?: Element | DocumentFragment | null | (() => Element | DocumentFragment | null);

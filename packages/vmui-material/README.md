@@ -1155,9 +1155,13 @@ The app’s Material 7 control leaves that declaration on the hidden panel.
 
 The toolbar’s basic and full search layouts use a portaled panel for both suggestions and the no-results message. Popper uses VPM Floating DOM to anchor the panel, flip it at a viewport edge, and follow scroll and size changes. The search field keeps focus and the panel retains its DOM node as suggestions change. Anchors inside an iframe use that document’s body by default.
 
-The supported interface includes explicit side placements, element or virtual anchors, custom portal containers, inline and retained mounting, root refs, theme defaults and `sx`. The app supplies the panel width and the listbox semantics. Custom Popper.js modifiers, its instance API and transition slots are outside the verified search contract.
+The supported interface includes explicit side placements, element or virtual anchors, custom portal containers, inline and retained mounting, root refs, theme defaults and `sx`. The app supplies the panel width and the listbox semantics.
 
-The browser suite exercises the app’s two JSX renderers against Material 7.2.0 and 9.5.0. Server rendering defers DOM anchor callbacks until mount. [Benchmark results](bench/popper/README.md)
+With `transition`, a render-function child receives `TransitionProps` (`in`, `onEnter` and `onExited`) to spread onto its transition component. The panel is positioned once that child enters, stays placed while it leaves, and is removed when it reports its exit; a `keepMounted` panel is hidden at that point instead. Without `transition` the child receives only the placement. The app’s unchanged npm MUI X date pickers draw their calendar this way, with Grow or Fade.
+
+Custom Popper.js modifiers, `popperOptions`, the `popperRef` instance API and the root `slots`/`slotProps` are not implemented.
+
+The browser suite exercises the app’s two JSX renderers and the transition lifecycle against Material 7.2.0 and 9.5.0. A second suite opens the npm DatePicker and DateTimePicker on VPM Material and on the npm Material they were installed with, and compares what is shown. Server rendering defers DOM anchor callbacks until mount. [Benchmark results](bench/popper/README.md)
 
 ## Slider
 

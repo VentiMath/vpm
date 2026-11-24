@@ -23,9 +23,13 @@ function swapAlignment(placement) {
     ? placement.replace("-start", "-end")
     : placement.replace("-end", "-start");
 }
+// `open` keeps the panel positioned; `dormant` takes a retained panel out of
+// layout. They differ while a transition child is still leaving.
 function FloatingPanel({
   anchor,
   open,
+  dormant,
+  transitionProps,
   placement,
   rtl,
   rootRef,
@@ -97,11 +101,13 @@ function FloatingPanel({
         ...(position && {
           transform: "translate(" + position.x + "px, " + position.y + "px)",
         }),
-        ...(!open && { display: "none" }),
+        ...(dormant && { display: "none" }),
         ...style,
       },
     },
-    typeof children === "function" ? children({ placement: side }) : children,
+    typeof children === "function"
+      ? children({ placement: side, TransitionProps: transitionProps })
+      : children,
   );
 }
 
@@ -135,13 +141,26 @@ const Popper = React.forwardRef(function Popper(input, ref) {
     keepMounted = false,
     open,
     placement = "bottom",
+    transition = false,
     ...props
   } = useThemeProps({ props: input, name: "MuiPopper" });
   const theme = useTheme();
-  if (!open && !keepMounted) return null;
+  // With `transition`, the child animates in and out and reports back; a
+  // closing panel stays until the child's exit has finished.
+  const [exited, setExited] = React.useState(true);
+  const closed = !open && (!transition || exited);
+  if (closed && !keepMounted) return null;
   return React.createElement(MountedPopper, {
     ...props,
-    open,
+    open: transition ? !exited : open,
+    dormant: closed,
+    transitionProps: transition
+      ? {
+          in: open,
+          onEnter: () => setExited(false),
+          onExited: () => setExited(true),
+        }
+      : undefined,
     placement,
     rootRef: ref,
     rtl: theme.direction === "rtl",

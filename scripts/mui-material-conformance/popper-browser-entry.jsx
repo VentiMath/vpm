@@ -4,6 +4,7 @@ import { flushSync } from "react-dom";
 import Popper from "@popper";
 import Paper from "@search-paper";
 import Typography from "@search-typography";
+import Grow from "@grow";
 const anchor = document.createElement("input");
 const host = document.createElement("main");
 document.body.append(anchor, host);
@@ -55,5 +56,45 @@ window.bounds = () => {
     below: p.top - a.bottom,
     above: p.bottom - a.top,
     width: p.width,
+  };
+};
+// A transition child, as menus and pickers supply one: the Popper hands it the
+// open state and learns from its callbacks when the panel may leave.
+window.phases = [];
+window.drawTransition = (open, props = {}) => {
+  flushSync(() =>
+    root.render(
+      <Popper open={open} anchorEl={anchor} transition className="z-9999" {...props}>
+        {({ TransitionProps, placement }) => (
+          <Grow
+            {...TransitionProps}
+            timeout={120}
+            onEnter={(...args) => {
+              window.phases.push("enter");
+              TransitionProps.onEnter(...args);
+            }}
+            onExited={(...args) => {
+              window.phases.push("exited");
+              TransitionProps.onExited(...args);
+            }}
+          >
+            <div role="dialog" data-side={placement} style={{ width: 180, height: 32 }}>
+              Calendar
+            </div>
+          </Grow>
+        )}
+      </Popper>,
+    ),
+  );
+};
+window.shown = () => {
+  const panel = document.querySelector(".MuiPopper-root"),
+    dialog = panel?.querySelector("[role=dialog]");
+  if (!dialog) return null;
+  const style = getComputedStyle(dialog);
+  return {
+    panel: getComputedStyle(panel).display,
+    visible: style.visibility === "visible" && style.opacity === "1",
+    side: dialog.dataset.side,
   };
 };
