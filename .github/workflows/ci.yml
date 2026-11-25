@@ -30,8 +30,8 @@ jobs:
         run: node scripts/time-zone-conformance/install-data.cjs
       - run: node scripts/check-bun.cjs
       - run: bun install --frozen-lockfile --ignore-scripts
-      - run: npm --prefix scripts/consumers ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/motion-utils-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs consumers --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs motion-utils-conformance --ignore-scripts --no-audit --no-fund
       - name: Motion utilities and unchanged animation callers
         run: |
           node scripts/motion-utils-conformance/check-controls.cjs
@@ -66,13 +66,13 @@ jobs:
           node scripts/motion-dom-conformance/types.cjs
           node scripts/motion-dom-conformance/browser.cjs
           node scripts/motion-dom-conformance/archives.cjs
-      - run: npm --prefix scripts/hook-form-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs hook-form-conformance --ignore-scripts --no-audit --no-fund
       - name: Calendar timezone data and civil-day regression guard
         run: |
           node scripts/time-zone-conformance/run.cjs
           node scripts/time-zone-conformance/browser.cjs
-      - run: npm --prefix scripts/resolvers-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/scheduler-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs resolvers-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs scheduler-conformance --ignore-scripts --no-audit --no-fund
       - name: Scheduler priorities and React integration
         run: |
           node --test packages/vscheduler/test/scheduler.test.cjs
@@ -81,7 +81,7 @@ jobs:
           node scripts/scheduler-conformance/browser.cjs
           VPM_REACT_MODE=development node scripts/scheduler-conformance/browser.cjs
           node scripts/scheduler-conformance/archives.cjs
-      - run: npm --prefix scripts/mui-system-conformance ci --ignore-scripts --no-audit --no-fund --legacy-peer-deps
+      - run: node scripts/install-conformance.cjs mui-system-conformance --ignore-scripts --no-audit --no-fund --legacy-peer-deps
       - name: Material controls text icons and application themes
         run: |
           node --test packages/vmui-material/test/*.test.cjs
@@ -277,7 +277,7 @@ jobs:
           node scripts/mui-system-conformance/browser.cjs
           VPM_REACT_MODE=development node scripts/mui-system-conformance/browser.cjs
           node scripts/mui-system-conformance/archives.cjs
-      - run: npm --prefix scripts/mui-utils-conformance ci --ignore-scripts --no-audit --no-fund --legacy-peer-deps
+      - run: node scripts/install-conformance.cjs mui-utils-conformance --ignore-scripts --no-audit --no-fund --legacy-peer-deps
       - name: MUI utility contracts and unchanged Material callers
         run: |
           node --test packages/vmui-utils/test/utils.test.cjs
@@ -287,7 +287,7 @@ jobs:
           VPM_REACT_MODE=development node scripts/mui-utils-conformance/browser.cjs
           node scripts/mui-utils-conformance/types.cjs
           node scripts/mui-utils-conformance/archives.cjs
-      - run: npm --prefix scripts/mui-engine-conformance ci --ignore-scripts --no-audit --no-fund --legacy-peer-deps
+      - run: node scripts/install-conformance.cjs mui-engine-conformance --ignore-scripts --no-audit --no-fund --legacy-peer-deps
       - name: MUI styling bridge and application cache ownership
         run: |
           node --test packages/vmui-styled-engine/test/engine.test.cjs
@@ -297,7 +297,7 @@ jobs:
           VPM_REACT_MODE=development node scripts/mui-engine-conformance/browser.cjs
           node scripts/mui-engine-conformance/types.cjs
           node scripts/mui-engine-conformance/archives.cjs
-      - run: npm --prefix scripts/mui-theming-conformance ci --ignore-scripts --no-audit --no-fund --legacy-peer-deps
+      - run: node scripts/install-conformance.cjs mui-theming-conformance --ignore-scripts --no-audit --no-fund --legacy-peer-deps
       - name: MUI theme context and unchanged system callers
         run: |
           node --test packages/vmui-private-theming/test/theme.test.cjs
@@ -307,7 +307,7 @@ jobs:
           VPM_REACT_MODE=development node scripts/mui-theming-conformance/browser.cjs
           node scripts/mui-theming-conformance/types.cjs
           node scripts/mui-theming-conformance/archives.cjs
-      - run: npm --prefix scripts/crypto-js-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs crypto-js-conformance --ignore-scripts --no-audit --no-fund
       - name: Contest hashes, native browser oracle and packed consumers
         run: |
           node --test packages/vcrypto-js/test/hash.test.cjs
@@ -317,14 +317,14 @@ jobs:
           node scripts/crypto-js-conformance/browser.cjs
           node scripts/crypto-js-conformance/types.cjs
           node scripts/crypto-js-conformance/archives.cjs
-      - run: npm --prefix scripts/vite-paths-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs vite-paths-conformance --ignore-scripts --no-audit --no-fund
       - name: Vite alias plugin, configuration invalidation and packed consumers
         run: |
           node --test packages/vvite-tsconfig-paths/test/plugin.test.cjs
           node scripts/vite-paths-conformance/run.cjs
           node scripts/vite-paths-conformance/types.cjs
           node scripts/vite-paths-conformance/archives.cjs
-      - run: npm --prefix scripts/tsconfck-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs tsconfck-conformance --ignore-scripts --no-audit --no-fund
       - name: Configuration reader, unchanged Vite plugins and packed consumers
         run: |
           node --test packages/vtsconfck/test/config.test.cjs
@@ -332,7 +332,7 @@ jobs:
           node scripts/tsconfck-conformance/callers.cjs
           node scripts/tsconfck-conformance/types.cjs
           node scripts/tsconfck-conformance/archives.cjs
-      - run: npm --prefix scripts/react-popper-conformance ci --ignore-scripts --no-audit --no-fund --legacy-peer-deps
+      - run: node scripts/install-conformance.cjs react-popper-conformance --ignore-scripts --no-audit --no-fund --legacy-peer-deps
       - name: Navigation popovers, browser lifecycle and pinned consumers
         run: |
           node --test packages/vreact-popper/test/navigation.test.cjs
@@ -341,7 +341,7 @@ jobs:
           node scripts/react-popper-conformance/browser.cjs
           VPM_REACT_MODE=development node scripts/react-popper-conformance/browser.cjs
           node scripts/react-popper-conformance/archives.cjs
-      - run: npm --prefix scripts/jwt-decode-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs jwt-decode-conformance --ignore-scripts --no-audit --no-fund
       - name: Token decoding, browser and packed consumers
         run: |
           node --test packages/vjwt-decode/test/decode.test.cjs
@@ -349,7 +349,7 @@ jobs:
           node scripts/jwt-decode-conformance/types.cjs
           node scripts/jwt-decode-conformance/browser.cjs
           node scripts/jwt-decode-conformance/archives.cjs
-      - run: npm --prefix scripts/css-native-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs css-native-conformance --ignore-scripts --no-audit --no-fund
       - name: Independent CSS value parser and native converter
         run: |
           node --test packages/vpostcss-value-parser/test/*.test.cjs packages/vcss-to-react-native/test/*.test.cjs
@@ -359,40 +359,40 @@ jobs:
           VCSS_NATIVE_ENTRY="$PWD/packages/vcss-to-react-native/index.cjs" node scripts/css-native-conformance/caller.cjs
           node scripts/css-native-conformance/types.cjs
           node scripts/css-native-conformance/archives.cjs
-      - run: npm --prefix scripts/css-colors-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs css-colors-conformance --ignore-scripts --no-audit --no-fund
       - name: CSS color table and unchanged CSS converter
         run: |
           node --test packages/vcss-color-keywords/test/*.test.cjs
           node scripts/css-colors-conformance/probe.cjs
           node scripts/css-colors-conformance/types.cjs
           node scripts/css-colors-conformance/archives.cjs
-      - run: npm --prefix scripts/classnames-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs classnames-conformance --ignore-scripts --no-audit --no-fund
       - name: Conditional class names and unchanged Redoc caller
         run: |
           node --test packages/vclassnames/test/*.test.cjs
           node scripts/classnames-conformance/probe.cjs
           node scripts/classnames-conformance/types.cjs
           node scripts/classnames-conformance/archives.cjs
-      - run: npm --prefix scripts/idb-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs idb-conformance --ignore-scripts --no-audit --no-fund
       - name: IndexedDB wrappers and unchanged Firebase browser storage
         run: |
           node --test packages/vidb/test/*.test.cjs
           node scripts/idb-conformance/types.cjs
           node scripts/idb-conformance/browser.cjs
           node scripts/idb-conformance/archives.cjs
-      - run: npm --prefix scripts/camelize-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/cssesc-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/eventemitter3-conformance ci --ignore-scripts --legacy-peer-deps --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs camelize-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs cssesc-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs eventemitter3-conformance --ignore-scripts --legacy-peer-deps --no-audit --no-fund
       - name: Base64 binary data and property lists
         run: |
-          npm --prefix scripts/base64-js-conformance ci --ignore-scripts --no-audit --no-fund
+          node scripts/install-conformance.cjs base64-js-conformance --ignore-scripts --no-audit --no-fund
           node --test packages/vbase64-js/test/*.test.cjs
           node scripts/base64-js-conformance/archives.cjs
           node --test packages/vieee754/test/*.test.cjs
           node scripts/base64-js-conformance/float-archives.cjs
       - name: Unsigned varints and Sass compiler messages
         run: |
-          npm --prefix scripts/varint-conformance ci --ignore-scripts --no-audit --no-fund
+          node scripts/install-conformance.cjs varint-conformance --ignore-scripts --no-audit --no-fund
           node --test packages/vvarint/test/*.test.cjs
           node scripts/varint-conformance/caller.cjs
           node scripts/varint-conformance/archives.cjs
@@ -400,7 +400,7 @@ jobs:
           node scripts/varint-conformance/builder-archives.cjs
       - name: Independent decorators and unchanged API viewer services
         run: |
-          npm --prefix scripts/source-map-conformance ci --ignore-scripts
+          node scripts/install-conformance.cjs source-map-conformance --ignore-scripts
           node --test packages/vsource-map-js/test/*.test.cjs
           node scripts/source-map-conformance/caller.cjs
           node scripts/source-map-conformance/archives.cjs
@@ -411,7 +411,7 @@ jobs:
           node --test packages/vtrace-mapping/test/*.test.cjs packages/vgen-mapping/test/*.test.cjs packages/vremapping/test/*.test.cjs packages/vconvert-source-map/test/*.test.cjs packages/vjsesc/test/*.test.cjs packages/vbabel-helper-validator-identifier/test/*.test.cjs packages/vbabel-helper-string-parser/test/*.test.cjs packages/vgensync/test/*.test.cjs packages/vjs-tokens/test/*.test.cjs packages/vbabel-code-frame/test/*.test.cjs packages/vbabel-helper-validator-option/test/*.test.cjs packages/vsemver/test/*.test.cjs packages/vlru-cache/test/*.test.cjs
           node scripts/source-map-conformance/trace-archives.cjs
           node scripts/source-map-conformance/lru-archives.cjs
-          npm --prefix scripts/picocolors-conformance ci --ignore-scripts
+          node scripts/install-conformance.cjs picocolors-conformance --ignore-scripts
           node --test packages/vpicocolors/test/*.test.cjs
           node scripts/picocolors-conformance/probe.cjs
           node scripts/picocolors-conformance/caller.cjs
@@ -423,25 +423,25 @@ jobs:
           node scripts/decko-conformance/archives.cjs
       - name: Independent balanced delimiters and glob callers
         run: |
-          npm --prefix scripts/balanced-match-conformance ci --ignore-scripts
+          node scripts/install-conformance.cjs balanced-match-conformance --ignore-scripts
           node --test packages/vbalanced-match/test/*.test.cjs
           node scripts/balanced-match-conformance/callers.cjs
           node scripts/balanced-match-conformance/archives.cjs
       - name: Independent brace expansion and file enumeration
         run: |
-          npm --prefix scripts/brace-expansion-conformance ci --ignore-scripts --no-audit --no-fund
+          node scripts/install-conformance.cjs brace-expansion-conformance --ignore-scripts --no-audit --no-fund
           node --test packages/vbrace-expansion/test/*.test.cjs
           node scripts/brace-expansion-conformance/callers.cjs
           node scripts/brace-expansion-conformance/archives.cjs
       - name: Independent minimatch and unchanged build callers
         run: |
-          npm --prefix scripts/minimatch-conformance ci --ignore-scripts --no-audit --no-fund
+          node scripts/install-conformance.cjs minimatch-conformance --ignore-scripts --no-audit --no-fund
           node --test packages/vminimatch/test/*.test.cjs
           node scripts/minimatch-conformance/callers.cjs
           node scripts/minimatch-conformance/archives.cjs
       - name: Independent Minipass and unchanged streaming callers
         run: |
-          npm --prefix scripts/minipass-conformance ci --ignore-scripts --no-audit --no-fund
+          node scripts/install-conformance.cjs minipass-conformance --ignore-scripts --no-audit --no-fund
           node --test packages/vminipass/test/*.test.cjs
           node scripts/minipass-conformance/upstream.cjs
           node scripts/minipass-conformance/contract.cjs
@@ -449,7 +449,7 @@ jobs:
           node scripts/minipass-conformance/archives.cjs
       - name: Independent filesystem paths and unchanged glob callers
         run: |
-          npm --prefix scripts/path-scurry-conformance ci --ignore-scripts --no-audit --no-fund
+          node scripts/install-conformance.cjs path-scurry-conformance --ignore-scripts --no-audit --no-fund
           node --test packages/vpath-scurry/test/*.test.cjs
           node scripts/path-scurry-conformance/upstream.cjs
           node scripts/path-scurry-conformance/contract.cjs
@@ -457,7 +457,7 @@ jobs:
           node scripts/path-scurry-conformance/archives.cjs
       - name: Independent glob and unchanged cleanup callers
         run: |
-          npm --prefix scripts/glob-conformance ci --ignore-scripts --no-audit --no-fund
+          node scripts/install-conformance.cjs glob-conformance --ignore-scripts --no-audit --no-fund
           node --test packages/vglob/test/*.test.cjs
           node scripts/glob-conformance/upstream.cjs
           node scripts/glob-conformance/contract.cjs
@@ -465,14 +465,14 @@ jobs:
           node scripts/glob-conformance/archives.cjs
       - name: Independent rimraf and unchanged Capacitor cleanup
         run: |
-          npm --prefix scripts/rimraf-conformance ci --ignore-scripts --no-audit --no-fund
+          node scripts/install-conformance.cjs rimraf-conformance --ignore-scripts --no-audit --no-fund
           node --test packages/vrimraf/test/*.test.cjs
           node scripts/rimraf-conformance/contract.cjs
           node scripts/rimraf-conformance/callers.cjs
           node scripts/rimraf-conformance/archives.cjs
       - name: Independent JSON files and unchanged Capacitor configuration
         run: |
-          npm --prefix scripts/jsonfile-conformance ci --ignore-scripts --no-audit --no-fund
+          node scripts/install-conformance.cjs jsonfile-conformance --ignore-scripts --no-audit --no-fund
           node --test packages/vjsonfile/test/*.test.cjs
           node scripts/jsonfile-conformance/upstream.cjs
           node scripts/jsonfile-conformance/contract.cjs
@@ -480,7 +480,7 @@ jobs:
           node scripts/jsonfile-conformance/archives.cjs
       - name: Independent filesystem conveniences and Capacitor workflows
         run: |
-          npm --prefix scripts/fs-extra-conformance ci --ignore-scripts --no-audit --no-fund
+          node scripts/install-conformance.cjs fs-extra-conformance --ignore-scripts --no-audit --no-fund
           node --test packages/vfs-extra/test/*.test.cjs
           node scripts/fs-extra-conformance/upstream.cjs
           node scripts/fs-extra-conformance/contract.cjs
@@ -488,7 +488,7 @@ jobs:
           node scripts/fs-extra-conformance/archives.cjs
       - name: Independent application directories and Capacitor callers
         run: |
-          npm --prefix scripts/env-paths-conformance ci --ignore-scripts --no-audit --no-fund
+          node scripts/install-conformance.cjs env-paths-conformance --ignore-scripts --no-audit --no-fund
           node --test packages/venv-paths/test/*.test.cjs
           node scripts/env-paths-conformance/upstream.cjs
           node scripts/env-paths-conformance/contract.cjs
@@ -496,7 +496,7 @@ jobs:
           node scripts/env-paths-conformance/archives.cjs
       - name: Independent Docker detection and unchanged opener callers
         run: |
-          npm --prefix scripts/docker-conformance ci --ignore-scripts --no-audit --no-fund
+          node scripts/install-conformance.cjs docker-conformance --ignore-scripts --no-audit --no-fund
           node --test packages/vis-docker/test/*.test.cjs
           node scripts/docker-conformance/upstream.cjs
           node scripts/docker-conformance/contract.cjs
@@ -504,7 +504,7 @@ jobs:
           node scripts/docker-conformance/archives.cjs
       - name: Independent container detection and current WSL caller
         run: |
-          npm --prefix scripts/container-conformance ci --ignore-scripts --no-audit --no-fund
+          node scripts/install-conformance.cjs container-conformance --ignore-scripts --no-audit --no-fund
           node --test packages/vis-inside-container/test/*.test.cjs
           node scripts/container-conformance/container.cjs
           node scripts/container-conformance/archives.cjs
@@ -515,26 +515,26 @@ jobs:
           node scripts/container-conformance/archives.cjs vis-wsl
       - name: Independent PATH key lookup and unchanged cross-spawn resolver
         run: |
-          npm --prefix scripts/path-key-conformance ci --ignore-scripts --no-audit --no-fund
+          node scripts/install-conformance.cjs path-key-conformance --ignore-scripts --no-audit --no-fund
           node --test packages/vpath-key/test/*.test.cjs
           node scripts/path-key-conformance/callers.cjs
           node scripts/path-key-conformance/archives.cjs
       - name: Independent shebang matcher and unchanged cross-spawn file reader
         run: |
-          npm --prefix scripts/shebang-regex-conformance ci --ignore-scripts --no-audit --no-fund
+          node scripts/install-conformance.cjs shebang-regex-conformance --ignore-scripts --no-audit --no-fund
           node --test packages/vshebang-regex/test/*.test.cjs
           node scripts/shebang-regex-conformance/callers.cjs
           node scripts/shebang-regex-conformance/archives.cjs
       - name: Independent lazy properties and unchanged opener app names
         run: |
-          npm --prefix scripts/lazy-prop-conformance ci --ignore-scripts --no-audit --no-fund
+          node scripts/install-conformance.cjs lazy-prop-conformance --ignore-scripts --no-audit --no-fund
           node --test packages/vdefine-lazy-prop/test/*.test.cjs
           node scripts/lazy-prop-conformance/contract.cjs
           node scripts/lazy-prop-conformance/callers.cjs
           node scripts/lazy-prop-conformance/archives.cjs
       - name: Independent terminal sequences and unchanged prompt callers
         run: |
-          npm --prefix scripts/sisteransi-conformance ci --ignore-scripts --no-audit --no-fund
+          node scripts/install-conformance.cjs sisteransi-conformance --ignore-scripts --no-audit --no-fund
           node --test packages/vsisteransi/test/*.test.cjs
           node scripts/sisteransi-conformance/contract.cjs
           node scripts/sisteransi-conformance/callers.cjs
@@ -557,7 +557,7 @@ jobs:
           node scripts/camelize-conformance/probe.cjs
           node scripts/camelize-conformance/types.cjs
           node scripts/camelize-conformance/archives.cjs
-      - run: npm --prefix scripts/nanoid-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs nanoid-conformance --ignore-scripts --no-audit --no-fund
       - name: Independent Nano ID and PostCSS caller
         run: |
           node --test packages/vnanoid/test/*.test.cjs
@@ -565,7 +565,7 @@ jobs:
           node scripts/nanoid-conformance/types.cjs
           node scripts/nanoid-conformance/browser.cjs
           node scripts/nanoid-conformance/archives.cjs
-      - run: npm --prefix scripts/js-cookie-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs js-cookie-conformance --ignore-scripts --no-audit --no-fund
       - name: Browser cookies and Amplify storage
         run: |
           node --test packages/vjs-cookie/test/*.test.cjs
@@ -573,7 +573,7 @@ jobs:
           node scripts/js-cookie-conformance/types.cjs
           node scripts/js-cookie-conformance/browser.cjs
           node scripts/js-cookie-conformance/archives.cjs
-      - run: npm --prefix scripts/react-i18next-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs react-i18next-conformance --ignore-scripts --no-audit --no-fund
       - name: React translation hooks, browser lifecycle and packed consumers
         run: |
           node --test packages/vreact-i18next/test/hooks.test.cjs
@@ -582,7 +582,7 @@ jobs:
           node scripts/react-i18next-conformance/browser.cjs
           VPM_REACT_MODE=development node scripts/react-i18next-conformance/browser.cjs
           node scripts/react-i18next-conformance/archives.cjs
-      - run: npm --prefix scripts/i18next-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs i18next-conformance --ignore-scripts --no-audit --no-fund
       - name: Translation engine, unchanged React adapters and packed consumers
         run: |
           node --test packages/vi18next/test/translations.test.cjs
@@ -590,7 +590,7 @@ jobs:
           node scripts/i18next-conformance/types.cjs
           node scripts/i18next-conformance/browser.cjs
           node scripts/i18next-conformance/archives.cjs
-      - run: npm --prefix scripts/date-fns-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs date-fns-conformance --ignore-scripts --no-audit --no-fund
       - name: Date utilities, unchanged MUI picker and packed consumers
         run: |
           node --test packages/vdate-fns/test/dates.test.cjs
@@ -605,7 +605,7 @@ jobs:
           VPM_REACT_MODE=development node scripts/mui-material-conformance/pickers-browser.cjs
           node scripts/mui-material-conformance/focus-removal-browser.cjs
           VPM_REACT_MODE=development node scripts/mui-material-conformance/focus-removal-browser.cjs
-      - run: npm --prefix scripts/zod-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs zod-conformance --ignore-scripts --no-audit --no-fund
       - name: Zod schema language, form stack and installed consumers
         run: |
           node --test packages/vzod/test/schema.test.cjs
@@ -629,7 +629,7 @@ jobs:
           node scripts/hook-form-conformance/types.cjs
           node scripts/hook-form-conformance/browser.cjs
           node scripts/hook-form-conformance/archives.cjs
-      - run: npm --prefix scripts/moment-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs moment-conformance --ignore-scripts --no-audit --no-fund
       - name: Moment countdown dates, durations, DST and exact archives
         run: |
           node --test packages/vmoment/test/countdown.test.cjs
@@ -638,7 +638,7 @@ jobs:
           done
           node scripts/moment-conformance/types.cjs
           node scripts/moment-conformance/archives.cjs
-      - run: npm --prefix scripts/perfect-scrollbar-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs perfect-scrollbar-conformance --ignore-scripts --no-audit --no-fund
       - name: Desktop scrollbars, native input and packed consumers
         run: |
           node --test packages/vperfect-scrollbar/test/scrollbar.test.cjs
@@ -647,7 +647,7 @@ jobs:
           node scripts/perfect-scrollbar-conformance/types.cjs
           node scripts/perfect-scrollbar-conformance/browser.cjs
           node scripts/perfect-scrollbar-conformance/archives.cjs
-      - run: npm --prefix scripts/notistack-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs notistack-conformance --ignore-scripts --no-audit --no-fund
       - name: Notification queues, browser callers and local archives
         run: |
           node scripts/notistack-conformance/run.cjs
@@ -656,7 +656,7 @@ jobs:
           node scripts/notistack-conformance/browser.cjs
           VNOTISTACK_MODE=development node scripts/notistack-conformance/browser.cjs
           node scripts/notistack-conformance/archives.cjs
-      - run: npm --prefix scripts/goober-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs goober-conformance --ignore-scripts --no-audit --no-fund
       - name: Goober object CSS and unchanged notifications
         run: |
           node scripts/goober-conformance/check-controls.cjs
@@ -664,7 +664,7 @@ jobs:
           node scripts/goober-conformance/types.cjs
           node scripts/goober-conformance/browser.cjs
           node scripts/goober-conformance/archives.cjs
-      - run: npm --prefix scripts/diff-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs diff-conformance --ignore-scripts --no-audit --no-fund
       - name: Word diffs, frontend caller and consumer archives
         run: |
           node scripts/diff-conformance/check-controls.cjs
@@ -674,7 +674,7 @@ jobs:
           node scripts/diff-conformance/types.cjs
           node scripts/diff-conformance/browser.cjs
           node scripts/diff-conformance/archives.cjs
-      - run: npm --prefix scripts/ky-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs ky-conformance --ignore-scripts --no-audit --no-fund
       - name: Ky contracts, native HTTP and consumer archives
         run: |
           node scripts/ky-conformance/check-controls.cjs
@@ -684,25 +684,25 @@ jobs:
           node scripts/ky-conformance/browser.cjs
           node scripts/ky-conformance/types.cjs
           node scripts/ky-conformance/archives.cjs
-      - run: npm --prefix scripts/react-table-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/table-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs react-table-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs table-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/table-conformance/grouped-selection.cjs
-      - run: npm --prefix scripts/store-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/react-virtual-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/google-http-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/retry-request-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/teeny-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/duplexify-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/paginator-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/cloud-utils-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/queue-limit-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/retry-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/numbers-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/xml-helpers-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/path-matcher-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/xml-builder-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/callback-ref-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/sidecar-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs store-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs react-virtual-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs google-http-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs retry-request-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs teeny-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs duplexify-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs paginator-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs cloud-utils-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs queue-limit-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs retry-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs numbers-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs xml-helpers-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs path-matcher-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs xml-builder-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs callback-ref-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs sidecar-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/sidecar-conformance/run.cjs
       - run: node scripts/sidecar-conformance/errors.cjs
       - run: node scripts/sidecar-conformance/archives.cjs
@@ -714,16 +714,16 @@ jobs:
       - run: node scripts/scrollbar-conformance/archives.cjs
       - run: node scripts/scroll-conformance/run.cjs
       - run: node scripts/scroll-conformance/archives.cjs
-      - run: npm --prefix scripts/aria-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-primitive-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/compose-refs-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/slot-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-react-primitive-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-context-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-focus-guards-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-effect-event-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-effect-event-conformance/current ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-layout-effect-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs aria-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-primitive-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs compose-refs-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs slot-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-react-primitive-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-context-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-focus-guards-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-effect-event-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-effect-event-conformance/current --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-layout-effect-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/aria-conformance/run.cjs
       - run: node scripts/aria-conformance/callers.cjs
       - run: node scripts/aria-conformance/archives.cjs
@@ -735,43 +735,43 @@ jobs:
       - run: node scripts/radix-context-conformance/direction-archives.cjs
       - run: node scripts/radix-focus-guards-conformance/archives.cjs
       - run: node scripts/radix-effect-event-conformance/archives.cjs
-      - run: npm --prefix scripts/radix-id-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-id-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-id-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-id-conformance/current --ignore-scripts --no-audit --no-fund
       - run: node scripts/radix-id-conformance/archives.cjs
-      - run: npm --prefix scripts/radix-state-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-state-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-state-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-state-conformance/current --ignore-scripts --no-audit --no-fund
       - run: node scripts/radix-state-conformance/archives.cjs
-      - run: npm --prefix scripts/radix-rect-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-rect-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/radix-rect-conformance/archives.cjs
-      - run: npm --prefix scripts/radix-use-size-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-use-size-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-use-size-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-use-size-conformance/current --ignore-scripts --no-audit --no-fund
       - run: node scripts/radix-use-size-conformance/archives.cjs
-      - run: npm --prefix scripts/radix-arrow-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-arrow-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-arrow-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-arrow-conformance/current --ignore-scripts --no-audit --no-fund
       - run: node scripts/radix-arrow-conformance/archives.cjs
-      - run: npm --prefix scripts/radix-popper-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-popper-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-popper-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-popper-conformance/current --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-popper-conformance/build.cjs
       - run: node scripts/radix-popper-conformance/archives.cjs
-      - run: npm --prefix scripts/radix-collection-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-collection-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-collection-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-collection-conformance/current --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-collection-conformance/build.cjs
       - run: node scripts/radix-collection-conformance/archives.cjs
-      - run: npm --prefix scripts/orderedmap-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs orderedmap-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/orderedmap-conformance/archives.cjs
-      - run: npm --prefix scripts/prosemirror-model-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs prosemirror-model-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/prosemirror-model-conformance/run.cjs
       - run: node scripts/prosemirror-model-conformance/archives.cjs
-      - run: npm --prefix scripts/prosemirror-transform-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs prosemirror-transform-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/prosemirror-transform-conformance/run.cjs
       - run: node scripts/prosemirror-transform-conformance/archives.cjs
-      - run: npm --prefix scripts/prosemirror-state-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs prosemirror-state-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/prosemirror-state-conformance/run.cjs
       - run: node scripts/prosemirror-state-conformance/archives.cjs
-      - run: npm --prefix scripts/prosemirror-commands-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs prosemirror-commands-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/prosemirror-commands-conformance/run.cjs
       - run: node scripts/prosemirror-commands-conformance/archives.cjs
-      - run: npm --prefix scripts/autosuggest-widget-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs autosuggest-widget-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/autosuggest-widget-conformance/archives.cjs
       - name: Verify Autosuggest release archives
         run: |
@@ -779,7 +779,7 @@ jobs:
           node scripts/check-autosuggest-release.cjs "$RUNNER_TEMP/autosuggest-release"
       - name: Verify independent table virtualization
         run: |
-          npm --prefix scripts/virtual-core-conformance ci --ignore-scripts --no-audit --no-fund
+          node scripts/install-conformance.cjs virtual-core-conformance --ignore-scripts --no-audit --no-fund
           node scripts/virtual-core-conformance/archives.cjs
       - name: Verify independent Material React Table release
         run: |
@@ -795,111 +795,111 @@ jobs:
         run: node scripts/react-virtual-conformance/archives.cjs
       - name: Verify independent table ranking
         run: |
-          npm --prefix scripts/match-sorter-conformance ci --ignore-scripts --no-audit --no-fund
+          node scripts/install-conformance.cjs match-sorter-conformance --ignore-scripts --no-audit --no-fund
           bun scripts/match-sorter-conformance/build.cjs
           node scripts/match-sorter-conformance/archives.cjs
       - name: Verify independent MUI transitions
         run: |
-          npm --prefix scripts/transition-group-conformance ci --ignore-scripts --no-audit --no-fund
+          node scripts/install-conformance.cjs transition-group-conformance --ignore-scripts --no-audit --no-fund
           node scripts/pack-transition-release.cjs --ref "$GITHUB_SHA" --tag react-transition-group-4.4.5-ci --out "$RUNNER_TEMP/transition-release"
           node scripts/check-transition-release.cjs "$RUNNER_TEMP/transition-release"
       - name: Verify DOM-helper elimination in MUI callers
         run: |
-          npm --prefix scripts/transition-dom-audit ci --ignore-scripts --no-audit --no-fund
+          node scripts/install-conformance.cjs transition-dom-audit --ignore-scripts --no-audit --no-fund
           node scripts/transition-dom-audit/contracts.cjs
           bun scripts/transition-dom-audit/contracts.cjs
           bun scripts/transition-dom-audit/build.cjs
           node scripts/transition-dom-audit/browser.cjs
-      - run: npm --prefix scripts/rtl-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs rtl-conformance --ignore-scripts --no-audit --no-fund
       - run: bun scripts/rtl-conformance/build.cjs
       - run: node scripts/rtl-conformance/archives.cjs
       - name: Verify Stylis RTL release archives
         run: |
           node scripts/pack-rtl-release.cjs --ref "$GITHUB_SHA" --tag stylis-plugin-rtl-2.1.1-ci --out "$RUNNER_TEMP/rtl-release"
           node scripts/check-rtl-release.cjs "$RUNNER_TEMP/rtl-release"
-      - run: npm --prefix scripts/cssjanus-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs cssjanus-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/cssjanus-conformance/archives.cjs
       - name: Verify CSSJanus release archive
         run: |
           node scripts/pack-cssjanus-release.cjs --ref "$GITHUB_SHA" --tag cssjanus-2.3.1-ci --out "$RUNNER_TEMP/cssjanus-release"
           node scripts/check-cssjanus-release.cjs "$RUNNER_TEMP/cssjanus-release"
-      - run: npm --prefix scripts/reselect-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs reselect-conformance --ignore-scripts --no-audit --no-fund
       - run: node --test packages/vreselect/test/*.test.cjs
       - run: node scripts/reselect-conformance/callers.cjs
       - run: node scripts/reselect-conformance/development.cjs
       - run: node --expose-gc scripts/reselect-conformance/gc.cjs
       - run: node scripts/reselect-conformance/types.cjs
       - run: node scripts/reselect-conformance/archives.cjs
-      - run: npm --prefix scripts/swipeable-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs swipeable-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/swipeable-conformance/archives.cjs
-      - run: npm --prefix scripts/highlight-words-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs highlight-words-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/highlight-words-conformance/archives.cjs
-      - run: npm --prefix scripts/themeable-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs themeable-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/themeable-conformance/archives.cjs
-      - run: npm --prefix scripts/section-iterator-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs section-iterator-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/section-iterator-conformance/archives.cjs
-      - run: npm --prefix scripts/autosuggest-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs autosuggest-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/autosuggest-conformance/archives.cjs
-      - run: npm --prefix scripts/keyname-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs keyname-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/keyname-conformance/run.cjs
       - run: node scripts/keyname-conformance/archives.cjs
-      - run: npm --prefix scripts/prosemirror-keymap-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs prosemirror-keymap-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/prosemirror-keymap-conformance/run.cjs
       - run: node scripts/prosemirror-keymap-conformance/archives.cjs
-      - run: npm --prefix scripts/rope-sequence-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs rope-sequence-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/rope-sequence-conformance/run.cjs
       - run: node scripts/rope-sequence-conformance/archives.cjs
-      - run: npm --prefix scripts/prosemirror-history-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs prosemirror-history-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/prosemirror-history-conformance/run.cjs
       - run: node scripts/prosemirror-history-conformance/archives.cjs
-      - run: npm --prefix scripts/prosemirror-schema-list-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs prosemirror-schema-list-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/prosemirror-schema-list-conformance/run.cjs
       - run: node scripts/prosemirror-schema-list-conformance/archives.cjs
-      - run: npm --prefix scripts/prosemirror-view-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs prosemirror-view-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/prosemirror-view-conformance/run.cjs
       - run: node scripts/prosemirror-view-conformance/archives.cjs
-      - run: npm --prefix scripts/radix-hydrated-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-hydrated-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-hydrated-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-hydrated-conformance/current --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-hydrated-conformance/build.cjs
       - run: node scripts/radix-hydrated-conformance/archives.cjs
-      - run: npm --prefix scripts/radix-roving-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-roving-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-roving-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-roving-conformance/current --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-roving-conformance/build.cjs
       - run: node scripts/radix-roving-conformance/archives.cjs
-      - run: npm --prefix scripts/radix-presence-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-presence-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-presence-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-presence-conformance/current --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-presence-conformance/build.cjs
       - run: node scripts/radix-presence-conformance/archives.cjs
-      - run: npm --prefix scripts/radix-portal-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-portal-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-portal-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-portal-conformance/current --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-portal-conformance/build.cjs
       - run: node scripts/radix-portal-conformance/archives.cjs
-      - run: npm --prefix scripts/radix-focus-scope-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-focus-scope-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-focus-scope-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-focus-scope-conformance/current --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-focus-scope-conformance/build.cjs
       - run: node scripts/radix-focus-scope-conformance/archives.cjs
-      - run: npm --prefix scripts/radix-dismissable-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-dismissable-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-dismissable-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-dismissable-conformance/current --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-dismissable-conformance/build.cjs
       - run: node scripts/radix-dismissable-conformance/archives.cjs
-      - run: npm --prefix scripts/radix-menu-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-menu-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-menu-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-menu-conformance/current --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-menu-conformance/build.cjs
       - run: node scripts/radix-menu-conformance/archives.cjs
-      - run: npm --prefix scripts/radix-dropdown-menu-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-dropdown-menu-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-dropdown-menu-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-dropdown-menu-conformance/current --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-dropdown-menu-conformance/build.cjs
       - run: node scripts/radix-dropdown-menu-conformance/archives.cjs
       - name: Validate Dropdown Menu release archives
         run: |
           node scripts/pack-radix-dropdown-release.cjs --ref HEAD --tag radix-dropdown-2.2.1-ci --out "$RUNNER_TEMP/dropdown-release"
           node scripts/check-radix-dropdown-release.cjs "$RUNNER_TEMP/dropdown-release"
-      - run: npm --prefix scripts/dnd-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/dnd-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs dnd-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs dnd-conformance/current --ignore-scripts --no-audit --no-fund
       - run: bun scripts/dnd-conformance/build.cjs
       - run: node scripts/dnd-conformance/archives.cjs
       - run: node scripts/vlx-conformance/check-lock.cjs
-      - run: npm --prefix scripts/vlx-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs vlx-conformance --ignore-scripts --no-audit --no-fund
       - run: node --test scripts/vlx-conformance/dom.test.cjs scripts/vlx-conformance/selection.test.cjs scripts/vlx-conformance/launch-chrome.test.cjs
       - run: node scripts/vlx-conformance/build-font.cjs --check
       - run: node scripts/vlx-conformance/raster.cjs
@@ -915,7 +915,7 @@ jobs:
       - run: node scripts/vlx-conformance/browser.cjs
       - name: VLX Three.js book and parchment surfaces
         run: |
-          npm --prefix scripts/vlx-three-conformance ci --ignore-scripts --no-audit --no-fund
+          node scripts/install-conformance.cjs vlx-three-conformance --ignore-scripts --no-audit --no-fund
           node scripts/vlx-three-conformance/build.cjs "$RUNNER_TEMP/vlx-three.html"
           node scripts/vlx-three-conformance/browser.cjs "$RUNNER_TEMP/vlx-three.html" 187
           node scripts/vlx-three-conformance/build.cjs "$RUNNER_TEMP/vlx-three-app.html" three-app
@@ -925,34 +925,34 @@ jobs:
           VLX_CI_VERSION=$(node -p 'require("./packages/vlx/package.json").version')
           node scripts/pack-vlx-release.cjs --ref "$GITHUB_SHA" --tag "vlx-${VLX_CI_VERSION}-ci" --out "$RUNNER_TEMP/vlx-release"
           node scripts/check-vlx-release.cjs "$RUNNER_TEMP/vlx-release"
-      - run: npm --prefix scripts/png-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs png-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/png-conformance/archives.cjs
-      - run: npm --prefix scripts/stripe-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs stripe-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/stripe-conformance/archives.cjs
       - run: node scripts/radix-layout-effect-conformance/archives.cjs
       - run: node scripts/radix-layout-effect-conformance/callback-archives.cjs
       - run: node scripts/aria-conformance/browser.cjs
       - run: node scripts/callback-ref-conformance/run.cjs
       - run: node scripts/callback-ref-conformance/archives.cjs
-      - run: npm --prefix scripts/redux-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs redux-conformance --ignore-scripts --no-audit --no-fund
       - name: Check Redux public contract and consumers
         run: |
           node scripts/redux-conformance/run.cjs --upstream
           node scripts/redux-conformance/run.cjs
           node scripts/redux-conformance/callers.cjs
           node scripts/redux-conformance/archives.cjs
-      - run: npm --prefix scripts/grpc-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs grpc-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/grpc-conformance/channelz.cjs --upstream
       - run: node scripts/grpc-conformance/channelz.cjs
-      - run: npm --prefix scripts/deep-equal-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/rbtree-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/firestore-api-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/firestore-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/firebase-admin-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/firebase-functions-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/headless-calendar-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/fullcalendar-core-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/fullcalendar-react-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs deep-equal-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs rbtree-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs firestore-api-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs firestore-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs firebase-admin-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs firebase-functions-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs headless-calendar-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs fullcalendar-core-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs fullcalendar-react-conformance --ignore-scripts --no-audit --no-fund
       - name: Check calendar release archives
         run: |
           node scripts/pack-calendar-release.cjs --ref "$GITHUB_SHA" --tag calendar-7.1.3-ci --out "$RUNNER_TEMP/calendar-release"
@@ -961,14 +961,14 @@ jobs:
         run: |
           node scripts/pack-styling-release.cjs --ref "$GITHUB_SHA" --tag styling-11.14.1-ci --out "$RUNNER_TEMP/styling-release"
           node scripts/check-styling-release.cjs "$RUNNER_TEMP/styling-release"
-      - run: npm --prefix scripts/tanstack-query-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/stylis-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/emotion-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/tabbable-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs tanstack-query-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs stylis-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs emotion-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs tabbable-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/tabbable-conformance/run.cjs
       - run: node scripts/tabbable-conformance/archives.cjs
       - run: node scripts/tabbable-conformance/browser.cjs
-      - run: npm --prefix scripts/floating-react-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs floating-react-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/floating-react-conformance/run.cjs
       - run: node scripts/floating-react-conformance/archives.cjs
       - run: node scripts/floating-react-conformance/browser.cjs
@@ -976,76 +976,76 @@ jobs:
         run: |
           node scripts/pack-floating-release.cjs --ref "$GITHUB_SHA" --tag floating-0.27.20-ci --out "$RUNNER_TEMP/floating-release"
           node scripts/check-floating-release.cjs "$RUNNER_TEMP/floating-release"
-      - run: npm --prefix scripts/floating-react-dom-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs floating-react-dom-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/floating-react-dom-conformance/run.cjs
       - run: node scripts/floating-react-dom-conformance/archives.cjs
-      - run: npm --prefix scripts/floating-dom-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs floating-dom-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/floating-dom-conformance/archives.cjs
-      - run: npm --prefix scripts/floating-core-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs floating-core-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/floating-core-conformance/archives.cjs
       - run: node scripts/floating-react-dom-conformance/browser.cjs
       - run: node scripts/floating-dom-conformance/browser.cjs
       - run: node scripts/floating-core-conformance/browser.cjs
-      - run: npm --prefix scripts/floating-utils-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs floating-utils-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/floating-utils-conformance/archives.cjs
       - run: node scripts/floating-utils-conformance/browser.cjs
-      - run: npm --prefix scripts/hoist-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs hoist-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/hoist-conformance/run.cjs
       - run: node scripts/hoist-conformance/callers.cjs --upstream
       - run: node scripts/hoist-conformance/callers.cjs
       - run: node scripts/hoist-conformance/archives.cjs
-      - run: npm --prefix scripts/react-is-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs react-is-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/react-is-conformance/archives.cjs
-      - run: npm --prefix scripts/box-model-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs box-model-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/box-model-conformance/run.cjs --upstream
       - run: node scripts/box-model-conformance/run.cjs
       - run: node scripts/box-model-conformance/callers.cjs
       - run: node scripts/box-model-conformance/archives.cjs
-      - run: npm --prefix scripts/invariant-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs invariant-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/invariant-conformance/run.cjs --upstream
       - run: node scripts/invariant-conformance/run.cjs
       - run: node scripts/invariant-conformance/callers.cjs
       - run: node scripts/invariant-conformance/archives.cjs
-      - run: npm --prefix scripts/raf-schd-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs raf-schd-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/raf-schd-conformance/run.cjs --upstream
       - run: node scripts/raf-schd-conformance/run.cjs
       - run: node scripts/raf-schd-conformance/callers.cjs --upstream
       - run: node scripts/raf-schd-conformance/callers.cjs
       - run: node scripts/raf-schd-conformance/archives.cjs
-      - run: npm --prefix scripts/shallow-equal-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs shallow-equal-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/shallow-equal-conformance/run.cjs --upstream
       - run: node scripts/shallow-equal-conformance/run.cjs
       - run: node scripts/shallow-equal-conformance/callers.cjs
       - run: node scripts/shallow-equal-conformance/archives.cjs
-      - run: npm --prefix scripts/external-store-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs external-store-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/external-store-conformance/run.cjs
       - run: node scripts/external-store-conformance/archives.cjs
-      - run: npm --prefix scripts/memoize-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs memoize-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/memoize-conformance/run.cjs --upstream
       - run: node scripts/memoize-conformance/run.cjs
       - run: node scripts/memoize-conformance/callers.cjs
       - run: node scripts/memoize-conformance/archives.cjs
-      - run: npm --prefix scripts/fast-compare-conformance ci --legacy-peer-deps --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs fast-compare-conformance --legacy-peer-deps --ignore-scripts --no-audit --no-fund
       - run: node scripts/fast-compare-conformance/run.cjs --upstream
       - run: node scripts/fast-compare-conformance/run.cjs
       - run: node scripts/fast-compare-conformance/callers.cjs
       - run: node scripts/fast-compare-conformance/archives.cjs
-      - run: npm --prefix scripts/clsx-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs clsx-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/clsx-conformance/archives.cjs
-      - run: npm --prefix scripts/gax-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/otel-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/ordered-map-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/grpc-loader-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/camelcase-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/protojson-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/protobuf-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/long-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/object-hash-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/storage-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/mime-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/xml-parser-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/nodable-entities-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/entities-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs gax-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs otel-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs ordered-map-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs grpc-loader-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs camelcase-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs protojson-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs protobuf-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs long-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs object-hash-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs storage-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs mime-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs xml-parser-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs nodable-entities-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs entities-conformance --ignore-scripts --no-audit --no-fund
       - run: npm test
       - run: node scripts/check-body-options.cjs
       - run: node scripts/integration-offline.cjs
@@ -1259,9 +1259,9 @@ jobs:
           node scripts/retry-request-conformance/callers.cjs --check-control
           node scripts/stream-events-conformance/run.cjs
           node scripts/stream-events-conformance/callers.cjs --upstream
-      - run: npm --prefix scripts/jwt-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs jwt-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/jwt-conformance/run.cjs
-      - run: npm --prefix scripts/jwks-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs jwks-conformance --ignore-scripts --no-audit --no-fund
       - run: |
           node scripts/jwks-conformance/regressions.cjs
           node scripts/jwks-conformance/run.cjs
@@ -1274,8 +1274,8 @@ jobs:
           node scripts/firestore-conformance/watch-index.cjs
           node scripts/firestore-conformance/wire.cjs
           node scripts/firestore-conformance/tracing.cjs
-      - run: npm --prefix scripts/agent-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/http-proxy-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs agent-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs http-proxy-conformance --ignore-scripts --no-audit --no-fund
       - run: |
           node scripts/http-proxy-conformance/run.cjs
           node scripts/http-proxy-conformance/run.cjs --upstream
@@ -1285,13 +1285,13 @@ jobs:
           node scripts/agent-conformance/current/run.cjs
           node scripts/agent-conformance/current/run.cjs --upstream
           node scripts/agent-conformance/current/proxy.cjs
-      - run: npm --prefix scripts/https-proxy-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs https-proxy-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/https-proxy-conformance/run.cjs
-      - run: npm --prefix scripts/express-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs express-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/express-conformance/run.cjs
-      - run: npm --prefix scripts/framework-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs framework-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/framework-conformance/run.cjs
-      - run: npm --prefix scripts/router-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs router-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/router-conformance/run.cjs
 
   bun-and-types:
@@ -1308,8 +1308,8 @@ jobs:
         run: node scripts/time-zone-conformance/install-data.cjs
       - run: node scripts/check-bun.cjs
       - run: bun install --frozen-lockfile --ignore-scripts
-      - run: npm --prefix scripts/consumers ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/motion-utils-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs consumers --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs motion-utils-conformance --ignore-scripts --no-audit --no-fund
       - name: Motion utility contracts on Bun
         run: |
           bun scripts/motion-utils-conformance/check-controls.cjs
@@ -1336,16 +1336,16 @@ jobs:
           bun scripts/motion-dom-conformance/reads.cjs
           bun scripts/motion-dom-conformance/transitions.cjs
           bun scripts/motion-dom-conformance/effects.cjs
-      - run: npm --prefix scripts/hook-form-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs hook-form-conformance --ignore-scripts --no-audit --no-fund
       - name: Calendar timezone data and civil-day regression guard on Bun
         run: bun scripts/time-zone-conformance/run.cjs
-      - run: npm --prefix scripts/resolvers-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/scheduler-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs resolvers-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs scheduler-conformance --ignore-scripts --no-audit --no-fund
       - name: Scheduler contracts on Bun
         run: |
           bun test packages/vscheduler/test/scheduler.test.cjs
           bun scripts/scheduler-conformance/contract.cjs
-      - run: npm --prefix scripts/mui-system-conformance ci --ignore-scripts --no-audit --no-fund --legacy-peer-deps
+      - run: node scripts/install-conformance.cjs mui-system-conformance --ignore-scripts --no-audit --no-fund --legacy-peer-deps
       - name: Motion React server contracts on Bun
         run: |
           node scripts/motion-react-conformance/build.cjs
@@ -1417,53 +1417,53 @@ jobs:
           bun scripts/mui-system-conformance/colors.cjs
           bun scripts/mui-system-conformance/variables.cjs
           bun scripts/mui-system-conformance/callers.cjs
-      - run: npm --prefix scripts/mui-utils-conformance ci --ignore-scripts --no-audit --no-fund --legacy-peer-deps
+      - run: node scripts/install-conformance.cjs mui-utils-conformance --ignore-scripts --no-audit --no-fund --legacy-peer-deps
       - name: MUI utility contracts and unchanged Material callers
         run: |
           bun test packages/vmui-utils/test/utils.test.cjs
           bun scripts/mui-utils-conformance/run.cjs
           bun scripts/mui-utils-conformance/callers.cjs
-      - run: npm --prefix scripts/mui-engine-conformance ci --ignore-scripts --no-audit --no-fund --legacy-peer-deps
+      - run: node scripts/install-conformance.cjs mui-engine-conformance --ignore-scripts --no-audit --no-fund --legacy-peer-deps
       - name: MUI styling bridge and application cache ownership
         run: |
           bun test packages/vmui-styled-engine/test/engine.test.cjs
           bun scripts/mui-engine-conformance/run.cjs
           bun scripts/mui-engine-conformance/callers.cjs
-      - run: npm --prefix scripts/mui-theming-conformance ci --ignore-scripts --no-audit --no-fund --legacy-peer-deps
+      - run: node scripts/install-conformance.cjs mui-theming-conformance --ignore-scripts --no-audit --no-fund --legacy-peer-deps
       - name: MUI theme context and system callers on Bun
         run: |
           bun test packages/vmui-private-theming/test/theme.test.cjs
           bun scripts/mui-theming-conformance/run.cjs
           bun scripts/mui-theming-conformance/callers.cjs
-      - run: npm --prefix scripts/crypto-js-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs crypto-js-conformance --ignore-scripts --no-audit --no-fund
       - name: Contest hashes and encoders on Bun
         run: |
           bun test packages/vcrypto-js/test/hash.test.cjs
           bun scripts/crypto-js-conformance/run.cjs
           VPM_CRYPTO_NATIVE=1 bun scripts/crypto-js-conformance/run.cjs
           VPM_CRYPTO_NATIVE=1 bun test packages/vcrypto-js/test/hash.test.cjs
-      - run: npm --prefix scripts/vite-paths-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs vite-paths-conformance --ignore-scripts --no-audit --no-fund
       - name: Vite alias plugin and configuration invalidation on Bun
         run: |
           bun test packages/vvite-tsconfig-paths/test/plugin.test.cjs
           bun scripts/vite-paths-conformance/run.cjs
-      - run: npm --prefix scripts/tsconfck-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs tsconfck-conformance --ignore-scripts --no-audit --no-fund
       - name: Configuration reader and Vite callers on Bun
         run: |
           bun test packages/vtsconfck/test/config.test.cjs
           bun scripts/tsconfck-conformance/run.cjs
           bun scripts/tsconfck-conformance/callers.cjs
-      - run: npm --prefix scripts/react-popper-conformance ci --ignore-scripts --no-audit --no-fund --legacy-peer-deps
+      - run: node scripts/install-conformance.cjs react-popper-conformance --ignore-scripts --no-audit --no-fund --legacy-peer-deps
       - name: Navigation popovers on Bun
         run: |
           bun test packages/vreact-popper/test/navigation.test.cjs
           bun scripts/react-popper-conformance/run.cjs
-      - run: npm --prefix scripts/jwt-decode-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs jwt-decode-conformance --ignore-scripts --no-audit --no-fund
       - name: Token decoding on Bun
         run: |
           bun test packages/vjwt-decode/test/decode.test.cjs
           bun scripts/jwt-decode-conformance/run.cjs
-      - run: npm --prefix scripts/css-native-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs css-native-conformance --ignore-scripts --no-audit --no-fund
       - name: Independent CSS value parser and native converter
         run: |
           bun test packages/vpostcss-value-parser/test/*.test.cjs packages/vcss-to-react-native/test/*.test.cjs
@@ -1471,19 +1471,19 @@ jobs:
           bun scripts/css-native-conformance/converter.cjs
           bun scripts/css-native-conformance/differential.cjs
           VCSS_NATIVE_ENTRY="$PWD/packages/vcss-to-react-native/index.cjs" bun scripts/css-native-conformance/caller.cjs
-      - run: npm --prefix scripts/css-colors-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs css-colors-conformance --ignore-scripts --no-audit --no-fund
       - run: bun test packages/vcss-color-keywords/test
       - run: bun scripts/css-colors-conformance/probe.cjs
-      - run: npm --prefix scripts/classnames-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs classnames-conformance --ignore-scripts --no-audit --no-fund
       - run: bun test packages/vclassnames/test
       - run: bun scripts/classnames-conformance/probe.cjs
-      - run: npm --prefix scripts/idb-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs idb-conformance --ignore-scripts --no-audit --no-fund
       - run: bun test packages/vidb/test
-      - run: npm --prefix scripts/camelize-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/cssesc-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/eventemitter3-conformance ci --ignore-scripts --legacy-peer-deps --no-audit --no-fund
-      - run: npm --prefix scripts/varint-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/base64-js-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs camelize-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs cssesc-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs eventemitter3-conformance --ignore-scripts --legacy-peer-deps --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs varint-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs base64-js-conformance --ignore-scripts --no-audit --no-fund
       - run: bun test packages/vbase64-js/test
       - run: bun test packages/vieee754/test
       - run: bun scripts/base64-js-conformance/float-caller.cjs
@@ -1491,7 +1491,7 @@ jobs:
       - run: bun test packages/vvarint/test
       - run: bun test packages/vbuffer-builder/test
       - run: VBUFFER_BUILDER_PACKAGE=./packages/vbuffer-builder bun scripts/varint-conformance/caller.cjs
-      - run: npm --prefix scripts/source-map-conformance ci --ignore-scripts
+      - run: node scripts/install-conformance.cjs source-map-conformance --ignore-scripts
       - run: bun test packages/vsource-map-js/test
       - run: bun scripts/source-map-conformance/caller.cjs
       - run: bun test packages/vsourcemap-codec/test packages/vresolve-uri/test
@@ -1503,67 +1503,67 @@ jobs:
       - run: bun scripts/source-map-conformance/option-caller.cjs
       - run: bun scripts/source-map-conformance/semver-caller.cjs
       - run: bun scripts/source-map-conformance/lru-callers.cjs
-      - run: npm --prefix scripts/balanced-match-conformance ci --ignore-scripts
+      - run: node scripts/install-conformance.cjs balanced-match-conformance --ignore-scripts
       - run: bun test packages/vbalanced-match/test
       - run: bun scripts/balanced-match-conformance/callers.cjs
-      - run: npm --prefix scripts/brace-expansion-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs brace-expansion-conformance --ignore-scripts --no-audit --no-fund
       - run: bun test packages/vbrace-expansion/test
       - run: bun scripts/brace-expansion-conformance/callers.cjs
-      - run: npm --prefix scripts/minimatch-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs minimatch-conformance --ignore-scripts --no-audit --no-fund
       - run: bun test packages/vminimatch/test
       - run: bun scripts/minimatch-conformance/callers.cjs
-      - run: npm --prefix scripts/minipass-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs minipass-conformance --ignore-scripts --no-audit --no-fund
       - run: bun test packages/vminipass/test
       - run: bun scripts/minipass-conformance/contract.cjs
       - run: bun scripts/minipass-conformance/callers.cjs
-      - run: npm --prefix scripts/path-scurry-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs path-scurry-conformance --ignore-scripts --no-audit --no-fund
       - run: bun test packages/vpath-scurry/test
       - run: bun scripts/path-scurry-conformance/contract.cjs
       - run: bun scripts/path-scurry-conformance/callers.cjs
-      - run: npm --prefix scripts/glob-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs glob-conformance --ignore-scripts --no-audit --no-fund
       - run: bun test packages/vglob/test
       - run: bun scripts/glob-conformance/contract.cjs
       - run: bun scripts/glob-conformance/callers.cjs
-      - run: npm --prefix scripts/rimraf-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs rimraf-conformance --ignore-scripts --no-audit --no-fund
       - run: bun test packages/vrimraf/test
       - run: bun scripts/rimraf-conformance/contract.cjs
       - run: bun scripts/rimraf-conformance/callers.cjs
-      - run: npm --prefix scripts/jsonfile-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs jsonfile-conformance --ignore-scripts --no-audit --no-fund
       - run: bun test packages/vjsonfile/test
       - run: bun scripts/jsonfile-conformance/upstream.cjs
       - run: bun scripts/jsonfile-conformance/contract.cjs
       - run: bun scripts/jsonfile-conformance/callers.cjs
-      - run: npm --prefix scripts/fs-extra-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs fs-extra-conformance --ignore-scripts --no-audit --no-fund
       - run: bun test packages/vfs-extra/test
       - run: bun scripts/fs-extra-conformance/upstream.cjs
       - run: bun scripts/fs-extra-conformance/contract.cjs
       - run: bun scripts/fs-extra-conformance/callers.cjs
-      - run: npm --prefix scripts/env-paths-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs env-paths-conformance --ignore-scripts --no-audit --no-fund
       - run: bun test packages/venv-paths/test
       - run: bun scripts/env-paths-conformance/upstream.cjs
       - run: bun scripts/env-paths-conformance/contract.cjs
       - run: bun scripts/env-paths-conformance/callers.cjs
-      - run: npm --prefix scripts/docker-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs docker-conformance --ignore-scripts --no-audit --no-fund
       - run: bun test packages/vis-docker/test
       - run: bun test ./scripts/docker-conformance/upstream.cjs
       - run: bun scripts/docker-conformance/contract.cjs
       - run: bun scripts/docker-conformance/callers.cjs
-      - run: npm --prefix scripts/container-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs container-conformance --ignore-scripts --no-audit --no-fund
       - run: bun test packages/vis-inside-container/test
       - run: bun scripts/container-conformance/container.cjs
       - run: bun test packages/vis-wsl/test
       - run: bun scripts/container-conformance/wsl.cjs
-      - run: npm --prefix scripts/lazy-prop-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/path-key-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs lazy-prop-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs path-key-conformance --ignore-scripts --no-audit --no-fund
       - run: bun test packages/vpath-key/test
       - run: bun scripts/path-key-conformance/callers.cjs
-      - run: npm --prefix scripts/shebang-regex-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs shebang-regex-conformance --ignore-scripts --no-audit --no-fund
       - run: bun test packages/vshebang-regex/test
       - run: bun scripts/shebang-regex-conformance/callers.cjs
       - run: bun test packages/vdefine-lazy-prop/test
       - run: bun scripts/lazy-prop-conformance/contract.cjs
       - run: bun scripts/lazy-prop-conformance/callers.cjs
-      - run: npm --prefix scripts/sisteransi-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs sisteransi-conformance --ignore-scripts --no-audit --no-fund
       - run: bun test packages/vsisteransi/test
       - run: bun scripts/sisteransi-conformance/contract.cjs
       - run: bun scripts/sisteransi-conformance/callers.cjs
@@ -1572,7 +1572,7 @@ jobs:
       - run: bun scripts/source-map-conformance/jsesc-caller.cjs
       - run: bun scripts/source-map-conformance/convert-caller.cjs
       - run: bun scripts/source-map-conformance/trace-caller.cjs
-      - run: npm --prefix scripts/picocolors-conformance ci --ignore-scripts
+      - run: node scripts/install-conformance.cjs picocolors-conformance --ignore-scripts
       - run: bun test packages/vpicocolors/test
       - run: bun scripts/picocolors-conformance/probe.cjs
       - run: bun scripts/picocolors-conformance/caller.cjs
@@ -1584,29 +1584,29 @@ jobs:
       - run: bun test packages/vcssesc/test
       - run: bun scripts/cssesc-conformance/probe.cjs
       - run: bun scripts/camelize-conformance/probe.cjs
-      - run: npm --prefix scripts/nanoid-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs nanoid-conformance --ignore-scripts --no-audit --no-fund
       - run: bun scripts/nanoid-conformance/probe.cjs
-      - run: npm --prefix scripts/js-cookie-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs js-cookie-conformance --ignore-scripts --no-audit --no-fund
       - run: |
           bun test packages/vjs-cookie/test
           bun scripts/js-cookie-conformance/probe.cjs
-      - run: npm --prefix scripts/react-i18next-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs react-i18next-conformance --ignore-scripts --no-audit --no-fund
       - name: React translation hooks on Bun
         run: |
           bun test packages/vreact-i18next/test/hooks.test.cjs
           bun scripts/react-i18next-conformance/run.cjs
-      - run: npm --prefix scripts/i18next-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs i18next-conformance --ignore-scripts --no-audit --no-fund
       - name: Translation engine on Bun
         run: |
           bun test packages/vi18next/test/translations.test.cjs
           bun scripts/i18next-conformance/run.cjs
-      - run: npm --prefix scripts/date-fns-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs date-fns-conformance --ignore-scripts --no-audit --no-fund
       - name: Date utilities and unchanged MUI adapter on Bun
         run: |
           bun test packages/vdate-fns/test/dates.test.cjs
           bun scripts/date-fns-conformance/run.cjs
           bun scripts/date-fns-conformance/adapter.cjs
-      - run: npm --prefix scripts/zod-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs zod-conformance --ignore-scripts --no-audit --no-fund
       - name: Zod schema language and form stack on Bun
         run: |
           bun test packages/vzod/test/schema.test.cjs
@@ -1621,64 +1621,64 @@ jobs:
         run: |
           bun test packages/vreact-hook-form/test/store.test.cjs
           bun scripts/hook-form-conformance/run.cjs
-      - run: npm --prefix scripts/moment-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs moment-conformance --ignore-scripts --no-audit --no-fund
       - name: Moment countdown dates, durations and DST on Bun
         run: |
           bun test packages/vmoment/test/countdown.test.cjs
           for tz in UTC America/Los_Angeles Europe/Berlin; do
             TZ="$tz" bun scripts/moment-conformance/run.cjs || exit
           done
-      - run: npm --prefix scripts/perfect-scrollbar-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs perfect-scrollbar-conformance --ignore-scripts --no-audit --no-fund
       - name: Desktop scrollbar geometry and lifecycle
         run: |
           bun test packages/vperfect-scrollbar/test/scrollbar.test.cjs
           bun scripts/perfect-scrollbar-conformance/run.cjs
           bun scripts/perfect-scrollbar-conformance/mobile-check.cjs
-      - run: npm --prefix scripts/notistack-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs notistack-conformance --ignore-scripts --no-audit --no-fund
       - name: Notification queues and server imports
         run: |
           bun scripts/notistack-conformance/run.cjs
           bun test packages/vnotistack/test/queue.test.cjs
-      - run: npm --prefix scripts/goober-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs goober-conformance --ignore-scripts --no-audit --no-fund
       - name: Goober object CSS on Bun
         run: |
           bun scripts/goober-conformance/check-controls.cjs
           bun scripts/goober-conformance/run.cjs
-      - run: npm --prefix scripts/diff-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs diff-conformance --ignore-scripts --no-audit --no-fund
       - name: Word diff contracts on Bun
         run: |
           bun scripts/diff-conformance/check-controls.cjs
           bun scripts/diff-conformance/run.mjs
           bun scripts/diff-conformance/generated.mjs
           bun scripts/diff-conformance/options.mjs
-      - run: npm --prefix scripts/ky-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs ky-conformance --ignore-scripts --no-audit --no-fund
       - name: Ky contracts and native HTTP on Bun
         run: |
           bun scripts/ky-conformance/check-controls.cjs
           bun scripts/ky-conformance/run.mjs
           bun scripts/ky-conformance/matrix.mjs
           bun scripts/ky-conformance/wire.mjs
-      - run: npm --prefix scripts/react-table-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs react-table-conformance --ignore-scripts --no-audit --no-fund
       - run: bun scripts/material-table-conformance/build.cjs
       - run: bun scripts/material-table-conformance/ssr.cjs
-      - run: npm --prefix scripts/table-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs table-conformance --ignore-scripts --no-audit --no-fund
       - run: bun scripts/table-conformance/grouped-selection.cjs
-      - run: npm --prefix scripts/store-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/react-virtual-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/google-http-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/retry-request-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/teeny-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/duplexify-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/paginator-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/cloud-utils-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/queue-limit-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/retry-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/numbers-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/xml-helpers-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/path-matcher-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/xml-builder-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/callback-ref-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/sidecar-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs store-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs react-virtual-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs google-http-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs retry-request-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs teeny-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs duplexify-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs paginator-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs cloud-utils-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs queue-limit-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs retry-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs numbers-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs xml-helpers-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs path-matcher-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs xml-builder-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs callback-ref-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs sidecar-conformance --ignore-scripts --no-audit --no-fund
       - run: bun scripts/sidecar-conformance/run.cjs
       - run: bun scripts/sidecar-conformance/errors.cjs
       - run: bun scripts/sidecar-conformance/archives.cjs
@@ -1690,16 +1690,16 @@ jobs:
       - run: bun scripts/scrollbar-conformance/archives.cjs
       - run: bun scripts/scroll-conformance/run.cjs
       - run: bun scripts/scroll-conformance/archives.cjs
-      - run: npm --prefix scripts/aria-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-primitive-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/compose-refs-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/slot-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-react-primitive-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-context-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-focus-guards-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-effect-event-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-effect-event-conformance/current ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-layout-effect-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs aria-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-primitive-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs compose-refs-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs slot-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-react-primitive-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-context-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-focus-guards-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-effect-event-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-effect-event-conformance/current --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-layout-effect-conformance --ignore-scripts --no-audit --no-fund
       - run: bun scripts/aria-conformance/run.cjs
       - run: bun scripts/aria-conformance/callers.cjs
       - run: node scripts/aria-conformance/archives.cjs
@@ -1711,239 +1711,239 @@ jobs:
       - run: node scripts/radix-context-conformance/direction-archives.cjs
       - run: node scripts/radix-focus-guards-conformance/archives.cjs
       - run: node scripts/radix-effect-event-conformance/archives.cjs
-      - run: npm --prefix scripts/radix-id-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-id-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-id-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-id-conformance/current --ignore-scripts --no-audit --no-fund
       - run: node scripts/radix-id-conformance/archives.cjs
-      - run: npm --prefix scripts/radix-state-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-state-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-state-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-state-conformance/current --ignore-scripts --no-audit --no-fund
       - run: node scripts/radix-state-conformance/archives.cjs
-      - run: npm --prefix scripts/radix-rect-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-rect-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/radix-rect-conformance/archives.cjs
-      - run: npm --prefix scripts/radix-use-size-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-use-size-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-use-size-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-use-size-conformance/current --ignore-scripts --no-audit --no-fund
       - run: node scripts/radix-use-size-conformance/archives.cjs
-      - run: npm --prefix scripts/radix-arrow-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-arrow-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-arrow-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-arrow-conformance/current --ignore-scripts --no-audit --no-fund
       - run: node scripts/radix-arrow-conformance/archives.cjs
-      - run: npm --prefix scripts/radix-popper-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-popper-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-popper-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-popper-conformance/current --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-popper-conformance/build.cjs
       - run: node scripts/radix-popper-conformance/archives.cjs
-      - run: npm --prefix scripts/radix-collection-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-collection-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-collection-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-collection-conformance/current --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-collection-conformance/build.cjs
       - run: node scripts/radix-collection-conformance/archives.cjs
-      - run: npm --prefix scripts/orderedmap-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs orderedmap-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/orderedmap-conformance/archives.cjs
-      - run: npm --prefix scripts/prosemirror-model-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs prosemirror-model-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/prosemirror-model-conformance/run.cjs
       - run: node scripts/prosemirror-model-conformance/archives.cjs
-      - run: npm --prefix scripts/prosemirror-transform-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs prosemirror-transform-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/prosemirror-transform-conformance/run.cjs
       - run: node scripts/prosemirror-transform-conformance/archives.cjs
-      - run: npm --prefix scripts/prosemirror-state-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs prosemirror-state-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/prosemirror-state-conformance/run.cjs
       - run: node scripts/prosemirror-state-conformance/archives.cjs
-      - run: npm --prefix scripts/prosemirror-commands-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs prosemirror-commands-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/prosemirror-commands-conformance/run.cjs
       - run: node scripts/prosemirror-commands-conformance/archives.cjs
-      - run: npm --prefix scripts/autosuggest-widget-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs autosuggest-widget-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/autosuggest-widget-conformance/archives.cjs
-      - run: npm --prefix scripts/rtl-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs rtl-conformance --ignore-scripts --no-audit --no-fund
       - run: bun scripts/rtl-conformance/build.cjs
       - run: node scripts/rtl-conformance/archives.cjs
-      - run: npm --prefix scripts/cssjanus-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs cssjanus-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/cssjanus-conformance/archives.cjs
-      - run: npm --prefix scripts/reselect-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs reselect-conformance --ignore-scripts --no-audit --no-fund
       - run: bun test packages/vreselect/test/*.test.cjs
       - run: bun scripts/reselect-conformance/callers.cjs
       - run: bun scripts/reselect-conformance/development.cjs
       - run: node scripts/reselect-conformance/types.cjs
-      - run: npm --prefix scripts/swipeable-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs swipeable-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/swipeable-conformance/archives.cjs
-      - run: npm --prefix scripts/highlight-words-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs highlight-words-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/highlight-words-conformance/archives.cjs
-      - run: npm --prefix scripts/themeable-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs themeable-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/themeable-conformance/archives.cjs
-      - run: npm --prefix scripts/section-iterator-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs section-iterator-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/section-iterator-conformance/archives.cjs
-      - run: npm --prefix scripts/autosuggest-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs autosuggest-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/autosuggest-conformance/archives.cjs
-      - run: npm --prefix scripts/keyname-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs keyname-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/keyname-conformance/run.cjs
       - run: node scripts/keyname-conformance/archives.cjs
-      - run: npm --prefix scripts/prosemirror-keymap-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs prosemirror-keymap-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/prosemirror-keymap-conformance/run.cjs
       - run: node scripts/prosemirror-keymap-conformance/archives.cjs
-      - run: npm --prefix scripts/rope-sequence-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs rope-sequence-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/rope-sequence-conformance/run.cjs
       - run: node scripts/rope-sequence-conformance/archives.cjs
-      - run: npm --prefix scripts/prosemirror-history-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs prosemirror-history-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/prosemirror-history-conformance/run.cjs
       - run: node scripts/prosemirror-history-conformance/archives.cjs
-      - run: npm --prefix scripts/prosemirror-schema-list-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs prosemirror-schema-list-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/prosemirror-schema-list-conformance/run.cjs
       - run: node scripts/prosemirror-schema-list-conformance/archives.cjs
-      - run: npm --prefix scripts/prosemirror-view-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs prosemirror-view-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/prosemirror-view-conformance/run.cjs
       - run: node scripts/prosemirror-view-conformance/archives.cjs
-      - run: npm --prefix scripts/radix-hydrated-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-hydrated-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-hydrated-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-hydrated-conformance/current --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-hydrated-conformance/build.cjs
       - run: node scripts/radix-hydrated-conformance/archives.cjs
-      - run: npm --prefix scripts/radix-roving-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-roving-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-roving-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-roving-conformance/current --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-roving-conformance/build.cjs
       - run: node scripts/radix-roving-conformance/archives.cjs
-      - run: npm --prefix scripts/radix-presence-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-presence-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-presence-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-presence-conformance/current --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-presence-conformance/build.cjs
       - run: node scripts/radix-presence-conformance/archives.cjs
-      - run: npm --prefix scripts/radix-portal-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-portal-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-portal-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-portal-conformance/current --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-portal-conformance/build.cjs
       - run: node scripts/radix-portal-conformance/archives.cjs
-      - run: npm --prefix scripts/radix-focus-scope-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-focus-scope-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-focus-scope-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-focus-scope-conformance/current --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-focus-scope-conformance/build.cjs
       - run: node scripts/radix-focus-scope-conformance/archives.cjs
-      - run: npm --prefix scripts/radix-dismissable-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-dismissable-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-dismissable-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-dismissable-conformance/current --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-dismissable-conformance/build.cjs
       - run: node scripts/radix-dismissable-conformance/archives.cjs
-      - run: npm --prefix scripts/radix-menu-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-menu-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-menu-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-menu-conformance/current --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-menu-conformance/build.cjs
       - run: node scripts/radix-menu-conformance/archives.cjs
-      - run: npm --prefix scripts/radix-dropdown-menu-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/radix-dropdown-menu-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-dropdown-menu-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs radix-dropdown-menu-conformance/current --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-dropdown-menu-conformance/build.cjs
       - run: node scripts/radix-dropdown-menu-conformance/archives.cjs
       - name: Validate Dropdown Menu release archives
         run: |
           node scripts/pack-radix-dropdown-release.cjs --ref HEAD --tag radix-dropdown-2.2.1-ci --out "$RUNNER_TEMP/dropdown-release"
           node scripts/check-radix-dropdown-release.cjs "$RUNNER_TEMP/dropdown-release"
-      - run: npm --prefix scripts/dnd-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/dnd-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs dnd-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs dnd-conformance/current --ignore-scripts --no-audit --no-fund
       - run: bun scripts/dnd-conformance/build.cjs
       - run: node scripts/dnd-conformance/archives.cjs
       - run: node scripts/vlx-conformance/check-lock.cjs
-      - run: npm --prefix scripts/vlx-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs vlx-conformance --ignore-scripts --no-audit --no-fund
       - run: node --test scripts/vlx-conformance/dom.test.cjs scripts/vlx-conformance/selection.test.cjs scripts/vlx-conformance/launch-chrome.test.cjs
       - run: node scripts/vlx-conformance/build-font.cjs --check
       - run: bun scripts/vlx-conformance/raster.cjs
       - run: bun test packages/vresvg/test/*.test.cjs
       - run: bun scripts/resvg-conformance/compare.cjs
       - run: node scripts/vlx-conformance/archives.cjs
-      - run: npm --prefix scripts/png-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs png-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/png-conformance/archives.cjs
-      - run: npm --prefix scripts/stripe-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs stripe-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/stripe-conformance/archives.cjs
       - run: node scripts/radix-layout-effect-conformance/archives.cjs
       - run: node scripts/radix-layout-effect-conformance/callback-archives.cjs
       - run: bun scripts/callback-ref-conformance/run.cjs
       - run: node scripts/callback-ref-conformance/archives.cjs
-      - run: npm --prefix scripts/redux-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs redux-conformance --ignore-scripts --no-audit --no-fund
       - name: Check Redux public contract and consumers
         run: |
           bun scripts/redux-conformance/run.cjs --upstream
           bun scripts/redux-conformance/run.cjs
           bun scripts/redux-conformance/callers.cjs
           bun scripts/redux-conformance/archives.cjs
-      - run: npm --prefix scripts/grpc-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs grpc-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/grpc-conformance/channelz.cjs --upstream
       - run: node scripts/grpc-conformance/channelz.cjs
-      - run: npm --prefix scripts/deep-equal-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/rbtree-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/firestore-api-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/firestore-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/firebase-admin-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/firebase-functions-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/headless-calendar-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/fullcalendar-core-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/fullcalendar-react-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/tanstack-query-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/stylis-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/emotion-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/tabbable-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs deep-equal-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs rbtree-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs firestore-api-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs firestore-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs firebase-admin-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs firebase-functions-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs headless-calendar-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs fullcalendar-core-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs fullcalendar-react-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs tanstack-query-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs stylis-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs emotion-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs tabbable-conformance --ignore-scripts --no-audit --no-fund
       - run: bun scripts/tabbable-conformance/run.cjs
       - run: node scripts/tabbable-conformance/archives.cjs
-      - run: npm --prefix scripts/floating-react-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs floating-react-conformance --ignore-scripts --no-audit --no-fund
       - run: bun scripts/floating-react-conformance/run.cjs
       - run: node scripts/floating-react-conformance/archives.cjs
-      - run: npm --prefix scripts/floating-react-dom-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs floating-react-dom-conformance --ignore-scripts --no-audit --no-fund
       - run: bun scripts/floating-react-dom-conformance/run.cjs
       - run: node scripts/floating-react-dom-conformance/archives.cjs
-      - run: npm --prefix scripts/floating-dom-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs floating-dom-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/floating-dom-conformance/archives.cjs
-      - run: npm --prefix scripts/floating-core-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs floating-core-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/floating-core-conformance/archives.cjs
-      - run: npm --prefix scripts/floating-utils-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs floating-utils-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/floating-utils-conformance/archives.cjs
-      - run: npm --prefix scripts/hoist-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs hoist-conformance --ignore-scripts --no-audit --no-fund
       - run: bun scripts/hoist-conformance/run.cjs
       - run: bun scripts/hoist-conformance/callers.cjs --upstream
       - run: bun scripts/hoist-conformance/callers.cjs
       - run: node scripts/hoist-conformance/archives.cjs
-      - run: npm --prefix scripts/react-is-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs react-is-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/react-is-conformance/archives.cjs
-      - run: npm --prefix scripts/box-model-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs box-model-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/box-model-conformance/run.cjs --upstream
       - run: node scripts/box-model-conformance/run.cjs
       - run: node scripts/box-model-conformance/callers.cjs
       - run: node scripts/box-model-conformance/archives.cjs
-      - run: npm --prefix scripts/invariant-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs invariant-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/invariant-conformance/run.cjs --upstream
       - run: node scripts/invariant-conformance/run.cjs
       - run: node scripts/invariant-conformance/callers.cjs
       - run: node scripts/invariant-conformance/archives.cjs
-      - run: npm --prefix scripts/raf-schd-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs raf-schd-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/raf-schd-conformance/run.cjs --upstream
       - run: node scripts/raf-schd-conformance/run.cjs
       - run: node scripts/raf-schd-conformance/callers.cjs --upstream
       - run: node scripts/raf-schd-conformance/callers.cjs
       - run: node scripts/raf-schd-conformance/archives.cjs
-      - run: npm --prefix scripts/shallow-equal-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs shallow-equal-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/shallow-equal-conformance/run.cjs --upstream
       - run: node scripts/shallow-equal-conformance/run.cjs
       - run: node scripts/shallow-equal-conformance/callers.cjs
       - run: node scripts/shallow-equal-conformance/archives.cjs
-      - run: npm --prefix scripts/external-store-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs external-store-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/external-store-conformance/run.cjs
       - run: node scripts/external-store-conformance/archives.cjs
-      - run: npm --prefix scripts/memoize-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs memoize-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/memoize-conformance/run.cjs --upstream
       - run: node scripts/memoize-conformance/run.cjs
       - run: node scripts/memoize-conformance/callers.cjs
       - run: node scripts/memoize-conformance/archives.cjs
-      - run: npm --prefix scripts/fast-compare-conformance ci --legacy-peer-deps --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs fast-compare-conformance --legacy-peer-deps --ignore-scripts --no-audit --no-fund
       - run: node scripts/fast-compare-conformance/run.cjs --upstream
       - run: node scripts/fast-compare-conformance/run.cjs
       - run: node scripts/fast-compare-conformance/callers.cjs
       - run: node scripts/fast-compare-conformance/archives.cjs
-      - run: npm --prefix scripts/clsx-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs clsx-conformance --ignore-scripts --no-audit --no-fund
       - run: node scripts/clsx-conformance/archives.cjs
-      - run: npm --prefix scripts/gax-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/otel-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/ordered-map-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/grpc-loader-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/camelcase-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/protojson-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/protobuf-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/long-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/object-hash-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/storage-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/mime-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/xml-parser-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/nodable-entities-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/entities-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs gax-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs otel-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs ordered-map-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs grpc-loader-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs camelcase-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs protojson-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs protobuf-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs long-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs object-hash-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs storage-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs mime-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs xml-parser-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs nodable-entities-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs entities-conformance --ignore-scripts --no-audit --no-fund
       - run: bun run test:bun
       - run: bun scripts/check-body-options.cjs
       - run: bun run typecheck
       - run: bun run check:docs
       - run: node scripts/numbers-conformance/generate-data.cjs --check
       - run: node --disable-warning=ExperimentalWarning scripts/entities-conformance/generate-data.cjs --check
-      - run: npm --prefix scripts/type-consumers ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs type-consumers --ignore-scripts --no-audit --no-fund
       - run: node scripts/sync-types.cjs --check
       - run: npm run test:types
       - run: node scripts/fullcalendar-react-conformance/types.cjs
@@ -2168,9 +2168,9 @@ jobs:
           bun scripts/retry-request-conformance/callers.cjs --check-control
           bun scripts/stream-events-conformance/run.cjs
           bun scripts/stream-events-conformance/callers.cjs --upstream
-      - run: npm --prefix scripts/jwt-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs jwt-conformance --ignore-scripts --no-audit --no-fund
       - run: bun scripts/jwt-conformance/run.cjs
-      - run: npm --prefix scripts/jwks-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs jwks-conformance --ignore-scripts --no-audit --no-fund
       - run: |
           bun scripts/jwks-conformance/regressions.cjs
           bun scripts/jwks-conformance/run.cjs
@@ -2183,8 +2183,8 @@ jobs:
           bun scripts/firestore-conformance/watch-index.cjs
           bun scripts/firestore-conformance/wire.cjs
           bun scripts/firestore-conformance/tracing.cjs
-      - run: npm --prefix scripts/agent-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: npm --prefix scripts/http-proxy-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs agent-conformance --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs http-proxy-conformance --ignore-scripts --no-audit --no-fund
       - run: |
           bun scripts/http-proxy-conformance/run.cjs
           bun scripts/http-proxy-conformance/run.cjs --upstream
@@ -2194,11 +2194,11 @@ jobs:
           bun scripts/agent-conformance/current/run.cjs
           bun scripts/agent-conformance/current/run.cjs --upstream
           bun scripts/agent-conformance/current/proxy.cjs
-      - run: npm --prefix scripts/https-proxy-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs https-proxy-conformance --ignore-scripts --no-audit --no-fund
       - run: bun scripts/https-proxy-conformance/run.cjs
-      - run: npm --prefix scripts/express-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs express-conformance --ignore-scripts --no-audit --no-fund
       - run: bun scripts/express-conformance/run.cjs
-      - run: npm --prefix scripts/framework-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs framework-conformance --ignore-scripts --no-audit --no-fund
       - run: bun scripts/framework-conformance/run.cjs
-      - run: npm --prefix scripts/router-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/install-conformance.cjs router-conformance --ignore-scripts --no-audit --no-fund
       - run: bun scripts/router-conformance/run.cjs
