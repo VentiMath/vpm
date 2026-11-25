@@ -26,52 +26,64 @@ A standalone VPM CLI, registry and native Bun integration remain future work.
 
 ## Setup
 
+Each conformance suite pins its own upstream packages in its own
+`package-lock.json`. Install a suite with
+`node scripts/install-conformance.cjs <dir under scripts/> [npm ci flags]`, never a bare
+`npm ci`. On macOS the helper runs `npm ci` once per distinct lockfile into
+`~/Library/Caches/vpm-conformance` and gives each suite an APFS copy-on-write
+clone, so every worktree has the same files at the same paths while the disk stores
+them once. A full set of suites otherwise costs about 12 GB per worktree. Other
+platforms, including CI, run a plain `npm ci` in the suite;
+`VPM_CONFORMANCE_SHARED=0` forces that on macOS, and `VPM_CONFORMANCE_CACHE` moves
+the cache. Delete the cache directory to reclaim lockfiles no worktree uses any more.
+
 From the repository root:
 
 ```sh
 bun install --frozen-lockfile --ignore-scripts
 for lockfile in scripts/*/package-lock.json; do
-  npm --prefix "${lockfile%/package-lock.json}" ci --ignore-scripts --no-audit --no-fund
+  suite=${lockfile#scripts/}
+  node scripts/install-conformance.cjs "${suite%/package-lock.json}" --ignore-scripts --no-audit --no-fund
 done
-npm --prefix scripts/radix-effect-event-conformance/current ci --ignore-scripts --no-audit --no-fund
-npm --prefix scripts/radix-id-conformance/current ci --ignore-scripts --no-audit --no-fund
-npm --prefix scripts/radix-state-conformance/current ci --ignore-scripts --no-audit --no-fund
-npm --prefix scripts/radix-use-size-conformance/current ci --ignore-scripts --no-audit --no-fund
-npm --prefix scripts/radix-arrow-conformance/current ci --ignore-scripts --no-audit --no-fund
-npm --prefix scripts/radix-popper-conformance/current ci --ignore-scripts --no-audit --no-fund
-npm --prefix scripts/radix-collection-conformance ci --ignore-scripts --no-audit --no-fund
-npm --prefix scripts/radix-collection-conformance/current ci --ignore-scripts --no-audit --no-fund
+node scripts/install-conformance.cjs radix-effect-event-conformance/current --ignore-scripts --no-audit --no-fund
+node scripts/install-conformance.cjs radix-id-conformance/current --ignore-scripts --no-audit --no-fund
+node scripts/install-conformance.cjs radix-state-conformance/current --ignore-scripts --no-audit --no-fund
+node scripts/install-conformance.cjs radix-use-size-conformance/current --ignore-scripts --no-audit --no-fund
+node scripts/install-conformance.cjs radix-arrow-conformance/current --ignore-scripts --no-audit --no-fund
+node scripts/install-conformance.cjs radix-popper-conformance/current --ignore-scripts --no-audit --no-fund
+node scripts/install-conformance.cjs radix-collection-conformance --ignore-scripts --no-audit --no-fund
+node scripts/install-conformance.cjs radix-collection-conformance/current --ignore-scripts --no-audit --no-fund
 bun scripts/radix-popper-conformance/build.cjs
 bun scripts/radix-collection-conformance/build.cjs
-npm --prefix scripts/radix-hydrated-conformance ci --ignore-scripts --no-audit --no-fund
-npm --prefix scripts/radix-hydrated-conformance/current ci --ignore-scripts --no-audit --no-fund
+node scripts/install-conformance.cjs radix-hydrated-conformance --ignore-scripts --no-audit --no-fund
+node scripts/install-conformance.cjs radix-hydrated-conformance/current --ignore-scripts --no-audit --no-fund
 bun scripts/radix-hydrated-conformance/build.cjs
-npm --prefix scripts/radix-roving-conformance ci --ignore-scripts --no-audit --no-fund
-npm --prefix scripts/radix-roving-conformance/current ci --ignore-scripts --no-audit --no-fund
+node scripts/install-conformance.cjs radix-roving-conformance --ignore-scripts --no-audit --no-fund
+node scripts/install-conformance.cjs radix-roving-conformance/current --ignore-scripts --no-audit --no-fund
 bun scripts/radix-roving-conformance/build.cjs
-npm --prefix scripts/radix-presence-conformance ci --ignore-scripts --no-audit --no-fund
-npm --prefix scripts/radix-presence-conformance/current ci --ignore-scripts --no-audit --no-fund
+node scripts/install-conformance.cjs radix-presence-conformance --ignore-scripts --no-audit --no-fund
+node scripts/install-conformance.cjs radix-presence-conformance/current --ignore-scripts --no-audit --no-fund
 bun scripts/radix-presence-conformance/build.cjs
-npm --prefix scripts/radix-portal-conformance ci --ignore-scripts --no-audit --no-fund
-npm --prefix scripts/radix-portal-conformance/current ci --ignore-scripts --no-audit --no-fund
+node scripts/install-conformance.cjs radix-portal-conformance --ignore-scripts --no-audit --no-fund
+node scripts/install-conformance.cjs radix-portal-conformance/current --ignore-scripts --no-audit --no-fund
 bun scripts/radix-portal-conformance/build.cjs
-npm --prefix scripts/radix-focus-scope-conformance ci --ignore-scripts --no-audit --no-fund
-npm --prefix scripts/radix-focus-scope-conformance/current ci --ignore-scripts --no-audit --no-fund
+node scripts/install-conformance.cjs radix-focus-scope-conformance --ignore-scripts --no-audit --no-fund
+node scripts/install-conformance.cjs radix-focus-scope-conformance/current --ignore-scripts --no-audit --no-fund
 bun scripts/radix-focus-scope-conformance/build.cjs
-npm --prefix scripts/radix-dismissable-conformance ci --ignore-scripts --no-audit --no-fund
-npm --prefix scripts/radix-dismissable-conformance/current ci --ignore-scripts --no-audit --no-fund
+node scripts/install-conformance.cjs radix-dismissable-conformance --ignore-scripts --no-audit --no-fund
+node scripts/install-conformance.cjs radix-dismissable-conformance/current --ignore-scripts --no-audit --no-fund
 bun scripts/radix-dismissable-conformance/build.cjs
 node scripts/radix-dismissable-conformance/archives.cjs
-npm --prefix scripts/radix-menu-conformance ci --ignore-scripts --no-audit --no-fund
-npm --prefix scripts/radix-menu-conformance/current ci --ignore-scripts --no-audit --no-fund
+node scripts/install-conformance.cjs radix-menu-conformance --ignore-scripts --no-audit --no-fund
+node scripts/install-conformance.cjs radix-menu-conformance/current --ignore-scripts --no-audit --no-fund
 bun scripts/radix-menu-conformance/build.cjs
 node scripts/radix-menu-conformance/archives.cjs
-npm --prefix scripts/radix-dropdown-menu-conformance ci --ignore-scripts --no-audit --no-fund
-npm --prefix scripts/radix-dropdown-menu-conformance/current ci --ignore-scripts --no-audit --no-fund
+node scripts/install-conformance.cjs radix-dropdown-menu-conformance --ignore-scripts --no-audit --no-fund
+node scripts/install-conformance.cjs radix-dropdown-menu-conformance/current --ignore-scripts --no-audit --no-fund
 bun scripts/radix-dropdown-menu-conformance/build.cjs
 node scripts/radix-dropdown-menu-conformance/archives.cjs
-npm --prefix scripts/dnd-conformance ci --ignore-scripts --no-audit --no-fund
-npm --prefix scripts/dnd-conformance/current ci --ignore-scripts --no-audit --no-fund
+node scripts/install-conformance.cjs dnd-conformance --ignore-scripts --no-audit --no-fund
+node scripts/install-conformance.cjs dnd-conformance/current --ignore-scripts --no-audit --no-fund
 bun scripts/dnd-conformance/build.cjs
 ```
 
